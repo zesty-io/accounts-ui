@@ -7,8 +7,9 @@
     "prestart": "npm prune & npm install",
     "start": "npm run build:dev",
     "build": "node bin/build",
-    "build:dev": "export NODE_ENV=\"development\" && ./node_modules/.bin/webpack --watch",
+    "build:dev": "export NODE_ENV=\"development\" && ./node_modules/.bin/webpack --watch & npm run serve",
     "build:prod": "export NODE_ENV=\"production\" && ./node_modules/.bin/webpack --progress -p",
+    "serve": "./node_modules/.bin/serve build",
     "test": "./node_modules/.bin/ava tests"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
@@ -29,7 +30,13 @@
     "babel-preset-es2015": "6.24.0",
     "babel-preset-react": "6.23.0",
     "babel-preset-stage-2": "^6.22.0",
+    "css-loader": "^0.27.3",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "node-sass": "^4.5.2",
     "redux-logger": "2.8.2",
+    "sass-loader": "^6.0.3",
+    "serve": "5.1.2",
+    "style-loader": "^0.16.1",
     "webpack": "2.2.1",
     "yarn": "0.21.3"
   }
