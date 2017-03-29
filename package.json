@@ -1,0 +1,34 @@
+{
+  "name": "accounts-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm prune & npm install",
+    "start": "npm run build:dev",
+    "build": "node bin/build",
+    "build:dev": "export NODE_ENV=\"development\" && ./node_modules/.bin/webpack --watch",
+    "build:prod": "export NODE_ENV=\"production\" && ./node_modules/.bin/webpack --progress -p",
+    "test": "./node_modules/.bin/ava tests"
+  },
+  "author": "Stuart Runyan<stuart@zesty.io>",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "react": "15.4.2",
+    "react-dom": "15.4.2",
+    "react-redux": "5.0.3",
+    "react-router": "4.0.0",
+    "redux": "3.6.0",
+    "redux-thunk": "2.2.0"
+  },
+  "devDependencies": {
+    "ava": "0.18.2",
+    "babel": "6.23.0",
+    "babel-loader": "6.4.0",
+    "babel-preset-es2015": "6.24.0",
+    "babel-preset-react": "6.23.0",
+    "redux-logger": "2.8.2",
+    "webpack": "2.2.1",
+    "yarn": "0.21.3"
+  }
+}

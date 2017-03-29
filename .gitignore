@@ -1,0 +1,7 @@
+# File Extensions
+*.sublime-*
+*.log
+*.lock
+
+/build
+/node_modules
