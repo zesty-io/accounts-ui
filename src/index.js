@@ -6,31 +6,91 @@ import {BrowserRouter, Redirect, Route} from 'react-router-dom'
 import {store} from './reducers'
 
 import App from './views/app'
-import Dashboard from './views/dashboard'
 import Login from './views/Login'
+import Dashboard from './views/dashboard'
+import Settings from './views/settings'
+import Websites from './views/websites'
+
+class PrivateRoute extends React.Component {
+  render() {
+    return (this.props.loggedIn)
+      ? this.props.children
+      : <Redirect to="/login"></Redirect>
+  }
+}
+PrivateRoute.defaultProps = {
+  loggedIn: true
+}
 
 ReactDOM.render((
   <Provider store={store}>
-    <BrowserRouter basename="/z">
-      <Route path="/" component={App}>
+    <BrowserRouter>
+      <div>
+        <Route path="/login" component={Login} />
+        <PrivateRoute>
+          <Route path="/" component={App}>
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/sites" component={Websites} />
+            <Route path="/settings" component={Settings} />
+          </Route>
+        </PrivateRoute>
+      </div>
+
+
+      {/* <App>
         <Route path="/dashboard" component={Dashboard} />
-      </Route>
+        <Route path="/sites" component={Websites} />
+        <Route path="/settings" component={Settings} />
+      </App> */}
+      {/* <Route children={({match, ...rest}) => {
+        console.log('match', match);
+        console.log('rest', rest);
+        return (
+          <App>
+            <Route path="/login" component={Login} />
+            <PrivateRoute>
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/sites" component={Websites} />
+              <Route path="/settings" component={Settings} />
+            </PrivateRoute>
+          </App>
+        )
+      }}></Route> */}
+      {/* <Route path="/" component={App}>
+        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/sites" component={Websites} />
+        <Route path="/settings" component={Settings} />
+      </Route> */}
     </BrowserRouter>
   </Provider>
 ), document.getElementById('root'))
 
 
-const PrivateRoute = ({component, ...rest}) => {
-  return class extends React.Component {
-    constructor() {
-      super()
-      console.log('PrivateRoute:constructor', this)
-    }
-    render() {
-      return <Route {...rest} component={App} />
-    }
-  }
-}
+
+
+
+
+
+
+// const PrivateRoute = ({component, ...rest}) => {
+//   return class extends React.Component {
+//     constructor() {
+//       super()
+//       console.log('PrivateRoute:constructor', this)
+//     }
+//     componentWillUpdate() {
+//       this.props.loggedIn = false
+//     }
+//     // render() {
+//     //   return <Route {...rest} component={App} />
+//     // }
+//     render() {
+//       return (this.props.loggedIn)
+//         ? this.props.children
+//         : <Redirect to="/login"></Redirect>
+//     }
+//   }
+// }
 
 
 

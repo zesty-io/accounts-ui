@@ -4,11 +4,14 @@ import styles from './styles.less'
 import GlobalHeader from '../../components/GlobalHeader'
 
 class App extends Component {
+  constructor() {
+    super()
+    console.log('App', this)
+  }
   render() {
     return (
       <section className={styles.app}>
         <GlobalHeader />
-        <h1>Accounts App</h1>
         {this.props.children}
       </section>
     )
