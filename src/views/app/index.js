@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import styles from './styles.css'
+import styles from './styles.less'
 import GlobalHeader from '../../components/GlobalHeader'
 
 class App extends Component {

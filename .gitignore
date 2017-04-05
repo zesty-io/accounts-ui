@@ -2,6 +2,7 @@
 *.sublime-*
 *.log
 *.lock
+*.css.json
 
 /build
 /node_modules

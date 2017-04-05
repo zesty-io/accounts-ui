@@ -3,47 +3,35 @@
 const webpack = require('webpack')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-// Create multiple instances
-// const extractCSS = new ExtractTextPlugin('stylesheets/[name]-one.css');
-// const extractLESS = new ExtractTextPlugin('stylesheets/[name]-two.css');
-
 const env = new webpack.EnvironmentPlugin(['NODE_ENV'])
-const extractSass = new ExtractTextPlugin({
-    filename: "build/[name].[contenthash].css",
+const extractLess = new ExtractTextPlugin({
+    filename: "build/app.bundle.css",
     disable: process.env.NODE_ENV === "development"
-});
+})
 
 module.exports = {
   entry: './src/index.js',
   devtool: 'cheap-module-source-map',
   output: {
-      filename: 'build/bundle.accounts-app.js'
+    filename: 'build/bundle.accounts-app.js'
   },
-  plugins: [env, extractSass],
+  plugins: [env, extractLess],
   module: {
     rules: [
-      // {
-      //   test: /\.scss$/,
-      //   loader: extractSass.extract({
-      //       use: [{
-      //         loader: "css-loader"
-      //       }, {
-      //         loader: "sass-loader"
-      //       }],
-      //       // use style-loader in development
-      //       fallback: "style-loader"
-      //   })
-      // },
       {
-        test: /\.css$/,
-        loader: 'style-loader'
-      }, {
-        test: /\.css$/,
-        loader: 'css-loader',
-        query: {
-          modules: true,
-          localIdentName: '[name]__[local]___[hash:base64:5]'
-        }
+        test: /\.less$/,
+        use: extractLess.extract({
+          use: [{
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              localIdentName: '[local]--[hash:base64:5]'
+            }
+          }, {
+            loader: 'less-loader'
+          }],
+          fallback: 'style-loader'
+        })
       },
       {
         test: /\.js$/,

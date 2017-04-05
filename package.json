@@ -1,7 +1,7 @@
 {
   "name": "accounts-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "Zesty.io account management applicaiton",
   "main": "index.js",
   "scripts": {
     "prestart": "npm prune & npm install",
@@ -32,9 +32,9 @@
     "babel-preset-stage-2": "^6.22.0",
     "css-loader": "^0.27.3",
     "extract-text-webpack-plugin": "^2.1.0",
-    "node-sass": "^4.5.2",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.3",
     "redux-logger": "2.8.2",
-    "sass-loader": "^6.0.3",
     "serve": "5.1.2",
     "style-loader": "^0.16.1",
     "webpack": "2.2.1",

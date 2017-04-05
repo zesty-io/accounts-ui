@@ -17,7 +17,7 @@ ReactDOM.render((
       </Route>
     </BrowserRouter>
   </Provider>
-), document.getElementById('app'))
+), document.getElementById('root'))
 
 
 const PrivateRoute = ({component, ...rest}) => {

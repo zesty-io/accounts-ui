@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import {Link} from 'react-router-dom'
 // import {connect} from 'react-redux'
-import styles from './styles.css'
+import styles from './styles.less'
 import MessageIcon from '../Messages/Icon'
 
 export default class GlobalHeader extends PureComponent {
