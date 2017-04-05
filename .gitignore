@@ -3,6 +3,7 @@
 *.log
 *.lock
 *.css.json
+.env
 
 /build
-/node_modules
+*node_modules
