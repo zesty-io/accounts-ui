@@ -1,15 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
-import {BrowserRouter, Redirect, Route} from 'react-router-dom'
+import {BrowserRouter, Switch, Redirect, Route} from 'react-router-dom'
 
 import {store} from './reducers'
 
 import App from './views/app'
 import Login from './views/Login'
-import Dashboard from './views/dashboard'
-import Settings from './views/settings'
-import Websites from './views/websites'
 
 class PrivateRoute extends React.Component {
   render() {
@@ -19,7 +16,7 @@ class PrivateRoute extends React.Component {
   }
 }
 PrivateRoute.defaultProps = {
-  loggedIn: true
+  loggedIn: false
 }
 
 ReactDOM.render((
@@ -28,39 +25,9 @@ ReactDOM.render((
       <div>
         <Route path="/login" component={Login} />
         <PrivateRoute>
-          <Route path="/" component={App}>
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/sites" component={Websites} />
-            <Route path="/settings" component={Settings} />
-          </Route>
+          <Route path="/" component={App} />
         </PrivateRoute>
       </div>
-
-
-      {/* <App>
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/sites" component={Websites} />
-        <Route path="/settings" component={Settings} />
-      </App> */}
-      {/* <Route children={({match, ...rest}) => {
-        console.log('match', match);
-        console.log('rest', rest);
-        return (
-          <App>
-            <Route path="/login" component={Login} />
-            <PrivateRoute>
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/sites" component={Websites} />
-              <Route path="/settings" component={Settings} />
-            </PrivateRoute>
-          </App>
-        )
-      }}></Route> */}
-      {/* <Route path="/" component={App}>
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/sites" component={Websites} />
-        <Route path="/settings" component={Settings} />
-      </Route> */}
     </BrowserRouter>
   </Provider>
 ), document.getElementById('root'))
