@@ -1,6 +1,6 @@
 'use strict'
 
-const getUser = require('./user/find')
+const findUser = require('./user/find')
 
 module.exports = (db) => {
   return {

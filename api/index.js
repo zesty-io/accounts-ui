@@ -10,6 +10,4 @@ dotenv.load({
   path: process.env.dotenv_path || path.join(__dirname, '.env')
 })
 
-console.log('env', process.env.PORT)
-
 server(actions(db()))

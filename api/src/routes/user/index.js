@@ -1,7 +1,8 @@
 'use strict'
 
 module.exports = {
-  find: (req, res) => {
+  find: async function(req, res) {
+    console.log('route: user.find', res.locals)
     // TODO confirm id?
     try {
       const user = await res.locals.actions.user.find(req.params.id)
