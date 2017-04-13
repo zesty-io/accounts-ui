@@ -16,7 +16,7 @@ class PrivateRoute extends React.Component {
   }
 }
 PrivateRoute.defaultProps = {
-  loggedIn: false
+  loggedIn: true
 }
 
 ReactDOM.render((
