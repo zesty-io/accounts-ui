@@ -10,4 +10,6 @@ dotenv.load({
   path: process.env.dotenv_path || path.join(__dirname, '.env')
 })
 
-server(actions(db()))
+server(actions(db())).listen(process.env.PORT, () => {
+  console.log(`server started on port: ${process.env.PORT}`)
+})

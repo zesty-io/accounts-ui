@@ -8,7 +8,14 @@ import Dashboard from '../dashboard'
 import Settings from '../settings'
 import Websites from '../websites'
 
+import {getUser} from '../../actions/user'
+
 class App extends Component {
+  componentWillMount() {
+    console.log('componentWillMount')
+    // TODO how do I get the id?
+    getUser('20473729')
+  }
   render() {
     return (
       <section className={styles.app}>

@@ -20,9 +20,5 @@ module.exports = (actions) => {
   app.get('/', (req, res) => res.sendStatus(200))
   app.all('*', (req, res) => res.sendStatus(404))
 
-  app.listen(process.env.PORT, () => {
-    console.log(`server started on port: ${process.env.PORT}`)
-  })
-
   return app
 }
