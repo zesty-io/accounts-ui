@@ -5,7 +5,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const env = new webpack.EnvironmentPlugin(['NODE_ENV'])
 const extractLess = new ExtractTextPlugin({
-    filename: "build/app.bundle.css",
+    filename: "build/bundle.accounts-app.css",
     disable: process.env.NODE_ENV === "development"
 })
 
