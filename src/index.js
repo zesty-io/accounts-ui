@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
 import {BrowserRouter, Switch, Redirect, Route} from 'react-router-dom'
 
-import {store} from './reducers'
+import {store} from './store'
 
-import App from './views/app'
+import ShellView from './shell'
 import Login from './views/Login'
 
 class PrivateRoute extends React.Component {
@@ -25,7 +25,7 @@ ReactDOM.render((
       <div>
         <Route path="/login" component={Login} />
         <PrivateRoute>
-          <Route path="/" component={App} />
+          <Route path="/" component={ShellView} />
         </PrivateRoute>
       </div>
     </BrowserRouter>

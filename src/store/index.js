@@ -1,6 +1,7 @@
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
+
 import {user} from './user'
 
 const loggerMiddleware = createLogger({

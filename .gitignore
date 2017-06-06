@@ -1,7 +1,6 @@
 # File Extensions
 *.sublime-*
 *.log
-*.lock
 *.css.json
 .env
 

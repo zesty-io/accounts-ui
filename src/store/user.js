@@ -28,3 +28,19 @@ export function getUser(id) {
       })
   }
 }
+
+export function user(state = {}, action) {
+  switch(action.type) {
+    case FETCHING_USER:
+      // TODO show loading state?
+
+    case FETCH_USER_SUCCESS:
+      return {...action.user}
+
+    case FETCH_USER_ERROR:
+      // TODO handle failure
+      //
+    default:
+      return state
+  }
+}

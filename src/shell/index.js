@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Switch, Redirect, Route} from 'react-router-dom'
 import styles from './styles.less'
-import GlobalHeader from '../../components/GlobalHeader'
 
-import Dashboard from '../dashboard'
-import Settings from '../settings'
-import Websites from '../websites'
+import GlobalHeader from '../components/GlobalHeader'
+import Dashboard from '../views/dashboard'
+import Settings from '../views/settings'
+import Websites from '../views/websites'
 
-import {getUser} from '../../actions/user'
+import {getUser} from '../actions/user'
 
-class App extends Component {
+class Shell extends Component {
   componentWillMount() {
     console.log('componentWillMount')
     // TODO how do I get the id?
@@ -32,6 +32,6 @@ class App extends Component {
   }
 }
 
-const AppView = connect(state => state)(App)
+const ShellView = connect(state => state)(Shell)
 
-export default AppView
+export default ShellView
