@@ -5,7 +5,7 @@ import {BrowserRouter, Switch, Redirect, Route} from 'react-router-dom'
 
 import {store} from './store'
 
-import ShellView from './shell'
+import AppShell from './app-shell'
 import Login from './views/Login'
 
 class PrivateRoute extends React.Component {
@@ -25,7 +25,7 @@ ReactDOM.render((
       <div>
         <Route path="/login" component={Login} />
         <PrivateRoute>
-          <Route path="/" component={ShellView} />
+          <Route path="/" component={AppShell} />
         </PrivateRoute>
       </div>
     </BrowserRouter>

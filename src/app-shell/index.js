@@ -8,9 +8,9 @@ import Dashboard from '../views/dashboard'
 import Settings from '../views/settings'
 import Websites from '../views/websites'
 
-import {getUser} from '../actions/user'
+import {getUser} from '../store/user'
 
-class Shell extends Component {
+class App extends Component {
   componentWillMount() {
     console.log('componentWillMount')
     // TODO how do I get the id?
@@ -32,6 +32,6 @@ class Shell extends Component {
   }
 }
 
-const ShellView = connect(state => state)(Shell)
+const AppShell = connect(state => state)(App)
 
-export default ShellView
+export default AppShell
