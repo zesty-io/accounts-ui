@@ -12,6 +12,9 @@ const extractLess = new ExtractTextPlugin({
 module.exports = {
   entry: './src/index.js',
   devtool: 'cheap-module-source-map',
+  externals: {
+    'react': 'React'
+  },
   output: {
     filename: 'build/bundle.accounts-app.js'
   },
