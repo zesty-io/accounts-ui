@@ -1,0 +1,33 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "description": "This is a collection of core UI components for the Zesty.io platform. Using React as our view library.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "start": "export NODE_ENV=\"development\" && ./node_modules/.bin/webpack --watch",
+    "prestart": "npm install",
+    "poststart": "npm prune",
+    "build:prod": "export NODE_ENV=\"production\" && ./node_modules/.bin/webpack --progress -p",
+    "prebuild": "npm install",
+    "postbuild": "npm prune"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "classnames": "2.2.5",
+    "react": "15.5.4"
+  },
+  "devDependencies": {
+    "babel-core": "6.24.1",
+    "babel-loader": "7.0.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-react": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "css-loader": "0.28.2",
+    "extract-text-webpack-plugin": "2.1.0",
+    "less": "2.7.2",
+    "less-loader": "4.0.3",
+    "style-loader": "0.18.1",
+    "webpack": "2.6.0"
+  }
+}

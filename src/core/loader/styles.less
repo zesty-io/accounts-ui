@@ -1,0 +1,31 @@
+@import '../../views/colors.less';
+
+.loader {
+  display: flex;
+  height: 2rem;
+
+  .bar {
+    animation: fade 1s infinite ease-in-out;
+    background-color: @zesty-tab-color;
+    margin: 0.5rem;
+    opacity: 1;
+    width: 1rem;
+
+    &:nth-child(1) { animation-delay: -0.16s }
+    &:nth-child(2) { animation-delay: 1s }
+    &:nth-child(3) { animation-delay: -0.32s }
+    &:nth-child(4) { animation-delay: 2s }
+    &:nth-child(5) { animation-delay: -0.16s }
+  }
+}
+
+@keyframes fade {
+  0%,
+  80%,
+  100% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.3;
+  }
+}

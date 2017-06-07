@@ -1,0 +1,30 @@
+@import '../../views/colors.less';
+
+.link {
+    color: @zesty-blue;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    font-weight: 900;
+    line-height: 2em;
+    margin: 0 0.5rem;
+    padding: 0;
+    text-decoration: none;
+    text-shadow: 1px 1px 0 #becadf;
+    transition-duration: 0.3s;
+    transition-property: color, background-color;
+
+    &:hover,
+    &:focus {
+        color: darken(@zesty-blue, 5%);
+    }
+    &:active {
+        color: darken(@zesty-blue, 10%);
+        outline: none;
+    }
+    .icon {
+        color: @zesty-tab-blue;
+        width: 15px;
+    }
+}
