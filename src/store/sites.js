@@ -11,19 +11,25 @@ export function getSites(id) {
     dispatch({
       type: FETCH_SITES_SUCCESS,
       sites: [{
+        zuid: 'xxxxx0',
+        name: 'Hofbrauhaus Brand Epicenter / America Corp',
+        domain: '',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
+
+      }, {
         zuid: 'xxxxx1',
-        name: 'My Website 1',
-        domain: 'hofbrauhauschicago.com',
+        name: 'Hofbrauhaus America Corporate',
+        domain: 'hofbrauhaus.us',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
 
       }, {
         zuid: 'xxxxx2',
-        name: 'My Website 2',
-        domain: 'hofbrauhauschicago.com',
+        name: 'Hofbrauhaus FR - Las Vegas',
+        domain: 'hofbrauhauslasvegas.com',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
       }, {
         zuid: 'xxxxx3',
-        name: 'My Website 3',
+        name: 'Hofbrauhaus FR - Chicago',
         domain: 'hofbrauhauschicago.com',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
       }]

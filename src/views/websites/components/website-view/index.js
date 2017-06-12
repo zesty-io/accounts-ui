@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import cx from 'classnames'
 import styles from './styles.less'
 
 class Website extends Component {
@@ -7,18 +8,33 @@ class Website extends Component {
     return (
       <article className={styles.website}>
         <header>
-          <h1><i className="fa fa-globe" aria-hidden="true"></i>{this.props.site.name}</h1>
+          <h1 className={styles.name}>
+            {this.props.site.name}
+          </h1>
+          <h2 className={styles.domain}>
+            {this.props.site.domain
+              ? this.props.site.domain
+              : <Button className={styles.setup}><i className={cx(styles.icon, "fa fa-cog")} aria-hidden="true"></i>Setup Domain</Button>}
+          </h2>
+          {/*<ButtonGroup>
+                      <Link>
+                        <i className="fa fa-external-link" aria-hidden="true"></i>View Stage
+                      </Link>
+                      <Link>
+                        <i className="fa fa-external-link" aria-hidden="true"></i>View Live
+                      </Link>
+
+                    </ButtonGroup>*/}
         </header>
         <main>
-          your website
+          {/*<div>
+                     <ButtonGroup>
+                       <Button>
+                         Open Site Manager
+                       </Button>
 
-          <Link>
-            <i className="fa fa-external-link" aria-hidden="true"></i>View Stage
-          </Link>
-          <Link>
-            <i className="fa fa-external-link" aria-hidden="true"></i>View Production
-          </Link>
-
+                     </ButtonGroup>
+                    </div>*/}
         </main>
         <footer></footer>
       </article>
