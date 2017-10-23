@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import styles from './styles.less'
 
@@ -11,8 +12,11 @@ class WebsitesActions extends Component {
         </h2>
         <div className={styles.actions}>
           <Search className={styles.filter} placeholder="Search by web property name or domain" />
+
           <Button className="save">
-            <i className="fa fa-plus" aria-hidden="true"></i>Add New Web Property
+            <Link to="/sites/create">
+              <i className="fa fa-plus" aria-hidden="true"></i>Add New Web Property
+            </Link>
           </Button>
         </div>
       </header>

@@ -6,7 +6,8 @@ import styles from './styles.less'
 import GlobalHeader from '../components/GlobalHeader'
 import Dashboard from '../views/dashboard'
 import Settings from '../views/settings'
-import Websites from '../views/websites'
+import Websites from '../views/Websites'
+import WebsiteCreate from '../views/WebsiteCreate'
 
 import {getUser} from '../store/user'
 
@@ -23,6 +24,7 @@ class App extends Component {
         <Switch>
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/sites" component={Websites} />
+          <Route path="/sites/create" component={WebsiteCreate} />
           <Route path="/settings" component={Settings} />
           <Redirect from='/' to='/dashboard'/>
           {/* TODO: handle no match */}

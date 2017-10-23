@@ -5,7 +5,7 @@ import {BrowserRouter, Switch, Redirect, Route} from 'react-router-dom'
 
 import {store} from './store'
 
-import AppShell from './app-shell'
+import AppShell from './shell'
 import Login from './views/Login'
 
 class PrivateRoute extends React.Component {

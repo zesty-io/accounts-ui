@@ -19,18 +19,18 @@ export function getSites(id) {
       }, {
         zuid: 'xxxxx1',
         name: 'Hofbrauhaus America Corporate',
-        domain: 'hofbrauhaus.us',
+        domain: 'https://www.hofbrauhaus.us',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
 
       }, {
         zuid: 'xxxxx2',
         name: 'Hofbrauhaus FR - Las Vegas',
-        domain: 'hofbrauhauslasvegas.com',
+        domain: 'https://www.hofbrauhauslasvegas.com',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
       }, {
         zuid: 'xxxxx3',
         name: 'Hofbrauhaus FR - Chicago',
-        domain: 'hofbrauhauschicago.com',
+        domain: 'https://www.hofbrauhauschicago.com',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
       }]
     })
