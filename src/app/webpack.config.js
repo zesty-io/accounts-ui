@@ -2,23 +2,32 @@
 
 const webpack = require('webpack')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-const env = new webpack.EnvironmentPlugin(['NODE_ENV'])
 const extractLess = new ExtractTextPlugin({
-    filename: "build/bundle.accounts-app.css",
+    filename: "../../build/bundle.accounts-app.css",
     disable: process.env.NODE_ENV === "development"
 })
 
 module.exports = {
-  entry: './src/shell/index.js',
+  entry: './src/index.js',
   devtool: 'cheap-module-source-map',
   externals: {
-    'react': 'React'
+    'classnames': 'cx',
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'react-redux': 'ReactRedux',
+    'react-router': 'ReactRouter',
+    'react-router-dom': 'ReactRouterDOM',
+    'redux': 'Redux',
+    'redux-thunk': 'ReduxThunk'
   },
   output: {
-    filename: 'build/bundle.accounts-app.js'
+    filename: '../../../build/bundle.accounts-app.js'
   },
-  plugins: [env, extractLess],
+  resolve: {
+    modules: ['node_modules', 'src'],
+    extensions: ['.js', '.jsx'],
+  },
+  plugins: [extractLess],
   module: {
     rules: [
       {
