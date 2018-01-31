@@ -2,15 +2,12 @@
   "name": "accounts-app",
   "version": "1.0.0",
   "description": "Zesty.io account management applicaiton",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
-    "prestart": "npm prune & npm install",
-    "start": "npm run build:dev",
     "build": "node bin/build",
-    "build:dev": "export NODE_ENV=\"development\" && ./node_modules/.bin/webpack --watch & npm run serve",
-    "build:prod": "export NODE_ENV=\"production\" && ./node_modules/.bin/webpack --progress -p",
-    "serve": "./node_modules/.bin/serve ./build --port 9000 --single",
-    "test": "./node_modules/.bin/ava tests"
+    "prestart": "npm install",
+    "start": "node bin/start & npm run serve",
+    "serve": "./node_modules/.bin/serve build --port 9000 --single"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
   "license": "UNLICENSED",

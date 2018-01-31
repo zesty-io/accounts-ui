@@ -1,12 +1,12 @@
 {
-  "name": "core",
+  "name": "accounts-app-shell",
   "version": "1.0.0",
-  "description": "This is a collection of core UI components for the Zesty.io platform. Using React as our view library.",
-  "main": "webpack.config.js",
+  "description": "Zesty.io account application shell",
+  "main": "index.js",
   "scripts": {
     "start": "export NODE_ENV=\"development\" && ../../node_modules/.bin/webpack --watch",
     "build": "export NODE_ENV=\"production\" && ../../node_modules/.bin/webpack --progress -p"
   },
-  "author": "",
+  "author": "Stuart Runyan<stuart@zesty.io>",
   "license": "UNLICENSED"
 }
