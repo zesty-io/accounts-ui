@@ -8,7 +8,7 @@ const runPkgCmd = require('./runPkgCmd')
 
 const root = path.resolve(__dirname, '../')
 const src = root + '/src'
-const appDir = root + '/src/app'
+const appDir = root + '/src/apps'
 
 copyFiles(root + '/public', root + '/build')
 
