@@ -1,0 +1,39 @@
+@import "../../../shell/styles/colors.less";
+.GlobalHeader {
+  align-items: center;
+  background-color: @globalHeader;
+  display: flex;
+  font-size: 0.8em;
+  flex-direction: row;
+  text-rendering: optimizeLegibility;
+  align-items: center;
+}
+.GlobalHeader .logo {
+  height: 32px;
+  padding: 0 1rem;
+}
+.GlobalNav {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+.GlobalNav a {
+  border-left: 1px solid #22293e;
+  text-decoration: none;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 0.8rem;
+  text-shadow: 0 0 4px #000;
+  color: #A7AFBF;
+  text-align: center;
+line-height: 1.4em;
+}
+.GlobalNav a:last-child {
+  border-right: 1px solid #22293e;
+}
+.GlobalHeader .logout {
+  cursor: pointer;
+  color: #FFF;
+  background-color: #697A91;
+  padding: 1rem;
+}
