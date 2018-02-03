@@ -9,20 +9,58 @@ export default class Login extends Component {
   render () {
     return (
       <section className={styles.Login}>
-        <form className={styles.LoginForm}>
+        <form name='login' className={styles.LoginForm}>
           <h2>Zesty.io</h2>
           <label>
-            <input className={styles.input} type='email' />
+            <input name='email' className={styles.input} type='email' />
           </label>
           <label>
-            <input className={styles.input} type='password' />
+            <input name='pass' className={styles.input} type='password' />
           </label>
           <button onClick={this.handleLogin}>Login</button>
         </form>
       </section>
     )
   }
-  handleLogin () {
-    // TODO make auth service request
+  handleLogin (evt) {
+    evt.preventDefault()
+
+    let email = document.forms.login.email.value
+    let password = document.forms.login.pass.value
+
+    let form = new FormData()
+    form.append('email', email)
+    form.append('password', password)
+
+    fetch('http://auth-svc.zesty.localdev:3011/login', {
+      method: 'POST',
+      // credentials: 'include',
+      mode: 'no-cors',
+      body: form
+    })
+    .then(res => res.json())
+    .then(json => {
+      console.log('login', json)
+      switch (json.code) {
+        case 200:
+          console.log('success')
+          break
+
+        case 202:
+          console.log('2FA. Start polling')
+          break
+
+        case 400:
+        case 401:
+        case 404:
+        case 500:
+          console.log('Error')
+          break
+
+        default:
+          console.log('Unknown error')
+      }
+    })
+    .catch(err => console.log(err))
   }
 }

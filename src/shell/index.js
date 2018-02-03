@@ -16,7 +16,7 @@ class PrivateRoute extends React.Component {
   }
 }
 PrivateRoute.defaultProps = {
-  loggedIn: true
+  loggedIn: false
 }
 
 ReactDOM.render((
@@ -31,6 +31,9 @@ ReactDOM.render((
     </BrowserRouter>
   </Provider>
 ), document.getElementById('root'))
+
+
+
 
 // import React, { Component } from 'react'
 // import {connect} from 'react-redux'
