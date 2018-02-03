@@ -15,6 +15,7 @@ export default class GlobalHeader extends PureComponent {
           <MessageIcon />
         </nav>
         <span className={styles.logout} title='Logout'>
+          <span>{this.props.user.firstname} {this.props.user.lastname}</span>
           <Link to='/logout'>
             <i className='fa fa-sign-out' aria-hidden='true' />
           </Link>

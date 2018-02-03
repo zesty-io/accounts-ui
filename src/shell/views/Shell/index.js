@@ -17,7 +17,7 @@ class Shell extends Component {
   render () {
     return (
       <section className={styles.shell}>
-        <GlobalHeader />
+        <GlobalHeader user={this.props.user} />
         <Switch>
           <Route path='/dashboard' component={Dashboard} />
           <Route path='/properties' component={Properties} />
