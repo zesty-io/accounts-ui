@@ -2,7 +2,7 @@ export const FETCHING_SITES = 'FETCHING_SITES'
 export const FETCH_SITES_SUCCESS = 'FETCH_SITES_SUCCESS'
 export const FETCH_SITES_ERROR = 'FETCH_SITES_ERROR'
 
-export function getSites(id) {
+export function getSites (id) {
   return (dispatch) => {
     dispatch({
       type: FETCHING_SITES
@@ -14,24 +14,24 @@ export function getSites(id) {
         zuid: 'xxxxx0',
         name: 'Hofbrauhaus Brand Epicenter / America Corp',
         domain: '',
-        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
 
       }, {
         zuid: 'xxxxx1',
         name: 'Hofbrauhaus America Corporate',
         domain: 'https://www.hofbrauhaus.us',
-        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
 
       }, {
         zuid: 'xxxxx2',
         name: 'Hofbrauhaus FR - Las Vegas',
         domain: 'https://www.hofbrauhauslasvegas.com',
-        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
       }, {
         zuid: 'xxxxx3',
         name: 'Hofbrauhaus FR - Chicago',
         domain: 'https://www.hofbrauhauschicago.com',
-        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
       }]
     })
 
@@ -54,12 +54,11 @@ export function getSites(id) {
     //       err
     //     })
     //   })
-
   }
 }
 
-export function sites(state = {}, action) {
-  switch(action.type) {
+export function sites (state = {}, action) {
+  switch (action.type) {
     // case FETCHING_SITES:
     //   // TODO show loading state?
     //   return state

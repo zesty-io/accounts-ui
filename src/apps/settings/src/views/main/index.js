@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 
 class Settings extends Component {
-  render() {
+  render () {
     return (
-      <section id="settings">
+      <section id='settings'>
         <h2>Settings</h2>
       </section>
     )

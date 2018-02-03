@@ -6,8 +6,8 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 // import {sites} from './sites'
 
 const loggerMiddleware = createLogger({
-    collapsed: true,
-    diff: true
+  collapsed: true,
+  diff: true
 })
 
 // const rootReducer = combineReducers({user, sites})

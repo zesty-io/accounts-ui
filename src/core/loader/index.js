@@ -3,10 +3,10 @@ import styles from './styles.less'
 
 export default () => (
   <div className={styles.loader}>
-    <span className={styles.bar}></span>
-    <span className={styles.bar}></span>
-    <span className={styles.bar}></span>
-    <span className={styles.bar}></span>
-    <span className={styles.bar}></span>
+    <span className={styles.bar} />
+    <span className={styles.bar} />
+    <span className={styles.bar} />
+    <span className={styles.bar} />
+    <span className={styles.bar} />
   </div>
 )

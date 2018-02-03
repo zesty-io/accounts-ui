@@ -2,7 +2,7 @@ export const FETCHING_USER = 'FETCHING_USER'
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
 export const FETCH_USER_ERROR = 'FETCH_USER_ERROR'
 
-export function getUser(id) {
+export function getUser (id) {
   console.log('action:getUser', id)
   return (dispatch) => {
     dispatch({
@@ -29,8 +29,8 @@ export function getUser(id) {
   }
 }
 
-export function user(state = {}, action) {
-  switch(action.type) {
+export function user (state = {}, action) {
+  switch (action.type) {
     case FETCHING_USER:
       // TODO show loading state?
 

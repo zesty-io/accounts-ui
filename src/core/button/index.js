@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles.less'
 import cx from 'classnames'
 
-export default function Button(props) {
+export default function Button (props) {
   let opts = {
     'className': cx(styles.button, props.className),
     'data-data': props.data,

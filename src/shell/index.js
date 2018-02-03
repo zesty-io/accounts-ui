@@ -9,10 +9,10 @@ import Login from './views/Login'
 import Shell from './views/Shell'
 
 class PrivateRoute extends React.Component {
-  render() {
+  render () {
     return (this.props.loggedIn)
       ? this.props.children
-      : <Redirect to="/login"></Redirect>
+      : <Redirect to='/login' />
   }
 }
 PrivateRoute.defaultProps = {
@@ -23,19 +23,14 @@ ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <div>
-        <Route path="/login" component={Login} />
+        <Route path='/login' component={Login} />
         <PrivateRoute>
-          <Route path="/" component={Shell} />
+          <Route path='/' component={Shell} />
         </PrivateRoute>
       </div>
     </BrowserRouter>
   </Provider>
 ), document.getElementById('root'))
-
-
-
-
-
 
 // import React, { Component } from 'react'
 // import {connect} from 'react-redux'

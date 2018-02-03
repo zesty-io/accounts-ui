@@ -2,7 +2,7 @@ import styles from './styles.less'
 import cx from 'classnames'
 
 export default class Select extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -12,22 +12,22 @@ export default class Select extends React.Component {
       children: this.props.children
     }
 
-    //bind functions once
+    // bind functions once
     this.onEsc = this.onEsc.bind(this)
     this.onClose = this.onClose.bind(this)
     this.setSelection = this.setSelection.bind(this)
     this.toggleDropdown = this.toggleDropdown.bind(this)
     this.handleFilterKeyUp = this.handleFilterKeyUp.bind(this)
   }
-  componentWillMount() {
+  componentWillMount () {
     document.addEventListener('click', this.onClose)
     document.addEventListener('keyup', this.onEsc)
   }
-  componentWillUnmount() {
+  componentWillUnmount () {
     document.removeEventListener('click', this.onClose)
     document.removeEventListener('keyup', this.onEsc)
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     // For users that provide their own children options
     // we have to listen for prop changes to determine
     // if the internal selection state needs to change
@@ -37,28 +37,28 @@ export default class Select extends React.Component {
       })
     }
   }
-  render() {
+  render () {
     let opts = {
-      'className': cx("selector", styles.selector, (this.state.dropdownOpen ? styles.show : styles.hidden)),
+      'className': cx('selector', styles.selector, (this.state.dropdownOpen ? styles.show : styles.hidden)),
       'onClick': this.toggleDropdown
     }
     return (
       <div {...opts} ref={div => this.selector = div}>
-        <input type="hidden" name={this.props.name} value={this.state.selection.value} />
+        <input type='hidden' name={this.props.name} value={this.state.selection.value} />
         <span className={styles.selection}>
-          <i className={cx("icon icon-chevron-right", styles.chevron, styles['icon-chevron-right'])}></i>
-          <i className={cx("icon icon-chevron-down", styles.chevron, styles['icon-chevron-down'])}></i>
+          <i className={cx('icon icon-chevron-right', styles.chevron, styles['icon-chevron-right'])} />
+          <i className={cx('icon icon-chevron-down', styles.chevron, styles['icon-chevron-down'])} />
 
           {this.state.selection.html
             ? <span className={styles.content} dangerouslySetInnerHTML={{
               __html: this.state.selection.html
-            }}></span>
+            }} />
             : <span className={styles.content}>
               {this.state.selection.text}
             </span>}
 
         </span>
-        <ul className={"selections " + styles.selections}>
+        <ul className={'selections ' + styles.selections}>
           {this.renderFilter()}
           <div className={styles.options}>
             {this.state.children
@@ -71,17 +71,17 @@ export default class Select extends React.Component {
       </div>
     )
   }
-  renderFilter() {
+  renderFilter () {
     if ((this.props.children && this.props.children.length > 50) || (this.props.options && this.props.options.length > 50)) {
       return <Search
-        className="filter"
-        placeholder="Enter a term to filter this list"
+        className='filter'
+        placeholder='Enter a term to filter this list'
         onKeyUp={this.handleFilterKeyUp} />
     }
     return null
   }
 
-  toggleDropdown(evt) {
+  toggleDropdown (evt) {
     if (evt.target.closest('.filter')) {
       return false
     }
@@ -98,33 +98,31 @@ export default class Select extends React.Component {
       const scrollOffset = body.scrollTop
 
       if (initialSelectionsHeight < contentHeight) {
-          if (initialSelectionsHeight + selectorPosition.y > contentHeight) {
+        if (initialSelectionsHeight + selectorPosition.y > contentHeight) {
               // If we can adjust the dropdown height to fit in the
               // available content space, subtracting the footer 50px height
-              let newHeight = (Math.floor(contentHeight - selectorPosition.y) - 50)
-              if (newHeight > 200 && newHeight < 600) {
+          let newHeight = (Math.floor(contentHeight - selectorPosition.y) - 50)
+          if (newHeight > 200 && newHeight < 600) {
                   // The options list controls the overflow scrolling
                   // so we have to adjust it's height
-                  selections.querySelector('.options').style.height = newHeight+'px'
-              } else {
-                  selections.style.top = '-'+initialSelectionsHeight+'px'
-              }
+            selections.querySelector('.options').style.height = newHeight + 'px'
+          } else {
+            selections.style.top = '-' + initialSelectionsHeight + 'px'
           }
+        }
       }
 
       if (filter) {
-          filter.querySelector('input').focus()
+        filter.querySelector('input').focus()
       }
     }
 
     this.setState({
-      dropdownOpen: this.state.dropdownOpen
-        ? false
-        : true
+      dropdownOpen: !this.state.dropdownOpen
     })
   }
 
-  setSelection(evt) {
+  setSelection (evt) {
     if (this.props.onSelect) {
       this.props.onSelect(evt)
     }
@@ -136,7 +134,7 @@ export default class Select extends React.Component {
     })
   }
 
-  handleFilterKeyUp(evt) {
+  handleFilterKeyUp (evt) {
     let value = evt.target.value.trim().toLowerCase()
 
     if (value) {
@@ -161,15 +159,15 @@ export default class Select extends React.Component {
     }
   }
 
-  onEsc(evt) {
-      if (27 == evt.which) {
-          this.setState({
-              dropdownOpen: false
-          })
-      }
+  onEsc (evt) {
+    if (evt.which == 27) {
+      this.setState({
+        dropdownOpen: false
+      })
+    }
   }
 
-  onClose(evt) {
+  onClose (evt) {
     const parent = evt.target.closest('.selector')
 
     // Close this select if the click occured
@@ -183,7 +181,7 @@ export default class Select extends React.Component {
 export const Option = ({value, html, text, onClick}) => {
   if (html) {
     return (
-      <li data-value={value} onClick={onClick} dangerouslySetInnerHTML={{__html: html}}></li>
+      <li data-value={value} onClick={onClick} dangerouslySetInnerHTML={{__html: html}} />
     )
   } else {
     return (

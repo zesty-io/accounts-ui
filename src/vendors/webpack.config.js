@@ -7,7 +7,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   output: {
     filename: '../../build/bundle.vendors.js'
-  },
+  }
   // module: {
   //   rules: [
   //     {

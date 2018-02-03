@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles.less'
 import cx from 'classnames'
 
-export default function Link(props) {
+export default function Link (props) {
   let opts = {
     'className': cx(styles.link, props.className),
     'target': props.target ? props.target : '_self',

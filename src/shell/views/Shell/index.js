@@ -14,17 +14,17 @@ class Shell extends Component {
   //   // TODO how do I get the id?
   //   getUser('20473729')
   // }
-  render() {
+  render () {
     return (
       <section className={styles.shell}>
         <GlobalHeader />
         <Switch>
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/properties" component={Properties} />
-        {/* <Route path="/properties/create" component={WebsiteCreate} /> */}
-          <Route path="/settings" component={Settings} />
+          <Route path='/dashboard' component={Dashboard} />
+          <Route path='/properties' component={Properties} />
+          {/* <Route path="/properties/create" component={WebsiteCreate} /> */}
+          <Route path='/settings' component={Settings} />
 
-          <Redirect from='/' to='/dashboard'/>
+          <Redirect from='/' to='/dashboard' />
           {/* TODO: handle no match */}
         </Switch>
       </section>

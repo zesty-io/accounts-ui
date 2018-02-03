@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './styles.less'
 import cx from 'classnames'
 
-export default function ButtonGroup(props) {
+export default function ButtonGroup (props) {
   let opts = {
     'className': cx(styles.ButtonGroup, props.className)
   }

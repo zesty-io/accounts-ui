@@ -4,7 +4,7 @@ import cx from 'classnames'
 import styles from './styles.less'
 
 class Website extends Component {
-  render() {
+  render () {
     return (
       <article className={styles.website}>
         <header>
@@ -14,9 +14,9 @@ class Website extends Component {
           <h2 className={styles.domain}>
             {this.props.site.domain
               ? this.props.site.domain
-              : <Button className={styles.setup}><i className={cx(styles.icon, "fa fa-cog")} aria-hidden="true"></i>Setup Domain</Button>}
+              : <Button className={styles.setup}><i className={cx(styles.icon, 'fa fa-cog')} aria-hidden='true' />Setup Domain</Button>}
           </h2>
-          {/*<ButtonGroup>
+          {/* <ButtonGroup>
                       <Link>
                         <i className="fa fa-external-link" aria-hidden="true"></i>View Stage
                       </Link>
@@ -24,19 +24,19 @@ class Website extends Component {
                         <i className="fa fa-external-link" aria-hidden="true"></i>View Live
                       </Link>
 
-                    </ButtonGroup>*/}
+                    </ButtonGroup> */}
         </header>
         <main>
-          {/*<div>
+          {/* <div>
                      <ButtonGroup>
                        <Button>
                          Open Site Manager
                        </Button>
 
                      </ButtonGroup>
-                    </div>*/}
+                    </div> */}
         </main>
-        <footer></footer>
+        <footer />
       </article>
     )
   }

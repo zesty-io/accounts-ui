@@ -4,7 +4,7 @@ import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
 class WebsiteCard extends Component {
-  render() {
+  render () {
     console.log('site: ', this.props)
     return (
       <article className={styles.WebsiteCard}>
@@ -14,11 +14,11 @@ class WebsiteCard extends Component {
           </h1>
           <h2 className={styles.domain}>
             {this.props.site.domain
-              ? <a href={this.props.site.domain} target="_blank">{this.props.site.domain}</a>
-              : <Button className={styles.setup}><i className={cx(styles.icon, "fa fa-cog")} aria-hidden="true"></i>Setup Domain</Button>}
+              ? <a href={this.props.site.domain} target='_blank'>{this.props.site.domain}</a>
+              : <Button className={styles.setup}><i className={cx(styles.icon, 'fa fa-cog')} aria-hidden='true' />Setup Domain</Button>}
           </h2>
 
-          {/*<ButtonGroup>
+          {/* <ButtonGroup>
                       <Link>
                         <i className="fa fa-external-link" aria-hidden="true"></i>View Stage
                       </Link>
@@ -28,19 +28,19 @@ class WebsiteCard extends Component {
                       <Button>
                         Site Manager
                        </Button>
-                    </ButtonGroup>*/}
+                    </ButtonGroup> */}
         </header>
         <main>
-          {/*<div>
+          {/* <div>
                                <ButtonGroup>
                                  <Button>
                                    Open Site Manager
                                  </Button>
 
                                </ButtonGroup>
-                              </div>*/}
+                              </div> */}
         </main>
-        <footer></footer>
+        <footer />
       </article>
     )
   }

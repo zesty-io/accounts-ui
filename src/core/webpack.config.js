@@ -1,10 +1,10 @@
 'use strict'
 
 const webpack = require('webpack')
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const extractLess = new ExtractTextPlugin({
-    filename: "../../build/bundle.core.css",
-    disable: process.env.NODE_ENV === "development"
+  filename: '../../build/bundle.core.css',
+  disable: process.env.NODE_ENV === 'development'
 })
 
 module.exports = {
@@ -38,10 +38,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /(node_modules)/,
         use: {
-            loader: 'babel-loader',
-            options: {
-                presets: ['react', 'es2015', 'stage-2']
-            }
+          loader: 'babel-loader',
+          options: {
+            presets: ['react', 'es2015', 'stage-2']
+          }
         }
       }
     ]

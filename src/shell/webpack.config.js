@@ -1,12 +1,12 @@
 'use strict'
 
 const webpack = require('webpack')
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const env = new webpack.EnvironmentPlugin(['NODE_ENV'])
 const extractLess = new ExtractTextPlugin({
-    filename: "../../build/bundle.shell.css",
-    disable: process.env.NODE_ENV === "development"
+  filename: '../../build/bundle.shell.css',
+  disable: process.env.NODE_ENV === 'development'
 })
 
 module.exports = {
@@ -26,7 +26,7 @@ module.exports = {
   },
   resolve: {
     modules: ['node_modules', 'src'],
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx']
   },
   plugins: [env, extractLess],
   module: {
