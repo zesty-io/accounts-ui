@@ -6,14 +6,14 @@ import styles from './shell.less'
 
 import GlobalHeader from '../../components/GlobalHeader'
 
-// // import {getUser} from '../store/user'
+import {getUser} from '../../store/user'
 
 class Shell extends Component {
-  // componentWillMount() {
-  //   console.log('componentWillMount')
-  //   // TODO how do I get the id?
-  //   getUser('20473729')
-  // }
+  componentWillMount () {
+    console.log('componentWillMount')
+    // TODO how do I get the id?
+    this.props.dispatch(getUser('5-44ccc74-6gc353'))
+  }
   render () {
     return (
       <section className={styles.shell}>

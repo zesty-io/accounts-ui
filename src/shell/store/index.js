@@ -2,7 +2,7 @@ import thunkMiddleware from 'redux-thunk'
 import {createLogger} from 'redux-logger'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 
-// import {user} from './user'
+import {user} from './user'
 // import {sites} from './sites'
 
 const loggerMiddleware = createLogger({
@@ -11,7 +11,7 @@ const loggerMiddleware = createLogger({
 })
 
 // const rootReducer = combineReducers({user, sites})
-const rootReducer = combineReducers({})
+const rootReducer = combineReducers({user})
 
 export const store = createStore(
   rootReducer,
