@@ -6,6 +6,8 @@ class Settings extends Component {
     return (
       <section id='settings'>
         <h2>Settings</h2>
+        <p>Hello, {this.props.user.firstname} {this.props.user.lastname}</p>
+        <p>Email: {this.props.user.email}</p>
       </section>
     )
   }
