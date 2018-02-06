@@ -13,7 +13,6 @@ module.exports = (options) => {
 
   try {
     return mysql.createPool(opts)
-
   } catch (err) {
     console.log('Failed Connecting to MySQL', err)
   }

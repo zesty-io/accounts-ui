@@ -14,10 +14,10 @@ copyFiles(root + '/public', root + '/build')
 
 fs.readdirSync(src)
   .forEach((dir) => {
-      runPkgCmd(path.join(src, dir), 'build')
-    })
+    runPkgCmd(path.join(src, dir), 'build')
+  })
 
 fs.readdirSync(appDir)
   .forEach((app) => {
-      runPkgCmd(path.join(appDir, app), 'build')
-    })
+    runPkgCmd(path.join(appDir, app), 'build')
+  })

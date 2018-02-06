@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = {
-  find: async function(req, res) {
+  find: async function (req, res) {
     console.log('route: user.find', res.locals)
     // TODO confirm id?
     try {
