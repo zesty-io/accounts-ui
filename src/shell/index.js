@@ -8,6 +8,9 @@ import {store} from './store'
 import Login from './views/Login'
 import Shell from './views/Shell'
 
+let state = store.getState()
+console.log(state)
+
 class PrivateRoute extends React.Component {
   render () {
     return (this.props.loggedIn)
@@ -15,62 +18,19 @@ class PrivateRoute extends React.Component {
       : <Redirect to='/login' />
   }
 }
-PrivateRoute.defaultProps = {
-  loggedIn: false
-}
 
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <div>
         <Route path='/login' component={Login} />
-        <PrivateRoute>
+        <Route path='/create-account' component={Login} />
+        <Route path='/reset-password' component={Login} />
+        <Route path='/verify-email' component={Login} />
+        <PrivateRoute loggedIn={state.authenticated}>
           <Route path='/' component={Shell} />
         </PrivateRoute>
       </div>
     </BrowserRouter>
   </Provider>
 ), document.getElementById('root'))
-
-
-
-
-// import React, { Component } from 'react'
-// import {connect} from 'react-redux'
-// import {Switch, Redirect, Route} from 'react-router-dom'
-// import styles from './shell.less'
-
-// import GlobalHeader from './components/GlobalHeader'
-// import Dashboard from '../app/views/dashboard'
-// import Settings from '../app/views/settings'
-// import Websites from '../app/views/Websites'
-// import WebsiteCreate from '../app/views/WebsiteCreate'
-
-// // import {getUser} from '../store/user'
-
-// class App extends Component {
-//   // componentWillMount() {
-//   //   console.log('componentWillMount')
-//   //   // TODO how do I get the id?
-//   //   getUser('20473729')
-//   // }
-//   render() {
-//     return (
-//       <section className={styles.shell}>
-//         <GlobalHeader />
-//         <Switch>
-//           <Route path="/dashboard" component={Dashboard} />
-//           <Route path="/sites" component={Websites} />
-//           <Route path="/sites/create" component={WebsiteCreate} />
-//           <Route path="/settings" component={Settings} />
-//           <Redirect from='/' to='/dashboard'/>
-//           {/* TODO: handle no match */}
-//         </Switch>
-//       </section>
-//     )
-//   }
-// }
-
-// const AppShell = connect(state => state)(App)
-
-// export default AppShell

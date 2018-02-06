@@ -3,6 +3,7 @@ import {createLogger} from 'redux-logger'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 
 import {user} from './user'
+import {authenticated} from './auth'
 // import {sites} from './sites'
 
 const loggerMiddleware = createLogger({
@@ -11,7 +12,10 @@ const loggerMiddleware = createLogger({
 })
 
 // const rootReducer = combineReducers({user, sites})
-const rootReducer = combineReducers({user})
+const rootReducer = combineReducers({
+  authenticated,
+  user
+})
 
 export const store = createStore(
   rootReducer,

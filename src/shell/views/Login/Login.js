@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
+
 import styles from './Login.less'
 
-export default class Login extends Component {
+import {request} from '../../../util/request'
+
+class Login extends Component {
   constructor (props) {
     super(props)
     this.handleLogin = this.handleLogin.bind(this)
@@ -24,43 +28,26 @@ export default class Login extends Component {
   }
   handleLogin (evt) {
     evt.preventDefault()
-
-    let email = document.forms.login.email.value
-    let password = document.forms.login.pass.value
-
-    let form = new FormData()
-    form.append('email', email)
-    form.append('password', password)
-
-    fetch('http://auth-svc.zesty.localdev:3011/login', {
-      method: 'POST',
-      // credentials: 'include',
-      mode: 'no-cors',
-      body: form
-    })
-    .then(res => res.json())
-    .then(json => {
-      console.log('login', json)
-      switch (json.code) {
-        case 200:
-          console.log('success')
-          break
-
-        case 202:
-          console.log('2FA. Start polling')
-          break
-
-        case 400:
-        case 401:
-        case 404:
-        case 500:
-          console.log('Error')
-          break
-
-        default:
-          console.log('Unknown error')
+    request('http://svc.zesty.localdev:3011/login', {
+      body: {
+        email: document.forms.login.email.value,
+        password: document.forms.login.pass.value
       }
     })
-    .catch(err => console.log(err))
+    .then(json => {
+      // TODO
+      this.props.dispatch({
+        type: 'AUTHENTICATED',
+        auth: true
+      })
+
+      if (json.code === 200) {
+        // TODO set logged in state
+        // this.props.dispatch()
+      } else {
+        // Display error message
+      }
+    })
   }
 }
+export default connect(state => state)(Login)
