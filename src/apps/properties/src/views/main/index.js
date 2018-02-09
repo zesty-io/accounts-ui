@@ -9,9 +9,9 @@ import WebsiteCard from '../../components/WebsiteCard'
 import {getSites} from '../../store'
 
 class Properties extends Component {
-  constructor (props) {
-    super(props)
-  }
+  // constructor (props) {
+  //   super(props)
+  // }
   componentWillMount () {
     this.props.dispatch(getSites())
   }
@@ -20,13 +20,12 @@ class Properties extends Component {
       <section className={styles.Websites}>
         <WebsitesActions />
         <main className={styles.siteList}>
-          {/* Object.keys(this.props.sites).map(zuid => {
+          {Object.keys(this.props.sites).map(zuid => {
             return <WebsiteCard key={zuid} site={this.props.sites[zuid]} />
-          }) */}
+          })}
         </main>
       </section>
     )
   }
 }
-
 export default connect(state => state)(Properties)

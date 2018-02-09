@@ -20,6 +20,7 @@ class Login extends Component {
     return (
       <section className={styles.Login}>
         <form name='login' className={styles.LoginForm}>
+          <img src='/zesty-z-logo.png' />
           <h2>Zesty.io</h2>
           <label>
             <input name='email' className={styles.input} type='email' />
@@ -27,7 +28,7 @@ class Login extends Component {
           <label>
             <input name='pass' className={styles.input} type='password' />
           </label>
-          <button onClick={this.handleLogin}>Login</button>
+          <Button onClick={this.handleLogin}>Login</Button>
           <p>{this.state.message}</p>
         </form>
       </section>
