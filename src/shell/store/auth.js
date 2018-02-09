@@ -38,3 +38,25 @@ export function verifyAuth () {
     })
   }
 }
+
+export function logout () {
+  return (dispatch) => {
+    dispatch({
+      type: 'FETCHING_AUTH'
+    })
+    request('http://svc.zesty.localdev:3011/logout')
+    .then(json => {
+      console.log(json)
+      dispatch({
+        type: 'LOGOUT'
+      })
+    })
+    .catch(err => {
+      console.error(err)
+      dispatch({
+        type: 'FETCH_AUTH_ERROR',
+        err
+      })
+    })
+  }
+}

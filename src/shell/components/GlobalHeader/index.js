@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react'
-import {NavLink, Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 import styles from './styles.less'
 import MessageIcon from '../Messages/Icon'
 
-export default class GlobalHeader extends PureComponent {
+import {logout} from '../../store/auth'
+
+class GlobalHeader extends PureComponent {
   render () {
     return (
       <header className={styles.GlobalHeader}>
@@ -16,11 +19,11 @@ export default class GlobalHeader extends PureComponent {
         </nav>
         <span className={styles.logout} title='Logout'>
           <span>{this.props.user.firstname} {this.props.user.lastname}</span>
-          <Link to='/logout'>
-            <i className='fa fa-sign-out' aria-hidden='true' />
-          </Link>
+
+          <i className='fa fa-sign-out' aria-hidden='true' onClick={() => this.props.dispatch(logout())} />
         </span>
       </header>
     )
   }
 }
+export default connect(state => state)(GlobalHeader)
