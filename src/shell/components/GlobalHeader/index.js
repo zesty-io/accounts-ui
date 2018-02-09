@@ -12,7 +12,7 @@ class GlobalHeader extends PureComponent {
       <header className={styles.GlobalHeader}>
         <img className={styles.logo} src='/zesty-z-logo.png' />
         <nav className={styles.GlobalNav}>
-          <NavLink to='/dashboard'>Dashboard</NavLink>
+          {/*<NavLink to='/dashboard'>Dashboard</NavLink>*/}
           <NavLink to='/properties'>Web Properties</NavLink>
           <NavLink to='/settings'>My Settings</NavLink>
           <MessageIcon />

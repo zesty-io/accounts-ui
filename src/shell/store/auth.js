@@ -1,32 +1,49 @@
 import {request} from '../../util/request'
 
-export function authenticated (state = false, action) {
+export function auth (state = {
+  checking: false,
+  valid: false
+}, action) {
   switch (action.type) {
+    case 'FETCHING_AUTH':
+      return {
+        ...state,
+        checking: true
+      }
     case 'FETCH_AUTH_SUCCESS':
-      return action.auth
+      return {
+        checking: false,
+        valid: action.auth
+      }
     case 'FETCH_AUTH_ERROR':
-      // TODO clear cookie
-      return false
+      return {
+        checking: false,
+        valid: false
+      }
     case 'LOGOUT':
-      // TODO clear cookie
-      return false
+      return {
+        checking: false,
+        valid: false
+      }
     default:
       return state
   }
 }
 
-export function verifyAuth () {
+export function verifyAuth (unsubscribe) {
   return (dispatch) => {
     dispatch({
       type: 'FETCHING_AUTH'
     })
     request('http://svc.zesty.localdev:3011/verify')
     .then(json => {
-      console.log(json)
       dispatch({
         type: 'FETCH_AUTH_SUCCESS',
-        auth: (json.code === 200) ? true : false
+        auth: (json.code === 200)
       })
+      if (unsubscribe) {
+        unsubscribe()
+      }
     })
     .catch(err => {
       console.error(err)

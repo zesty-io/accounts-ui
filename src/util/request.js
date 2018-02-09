@@ -31,7 +31,7 @@ export function request (url, opts = {}) {
     }
   }
 
-    // Default to authenticated requests
+  // Default to authenticated requests
   opts.credentials = opts.credentials || 'include'
   opts.method = opts.method || 'GET'
 

@@ -5,7 +5,7 @@ import styles from './WebsiteCard.less'
 
 class WebsiteCard extends Component {
   render () {
-    console.log('site: ', this.props)
+    // console.log('site: ', this.props)
     return (
       <article className={styles.WebsiteCard}>
         <header>

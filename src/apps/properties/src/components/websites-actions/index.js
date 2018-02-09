@@ -12,9 +12,8 @@ class WebsitesActions extends Component {
         </h2>
         <div className={styles.actions}>
           <Search className={styles.filter} placeholder='Search by web property name or domain' />
-
           <Button className='save'>
-            <Link to='/sites/create'>
+            <Link to='/properties/create'>
               <i className='fa fa-plus' aria-hidden='true' />Add New Web Property
             </Link>
           </Button>

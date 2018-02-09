@@ -1,29 +1,24 @@
 import React, { Component } from 'react'
+import {Switch, Route} from 'react-router-dom'
 import {connect} from 'react-redux'
 import styles from './Websites.less'
 
-import WebsitesActions from '../../components/websites-actions'
-// import WebsiteView from '../../components/website-view'
-import WebsiteCard from '../../components/WebsiteCard'
+import PropertiesList from '../PropertiesList'
+import PropertyCreate from '../PropertyCreate'
 
 import {getSites} from '../../store'
 
 class Properties extends Component {
-  // constructor (props) {
-  //   super(props)
-  // }
   componentWillMount () {
     this.props.dispatch(getSites())
   }
   render () {
     return (
       <section className={styles.Websites}>
-        <WebsitesActions />
-        <main className={styles.siteList}>
-          {Object.keys(this.props.sites).map(zuid => {
-            return <WebsiteCard key={zuid} site={this.props.sites[zuid]} />
-          })}
-        </main>
+        <Switch>
+          <Route exact path='/properties' component={PropertiesList} />
+          <Route exact path='/properties/create' component={PropertyCreate} />
+        </Switch>
       </section>
     )
   }

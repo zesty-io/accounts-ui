@@ -16,7 +16,7 @@ class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this)
   }
   render () {
-    console.log(this)
+    // console.log(this)
     return (
       <section className={styles.Login}>
         <form name='login' className={styles.LoginForm}>

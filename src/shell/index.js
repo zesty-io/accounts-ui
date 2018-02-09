@@ -25,25 +25,32 @@ class App extends React.Component {
   render () {
     return (
       <div>
+        <PrivateRoute loggedIn={this.props.auth.valid}>
+          <Route path='/' component={Shell} />
+        </PrivateRoute>
         <Switch>
           <Route path='/login' component={Login} />
           <Route path='/create-account' component={Login} />
           <Route path='/reset-password' component={Login} />
           <Route path='/verify-email' component={Login} />
         </Switch>
-        <PrivateRoute loggedIn={this.props.authenticated}>
-          <Route path='/' component={Shell} />
-        </PrivateRoute>
       </div>
     )
   }
 }
 let AppShell = connect(state => state)(App)
 
-ReactDOM.render((
-  <Provider store={store}>
-    <BrowserRouter>
-      <Route path='/' component={AppShell} />
-    </BrowserRouter>
-  </Provider>
-), document.getElementById('root'))
+let unsubscribe = store.subscribe(() => {
+  let state = store.getState()
+  if (!state.auth.checking) {
+    ReactDOM.render((
+      <Provider store={store}>
+        <BrowserRouter>
+          <Route path='/' component={AppShell} />
+        </BrowserRouter>
+      </Provider>
+    ), document.getElementById('root'))
+  }
+})
+
+store.dispatch(verifyAuth(unsubscribe))

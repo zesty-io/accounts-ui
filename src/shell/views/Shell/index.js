@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Switch, Redirect, Route} from 'react-router-dom'
 
-import styles from './shell.less'
-
 import GlobalHeader from '../../components/GlobalHeader'
+import styles from './shell.less'
 
 import {getUser} from '../../store/user'
 
@@ -18,12 +17,11 @@ class Shell extends Component {
       <section className={styles.shell}>
         <GlobalHeader user={this.props.user} />
         <Switch>
-          <Route path='/dashboard' component={Dashboard} />
+          {/*<Route path='/dashboard' component={Dashboard} />*/}
           <Route path='/properties' component={Properties} />
-          {/* <Route path="/properties/create" component={WebsiteCreate} /> */}
           <Route path='/settings' component={Settings} />
 
-          <Redirect from='/' to='/dashboard' />
+          <Redirect from='/' to='/properties' />
           {/* TODO: handle no match */}
         </Switch>
       </section>

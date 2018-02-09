@@ -3,7 +3,7 @@ import {createLogger} from 'redux-logger'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 
 import {user} from './user'
-import {authenticated} from './auth'
+import {auth} from './auth'
 import {sites} from '../../apps/properties/src/store'
 
 const loggerMiddleware = createLogger({
@@ -13,7 +13,7 @@ const loggerMiddleware = createLogger({
 
 // const rootReducer = combineReducers({user, sites})
 const rootReducer = combineReducers({
-  authenticated,
+  auth,
   user,
   sites
 })
