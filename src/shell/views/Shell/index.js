@@ -10,7 +10,6 @@ import {getUser} from '../../store/user'
 
 class Shell extends Component {
   componentWillMount () {
-    console.log('componentWillMount')
     // TODO how do I get the id?
     this.props.dispatch(getUser('5-44ccc74-6gc353'))
   }

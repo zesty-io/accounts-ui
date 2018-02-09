@@ -8,9 +8,15 @@ import {request} from '../../../util/request'
 class Login extends Component {
   constructor (props) {
     super(props)
+
+    this.state = {
+      message: 'TEST'
+    }
+
     this.handleLogin = this.handleLogin.bind(this)
   }
   render () {
+    console.log(this)
     return (
       <section className={styles.Login}>
         <form name='login' className={styles.LoginForm}>
@@ -22,6 +28,7 @@ class Login extends Component {
             <input name='pass' className={styles.input} type='password' />
           </label>
           <button onClick={this.handleLogin}>Login</button>
+          <p>{this.state.message}</p>
         </form>
       </section>
     )
@@ -35,17 +42,27 @@ class Login extends Component {
       }
     })
     .then(json => {
-      // TODO
-      this.props.dispatch({
-        type: 'AUTHENTICATED',
-        auth: true
-      })
-
       if (json.code === 200) {
-        // TODO set logged in state
-        // this.props.dispatch()
+        this.props.dispatch({
+          type: 'FETCH_AUTH_SUCCESS',
+          auth: true
+        })
+      } else if (json.code === 201) {
+        // TODO Show 2FA screen
+        // TODO poll auth api for 2FA one touch
+        this.props.dispatch({
+          type: 'FETCH_AUTH_SUCCESS',
+          auth: false
+        })
       } else {
-        // Display error message
+        // TODO Display error message
+        this.setState({
+          message: json.message
+        })
+        this.props.dispatch({
+          type: 'FETCH_AUTH_SUCCESS',
+          auth: false
+        })
       }
     })
   }
