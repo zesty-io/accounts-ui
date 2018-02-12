@@ -11,14 +11,16 @@ export function auth (state = {
         checking: true
       }
     case 'FETCH_AUTH_SUCCESS':
+    case 'FETCH_AUTH_ERROR':
       return {
         checking: false,
         valid: action.auth
       }
-    case 'FETCH_AUTH_ERROR':
+    case 'FETCH_VERIFY_SUCCESS':
+    case 'FETCH_VERIFY_ERROR':
       return {
         checking: false,
-        valid: false
+        valid: action.auth
       }
     case 'LOGOUT':
       return {
@@ -32,13 +34,13 @@ export function auth (state = {
 
 export function verifyAuth (unsubscribe) {
   return (dispatch) => {
-    dispatch({
-      type: 'FETCHING_AUTH'
-    })
+    // dispatch({
+    //   type: 'FETCHING_AUTH'
+    // })
     request('http://svc.zesty.localdev:3011/verify')
     .then(json => {
       dispatch({
-        type: 'FETCH_AUTH_SUCCESS',
+        type: 'FETCH_VERIFY_SUCCESS',
         auth: (json.code === 200)
       })
       if (unsubscribe) {
@@ -48,7 +50,7 @@ export function verifyAuth (unsubscribe) {
     .catch(err => {
       console.error(err)
       dispatch({
-        type: 'FETCH_AUTH_ERROR',
+        type: 'FETCH_VERIFY_ERROR',
         auth: false,
         err
       })
@@ -72,6 +74,7 @@ export function logout () {
       console.error(err)
       dispatch({
         type: 'FETCH_AUTH_ERROR',
+        auth: false,
         err
       })
     })

@@ -46,6 +46,7 @@ class Login extends Component {
       if (json.code === 200) {
         this.props.dispatch({
           type: 'FETCH_AUTH_SUCCESS',
+          zuid: json.data.user_zuid,
           auth: true
         })
       } else if (json.code === 201) {

@@ -43,7 +43,6 @@ export function request (url, opts = {}) {
     }
 
     if (json.code > 400) {
-      console.log(json)
       // TODO trigger global app notification
     }
 

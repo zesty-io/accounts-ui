@@ -1,12 +1,11 @@
-import React, { PureComponent } from 'react'
-import {connect} from 'react-redux'
+import {PureComponent} from 'react'
 import {NavLink} from 'react-router-dom'
+import {MessageIcon} from '../Messages/Icon'
 import styles from './styles.less'
-import MessageIcon from '../Messages/Icon'
 
 import {logout} from '../../store/auth'
 
-class GlobalHeader extends PureComponent {
+export class GlobalHeader extends PureComponent {
   render () {
     return (
       <header className={styles.GlobalHeader}>
@@ -26,4 +25,3 @@ class GlobalHeader extends PureComponent {
     )
   }
 }
-export default connect(state => state)(GlobalHeader)
