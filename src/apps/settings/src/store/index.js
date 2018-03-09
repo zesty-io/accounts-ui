@@ -21,7 +21,7 @@ export function settings (state = {}, action) {
       return {...state, profile}
 
     case 'MODIFY_EMAIL_SUCCESS':
-      const emails = [...state.settings.emails].push(action.payload)
+      const emails = action.payload
       return {...state, emails}
 
     default:
