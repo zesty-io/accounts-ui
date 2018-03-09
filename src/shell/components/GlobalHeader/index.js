@@ -13,7 +13,7 @@ export class GlobalHeader extends PureComponent {
         <nav className={styles.GlobalNav}>
           {/*<NavLink to='/dashboard'>Dashboard</NavLink>*/}
           <NavLink to='/properties'>Web Properties</NavLink>
-          <NavLink to='/settings'>My Settings</NavLink>
+          <NavLink to='/settings/profile'>My Settings</NavLink>
           <MessageIcon />
         </nav>
         <span className={styles.logout} title='Logout'>

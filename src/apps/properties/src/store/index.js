@@ -54,8 +54,13 @@ export function getSites (id) {
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
       }, {
         zuid: 'xxxxx3',
-        name: 'Hofbrauhaus FR - Chicago',
-        domain: 'https://www.hofbrauhauschicago.com',
+        name: 'New Site',
+        domain: 'https://www.newsite.com',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx4',
+        name: 'More Fake Data',
+        domain: 'https://www.fakedata.com',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
       }]
     })

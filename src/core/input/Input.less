@@ -1,0 +1,23 @@
+@import '../../shell/styles/colors.less';
+.Input {
+  background: #eaecf1;
+  border: none;
+  // border-bottom: 3px solid #6f819a;
+  border: 1px solid #9dabc5;
+  border-radius: 3px;
+  color: @zesty-grey;
+  // flex: 1;
+  font-size: 1.3rem;
+  padding: 0 0 0 0.5em;
+  line-height: 3rem;
+
+  &:focus {
+    outline: none;
+    font-weight: bold;
+  }
+  &:placeholder-shown {
+    color: @zesty-light-grey;
+    font-family: 'Gibson';
+    font-weight: 100;
+  }
+}
