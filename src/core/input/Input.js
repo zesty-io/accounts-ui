@@ -11,7 +11,12 @@ export default function Input(props) {
   // if (props.disabled) {
   //   opts['disabled'] = 'disabled'
   // }
-  return (
-    <input {...props} className={cx(styles.Input, props.className)} />
-  )
+  if(!props.name){
+    console.error("Input component requires a 'name' attribute")
+    return <b>**INPUT COMPONENT REQUIRES A NAME ATTRIBUTE**</b>
+  }else{
+    return (
+      <input {...props} className={cx(styles.Input, props.className)} />
+    )
+  }
 }

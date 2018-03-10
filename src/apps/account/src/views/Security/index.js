@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 class Security extends Component {
   render () {
@@ -9,7 +9,7 @@ class Security extends Component {
         <h1>Security</h1>
         <h3>Two-factor authentication</h3>
         {
-          this.props.settings.twofa ?
+          this.props.profile.twofa ?
           <div><p>Two-factor authentication currently set up for this account.</p>
         <Button text='Disable Two-factor' /></div>
           :

@@ -14,15 +14,13 @@ class Email extends Component {
   }
   handleEmailChange(e){
     e.preventDefault()
-    const newEmails = this.props.emails.concat([{email:this.state.newEmail, options: ''}])
+    this.props.dispatch(addEmail(this.state.newEmail))
     this.setState({newEmail: ''})
-    this.props.dispatch(addEmail(newEmails))
   }
   render () {
     return (
       <section id='settings'>
         <h1>Emails</h1>
-        {this.props.emails  ?
         <div>
         <div className="info">
           <strong>Tip: Why set up multiple emails?</strong>
@@ -36,23 +34,20 @@ class Email extends Component {
             {this.props.emails.map((email, i) => <tr key={i}><td>{email.email} </td><td>{i === 0 ? <em>(login email)</em> : email.options}</td></tr>)}
           <tr>
             <td className="form">
-              <Input type="text" placeholder="Email" id="new-email" value={this.state.newEmail} onChange={e => this.setState({newEmail: e.target.value})} />
+              <Input type="text" placeholder="Email" name='email' id="new-email" value={this.state.newEmail} onChange={e => this.setState({newEmail: e.target.value})} />
             </td>
             <td>
               <Button text="Add Email" onClick={(e) => this.handleEmailChange(e)}/>
             </td>
           </tr>
         </tbody></table></div>
-        :
-        <p>loading,</p>
-        }
       </section>
     )
   }
 }
 
 const mapStateToProps = state => {
-  return { emails: state.settings.emails }
+  return { emails: state.profile.emails }
 }
 
 export default connect(mapStateToProps)(Email)
