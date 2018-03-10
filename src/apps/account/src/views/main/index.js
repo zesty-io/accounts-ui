@@ -33,15 +33,15 @@ class Account extends Component {
       return (
         <ErrorBoundary>
           <SettingsBar />
+          <div style={{paddingLeft: '25%', }}>
           <Switch>
-            <div style={{paddingLeft: '25%', }}>
             <Route path='/account/profile' component={Profile} />
-            <Route path='/account/blueprints' component={Blueprints} />
             <Route path='/account/email' component={Email} />
             <Route path='/account/password' component={Password} />
             <Route path='/account/security' component={Security} />
-            </div>
+            <Route path='/account/blueprints' component={Blueprints} />
           </Switch>
+          </div>
         </ErrorBoundary>
       )
     } else {

@@ -6,9 +6,9 @@ class Password extends Component {
     return (
       <section id='settings'>
         <h2>Password</h2>
-        <div>Old Password </div><div><Input /></div>
-        <div>New Password </div><div><Input /></div>
-        <div>Confirm New Password </div><div><Input /></div>
+        <div>Old Password </div><div><Input name='oldPassword' /></div>
+        <div>New Password </div><div><Input name='newPassword' /></div>
+        <div>Confirm New Password </div><div><Input name='confirmNewPassword' /></div>
         <Button text="Submit" />
       </section>
     )

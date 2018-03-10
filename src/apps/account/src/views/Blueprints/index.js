@@ -10,7 +10,7 @@ class Blueprints extends Component {
         <a className="button green fr">
             <span className="icon-plus">+</span>
             Add New Blueprint
-            <Infotip>In this area you can manager your own custom Blueprints. Learn how to create and maintain your own Blueprints using GitHub through this <a target="_blank" href="https://developer.zesty.io/docs/templating/building-a-template-with-github/">Zesty.io Blueprint tutorial</a>. You may share Blueprints by passing your GitHub repo url to a co-worker or friend. You may use other public Blueprints by forking their repositories, and copying the Github repository url.</Infotip>
+            <Infotip>In this area you can manager your own custom Blueprints. Learn how to create and maintain your own Blueprints using GitHub through this. You may share Blueprints by passing your GitHub repo url to a co-worker or friend. You may use other public Blueprints by forking their repositories, and copying the Github repository url.</Infotip>
         </a>
         <div className="z-row">
             <table>
