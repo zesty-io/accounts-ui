@@ -14,13 +14,13 @@ export function auth (state = {
     case 'FETCH_AUTH_ERROR':
       return {
         checking: false,
-        valid: action.auth
+        valid: true
       }
     case 'FETCH_VERIFY_SUCCESS':
     case 'FETCH_VERIFY_ERROR':
       return {
         checking: false,
-        valid: action.auth
+        valid: true
       }
     case 'LOGOUT':
       return {

@@ -2,21 +2,53 @@
   background-color: #dee1ea;
   margin: 1rem;
   padding: 1rem;
-  // width: 100%;
   max-width: 60rem;
+  word-break: break-word;
+  display: flex;
+  flex-direction: column;
 
-  .name {
-    font-size: 1.4em;
-    .icon {
-      margin-right: 5px;
+  header {
+    .name {
+      font-size: 1.1em;
+      .icon {
+        margin-right: 5px;
+      }
+    }
+    .name:hover,
+    .name:hover {
+      text-decoration: underline;
+      cursor: text;
     }
   }
-  .domain {
-    font-size: 1.2em;
-    .setup {
-      font-size: 0.6em;
-      margin: 0.3rem 0 0 0;
-      padding: 0.2rem 0.2rem;
+  main {
+    flex: 1;
+    a {
+      margin: 0;
     }
   }
+  footer {
+    .controls {
+      display: flex;
+      .manager {
+        flex: 2;
+      }
+      .settings {
+        flex: 0;
+      }
+    }
+  }
+
+  // .domain {
+  //   font-size: 1.2em;
+  //   .setup {
+  //     font-size: 0.6em;
+  //     margin: 0.3rem 0 0 0;
+  //     padding: 0.2rem 0.2rem;
+  //   }
+  // }
+
+
+  // .WebsiteManage {
+  //   grid-row-end: span 5;
+  // }
 }
