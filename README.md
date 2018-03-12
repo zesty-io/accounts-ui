@@ -15,7 +15,7 @@ This will do the following tasks:
 - Install all dependencies
 - Build all necessary bundles
 	- Watch code for updates and rebuild bundles
-- Start a local server on `localhost:9000`
+- Start a local server on `localhost:6006`
 
 ## Production
 

@@ -10,7 +10,7 @@
     "build": "node bin/build",
     "prestart": "npm install",
     "start": "node bin/start & npm run serve",
-    "serve": "./node_modules/.bin/serve build --port 9000 --single"
+    "serve": "./node_modules/.bin/serve build --port 6006 --single"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
   "license": "UNLICENSED",
