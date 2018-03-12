@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Zesty.io account management applicaiton",
   "repository": {
-    "git": "https://github.com/zesty-io/accounts-app-skunks"
+    "git": "https://github.com/zesty-io/accounts-ui"
   },
   "main": "webpack.config.js",
   "scripts": {
