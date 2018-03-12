@@ -12,23 +12,21 @@ class Profile extends Component {
     this.props.dispatch(saveProfile())
   }
   handleChange = (e) => {
-    this.props.dispatch(updateSetting( { [e.target.name]: e.target.value})) // need to flatten data for this to work
+    this.props.dispatch(updateSetting( { [e.target.name]: e.target.value}))
   }
   render() {
     return (
       <section id='UserSettings'>
         <h2>Profile</h2>
-        <form id="update-my-info" method="POST">
           <div className="field">
-            <label>First Name</label>
+            <div><label>First Name</label></div>
             <Input type="text" value={this.props.profile.firstName} onChange={this.handleChange} name='firstName' />
           </div>
           <div className="field">
-            <label>Last Name</label>
+            <div><label>Last Name</label></div>
             <Input type="text" value={this.props.profile.lastName} onChange={this.handleChange} name='lastName' />
+            <Button text="Save" onClick={this.handleClick} />
           </div>
-          <Button text="Save" onClick={this.handleClick}/>
-        </form>
       </section>
     )
   }

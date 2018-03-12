@@ -22,9 +22,9 @@ export function profile(state = {}, action) {
       //TODO: deactivate loading state
       return state
 
-    case 'MODIFY_EMAIL_SUCCESS':
-      const emails = state.emails.concat([{email: action.payload, options: ''}])
-      return { ...state, emails }
+    case 'ADD_EMAIL_SUCCESS':
+      const emails = state.emails.concat([{email: state.newEmail, options: state.newEmailOptions || ''}])
+      return { ...state, newEmail: '', emails }
 
     case 'UPDATE_SETTINGS':
       return { ...state, ...action.payload }
@@ -60,11 +60,11 @@ export function saveProfile(profile) {
 export function addEmail(payload) {
   return (dispatch) => {
     dispatch({
-      type: 'MODIFYING_EMAIL'
+      type: 'ADDING_EMAIL'
     })
     setTimeout(() => {
       dispatch({
-        type: "MODIFY_EMAIL_SUCCESS",
+        type: "ADD_EMAIL_SUCCESS",
         payload
       })
     }, 500)
@@ -84,7 +84,7 @@ export function getSettings(id) {
           firstName: 'Grant',
           lastName: 'Glidewell',
           emails: [
-            { email: 'email@email.com' },
+            { email: 'email@email.com', options: '(default email)'},
             { email: 'name@domain.com', options: 'an option' },
             { email: 'anotheremail@moredomains.com' }
           ],
@@ -97,12 +97,12 @@ export function getSettings(id) {
             url: 'https://www.slowlyprogressing.com',
             date: '03-14-17'
           }],
-          twofa: true
+          twofa: false
         }
       })
     }, 500)
   }
 }
 
-// add change password, add email, modify user info, toggle 2fa
+// add change password, modify user info, toggle 2fa
 

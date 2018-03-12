@@ -1,21 +1,16 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 
-import {addEmail} from '../../store'
+import {updateSetting, addEmail} from '../../store'
 
 import './email.less'
 
 class Email extends Component {
-  constructor(props) {
-    super()
-    this.state= {
-      newEmail: ''
-    }
+  handleChange = (e) => {
+    this.props.dispatch(updateSetting( { [e.target.name]: e.target.value}))
   }
-  handleEmailChange(e){
-    e.preventDefault()
-    this.props.dispatch(addEmail(this.state.newEmail))
-    this.setState({newEmail: ''})
+  handleClick = (e) => {
+    this.props.dispatch(addEmail())
   }
   render () {
     return (
@@ -31,13 +26,13 @@ class Email extends Component {
             <th>Email</th>
             <th>Options</th>
           </tr>
-            {this.props.emails.map((email, i) => <tr key={i}><td>{email.email} </td><td>{i === 0 ? <em>(login email)</em> : email.options}</td></tr>)}
+            {this.props.emails.map((email, i) => <tr key={i}><td>{email.email} </td><td>{email.options}</td></tr>)}
           <tr>
             <td className="form">
-              <Input type="text" placeholder="Email" name='email' id="new-email" value={this.state.newEmail} onChange={e => this.setState({newEmail: e.target.value})} />
+              <Input type="text" placeholder="Email" name='newEmail' value={this.props.newEmail} onChange={this.handleChange}/>
             </td>
             <td>
-              <Button text="Add Email" onClick={(e) => this.handleEmailChange(e)}/>
+              <Button text="Add Email" onClick={this.handleClick}/>
             </td>
           </tr>
         </tbody></table></div>
