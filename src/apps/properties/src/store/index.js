@@ -40,13 +40,11 @@ export function getSites (id) {
         name: 'Hofbrauhaus Brand Epicenter / America Corp',
         domain: '',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
-
       }, {
         zuid: 'xxxxx1',
         name: 'Hofbrauhaus America Corporate',
         domain: 'https://www.hofbrauhaus.us',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
-
       }, {
         zuid: 'xxxxx2',
         name: 'Hofbrauhaus FR - Las Vegas',
@@ -61,6 +59,46 @@ export function getSites (id) {
         zuid: 'xxxxx4',
         name: 'More Fake Data',
         domain: 'https://www.fakedata.com',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx4',
+        name: 'Hofbrauhaus Brand Epicenter / America Corp',
+        domain: '',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx5',
+        name: 'Hofbrauhaus America Corporate',
+        domain: 'https://www.hofbrauhaus.us',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx6',
+        name: 'Hofbrauhaus FR - Las Vegas',
+        domain: 'https://www.hofbrauhauslasvegas.com',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx7',
+        name: 'Hofbrauhaus FR - Chicago',
+        domain: 'https://www.hofbrauhauschicago.com',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx8',
+        name: 'Hofbrauhaus Brand Epicenter / America Corp',
+        domain: '',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx9',
+        name: 'Hofbrauhaus America Corporate',
+        domain: 'https://www.hofbrauhaus.us',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx10',
+        name: 'Hofbrauhaus FR - Las Vegas',
+        domain: 'https://www.hofbrauhauslasvegas.com',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx11',
+        name: 'Hofbrauhaus FR - Chicago',
+        domain: 'https://www.hofbrauhauschicago.com',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
       }]
     })
