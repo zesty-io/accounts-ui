@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import styles from './PropertiesList.less'
 
 import WebsitesActions from '../../components/websites-actions'
-// import WebsiteView from '../../components/website-view'
+import WebsiteView from '../../components/website-view'
 import WebsiteCard from '../../components/WebsiteCard'
 
 import {getSites} from '../../store'
@@ -21,6 +21,7 @@ class Properties extends Component {
             return <WebsiteCard key={zuid} site={this.props.sites[zuid]} />
           })}
         </main>
+        <WebsiteView  site={this.props.sites['xxxxx0']} />
       </section>
     )
   }

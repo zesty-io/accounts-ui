@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import cx from 'classnames'
+
+import DetailsMenu from './DetailsMenu'
+import Access from './Access'
+import Overview from './Overview'
+import Domain from './Domain'
+import Stats from './Stats'
+import Blueprint from './Blueprint'
+
 import styles from './styles.less'
 
 class Website extends Component {
@@ -8,40 +16,23 @@ class Website extends Component {
     return (
       <article className={styles.website}>
         <header>
-          <h1 className={styles.name}>
+          <h4>
+            Web Property Overview
+          </h4>
+          <h3 className={styles.name}>
             {this.props.site.name}
-          </h1>
-          <h2 className={styles.domain}>
-            {this.props.site.domain
-              ? this.props.site.domain
-              : <Button className={styles.setup}><i className={cx(styles.icon, 'fa fa-cog')} aria-hidden='true' />Setup Domain</Button>}
-          </h2>
-          {/* <ButtonGroup>
-                      <Link>
-                        <i className="fa fa-external-link" aria-hidden="true"></i>View Stage
-                      </Link>
-                      <Link>
-                        <i className="fa fa-external-link" aria-hidden="true"></i>View Live
-                      </Link>
-
-                    </ButtonGroup> */}
+          </h3>
         </header>
-        <main>
-          {/* <div>
-                     <ButtonGroup>
-                       <Button>
-                         Open Site Manager
-                       </Button>
-
-                     </ButtonGroup>
-                    </div> */}
-        </main>
+        <Overview site={this.props.site} />
+        <Access site={this.props.site} />
+        <Domain site={this.props.site} />
+        <Stats site={this.props.site} />
+        <Blueprint site={this.props.site} />
         <footer />
+        <DetailsMenu />
       </article>
     )
   }
 }
 
-const WebsiteView = connect(state => state)(Website)
-
-export default WebsiteView
+export default connect(state => state)(Website)
