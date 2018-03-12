@@ -1,4 +1,4 @@
-# Accounts App
+# Zesty.io Accounts User Interface
 
 We are following the "sub-app" pattern established in the `zesty-io/manager-app`. This will allow us to grow the accounts-app product surface without forcing code on users who will not need it. We can split "sub-apps" by roles and only load the necessary code for each user.
 
@@ -24,7 +24,7 @@ This will do the following tasks:
 It's very important when deploying to production a "production" webpack build is done. This will add large optimizations to the bundle size and runtime code. In order to make a production build run:
 
 	npm run build
-	
+
 ### Deploying
 
 **TODO// develop deploy process**
