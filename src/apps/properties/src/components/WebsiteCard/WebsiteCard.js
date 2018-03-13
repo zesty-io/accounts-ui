@@ -6,7 +6,6 @@ import styles from './WebsiteCard.less'
 
 class WebsiteCard extends Component {
   render() {
-    // console.log('site: ', this.props)
     return (
       <article className={styles.WebsiteCard}>
         <header>
@@ -14,7 +13,7 @@ class WebsiteCard extends Component {
         </header>
         <main className={styles.WebsiteManage}>
           {this.props.site.domain ? (
-            <Url href="http://alphauniverse.com">
+            <Url target="_blank" href="http://alphauniverse.com">
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
                 this.props.site.domain
               }
