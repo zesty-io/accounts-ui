@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
@@ -36,13 +37,10 @@ class WebsiteCard extends Component {
         </header>
         <main className={styles.WebsiteManage}>
           {this.props.site.domain ?
-          <Link href="http://alphauniverse.com">
+          <Url href="http://alphauniverse.com">
             <i className="fa fa-globe" aria-hidden="true"></i>&nbsp;{this.props.site.domain}
-          </Link>
-          :
-            null
-          }
-
+          </Url>
+          : null }
           <p>
             30 Day Requests: 1,300,000
           </p>
@@ -56,8 +54,9 @@ class WebsiteCard extends Component {
             <Button>
               <i className="fa fa-globe" aria-hidden="true"></i>Preview
             </Button>
-
-            <i className={cx(styles.settings, "fa fa-cog")} aria-hidden="true"></i>
+            <Link to={`/properties/${this.props.site.zuid}`}>
+              <i className={cx(styles.settings, "fa fa-cog")} aria-hidden="true"></i>
+            </Link>
           </ButtonGroup>
         </footer>
       </article>

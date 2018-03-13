@@ -16,8 +16,8 @@ class Properties extends Component {
     return (
       <section className={styles.Websites}>
         <Switch>
-          <Route exact path='/properties' component={PropertiesList} />
           <Route exact path='/properties/create' component={PropertyCreate} />
+          <Route path='/properties' component={PropertiesList} />
         </Switch>
       </section>
     )
