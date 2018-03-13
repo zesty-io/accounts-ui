@@ -1,6 +1,6 @@
 import Button from './button'
 import ButtonGroup from './button-group'
-import Link from './link'
+import Url from './url'
 import Loader from './loader'
 import Search from './search'
 import Select from './select'
@@ -12,7 +12,7 @@ import Infotip from './infotip'
 // depend on these components.
 window.Button = Button
 window.ButtonGroup = ButtonGroup
-window.Link = Link
+window.Url = Url
 window.Loader = Loader
 window.Search = Search
 window.Select = Select
