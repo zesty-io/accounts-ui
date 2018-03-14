@@ -34,6 +34,8 @@ export default class Signup extends Component {
           </label>
           <Button onClick={this.handleSignup}>Create An Account</Button>
           <p>{this.state.message}</p>
+
+          <Url href="/login">Already have an account?</Url>
         </form>
       </section>
     )

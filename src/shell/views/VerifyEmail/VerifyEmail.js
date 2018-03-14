@@ -12,7 +12,7 @@ export default class VerifyEmail extends Component {
     return (
       <section className={styles.VerifyEmail}>
         <form name='VerifyEmail' className={styles.VerifyEmailForm}>
-          <h2>Zesty.io VerifyEmail</h2>
+          <h2>Verifying Email</h2>
         </form>
       </section>
     )

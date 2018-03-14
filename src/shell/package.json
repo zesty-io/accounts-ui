@@ -4,6 +4,7 @@
   "description": "Zesty.io account application shell",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm install",
     "start": "export NODE_ENV=\"development\" && ../../node_modules/.bin/webpack --watch",
     "build": "export NODE_ENV=\"production\" && ../../node_modules/.bin/webpack --progress -p"
   },
