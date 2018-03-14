@@ -6,7 +6,9 @@ class Blueprint extends Component {
   render() {
     return (
       <div>
-        <img src={this.props.site.blueprintImgUrl} alt='blueprint Image' />
+        <img src={this.props.site.blueprintImgUrl}
+          style={{maxHeight:'64px', maxWidth:'64px'}}
+          alt='blueprint Image' />
         current blueprint: {this.props.site.blueprint}
         {this.props.site.blueprintDetails}
         <a href='github.url'>View on Github</a>
