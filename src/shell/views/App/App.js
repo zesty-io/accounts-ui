@@ -8,6 +8,8 @@ import ResetPassword from '../ResetPassword'
 import VerifyEmail from '../VerifyEmail'
 
 import AppHeader from '../../components/AppHeader'
+import AppError from '../../components/AppError'
+
 import styles from './App.less'
 import { getUser } from '../../store/user'
 import { verifyAuth } from '../../store/auth'
@@ -24,16 +26,18 @@ class Shell extends Component {
     return (
       <section className={styles.AppShell}>
         <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
-        <section className={styles.AppMain}>
-          <Switch>
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/properties" component={Properties} />
-            <Route path="/account" component={Account} />
-            <Route path="/messages" component={Messages} />
-            <Redirect from="/" to="/properties" />
-            {/* TODO: handle no match */}
-          </Switch>
-        </section>
+        <AppError>
+          <section className={styles.AppMain}>
+            <Switch>
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/properties" component={Properties} />
+              <Route path="/account" component={Account} />
+              <Route path="/messages" component={Messages} />
+              <Redirect from="/" to="/properties" />
+              {/* TODO: handle no match */}
+            </Switch>
+          </section>
+        </AppError>
       </section>
     )
   }

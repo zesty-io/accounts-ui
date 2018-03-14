@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import styles from './styles.less'
 
 import Message from '../../components/Message'
-import {fetchMessages} from '../../store'
+import { fetchMessages } from '../../store'
 
 class Messages extends Component {
   componentDidMount() {
     this.props.dispatch(fetchMessages())
   }
-  render () {
-    console.log(Object.keys(this.props.messages));
+  render() {
     return (
-      <section id='dashboard'>
+      <section id="dashboard">
         <main className={styles.messages}>
           <h2>Messages</h2>
           <header>
