@@ -21,16 +21,18 @@ class Shell extends Component {
   }
   render() {
     return (
-      <section className={styles.shell}>
+      <section className={styles.AppShell}>
         <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
-        <Switch>
-          {/* <Route path='/dashboard' component={Dashboard} /> */}
-          <Route path="/properties" component={Properties} />
-          <Route path="/account" component={Account} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Redirect from="/" to="/properties" />
-          {/* TODO: handle no match */}
-        </Switch>
+        <section className={styles.AppMain}>
+          <Switch>
+            {/* <Route path='/dashboard' component={Dashboard} /> */}
+            <Route path="/properties" component={Properties} />
+            <Route path="/account" component={Account} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Redirect from="/" to="/properties" />
+            {/* TODO: handle no match */}
+          </Switch>
+        </section>
       </section>
     )
   }
