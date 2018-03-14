@@ -10,17 +10,15 @@ import VerifyEmail from '../VerifyEmail'
 import AppHeader from '../../components/AppHeader'
 import styles from './App.less'
 import { getUser } from '../../store/user'
-
-// class PrivateRoute extends Component {
-//   render() {
-//     return this.props.loggedIn ? this.props.children : null
-//   }
-// }
+import { verifyAuth } from '../../store/auth'
 
 class Shell extends Component {
   componentDidMount() {
     // TODO how do I get the id?
     this.props.dispatch(getUser(this.props.user.zuid))
+    setInterval(() => {
+      this.props.dispatch(verifyAuth())
+    }, 60000)
   }
   render() {
     return (
@@ -47,12 +45,9 @@ class App extends Component {
     return (
       <div>
         <Switch>
-          {/* <PrivateRoute loggedIn={this.props.auth.valid}>
+          {this.props.auth.valid ? (
             <Route path="/" component={AppShell} />
-          </PrivateRoute> */}
-          {this.props.auth.valid ?
-            <Route path="/" component={AppShell} />
-            : null}
+          ) : null}
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/reset-password" component={ResetPassword} />
