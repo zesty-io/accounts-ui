@@ -8,10 +8,10 @@ class CompanyAccess extends Component {
         <table className="users">
           <tbody>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
+              <th>#</th>
+              <th>Company</th>
+              <th>Active</th>
+              <th>Boss</th>
             </tr>
             
                 <tr>
