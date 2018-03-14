@@ -69,18 +69,18 @@ class WebsiteOverview extends Component {
           </header>
           <main>
             <h2>Month Requests</h2>
-            {/* <Overview site={this.props.site} /> */}
-            {/* <Stats site={this.props.site} /> */}
+            <Overview site={this.state} />
+            <Stats site={this.state} />
 
 
             <h2>Recent Site Actions</h2>
             
 
             <h2>User Access</h2>
-            {/* <Access site={this.props.site} /> */}
+            <Access site={this.state} />
             <h2>Company Access</h2>
             <h2>Blueprint</h2>
-            {/* <Blueprint site={this.props.site} /> */}
+            <Blueprint site={this.state} />
 
           </main>
         </article>
