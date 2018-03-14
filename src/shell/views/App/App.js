@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 
 import Login from '../Login'
 import AppHeader from '../../components/AppHeader'
-import styles from './app.less'
+import styles from './App.less'
 
 import { getUser } from '../../store/user'
 
@@ -25,10 +25,10 @@ class Shell extends Component {
         <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
         <section className={styles.AppMain}>
           <Switch>
-            {/* <Route path='/dashboard' component={Dashboard} /> */}
+            <Route path="/dashboard" component={Dashboard} />
             <Route path="/properties" component={Properties} />
             <Route path="/account" component={Account} />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/messages" component={Messages} />
             <Redirect from="/" to="/properties" />
             {/* TODO: handle no match */}
           </Switch>

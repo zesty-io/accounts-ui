@@ -1,6 +1,6 @@
 import {PureComponent} from 'react'
 // import {Link} from 'react-router-dom'
-import styles from './styles.less'
+import styles from './Icon.less'
 
 export class MessageIcon extends PureComponent {
   render () {

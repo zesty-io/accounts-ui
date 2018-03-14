@@ -7,9 +7,9 @@ class PropertiesHeader extends Component {
   render() {
     return (
       <header className={styles.PropertiesHeader}>
-        <h2>
+        {/* <h2>
           <i className="fa fa-globe" aria-hidden="true" />Your Web Properties
-        </h2>
+        </h2> */}
         <div className={styles.actions}>
           <Search
             className={styles.filter}

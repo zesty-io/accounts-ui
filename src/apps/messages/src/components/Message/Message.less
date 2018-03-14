@@ -1,0 +1,13 @@
+@import '../../../../../shell/styles/colors.less';
+.message {
+  padding: 1rem;
+  display: grid;
+  grid: auto-flow / 1fr 1fr 2fr 1fr 1fr;
+  grid-gap: 1rem;
+  .from {}
+  .type {}
+}
+
+.message:nth-child(odd) {
+  background-color: @zesty-background-blue;
+}
