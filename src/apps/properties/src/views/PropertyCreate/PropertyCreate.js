@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import {bindActionCreators} from 'redux'
 import { Link } from 'react-router-dom'
 import styles from './PropertyCreate.less'
+
+import{ getBlueprints, addProperty } from '../../store'
 
 class PropertyCreate extends Component {
   constructor(props) {
@@ -11,6 +14,9 @@ class PropertyCreate extends Component {
       blueprint: '',
       bpStep: false
     }
+  }
+  componentDidMount() {
+    this.props.dispatch(getBlueprints())
   }
   handleSubmit = () => {
     evt.preventDefault()
@@ -31,11 +37,12 @@ class PropertyCreate extends Component {
             </div>
           : <div>
               {
-                this.props.blueprints.map(blueprint => {
-                  return (<div>
+                this.props.sites.blueprints.map((blueprint, i) => {
+                  return (<div key={i}>
                     <h2>{blueprint.name}</h2>
                     <p>{blueprint.description}</p>
-                    <img src={blueprint.url} alt='bp img' /></div>
+                    <img src={blueprint.url} alt='bp img' />
+                    <Button name={`selectBlueprint${i}`} text='select this blueprint' /></div>
                   )
                 })
               }
@@ -46,7 +53,11 @@ class PropertyCreate extends Component {
     )
   }
 }
+const mapStateToProps = (state) => {
+  return state
+}
+const mapDispatchToProps = state => {
+  return bindActionCreators({getBlueprints, addProperty}, dispatch)
+}
 
-//mapStateToProps for blueprints
-
-export default connect(state => state)(PropertyCreate)
+export default connect(mapStateToProps)(PropertyCreate)

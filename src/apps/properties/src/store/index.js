@@ -29,6 +29,9 @@ export function sites(state = {}, action) {
     case 'FETCHING_SITE_DETAILS':
       return state
 
+    case 'GET_BLUEPRINTS':
+      return {...state, blueprints: action.blueprints}
+
     case 'FETCH_SITE_DETAILS_SUCCESS':
       return state
 
@@ -38,8 +41,8 @@ export function sites(state = {}, action) {
           zuid: 'xxxxx' + (state.sites.length + 1),
           domain: '',
           stage: '',
-          name: payload.name,
-          blueprint: payload.blueprint
+          name: action.payload.name,
+          blueprint: action.payload.blueprint
         })
       }
       return addedSite
@@ -50,14 +53,35 @@ export function sites(state = {}, action) {
 }
 
 export function addProperty(name, blueprint) {
-  return dispatch({
+  return (dispatch) => dispatch({
     type: 'ADD_PROPERTY',
     name,
     blueprint
   })
 }
 
-export function changeDomain(domType, zuid) {
+export const getBlueprints = () => {
+  return (dispatch) => dispatch({
+    type: 'GET_BLUEPRINTS',
+    blueprints: [
+      {
+        name: 'BP1',
+        description: 'things that happen',
+        url: 'asdgsdagsadg'
+      },{
+        name: 'Good Blueprint',
+        description: 'describing the good blueprint',
+        url: 'fakeurlforimg.com'
+      },{
+        name: 'not very popular blueprint',
+        description: 'nobody really likes this blueprint, because its ugly and doesnt work well on mobile',
+        url: 'www.eeweblueprints.com'
+      }
+    ]
+  })
+}
+
+export const changeDomain = (domType, zuid) => {
   return dispatch({
     type: 'CHANGE_DOMAIN',
     domType,
