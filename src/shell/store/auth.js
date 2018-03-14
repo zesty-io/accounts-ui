@@ -1,5 +1,7 @@
 import {request} from '../../util/request'
 
+// TODO get default auth state by checking cookie
+// to see if session is still valid
 export function auth (state = {
   checking: false,
   valid: false
@@ -14,14 +16,14 @@ export function auth (state = {
     case 'FETCH_AUTH_ERROR':
       return {
         checking: false,
-        valid: true
+        valid: action.auth
       }
-    case 'FETCH_VERIFY_SUCCESS':
-    case 'FETCH_VERIFY_ERROR':
-      return {
-        checking: false,
-        valid: true
-      }
+    // case 'FETCH_VERIFY_SUCCESS':
+    // case 'FETCH_VERIFY_ERROR':
+    //   return {
+    //     checking: false,
+    //     valid: action.auth
+    //   }
     case 'LOGOUT':
       return {
         checking: false,

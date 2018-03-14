@@ -3,16 +3,19 @@ import { connect } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
 import Login from '../Login'
+import Signup from '../Signup'
+import ResetPassword from '../ResetPassword'
+import VerifyEmail from '../VerifyEmail'
+
 import AppHeader from '../../components/AppHeader'
 import styles from './App.less'
-
 import { getUser } from '../../store/user'
 
-class PrivateRoute extends Component {
-  render() {
-    return this.props.loggedIn ? this.props.children : <Redirect to="/login" />
-  }
-}
+// class PrivateRoute extends Component {
+//   render() {
+//     return this.props.loggedIn ? this.props.children : null
+//   }
+// }
 
 class Shell extends Component {
   componentDidMount() {
@@ -43,14 +46,18 @@ class App extends Component {
   render() {
     return (
       <div>
-        <PrivateRoute loggedIn={this.props.auth.valid}>
-          <Route path="/" component={AppShell} />
-        </PrivateRoute>
         <Switch>
+          {/* <PrivateRoute loggedIn={this.props.auth.valid}>
+            <Route path="/" component={AppShell} />
+          </PrivateRoute> */}
+          {this.props.auth.valid ?
+            <Route path="/" component={AppShell} />
+            : null}
           <Route path="/login" component={Login} />
-          <Route path="/create-account" component={Login} />
-          <Route path="/reset-password" component={Login} />
-          <Route path="/verify-email" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/reset-password" component={ResetPassword} />
+          <Route path="/verify-email" component={VerifyEmail} />
+          <Redirect to="/login" />
         </Switch>
       </div>
     )

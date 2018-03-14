@@ -59,7 +59,7 @@ class Login extends Component {
           message: json.message
         })
         this.props.dispatch({
-          type: 'FETCH_AUTH_SUCCESS',
+          type: 'FETCH_AUTH_ERROR',
           auth: false
         })
       }
