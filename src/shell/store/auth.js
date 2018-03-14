@@ -1,10 +1,10 @@
+import Cookies from 'js-cookie'
+import config from '../config'
 import {request} from '../../util/request'
 
-// TODO get default auth state by checking cookie
-// to see if session is still valid
 export function auth (state = {
   checking: false,
-  valid: false
+  valid: Cookies.get(config.COOKIE_NAME) ? true : false
 }, action) {
   switch (action.type) {
     case 'FETCHING_AUTH':
@@ -18,13 +18,11 @@ export function auth (state = {
         checking: false,
         valid: action.auth
       }
-    // case 'FETCH_VERIFY_SUCCESS':
-    // case 'FETCH_VERIFY_ERROR':
-    //   return {
-    //     checking: false,
-    //     valid: action.auth
-    //   }
     case 'LOGOUT':
+      Cookies.remove(config.COOKIE_NAME, {
+        path: '/',
+        domain: config.COOKIE_DOMAIN
+      })
       return {
         checking: false,
         valid: false
@@ -39,7 +37,7 @@ export function verifyAuth (unsubscribe) {
     // dispatch({
     //   type: 'FETCHING_AUTH'
     // })
-    request('http://svc.zesty.localdev:3011/verify')
+    request(`http://${config.SERVICE_URL}:3011/verify`)
     .then(json => {
       dispatch({
         type: 'FETCH_VERIFY_SUCCESS',

@@ -8,5 +8,8 @@
     "build": "export NODE_ENV=\"production\" && ../../node_modules/.bin/webpack --progress -p"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "js-cookie": "2.2.0"
+  }
 }
