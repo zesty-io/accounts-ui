@@ -4,8 +4,19 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
+import {Line} from 'react-chartjs-2'
+
 class WebsiteCard extends Component {
   render() {
+
+    let data = {
+        labels: ['jan', 'feb', 'march'],
+        datasets: [{
+          label: 'requests',
+          data: [1,3,4]
+        }]
+    };
+
     return (
       <article className={styles.WebsiteCard}>
         <header>
@@ -19,7 +30,9 @@ class WebsiteCard extends Component {
               }
             </Url>
           ) : null}
-          <p>30 Day Requests: 1,300,000 TODO line graph</p>
+          {/* <p>30 Day Requests: 1,300,000 TODO line graph</p> */}
+
+          <Line data={data} />
         </main>
         <footer>
           <ButtonGroup className={styles.controls}>
