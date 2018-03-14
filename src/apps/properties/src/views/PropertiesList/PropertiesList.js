@@ -11,7 +11,6 @@ import { getSites } from '../../store'
 
 class Properties extends Component {
   componentDidMount() {
-    console.log(this.props.match)
     this.props.dispatch(getSites())
   }
   render() {

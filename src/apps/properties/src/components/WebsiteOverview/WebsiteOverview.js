@@ -5,15 +5,19 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './styles.less'
 
-import Access from './Access'
+import UserAccess from './UserAccess'
 import CompanyAccess from './CompanyAccess'
 import Actions from './Actions'
-import Overview from './Overview'
 import Domain from './Domain'
 import Stats from './Stats'
 import Blueprint from './Blueprint'
 
+import { getSiteDetails } from '../../store'
+
 class WebsiteOverview extends Component {
+  componentDidMount() {
+    this.props.dispatch(getSiteDetails())
+  }
   render() {
     return (
       <section className={styles.WebsiteOverviewWrap}>
@@ -36,17 +40,15 @@ class WebsiteOverview extends Component {
           </header>
           <main>
             <h2>Month Requests</h2>
-            <Overview site={this.props} />
             <Stats site={this.props} />
             <h2>Recent Site Actions</h2>
             <Actions site={this.props} />
             <h2>User Access</h2>
-            <Access site={this.props} />
+            <UserAccess site={this.props} />
             <h2>Company Access</h2>
             <CompanyAccess site={this.props} />
             <h2>Blueprint</h2>
             <Blueprint site={this.props} />
-
           </main>
         </article>
       </section>
@@ -55,7 +57,7 @@ class WebsiteOverview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {...state.sites[ownProps.match.params.hash]}
+  return { ...state.sites[ownProps.match.params.hash] }
 }
 export default withRouter(connect(
   mapStateToProps

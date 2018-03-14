@@ -1,4 +1,4 @@
-export function sites (state = {}, action) {
+export function sites(state = {}, action) {
   switch (action.type) {
     // case 'FETCHING_SITES':
     //   // TODO show loading state?
@@ -26,6 +26,12 @@ export function sites (state = {}, action) {
       let changeDomain = state.sites.filter(site => site.zuid === action.zuid)
       return state
 
+    case 'FETCHING_SITE_DETAILS':
+      return state
+
+    case 'FETCH_SITE_DETAILS_SUCCESS':
+      return state
+
     default:
       return state
   }
@@ -39,15 +45,15 @@ export function changeDomain(type, zuid) {
   })
 }
 
-export function getSites (id) {
+export const getSiteDetails = (id) => {
   return (dispatch) => {
     dispatch({
-      type: 'FETCHING_SITES'
+      type: 'FETCHING_SITE_DETAILS'
     })
 
     dispatch({
-      type: 'FETCH_SITES_SUCCESS',
-      sites: [{
+      type: 'FETCH_SITE_DETAILS_SUCCESS',
+      site: {
         zuid: 'xxxxx0',
         name: 'Hofbrauhaus Brand Epicenter / America Corp',
         domain: '',
@@ -60,7 +66,60 @@ export function getSites (id) {
         metadata: {
           plan: 'Site in Development',
           contributors: 3,
-          createdOn:'12-3-18',
+          createdOn: '12-3-18',
+          createdBy: 'Grant',
+          status: 'In Development'
+        },
+        requests: {},
+        stats: {
+          allTime: {
+            dev: 3,
+            manager: 32
+          },
+          thisMonth: {
+            dev: 1,
+            manager: 10
+          }
+        },
+        users: [
+          {
+            name: 'Garrett D',
+            email: 'email@email.com',
+            role: 'owner'
+          },
+          {
+            name: 'Scarlet G',
+            email: 'email@domain.com',
+            role: 'contributor'
+          }
+        ]
+      }
+    })
+  }
+}
+
+export function getSites(id) {
+  return (dispatch) => {
+    dispatch({
+      type: 'FETCHING_SITES'
+    })
+
+    dispatch({
+      type: 'FETCH_SITES_SUCCESS',
+      sites: [{
+        zuid: 'xxxxx0',
+        name: 'Hofbrauhaus Brand Epicenter / America Corp',
+        domain: 'nowithasadomain.net',
+        domainSelect: 'no',
+        dns: '',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
+        blueprintImgUrl: 'https://raw.githubusercontent.com/zesty-io/plate-material-ui/master/shield.png',
+        blueprint: 'Material UI Blueprint',
+        blueprintDetails: 'these are details about the selected blueprint, it is probably a good blueprint that youll really like',
+        metadata: {
+          plan: 'Site in Development',
+          contributors: 3,
+          createdOn: '12-3-18',
           createdBy: 'Grant',
           status: 'In Development'
         },

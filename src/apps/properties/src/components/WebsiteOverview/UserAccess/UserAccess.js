@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-class Access extends Component {
+class UserAccess extends Component {
   render() {
     return (
       <div>
         <table className="users">
           <tbody>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Actions</th>
+              <th>#</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+              <th>Active</th>
+              <th>Boss</th>
             </tr>
             {this.props.site.users.map((user, i) => {
               return (
@@ -29,4 +31,4 @@ class Access extends Component {
   }
 }
 
-export default connect(state => state)(Access)
+export default connect(state => state)(UserAccess)
