@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
+
+import { ErrorBoundary } from './err'
 
 class Dashboard extends Component {
-  render () {
+  render() {
     return (
-      <section id='dashboard'>
-        <h2>Dashboard</h2>
-        <h3>**INSERT FANCY GRAPHS**</h3>
-      </section>
+      <ErrorBoundary>
+        <section id='dashboard'>
+          <h2>Dashboard</h2>
+          <h3>**INSERT FANCY GRAPHS**</h3>
+        </section>
+      </ErrorBoundary>
     )
   }
 }
