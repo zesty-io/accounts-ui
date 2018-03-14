@@ -95,7 +95,7 @@ export const getSiteDetails = (id) => {
       type: 'FETCHING_SITE_DETAILS'
     })
 
-    dispatch({
+    setTimeout(() => dispatch({
       type: 'FETCH_SITE_DETAILS_SUCCESS',
       site: {
         zuid: 'xxxxx0',
@@ -138,7 +138,7 @@ export const getSiteDetails = (id) => {
           }
         ]
       }
-    })
+    }), 500)
   }
 }
 
@@ -148,7 +148,7 @@ export function getSites(id) {
       type: 'FETCHING_SITES'
     })
 
-    dispatch({
+    setTimeout(() => dispatch({
       type: 'FETCH_SITES_SUCCESS',
       sites: [{
         zuid: 'xxxxx0',
@@ -251,7 +251,7 @@ export function getSites(id) {
         domain: 'https://www.hofbrauhauschicago.com',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
       }]
-    })
+    }), 500)
 
     // TODO implement sites endpoint
     // fetch(`http://localhost:9001/sites/${id}`)

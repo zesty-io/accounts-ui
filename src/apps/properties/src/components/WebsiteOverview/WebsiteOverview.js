@@ -21,6 +21,7 @@ class WebsiteOverview extends Component {
   render() {
     return (
       <section className={styles.WebsiteOverviewWrap}>
+      {this.props.name ?
         <article className={styles.WebsiteOverview}>
           <Link to="/properties/">
             <i className="fa fa-times-circle-o" aria-hidden="true" />
@@ -50,7 +51,7 @@ class WebsiteOverview extends Component {
             <h2>Blueprint</h2>
             <Blueprint site={this.props} />
           </main>
-        </article>
+        </article>: <h3>loading</h3>}
       </section>
     )
   }
