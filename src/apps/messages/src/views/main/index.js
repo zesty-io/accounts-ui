@@ -6,7 +6,7 @@ import Message from '../../components/Message'
 import {fetchMessages} from '../../store'
 
 class Messages extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchMessages())
   }
   render () {
