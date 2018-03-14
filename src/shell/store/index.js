@@ -5,6 +5,7 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {user} from './user'
 import {auth} from './auth'
 import {sites} from '../../apps/properties/src/store'
+import {messages} from '../../apps/messages/src/store'
 import {profile} from '../../apps/account/src/store'
 
 const loggerMiddleware = createLogger({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   auth,
   user,
   sites,
+  messages,
   profile
 })
 
