@@ -4,6 +4,7 @@ import styles from './styles.less'
 
 import Message from '../../components/Message'
 import {fetchMessages} from '../../store'
+import {ErrorBoundary} from './err'
 
 class Messages extends Component {
   componentDidMount() {
@@ -12,6 +13,7 @@ class Messages extends Component {
   render () {
     console.log(Object.keys(this.props.messages));
     return (
+      <ErrorBoundary>
       <section id='dashboard'>
         <main className={styles.messages}>
           <h2>Messages</h2>
@@ -27,6 +29,7 @@ class Messages extends Component {
           })}
         </main>
       </section>
+      </ErrorBoundary>
     )
   }
 }
