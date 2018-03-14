@@ -12,11 +12,8 @@ class Login extends Component {
     this.state = {
       message: 'TEST'
     }
-
-    this.handleLogin = this.handleLogin.bind(this)
   }
   render () {
-    // console.log(this)
     return (
       <section className={styles.Login}>
         <form name='login' className={styles.LoginForm}>
@@ -28,14 +25,14 @@ class Login extends Component {
           <label>
             <input name='pass' className={styles.input} type='password' />
           </label>
-          <Button onClick={this.handleLogin}>Login</Button>
+          <Button onClick={e => this.handleLogin(e)}>Login</Button>
           <p>{this.state.message}</p>
         </form>
       </section>
     )
   }
-  handleLogin (evt) {
-    evt.preventDefault()
+  handleLogin (e) {
+    e.preventDefault()
     request('http://svc.zesty.localdev:3011/login', {
       body: {
         email: document.forms.login.email.value,

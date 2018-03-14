@@ -19,7 +19,7 @@ class PrivateRoute extends Component {
 }
 
 class Shell extends Component {
-  componentWillMount () {
+  componentDidMount () {
     // TODO how do I get the id?
     this.props.dispatch(getUser(this.props.user.zuid))
   }
@@ -30,8 +30,8 @@ class Shell extends Component {
         <Switch>
           {/* <Route path='/dashboard' component={Dashboard} /> */}
           <Route path='/properties' component={Properties} />
-          <Route path='/settings' component={Settings} />
-
+          <Route path='/account' component={Account} />
+          <Route path='/dashboard' component={Dashboard} />
           <Redirect from='/' to='/properties' />
           {/* TODO: handle no match */}
         </Switch>

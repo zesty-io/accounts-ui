@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
-import {Switch, Route} from 'react-router-dom'
-import {connect} from 'react-redux'
+import { Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 import styles from './Websites.less'
 
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
 
-import {getSites} from '../../store'
+import { getSites } from '../../store'
 
 class Properties extends Component {
-  componentWillMount () {
+  componentWillMount() {
     this.props.dispatch(getSites())
   }
-  render () {
+  render() {
     return (
       <section className={styles.Websites}>
         <Switch>

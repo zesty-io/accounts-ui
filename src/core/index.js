@@ -4,6 +4,7 @@ import Url from './url'
 import Loader from './loader'
 import Search from './search'
 import Select from './select'
+import Input from './input'
 import {Option} from './select'
 import Infotip from './infotip'
 
@@ -18,3 +19,4 @@ window.Search = Search
 window.Select = Select
 window.Option = Option
 window.Infotip = Infotip
+window.Input = Input

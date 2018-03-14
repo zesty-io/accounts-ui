@@ -4,13 +4,14 @@ import {Route} from 'react-router-dom'
 import styles from './PropertiesList.less'
 
 import WebsitesActions from '../../components/websites-actions'
-import WebsiteOverview from '../../components/WebsiteOverview'
+import WebsiteView from '../../components/website-view'
 import WebsiteCard from '../../components/WebsiteCard'
 
 import {getSites} from '../../store'
 
 class Properties extends Component {
-  componentWillMount () {
+  componentDidMount () {
+    console.log(this.props.match)
     this.props.dispatch(getSites())
   }
   render () {
@@ -22,7 +23,7 @@ class Properties extends Component {
             return <WebsiteCard key={zuid} site={this.props.sites[zuid]} />
           })}
         </main>
-        <Route path="/properties/:hash" component={WebsiteOverview} />
+        <Route path="/properties/:hash" component={WebsiteView} />
       </section>
     )
   }

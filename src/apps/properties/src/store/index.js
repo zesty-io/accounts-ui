@@ -22,9 +22,21 @@ export function sites (state = {}, action) {
       // leave state as is
       return state
 
+    case 'CHANGE_DOMAIN':
+      let changeDomain = state.sites.filter(site => site.zuid === action.zuid)
+      return state
+
     default:
       return state
   }
+}
+
+export function changeDomain(type, zuid) {
+  return dispatch({
+    type: 'CHANGE_DOMAIN',
+    type,
+    zuid
+  })
 }
 
 export function getSites (id) {
@@ -39,7 +51,42 @@ export function getSites (id) {
         zuid: 'xxxxx0',
         name: 'Hofbrauhaus Brand Epicenter / America Corp',
         domain: '',
-        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+        domainSelect: 'no',
+        dns: '',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/',
+        blueprintImgUrl: 'https://raw.githubusercontent.com/zesty-io/plate-material-ui/master/shield.png',
+        blueprint: 'Material UI Blueprint',
+        blueprintDetails: 'these are details about the selected blueprint, it is probably a good blueprint that youll really like',
+        metadata: {
+          plan: 'Site in Development',
+          contributors: 3,
+          createdOn:'12-3-18',
+          createdBy: 'Grant',
+          status: 'In Development'
+        },
+        requests: {},
+        stats: {
+          allTime: {
+            dev: 3,
+            manager: 32
+          },
+          thisMonth: {
+            dev: 0,
+            manager: 10
+          }
+        },
+        users: [
+          {
+            name: 'Garrett D',
+            email: 'email@email.com',
+            role: 'owner'
+          },
+          {
+            name: 'Scarlet G',
+            email: 'email@domain.com',
+            role: 'contributor'
+          }
+        ]
       }, {
         zuid: 'xxxxx1',
         name: 'Hofbrauhaus America Corporate',
@@ -52,8 +99,13 @@ export function getSites (id) {
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
       }, {
         zuid: 'xxxxx3',
-        name: 'Hofbrauhaus FR - Chicago',
-        domain: 'https://www.hofbrauhauschicago.com',
+        name: 'New Site',
+        domain: 'https://www.newsite.com',
+        stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
+      }, {
+        zuid: 'xxxxx4',
+        name: 'More Fake Data',
+        domain: 'https://www.fakedata.com',
         stage: 'http://2xzzl8fb.sites.zesty.localdev:3001/'
       }, {
         zuid: 'xxxxx4',

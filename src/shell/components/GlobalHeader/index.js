@@ -11,14 +11,13 @@ export class GlobalHeader extends PureComponent {
       <header className={styles.GlobalHeader}>
         <img className={styles.logo} src='/zesty-z-logo.png' />
         <nav className={styles.GlobalNav}>
-          {/*<NavLink to='/dashboard'>Dashboard</NavLink>*/}
+          <NavLink to='/dashboard'>Dashboard</NavLink>
           <NavLink to='/properties'>Web Properties</NavLink>
-          <NavLink to='/settings'>My Settings</NavLink>
+          <NavLink to='/account/combined'>My Account</NavLink>
           <MessageIcon />
         </nav>
         <span className={styles.logout} title='Logout'>
           <span>{this.props.user.firstname} {this.props.user.lastname}</span>
-
           <i className='fa fa-sign-out' aria-hidden='true' onClick={() => this.props.dispatch(logout())} />
         </span>
       </header>
