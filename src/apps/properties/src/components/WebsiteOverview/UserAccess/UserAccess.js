@@ -5,6 +5,8 @@ class UserAccess extends Component {
   render() {
     return (
       <div>
+        <Input name='newUser' type='text' />
+        <Button name='newUserSubmit'>Send Invite</Button>
         <table className="users">
           <tbody>
             <tr>
