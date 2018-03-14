@@ -20,14 +20,19 @@ class Login extends Component {
           <img src='/zesty-z-logo.png' />
           <h2>Zesty.io</h2>
           <label>
-            <input name='email' className={styles.input} type='email' />
+            <p>Email Address</p>
+            <input name='email' className={styles.input} type='email' placeholder="e.g. hello@zesty.io" />
           </label>
           <label>
+            <p>Password</p>
             <input name='pass' className={styles.input} type='password' />
           </label>
           <Button onClick={e => this.handleLogin(e)}>Login</Button>
           <p>{this.state.message}</p>
         </form>
+
+        <Url href="/reset-password">Reset Password</Url>
+        <Url href="/signup">Create Account</Url>
       </section>
     )
   }
