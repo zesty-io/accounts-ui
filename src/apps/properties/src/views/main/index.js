@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './Websites.less'
 
+import {ErrorBoundary} from './err'
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
 
@@ -14,12 +15,14 @@ class Properties extends Component {
   }
   render() {
     return (
+      <ErrorBoundary>
       <section className={styles.Websites}>
         <Switch>
           <Route exact path='/properties/create' component={PropertyCreate} />
           <Route path='/properties' component={PropertiesList} />
         </Switch>
       </section>
+      </ErrorBoundary>
     )
   }
 }
