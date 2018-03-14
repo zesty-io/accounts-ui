@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import {Route} from 'react-router-dom'
 import styles from './PropertiesList.less'
 
 import WebsitesActions from '../../components/websites-actions'
@@ -22,8 +23,7 @@ class Properties extends Component {
             return <WebsiteCard key={zuid} site={this.props.sites[zuid]} />
           })}
         </main>
-        
-        <WebsiteView  site={this.props.sites['xxxxx0']} />
+        <Route path="/properties/:hash" component={WebsiteView} />
       </section>
     )
   }

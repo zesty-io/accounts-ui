@@ -1,19 +1,24 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 import styles from './styles.less'
 
 class WebsitesActions extends Component {
-  render () {
+  render() {
     return (
       <header className={styles.WebsitesActions}>
         <h2>
-          <i className='fa fa-globe' aria-hidden='true' />Your Web Properties
+          <i className="fa fa-globe" aria-hidden="true" />Your Web Properties
         </h2>
         <div className={styles.actions}>
-          <Search className={styles.filter} placeholder='Search by web property name or domain' />
-          <Button className='save'>
-            <i className='fa fa-plus' aria-hidden='true' />Create Web Property
+          <Search
+            className={styles.filter}
+            placeholder="Search by web property name or domain"
+          />
+          <Button className={styles.save}>
+            <Link to="/properties/create">
+              <i className="fa fa-plus" aria-hidden="true" />Create Web Property
+            </Link>
           </Button>
         </div>
       </header>

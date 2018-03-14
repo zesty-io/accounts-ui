@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "description": "Zesty.io account management applicaiton",
   "repository": {
-    "git": "https://github.com/zesty-io/accounts-app-skunks"
+    "git": "https://github.com/zesty-io/accounts-ui"
   },
   "main": "webpack.config.js",
   "scripts": {
     "build": "node bin/build",
     "prestart": "npm install",
     "start": "node bin/start & npm run serve",
-    "serve": "./node_modules/.bin/serve build --port 9000 --single"
+    "serve": "./node_modules/.bin/serve build --port 6006 --single"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
   "license": "UNLICENSED",
