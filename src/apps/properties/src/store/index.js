@@ -22,9 +22,21 @@ export function sites (state = {}, action) {
       // leave state as is
       return state
 
+    case 'CHANGE_DOMAIN':
+      let changeDomain = state.sites.filter(site => site.zuid === action.zuid)
+      return state
+
     default:
       return state
   }
+}
+
+export function changeDomain(type, zuid) {
+  return dispatch({
+    type: 'CHANGE_DOMAIN',
+    type,
+    zuid
+  })
 }
 
 export function getSites (id) {
