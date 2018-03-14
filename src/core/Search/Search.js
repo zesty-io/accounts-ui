@@ -3,16 +3,10 @@ import styles from './Search.less'
 import cx from 'classnames'
 
 export default class Search extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     return (
       <div className={cx(styles.search, this.props.className)}>
-        <Button
-          className={styles.searchBtn}
-          onClick={this.handleFilter.bind(this)}
-        >
+        <Button className={styles.searchBtn} onClick={this.handleFilter}>
           <i
             className={cx(styles.searchIcon, 'fa fa-search')}
             aria-hidden="true"
@@ -28,10 +22,11 @@ export default class Search extends React.Component {
       </div>
     )
   }
-  handleFilter(evt) {
+  handleFilter = evt => {
     // Prevent button click from triggering
     // a form submission if this exists inside
     // of a form element parent
     evt.preventDefault()
+    this.props.onClick(evt)
   }
 }

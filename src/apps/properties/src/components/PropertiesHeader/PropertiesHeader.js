@@ -7,13 +7,12 @@ class PropertiesHeader extends Component {
   render() {
     return (
       <header className={styles.PropertiesHeader}>
-        {/* <h2>
-          <i className="fa fa-globe" aria-hidden="true" />Your Web Properties
-        </h2> */}
         <div className={styles.actions}>
           <Search
             className={styles.filter}
             placeholder="Search by web property name or domain"
+            onClick={this.onSearch}
+            onKeyUp={this.onSearch}
           />
           <Button className={styles.save}>
             <Link to="/properties/create">
@@ -23,6 +22,19 @@ class PropertiesHeader extends Component {
         </div>
       </header>
     )
+  }
+  onSearch = evt => {
+    // if (!this.state.timeout) {
+    //   clearTimeout(this.state.timeout)
+    //   this.setState({
+    //     timeout: setTimeout(() => {
+    //
+    //     }, 500)
+    //   })
+    // }
+
+    console.log(evt)
+    // this.props.dispatch(filterSites(evt.target.value))
   }
 }
 
