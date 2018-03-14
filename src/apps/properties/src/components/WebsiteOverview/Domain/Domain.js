@@ -15,7 +15,6 @@ class Domain extends Component {
 
     return (
       <div>
-        <h3>Domain</h3>
         <form>
           <Input
             type='radio'

@@ -6,10 +6,9 @@ class Blueprint extends Component {
   render() {
     return (
       <div>
-        <h3>Blueprint</h3>        
-        <p>current blueprint: {this.props.site.blueprint}</p>
         <img src={this.props.site.blueprintImgUrl} alt='blueprint Image' />
-        <p>{this.props.site.blueprintDetails}</p>
+        current blueprint: {this.props.site.blueprint}
+        {this.props.site.blueprintDetails}
         <a href='github.url'>View on Github</a>
         <NavLink to='/account/blueprints'>Change Blueprint</NavLink>
       </div>

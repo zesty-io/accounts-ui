@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-class Access extends Component {
+class CompanyAccess extends Component {
   render() {
     return (
       <div>
@@ -13,15 +13,12 @@ class Access extends Component {
               <th>Role</th>
               <th>Actions</th>
             </tr>
-            {this.props.site.users.map((user, i) => {
-              return (
-                <tr key={i}>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
+            
+                <tr>
+                  <td>A Company</td>
+                  <td>contactInfo</td>
+                  <td>role/permissions</td>
                 </tr>
-              )
-            })}
           </tbody>
         </table>
       </div>
@@ -29,4 +26,4 @@ class Access extends Component {
   }
 }
 
-export default connect(state => state)(Access)
+export default connect(state => state)(CompanyAccess)

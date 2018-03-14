@@ -5,7 +5,6 @@ class Overview extends Component {
   render() {
     return (
       <div>
-        <h3>Overview</h3>
         <p>Plan: {this.props.site.metadata.plan}</p>
         <p>Contributors: {this.props.site.metadata.contributors}</p>
         <p>Created On: {this.props.site.metadata.createdOn}</p>

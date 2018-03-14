@@ -5,6 +5,7 @@ import cx from 'classnames'
 import styles from './styles.less'
 
 import Access from './Access'
+import CompanyAccess from './CompanyAccess'
 import Overview from './Overview'
 import Domain from './Domain'
 import Stats from './Stats'
@@ -44,6 +45,7 @@ class WebsiteOverview extends Component {
             <h2>User Access</h2>
             <Access site={this.state} />
             <h2>Company Access</h2>
+            <CompanyAccess site={this.state} />
             <h2>Blueprint</h2>
             <Blueprint site={this.state} />
 
