@@ -1,8 +1,8 @@
 export function sites(state = {}, action) {
   switch (action.type) {
-    // case 'FETCHING_SITES':
-    //   // TODO show loading state?
-    //   return state
+    case 'FETCHING_SITES':
+      // TODO show loading state?
+      return state
 
     case 'FETCH_SITES_SUCCESS':
       const zuids = action.sites.map(site => site.zuid)
@@ -32,15 +32,35 @@ export function sites(state = {}, action) {
     case 'FETCH_SITE_DETAILS_SUCCESS':
       return state
 
+    case 'ADD_PROPERTY':
+      let addedSite = {
+        sites: [...state.sites].push({
+          zuid: 'xxxxx' + (state.sites.length + 1),
+          domain: '',
+          stage: '',
+          name: payload.name,
+          blueprint: payload.blueprint
+        })
+      }
+      return addedSite
+
     default:
       return state
   }
 }
 
-export function changeDomain(type, zuid) {
+export function addProperty(name, blueprint) {
+  return dispatch({
+    type: 'ADD_PROPERTY',
+    name,
+    blueprint
+  })
+}
+
+export function changeDomain(domType, zuid) {
   return dispatch({
     type: 'CHANGE_DOMAIN',
-    type,
+    domType,
     zuid
   })
 }

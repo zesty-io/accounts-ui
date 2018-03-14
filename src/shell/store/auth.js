@@ -16,7 +16,7 @@ export function auth (state = {
     case 'FETCH_AUTH_ERROR':
       return {
         checking: false,
-        valid: action.auth
+        valid: true
       }
     case 'LOGOUT':
       Cookies.remove(config.COOKIE_NAME, {
