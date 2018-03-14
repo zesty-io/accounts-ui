@@ -10,12 +10,23 @@ class WebsiteCard extends Component {
   render() {
 
     let data = {
-        labels: ['jan', 'feb', 'march'],
+        labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
         datasets: [{
           label: 'requests',
-          data: [1,3,4]
+          data: [2, 4, 0, 6, 2, 4, 9]
+        }, {
+          label: 'media',
+          data: [3, 6, 11, 7, 3, 6, 11]
         }]
     };
+
+    let options = {
+      elements: {
+        line: {
+          tension: 0, // disables bezier curves
+        }
+      }
+    }
 
     return (
       <article className={styles.WebsiteCard}>
@@ -32,7 +43,7 @@ class WebsiteCard extends Component {
           ) : null}
           {/* <p>30 Day Requests: 1,300,000 TODO line graph</p> */}
 
-          <Line data={data} />
+          <Line data={data} options={options} />
         </main>
         <footer>
           <ButtonGroup className={styles.controls}>
