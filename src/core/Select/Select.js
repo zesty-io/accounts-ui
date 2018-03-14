@@ -19,7 +19,7 @@ export default class Select extends React.Component {
     this.toggleDropdown = this.toggleDropdown.bind(this)
     this.handleFilterKeyUp = this.handleFilterKeyUp.bind(this)
   }
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('click', this.onClose)
     document.addEventListener('keyup', this.onEsc)
   }

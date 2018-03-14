@@ -10,7 +10,7 @@ import PropertyCreate from '../PropertyCreate'
 import { getSites } from '../../store'
 
 class Properties extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(getSites())
   }
   render() {
