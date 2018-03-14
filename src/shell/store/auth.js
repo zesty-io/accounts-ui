@@ -1,11 +1,14 @@
 import Cookies from 'js-cookie'
 import config from '../config'
-import {request} from '../../util/request'
+import { request } from '../../util/request'
 
-export function auth (state = {
-  checking: false,
-  valid: Cookies.get(config.COOKIE_NAME) ? true : false
-}, action) {
+export function auth(
+  state = {
+    checking: false,
+    valid: Cookies.get(config.COOKIE_NAME) ? true : false
+  },
+  action
+) {
   switch (action.type) {
     case 'FETCHING_AUTH':
       return {
@@ -14,6 +17,8 @@ export function auth (state = {
       }
     case 'FETCH_AUTH_SUCCESS':
     case 'FETCH_AUTH_ERROR':
+    case 'FETCH_VERIFY_SUCCESS':
+    case 'FETCH_VERIFY_ERROR':
       return {
         checking: false,
         valid: action.auth
@@ -32,51 +37,48 @@ export function auth (state = {
   }
 }
 
-export function verifyAuth (unsubscribe) {
-  return (dispatch) => {
-    // dispatch({
-    //   type: 'FETCHING_AUTH'
-    // })
+export function verifyAuth(unsubscribe) {
+  return dispatch => {
     request(`http://${config.SERVICE_URL}:3011/verify`)
-    .then(json => {
-      dispatch({
-        type: 'FETCH_VERIFY_SUCCESS',
-        auth: (json.code === 200)
+      .then(json => {
+        console.log('VERIFY JSON: ', json)
+        dispatch({
+          type: 'FETCH_VERIFY_SUCCESS',
+          auth: json.code === 200
+        })
+        if (unsubscribe) {
+          unsubscribe()
+        }
       })
-      if (unsubscribe) {
-        unsubscribe()
-      }
-    })
-    .catch(err => {
-      console.error(err)
-      dispatch({
-        type: 'FETCH_VERIFY_ERROR',
-        auth: false,
-        err
+      .catch(err => {
+        console.error('VERIFY ERR', err)
+        dispatch({
+          type: 'FETCH_VERIFY_ERROR',
+          auth: false,
+          err
+        })
       })
-    })
   }
 }
 
-export function logout () {
-  return (dispatch) => {
-    dispatch({
-      type: 'FETCHING_AUTH'
-    })
-    request('http://svc.zesty.localdev:3011/logout')
-    .then(json => {
-      console.log(json)
-      dispatch({
-        type: 'LOGOUT'
+export function logout() {
+  return dispatch => {
+    // dispatch({
+    //   type: 'FETCHING_AUTH'
+    // })
+    request(`http://${config.SERVICE_URL}:3011/logout`)
+      .then(json => {
+        dispatch({
+          type: 'LOGOUT'
+        })
       })
-    })
-    .catch(err => {
-      console.error(err)
-      dispatch({
-        type: 'FETCH_AUTH_ERROR',
-        auth: false,
-        err
+      .catch(err => {
+        console.error(err)
+        dispatch({
+          type: 'FETCH_AUTH_ERROR',
+          auth: false,
+          err
+        })
       })
-    })
   }
 }
