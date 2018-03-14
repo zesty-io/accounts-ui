@@ -71,7 +71,7 @@ export function getSites (id) {
             manager: 32
           },
           thisMonth: {
-            dev: 0,
+            dev: 1,
             manager: 10
           }
         },
