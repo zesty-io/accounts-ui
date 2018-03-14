@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import styles from './styles.less'
+import styles from './PropertiesHeader.less'
 
-class WebsitesActions extends Component {
+class PropertiesHeader extends Component {
   render() {
     return (
-      <header className={styles.WebsitesActions}>
+      <header className={styles.PropertiesHeader}>
         <h2>
           <i className="fa fa-globe" aria-hidden="true" />Your Web Properties
         </h2>
@@ -26,4 +26,4 @@ class WebsitesActions extends Component {
   }
 }
 
-export default connect(state => state)(WebsitesActions)
+export default connect(state => state)(PropertiesHeader)

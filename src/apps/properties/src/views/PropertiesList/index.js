@@ -1,23 +1,23 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import {Route} from 'react-router-dom'
+import { connect } from 'react-redux'
+import { Route } from 'react-router-dom'
 import styles from './PropertiesList.less'
 
-import WebsitesActions from '../../components/websites-actions'
+import PropertiesHeader from '../../components/PropertiesHeader'
 import WebsiteView from '../../components/website-view'
 import WebsiteCard from '../../components/WebsiteCard'
 
-import {getSites} from '../../store'
+import { getSites } from '../../store'
 
 class Properties extends Component {
-  componentDidMount () {
+  componentDidMount() {
     console.log(this.props.match)
     this.props.dispatch(getSites())
   }
-  render () {
+  render() {
     return (
       <section className={styles.Websites}>
-        <WebsitesActions />
+        <PropertiesHeader />
         <main className={styles.siteList}>
           {Object.keys(this.props.sites).map(zuid => {
             return <WebsiteCard key={zuid} site={this.props.sites[zuid]} />
