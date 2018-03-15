@@ -18,10 +18,11 @@ class TwoFactor extends Component {
     return (
       <section className={styles.TwoFactor}>
         <form name="TwoFactor" className={styles.TwoFactorForm}>
-          <h2>Zesty.io TwoFactor</h2>
+          <img src="/zesty-z-logo.svg" />
+          <h2>Two Factor Authentication</h2>
           <label>
             <p>Authy Two Factor Token</p>
-            <input type="text" name="token" className={styles.input} />
+            <Input type="text" name="token" className={styles.input} />
           </label>
           <Button onClick={this.handle2FA}>Check Token</Button>
           <p>{this.state.message}</p>
