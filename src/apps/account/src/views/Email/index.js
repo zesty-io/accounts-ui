@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-
 import {updateSetting, addEmail} from '../../store'
-
-import './email.less'
+import styles from './email.less'
 
 class Email extends Component {
   handleChange = (e) => {
@@ -14,11 +12,11 @@ class Email extends Component {
   }
   render () {
     return (
-      <section id='settings'>
-        <h1>Emails</h1>
+      <section className={styles.profileEmail}>
+        <h2>Emails</h2>
         <div>
         <div className="info">
-          <strong>Tip: Why set up multiple emails?</strong>
+          <p><strong>Tip: Why set up multiple emails?</strong></p>
           <p>Setting up multiple emails lets you accept all of your account invitations in one place.</p>
         </div>
         <table className="basicList">
