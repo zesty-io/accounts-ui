@@ -213,7 +213,6 @@ export function getSites(userZuid) {
       type: 'FETCHING_SITES'
     })
 
-    // TODO implement sites endpoint
     request(`http://${config.API_ACCOUNTS}:6010/v1/instances`, {
       headers: {
         'User-Zuid': userZuid

@@ -11,7 +11,7 @@ import { getSites } from '../../store'
 
 class Properties extends Component {
   componentDidMount() {
-    this.props.dispatch(getSites())
+    this.props.dispatch(getSites(this.props.user.zuid))
   }
   render() {
     return (
@@ -19,7 +19,9 @@ class Properties extends Component {
         <PropertiesHeader />
         <main className={styles.siteList}>
           {Object.keys(this.props.filteredSites).map(zuid => {
-            return <WebsiteCard key={zuid} site={this.props.filteredSites[zuid]} />
+            return (
+              <WebsiteCard key={zuid} site={this.props.filteredSites[zuid]} />
+            )
           })}
         </main>
         <Route path="/properties/:hash" component={WebsiteOverview} />
