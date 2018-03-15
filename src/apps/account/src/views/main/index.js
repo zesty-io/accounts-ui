@@ -12,24 +12,13 @@ import styles from './styles.less'
 import { getSettings } from '../../store'
 
 class Settings extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      loading: true
-    }
-  }
   componentDidMount() {
     this.props.dispatch(getSettings())
   }
-  componentWillReceiveProps(next) {
-    if (this.props.profile) {
-      this.setState({ loading: false })
-    }
-  }
   render() {
-    if (this.state.loading === false) {
-      return (
-        <ErrorBoundary>
+    return (
+      <ErrorBoundary>
+        {Object.keys(this.props.profile).length ? (
           <section className={styles.settings}>
             <ul>
               <li>
@@ -50,11 +39,14 @@ class Settings extends Component {
               </Switch>
             </div>
           </section>
-        </ErrorBoundary>
-      )
-    } else {
-      return <p>loading</p>
-    }
+        ) : (
+          <div className={styles.Loading}>
+            <h1>Loading Account</h1>
+            <Loader />
+          </div>
+        )}
+      </ErrorBoundary>
+    )
   }
 }
 
