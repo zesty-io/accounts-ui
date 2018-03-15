@@ -88,7 +88,7 @@ export const filterProperties = (searchString) => {
           filteredSites[zuid] = sites[zuid]
         }
       }
-    dispatch({ type: 'FILTER_PROPERTIES', filteredSites})
+    dispatch({ meta: {debounce: {time: 500}}, type: 'FILTER_PROPERTIES', filteredSites})
   }else{
     dispatch({type: 'FILTER_PROPERTIES', filteredSites: sites})
   }
