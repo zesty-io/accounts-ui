@@ -73,10 +73,8 @@ export function sites(state = {}, action) {
 }
 
 export const filterProperties = searchString => {
-  // return (dispatch) =>
   return function(dispatch, getState) {
     let sites = getState().sites
-
     if (searchString !== '') {
       let filteredSites = {}
       for (const zuid in sites) {
