@@ -1,32 +1,36 @@
 @import '../../../../../shell/styles/colors.less';
 @keyframes slideIn {
-  0% {right:-100vw;}
-	100% { right: 0; }
+  0% {
+    right: -100vw;
+  }
+  100% {
+    right: 0;
+  }
 }
 .PropertyCreate {
   background-color: @globalHeader;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0;
-    align-items: center;
-    justify-content: center;
-    position:fixed;
-    top:0;
-    right:0;
-    height:100%;
-    width:100%;
-  	animation: slideIn 400ms forwards;
-    .nameNew {
-      max-width:400px;
-      input {
-        width:100%;
-        margin-bottom:10px;
-          font-weight: normal;
-      }
-      button {
-        display:inline-block;
-        width:40%;
-      }
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  animation: slideIn 400ms forwards;
+  .nameNew {
+    max-width: 400px;
+    input {
+      width: 100%;
+      margin-bottom: 10px;
+      font-weight: normal;
     }
+    button {
+      display: inline-block;
+      width: 40%;
+    }
+  }
 }
