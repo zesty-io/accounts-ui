@@ -12,16 +12,19 @@ export default class ResetPassword extends Component {
     return (
       <section className={styles.ResetPassword}>
         <form name='ResetPassword' className={styles.ResetPasswordForm}>
-          <h2>Zesty.io ResetPassword</h2>
+
+          <img src="/zesty-z-logo.svg" />
+          <h2>Reset Password</h2>
           <label>
             <p>New Password</p>
-            <input name='pass' className={styles.input} type='password' />
+            <Input className={styles.input} type="password" name='pass' />
           </label>
           <label>
             <p>Confirm New Password</p>
-            <input name='pass' className={styles.input} type='password' />
+            <Input className={styles.input} type="password" name='pass' />
           </label>
           <Button onClick={this.handleSignup}>Reset Password</Button>
+          <Url href="/login">Return to Login</Url>
         </form>
       </section>
     )
