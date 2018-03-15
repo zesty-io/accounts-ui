@@ -33,20 +33,20 @@ class Settings extends Component {
           <section className={styles.settings}>
             <ul>
               <li>
-                <NavLink to="/account/combined">Account</NavLink>
+                <NavLink to="/settings/account">Account</NavLink>
               </li>
               <li>
-                <NavLink to="/account/security">Security</NavLink>
+                <NavLink to="/settings/security">Security</NavLink>
               </li>
               <li>
-                <NavLink to="/account/blueprints">Blueprints</NavLink>
+                <NavLink to="/settings/blueprints">Blueprints</NavLink>
               </li>
             </ul>
             <div style={{ paddingLeft: '25%' }}>
               <Switch>
-                <Route path="/account/combined" component={Account} />
-                <Route path="/account/security" component={Security} />
-                <Route path="/account/blueprints" component={Blueprints} />
+                <Route path="/settings/account" component={Account} />
+                <Route path="/settings/security" component={Security} />
+                <Route path="/settings/blueprints" component={Blueprints} />
               </Switch>
             </div>
           </section>

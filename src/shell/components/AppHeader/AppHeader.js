@@ -13,7 +13,7 @@ export default class AppHeader extends PureComponent {
         <nav className={styles.GlobalNav}>
           {/* <NavLink to="/dashboard">Dashboard</NavLink> */}
           <NavLink to="/properties">Web Properties</NavLink>
-          <NavLink to="/account/combined">My Account</NavLink>
+          <NavLink to="/settings/account">My Account</NavLink>
           {/* <NavLink to="/messages">
             <MessageIcon />
           </NavLink> */}
