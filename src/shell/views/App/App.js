@@ -29,10 +29,10 @@ class Shell extends Component {
         <AppError>
           <section className={styles.AppMain}>
             <Switch>
-              <Route path="/dashboard" component={Dashboard} />
+              {/* <Route path="/dashboard" component={Dashboard} /> */}
               <Route path="/properties" component={Properties} />
               <Route path="/account" component={Account} />
-              <Route path="/messages" component={Messages} />
+              {/* <Route path="/messages" component={Messages} /> */}
               <Redirect from="/" to="/properties" />
               {/* TODO: handle no match */}
             </Switch>
