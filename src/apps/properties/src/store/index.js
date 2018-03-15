@@ -2,7 +2,6 @@ import { request } from '../../../../util/request'
 import config from '../../../../shell/config'
 
 const normalizeSites = sites => {
-
   const zuids = sites.map(site => site.ZUID)
   const normalized = zuids.reduce((sites, zuid) => {
     sites[zuid] = {}
@@ -89,19 +88,23 @@ export const filterProperties = searchString => {
         }
         if (
           sites[zuid].AccountName &&
-          sites[zuid].AccountName.toLowerCase().includes(searchString.toLowerCase())
+          sites[zuid].AccountName.toLowerCase().includes(
+            searchString.toLowerCase()
+          )
         ) {
           filteredSites[zuid] = sites[zuid]
         }
         if (
           sites[zuid].RandomHashID &&
-          sites[zuid].RandomHashID.toLowerCase().includes(searchString.toLowerCase())
+          sites[zuid].RandomHashID.toLowerCase().includes(
+            searchString.toLowerCase()
+          )
         ) {
           filteredSites[zuid] = sites[zuid]
         }
       }
       dispatch({
-        meta: { debounce: { time: 500 } },
+        meta: { debounce: { time: 250 } },
         type: 'FILTER_PROPERTIES',
         filteredSites
       })
