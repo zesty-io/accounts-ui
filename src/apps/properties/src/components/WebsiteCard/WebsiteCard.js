@@ -35,7 +35,7 @@ class WebsiteCard extends Component {
         </header>
         <main className={styles.WebsiteManage}>
           {this.props.site.Domain ? (
-            <Url target="_blank" href=http://{this.props.site.Domain}>
+            <Url target="_blank" href={`http://${this.props.site.Domain}`}>
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
                 this.props.site.Domain
               }

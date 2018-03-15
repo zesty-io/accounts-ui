@@ -26,15 +26,6 @@ class PropertiesHeader extends Component {
     )
   }
   onSearch = evt => {
-    // if (!this.state.timeout) {
-    //   clearTimeout(this.state.timeout)
-    //   this.setState({
-    //     timeout: setTimeout(() => {
-          
-    //     }, 500)
-    //   })
-    // }
-    
     this.props.dispatch(filterProperties(evt.target.value))
   }
 }
