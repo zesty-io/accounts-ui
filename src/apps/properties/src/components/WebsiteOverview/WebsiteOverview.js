@@ -21,13 +21,13 @@ class WebsiteOverview extends Component {
   render() {
     return (
       <section className={styles.WebsiteOverviewWrap}>
-      {this.props.name ?
+      {this.props.AccountName ?
         <article className={styles.WebsiteOverview}>
           <Link to="/properties/">
             <i className="fa fa-times-circle-o" aria-hidden="true" />
           </Link>
           <header>
-            <h1>{this.props.name}</h1>
+            <h1>{this.props.AccountName}</h1>
             <h2>
               {this.props.domain ? (
                 this.props.domain

@@ -2,14 +2,15 @@ import { request } from '../../../../util/request'
 import config from '../../../../shell/config'
 
 const normalizeSites = sites => {
-  const zuids = sites.map(site => site.zuid)
+
+  const zuids = sites.map(site => site.ZUID)
   const normalized = zuids.reduce((sites, zuid) => {
     sites[zuid] = {}
     return sites
   }, {})
 
   sites.forEach(site => {
-    normalized[site.zuid] = site
+    normalized[site.ZUID] = site
   })
 
   return normalized
@@ -81,20 +82,20 @@ export const filterProperties = searchString => {
       let filteredSites = {}
       for (const zuid in sites) {
         if (
-          sites[zuid].zuid &&
-          sites[zuid].zuid.toLowerCase().includes(searchString.toLowerCase())
+          sites[zuid].ZUID &&
+          sites[zuid].ZUID.toLowerCase().includes(searchString.toLowerCase())
         ) {
           filteredSites[zuid] = sites[zuid]
         }
         if (
-          sites[zuid].name &&
-          sites[zuid].name.toLowerCase().includes(searchString.toLowerCase())
+          sites[zuid].AccountName &&
+          sites[zuid].AccountName.toLowerCase().includes(searchString.toLowerCase())
         ) {
           filteredSites[zuid] = sites[zuid]
         }
         if (
-          sites[zuid].hash &&
-          sites[zuid].hash.toLowerCase().includes(searchString.toLowerCase())
+          sites[zuid].RandomHashID &&
+          sites[zuid].RandomHashID.toLowerCase().includes(searchString.toLowerCase())
         ) {
           filteredSites[zuid] = sites[zuid]
         }
@@ -223,7 +224,6 @@ export function getSites(userZuid) {
       }
     })
       .then(sites => {
-        console.log('sites', sites)
         dispatch({
           type: 'FETCH_SITES_SUCCESS',
           sites

@@ -31,13 +31,13 @@ class WebsiteCard extends Component {
     return (
       <article className={styles.WebsiteCard}>
         <header>
-          <h1 className={styles.name}>{this.props.site.name}</h1>
+          <h1 className={styles.name}>{this.props.site.AccountName}</h1>
         </header>
         <main className={styles.WebsiteManage}>
           {this.props.site.domain ? (
             <Url target="_blank" href="http://alphauniverse.com">
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
-                this.props.site.domain
+                this.props.site.Domain
               }
             </Url>
           ) : null}
@@ -49,18 +49,18 @@ class WebsiteCard extends Component {
           <ButtonGroup className={styles.controls}>
             <Url
               target="_blank"
-              href={`https://${this.props.site.zuid}.manage.zesty.io`}
+              href={`https://${this.props.site.ZUID}.manage.zesty.io`}
             >
               <i className="fa fa-external-link" aria-hidden="true" />Site
               Manager
             </Url>
             <Url
               target="_blank"
-              href={`https://${this.props.site.zuid}.preview.zesty.io`}
+              href={`https://${this.props.site.ZUID}.preview.zesty.io`}
             >
               <i className="fa fa-globe" aria-hidden="true" />Preview
             </Url>
-            <Link to={`/properties/${this.props.site.zuid}`}>
+            <Link to={`/properties/${this.props.site.ZUID}`}>
               <i
                 className={cx(styles.settings, 'fa fa-cog')}
                 aria-hidden="true"
