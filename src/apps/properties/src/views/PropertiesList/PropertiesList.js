@@ -18,8 +18,8 @@ class Properties extends Component {
       <section className={styles.Websites}>
         <PropertiesHeader />
         <main className={styles.siteList}>
-          {Object.keys(this.props.sites).map(zuid => {
-            return <WebsiteCard key={zuid} site={this.props.sites[zuid]} />
+          {Object.keys(this.props.filteredSites).map(zuid => {
+            return <WebsiteCard key={zuid} site={this.props.filteredSites[zuid]} />
           })}
         </main>
         <Route path="/properties/:hash" component={WebsiteOverview} />

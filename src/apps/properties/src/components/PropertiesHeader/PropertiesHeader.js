@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './PropertiesHeader.less'
 
+import { filterProperties } from '../../store'
+
 class PropertiesHeader extends Component {
   render() {
     return (
@@ -28,13 +30,12 @@ class PropertiesHeader extends Component {
     //   clearTimeout(this.state.timeout)
     //   this.setState({
     //     timeout: setTimeout(() => {
-    //
+          
     //     }, 500)
     //   })
     // }
-
-    console.log(evt)
-    // this.props.dispatch(filterSites(evt.target.value))
+    
+    this.props.dispatch(filterProperties(evt.target.value))
   }
 }
 

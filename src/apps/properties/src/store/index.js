@@ -1,3 +1,31 @@
+const normalizeSites = (sites) => {
+  const zuids = sites.map(site => site.zuid)
+  const normalized = zuids.reduce((sites, zuid) => {
+    sites[zuid] = {}
+    return sites
+  }, {})
+
+  sites.forEach(site => {
+    normalized[site.zuid] = site
+  })
+
+  return normalized
+}
+
+export function filteredSites(state = {}, action) {
+  switch (action.type) {
+    case 'FETCH_SITES_SUCCESS':
+      return normalizeSites(action.sites)
+
+    case 'FILTER_PROPERTIES':
+      return action.filteredSites
+    
+    default:
+      return state
+  }
+
+}
+
 export function sites(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_SITES':
@@ -5,17 +33,7 @@ export function sites(state = {}, action) {
       return state
 
     case 'FETCH_SITES_SUCCESS':
-      const zuids = action.sites.map(site => site.zuid)
-      const sites = zuids.reduce((sites, zuid) => {
-        sites[zuid] = {}
-        return sites
-      }, {})
-
-      action.sites.forEach(site => {
-        sites[site.zuid] = site
-      })
-
-      return sites
+      return normalizeSites(action.sites)
 
     case 'FETCH_SITES_ERROR':
       // TODO show global growl of error
@@ -30,10 +48,10 @@ export function sites(state = {}, action) {
       return state
 
     case 'GET_BLUEPRINTS':
-      return {...state, blueprints: action.blueprints}
+      return { ...state, blueprints: action.blueprints }
 
     case 'FETCH_SITE_DETAILS_SUCCESS':
-      return state
+      return { ...state, site: action.site, detailsSuccess: true }
 
     case 'ADD_PROPERTY':
       let addedSite = {
@@ -41,14 +59,39 @@ export function sites(state = {}, action) {
           zuid: 'xxxxx' + (state.sites.length + 1),
           domain: '',
           stage: '',
-          name: action.payload.name,
-          blueprint: action.payload.blueprint
+          name: action.name,
+          blueprint: action.blueprint
         })
       }
       return addedSite
 
     default:
       return state
+  }
+}
+
+export const filterProperties = (searchString) => {
+  // return (dispatch) => 
+  return function(dispatch, getState) {
+    let sites = getState().sites
+    
+    if(searchString !== ''){
+      let filteredSites = {}
+      for (const zuid in sites) {
+        if (sites[zuid].zuid && sites[zuid].zuid.toLowerCase().includes(searchString.toLowerCase())) {
+          filteredSites[zuid] = sites[zuid]
+        }
+        if (sites[zuid].name && sites[zuid].name.toLowerCase().includes(searchString.toLowerCase())) {
+          filteredSites[zuid] = sites[zuid]
+        }
+        if (sites[zuid].hash && sites[zuid].hash.toLowerCase().includes(searchString.toLowerCase())) {
+          filteredSites[zuid] = sites[zuid]
+        }
+      }
+    dispatch({ type: 'FILTER_PROPERTIES', filteredSites})
+  }else{
+    dispatch({type: 'FILTER_PROPERTIES', filteredSites: sites})
+  }
   }
 }
 
@@ -68,11 +111,11 @@ export const getBlueprints = () => {
         name: 'BP1',
         description: 'things that happen',
         url: 'asdgsdagsadg'
-      },{
+      }, {
         name: 'Good Blueprint',
         description: 'describing the good blueprint',
         url: 'fakeurlforimg.com'
-      },{
+      }, {
         name: 'not very popular blueprint',
         description: 'nobody really likes this blueprint, because its ugly and doesnt work well on mobile',
         url: 'www.eeweblueprints.com'
