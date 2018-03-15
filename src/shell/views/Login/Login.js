@@ -11,26 +11,34 @@ class Login extends Component {
     super(props)
 
     this.state = {
-      message: ''
+      message: 'TEST ERROR MESSAGE, PLZ STYLE'
     }
   }
   render() {
     return (
       <section className={styles.Login}>
-        <div className={styles.gridWrap} >
+        <div className={styles.gridWrap}>
           <header>
             <img src="/zesty-z-logo.svg" />
           </header>
-          <div className={styles.gridSingle} >
+          <div className={styles.gridSingle}>
             <form name="login" className={styles.LoginForm}>
-
               <label>
                 <p>Email Address</p>
-                <Input className={styles.loginInput} type="text" placeholder="e.g. hello@zesty.io" name='email' />
+                <Input
+                  className={styles.loginInput}
+                  type="text"
+                  placeholder="e.g. hello@zesty.io"
+                  name="email"
+                />
               </label>
               <label>
                 <p>Password</p>
-                <Input className={styles.loginInput} type="password" name='pass' />
+                <Input
+                  className={styles.loginInput}
+                  type="password"
+                  name="pass"
+                />
               </label>
               <Button onClick={e => this.handleLogin(e)}>Login</Button>
               <p>{this.state.message}</p>
@@ -38,14 +46,22 @@ class Login extends Component {
 
             <Url href="/reset-password">Forgot Password?</Url>
           </div>
-          <div className={styles.gridSingle} >
-            <div className={styles.createAccount} >
+          <div className={styles.gridSingle}>
+            <div className={styles.createAccount}>
               <h2>Create an Account</h2>
-              <p>Welcome to Zesty.io. Sign Up to start creating and managing content ready to be delivered securely, quickily and scalably to everywhere from anywhere.<br/></p>
+              <p>
+                Welcome to Zesty.io. Sign Up to start creating and managing
+                content ready to be delivered securely, quickily and scalably to
+                everywhere from anywhere.<br />
+              </p>
               <Url href="/signup">Create Account</Url>
               <h3>Additional Information</h3>
-              <p><Url href="https://zesty.io">Zesty.io</Url></p>
-              <p><Url href="mailto:hello@zesty.io">hello@zesty.io</Url></p>
+              <p>
+                <Url href="https://zesty.io">Zesty.io</Url>
+              </p>
+              <p>
+                <Url href="mailto:hello@zesty.io">hello@zesty.io</Url>
+              </p>
             </div>
           </div>
         </div>
