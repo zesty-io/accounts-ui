@@ -29,7 +29,7 @@ class PropertyCreate extends Component {
     return (
       <section className={styles.PropertyCreate}>
         {!this.state.bpStep
-          ? <div>
+          ? <div className={styles.nameNew}>
               <h3>Name your new web property</h3>
               <Input type='text' name='newPropertName' value={this.state.name} onChange={this.handleChange}/>
               <Button name='submitNewPropertyName' text='Submit' onClick={() => this.setState({ bpStep: true })} />
