@@ -21,37 +21,43 @@ class WebsiteOverview extends Component {
   render() {
     return (
       <section className={styles.WebsiteOverviewWrap}>
-      {this.props.AccountName ?
-        <article className={styles.WebsiteOverview}>
-          <Link to="/properties/">
-            <i className="fa fa-times-circle-o" aria-hidden="true" />
-          </Link>
-          <header>
-            <h1>{this.props.AccountName}</h1>
-            <h2>
-              {this.props.Domain ? (
-                this.props.Domain
-              ) : (
+        {this.props.AccountName ? (
+          <article className={styles.WebsiteOverview}>
+            <Link to="/properties/">
+              <i className="fa fa-times-circle-o" aria-hidden="true" />
+            </Link>
+            <header>
+              <h1>{this.props.AccountName}</h1>
+              <h2>
+                {this.props.Domain ? (
+                  this.props.Domain
+                ) : (
                   <Button>
                     <i className={cx('fa fa-cog')} aria-hidden="true" />Setup
                     Domain
-                </Button>
+                  </Button>
                 )}
-            </h2>
-          </header>
-          <main>
-            <h2>Month Requests</h2>
-            <Stats site={this.props} />
-            <h2>Recent Site Actions</h2>
-            {/* <Actions site={this.props} /> */}
-            <h2>User Access</h2>
-            {/* <UserAccess site={this.props} /> */}
-            <h2>Company Access</h2>
-            {/* <CompanyAccess site={this.props} /> */}
-            <h2>Blueprint</h2>
-            {/* <Blueprint site={this.props} /> */}
-          </main>
-        </article>: <h3>loading</h3>}
+              </h2>
+            </header>
+            <main>
+              <h2>Month Requests</h2>
+              <Stats site={this.props} />
+              <h2>Recent Site Actions</h2>
+              {/* <Actions site={this.props} /> */}
+              <h2>User Access</h2>
+              {/* <UserAccess site={this.props} /> */}
+              <h2>Company Access</h2>
+              {/* <CompanyAccess site={this.props} /> */}
+              <h2>Blueprint</h2>
+              {/* <Blueprint site={this.props} /> */}
+            </main>
+          </article>
+        ) : (
+          <section className={styles.Loading}>
+            <h3>Loading Site</h3>
+            <Loader />
+          </section>
+        )}
       </section>
     )
   }
@@ -60,6 +66,4 @@ class WebsiteOverview extends Component {
 const mapStateToProps = (state, ownProps) => {
   return { ...state.sites[ownProps.match.params.hash] }
 }
-export default withRouter(connect(
-  mapStateToProps
-)(WebsiteOverview))
+export default withRouter(connect(mapStateToProps)(WebsiteOverview))
