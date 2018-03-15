@@ -6,12 +6,12 @@ import styles from './Websites.less'
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
 
-import { getSites } from '../../store'
+// import { getSites } from '../../store'
 
 class Properties extends Component {
-  componentDidMount() {
-    this.props.dispatch(getSites())
-  }
+  // componentDidMount() {
+  //   this.props.dispatch(getSites())
+  // }
   render() {
     return (
       <section className={styles.Websites}>

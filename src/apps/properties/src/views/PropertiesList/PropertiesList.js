@@ -17,6 +17,14 @@ class Properties extends Component {
     return (
       <section className={styles.Websites}>
         <PropertiesHeader />
+
+        {!Object.keys(this.props.filteredSites).length ? (
+          <div className={styles.LoadingSites}>
+            <h2>Loading Sites</h2>
+            <Loader />
+          </div>
+        ) : null}
+
         <main className={styles.siteList}>
           {Object.keys(this.props.filteredSites).map(zuid => {
             return (
