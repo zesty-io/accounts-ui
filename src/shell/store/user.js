@@ -1,4 +1,7 @@
-export function user (state = {}, action) {
+import config from '../config'
+import { request } from '../../util/request'
+
+export function user(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_USER':
       // TODO show loading state?
@@ -26,13 +29,13 @@ export function user (state = {}, action) {
   }
 }
 
-export function getUser (zuid) {
+export function getUser(zuid) {
   // console.log('action:getUser', zuid)
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: 'FETCHING_USER'
     })
-    fetch(`http://localhost:6010/v1/user/${zuid}`)
+    request(`http://${config.API_ACCOUNTS}:6010/v1/user/${zuid}`)
       .then(res => res.json())
       .then(user => {
         console.log('user', user)
