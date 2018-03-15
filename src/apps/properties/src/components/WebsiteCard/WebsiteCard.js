@@ -34,7 +34,7 @@ class WebsiteCard extends Component {
           <h1 className={styles.name}>{this.props.site.AccountName}</h1>
         </header>
         <main className={styles.WebsiteManage}>
-          {this.props.site.domain ? (
+          {this.props.site.Domain ? (
             <Url target="_blank" href="http://alphauniverse.com">
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
                 this.props.site.Domain

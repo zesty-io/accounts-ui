@@ -53,7 +53,7 @@ export function sites(state = {}, action) {
       return { ...state, blueprints: action.blueprints }
 
     case 'FETCH_SITE_DETAILS_SUCCESS':
-      return { ...state, site: action.site, detailsSuccess: true }
+      return { ...state, [action.site.zuid]: {...state[action.site.zuid], ...action.site}, detailsSuccess: true }
 
     case 'ADD_PROPERTY':
       let addedSite = {
