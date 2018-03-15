@@ -53,7 +53,7 @@ export function sites(state = {}, action) {
       return { ...state, blueprints: action.blueprints }
 
     case 'FETCH_SITE_DETAILS_SUCCESS':
-      return { ...state, [action.site.zuid]: {...state[action.site.zuid], ...action.site}, detailsSuccess: true }
+      return { ...state, [action.site.zuid]: { ...state[action.site.zuid], ...action.site }}
 
     case 'ADD_PROPERTY':
       let addedSite = {
@@ -73,7 +73,7 @@ export function sites(state = {}, action) {
 }
 
 export const filterProperties = searchString => {
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     let sites = getState().sites
     if (searchString !== '') {
       let filteredSites = {}
