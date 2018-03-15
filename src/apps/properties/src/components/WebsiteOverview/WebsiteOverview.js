@@ -41,7 +41,7 @@ class WebsiteOverview extends Component {
           </header>
           <main>
             <h2>Month Requests</h2>
-            {/* <Stats site={this.props} /> */}
+            <Stats site={this.props} />
             <h2>Recent Site Actions</h2>
             {/* <Actions site={this.props} /> */}
             <h2>User Access</h2>
