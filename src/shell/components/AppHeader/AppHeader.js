@@ -11,12 +11,12 @@ export default class AppHeader extends PureComponent {
       <header className={styles.AppHeader}>
         <img className={styles.logo} src="/zesty-z-logo.png" />
         <nav className={styles.GlobalNav}>
-          <NavLink to="/dashboard">Dashboard</NavLink>
+          {/* <NavLink to="/dashboard">Dashboard</NavLink> */}
           <NavLink to="/properties">Web Properties</NavLink>
           <NavLink to="/account/combined">My Account</NavLink>
-          <NavLink to="/messages">
+          {/* <NavLink to="/messages">
             <MessageIcon />
-          </NavLink>
+          </NavLink> */}
         </nav>
         <span className={styles.logout} title="Logout">
           <span>
