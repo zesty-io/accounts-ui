@@ -104,7 +104,7 @@ export const filterProperties = searchString => {
         }
       }
       dispatch({
-        meta: { debounce: { time: 500 } },
+        meta: { debounce: { time: 250 } },
         type: 'FILTER_PROPERTIES',
         filteredSites
       })
