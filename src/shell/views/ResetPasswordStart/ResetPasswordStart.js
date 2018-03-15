@@ -16,10 +16,11 @@ export default class ResetPasswordStart extends Component {
           className={styles.ResetPasswordStartForm}
         >
           <img src="/zesty-z-logo.svg" />
+          <h2>Request Password Reset</h2>
           <label>
+
             <p>
-              Enter the email for the account you need to reset your password
-              for and we will send an email with instructions for resetting your
+              Enter the email for associated with your account and we will send an email with instructions for resetting your
               password.
             </p>
             <Input className={styles.input} type="email" name="email" />

@@ -49,7 +49,7 @@ export default class Signup extends Component {
             <Input className={styles.input} type="password" name="pass" />
           </label>
           <Button onClick={this.handleSignup}>Create An Account</Button>
-          <p>{this.state.message}</p>
+          <p className={styles.error} >{this.state.message}</p>
 
           <Url href="/login">Already have an account?</Url>
         </form>

@@ -13,6 +13,7 @@ export default class ResetPasswordEnd extends Component {
       <section className={styles.ResetPasswordEnd}>
         <form name="ResetPasswordEnd" className={styles.ResetPasswordEndForm}>
           <img src="/zesty-z-logo.svg" />
+          <h2>Enter New Password</h2>
           <label>
             <p>New Password</p>
             <Input className={styles.input} type="password" name="pass" />
@@ -22,7 +23,6 @@ export default class ResetPasswordEnd extends Component {
             <Input className={styles.input} type="password" name="pass" />
           </label>
           <Button onClick={this.handleSignup}>Reset Password</Button>
-          <Url href="/login">Return to Login</Url>
         </form>
       </section>
     )

@@ -41,7 +41,7 @@ class Login extends Component {
                 />
               </label>
               <Button onClick={e => this.handleLogin(e)}>Login</Button>
-              <p>{this.state.message}</p>
+              <p className={styles.error} >{this.state.message}</p>
             </form>
 
             <Url href="/reset-password">Forgot Password?</Url>
