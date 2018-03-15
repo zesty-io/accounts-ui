@@ -29,8 +29,8 @@ class WebsiteOverview extends Component {
           <header>
             <h1>{this.props.AccountName}</h1>
             <h2>
-              {this.props.domain ? (
-                this.props.domain
+              {this.props.Domain ? (
+                this.props.Domain
               ) : (
                   <Button>
                     <i className={cx('fa fa-cog')} aria-hidden="true" />Setup
@@ -41,15 +41,15 @@ class WebsiteOverview extends Component {
           </header>
           <main>
             <h2>Month Requests</h2>
-            <Stats site={this.props} />
+            {/* <Stats site={this.props} /> */}
             <h2>Recent Site Actions</h2>
-            <Actions site={this.props} />
+            {/* <Actions site={this.props} /> */}
             <h2>User Access</h2>
-            <UserAccess site={this.props} />
+            {/* <UserAccess site={this.props} /> */}
             <h2>Company Access</h2>
-            <CompanyAccess site={this.props} />
+            {/* <CompanyAccess site={this.props} /> */}
             <h2>Blueprint</h2>
-            <Blueprint site={this.props} />
+            {/* <Blueprint site={this.props} /> */}
           </main>
         </article>: <h3>loading</h3>}
       </section>

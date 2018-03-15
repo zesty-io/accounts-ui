@@ -164,7 +164,7 @@ export const getSiteDetails = id => {
         dispatch({
           type: 'FETCH_SITE_DETAILS_SUCCESS',
           site: {
-            zuid: 'xxxxx0',
+            zuid: '8-5fbd084-cf8d72',
             name: 'Hofbrauhaus Brand Epicenter / America Corp',
             domain: '',
             domainSelect: 'no',
