@@ -25,7 +25,7 @@ class TwoFactor extends Component {
             <Input type="text" name="token" className={styles.input} />
           </label>
           <Button onClick={this.handle2FA}>Check Token</Button>
-          <p>{this.state.message}</p>
+          <p className={styles.error} >{this.state.message}</p>
         </form>
       </section>
     )
