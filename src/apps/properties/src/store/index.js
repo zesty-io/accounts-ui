@@ -222,7 +222,6 @@ export function getSites(userZuid) {
         'User-Zuid': userZuid
       }
     })
-      .then(res => res.json())
       .then(sites => {
         console.log('sites', sites)
         dispatch({
