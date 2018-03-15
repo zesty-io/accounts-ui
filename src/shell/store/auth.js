@@ -44,6 +44,7 @@ export function verifyAuth(unsubscribe) {
         console.log('VERIFY JSON: ', json)
         dispatch({
           type: 'FETCH_VERIFY_SUCCESS',
+          zuid: json.meta.userZuid,
           auth: json.code === 200
         })
         if (unsubscribe) {
