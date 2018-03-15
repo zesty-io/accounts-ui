@@ -5,13 +5,13 @@ import { ErrorBoundary } from './err'
 
 import Blueprints from '../Blueprints'
 import Security from '../Security'
-import Combined from '../Combined'
+import Account from '../Account'
 
 import styles from './styles.less'
 
 import { getSettings } from '../../store'
 
-class Account extends Component {
+class Settings extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -44,7 +44,7 @@ class Account extends Component {
             </ul>
             <div style={{ paddingLeft: '25%' }}>
               <Switch>
-                <Route path="/account/combined" component={Combined} />
+                <Route path="/account/combined" component={Account} />
                 <Route path="/account/security" component={Security} />
                 <Route path="/account/blueprints" component={Blueprints} />
               </Switch>
@@ -58,4 +58,4 @@ class Account extends Component {
   }
 }
 
-export default connect(state => state)(Account)
+export default connect(state => state)(Settings)

@@ -33,7 +33,7 @@ class Shell extends Component {
             <Switch>
               {/* <Route path="/dashboard" component={Dashboard} /> */}
               <Route path="/properties" component={Properties} />
-              <Route path="/account" component={Account} />
+              <Route path="/account" component={Settings} />
               {/* <Route path="/messages" component={Messages} /> */}
               <Redirect from="/" to="/properties" />
               {/* TODO: handle no match */}
