@@ -1,13 +1,19 @@
 .WebsiteCard {
-  background-color: #dee1ea;
-  margin: 1rem;
-  padding: 1rem;
+background:lighten(#f2f4fb,2.5%);
+  margin: 1.5rem;
   max-width: 60rem;
   word-break: break-word;
   display: flex;
   flex-direction: column;
 
+  a:visited, a {
+    color:#497edf;
+    margin: 0;
+  }
   header {
+    padding: 1rem;
+    background:lighten(#f2f4fb,2%);
+    border-bottom:1px solid #f2f4fb;
     .name {
       font-size: 1.1em;
       .icon {
@@ -21,12 +27,16 @@
     }
   }
   main {
+    padding: 1rem;
+      padding-bottom:0;
     flex: 1;
     a {
       margin: 0;
     }
   }
   footer {
+    padding: 1rem;
+      padding-top:0;
     .controls {
       display: flex;
       display: grid;
@@ -36,6 +46,9 @@
       }
       .settings {
         flex: 0;
+      }
+      a:visited, a {
+        color:#497edf;
       }
     }
   }
