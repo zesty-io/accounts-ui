@@ -11,7 +11,7 @@ class TwoFactor extends Component {
     super(props)
 
     this.state = {
-      message: ''
+      message: 'TEST ERROR MESSAGE, PLZ STYLE'
     }
   }
   render() {

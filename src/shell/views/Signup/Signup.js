@@ -1,37 +1,52 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import styles from './Signup.less'
-import {request} from '../../../util/request'
+import { request } from '../../../util/request'
 
 export default class Signup extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
-      message: 'TEST'
+      message: 'TEST ERROR MESSAGE, PLZ STYLE'
     }
   }
-  render () {
+  render() {
     return (
       <section className={styles.Signup}>
-        <form name='signup' className={styles.SignupForm}>
+        <form name="signup" className={styles.SignupForm}>
           <img src="/zesty-z-logo.svg" />
           <h2>Create an Account</h2>
           <label>
             <p>Email Address</p>
-            <Input className={styles.input} type="text" placeholder="hello@zesty.io" name='email' />
+            <Input
+              className={styles.input}
+              type="text"
+              placeholder="hello@zesty.io"
+              name="email"
+            />
           </label>
           <label>
             <p>First Name</p>
-            <Input className={styles.input} type="text" placeholder="Zesty" name='first_name' />
+            <Input
+              className={styles.input}
+              type="text"
+              placeholder="Zesty"
+              name="first_name"
+            />
           </label>
           <label>
             <p>Last Name</p>
-            <Input className={styles.input} type="text" placeholder="Dotio" name='last_name' />
+            <Input
+              className={styles.input}
+              type="text"
+              placeholder="Dotio"
+              name="last_name"
+            />
           </label>
           <label>
             <p>Password</p>
-            <Input className={styles.input} type="password"  name='pass' />
+            <Input className={styles.input} type="password" name="pass" />
           </label>
           <Button onClick={this.handleSignup}>Create An Account</Button>
           <p>{this.state.message}</p>
@@ -41,10 +56,10 @@ export default class Signup extends Component {
       </section>
     )
   }
-  handleSignup = (evt) => {
+  handleSignup = evt => {
     evt.preventDefault()
 
-    console.log("signup", evt);
+    console.log('signup', evt)
 
     // request('http://svc.zesty.localdev:3011/login', {
     //   body: {
