@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 
 import Login from '../Login'
+import TwoFactor from '../TwoFactor'
 import Signup from '../Signup'
 import ResetPassword from '../ResetPassword'
 import VerifyEmail from '../VerifyEmail'
@@ -52,7 +53,8 @@ class App extends Component {
           {this.props.auth.valid ? (
             <Route path="/" component={AppShell} />
           ) : null}
-          <Route path="/login" component={Login} />
+          <Route exact path="/login" component={Login} />
+          <Route path="/login/2fa" component={TwoFactor} />
           <Route path="/signup" component={Signup} />
           <Route path="/reset-password" component={ResetPassword} />
           <Route path="/verify-email" component={VerifyEmail} />

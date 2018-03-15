@@ -11,7 +11,7 @@ class Login extends Component {
     super(props)
 
     this.state = {
-      message: 'TEST'
+      message: ''
     }
   }
   render() {
@@ -57,13 +57,8 @@ class Login extends Component {
             zuid: json.meta.userZuid,
             auth: true
           })
-        } else if (json.code === 201) {
-          // TODO Show 2FA screen
-          // TODO poll auth api for 2FA one touch
-          this.props.dispatch({
-            type: 'FETCH_AUTH_SUCCESS',
-            auth: false
-          })
+        } else if (json.code === 202) {
+          window.location = '/login/2fa'
         } else {
           // TODO Display error message
           this.setState({
