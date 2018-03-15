@@ -17,28 +17,38 @@ class Login extends Component {
   render() {
     return (
       <section className={styles.Login}>
-        <form name="login" className={styles.LoginForm}>
-          <img src="/zesty-z-logo.png" />
-          <h2>Zesty.io</h2>
-          <label>
-            <p>Email Address</p>
-            <input
-              name="email"
-              className={styles.input}
-              type="email"
-              placeholder="e.g. hello@zesty.io"
-            />
-          </label>
-          <label>
-            <p>Password</p>
-            <input name="pass" className={styles.input} type="password" />
-          </label>
-          <Button onClick={e => this.handleLogin(e)}>Login</Button>
-          <p>{this.state.message}</p>
-        </form>
+        <div className={styles.gridWrap} >
+          <header>
+            <img src="/zesty-z-logo.svg" />
+          </header>
+          <div className={styles.gridSingle} >
+            <form name="login" className={styles.LoginForm}>
 
-        <Url href="/reset-password">Reset Password</Url>
-        <Url href="/signup">Create Account</Url>
+              <label>
+                <p>Email Address</p>
+                <Input className={styles.loginInput} type="text" placeholder="e.g. hello@zesty.io" name='email' />
+              </label>
+              <label>
+                <p>Password</p>
+                <Input className={styles.loginInput} type="password" name='pass' />
+              </label>
+              <Button onClick={e => this.handleLogin(e)}>Login</Button>
+              <p>{this.state.message}</p>
+            </form>
+
+            <Url href="/reset-password">Forgot Password?</Url>
+          </div>
+          <div className={styles.gridSingle} >
+            <div className={styles.createAccount} >
+              <h2>Create an Account</h2>
+              <p>Welcome to Zesty.io. Sign Up to start creating and managing content ready to be delivered securely, quickily and scalably to everywhere from anywhere.<br/></p>
+              <Url href="/signup">Create Account</Url>
+              <h3>Additional Information</h3>
+              <p><Url href="https://zesty.io">Zesty.io</Url></p>
+              <p><Url href="mailto:hello@zesty.io">hello@zesty.io</Url></p>
+            </div>
+          </div>
+        </div>
       </section>
     )
   }
