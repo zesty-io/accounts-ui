@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styles from './profile.less'
 
 import {
     updateSetting,
@@ -16,16 +17,16 @@ class Profile extends Component {
   }
   render() {
     return (
-      <section id='UserSettings'>
+      <section className={styles.profile}>
         <h2>Profile</h2>
-          <div className="field">
+          <div className={styles.field}>
             <div><label>First Name</label></div>
             <Input type="text" value={this.props.profile.firstName} onChange={this.handleChange} name='firstName' />
           </div>
           <div className="field">
             <div><label>Last Name</label></div>
             <Input type="text" value={this.props.profile.lastName} onChange={this.handleChange} name='lastName' />
-            <Button text="Save" onClick={this.handleClick} />
+            <Button className={styles.ProfileSave} text="Save" onClick={this.handleClick} />
           </div>
       </section>
     )
