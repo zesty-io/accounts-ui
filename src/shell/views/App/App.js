@@ -5,7 +5,8 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import Login from '../Login'
 import TwoFactor from '../TwoFactor'
 import Signup from '../Signup'
-import ResetPassword from '../ResetPassword'
+import ResetPasswordStart from '../ResetPasswordStart'
+import ResetPasswordEnd from '../ResetPasswordEnd'
 import VerifyEmail from '../VerifyEmail'
 
 import AppHeader from '../../components/AppHeader'
@@ -56,7 +57,8 @@ class App extends Component {
           <Route exact path="/login" component={Login} />
           <Route path="/login/2fa" component={TwoFactor} />
           <Route path="/signup" component={Signup} />
-          <Route path="/reset-password" component={ResetPassword} />
+          <Route exact path="/reset-password" component={ResetPasswordStart} />
+          <Route path="/reset-password-confirm" component={ResetPasswordEnd} />
           <Route path="/verify-email" component={VerifyEmail} />
           <Redirect to="/login" />
         </Switch>
