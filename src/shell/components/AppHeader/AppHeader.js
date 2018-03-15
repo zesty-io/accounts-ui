@@ -9,7 +9,7 @@ export default class AppHeader extends PureComponent {
   render() {
     return (
       <header className={styles.AppHeader}>
-        <img className={styles.logo} src="/zesty-z-logo.png" />
+        <img className={styles.logo} src="/zesty-z-logo.svg" />
         <nav className={styles.GlobalNav}>
           {/* <NavLink to="/dashboard">Dashboard</NavLink> */}
           <NavLink to="/properties">Web Properties</NavLink>

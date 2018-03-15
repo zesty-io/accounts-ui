@@ -34,6 +34,11 @@ class WebsiteCard extends Component {
           <h1 className={styles.name}>{this.props.site.AccountName}</h1>
         </header>
         <main className={styles.WebsiteManage}>
+          {/* <p>30 Day Requests: 1,300,000 TODO line graph</p> */}
+
+          <Line data={data} options={options} />
+        </main>
+        <footer>
           {this.props.site.Domain ? (
             <Url target="_blank" href={`http://${this.props.site.Domain}`}>
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
@@ -41,24 +46,19 @@ class WebsiteCard extends Component {
               }
             </Url>
           ) : null}
-          {/* <p>30 Day Requests: 1,300,000 TODO line graph</p> */}
-
-          <Line data={data} options={options} />
-        </main>
-        <footer>
           <ButtonGroup className={styles.controls}>
             <Url
               target="_blank"
               href={`https://${this.props.site.ZUID}.manage.zesty.io`}
             >
-              <i className="fa fa-external-link" aria-hidden="true" />Site
+              <i className="fa fa-external-link" aria-hidden="true" /> Site
               Manager
             </Url>
             <Url
               target="_blank"
               href={`https://${this.props.site.ZUID}.preview.zesty.io`}
             >
-              <i className="fa fa-globe" aria-hidden="true" />Preview
+              <i className="fa fa-globe" aria-hidden="true" /> Preview
             </Url>
             <Link to={`/properties/${this.props.site.ZUID}`}>
               <i
