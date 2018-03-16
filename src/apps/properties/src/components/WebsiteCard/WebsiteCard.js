@@ -35,13 +35,18 @@ class WebsiteCard extends Component {
         <header>
           <div className={styles.name}>
             <h1>{this.props.site.AccountName}</h1>
-            {this.props.site.Domain ? (
-              <Url target="_blank" href={`http://${this.props.site.Domain}`}>
+            {this.props.site.domain ? (
+              <Url target="_blank" href={`http://${this.props.site.domain}`}>
                 <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
-                  this.props.site.Domain
+                  this.props.site.domain
                 }
               </Url>
-            ) : null}
+            ) : (
+              <Link to={`/properties/${this.props.site.ZUID}`}>
+                <i className="fa fa-plus" aria-hidden="true" />
+                &nbsp;Set Domain
+              </Link>
+            )}
           </div>
 
           <Url
@@ -55,35 +60,15 @@ class WebsiteCard extends Component {
           <Line data={data} options={options} />
         </main>
         <footer>
-          {/* <ButtonGroup className={styles.controls}>
-            <Url
-              target="_blank"
-              href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
-            >
-              <i className="fa fa-globe" aria-hidden="true" /> Preview
-            </Url>
-            {this.props.site.Domain ? (
-              <Url target="_blank" href={`http://${this.props.site.Domain}`}>
-                <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
-                  this.props.site.Domain
-                }
-              </Url>
-            ) : null}
-          </ButtonGroup> */}
           <ButtonGroup className={styles.controls}>
             <Url
+              className={styles.manager}
               target="_blank"
               href={`https://${this.props.site.RandomHashID}.manage.zesty.io`}
             >
               <i className="fa fa-external-link" aria-hidden="true" /> Site
               Manager
             </Url>
-            {/* <Url
-              target="_blank"
-              href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
-            >
-              <i className="fa fa-globe" aria-hidden="true" /> Preview
-            </Url> */}
             <Link to={`/properties/${this.props.site.ZUID}`}>
               <i
                 className={cx(styles.settings, 'fa fa-cog')}
