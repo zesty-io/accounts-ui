@@ -24,34 +24,31 @@ class Email extends Component {
               invitations in one place.
             </p>
           </div>
-          <table className="basicList">
-            <tbody>
-              <tr>
-                <th>Email</th>
-                <th>Options</th>
-              </tr>
+          <div className={styles.emailTable}>
+          <footer>
+              <Input
+                type="text"
+                placeholder="Email"
+                name="newEmail"
+                value={this.props.newEmail}
+                onChange={this.handleChange}
+              />
+              <Button text="Add Email" onClick={this.handleClick} />
+          </footer>
+              <header>
+                <h3>Email</h3>
+                <h3>Options</h3>
+              </header>
+              <main>
               {this.props.emails.map((email, i) => (
-                <tr key={i}>
-                  <td>{email.email} </td>
-                  <td>{email.options}</td>
-                </tr>
+                <article key={i}>
+                  <span>{email.email} </span>
+                  <span>{email.options}</span>
+                </article>
               ))}
-              <tr>
-                <td className="form">
-                  <Input
-                    type="text"
-                    placeholder="Email"
-                    name="newEmail"
-                    value={this.props.newEmail}
-                    onChange={this.handleChange}
-                  />
-                </td>
-                <td>
-                  <Button text="Add Email" onClick={this.handleClick} />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+              </main>
+
+          </div>
         </div>
       </section>
     )
