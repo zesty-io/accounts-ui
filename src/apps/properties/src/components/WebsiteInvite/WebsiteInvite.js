@@ -45,12 +45,10 @@ class WebsiteInvite extends Component {
               }
             </Url>
           ) : null} */}
-          <ButtonGroup className={styles.controls}>
-            <Button>
-              <i className="fa fa-check-circle-o" aria-hidden="true" />
-              Accept Invite
-            </Button>
-          </ButtonGroup>
+          <Button className={styles.invite}>
+            <i className="fa fa-check-circle-o" aria-hidden="true" />
+            Accept Invite
+          </Button>
         </footer>
       </article>
     )
