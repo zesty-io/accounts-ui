@@ -1,56 +1,56 @@
-.PropertyBlueprint {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  display: grid;
-  // grid-auto-flow: columns;
-  grid-gap: 2rem;
-  width: 100%;
-  grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-  grid-auto-rows: minmax(10rem, auto);
-  margin: 2rem;
-  > a {
-    position: absolute;
-    display: block;
-    padding: 1rem;
-    top: 0;
-    right: 0;
-  }
-  > article {
-    max-width: 30rem;
-    word-break: break-word;
+@import '../../../../../shell/styles/colors.less';
+
+.BlueprintView {
+  padding: 2rem;
+  header {
     display: flex;
-    flex-direction: column;
-    animation: fadeIn 500ms forwards;
-    background: #fcfcfe;
-    header {
-      padding: 1rem;
-      background: lighten(#f2f4fb, 0%);
-      border-bottom: 1px solid #f2f4fb;
-      .name {
-        font-size: 1.1em;
-        .icon {
-          margin-right: 5px;
-        }
-      }
-    }
-    main {
-      padding: 1rem;
-      padding-bottom: 0;
+    flex-direction: row;
+    h1 {
+      font-size: 1.4rem;
       flex: 1;
-      a {
-        margin: 0;
-      }
+      margin-bottom: 5px;
     }
   }
-}
-@supports (display: grid) {
-  .PropertyBlueprint > * {
-    margin: 0;
+  .description {
+    border-bottom: 1px solid @zesty-light-blue;
+    max-width: 50rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
   }
 }
-// .PropertyBlueprint {
-// }
+
+.Blueprints {
+  display: grid;
+  grid: auto-flow / 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  margin-top: 2rem;
+}
+
+.Blueprint {
+  background: @white;
+
+  header {
+    background: @zesty-white;
+    .name {
+      font-size: 1.1em;
+      margin-left: 1rem;
+    }
+  }
+  main {
+    padding: 1rem;
+    padding-bottom: 0;
+
+    img {
+      max-width: 30%;
+      padding: 0 1rem 1rem 0;
+      float: left;
+    }
+  }
+  footer {
+    clear: both;
+    padding: 1rem;
+  }
+}
 
 .Loading {
   display: flex;
