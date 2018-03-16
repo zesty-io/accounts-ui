@@ -7,13 +7,13 @@ import Email from './Email'
 class Account extends Component {
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Profile />
         <br />
         <hr />
         <br />
         <Email />
-      </div>
+      </React.Fragment>
     )
   }
 }
