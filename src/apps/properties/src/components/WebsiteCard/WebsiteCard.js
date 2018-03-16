@@ -13,11 +13,11 @@ class WebsiteCard extends Component {
       datasets: [
         {
           label: 'requests',
-          data: [2, 4, 0, 6, 2, 4, 9]
+          data: Array.from({length:7}, () => Math.floor(Math.random() * 7))
         },
         {
           label: 'media',
-          data: [3, 6, 11, 7, 3, 6, 11]
+          data: Array.from({length:7}, () => Math.floor(Math.random() * 7))
         }
       ]
     }
