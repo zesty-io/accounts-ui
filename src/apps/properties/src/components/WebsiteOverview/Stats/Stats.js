@@ -10,7 +10,7 @@ class Stats extends Component {
         {
           label: 'Manager',
           // data: [this.props.site.stats.thisMonth.manager, this.props.site.stats.allTime.manager],
-          data: [23, 43],
+          data: Array.from({length:2}, () => Math.floor(Math.random() * 20)),
           backgroundColor: [
             'rgba(153, 102, 255, 0.2)',
             'rgba(153, 102, 255, 0.2)'
@@ -19,7 +19,7 @@ class Stats extends Component {
         {
           label: 'Development',
           // data: [this.props.site.stats.thisMonth.dev, this.props.site.stats.allTime.dev],
-          data: [14, 36],
+          data: Array.from({length:2}, () => Math.floor(Math.random() * 20)),
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(255, 99, 132, 0.2)'

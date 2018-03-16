@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styles from './Blueprint.less'
 
 class Blueprints extends Component {
   render() {
     return (
-      <section id="settings">
-        <div className="inner">
+        <div className={styles.blueprints}>
           <h2>Blueprints</h2>
           <a className="button green fr">
             <span className="icon-plus">+</span>
@@ -18,26 +18,23 @@ class Blueprints extends Component {
               forking their repositories, and copying the Github repository url.
             </Infotip>
           </a>
-          <div className="z-row">
-            <table>
-              <tbody>
-                <tr>
-                  <th>Blueprint Name</th>
-                  <th>Github URL</th>
-                  <th>Date Added</th>
-                </tr>
+          <div className={styles.bptable}>
+              <main>
+                <header>
+                  <h3>Blueprint Name</h3>
+                  <h3>Github URL</h3>
+                  <h3>Date Added</h3>
+                </header>
                 {this.props.profile.blueprints.map((bp, i) => (
-                  <tr key={i}>
-                    <td>{bp.name}</td>
-                    <td>{bp.url}</td>
-                    <td>{bp.date}</td>
-                  </tr>
+                  <article key={i}>
+                    <span>{bp.name}</span>
+                    <span>{bp.url}</span>
+                    <span>{bp.date}</span>
+                  </article>
                 ))}
-              </tbody>
-            </table>
+              </main>
           </div>
         </div>
-      </section>
     )
   }
 }
