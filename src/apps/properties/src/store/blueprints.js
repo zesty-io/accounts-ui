@@ -40,3 +40,29 @@ export function fetchBlueprints() {
       })
   }
 }
+
+export function fetchBlueprint(id) {
+  return dispatch => {
+    dispatch({
+      type: 'FETCHING_BLUEPRINTS'
+    })
+    request(`http://${config.API_ACCOUNTS}:6010/v1/blueprints/${id}`)
+      .then(json => {
+        let blueprints = json.reduce((acc, print) => {
+          acc[print.ID] = print
+          return acc
+        }, {})
+        dispatch({
+          type: 'FETCHING_BLUEPRINTS_SUCCESS',
+          blueprints
+        })
+      })
+      .catch(err => {
+        console.table(err)
+        dispatch({
+          type: 'FETCHING_BLUEPRINTS_ERROR',
+          err
+        })
+      })
+  }
+}
