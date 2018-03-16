@@ -7,6 +7,10 @@
     right: 0;
   }
 }
+@keyframes fadeIn {
+  0% {opacity:0;}
+	100% { opacity: 1; }
+}
 .PropertyCreate {
   background-color: @globalHeader;
   display: flex;
@@ -28,9 +32,38 @@
       margin-bottom: 10px;
       font-weight: normal;
     }
-    button {
-      display: inline-block;
-      width: 40%;
+    .blueprintsContainer {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      display: grid;
+      // grid-auto-flow: columns;
+      grid-gap: 2rem;
+      width:100%;
+      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+      grid-auto-rows: minmax(10rem, auto);
+      margin: 2rem;
+      > a {
+        position: absolute;
+        display: block;
+        padding: 1rem;
+        top:0;
+        right:0;
+      }
+      >div {
+        background: #fcfcfe;
+        //margin: 1.5rem;
+        max-width: 60rem;
+        word-break: break-word;
+        display: flex;
+        flex-direction: column;
+      	animation: fadeIn 500ms forwards;
+
+      }
     }
-  }
+    @supports (display: grid) {
+      .blueprintsContainer > * {
+        margin: 0;
+      }
+    }
 }

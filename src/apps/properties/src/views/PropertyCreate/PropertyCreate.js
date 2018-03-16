@@ -48,7 +48,7 @@ class PropertyCreate extends Component {
             </Link>
           </div>
         ) : (
-          <div>
+          <div className={styles.blueprintsContainer} ><Link to='/properties'> <Button name='cancel' text='cancel' /> </Link>
             {this.props.sites.blueprints.map((blueprint, i) => {
               return (
                 <div key={i}>
