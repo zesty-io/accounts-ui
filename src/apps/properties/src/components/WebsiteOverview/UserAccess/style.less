@@ -1,0 +1,56 @@
+@import "../../../../../../shell/styles/colors.less";
+
+.userAccess {
+  h2 {
+    margin: 20px 0;
+  }
+  p {
+    line-height: 30px;
+  }
+  .userTable {
+
+display: grid;
+       header {
+         display: grid;
+         grid: auto-flow / 1fr 1fr;
+       }
+       main {
+         display: grid;
+        grid-template-rows: auto;
+        article {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          &:nth-child(odd){
+            background-color: @zesty-field-blue;
+          }
+        }
+       }
+
+       footer {
+         display: flex;
+         input {
+           //height: 34px;
+
+         }
+         button {
+           margin-left: 20px;
+         }
+       }
+
+
+  }
+  .info {
+    color: #607394;
+    display: block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    overflow-y: visible;
+    position: relative;
+    max-width: 668px;
+    background: #dfeeff;
+    color: #2e436b;
+    border: solid 1px #a2bbd8;
+    border-radius: 4px;
+  }
+}
