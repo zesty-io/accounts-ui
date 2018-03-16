@@ -15,8 +15,7 @@ class PropertyBlueprint extends Component {
         {Object.keys(this.props.blueprints).length ? (
           <section className={styles.PropertyBlueprint}>
             <Link to="/properties">
-              {' '}
-              <Button name="cancel" text="cancel" />{' '}
+              <Button name="cancel" text="cancel" />
             </Link>
             {Object.keys(this.props.blueprints).map(i => {
               let blueprint = this.props.blueprints[i]
@@ -33,6 +32,7 @@ class PropertyBlueprint extends Component {
                     <Button
                       name={`selectBlueprint${i}`}
                       text="select this blueprint"
+                      onClick={this.handleSelect}
                     />
                   </main>
                 </article>
@@ -48,7 +48,13 @@ class PropertyBlueprint extends Component {
       </div>
     )
   }
+  handleSelect = evt => {
+    // TODO make api request to set blueprint for site
+    // TODO user returned zuid
+    window.location = '/properties/8-45a294a-1zg0cg'
+  }
 }
+
 export default connect(state => {
   console.log(state.blueprints)
 
