@@ -37,9 +37,11 @@ class PropertyCreate extends Component {
     )
   }
   handleChange = evt => {
-    this.setState({
-      name: evt.target.value
-    })
+    if (evt.target.value !== '') {
+      this.setState({
+        name: evt.target.value
+      })
+    }
   }
   handleSubmit = evt => {
     // TODO make api request to create site
