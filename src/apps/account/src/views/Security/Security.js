@@ -7,12 +7,12 @@ import TwoFactor from './TwoFactor'
 class Security extends Component {
   render() {
     return (
-      <section id="settings">
+      <React.Fragment>
         <h1>Security</h1>
         <Password />
         <h1>Two-factor authentication</h1>
         <TwoFactor />
-      </section>
+      </React.Fragment>
     )
   }
 }
