@@ -13,10 +13,13 @@ import Stats from './Stats'
 import Blueprint from './Blueprint'
 
 import { getSiteDetails } from '../../store'
+import{ getUsersForSite } from '../../store/siteUsers'
 
 class WebsiteOverview extends Component {
   componentDidMount() {
     this.props.dispatch(getSiteDetails())
+    this.props.dispatch(getUsersForSite(this.props.userZuid, this.props.ZUID))
+    console.log(this.props)
   }
   render() {
     return (
@@ -45,7 +48,7 @@ class WebsiteOverview extends Component {
               <h2>Recent Site Actions</h2>
               {/* <Actions site={this.props} /> */}
               <h2>User Access</h2>
-              {/* <UserAccess site={this.props} /> */}
+              <UserAccess users={this.props.siteUsers} />
               <h2>Company Access</h2>
               {/* <CompanyAccess site={this.props} /> */}
               <h2>Blueprint</h2>
@@ -64,6 +67,6 @@ class WebsiteOverview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return { ...state.sites[ownProps.match.params.hash] }
+  return { ...state.sites[ownProps.match.params.hash], userZuid: state.user.zuid, }
 }
 export default withRouter(connect(mapStateToProps)(WebsiteOverview))

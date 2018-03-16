@@ -101,6 +101,7 @@ export function sites(state = {}, action) {
       return state
 
     case 'FETCH_SITE_DETAILS_SUCCESS':
+    // /{{accounts_api_version}}/instances/{{site_zuid}}/users
       return {
         ...state,
         [action.site.zuid]: { ...state[action.site.zuid], ...action.site }
@@ -205,12 +206,43 @@ export const changeDomain = (domType, zuid) => {
   })
 }
 
+export const getUsersForSite = (id, siteZuid) => {
+  return dispatch => {
+    dispatch({
+      type: 'FETCHING_SITE_USERS'
+    })
+
+    request(`http://${config.API_ACCOUNTS}:6010/v1/instances/${siteZuid}/users`, {
+      headers: {
+        'User-Zuid': userZuid
+      }
+    })
+      .then(sites => {
+        dispatch({
+          type: 'FETCH_SITE_USERS_SUCCESS',
+          sites
+        })
+      })
+      .catch(err => {
+        console.error(err)
+        dispatch({
+          type: 'FETCH_SITE_USERS_ERROR',
+          err
+        })
+      })
+  }
+}
+
 export const getSiteDetails = id => {
   return dispatch => {
     dispatch({
       type: 'FETCHING_SITE_DETAILS'
     })
-
+    // request(`http://${config.API_ACCOUNTS}:6010/v1/instances/${}/users`, {
+    //   headers: {
+    //     'User-Zuid': userZuid
+    //   }
+    // })
     setTimeout(
       () =>
         dispatch({

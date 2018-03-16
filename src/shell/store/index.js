@@ -10,6 +10,8 @@ import {
   filteredSites,
   blueprints
 } from '../../apps/properties/src/store'
+import { siteUsers } from '../../apps/properties/src/store/siteUsers'
+import { siteCompanies } from '../../apps/properties/src/store/siteCompanies'
 import { messages } from '../../apps/messages/src/store'
 import { profile } from '../../apps/account/src/store'
 
@@ -23,6 +25,8 @@ const rootReducer = combineReducers({
   auth,
   user,
   sites,
+  siteUsers,
+  siteCompanies,
   filteredSites,
   blueprints,
   messages,
