@@ -36,7 +36,7 @@ export function getUser(zuid) {
     dispatch({
       type: 'FETCHING_USER'
     })
-    request(`http://${config.API_ACCOUNTS}:6010/v1/user/${zuid}`)
+    request(`http://${config.API_ACCOUNTS}:6010/v1/users/${zuid}`)
       .then(user => {
         console.log('user', user)
         dispatch({
