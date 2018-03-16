@@ -15,6 +15,15 @@ const normalizeSites = sites => {
   return normalized
 }
 
+export function blueprints(state = {}, action) {
+  switch (action.type) {
+    case 'GET_BLUEPRINTS':
+      return { ...state, ...action.blueprints }
+    default:
+      return state
+  }
+}
+
 export function filteredSites(state = {}, action) {
   switch (action.type) {
     case 'FETCH_SITES_SUCCESS':
@@ -49,23 +58,23 @@ export function sites(state = {}, action) {
     case 'FETCHING_SITE_DETAILS':
       return state
 
-    case 'GET_BLUEPRINTS':
-      return { ...state, blueprints: action.blueprints }
-
     case 'FETCH_SITE_DETAILS_SUCCESS':
-      return { ...state, [action.site.zuid]: { ...state[action.site.zuid], ...action.site }}
-
-    case 'ADD_PROPERTY':
-      let addedSite = {
-        sites: [...state.sites].push({
-          zuid: 'xxxxx' + (state.sites.length + 1),
-          domain: '',
-          stage: '',
-          name: action.name,
-          blueprint: action.blueprint
-        })
+      return {
+        ...state,
+        [action.site.zuid]: { ...state[action.site.zuid], ...action.site }
       }
-      return addedSite
+
+    // case 'ADD_PROPERTY':
+    //   let addedSite = {
+    //     sites: [...state.sites].push({
+    //       zuid: 'xxxxx' + (state.sites.length + 1),
+    //       domain: '',
+    //       stage: '',
+    //       name: action.name,
+    //       blueprint: action.blueprint
+    //     })
+    //   }
+    //   return addedSite
 
     default:
       return state
@@ -73,7 +82,7 @@ export function sites(state = {}, action) {
 }
 
 export const filterProperties = searchString => {
-  return function (dispatch, getState) {
+  return function(dispatch, getState) {
     let sites = getState().sites
     if (searchString !== '') {
       let filteredSites = {}
@@ -112,14 +121,14 @@ export const filterProperties = searchString => {
   }
 }
 
-export function addProperty(name, blueprint) {
-  return dispatch =>
-    dispatch({
-      type: 'ADD_PROPERTY',
-      name,
-      blueprint
-    })
-}
+// export function addProperty(name, blueprint) {
+//   return dispatch =>
+//     dispatch({
+//       type: 'ADD_PROPERTY',
+//       name,
+//       blueprint
+//     })
+// }
 
 export const getBlueprints = () => {
   return dispatch =>

@@ -5,17 +5,18 @@ import styles from './Websites.less'
 
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
-
-// import { getSites } from '../../store'
+import PropertyBlueprint from '../PropertyBlueprint'
 
 class Properties extends Component {
-  // componentDidMount() {
-  //   this.props.dispatch(getSites())
-  // }
   render() {
     return (
       <section className={styles.Websites}>
         <Switch>
+          <Route
+            exact
+            path="/properties/:zuid/blueprint"
+            component={PropertyBlueprint}
+          />
           <Route exact path="/properties/create" component={PropertyCreate} />
           <Route path="/properties" component={PropertiesList} />
         </Switch>

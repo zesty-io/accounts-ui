@@ -1,14 +1,17 @@
 import thunkMiddleware from 'redux-thunk'
-import {createLogger} from 'redux-logger'
-import {createStore, combineReducers, applyMiddleware} from 'redux'
+import { createLogger } from 'redux-logger'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createDebounce from 'redux-debounced'
 
-import {user} from './user'
-import {auth} from './auth'
-import {sites} from '../../apps/properties/src/store'
-import {filteredSites} from '../../apps/properties/src/store'
-import {messages} from '../../apps/messages/src/store'
-import {profile} from '../../apps/account/src/store'
+import { user } from './user'
+import { auth } from './auth'
+import {
+  sites,
+  filteredSites,
+  blueprints
+} from '../../apps/properties/src/store'
+import { messages } from '../../apps/messages/src/store'
+import { profile } from '../../apps/account/src/store'
 
 const loggerMiddleware = createLogger({
   collapsed: true,
@@ -21,6 +24,7 @@ const rootReducer = combineReducers({
   user,
   sites,
   filteredSites,
+  blueprints,
   messages,
   profile
 })
@@ -31,6 +35,6 @@ export const store = createStore(
   applyMiddleware(
     createDebounce(),
     thunkMiddleware, // lets us dispatch() functions
-    loggerMiddleware, // neat middleware that logs actions
+    loggerMiddleware // neat middleware that logs actions
   )
 )
