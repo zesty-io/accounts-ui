@@ -9,18 +9,18 @@ import WebsiteCard from '../../components/WebsiteCard'
 import WebsiteInvite from '../../components/WebsiteInvite'
 import WebsiteCreate from '../../components/WebsiteCreate'
 
-import { getSites } from '../../store'
+import { fetchSites } from '../../store/sites'
 
 class Properties extends Component {
   componentDidMount() {
-    this.props.dispatch(getSites(this.props.user.zuid))
+    this.props.dispatch(fetchSites(this.props.user.zuid))
   }
   render() {
     return (
       <section className={styles.Websites}>
         <PropertiesHeader />
         <main className={styles.siteListWrap}>
-          {Object.keys(this.props.filteredSites).length ? (
+          {Object.keys(this.props.sitesFiltered).length ? (
             <div className={styles.siteList}>
               {/* Only show if no site has been created */}
               {Object.keys(this.props.sites).length ? <WebsiteCreate /> : null}
@@ -38,17 +38,17 @@ class Properties extends Component {
                 })}
 
               {/* render sites user has access */}
-              {Object.keys(this.props.filteredSites)
+              {Object.keys(this.props.sitesFiltered)
                 .filter(
                   zuid =>
-                    this.props.filteredSites[zuid] &&
-                    !this.props.filteredSites[zuid].invite
+                    this.props.sitesFiltered[zuid] &&
+                    !this.props.sitesFiltered[zuid].invite
                 )
                 .map(zuid => {
                   return (
                     <WebsiteCard
                       key={zuid}
-                      site={this.props.filteredSites[zuid]}
+                      site={this.props.sitesFiltered[zuid]}
                     />
                   )
                 })}

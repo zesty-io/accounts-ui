@@ -14,14 +14,16 @@ import Blueprint from './Blueprint'
 
 import { getSiteDetails } from '../../store'
 
-import{ getUsersForSite } from '../../store/siteUsers'
-import{ getCompaniesForSite } from '../../store/siteCompanies'
+import { fetchSiteUsers } from '../../store/sitesUsers'
+import { fetichSiteCompanies } from '../../store/sitesCompanies'
 
 class WebsiteOverview extends Component {
   componentDidMount() {
     this.props.dispatch(getSiteDetails())
-    this.props.dispatch(getUsersForSite(this.props.userZuid, this.props.ZUID))
-    this.props.dispatch(getCompaniesForSite(this.props.userZuid, this.props.ZUID))
+    this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID))
+    this.props.dispatch(
+      fetichSiteCompanies(this.props.userZuid, this.props.ZUID)
+    )
   }
   render() {
     return (

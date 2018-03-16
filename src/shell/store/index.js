@@ -5,14 +5,7 @@ import createDebounce from 'redux-debounced'
 
 import { user } from './user'
 import { auth } from './auth'
-import {
-  sites,
-  filteredSites,
-  blueprints
-} from '../../apps/properties/src/store'
-import { siteUsers } from '../../apps/properties/src/store/siteUsers'
-import { siteCompanies } from '../../apps/properties/src/store/siteCompanies'
-import { messages } from '../../apps/messages/src/store'
+import { propertiesReducers } from '../../apps/properties/src/store'
 import { profile } from '../../apps/account/src/store'
 
 const loggerMiddleware = createLogger({
@@ -20,16 +13,10 @@ const loggerMiddleware = createLogger({
   diff: true
 })
 
-// const rootReducer = combineReducers({user, sites})
 const rootReducer = combineReducers({
+  ...propertiesReducers,
   auth,
   user,
-  sites,
-  siteUsers,
-  siteCompanies,
-  filteredSites,
-  blueprints,
-  messages,
   profile
 })
 

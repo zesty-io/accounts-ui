@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import styles from './PropertyBlueprint.less'
 
-import { getBlueprints } from '../../store'
+import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
   componentWillMount() {
-    this.props.dispatch(getBlueprints())
+    this.props.dispatch(fetchBlueprints())
   }
   render() {
     return (
