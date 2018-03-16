@@ -7,7 +7,7 @@ import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchBlueprints())
+    this.props.dispatch(fetchBlueprints(this.props.user.zuid))
   }
   render() {
     return (
@@ -71,5 +71,8 @@ class PropertyBlueprint extends Component {
 export default connect(state => {
   console.log(state.blueprints)
 
-  return { blueprints: state.blueprints }
+  return {
+    blueprints: state.blueprints,
+    user: state.user
+  }
 })(PropertyBlueprint)
