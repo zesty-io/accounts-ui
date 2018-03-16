@@ -1,12 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import styles from './style.less'
 class UserAccess extends Component {
+  componentWillUnmount(){
+    this.props.dispatch({ type: 'CLEAR_USERS' })
+  }
   render() {
     return (
-      <div>
+      <div className={styles.userAccess}>
         <Input name='newUser' type='text' />
         <Button name='newUserSubmit'>Send Invite</Button>
+        <div className ={styles.userTable}>
         <header>
                 <h3>First Name</h3>
                 <h3>Last Name</h3>
@@ -26,6 +30,7 @@ class UserAccess extends Component {
               : null
             }
               </main>
+              </div>
       </div>
     )
   }
