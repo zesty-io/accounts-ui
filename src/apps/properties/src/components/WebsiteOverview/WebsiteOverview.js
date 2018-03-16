@@ -15,7 +15,8 @@ import Blueprint from './Blueprint'
 import { getSiteDetails } from '../../store'
 
 import { fetchSiteUsers } from '../../store/sitesUsers'
-import { fetichSiteCompanies } from '../../store/sitesCompanies'
+import { fetichSiteCompanies } from '../../store/sitesCompanies' 
+import { fetchBlueprint } from '../../store/blueprints' 
 
 class WebsiteOverview extends Component {
   componentDidMount() {
@@ -24,6 +25,7 @@ class WebsiteOverview extends Component {
     this.props.dispatch(
       fetichSiteCompanies(this.props.userZuid, this.props.ZUID)
     )
+    this.props.dispatch(fetchBlueprint(this.props.initialBlueprint || this.props.site.BlueprintID))
   }
   render() {
     return (
@@ -54,9 +56,9 @@ class WebsiteOverview extends Component {
               <h2>User Access</h2>
               <UserAccess />
               <h2>Company Access</h2>
-              <CompanyAccess site={this.props} />
+              <CompanyAccess />
               <h2>Blueprint</h2>
-              {/* <Blueprint site={this.props} /> */}
+              <Blueprint site={this.props} />
             </main>
           </article>
         ) : (

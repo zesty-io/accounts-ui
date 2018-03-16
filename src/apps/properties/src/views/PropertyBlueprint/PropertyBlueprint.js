@@ -28,7 +28,11 @@ class PropertyBlueprint extends Component {
               configured for Zesty.io.
             </p>
             <main className={styles.Blueprints}>
-              {Object.keys(this.props.blueprints).map(i => {
+              {Object.keys(this.props.blueprints).filter(i => {
+                  if(!this.props.blueprints[i].Trashed){
+                    return i
+                  }
+                }).map(i => {
                 let blueprint = this.props.blueprints[i]
                 return (
                   <article className={styles.Blueprint} key={i}>

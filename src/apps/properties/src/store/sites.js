@@ -45,7 +45,7 @@ export function sites(state = {}, action) {
         ThirdPartyOAuthTokens: '{"google":"421"}',
         Favicon: null,
         Referrer: 'https://zesty.io/',
-        InitialPlate: 15,
+        BlueprintID: 15,
         RequiresTwoFactor: 0,
         createdAt: null,
         updatedAt: '2015-05-01T16:31:41Z',
