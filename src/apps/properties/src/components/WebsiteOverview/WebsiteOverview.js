@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import styles from './styles.less'
+import styles from './WebsiteOverview.less'
 
 import UserAccess from './UserAccess'
 import CompanyAccess from './CompanyAccess'
@@ -13,7 +13,7 @@ import Stats from './Stats'
 import Blueprint from './Blueprint'
 
 import { getSiteDetails } from '../../store'
-import{ getUsersForSite } from '../../store/siteUsers'
+import { getUsersForSite } from '../../store/siteUsers'
 
 class WebsiteOverview extends Component {
   componentDidMount() {
@@ -26,12 +26,12 @@ class WebsiteOverview extends Component {
       <section className={styles.WebsiteOverviewWrap}>
         {this.props.AccountName ? (
           <article className={styles.WebsiteOverview}>
-            <Link to="/properties/">
-              <i className="fa fa-times-circle-o" aria-hidden="true" />
-            </Link>
             <header>
-              <h1>{this.props.AccountName}</h1>
-              <h2>
+              <Link className={styles.close} to="/properties/">
+                <i className="fa fa-times-circle-o" aria-hidden="true" />Close
+              </Link>
+              <h1 className={styles.name}>{this.props.AccountName}</h1>
+              <h2 className={styles.domain}>
                 {this.props.Domain ? (
                   this.props.Domain
                 ) : (
@@ -67,6 +67,9 @@ class WebsiteOverview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return { ...state.sites[ownProps.match.params.hash], userZuid: state.user.zuid, }
+  return {
+    ...state.sites[ownProps.match.params.hash],
+    userZuid: state.user.zuid
+  }
 }
 export default withRouter(connect(mapStateToProps)(WebsiteOverview))
