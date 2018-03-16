@@ -25,14 +25,14 @@ class TwoFactor extends Component {
             <Input type="text" name="token" className={styles.input} />
           </label>
           <Button onClick={this.handle2FA}>Check Token</Button>
-          <p className={styles.error} >{this.state.message}</p>
+          <p className={styles.error}>{this.state.message}</p>
         </form>
       </section>
     )
   }
   handle2FA = evt => {
     evt.preventDefault()
-    request(`http://${config.SERVICE_URL}:3011/verify-2fa`, {
+    request(`http://${config.API_AUTH}/verify-2fa`, {
       body: {
         token: document.forms.TwoFactor.token.value
       }

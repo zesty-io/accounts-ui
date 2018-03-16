@@ -59,9 +59,6 @@ export default class Signup extends Component {
   }
   handleSignup = evt => {
     evt.preventDefault()
-
-    console.log('signup', evt)
-
     request(`http://${config.API_ACCOUNTS}/users`, {
       method: 'POST',
       body: {
@@ -73,12 +70,34 @@ export default class Signup extends Component {
     })
       .then(json => {
         console.log('USER: ', json)
-
         if (json.code === 201) {
-          // this.props.dispatch({
-          //   type: 'FETCH_AUTH_SUCCESS',
-          //   auth: false
-          // })
+          // Log user in after signing up
+          request(`http://${config.API_AUTH}/login`, {
+            body: {
+              email: document.forms.signup.email.value,
+              password: document.forms.signup.pass.value
+            }
+          })
+            .then(json => {
+              if (json.code === 200) {
+                this.props.dispatch({
+                  type: 'FETCH_AUTH_SUCCESS',
+                  zuid: json.meta.userZuid,
+                  auth: true
+                })
+              } else {
+                this.setState({
+                  message: json.message
+                })
+                this.props.dispatch({
+                  type: 'FETCH_AUTH_ERROR',
+                  auth: false
+                })
+              }
+            })
+            .catch(err => {
+              console.error('LOGIN ERR', err)
+            })
         } else {
           this.setState({
             message: json.message
