@@ -13,13 +13,15 @@ import Stats from './Stats'
 import Blueprint from './Blueprint'
 
 import { getSiteDetails } from '../../store'
-import { getUsersForSite } from '../../store/siteUsers'
+
+import{ getUsersForSite } from '../../store/siteUsers'
+import{ getCompaniesForSite } from '../../store/siteCompanies'
 
 class WebsiteOverview extends Component {
   componentDidMount() {
     this.props.dispatch(getSiteDetails())
     this.props.dispatch(getUsersForSite(this.props.userZuid, this.props.ZUID))
-    console.log(this.props)
+    this.props.dispatch(getCompaniesForSite(this.props.userZuid, this.props.ZUID))
   }
   render() {
     return (
@@ -44,13 +46,13 @@ class WebsiteOverview extends Component {
             </header>
             <main>
               <h2>Month Requests</h2>
-              <Stats site={this.props} />
+              <Stats />
               <h2>Recent Site Actions</h2>
               {/* <Actions site={this.props} /> */}
               <h2>User Access</h2>
-              <UserAccess users={this.props.siteUsers} />
+              <UserAccess />
               <h2>Company Access</h2>
-              {/* <CompanyAccess site={this.props} /> */}
+              <CompanyAccess site={this.props} />
               <h2>Blueprint</h2>
               {/* <Blueprint site={this.props} /> */}
             </main>

@@ -13,3 +13,32 @@ export function siteCompanies(state = {} , action) {
       return state
   }
 }
+
+
+export const getCompaniesForSite = (userZuid, siteZuid) => {
+  console.log('user: ', userZuid, 'site: ', siteZuid)
+  return dispatch => {
+    dispatch({
+      type: 'FETCHING_COMPANIES'
+    })
+
+    request(`http://${config.API_ACCOUNTS}:6010/v1/instances/${siteZuid}/companies`, {
+      headers: {
+        'User-Zuid': userZuid
+      }
+    })
+      .then(users => {
+        dispatch({
+          type: 'FETCH_COMPANIES_SUCCESS',
+          users
+        })
+      })
+      .catch(err => {
+        console.error(err)
+        dispatch({
+          type: 'FETCH_COMPANIES_ERROR',
+          err
+        })
+      })
+  }
+}
