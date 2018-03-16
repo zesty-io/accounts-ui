@@ -18,8 +18,8 @@ class UserAccess extends Component {
                 <h3>Staff</h3>
               </header>
               <main>
-              {Array.isArray(this.props.siteUsers)
-              ? this.props.siteUsers.map((user, i) => {
+              {Array.isArray(this.props.sitesUsers)
+              ? this.props.sitesUsers.map((user, i) => {
                   return (<article key={i}>
                     <span>{user.firstName} </span>
                     <span>{user.lastName} </span>

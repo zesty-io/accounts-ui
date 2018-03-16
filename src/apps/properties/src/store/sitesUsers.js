@@ -24,12 +24,7 @@ export const fetchSiteUsers = (userZuid, siteZuid) => {
     })
 
     request(
-      `http://${config.API_ACCOUNTS}:6010/v1/instances/${siteZuid}/users`,
-      {
-        headers: {
-          'User-Zuid': userZuid
-        }
-      }
+      `http://${config.API_ACCOUNTS}:6010/v1/instances/${siteZuid}/users`
     )
       .then(users => {
         dispatch({
