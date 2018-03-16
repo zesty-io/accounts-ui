@@ -22,11 +22,9 @@ export default class AppHeader extends PureComponent {
           <span>
             {this.props.user.firstname} {this.props.user.lastname}
           </span>
-          <span onClick={() => this.props.dispatch(logout())} ><i
-            className="fa fa-sign-out"
-            aria-hidden="true"
-
-          /> Logout </span>
+          <span onClick={() => this.props.dispatch(logout())}>
+            <i className="fa fa-sign-out" aria-hidden="true" /> Logout
+          </span>
         </span>
       </header>
     )
