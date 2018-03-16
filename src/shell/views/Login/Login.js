@@ -41,7 +41,7 @@ class Login extends Component {
                 />
               </label>
               <Button onClick={e => this.handleLogin(e)}>Login</Button>
-              <p className={styles.error} >{this.state.message}</p>
+              <p className={styles.error}>{this.state.message}</p>
             </form>
 
             <Url href="/reset-password">Forgot Password?</Url>
@@ -70,7 +70,7 @@ class Login extends Component {
   }
   handleLogin(evt) {
     evt.preventDefault()
-    request(`http://${config.SERVICE_URL}:3011/login`, {
+    request(`http://${config.API_AUTH}/login`, {
       body: {
         email: document.forms.login.email.value,
         password: document.forms.login.pass.value

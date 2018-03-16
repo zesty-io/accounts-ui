@@ -35,7 +35,7 @@ export function fetchUser(zuid) {
     dispatch({
       type: 'FETCHING_USER'
     })
-    request(`http://${config.API_ACCOUNTS}:6010/v1/users/${zuid}`)
+    request(`http://${config.API_ACCOUNTS}/users/${zuid}`)
       .then(user => {
         dispatch({
           type: 'FETCH_USER_SUCCESS',

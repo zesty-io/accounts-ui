@@ -20,7 +20,7 @@ export function fetchBlueprints() {
     dispatch({
       type: 'FETCHING_BLUEPRINTS'
     })
-    request(`http://${config.API_ACCOUNTS}:6010/v1/blueprints`)
+    request(`http://${config.API_ACCOUNTS}/blueprints`)
       .then(json => {
         let blueprints = json.reduce((acc, print) => {
           acc[print.ID] = print
@@ -46,7 +46,7 @@ export function fetchBlueprint(id) {
     dispatch({
       type: 'FETCHING_BLUEPRINTS'
     })
-    request(`http://${config.API_ACCOUNTS}:6010/v1/blueprints/${id}`)
+    request(`http://${config.API_ACCOUNTS}/blueprints/${id}`)
       .then(blueprint => {
         dispatch({
           type: 'FETCHING_BLUEPRINTS_SUCCESS',

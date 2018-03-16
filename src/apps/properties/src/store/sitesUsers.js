@@ -23,9 +23,7 @@ export const fetchSiteUsers = (userZuid, siteZuid) => {
       type: 'FETCHING_USERS'
     })
 
-    request(
-      `http://${config.API_ACCOUNTS}:6010/v1/instances/${siteZuid}/users`
-    )
+    request(`http://${config.API_ACCOUNTS}/instances/${siteZuid}/users`)
       .then(users => {
         dispatch({
           type: 'FETCH_USERS_SUCCESS',
