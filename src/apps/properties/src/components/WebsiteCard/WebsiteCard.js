@@ -4,26 +4,28 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
-import {Line} from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 
 class WebsiteCard extends Component {
   render() {
-
     let data = {
-        labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
-        datasets: [{
+      labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
+      datasets: [
+        {
           label: 'requests',
           data: [2, 4, 0, 6, 2, 4, 9]
-        }, {
+        },
+        {
           label: 'media',
           data: [3, 6, 11, 7, 3, 6, 11]
-        }]
-    };
+        }
+      ]
+    }
 
     let options = {
       elements: {
         line: {
-          tension: 0, // disables bezier curves
+          tension: 0 // disables bezier curves
         }
       }
     }
@@ -49,14 +51,14 @@ class WebsiteCard extends Component {
           <ButtonGroup className={styles.controls}>
             <Url
               target="_blank"
-              href={`https://${this.props.site.ZUID}.manage.zesty.io`}
+              href={`https://${this.props.site.RandomHashID}.manage.zesty.io`}
             >
               <i className="fa fa-external-link" aria-hidden="true" /> Site
               Manager
             </Url>
             <Url
               target="_blank"
-              href={`https://${this.props.site.ZUID}.preview.zesty.io`}
+              href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
             >
               <i className="fa fa-globe" aria-hidden="true" /> Preview
             </Url>
