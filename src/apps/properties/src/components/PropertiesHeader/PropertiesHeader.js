@@ -18,7 +18,8 @@ class PropertiesHeader extends Component {
           />
           <Button className={styles.save}>
             <Link to="/properties/create">
-              <i className="fa fa-plus" aria-hidden="true" /> Create Web Property
+              <i className="fa fa-plus" aria-hidden="true" /> Create Web
+              Property
             </Link>
           </Button>
         </div>
