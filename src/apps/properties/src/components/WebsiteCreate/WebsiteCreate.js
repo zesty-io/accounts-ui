@@ -14,14 +14,22 @@ class WebsiteCreate extends Component {
           <h1 className={styles.name}>Your Web Property</h1>
         </header>
         <main className={styles.WebsiteManage}>
-          <p>Create your first Zesty website in 3 easy steps.</p>
-          <Button className={styles.save}>
-            <Link to="/properties/create">
-              <i className="fa fa-plus" aria-hidden="true" /> Create Web
-              Property
-            </Link>
-          </Button>
+          <h1>Welcome to Zesty.io</h1>
+          <p>
+            Get started by creating your first Zesty website in a few easy
+            steps.
+          </p>
+
+          {/* <Button className={styles.save}>
+
+          </Button> */}
         </main>
+        <footer>
+          <Url href="/properties/create">
+            <i className="fa fa-plus" aria-hidden="true" />&nbsp;Create Web
+            Property
+          </Url>
+        </footer>
       </article>
     )
   }
