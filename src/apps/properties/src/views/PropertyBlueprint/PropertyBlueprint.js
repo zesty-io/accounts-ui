@@ -7,7 +7,7 @@ import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchBlueprints(this.props.user.zuid))
+    this.props.dispatch(fetchBlueprints())
   }
   render() {
     return (
@@ -33,13 +33,11 @@ class PropertyBlueprint extends Component {
                 return (
                   <article className={styles.Blueprint} key={i}>
                     <header>
-                      <h1 className={styles.name}>{blueprint.name}</h1>
+                      <h1 className={styles.name}>{blueprint.Name}</h1>
                     </header>
                     <main>
-                      <p>
-                        <img src={blueprint.url} alt="bp img" />
-                        {blueprint.description}
-                      </p>
+                      <img src={blueprint.CoverImage} alt="bp img" />
+                      <p>{blueprint.Description}</p>
                     </main>
                     <footer>
                       <Button onClick={this.handleSelect}>
@@ -69,10 +67,7 @@ class PropertyBlueprint extends Component {
 }
 
 export default connect(state => {
-  console.log(state.blueprints)
-
   return {
-    blueprints: state.blueprints,
-    user: state.user
+    blueprints: state.blueprints
   }
 })(PropertyBlueprint)

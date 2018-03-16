@@ -13,7 +13,7 @@ import { fetchSites } from '../../store/sites'
 
 class Properties extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchSites(this.props.user.zuid))
+    this.props.dispatch(fetchSites())
   }
   render() {
     return (

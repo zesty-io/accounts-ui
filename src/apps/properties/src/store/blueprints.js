@@ -20,16 +20,15 @@ export function fetchBlueprints(userZuid) {
     dispatch({
       type: 'FETCHING_BLUEPRINTS'
     })
-    request(`http://${config.API_ACCOUNTS}:6010/v1/blueprints`, {
-      headers: {
-        'User-Zuid': userZuid
-      }
-    })
+    request(`http://${config.API_ACCOUNTS}:6010/v1/blueprints`)
       .then(blueprints => {
-        console.log('Blueprint: ', blueprints)
+        dispatch({
+          type: 'FETCHING_BLUEPRINTS_SUCCESS',
+          blueprints
+        })
       })
       .catch(err => {
-        console.log(err)
+        console.table(err)
         dispatch({
           type: 'FETCHING_BLUEPRINTS_ERROR',
           err

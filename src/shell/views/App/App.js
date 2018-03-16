@@ -13,13 +13,13 @@ import AppHeader from '../../components/AppHeader'
 import AppError from '../../components/AppError'
 
 import styles from './App.less'
-import { getUser } from '../../store/user'
+import { fetchUser } from '../../store/user'
 import { verifyAuth } from '../../store/auth'
 
 class Shell extends Component {
   componentDidMount() {
     // TODO how do I get the id?
-    this.props.dispatch(getUser(this.props.user.zuid))
+    this.props.dispatch(fetchUser(this.props.user.zuid))
     setInterval(() => {
       this.props.dispatch(verifyAuth())
     }, 60000)

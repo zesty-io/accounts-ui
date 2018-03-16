@@ -30,22 +30,20 @@ export function user(state = {}, action) {
   }
 }
 
-export function getUser(zuid) {
-  // console.log('action:getUser', zuid)
+export function fetchUser(zuid) {
   return dispatch => {
     dispatch({
       type: 'FETCHING_USER'
     })
     request(`http://${config.API_ACCOUNTS}:6010/v1/users/${zuid}`)
       .then(user => {
-        console.log('user', user)
         dispatch({
           type: 'FETCH_USER_SUCCESS',
           user
         })
       })
       .catch(err => {
-        console.error(err)
+        console.table(err)
         dispatch({
           type: 'FETCH_USER_ERROR',
           err

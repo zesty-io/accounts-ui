@@ -65,17 +65,12 @@ export function sites(state = {}, action) {
   }
 }
 
-export function fetchSites(userZuid) {
+export function fetchSites() {
   return dispatch => {
     dispatch({
       type: 'FETCHING_SITES'
     })
-
-    request(`http://${config.API_ACCOUNTS}:6010/v1/instances`, {
-      headers: {
-        'User-Zuid': userZuid
-      }
-    })
+    request(`http://${config.API_ACCOUNTS}:6010/v1/instances`)
       .then(sites => {
         dispatch({
           type: 'FETCH_SITES_SUCCESS',
@@ -83,7 +78,7 @@ export function fetchSites(userZuid) {
         })
       })
       .catch(err => {
-        console.error(err)
+        console.table(err)
         dispatch({
           type: 'FETCH_SITES_ERROR',
           err
