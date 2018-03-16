@@ -15,7 +15,7 @@ export function blueprints(state = {}, action) {
   }
 }
 
-export function fetchBlueprints(userZuid) {
+export function fetchBlueprints() {
   return dispatch => {
     dispatch({
       type: 'FETCHING_BLUEPRINTS'
