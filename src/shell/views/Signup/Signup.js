@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import styles from './Signup.less'
 import { request } from '../../../util/request'
+import config from '../../../shell/config'
 
 export default class Signup extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ export default class Signup extends Component {
               className={styles.input}
               type="text"
               placeholder="Zesty"
-              name="first_name"
+              name="firstName"
             />
           </label>
           <label>
@@ -41,7 +42,7 @@ export default class Signup extends Component {
               className={styles.input}
               type="text"
               placeholder="Dotio"
-              name="last_name"
+              name="lastName"
             />
           </label>
           <label>
@@ -49,7 +50,7 @@ export default class Signup extends Component {
             <Input className={styles.input} type="password" name="pass" />
           </label>
           <Button onClick={this.handleSignup}>Create An Account</Button>
-          <p className={styles.error} >{this.state.message}</p>
+          <p className={styles.error}>{this.state.message}</p>
 
           <Url href="/login">Already have an account?</Url>
         </form>
@@ -61,30 +62,32 @@ export default class Signup extends Component {
 
     console.log('signup', evt)
 
-    // request('http://svc.zesty.localdev:3011/login', {
-    //   body: {
-    //     email: document.forms.login.email.value,
-    //     password: document.forms.login.pass.value
-    //   }
-    // })
-    // .then(json => {
-    //   if (json.code === 201) {
-    //     // TODO Show 2FA screen
-    //     // TODO poll auth api for 2FA one touch
-    //     this.props.dispatch({
-    //       type: 'FETCH_AUTH_SUCCESS',
-    //       auth: false
-    //     })
-    //   } else {
-    //     // TODO Display error message
-    //     this.setState({
-    //       message: json.message
-    //     })
-    //     this.props.dispatch({
-    //       type: 'FETCH_AUTH_SUCCESS',
-    //       auth: false
-    //     })
-    //   }
-    // })
+    request(`http://{${config.API_ACCOUNTS}/user`, {
+      method: 'POST',
+      body: {
+        email: document.forms.signup.email.value,
+        firstName: document.forms.signup.firstName.value,
+        lastName: document.forms.signup.lastName.value,
+        password: document.forms.signup.pass.value
+      }
+    }).then(json => {
+      if (json.code === 201) {
+        // TODO Show 2FA screen
+        // TODO poll auth api for 2FA one touch
+        this.props.dispatch({
+          type: 'FETCH_AUTH_SUCCESS',
+          auth: false
+        })
+      } else {
+        // TODO Display error message
+        this.setState({
+          message: json.message
+        })
+        this.props.dispatch({
+          type: 'FETCH_AUTH_SUCCESS',
+          auth: false
+        })
+      }
+    })
   }
 }

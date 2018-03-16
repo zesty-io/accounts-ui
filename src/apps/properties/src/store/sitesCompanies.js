@@ -21,14 +21,11 @@ export const fetichSiteCompanies = (userZuid, siteZuid) => {
       type: 'FETCHING_COMPANIES'
     })
 
-    request(
-      `http://${config.API_ACCOUNTS}:6010/v1/instances/${siteZuid}/companies`,
-      {
-        headers: {
-          'User-Zuid': userZuid
-        }
+    request(`http://${config.API_ACCOUNTS}/instances/${siteZuid}/companies`, {
+      headers: {
+        'User-Zuid': userZuid
       }
-    )
+    })
       .then(users => {
         dispatch({
           type: 'FETCH_COMPANIES_SUCCESS',
