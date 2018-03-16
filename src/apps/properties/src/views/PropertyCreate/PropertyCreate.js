@@ -15,22 +15,23 @@ class PropertyCreate extends Component {
     return (
       <section className={styles.PropertyCreate}>
         <div className={styles.nameNew}>
-          <h3>Name your new web property</h3>
+          <h1>Name your new web property</h1>
           <Input
             type="text"
-            name="newPropertName"
             value={this.state.name}
+            placeholder="e.g. My Blog or Company Marketing Website"
             onChange={this.handleChange}
           />
-          <Button
-            name="submitNewPropertyName"
-            text="Submit"
-            onClick={this.handleSubmit}
-          />
-          <Link to="/properties">
-            {' '}
-            <Button name="cancel" text="cancel" />{' '}
-          </Link>
+          <div className={styles.controls}>
+            <Button onClick={this.handleSubmit}>
+              <i className="fa fa-plus" aria-hidden="true" />
+              Create New Property
+            </Button>
+            <Link to="/properties">
+              <i className="fa fa-ban" aria-hidden="true" />
+              &nbsp;Cancel
+            </Link>
+          </div>
         </div>
       </section>
     )
