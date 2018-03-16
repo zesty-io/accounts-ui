@@ -62,7 +62,7 @@ export default class Signup extends Component {
 
     console.log('signup', evt)
 
-    request(`http://{${config.API_ACCOUNTS}/user`, {
+    request(`http://${config.API_ACCOUNTS}/users`, {
       method: 'POST',
       body: {
         email: document.forms.signup.email.value,
@@ -70,24 +70,27 @@ export default class Signup extends Component {
         lastName: document.forms.signup.lastName.value,
         password: document.forms.signup.pass.value
       }
-    }).then(json => {
-      if (json.code === 201) {
-        // TODO Show 2FA screen
-        // TODO poll auth api for 2FA one touch
-        this.props.dispatch({
-          type: 'FETCH_AUTH_SUCCESS',
-          auth: false
-        })
-      } else {
-        // TODO Display error message
-        this.setState({
-          message: json.message
-        })
-        this.props.dispatch({
-          type: 'FETCH_AUTH_SUCCESS',
-          auth: false
-        })
-      }
     })
+      .then(json => {
+        console.log('USER: ', json)
+
+        if (json.code === 201) {
+          // this.props.dispatch({
+          //   type: 'FETCH_AUTH_SUCCESS',
+          //   auth: false
+          // })
+        } else {
+          this.setState({
+            message: json.message
+          })
+          // this.props.dispatch({
+          //   type: 'FETCH_AUTH_SUCCESS',
+          //   auth: false
+          // })
+        }
+      })
+      .catch(err => {
+        console.table(err)
+      })
   }
 }
