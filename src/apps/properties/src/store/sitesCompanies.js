@@ -6,7 +6,7 @@ export function sitesCompanies(state = {}, action) {
     case 'FETCHING_COMPANIES':
       return state
     case 'FETCH_COMPANIES_SUCCESS':
-      return state
+      return action.companies
     case 'FETCH_COMPANIES_ERROR':
       return state
     default:
