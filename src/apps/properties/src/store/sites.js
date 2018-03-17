@@ -23,7 +23,7 @@ export function sites(state = {}, action) {
         Domain: 'stuartrunyan.com',
         DomainVerified: true,
         DevelopmentWebsite: false,
-        AccountName: 'stuartrunyan.com',
+        Name: 'stuartrunyan.com',
         LegacyDiscountReason: null,
         PlanID: 14,
         Addons: null,
