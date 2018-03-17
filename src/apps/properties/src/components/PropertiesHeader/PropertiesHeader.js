@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './PropertiesHeader.less'
 
-import { filterProperties } from '../../store'
+import { filter } from '../../store/sitesFiltered'
 
 class PropertiesHeader extends Component {
   render() {
@@ -27,7 +27,7 @@ class PropertiesHeader extends Component {
     )
   }
   onSearch = evt => {
-    this.props.dispatch(filterProperties(evt.target.value))
+    this.props.dispatch(filter(evt.target.value))
   }
 }
 

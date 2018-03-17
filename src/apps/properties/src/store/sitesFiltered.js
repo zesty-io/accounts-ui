@@ -7,53 +7,46 @@ export function sitesFiltered(state = {}, action) {
   switch (action.type) {
     case 'FETCH_SITES_SUCCESS':
       return normalizeSites(action.sites)
-    // return {}
 
     case 'FILTER_PROPERTIES':
-      return action.filteredSites
-    // return {}
+      return action.filtered
 
     default:
       return state
   }
 }
 
-// export const filterProperties = searchString => {
-//   return function(dispatch, getState) {
-//     let sites = getState().sites
-//     if (searchString !== '') {
-//       let filteredSites = {}
-//       for (const zuid in sites) {
-//         if (
-//           sites[zuid].ZUID &&
-//           sites[zuid].ZUID.toLowerCase().includes(searchString.toLowerCase())
-//         ) {
-//           filteredSites[zuid] = sites[zuid]
-//         }
-//         if (
-//           sites[zuid].AccountName &&
-//           sites[zuid].AccountName.toLowerCase().includes(
-//             searchString.toLowerCase()
-//           )
-//         ) {
-//           filteredSites[zuid] = sites[zuid]
-//         }
-//         if (
-//           sites[zuid].RandomHashID &&
-//           sites[zuid].RandomHashID.toLowerCase().includes(
-//             searchString.toLowerCase()
-//           )
-//         ) {
-//           filteredSites[zuid] = sites[zuid]
-//         }
-//       }
-//       dispatch({
-//         meta: { debounce: { time: 250 } },
-//         type: 'FILTER_PROPERTIES',
-//         filteredSites
-//       })
-//     } else {
-//       dispatch({ type: 'FILTER_PROPERTIES', filteredSites: sites })
-//     }
-//   }
-// }
+export const filter = searchString => {
+  return function(dispatch, getState) {
+    let sites = getState().sites
+    if (searchString !== '') {
+      let filtered = {}
+      for (const zuid in sites) {
+        let site = sites[zuid]
+        if (
+          site.Name &&
+          site.Name.toLowerCase().includes(searchString.toLowerCase())
+        ) {
+          filtered[zuid] = site
+        } else if (site.ZUID && site.ZUID.includes(searchString)) {
+          filtered[zuid] = site
+        } else if (
+          site.RandomHashID &&
+          site.RandomHashID.includes(searchString)
+        ) {
+          filtered[zuid] = site
+        }
+      }
+      dispatch({
+        meta: { debounce: { time: 250 } },
+        type: 'FILTER_PROPERTIES',
+        filtered
+      })
+    } else {
+      dispatch({
+        type: 'FILTER_PROPERTIES',
+        filtered: sites
+      })
+    }
+  }
+}
