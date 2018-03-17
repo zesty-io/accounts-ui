@@ -28,7 +28,7 @@ export function fetchBlueprints() {
         }, {})
         dispatch({
           type: 'FETCHING_BLUEPRINTS_SUCCESS',
-          blueprints
+          blueprints: blueprints.data
         })
       })
       .catch(err => {
@@ -51,7 +51,7 @@ export function fetchBlueprint(id) {
         dispatch({
           type: 'FETCHING_BLUEPRINTS_SUCCESS',
           blueprints: {
-            [blueprint.ID]: blueprint
+            [blueprint.ID]: blueprint.data
           }
         })
       })
