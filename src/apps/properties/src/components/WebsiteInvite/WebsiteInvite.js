@@ -32,7 +32,7 @@ class WebsiteInvite extends Component {
     return (
       <article className={styles.WebsiteInvite}>
         <header>
-          <h1 className={styles.name}>{this.props.site.AccountName}</h1>
+          <h1 className={styles.name}>{this.props.site.Name}</h1>
         </header>
         <main className={styles.WebsiteManage}>
           <Line data={data} options={options} />
