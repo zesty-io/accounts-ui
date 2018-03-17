@@ -4,19 +4,17 @@ import { NavLink } from 'react-router-dom'
  
 class Blueprint extends Component {
   render() {
-    const blueprint = this.props.blueprints[this.props.site.BlueprintID]
-    return <p>hi</p>
-      // {blueprint
-      //   ? (<React.Fragment>
-      //   <img src={blueprint.MainImage}
-      //     style={{maxHeight:'64px', maxWidth:'64px'}}
-      //     alt='blueprint Image' />
-      //   current blueprint: {blueprint.Name}
-      //   {blueprint.Description}
-      //   <a href={blueprint.PreviewURL}>View Preview</a>
-      //   <NavLink to='/account/blueprints'>Change Blueprint</NavLink>
-      // </React.Fragment>)
-      //   : 'loading'}
+    return this.props.blueprints[this.props.site.BlueprintID] instanceof Object 
+      ? <React.Fragment>
+        <img src={this.props.blueprints[this.props.site.BlueprintID].MainImage}
+          style={{maxHeight:'64px', maxWidth:'64px'}}
+          alt='blueprint Image' />
+        current blueprint: {this.props.blueprints[this.props.site.BlueprintID].Name}
+        {this.props.blueprints[this.props.site.BlueprintID].Description}
+        <a href={this.props.blueprints[this.props.site.BlueprintID].PreviewURL}>View Preview</a>
+        <NavLink to='/account/blueprints'>Change Blueprint</NavLink>
+      </React.Fragment>
+        : <p>loading</p>
   }
 }
 
