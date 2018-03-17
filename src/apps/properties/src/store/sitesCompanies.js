@@ -6,7 +6,7 @@ export function sitesCompanies(state = {}, action) {
     case 'FETCHING_COMPANIES':
       return state
     case 'FETCH_COMPANIES_SUCCESS':
-      return state
+      return action.companies
     case 'FETCH_COMPANIES_ERROR':
       return state
     default:
@@ -15,17 +15,16 @@ export function sitesCompanies(state = {}, action) {
 }
 
 export const fetichSiteCompanies = (userZuid, siteZuid) => {
-  console.log('user: ', userZuid, 'site: ', siteZuid)
   return dispatch => {
     dispatch({
       type: 'FETCHING_COMPANIES'
     })
 
     request(`http://${config.API_ACCOUNTS}/instances/${siteZuid}/companies`)
-      .then(users => {
+      .then(companies => {
         dispatch({
           type: 'FETCH_COMPANIES_SUCCESS',
-          users: users.data
+          companies: companies.data
         })
       })
       .catch(err => {
