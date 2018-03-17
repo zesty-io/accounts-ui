@@ -49,7 +49,7 @@ export const getUsersForSite = (id, siteZuid) => {
       .then(sites => {
         dispatch({
           type: 'FETCH_SITE_USERS_SUCCESS',
-          sites
+          sites: sites.data
         })
       })
       .catch(err => {

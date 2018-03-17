@@ -74,7 +74,7 @@ export function fetchSites() {
       .then(sites => {
         dispatch({
           type: 'FETCH_SITES_SUCCESS',
-          sites
+          sites: sites.data
         })
       })
       .catch(err => {

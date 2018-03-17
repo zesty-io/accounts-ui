@@ -11,9 +11,9 @@ class Blueprint extends Component {
           src={this.props.blueprints[this.props.site.BlueprintID].MainImage}
           style={{ maxHeight: "64px", maxWidth: "64px" }}
           alt="blueprint Image"
-        />
-        current blueprint:{" "}
-        {this.props.blueprints[this.props.site.BlueprintID].Name}
+        /><br />
+        current blueprint:
+        {this.props.blueprints[this.props.site.BlueprintID].Name}<br />
         {this.props.blueprints[this.props.site.BlueprintID].Description}
         <a href={this.props.blueprints[this.props.site.BlueprintID].PreviewURL}>
           View Preview

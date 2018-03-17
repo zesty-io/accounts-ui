@@ -27,7 +27,7 @@ export const fetchSiteUsers = (userZuid, siteZuid) => {
       .then(users => {
         dispatch({
           type: 'FETCH_USERS_SUCCESS',
-          users
+          users: users.data
         })
       })
       .catch(err => {

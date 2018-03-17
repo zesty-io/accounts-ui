@@ -29,7 +29,7 @@ export const fetichSiteCompanies = (userZuid, siteZuid) => {
       .then(users => {
         dispatch({
           type: 'FETCH_COMPANIES_SUCCESS',
-          users
+          users: users.data
         })
       })
       .catch(err => {
