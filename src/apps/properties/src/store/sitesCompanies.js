@@ -15,21 +15,16 @@ export function sitesCompanies(state = {}, action) {
 }
 
 export const fetichSiteCompanies = (userZuid, siteZuid) => {
-  console.log('user: ', userZuid, 'site: ', siteZuid)
   return dispatch => {
     dispatch({
       type: 'FETCHING_COMPANIES'
     })
 
-    request(`http://${config.API_ACCOUNTS}/instances/${siteZuid}/companies`, {
-      headers: {
-        'User-Zuid': userZuid
-      }
-    })
-      .then(users => {
+    request(`http://${config.API_ACCOUNTS}/instances/${siteZuid}/companies`)
+      .then(companies => {
         dispatch({
           type: 'FETCH_COMPANIES_SUCCESS',
-          users: users.data
+          companies: companies.data
         })
       })
       .catch(err => {
