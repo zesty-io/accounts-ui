@@ -14,12 +14,11 @@ export function sitesCompanies(state = {}, action) {
   }
 }
 
-export const fetichSiteCompanies = (userZuid, siteZuid) => {
+export const fetchSiteCompanies = (userZuid, siteZuid) => {
   return dispatch => {
     dispatch({
       type: 'FETCHING_COMPANIES'
     })
-
     request(`http://${config.API_ACCOUNTS}/instances/${siteZuid}/companies`)
       .then(companies => {
         dispatch({

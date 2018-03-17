@@ -5,6 +5,7 @@ import styles from './CompanyAccess.less'
 
 class CompanyAccess extends Component {
   render() {
+    console.log(this.props.sitesCompanies)
     return (
       <div className={styles.CompanyAccess}>
         <div className={styles.invite}>

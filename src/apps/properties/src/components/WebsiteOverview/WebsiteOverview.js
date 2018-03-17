@@ -15,7 +15,7 @@ import Blueprint from './Blueprint'
 import { getSiteDetails } from '../../store'
 
 import { fetchSiteUsers } from '../../store/sitesUsers'
-import { fetichSiteCompanies } from '../../store/sitesCompanies'
+import { fetchSiteCompanies } from '../../store/sitesCompanies'
 import { fetchBlueprint } from '../../store/blueprints'
 
 class WebsiteOverview extends Component {
@@ -23,7 +23,7 @@ class WebsiteOverview extends Component {
     this.props.dispatch(getSiteDetails())
     this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID))
     this.props.dispatch(
-      fetichSiteCompanies(this.props.userZuid, this.props.ZUID)
+      fetchSiteCompanies(this.props.userZuid, this.props.ZUID)
     )
     this.props.dispatch(fetchBlueprint(this.props.BlueprintID))
   }
