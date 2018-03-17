@@ -73,14 +73,8 @@ class WebsiteOverview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('SITE ZUID: ', ownProps.match.params.hash)
-
-  let site = state.sites[ownProps.match.params.hash]
-
-  console.log('SITE: ', site)
-
   return {
-    ...site,
+    ...state.sites[ownProps.match.params.hash],
     userZuid: state.user.zuid
   }
 }
