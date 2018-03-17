@@ -1,4 +1,4 @@
-@import "../../../../../../shell/styles/colors.less";
+@import '../../../../../../shell/styles/colors.less';
 
 .userAccess {
   h2 {
@@ -7,37 +7,39 @@
   p {
     line-height: 30px;
   }
+  .invite {
+    display: flex;
+    input {
+      flex: 1;
+    }
+  }
   .userTable {
-
-display: grid;
-       header {
-         display: grid;
-         grid: auto-flow / 1fr 1fr 1fr 1fr;
-       }
-       main {
-         display: grid;
-        grid-template-rows: auto;
-        article {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-          &:nth-child(odd){
-            background-color: @zesty-field-blue;
-          }
+    display: grid;
+    header {
+      display: grid;
+      grid: auto-flow / 1fr 1fr 1fr 1fr;
+    }
+    main {
+      display: grid;
+      grid-template-rows: auto;
+      article {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        &:nth-child(odd) {
+          background-color: @zesty-field-blue;
         }
-       }
+      }
+    }
 
-       footer {
-         display: flex;
-         input {
-           //height: 34px;
-
-         }
-         button {
-           margin-left: 20px;
-         }
-       }
-
-
+    footer {
+      display: flex;
+      input {
+        //height: 34px;
+      }
+      button {
+        margin-left: 20px;
+      }
+    }
   }
   .info {
     color: #607394;

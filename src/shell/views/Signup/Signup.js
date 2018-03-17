@@ -97,7 +97,7 @@ export default class Signup extends Component {
             })
         } else {
           this.setState({
-            message: json.error
+            message: json.data.error
           })
         }
       })

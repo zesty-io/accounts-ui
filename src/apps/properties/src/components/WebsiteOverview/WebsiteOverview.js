@@ -36,10 +36,16 @@ class WebsiteOverview extends Component {
               <Link className={styles.close} to="/properties/">
                 <i className="fa fa-times-circle-o" aria-hidden="true" />Close
               </Link>
-              <h1 className={styles.name}>{this.props.Name}</h1>
+              <h1 className={styles.name}>
+                {this.props.Name}&nbsp;
+                <i className="fa fa-pencil" aria-hidden="true" />
+              </h1>
               <h2 className={styles.domain}>
-                {this.props.Domain ? (
-                  this.props.Domain
+                {this.props.domain ? (
+                  <span>
+                    {this.props.domain}&nbsp;
+                    <i className="fa fa-pencil" aria-hidden="true" />
+                  </span>
                 ) : (
                   <Button>
                     <i className={cx('fa fa-cog')} aria-hidden="true" />Setup
