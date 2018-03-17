@@ -39,7 +39,7 @@ export function fetchUser(zuid) {
       .then(user => {
         dispatch({
           type: 'FETCH_USER_SUCCESS',
-          user
+          user: user.data
         })
       })
       .catch(err => {
