@@ -61,6 +61,7 @@ export default class Signup extends Component {
     evt.preventDefault()
     request(`http://${config.API_ACCOUNTS}/users`, {
       method: 'POST',
+      json: true,
       body: {
         email: document.forms.signup.email.value,
         firstName: document.forms.signup.firstName.value,
@@ -86,26 +87,18 @@ export default class Signup extends Component {
                   auth: true
                 })
               } else {
-                this.setState({
-                  message: json.message
-                })
-                this.props.dispatch({
-                  type: 'FETCH_AUTH_ERROR',
-                  auth: false
-                })
+                // if the user was created but login failed
+                // send them to the login view
+                window.location = '/login'
               }
             })
             .catch(err => {
-              console.error('LOGIN ERR', err)
+              console.table(err)
             })
         } else {
           this.setState({
-            message: json.message
+            message: json.error
           })
-          // this.props.dispatch({
-          //   type: 'FETCH_AUTH_SUCCESS',
-          //   auth: false
-          // })
         }
       })
       .catch(err => {

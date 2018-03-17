@@ -52,6 +52,8 @@ class Properties extends Component {
                     />
                   )
                 })}
+
+              <Route path="/properties/:hash" component={WebsiteOverview} />
             </div>
           ) : (
             <div className={styles.LoadingSites}>
@@ -60,8 +62,6 @@ class Properties extends Component {
             </div>
           )}
         </main>
-
-        <Route path="/properties/:hash" component={WebsiteOverview} />
       </section>
     )
   }

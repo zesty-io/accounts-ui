@@ -15,8 +15,8 @@ import Blueprint from './Blueprint'
 import { getSiteDetails } from '../../store'
 
 import { fetchSiteUsers } from '../../store/sitesUsers'
-import { fetichSiteCompanies } from '../../store/sitesCompanies' 
-import { fetchBlueprint } from '../../store/blueprints' 
+import { fetichSiteCompanies } from '../../store/sitesCompanies'
+import { fetchBlueprint } from '../../store/blueprints'
 
 class WebsiteOverview extends Component {
   componentDidMount() {
@@ -25,18 +25,18 @@ class WebsiteOverview extends Component {
     this.props.dispatch(
       fetichSiteCompanies(this.props.userZuid, this.props.ZUID)
     )
-    this.props.dispatch(fetchBlueprint(this.props.initialBlueprint || this.props.site.BlueprintID))
+    this.props.dispatch(fetchBlueprint(this.props.BlueprintID))
   }
   render() {
     return (
       <section className={styles.WebsiteOverviewWrap}>
-        {this.props.AccountName ? (
+        {this.props.Name ? (
           <article className={styles.WebsiteOverview}>
             <header>
               <Link className={styles.close} to="/properties/">
                 <i className="fa fa-times-circle-o" aria-hidden="true" />Close
               </Link>
-              <h1 className={styles.name}>{this.props.AccountName}</h1>
+              <h1 className={styles.name}>{this.props.Name}</h1>
               <h2 className={styles.domain}>
                 {this.props.Domain ? (
                   this.props.Domain
@@ -73,8 +73,14 @@ class WebsiteOverview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log('SITE ZUID: ', ownProps.match.params.hash)
+
+  let site = state.sites[ownProps.match.params.hash]
+
+  console.log('SITE: ', site)
+
   return {
-    ...state.sites[ownProps.match.params.hash],
+    ...site,
     userZuid: state.user.zuid
   }
 }
