@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { request } from '../../../util/request'
 import config from '../../config'
-
 import styles from './Login.less'
 
 class Login extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
-      message: 'TEST ERROR MESSAGE, PLZ STYLE'
+      message: ''
     }
   }
   render() {
@@ -19,9 +18,16 @@ class Login extends Component {
       <section className={styles.Login}>
         <div className={styles.gridWrap}>
           <header>
-            <img src="/zesty-z-logo.svg" />
+            <img src="/zesty-io-logo.svg" />
           </header>
-          <div className={styles.gridSingle}>
+          {this.state.message ? (
+            <p className={styles.error}>
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
+                this.state.message
+              }
+            </p>
+          ) : null}
+          <main className={styles.gridSingle}>
             <form name="login" className={styles.LoginForm}>
               <label>
                 <p>Email Address</p>
@@ -41,29 +47,28 @@ class Login extends Component {
                 />
               </label>
               <Button onClick={e => this.handleLogin(e)}>Login</Button>
-              <p className={styles.error}>{this.state.message}</p>
             </form>
 
-            <Url href="/reset-password">Forgot Password?</Url>
-          </div>
-          <div className={styles.gridSingle}>
+            <AppLink to="/reset-password">Forgot Password?</AppLink>
+          </main>
+          <footer className={styles.gridSingle}>
             <div className={styles.createAccount}>
               <h2>Create an Account</h2>
               <p>
-                Welcome to Zesty.io. Sign Up to start creating and managing
+                Welcome to Zesty.io. Sign up to start creating and managing
                 content ready to be delivered securely, quickily and scalably to
                 everywhere from anywhere.<br />
               </p>
-              <Url href="/signup">Create Account</Url>
+              <AppLink to="/signup">Create Account</AppLink>
               <h3>Additional Information</h3>
               <p>
-                <Url href="https://zesty.io">Zesty.io</Url>
+                <Url href="https://zesty.io">https://zesty.io</Url>
               </p>
               <p>
                 <Url href="mailto:hello@zesty.io">hello@zesty.io</Url>
               </p>
             </div>
-          </div>
+          </footer>
         </div>
       </section>
     )

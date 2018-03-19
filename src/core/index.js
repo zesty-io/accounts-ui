@@ -1,6 +1,7 @@
 import Button from './Button'
 import ButtonGroup from './ButtonGroup'
 import Url from './Url'
+import AppLink from './AppLink'
 import Loader from './Loader'
 import Search from './Search'
 import Select from './Select'
@@ -14,6 +15,7 @@ import Infotip from './Infotip'
 window.Button = Button
 window.ButtonGroup = ButtonGroup
 window.Url = Url
+window.AppLink = AppLink
 window.Loader = Loader
 window.Search = Search
 window.Select = Select

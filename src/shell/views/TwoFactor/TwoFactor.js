@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import styles from './TwoFactor.less'
 import { request } from '../../../util/request'
@@ -11,21 +12,40 @@ class TwoFactor extends Component {
     super(props)
 
     this.state = {
-      message: 'TEST ERROR MESSAGE, PLZ STYLE'
+      message: ''
     }
   }
   render() {
     return (
       <section className={styles.TwoFactor}>
         <form name="TwoFactor" className={styles.TwoFactorForm}>
-          <img src="/zesty-z-logo.svg" />
-          <h2>Two Factor Authentication</h2>
+          <img src="/zesty-io-logo.svg" />
+          {this.state.message ? (
+            <p className={styles.error}>
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
+                this.state.message
+              }
+            </p>
+          ) : null}
+          {/* <h2>To log in, open Authy on your mobile device.</h2> */}
           <label>
-            <p>Authy Two Factor Token</p>
+            <p>Enter Authy Token</p>
+            <small>
+              To log in, open
+              <Url href="https://authy.com/" target="_blank">
+                Authy
+              </Url>
+              on your mobile device.
+            </small>
             <Input type="text" name="token" className={styles.input} />
           </label>
-          <Button onClick={this.handle2FA}>Check Token</Button>
-          <p className={styles.error}>{this.state.message}</p>
+          <ButtonGroup className={styles.controls}>
+            <Button onClick={this.handle2FA}>Check 2FA Token</Button>
+            <Link to="/login">
+              <i className="fa fa-ban" aria-hidden="true" />
+              &nbsp;Cancel
+            </Link>
+          </ButtonGroup>
         </form>
       </section>
     )
@@ -55,7 +75,7 @@ class TwoFactor extends Component {
         }
       })
       .catch(err => {
-        console.error(err)
+        console.table(err)
         throw err
       })
   }

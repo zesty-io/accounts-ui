@@ -12,7 +12,7 @@ export default class ResetPasswordEnd extends Component {
     return (
       <section className={styles.ResetPasswordEnd}>
         <form name="ResetPasswordEnd" className={styles.ResetPasswordEndForm}>
-          <img src="/zesty-z-logo.svg" />
+          <img src="/zesty-io-logo.svg" />
           <h2>Enter New Password</h2>
           <label>
             <p>New Password</p>

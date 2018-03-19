@@ -9,21 +9,27 @@ export default class Signup extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      message: 'TEST ERROR MESSAGE, PLZ STYLE'
+      message: ''
     }
   }
   render() {
     return (
       <section className={styles.Signup}>
         <form name="signup" className={styles.SignupForm}>
-          <img src="/zesty-z-logo.svg" />
-          <h2>Create an Account</h2>
+          <img src="/zesty-io-logo.svg" />
+          {this.state.message ? (
+            <p className={styles.error}>
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
+                this.state.message
+              }
+            </p>
+          ) : null}
           <label>
             <p>Email Address</p>
             <Input
               className={styles.input}
               type="text"
-              placeholder="hello@zesty.io"
+              placeholder="e.g. hello@zesty.io"
               name="email"
             />
           </label>
@@ -41,7 +47,7 @@ export default class Signup extends Component {
             <Input
               className={styles.input}
               type="text"
-              placeholder="Dotio"
+              placeholder=""
               name="lastName"
             />
           </label>
@@ -50,9 +56,7 @@ export default class Signup extends Component {
             <Input className={styles.input} type="password" name="pass" />
           </label>
           <Button onClick={this.handleSignup}>Create An Account</Button>
-          <p className={styles.error}>{this.state.message}</p>
-
-          <Url href="/login">Already have an account?</Url>
+          <AppLink to="/login">Already have an account?</AppLink>
         </form>
       </section>
     )
