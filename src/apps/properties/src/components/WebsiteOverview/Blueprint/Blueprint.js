@@ -2,23 +2,35 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 
+import styles from './Blueprint.less'
 class Blueprint extends Component {
   render() {
     return this.props.blueprints[this.props.site.BlueprintID] instanceof
       Object ? (
       <React.Fragment>
-        <img
-          src={this.props.blueprints[this.props.site.BlueprintID].MainImage}
-          style={{ maxHeight: "64px", maxWidth: "64px" }}
-          alt="blueprint Image"
-        /><br />
-        current blueprint:
-        {this.props.blueprints[this.props.site.BlueprintID].Name}<br />
-        {this.props.blueprints[this.props.site.BlueprintID].Description}
-        <a href={this.props.blueprints[this.props.site.BlueprintID].PreviewURL}>
-          View Preview
-        </a>
-        <NavLink to="/account/blueprints">Change Blueprint</NavLink>
+        <article className={styles.Blueprint}>
+          <header>
+            <h1 className={styles.name}>
+              {this.props.blueprints[this.props.site.BlueprintID].Name}
+            </h1>
+          </header>
+          <main>
+            <img
+              src={
+                this.props.blueprints[this.props.site.BlueprintID].CoverImage
+              }
+              alt="bp img"
+            />
+            <p>
+              {this.props.blueprints[this.props.site.BlueprintID].Description}
+            </p>
+          </main>
+          <Button onClick={this.handleSelect}>
+            <i className="fa fa-columns" aria-hidden="true" />
+            Change Blueprint
+          </Button>
+          <footer />
+        </article>
       </React.Fragment>
     ) : (
       <p>loading</p>
