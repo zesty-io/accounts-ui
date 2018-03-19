@@ -1,9 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./style.less";
+import { inviteData, sendInvite } from '../../../store/invite'
 class UserAccess extends Component {
   componentWillUnmount() {
     this.props.dispatch({ type: "CLEAR_USERS" });
+  }
+  handleInvite = evt => {
+    this.props.dispatch(sendInvite())
+    // endpoint for invites
+  }
+  handleChange = evt => {
+    if(evt.target.value.match(evt.target.pattern)){
+      this.props.dispatch(inviteData({ [evt.target.name]: evt.target.value }))
+    }
   }
   render() {
     return (
@@ -31,18 +41,25 @@ class UserAccess extends Component {
           </main>
         </div>
         <div className={styles.invite}>
-          <Input type="text" />
           {/* <Select selection={{ value: 'editor' }}>
             <Option value="editor">Editor</Option>
             <Option value="developer">Developer</Option>
             <Option value="admin">Admin</Option>
           </Select> */}
-          <select>
+          <Input
+                type="text"
+                placeholder="Email"
+                name="inviteEmail"
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                value={this.props.sitesUsers.inviteEmail}
+                onChange={this.handleChange}
+              />
+          <select name='inviteRole' onChange={this.handleChange}>
             <option value="editor">Editor</option>
             <option value="developer">Developer</option>
             <option value="admin">Admin</option>
           </select>
-          <Button>Send Invite</Button>
+          <Button onClick={this.handleInvite}>Send Invite</Button>
         </div>
       </div>
     );

@@ -7,6 +7,7 @@ import { sitesCompanies } from './sitesCompanies'
 import { sitesFiltered } from './sitesFiltered'
 import { sitesStats } from './sitesStats'
 import { sitesUsers } from './sitesUsers'
+import { invite } from './invite'
 
 export const propertiesReducers = {
   sites,
@@ -14,6 +15,7 @@ export const propertiesReducers = {
   sitesFiltered,
   sitesStats,
   sitesUsers,
+  invite,
   blueprints
 }
 
@@ -38,6 +40,7 @@ export const changeDomain = (domType, zuid) => {
     zuid
   })
 }
+
 
 export const getUsersForSite = (id, siteZuid) => {
   return dispatch => {
