@@ -27,7 +27,6 @@ class TwoFactor extends Component {
               }
             </p>
           ) : null}
-          {/* <h2>To log in, open Authy on your mobile device.</h2> */}
           <label>
             <p>Enter Authy Token</p>
             <small>
