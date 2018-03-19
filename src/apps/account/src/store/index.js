@@ -1,3 +1,6 @@
+import { request } from '../../../../util/request'
+import config from '../../../../shell/config'
+
 export function profile(state = {}, action) {
   switch (action.type) {
     // case 'FETCHING_SITES':
@@ -22,6 +25,15 @@ export function profile(state = {}, action) {
       //TODO: deactivate loading state
       return state
 
+    case 'FETCHING_ACCOUNT_BLUEPRINTS':
+      return state
+
+    case 'FETCHING_ACCOUNT_BLUEPRINTS_SUCCESS':
+      return {...state, bluprints: action.blueprints}
+
+    case 'FETCHING_ACCOUNT_BLUEPRINTS_ERROR':
+      return state
+
     case 'ADD_EMAIL_SUCCESS':
       const emails = state.emails.concat([{email: state.newEmail, options: state.newEmailOptions || ''}])
       return { ...state, newEmail: '', emails }
@@ -34,9 +46,36 @@ export function profile(state = {}, action) {
   }
 }
 
+export function fetchAccountBlueprints() {
+  return dispatch => {
+    dispatch({
+      type: 'FETCHING_BLUEPRINTS'
+    })
+    request(`http://${config.API_ACCOUNTS}/blueprints`)
+      .then(json => 
+        dispatch({
+          type: 'FETCHING_BLUEPRINTS_SUCCESS',
+          blueprints: json.data
+        })
+      )
+      .catch(err => {
+        console.table(err)
+        dispatch({
+          type: 'FETCHING_BLUEPRINTS_ERROR',
+          err
+        })
+      })
+  }
+}
+
 export function updateSetting(payload) {
   return {
     type: 'UPDATE_SETTINGS',
+    meta: {
+      debounce: {
+        time: 300
+      }
+    },
     payload
   }
 }

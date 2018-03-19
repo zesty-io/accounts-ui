@@ -1,42 +1,64 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import styles from './Blueprint.less'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchAccountBlueprints } from "../../store";
+
+import styles from "./Blueprint.less";
 
 class Blueprints extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchAccountBlueprints());
+  }
+
+  handleClick() {}
   render() {
     return (
-        <div className={styles.blueprints}>
-          <h2>Blueprints</h2>
-          <a className="button green fr">
-            <span className="icon-plus">+</span>
-            Add New Blueprint
-            <Infotip>
-              In this area you can manager your own custom Blueprints. Learn how
-              to create and maintain your own Blueprints using GitHub through
-              this. You may share Blueprints by passing your GitHub repo url to
-              a co-worker or friend. You may use other public Blueprints by
-              forking their repositories, and copying the Github repository url.
-            </Infotip>
-          </a>
-          <div className={styles.bptable}>
-              <main>
-                <header>
-                  <h3>Blueprint Name</h3>
-                  <h3>Github URL</h3>
-                  <h3>Date Added</h3>
-                </header>
-                {this.props.profile.blueprints.map((bp, i) => (
-                  <article key={i}>
-                    <span>{bp.name}</span>
-                    <span>{bp.url}</span>
-                    <span>{bp.date}</span>
+      <div className={styles.blueprints}>
+        <h2>Blueprints</h2>
+        <a className="button green fr">
+          <Button onClick={this.handleSelect}>
+            <i className="fa fa-columns" aria-hidden="true" />
+            Add Blueprint
+          </Button>
+          <Infotip>
+            In this area you can manager your own custom Blueprints. Learn how
+            to create and maintain your own Blueprints using GitHub through
+            this. You may share Blueprints by passing your GitHub repo url to a
+            co-worker or friend. You may use other public Blueprints by forking
+            their repositories, and copying the Github repository url.
+          </Infotip>
+        </a>
+        <div className={styles.bptable}>
+          <main className={styles.Blueprints}>
+            {Object.keys(this.props.blueprints)
+              .filter(i => {
+                if (!this.props.blueprints[i].Trashed) {
+                  return i;
+                }
+              })
+              .map(i => {
+                let blueprint = this.props.blueprints[i];
+                return (
+                  <article className={styles.Blueprint} key={i}>
+                    <header>
+                      <h1 className={styles.name}>{blueprint.Name}</h1>
+                    </header>
+                    <main>
+                      <img src={blueprint.CoverImage} alt="bp img" />
+                      <p>{blueprint.Description}</p>
+                    </main>
+                    <Button onClick={this.handleSelect}>
+                      <i className="fa fa-columns" aria-hidden="true" />
+                      Remove Blueprint
+                    </Button>
+                    <footer />
                   </article>
-                ))}
-              </main>
-          </div>
+                );
+              })}
+          </main>
         </div>
-    )
+      </div>
+    );
   }
 }
 
-export default connect(state => state)(Blueprints)
+export default connect(state => state)(Blueprints);

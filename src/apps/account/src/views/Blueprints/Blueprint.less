@@ -1,56 +1,64 @@
-@import "../../../../../shell/styles/colors.less";
+@import '../../../../../shell/styles/colors.less';
 
-.blueprints {
-  h2 {
-    margin-bottom: 20px;
+.BlueprintView {
+  padding: 2rem;
+  header {
+    display: flex;
+    flex-direction: row;
+    h1 {
+      font-size: 1.4rem;
+      flex: 1;
+      margin-bottom: 5px;
+    }
   }
-  p {
-    line-height: 30px;
+  .description {
+    border-bottom: 1px solid @zesty-light-blue;
+    max-width: 50rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
   }
-  .bptable {
+}
 
-display: grid;
-       header {
-         display: grid;
-         grid: auto-flow / 1fr 1fr 1fr;
-       }
-       main {
-         display: grid;
-        grid-template-rows: auto;
-        article {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          &:nth-child(odd){
-            background-color: @zesty-field-blue;
-          }
-        }
-       }
+.Blueprints {
+  display: grid;
+  grid: auto-flow / 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  margin-top: 2rem;
+}
 
-       footer {
-         display: flex;
-         input {
-           //height: 34px;
+.Blueprint {
+  background: @white;
 
-         }
-         button {
-           margin-left: 20px;
-         }
-       }
-
-
+  header {
+    background: @zesty-white;
+    .name {
+      font-size: 1.1em;
+      margin-left: 1rem;
+    }
   }
-  .info {
-    color: #607394;
-    display: block;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    font-weight: normal;
-    overflow-y: visible;
-    position: relative;
-    max-width: 668px;
-    background: #dfeeff;
-    color: #2e436b;
-    border: solid 1px #a2bbd8;
-    border-radius: 4px;
+  main {
+    padding: 1rem;
+    padding-bottom: 0;
+
+    img {
+      width: 100%;
+      padding: 0 0 1rem;
+      // max-width: 30%;
+      // padding: 0 1rem 1rem 0;
+      // float: left;
+    }
   }
+  footer {
+    clear: both;
+    padding: 1rem;
+  }
+}
+
+.Loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100vw;
 }

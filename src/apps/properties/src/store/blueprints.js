@@ -21,16 +21,12 @@ export function fetchBlueprints() {
       type: 'FETCHING_BLUEPRINTS'
     })
     request(`http://${config.API_ACCOUNTS}/blueprints`)
-      .then(json => {
-        let blueprints = json.reduce((acc, print) => {
-          acc[print.ID] = print
-          return acc
-        }, {})
+      .then(json => 
         dispatch({
           type: 'FETCHING_BLUEPRINTS_SUCCESS',
-          blueprints: blueprints.data
+          blueprints: json.data
         })
-      })
+      )
       .catch(err => {
         console.table(err)
         dispatch({

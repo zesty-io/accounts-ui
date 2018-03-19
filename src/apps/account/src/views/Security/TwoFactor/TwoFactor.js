@@ -1,7 +1,32 @@
-import { Component } from 'React'
-import { updateSetting } from '../../../store'
-
-export default class TwoFactor extends Component {
+import { Component } from "React";
+import { updateSetting } from "../../../store";
+import { connect } from "react-redux";
+class TwoFactor extends Component {
+  handleChange = evt => {
+    if (evt.target.value.match(evt.target.pattern)) {
+      return this.props.dispatch(
+        updateSetting({
+          [evt.target.name]: evt.target.value
+        })
+      );
+    }
+  };
+  handleEnable = () => {
+    this.props.dispatch(
+      updateSetting({
+        twofa: true,
+        showAuth: true
+      })
+    );
+  };
+  handleDisable = () => {
+    this.props.dispatch(
+      updateSetting({
+        twofa: false,
+        showAuth: false
+      })
+    );
+  };
   render() {
     return (
       <section>
@@ -29,8 +54,9 @@ export default class TwoFactor extends Component {
               />
               <Input
                 type="text"
-                placeholder="123 456 7890"
+                placeholder="123-456-7890"
                 name="phoneNumber"
+                pattern="d{3}-\d{3}-\d{4}"
                 onChange={this.handleChange}
               />
             </div>
@@ -38,29 +64,8 @@ export default class TwoFactor extends Component {
           </div>
         )}
       </section>
-    )
-  }
-  handleChange = evt => {
-    return this.props.dispatch(
-      updateSetting({
-        [evt.target.name]: evt.target.value
-      })
-    )
-  }
-  handleEnable = () => {
-    this.props.dispatch(
-      updateSetting({
-        twofa: true,
-        showAuth: true
-      })
-    )
-  }
-  handleDisable = () => {
-    this.props.dispatch(
-      updateSetting({
-        twofa: false,
-        showAuth: false
-      })
-    )
+    );
   }
 }
+
+export default connect(state => state)(TwoFactor);

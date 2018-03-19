@@ -1,6 +1,19 @@
-import { Component } from 'React'
-
-export default class Password extends Component {
+import { Component } from "React";
+import { connect } from "react-redux";
+import { updateSetting } from "../../../store";
+class Password extends Component {
+  handleChange = evt => {
+    if (evt.target.value.match(evt.target.pattern)) {
+      return this.props.dispatch(
+        updateSetting({
+          [evt.target.name]: evt.target.value
+        })
+      );
+    }
+  };
+  handleClick = evt => {
+    console.log("submitting password change");
+  };
   render() {
     return (
       <section>
@@ -14,10 +27,11 @@ export default class Password extends Component {
             type="password"
           />
         </div>
-        <div>
+        <div><p>Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:</p>
           <Input
             name="newPassword"
             placeholder="New Password"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
             onChange={this.handleChange}
             value={this.props.newPassword}
             type="password"
@@ -27,6 +41,7 @@ export default class Password extends Component {
           <Input
             name="confirmNewPassword"
             placeholder="Confirm New Password"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
             onChange={this.handleChange}
             value={this.props.confirmNewPassword}
             type="password"
@@ -34,16 +49,8 @@ export default class Password extends Component {
         </div>
         <Button text="Submit" onClick={this.handleClick} />
       </section>
-    )
-  }
-  handleChange = evt => {
-    return this.props.dispatch(
-      updateSetting({
-        [evt.target.name]: evt.target.value
-      })
-    )
-  }
-  handleClick = evt => {
-    console.log('submitting password change')
+    );
   }
 }
+
+export default connect(state => state)(Password);
