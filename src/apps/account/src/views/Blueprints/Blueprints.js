@@ -19,13 +19,13 @@ class Blueprints extends Component {
             <i className="fa fa-columns" aria-hidden="true" />
             Add Blueprint
           </Button>
-          <Infotip>
+          <h5>
             In this area you can manager your own custom Blueprints. Learn how
             to create and maintain your own Blueprints using GitHub through
             this. You may share Blueprints by passing your GitHub repo url to a
             co-worker or friend. You may use other public Blueprints by forking
             their repositories, and copying the Github repository url.
-          </Infotip>
+          </h5>
         </a>
         <div className={styles.bptable}>
           <main className={styles.Blueprints}>

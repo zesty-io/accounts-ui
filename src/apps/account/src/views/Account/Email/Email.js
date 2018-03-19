@@ -1,17 +1,19 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { updateSetting, addEmail } from '../../../store'
-import styles from './email.less'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { updateSetting, addEmail } from "../../../store";
+import styles from "./email.less";
 
 class Email extends Component {
   handleChange = evt => {
-    if(evt.target.value.match(evt.target.pattern)){
-      this.props.dispatch(updateSetting({ [evt.target.name]: evt.target.value }))
+    if (evt.target.value.match(evt.target.pattern)) {
+      this.props.dispatch(
+        updateSetting({ [evt.target.name]: evt.target.value })
+      );
     }
-  }
+  };
   handleClick = e => {
-    this.props.dispatch(addEmail())
-  }
+    this.props.dispatch(addEmail());
+  };
   render() {
     return (
       <section className={styles.profileEmail}>
@@ -27,39 +29,44 @@ class Email extends Component {
             </p>
           </div>
           <div className={styles.emailTable}>
-          <footer>
+            <footer>
               <Input
                 type="text"
-                placeholder="Email"
+                placeholder="wont@work.com"
                 name="newEmail"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                 value={this.props.newEmail}
                 onChange={this.handleChange}
               />
               <Button text="Add Email" onClick={this.handleClick} />
-          </footer>
-              <header>
-                <h3>Email</h3>
-                <h3>Options</h3>
-              </header>
-              <main>
-              {this.props.emails.map((email, i) => (
-                <article key={i}>
-                  <span>{email.email} </span>
-                  <span>{email.options}</span>
-                </article>
-              ))}
-              </main>
-
+            </footer>
+            <header>
+              <h3>Email</h3>
+              <h3>Options</h3>
+            </header>
+            <main>
+              <article>
+                <span>{this.props.email} </span>
+                <span>
+                  {this.props.email === this.props.EmailsVerified
+                    ? "Verified"
+                    : "Unverified"}
+                </span>
+              </article>
+            </main>
           </div>
         </div>
       </section>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => {
-  return { emails: state.profile.emails }
-}
+  return {
+    email: state.profile.email,
+    EmailsVerified: state.profile.EmailsVerified,
+    EmailsUnverified: state.profile.EmailsUnverified
+  };
+};
 
-export default connect(mapStateToProps)(Email)
+export default connect(mapStateToProps)(Email);

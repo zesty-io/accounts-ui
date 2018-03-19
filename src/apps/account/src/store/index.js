@@ -29,7 +29,7 @@ export function profile(state = {}, action) {
       return state
 
     case 'FETCHING_ACCOUNT_BLUEPRINTS_SUCCESS':
-      return {...state, bluprints: action.blueprints}
+      return {...state, blueprints: action.blueprints}
 
     case 'FETCHING_ACCOUNT_BLUEPRINTS_ERROR':
       return state
@@ -120,23 +120,21 @@ export function getSettings(id) {
       dispatch({
         type: 'FETCH_SETTINGS_SUCCESS',
         profile: {
-          firstName: 'Grant',
-          lastName: 'Glidewell',
-          emails: [
-            { email: 'email@email.com', options: '(default email)'},
-            { email: 'name@domain.com', options: 'an option' },
-            { email: 'anotheremail@moredomains.com' }
-          ],
-          blueprints: [{
-            name: 'blueprint',
-            url: 'www.blueprint.com/blueprintname/867598',
-            date: '06-23-17'
-          }, {
-            name: 'another one',
-            url: 'https://www.slowlyprogressing.com',
-            date: '03-14-17'
-          }],
-          twofa: false
+          twofa: false,
+          "id": 21474458,
+          "zuid": "5-556f009-nj0d0g",
+          "firstName": "Mohammad",
+          "lastName": "Oweis",
+          "email": "mohammad.oweis@zesty.io",
+          "EmailsVerified": "mohammad.oweis@zesty.io",
+          "EmailsUnverified": "",
+          "staff": true,
+          "WebsiteCreator": true,
+          "ThirdPartyOAuthTokens": null,
+          "Prefs": null,
+          "createdAt": "2017-11-02T13:20:25Z",
+          "updatedAt": "2017-11-02T13:20:25Z",
+          "deletedAt": null
         }
       })
     }, 500)
