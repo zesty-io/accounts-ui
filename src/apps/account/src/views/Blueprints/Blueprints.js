@@ -48,7 +48,7 @@ class Blueprints extends Component {
                     </main>
                     <Button onClick={this.handleSelect}>
                       <i className="fa fa-columns" aria-hidden="true" />
-                      Remove Blueprint
+                      Edit
                     </Button>
                     <footer />
                   </article>
