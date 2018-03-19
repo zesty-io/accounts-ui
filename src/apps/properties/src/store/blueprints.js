@@ -28,9 +28,9 @@ export function fetchBlueprints() {
         }, {})
         dispatch({
           type: 'FETCHING_BLUEPRINTS_SUCCESS',
-          blueprints: blueprints
+          blueprints
         })
-      )
+      })
       .catch(err => {
         console.table(err)
         dispatch({
