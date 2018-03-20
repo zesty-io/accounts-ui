@@ -51,7 +51,6 @@ class UserAccess extends Component {
                 placeholder="Email"
                 name="inviteEmail"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-                value={this.props.sitesUsers.inviteEmail}
                 onChange={this.handleChange}
               />
           <select name='inviteRole' onChange={this.handleChange}>

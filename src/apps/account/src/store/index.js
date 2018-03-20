@@ -73,7 +73,7 @@ export function updateSetting(payload) {
     type: 'UPDATE_SETTINGS',
     meta: {
       debounce: {
-        time: 300
+        time: 250
       }
     },
     payload

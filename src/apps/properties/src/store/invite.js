@@ -6,7 +6,7 @@ export function invite(state = {inviteRole:'editor'}, action) {
     case 'INVITE_DATA':
       return {...state, ...action.payload}
     case 'SEND_INVITE':
-      console.log(state.inviteEmail, state.inviteRole)
+      // this should send the email, and role and site zuid to an endpoint.
       return state
     default:
       return state

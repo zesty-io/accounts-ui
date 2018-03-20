@@ -2,15 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
+
+import { addSiteInfo, postNewSite } from '../../store/createSite'
+
 import styles from './PropertyCreate.less'
 
 class PropertyCreate extends Component {
-  constructor(props) {
-    super()
-    this.state = {
-      name: ''
-    }
-  }
   render() {
     return (
       <section className={styles.PropertyCreate}>
@@ -18,7 +15,7 @@ class PropertyCreate extends Component {
           <h1>Name your new web property</h1>
           <Input
             type="text"
-            value={this.state.name}
+            name="propertyName"
             placeholder="e.g. My Blog or Company Marketing Website"
             onChange={this.handleChange}
           />
@@ -37,16 +34,16 @@ class PropertyCreate extends Component {
     )
   }
   handleChange = evt => {
-    if (evt.target.value !== '') {
-      this.setState({
-        name: evt.target.value
-      })
-    }
+    this.props.dispatch(addSiteInfo({[evt.target.name]: evt.target.value}))
   }
   handleSubmit = evt => {
     // TODO make api request to create site
-    // TODO user returned zuid
+    // TODO use returned zuid
     window.location = '/properties/8-45a294a-1zg0cg/blueprint'
   }
 }
-export default connect(state => state)(PropertyCreate)
+const mapStateToProps = (state) => {
+  return {...state.createSite}
+}
+
+export default connect(mapStateToProps)(PropertyCreate)

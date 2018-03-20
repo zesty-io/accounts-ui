@@ -8,6 +8,7 @@ import { sitesFiltered } from './sitesFiltered'
 import { sitesStats } from './sitesStats'
 import { sitesUsers } from './sitesUsers'
 import { invite } from './invite'
+import { createSite } from './createSite'
 
 export const propertiesReducers = {
   sites,
@@ -16,7 +17,8 @@ export const propertiesReducers = {
   sitesStats,
   sitesUsers,
   invite,
-  blueprints
+  blueprints,
+  createSite
 }
 
 export const normalizeSites = sites => {
