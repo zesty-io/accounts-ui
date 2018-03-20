@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import styles from './PropertyBlueprint.less'
 
 import { fetchBlueprints } from '../../store/blueprints'
+import { addSiteInfo, postNewSite } from '../../store/createSite'
 
 class PropertyBlueprint extends Component {
   componentWillMount() {
@@ -44,7 +45,7 @@ class PropertyBlueprint extends Component {
                       <p>{blueprint.Description}</p>
                     </main>
                     <footer>
-                      <Button onClick={this.handleSelect}>
+                      <Button onClick={() => this.handleSelect(blueprint.ID)}>
                         <i className="fa fa-columns" aria-hidden="true" />
                         Select Blueprint
                       </Button>
@@ -63,10 +64,10 @@ class PropertyBlueprint extends Component {
       </div>
     )
   }
-  handleSelect = evt => {
+  handleSelect = (id) => {
     // TODO make api request to set blueprint for site
+    this.props.dispatch(addSiteInfo({blueprintId : id}))
     // TODO user returned zuid
-    window.location = '/properties/8-45a294a-1zg0cg'
   }
 }
 

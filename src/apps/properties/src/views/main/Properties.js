@@ -14,7 +14,7 @@ class Properties extends Component {
         <Switch>
           <Route
             exact
-            path="/properties/:zuid/blueprint"
+            path="/properties/create/blueprint"
             component={PropertyBlueprint}
           />
           <Route exact path="/properties/create" component={PropertyCreate} />

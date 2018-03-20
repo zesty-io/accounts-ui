@@ -46,7 +46,9 @@ export const addSiteInfo = (payload) => {
   return {
     type: 'ADD_SITE_INFO',
     meta: {
-      debounce: 250
+      debounce: {
+        time: 250
+      }
     },
     payload
   }
