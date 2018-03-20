@@ -5,7 +5,7 @@ import styles from './Signup.less'
 import { request } from '../../../util/request'
 import config from '../../../shell/config'
 
-export default class Signup extends Component {
+class Signup extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -30,6 +30,7 @@ export default class Signup extends Component {
               className={styles.input}
               type="text"
               placeholder="e.g. hello@zesty.io"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
               name="email"
             />
           </label>
@@ -53,7 +54,10 @@ export default class Signup extends Component {
           </label>
           <label>
             <p>Password</p>
-            <Input className={styles.input} type="password" name="pass" />
+            <h5>Minimum 8 characters with at least</h5>
+            <h5> one number, uppercase and lowercase letter.</h5>
+            <Input className={styles.input} type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" name="pass" />
+            
           </label>
           <Button onClick={this.handleSignup}>Create An Account</Button>
           <AppLink to="/login">Already have an account?</AppLink>
@@ -63,6 +67,20 @@ export default class Signup extends Component {
   }
   handleSignup = evt => {
     evt.preventDefault()
+    
+    if(!document.forms.signup.email.value.match(document.forms.signup.email.pattern)){
+      return this.setState({message: 'Please use a valid email address'})
+    }
+    if(document.forms.signup.firstName.value.length < 1){
+      return this.setState({message: 'You must enter a first name.'})
+    }
+    if(document.forms.signup.lastName.value.length < 1){
+      return this.setState({message: 'You must enter a last name.'})
+    }
+    if(!document.forms.signup.pass.value.match(document.forms.signup.pass.pattern)){
+      return this.setState({message: 'Password does not meet our minimum specification.'})
+    }
+
     request(`http://${config.API_ACCOUNTS}/users`, {
       method: 'POST',
       json: true,
@@ -110,3 +128,5 @@ export default class Signup extends Component {
       })
   }
 }
+
+export default connect(state => state)(Signup)
