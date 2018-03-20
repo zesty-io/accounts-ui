@@ -1,0 +1,63 @@
+@import '../../styles/colors.less';
+
+.TwoFactor {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .TwoFactorForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    max-height: 40rem;
+
+    img {
+      height: 100px;
+      margin-bottom: 1rem;
+    }
+    .error {
+      color: @zesty-red;
+      border-radius: 3px;
+      margin: 0 0 1rem;
+      padding: 1rem;
+      background: @zesty-white-blue;
+    }
+    label {
+      font-weight: bold;
+
+      p {
+        margin-bottom: 5px;
+        text-align: left;
+      }
+      small {
+        font-weight: 500;
+        font-style: italic;
+        margin-bottom: 5px;
+        display: inline-block;
+        a {
+          margin: 0 0.25rem;
+        }
+      }
+    }
+    .input {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      button {
+        flex: 2;
+      }
+      a {
+        margin-left: 1rem;
+        color: @zesty-grey;
+        text-decoration: none;
+        text-align: center;
+      }
+    }
+  }
+}

@@ -1,18 +1,55 @@
 @import url('../../../../../shell/styles/colors.less');
-
+@keyframes slideIn {
+  0% {
+    right: -80vw;
+  }
+  100% {
+    right: 0;
+  }
+}
 .WebsiteOverviewWrap {
   position: absolute;
   top: 0;
   right: 0;
-  // overflow: scroll;
+  overflow-y: scroll;
   height: 100vh;
   width: 75vw;
-  display: flex;
+  // display: flex;
+  background: @zesty-light-blue;
+  box-shadow: 0px 0px 10px #171b26;
+  animation: slideIn 300ms forwards;
 }
 
 .WebsiteOverview {
   padding: 2rem;
-  flex: 1;
-  background: @zesty-light-blue;
-  box-shadow: 0px 0px 10px #171b26;
+  // flex: 1;
+  header {
+    border-bottom: 1px solid darken(@zesty-light-blue, 5%);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    .name {
+      font-size: 2rem;
+    }
+    .domain {
+      font-size: 1rem;
+    }
+    a {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+  }
+  main {
+    h2 {
+      margin-top: 2rem;
+    }
+  }
+}
+.Loading {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100vw;
 }

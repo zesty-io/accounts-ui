@@ -1,4 +1,4 @@
-export function request (url, opts = {}) {
+export function request(url, opts = {}) {
   if (!url) {
     throw new Error('A URL is required to make a request')
   }
@@ -14,7 +14,11 @@ export function request (url, opts = {}) {
     if (opts.json) {
       opts.headers['Content-Type'] = 'application/json'
       opts.body = JSON.stringify(opts.body)
-    } else if (opts.headers && opts.headers['Content-Type'] && opts.headers['Content-Type'].includes('x-www-form-urlencoded')) {
+    } else if (
+      opts.headers &&
+      opts.headers['Content-Type'] &&
+      opts.headers['Content-Type'].includes('x-www-form-urlencoded')
+    ) {
       // do nothing?
       console.log('x-www-form-urlencoded')
     } else {
@@ -36,21 +40,21 @@ export function request (url, opts = {}) {
   opts.method = opts.method || 'GET'
 
   return fetch(url, opts)
-  .then(res => res.json())
-  .then(json => {
-    if (opts.callback) {
-      opts.callback(json)
-    }
+    .then(res => res.json())
+    .then(json => {
+      if (opts.callback) {
+        opts.callback(json)
+      }
 
-    if (json.code > 400) {
-      // TODO trigger global app notification
-    }
+      if (json.code > 400) {
+        // TODO trigger global app notification
+      }
 
-    return json
-  })
-  .catch(err => {
-    console.error(err)
-    // TODO global app notification on total request failure
-    // throw err
-  })
+      return json
+    })
+    .catch(err => {
+      // TODO global app notification on total request failure
+      console.table(err)
+      throw err
+    })
 }

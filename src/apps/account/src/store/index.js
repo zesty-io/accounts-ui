@@ -1,3 +1,6 @@
+import { request } from '../../../../util/request'
+import config from '../../../../shell/config'
+
 export function profile(state = {}, action) {
   switch (action.type) {
     // case 'FETCHING_SITES':
@@ -22,6 +25,15 @@ export function profile(state = {}, action) {
       //TODO: deactivate loading state
       return state
 
+    case 'FETCHING_ACCOUNT_BLUEPRINTS':
+      return state
+
+    case 'FETCHING_ACCOUNT_BLUEPRINTS_SUCCESS':
+      return {...state, blueprints: action.blueprints}
+
+    case 'FETCHING_ACCOUNT_BLUEPRINTS_ERROR':
+      return state
+
     case 'ADD_EMAIL_SUCCESS':
       const emails = state.emails.concat([{email: state.newEmail, options: state.newEmailOptions || ''}])
       return { ...state, newEmail: '', emails }
@@ -34,9 +46,36 @@ export function profile(state = {}, action) {
   }
 }
 
+export function fetchAccountBlueprints() {
+  return dispatch => {
+    dispatch({
+      type: 'FETCHING_BLUEPRINTS'
+    })
+    request(`http://${config.API_ACCOUNTS}/blueprints`)
+      .then(json => 
+        dispatch({
+          type: 'FETCHING_BLUEPRINTS_SUCCESS',
+          blueprints: json.data
+        })
+      )
+      .catch(err => {
+        console.table(err)
+        dispatch({
+          type: 'FETCHING_BLUEPRINTS_ERROR',
+          err
+        })
+      })
+  }
+}
+
 export function updateSetting(payload) {
   return {
     type: 'UPDATE_SETTINGS',
+    meta: {
+      debounce: {
+        time: 250
+      }
+    },
     payload
   }
 }
@@ -81,23 +120,21 @@ export function getSettings(id) {
       dispatch({
         type: 'FETCH_SETTINGS_SUCCESS',
         profile: {
-          firstName: 'Grant',
-          lastName: 'Glidewell',
-          emails: [
-            { email: 'email@email.com', options: '(default email)'},
-            { email: 'name@domain.com', options: 'an option' },
-            { email: 'anotheremail@moredomains.com' }
-          ],
-          blueprints: [{
-            name: 'blueprint',
-            url: 'www.blueprint.com/blueprintname/867598',
-            date: '06-23-17'
-          }, {
-            name: 'another one',
-            url: 'https://www.slowlyprogressing.com',
-            date: '03-14-17'
-          }],
-          twofa: false
+          twofa: false,
+          "id": 21474458,
+          "zuid": "5-556f009-nj0d0g",
+          "firstName": "Mohammad",
+          "lastName": "Oweis",
+          "email": "mohammad.oweis@zesty.io",
+          "EmailsVerified": "mohammad.oweis@zesty.io",
+          "EmailsUnverified": "",
+          "staff": true,
+          "WebsiteCreator": true,
+          "ThirdPartyOAuthTokens": null,
+          "Prefs": null,
+          "createdAt": "2017-11-02T13:20:25Z",
+          "updatedAt": "2017-11-02T13:20:25Z",
+          "deletedAt": null
         }
       })
     }, 500)

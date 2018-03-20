@@ -1,12 +1,13 @@
-import Button from './button'
-import ButtonGroup from './button-group'
-import Url from './url'
-import Loader from './loader'
-import Search from './search'
-import Select from './select'
-import Input from './input'
-import {Option} from './select'
-import Infotip from './infotip'
+import Button from './Button'
+import ButtonGroup from './ButtonGroup'
+import Url from './Url'
+import AppLink from './AppLink'
+import Loader from './Loader'
+import Search from './Search'
+import Select from './Select'
+import { Option } from './Select'
+import Input from './Input'
+import Infotip from './Infotip'
 
 // We expose these modules on the global scope
 // since legacy code(read: outside of a bundle)
@@ -14,6 +15,7 @@ import Infotip from './infotip'
 window.Button = Button
 window.ButtonGroup = ButtonGroup
 window.Url = Url
+window.AppLink = AppLink
 window.Loader = Loader
 window.Search = Search
 window.Select = Select

@@ -1,0 +1,44 @@
+@import '../../styles/colors.less';
+
+.Signup {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .SignupForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    max-height: 40rem;
+
+    img {
+      height: 100px;
+      margin-bottom: 1rem;
+    }
+    .error {
+      color: @zesty-red;
+      border-radius: 3px;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: @zesty-white-blue;
+    }
+    p {
+      margin-bottom: 5px;
+      text-align: left;
+    }
+    button {
+      justify-content: center;
+      font-size: 1.5em;
+    }
+    .input {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    a {
+      margin: 0;
+      text-shadow: none;
+    }
+  }
+}

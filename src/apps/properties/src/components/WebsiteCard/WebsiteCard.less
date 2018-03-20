@@ -1,39 +1,55 @@
+@import url('../../../../../shell/styles/colors.less');
 .WebsiteCard {
-  background-color: #dee1ea;
-  margin: 1rem;
-  padding: 1rem;
+  background: lighten(#f2f4fb, 2.5%);
+  margin: 1.5rem;
   max-width: 60rem;
   word-break: break-word;
+
   display: flex;
   flex-direction: column;
 
+  display: grid;
+  grid-template-rows: 1fr 2fr 0fr;
+
+  a:visited,
+  a {
+    color: #497edf;
+    margin: 0;
+  }
   header {
+    display: flex;
+    align-items: top;
+    padding: 1rem;
+    background: lighten(#f2f4fb, 2%);
+    border-bottom: 1px solid #f2f4fb;
+    min-height: 45px;
     .name {
-      font-size: 1.1em;
-      .icon {
-        margin-right: 5px;
+      flex: 1;
+      h1 {
+        font-size: 1.2em;
       }
-    }
-    .name:hover,
-    .name:hover {
-      text-decoration: underline;
-      cursor: text;
+      a {
+        font-size: 0.9rem;
+      }
     }
   }
   main {
-    flex: 1;
-    a {
-      margin: 0;
-    }
+    border-bottom: 1px solid #f2f4fb;
+    padding: 1rem;
   }
   footer {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
     .controls {
+      flex: 1;
       display: flex;
+      display: grid;
+      grid-template-columns: 1fr 20px;
       .manager {
-        flex: 2;
-      }
-      .settings {
-        flex: 0;
+        color: @zesty-orange;
+        text-shadow: 1px 1px 0 @white;
       }
     }
   }

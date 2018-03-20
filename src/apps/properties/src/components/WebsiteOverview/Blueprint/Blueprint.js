@@ -1,0 +1,41 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
+
+import styles from './Blueprint.less'
+class Blueprint extends Component {
+  render() {
+    return this.props.blueprints[this.props.site.BlueprintID] instanceof
+      Object ? (
+      <React.Fragment>
+        <article className={styles.Blueprint}>
+          <header>
+            <h1 className={styles.name}>
+              {this.props.blueprints[this.props.site.BlueprintID].Name}
+            </h1>
+          </header>
+          <main>
+            <img
+              src={
+                this.props.blueprints[this.props.site.BlueprintID].CoverImage
+              }
+              alt="bp img"
+            />
+            <p>
+              {this.props.blueprints[this.props.site.BlueprintID].Description}
+            </p>
+          </main>
+          <Button onClick={this.handleSelect}>
+            <i className="fa fa-columns" aria-hidden="true" />
+            Change Blueprint
+          </Button>
+          <footer />
+        </article>
+      </React.Fragment>
+    ) : (
+      <p>loading</p>
+    );
+  }
+}
+
+export default connect(state => state)(Blueprint);
