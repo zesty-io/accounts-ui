@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+
+
 import cx from 'classnames'
 import styles from './WebsiteInvite.less'
 
 import { Line } from 'react-chartjs-2'
 
 class WebsiteInvite extends Component {
+  handleClick = evt => {
+    // post accepted invite data THEN route to the overview when the user has permissions
+    this.props.history.push(`/properties/invite/${this.props.site.ZUID}`)
+  }
   render() {
     let data = {
       labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
@@ -45,7 +51,7 @@ class WebsiteInvite extends Component {
               }
             </Url>
           ) : null} */}
-          <Button className={styles.invite}>
+          <Button className={styles.invite} onClick={this.handleClick}>
             <i className="fa fa-check-circle-o" aria-hidden="true" />
             Accept Invite
           </Button>
@@ -55,4 +61,4 @@ class WebsiteInvite extends Component {
   }
 }
 
-export default connect(state => state)(WebsiteInvite)
+export default withRouter(connect(state => state)(WebsiteInvite))

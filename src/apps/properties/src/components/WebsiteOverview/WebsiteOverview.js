@@ -1,31 +1,31 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
-import cx from 'classnames'
-import styles from './WebsiteOverview.less'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
+import cx from "classnames";
+import styles from "./WebsiteOverview.less";
 
-import UserAccess from './UserAccess'
-import CompanyAccess from './CompanyAccess'
-import Actions from './Actions'
-import Domain from './Domain'
-import Stats from './Stats'
-import Blueprint from './Blueprint'
+import UserAccess from "./UserAccess";
+import CompanyAccess from "./CompanyAccess";
+import Actions from "./Actions";
+import Domain from "./Domain";
+import Stats from "./Stats";
+import Blueprint from "./Blueprint";
 
-import { getSiteDetails } from '../../store'
+import { getSiteDetails } from "../../store";
 
-import { fetchSiteUsers } from '../../store/sitesUsers'
-import { fetchSiteCompanies } from '../../store/sitesCompanies'
-import { fetchBlueprint } from '../../store/blueprints'
+import { fetchSiteUsers } from "../../store/sitesUsers";
+import { fetchSiteCompanies } from "../../store/sitesCompanies";
+import { fetchBlueprint } from "../../store/blueprints";
 
 class WebsiteOverview extends Component {
   componentDidMount() {
-    this.props.dispatch(getSiteDetails())
-    this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID))
+    this.props.dispatch(getSiteDetails());
+    this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID));
     this.props.dispatch(
       fetchSiteCompanies(this.props.userZuid, this.props.ZUID)
-    )
-    this.props.dispatch(fetchBlueprint(this.props.BlueprintID))
+    );
+    this.props.dispatch(fetchBlueprint(this.props.BlueprintID));
   }
   render() {
     return (
@@ -48,7 +48,7 @@ class WebsiteOverview extends Component {
                   </span>
                 ) : (
                   <Button>
-                    <i className={cx('fa fa-cog')} aria-hidden="true" />Setup
+                    <i className={cx("fa fa-cog")} aria-hidden="true" />Setup
                     Domain
                   </Button>
                 )}
@@ -74,14 +74,20 @@ class WebsiteOverview extends Component {
           </section>
         )}
       </section>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {
-    ...state.sites[ownProps.match.params.hash],
-    userZuid: state.user.zuid
+  if (ownProps.match.params.hash === "invite" || undefined) {
+    console.log(ownProps.match.params.hash)
+    return state;
+    // do something here to deal with invite?
+  } else {
+    return {
+      ...state.sites[ownProps.match.params.hash],
+      userZuid: state.user.zuid
+    };
   }
-}
-export default withRouter(connect(mapStateToProps)(WebsiteOverview))
+};
+export default withRouter(connect(mapStateToProps)(WebsiteOverview));
