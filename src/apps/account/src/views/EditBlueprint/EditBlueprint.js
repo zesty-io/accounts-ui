@@ -6,7 +6,6 @@ import styles from "./EditBlueprint.less";
 
 class EditBlueprint extends Component {
   render() {
-    console.log(this.props.blueprint)
     return (
       <div className={styles.blueprints}>
         <p>{JSON.stringify(this.props.blueprint)}</p>

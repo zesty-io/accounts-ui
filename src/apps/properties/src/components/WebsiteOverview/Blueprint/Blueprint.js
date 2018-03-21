@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 import styles from './Blueprint.less'
 class Blueprint extends Component {
@@ -25,10 +25,12 @@ class Blueprint extends Component {
               {this.props.blueprints[this.props.site.blueprintID].Description}
             </p>
           </main>
+          <Link to={`${this.props.site.ZUID}/blueprint`}>
           <Button onClick={this.handleSelect}>
             <i className="fa fa-columns" aria-hidden="true" />
             Change Blueprint
           </Button>
+          </Link>
           <footer />
         </article>
       </React.Fragment>
