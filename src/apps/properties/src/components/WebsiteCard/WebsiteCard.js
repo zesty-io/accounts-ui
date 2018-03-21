@@ -34,7 +34,7 @@ class WebsiteCard extends Component {
       <article className={styles.WebsiteCard}>
         <header>
           <div className={styles.name}>
-            <h1>{this.props.site.Name}</h1>
+            <h1>{this.props.site.name}</h1>
             {this.props.site.domain ? (
               <Url target="_blank" href={`http://${this.props.site.domain}`}>
                 <i className="fa fa-globe" aria-hidden="true" />&nbsp;{

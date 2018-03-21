@@ -11,7 +11,7 @@ import { Line } from 'react-chartjs-2'
 class WebsiteInvite extends Component {
   handleClick = evt => {
     // post accepted invite data THEN route to the overview when the user has permissions
-    this.props.history.push(`/properties/invite/${this.props.site.ZUID}`)
+    this.props.history.push(`/properties/${this.props.site.ZUID}`)
   }
   render() {
     let data = {
