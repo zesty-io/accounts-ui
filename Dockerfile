@@ -1,7 +1,14 @@
-#FROM node:alpine
 FROM nginx:alpine
 
-COPY ./etc/nginx-vhosts.conf /etc/nginx/nginx-http/vhosts.conf
-COPY ./build ./www
+COPY ./etc/nginx.conf /etc/nginx/nginx.conf
+COPY ./build /www
 
-#CMD nginx -c /etc/nginx/nginx.conf -g "${NGINX_DIRECTIVES-}"
+#RUN mkdir -p /var/log/app_engine
+
+# For AppEngine health checks
+RUN mkdir /www/_ah
+RUN echo "healthy" > /www/_ah/health
+
+RUN chmod -R a+r /www
+
+# nginx is automatically started by this base image
