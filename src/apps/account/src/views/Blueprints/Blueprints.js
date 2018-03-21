@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { fetchAccountBlueprints } from "../../store";
 
 import styles from "./Blueprint.less";
@@ -20,9 +21,9 @@ class Blueprints extends Component {
             Add Blueprint
           </Button>
           <h5>
-            In this area you can manage your own custom Blueprints. Learn how
-            to create and maintain your own Blueprints using GitHub through
-            this. You may share Blueprints by passing your GitHub repo url to a
+            In this area you can manage your own custom Blueprints. Learn how to
+            create and maintain your own Blueprints using GitHub through this.
+            You may share Blueprints by passing your GitHub repo url to a
             co-worker or friend. You may use other public Blueprints by forking
             their repositories, and copying the Github repository url.
           </h5>
@@ -31,8 +32,11 @@ class Blueprints extends Component {
           <main className={styles.Blueprints}>
             {Object.keys(this.props.blueprints)
               .filter(i => {
-                if (!this.props.blueprints[i].Trashed
-                  && this.props.blueprints[i].CreatedByUserZUID === this.props.user.zuid) {
+                if (
+                  !this.props.blueprints[i].Trashed &&
+                  this.props.blueprints[i].CreatedByUserZUID ===
+                    this.props.user.zuid
+                ) {
                   return i;
                 }
               })
@@ -47,10 +51,12 @@ class Blueprints extends Component {
                       <img src={blueprint.CoverImage} alt="bp img" />
                       <p>{blueprint.Description}</p>
                     </main>
-                    <Button onClick={this.handleSelect}>
-                      <i className="fa fa-columns" aria-hidden="true" />
-                      Edit
-                    </Button>
+                    <Link to={`/settings/editblueprint/${blueprint.ID}`}>
+                      <Button onClick={this.handleSelect}>
+                        <i className="fa fa-columns" aria-hidden="true" />
+                        Edit
+                      </Button>
+                    </Link>
                     <footer />
                   </article>
                 );
