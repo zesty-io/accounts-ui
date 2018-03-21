@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './profile.less'
 
-import { updateSetting, saveProfile } from '../../../store'
+import { updateSettingRaw, saveProfile } from '../../../store'
 
 class Profile extends Component {
   handleClick = e => {
@@ -10,7 +10,7 @@ class Profile extends Component {
     this.props.dispatch(saveProfile())
   }
   handleChange = e => {
-    this.props.dispatch(updateSetting({ [e.target.name]: e.target.value }))
+    this.props.dispatch(updateSettingRaw({ [e.target.name]: e.target.value }))
   }
   render() {
     return (

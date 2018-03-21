@@ -53,6 +53,14 @@ class Email extends Component {
                     : "Unverified"}
                 </span>
               </article>
+              {this.props.EmailsUnverified ? (
+                <article>
+                  <span>
+                    {this.props.EmailsUnverified}
+                  </span>
+                  <span>Unverified</span>
+                </article>
+              ) : null}
             </main>
           </div>
         </div>

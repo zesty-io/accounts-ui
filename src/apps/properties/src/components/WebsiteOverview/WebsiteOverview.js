@@ -17,6 +17,7 @@ import { getSiteDetails } from "../../store";
 import { fetchSiteUsers } from "../../store/sitesUsers";
 import { fetchSiteCompanies } from "../../store/sitesCompanies";
 import { fetchBlueprint } from "../../store/blueprints";
+import { inviteData } from '../../store/invite'
 
 class WebsiteOverview extends Component {
   componentDidMount() {
@@ -25,19 +26,21 @@ class WebsiteOverview extends Component {
     this.props.dispatch(
       fetchSiteCompanies(this.props.userZuid, this.props.ZUID)
     );
-    this.props.dispatch(fetchBlueprint(this.props.BlueprintID));
+    this.props.dispatch(fetchBlueprint(this.props.blueprintID));
+    this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }))
   }
   render() {
+    console.log(this.props)
     return (
       <section className={styles.WebsiteOverviewWrap}>
-        {this.props.Name ? (
+        {this.props.name ? (
           <article className={styles.WebsiteOverview}>
             <header>
               <Link className={styles.close} to="/properties/">
                 <i className="fa fa-times-circle-o" aria-hidden="true" />Close
               </Link>
               <h1 className={styles.name}>
-                {this.props.Name}&nbsp;
+                {this.props.name}&nbsp;
                 <i className="fa fa-pencil" aria-hidden="true" />
               </h1>
               <h2 className={styles.domain}>
@@ -79,15 +82,9 @@ class WebsiteOverview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  if (ownProps.match.params.hash === "invite" || undefined) {
-    console.log(ownProps.match.params.hash)
-    return state;
-    // do something here to deal with invite?
-  } else {
-    return {
-      ...state.sites[ownProps.match.params.hash],
-      userZuid: state.user.zuid
-    };
-  }
+  return {
+    ...state.sites[ownProps.match.params.hash],
+    userZuid: state.user.zuid
+  };
 };
 export default withRouter(connect(mapStateToProps)(WebsiteOverview));

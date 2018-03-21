@@ -5,24 +5,24 @@ import { NavLink } from "react-router-dom";
 import styles from './Blueprint.less'
 class Blueprint extends Component {
   render() {
-    return this.props.blueprints[this.props.site.BlueprintID] instanceof
+    return this.props.blueprints[this.props.site.blueprintID] instanceof
       Object ? (
       <React.Fragment>
         <article className={styles.Blueprint}>
           <header>
             <h1 className={styles.name}>
-              {this.props.blueprints[this.props.site.BlueprintID].Name}
+              {this.props.blueprints[this.props.site.blueprintID].Name}
             </h1>
           </header>
           <main>
             <img
               src={
-                this.props.blueprints[this.props.site.BlueprintID].CoverImage
+                this.props.blueprints[this.props.site.blueprintID].CoverImage
               }
               alt="bp img"
             />
             <p>
-              {this.props.blueprints[this.props.site.BlueprintID].Description}
+              {this.props.blueprints[this.props.site.blueprintID].Description}
             </p>
           </main>
           <Button onClick={this.handleSelect}>

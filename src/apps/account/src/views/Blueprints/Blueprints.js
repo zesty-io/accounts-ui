@@ -20,7 +20,7 @@ class Blueprints extends Component {
             Add Blueprint
           </Button>
           <h5>
-            In this area you can manager your own custom Blueprints. Learn how
+            In this area you can manage your own custom Blueprints. Learn how
             to create and maintain your own Blueprints using GitHub through
             this. You may share Blueprints by passing your GitHub repo url to a
             co-worker or friend. You may use other public Blueprints by forking
@@ -31,7 +31,8 @@ class Blueprints extends Component {
           <main className={styles.Blueprints}>
             {Object.keys(this.props.blueprints)
               .filter(i => {
-                if (!this.props.blueprints[i].Trashed) {
+                if (!this.props.blueprints[i].Trashed
+                  && this.props.blueprints[i].CreatedByUserZUID === this.props.user.zuid) {
                   return i;
                 }
               })

@@ -80,6 +80,13 @@ export function updateSetting(payload) {
   }
 }
 
+export function updateSettingRaw(payload) {
+  return {
+    type: 'UPDATE_SETTINGS',
+    payload
+  }
+}
+
 export function saveProfile(profile) {
   return (dispatch, getState) => {
     let { settings } = getState()
@@ -123,11 +130,11 @@ export function getSettings(id) {
           twofa: false,
           "id": 21474458,
           "zuid": "5-556f009-nj0d0g",
-          "firstName": "Mohammad",
-          "lastName": "Oweis",
+          "firstName": "Grant",
+          "lastName": "Glidewell",
           "email": "mohammad.oweis@zesty.io",
           "EmailsVerified": "mohammad.oweis@zesty.io",
-          "EmailsUnverified": "",
+          "EmailsUnverified": "grant@unverified.org",
           "staff": true,
           "WebsiteCreator": true,
           "ThirdPartyOAuthTokens": null,

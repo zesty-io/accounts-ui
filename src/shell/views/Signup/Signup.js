@@ -122,7 +122,7 @@ class Signup extends Component {
     })
       .then(json => {
         console.log("USER: ", json);
-        if (json.code === 201) {
+        if (!json.error) {//this is in place of a code === 201, server only returns an error, no code
           // Log user in after signing up
           request(`http://${config.API_AUTH}/login`, {
             body: {

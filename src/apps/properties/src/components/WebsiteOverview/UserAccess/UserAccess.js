@@ -7,8 +7,11 @@ class UserAccess extends Component {
     this.props.dispatch({ type: "CLEAR_USERS" });
   }
   handleInvite = evt => {
-    this.props.dispatch(sendInvite())
-    // endpoint for invites
+    if(this.props.invite && this.props.invite.inviteEmail){
+      this.props.dispatch(sendInvite())
+    }else{
+      console.log('invite info incomplete')// placeholder for user notice
+    }
   }
   handleChange = evt => {
     if(evt.target.value.match(evt.target.pattern)){
