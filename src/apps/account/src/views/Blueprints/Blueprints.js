@@ -51,7 +51,7 @@ class Blueprints extends Component {
                       <img src={blueprint.CoverImage} alt="bp img" />
                       <p>{blueprint.Description}</p>
                     </main>
-                    <Link to={`/settings/editblueprint/${blueprint.ID}`}>
+                    <Link to={`/settings/blueprints/${blueprint.ID}`}>
                       <Button onClick={this.handleSelect}>
                         <i className="fa fa-columns" aria-hidden="true" />
                         Edit
