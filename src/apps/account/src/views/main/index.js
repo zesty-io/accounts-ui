@@ -32,12 +32,12 @@ class Settings extends Component {
                 <NavLink to="/settings/blueprints">Blueprints</NavLink>
               </li>
             </ul>
-            <div style={{ paddingLeft: '25%' }}>
+            <div className={styles.content}>
               <Switch>
                 <Route path="/settings/account" component={Account} />
                 <Route path="/settings/security" component={Security} />
+                <Route path="/settings/blueprints/:id" component={EditBlueprint} />
                 <Route path="/settings/blueprints" component={Blueprints} />
-                <Route path="/settings/editblueprint/:id" component={EditBlueprint} />
               </Switch>
             </div>
           </section>
