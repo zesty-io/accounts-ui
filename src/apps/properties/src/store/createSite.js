@@ -9,9 +9,9 @@ export function createSite(state = {}, action) {
       //do some sort of validation
       return state;
     case "CREATE_SITE_SUCCESS":
-      return site;
-    case "CREATE_SITE_ERROR":
       return state;
+    case "CREATE_SITE_ERROR":
+      return {...state, ...action.error};
     default:
       return state;
   }
@@ -22,25 +22,25 @@ export const postNewSite = (name) => {
     dispatch({
       type: "CREATING_SITE"
     });
-    request(`http://${config.API_ACCOUNTS}/instances`, {
+    return request(`http://${config.API_ACCOUNTS}/instances`, {
       method: "POST",
       json: true,
       body: { name }
     })
-      .then(site => {
-        console.log('site-',site)
-        dispatch({
-          type: "CREATE_SITE_SUCCESS",
-          site: site.data
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        dispatch({
-          type: "CREATE_SITE_ERROR",
-          err
-        });
-      });
+      // .then(site => {
+      //   console.log('site-',site)
+      //   dispatch({
+      //     type: "CREATE_SITE_SUCCESS",
+      //     site: site.data
+      //   });
+      // })
+      // .catch(err => {
+      //   console.error(err);
+      //   dispatch({
+      //     type: "CREATE_SITE_ERROR",
+      //     err
+      //   });
+      // });
   };
 };
 

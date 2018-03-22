@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import { addSiteInfo, postNewSite } from '../../store/createSite'
 
@@ -20,13 +20,10 @@ class PropertyCreate extends Component {
             onChange={this.handleChange}
           />
           <div className={styles.controls}>
-          {/* this button should submit the name of the new site and then redirect to the returned ZUID */}
-          <Link to="/properties/create/blueprint">
             <Button onClick={this.handleClick}>
               <i className="fa fa-plus" aria-hidden="true" />
               Create New Property
             </Button>
-            </Link>
             <Link to="/properties">
               <i className="fa fa-ban" aria-hidden="true" />
               &nbsp;Cancel
@@ -41,7 +38,19 @@ class PropertyCreate extends Component {
   }
   handleClick = evt => {
     this.props.dispatch(postNewSite(this.props.propertyName))
-    //on success redirect to edit blueprint
+      .then(data => {
+        this.props.history.push(`/properties/${data.data.ZUID}/blueprint`)
+        return this.props.dispatch({
+          type: "CREATE_SITE_SUCCESS"
+        })
+      })
+      .catch(error => {
+        console.log(error)
+        return this.props.dispatch({
+          type: "CREATE_SITE_ERROR",
+          error
+        })
+      })
   }
 }
 
@@ -49,4 +58,4 @@ const mapStateToProps = (state) => {
   return {...state.createSite}
 }
 
-export default connect(mapStateToProps)(PropertyCreate)
+export default withRouter(connect(mapStateToProps)(PropertyCreate))
