@@ -7,6 +7,17 @@ import styles from './WebsiteCard.less'
 import { Line } from 'react-chartjs-2'
 
 class WebsiteCard extends Component {
+  constructor(props) {
+    super(props)
+    this.state ={
+      shouldRedraw: false
+    }
+  }
+  componentDidMount() {
+    window.addEventListener('resize', () => {
+      this.setState({shouldRedraw: true})
+    })
+  }
   render() {
     let data = {
       labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
@@ -57,7 +68,7 @@ class WebsiteCard extends Component {
           </Url>
         </header>
         <main className={styles.WebsiteManage}>
-          <Line data={data} options={options} />
+          <Line data={data} options={options} redraw={this.state.shouldRedraw} />
         </main>
         <footer>
           <ButtonGroup className={styles.controls}>
