@@ -1,7 +1,7 @@
 {
-  "name": "accounts-app",
+  "name": "accounts-ui",
   "version": "1.0.0",
-  "description": "Zesty.io account management applicaiton",
+  "description": "Zesty.io account management application",
   "repository": {
     "git": "https://github.com/zesty-io/accounts-ui"
   },
@@ -15,6 +15,7 @@
   "author": "Stuart Runyan<stuart@zesty.io>",
   "license": "UNLICENSED",
   "dependencies": {
+    "chart.js": "2.7.2",
     "classnames": "2.2.5",
     "react": "16.2.0",
     "react-chartjs-2": "2.7.0",
