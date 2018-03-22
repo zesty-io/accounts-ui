@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link } from 'react-router-dom'
 
-import { addSiteInfo } from '../../store/createSite'
+import { addSiteInfo, postNewSite } from '../../store/createSite'
 
 import styles from './PropertyCreate.less'
 
@@ -22,7 +22,7 @@ class PropertyCreate extends Component {
           <div className={styles.controls}>
           {/* this button should submit the name of the new site and then redirect to the returned ZUID */}
           <Link to="/properties/create/blueprint">
-            <Button>
+            <Button onClick={this.handleClick}>
               <i className="fa fa-plus" aria-hidden="true" />
               Create New Property
             </Button>
@@ -38,6 +38,10 @@ class PropertyCreate extends Component {
   }
   handleChange = evt => {
     this.props.dispatch(addSiteInfo({[evt.target.name]: evt.target.value}))
+  }
+  handleClick = evt => {
+    this.props.dispatch(postNewSite(this.props.propertyName))
+    //on success redirect to edit blueprint
   }
 }
 
