@@ -19,7 +19,7 @@ export const fetchSiteCompanies = (userZuid, siteZuid) => {
     dispatch({
       type: 'FETCHING_COMPANIES'
     })
-    request(`http://${config.API_ACCOUNTS}/instances/${siteZuid}/companies`)
+    request(`${config.API_ACCOUNTS}/instances/${siteZuid}/companies`)
       .then(companies => {
         dispatch({
           type: 'FETCH_COMPANIES_SUCCESS',

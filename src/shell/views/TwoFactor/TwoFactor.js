@@ -51,7 +51,7 @@ class TwoFactor extends Component {
   }
   handle2FA = evt => {
     evt.preventDefault()
-    request(`http://${config.API_AUTH}/verify-2fa`, {
+    request(`${config.API_AUTH}/verify-2fa`, {
       body: {
         token: document.forms.TwoFactor.token.value
       }

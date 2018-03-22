@@ -39,7 +39,7 @@ export function auth(
 
 export function verifyAuth(unsubscribe) {
   return dispatch => {
-    request(`http://${config.API_AUTH}/verify`)
+    request(`${config.API_AUTH}/verify`)
       .then(json => {
         console.log('VERIFY JSON: ', json)
         dispatch({
@@ -67,7 +67,7 @@ export function logout() {
     // dispatch({
     //   type: 'FETCHING_AUTH'
     // })
-    request(`http://${config.API_AUTH}/logout`)
+    request(`${config.API_AUTH}/logout`)
       .then(json => {
         dispatch({
           type: 'LOGOUT'

@@ -70,7 +70,7 @@ export function fetchSites() {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    request(`http://${config.API_ACCOUNTS}/instances`)
+    request(`${config.API_ACCOUNTS}/instances`)
       .then(sites => {
         dispatch({
           type: 'FETCH_SITES_SUCCESS',

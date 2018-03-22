@@ -50,7 +50,7 @@ export const getUsersForSite = (id, siteZuid) => {
       type: 'FETCHING_SITE_USERS'
     })
 
-    request(`http://${config.API_ACCOUNTS}/instances/${siteZuid}/users`)
+    request(`${config.API_ACCOUNTS}/instances/${siteZuid}/users`)
       .then(sites => {
         dispatch({
           type: 'FETCH_SITE_USERS_SUCCESS',
@@ -72,7 +72,7 @@ export const getSiteDetails = id => {
     dispatch({
       type: 'FETCHING_SITE_DETAILS'
     })
-    // request(`http://${config.API_ACCOUNTS}/instances/${}/users`, {
+    // request(`${config.API_ACCOUNTS}/instances/${}/users`, {
     //   headers: {
     //     'User-Zuid': userZuid
     //   }

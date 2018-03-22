@@ -91,7 +91,7 @@ class Signup extends Component {
       });
     }
 
-    request(`http://${config.API_ACCOUNTS}/users`, {
+    request(`${config.API_ACCOUNTS}/users`, {
       method: "POST",
       json: true,
       body: {
@@ -105,7 +105,7 @@ class Signup extends Component {
         console.log("USER: ", json);
         if (!json.error) {//this is in place of a code === 201, server only returns an error, no code
           // Log user in after signing up
-          request(`http://${config.API_AUTH}/login`, {
+          request(`${config.API_AUTH}/login`, {
             body: {
               email: document.forms.signup.email.value,
               password: document.forms.signup.pass.value
