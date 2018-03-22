@@ -47,7 +47,6 @@ class Properties extends Component {
                 .map(zuid => {
                   return (
                     <WebsiteCard
-                      windowSize={window.innerWidth}
                       key={zuid}
                       site={this.props.sitesFiltered[zuid]}
                     />

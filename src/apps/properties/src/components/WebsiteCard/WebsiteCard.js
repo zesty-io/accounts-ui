@@ -14,9 +14,13 @@ class WebsiteCard extends Component {
     }
   }
   componentDidMount() {
-    window.addEventListener('resize', () => {
-      this.setState({shouldRedraw: true})
-    })
+    window.addEventListener('resize', this.setRedraw, false)
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setRedraw, false)
+  }
+  setRedraw = () => {
+    return this.setState({shouldRedraw: true})
   }
   render() {
     let data = {
