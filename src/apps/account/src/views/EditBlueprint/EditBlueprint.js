@@ -5,18 +5,22 @@ import { connect } from "react-redux";
 import styles from "./EditBlueprint.less";
 
 class EditBlueprint extends Component {
+	handleSubmit = (evt) => {
+		evt.preventDefault()
+		console.log('WEEEEEEEEE!') // disabled for now
+	}
   render() {
-		console.log(this.props.blueprint)
+		let { blueprint } = this.props
     return this.props && this.props.blueprint ? (
       <div className={styles.blueprints}>
-        <form id="edit-form">
+        <form id="edit-form" onSubmit={this.handleSubmit}>
           <div>
             <div>
               <img
                 src={`https://raw.githubusercontent.com/${
-                  this.props.blueprint.Name
+                  blueprint.Name
                 }/master/shield.png`}
-                alt={this.props.blueprint.Name}
+                alt={blueprint.Name}
               />
             </div>
 
@@ -25,24 +29,24 @@ class EditBlueprint extends Component {
                 <label>Blueprint Name</label>
                 <Input
                   type="text"
-                  placeholder={this.props.blueprint.Name}
+                  placeholder={blueprint.Name}
                   name="edit[name]"
                 />
                 <label>Github Repo URL</label>
                 <Input
                   type="text"
-                  placeholder={this.props.blueprint.GithubURL}
+                  placeholder={blueprint.GithubURL}
                   name="edit[github_url]"
                 />
                 <label>Blueprint Example Preview URL</label>
                 <Input
                   type="text"
-                  placeholder={this.props.blueprint.PreviewURL}
+                  placeholder={blueprint.PreviewURL}
                   name="edit[preview_url]"
                 />
                 <br />
                 <br />
-                <a href="#!/sites/plates/270/">View Plate in Creator</a>
+                <a href={`/some way to the creator/${blueprint.ID}/`}>View Plate in Creator</a>
               </fieldset>
             </div>
             <div>
@@ -50,24 +54,24 @@ class EditBlueprint extends Component {
                 Shield Image URL (Optional. This will override shield.png in
                 your repo.)
               </label>
-              <Input type="text" value="" name="edit[main_image]" />
+              <Input type="text" value={blueprint.MainImage} name="edit[main_image]" />
 
               <label>
                 Background Cover Image URL (Optional. This will override
                 shield.png in your repo.)
               </label>
-              <Input type="text" value="" name="edit[cover_image]" />
+              <Input type="text" value={blueprint.CoverImage} name="edit[cover_image]" />
             </div>
           </div>
           <hr />
           <div>
             <div>
               <label>Short Description</label>
-              <textarea name="edit[short_description]" />
+              <textarea name="edit[short_description]" value={blueprint.ShortDescription} />
             </div>
             <div>
               <label>Description</label>
-              <textarea name="edit[description]" />
+              <textarea name="edit[description]" value={blueprint.Description} />
             </div>
           </div>
           <hr />
@@ -163,15 +167,11 @@ class EditBlueprint extends Component {
             </div>
           </div>
           <hr />
-          <Input type="hidden" name="edit[tags_csv][]" value="30" />
-          <Input type="hidden" name="id" value="270" />
-          <Input type="hidden" name="edit[zesty_certified]" value="0" />
-          <Input type="hidden" name="edit[creator_id]" value="21474522" />
-          <Input type="submit" data-alt-text="Save..." value="Save" />
+          <Button type="submit" text="Save" />
         </form>
       </div>
     ) : (
-      <p>loading</p>
+      <p>No Blueprint Found</p>
     );
   }
 }
