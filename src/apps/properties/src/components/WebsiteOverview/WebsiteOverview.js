@@ -63,7 +63,7 @@ class WebsiteOverview extends Component {
               <h2>Recent Site Actions</h2>
               {/* <Actions site={this.props} /> */}
               <h2>User Access</h2>
-              <UserAccess />
+              <UserAccess site={this.props}/>
               <h2>Company Access</h2>
               <CompanyAccess />
               <h2>Blueprint</h2>

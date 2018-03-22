@@ -8,7 +8,11 @@ class UserAccess extends Component {
   }
   handleInvite = evt => {
     if(this.props.invite && this.props.invite.inviteEmail){
-      this.props.dispatch(sendInvite())
+      this.props.dispatch(sendInvite({
+        inviteeEmail: this.props.invite.inviteEmail,
+        InstanceZUID: this.props.site.ZUID,
+        RoleZUID: this.props.invite.inviteRole
+      }))
     }else{
       console.log('invite info incomplete')// placeholder for user notice
     }
@@ -50,10 +54,10 @@ class UserAccess extends Component {
             <Option value="admin">Admin</Option>
           </Select> */}
           <Input
-                type="text"
+                type="email"
                 placeholder="Email"
                 name="inviteEmail"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                required
                 onChange={this.handleChange}
               />
           <select name='inviteRole' onChange={this.handleChange}>
