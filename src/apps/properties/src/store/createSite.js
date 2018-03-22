@@ -22,7 +22,7 @@ export const postNewSite = (name) => {
     dispatch({
       type: "CREATING_SITE"
     });
-    return request(`http://${config.API_ACCOUNTS}/instances`, {
+    return request(`${config.API_ACCOUNTS}/instances`, {
       method: "POST",
       json: true,
       body: { name }

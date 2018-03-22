@@ -75,7 +75,7 @@ class Login extends Component {
   }
   handleLogin = evt => {
     evt.preventDefault()
-    request(`http://${config.API_AUTH}/login`, {
+    request(`${config.API_AUTH}/login`, {
       body: {
         email: document.forms.login.email.value,
         password: document.forms.login.pass.value

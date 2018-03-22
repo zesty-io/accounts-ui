@@ -51,8 +51,8 @@ export function fetchAccountBlueprints() {
     dispatch({
       type: 'FETCHING_BLUEPRINTS'
     })
-    request(`http://${config.API_ACCOUNTS}/blueprints`)
-      .then(json => 
+    request(`${config.API_ACCOUNTS}/blueprints`)
+      .then(json =>
         dispatch({
           type: 'FETCHING_BLUEPRINTS_SUCCESS',
           blueprints: json.data
@@ -149,4 +149,3 @@ export function getSettings(id) {
 }
 
 // add change password, modify user info, toggle 2fa
-

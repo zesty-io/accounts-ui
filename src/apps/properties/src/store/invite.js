@@ -35,7 +35,7 @@ export function sendInvite(payload) {
     dispatch({
       type: "SENDING_INVITE"
     })
-    request(`http://${config.API_ACCOUNTS}/invites`, {
+    request(`${config.API_ACCOUNTS}/invites`, {
       method: "POST",
       json: true,
       body: {
