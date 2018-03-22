@@ -36,6 +36,12 @@
     .input {
       margin-bottom: 20px;
       width: 100%;
+      &:valid {
+        box-shadow: 0 0 5px 1px @zesty-teal;
+      }
+      &:focus:required:invalid {
+        box-shadow: 0 0 5px 1px @zesty-red;
+      }
     }
     a {
       margin: 0;

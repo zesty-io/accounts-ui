@@ -15,7 +15,7 @@ class Signup extends Component {
   render() {
     return (
       <section className={styles.Signup}>
-        <form name="signup" className={styles.SignupForm}>
+        <form name="signup" className={styles.SignupForm} onSubmit={this.handleSignup}>
           <img src="/zesty-io-logo.svg" />
           {this.state.message ? (
             <p className={styles.error}>
@@ -28,9 +28,9 @@ class Signup extends Component {
             <p>Email Address</p>
             <Input
               className={styles.input}
-              type="text"
+              type="email"
               placeholder="e.g. hello@zesty.io"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              required
               name="email"
             />
           </label>
@@ -40,6 +40,7 @@ class Signup extends Component {
               className={styles.input}
               type="text"
               placeholder="Zesty"
+              required
               name="firstName"
             />
           </label>
@@ -49,6 +50,7 @@ class Signup extends Component {
               className={styles.input}
               type="text"
               placeholder=""
+              required
               name="lastName"
             />
           </label>
@@ -59,6 +61,7 @@ class Signup extends Component {
             <Input
               className={styles.input}
               type="password"
+              required
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
               name="pass"
             />
@@ -71,9 +74,9 @@ class Signup extends Component {
             >
               End User License Agreement
             </a>
-            <Input type="checkbox" className={styles.checkbox} name="eula" />
+            <Input type="checkbox" required className={styles.checkbox} name="eula" />
           </label>
-          <Button onClick={this.handleSignup}>Create An Account</Button>
+          <Button type="submit">Create An Account</Button>
           <AppLink to="/login">Already have an account?</AppLink>
         </form>
       </section>
@@ -81,29 +84,7 @@ class Signup extends Component {
   }
   handleSignup = evt => {
     evt.preventDefault();
-    // handle some form validation
-    if (
-      !document.forms.signup.email.value.match(
-        document.forms.signup.email.pattern
-      )
-    ) {
-      return this.setState({ message: "Please use a valid email address" });
-    }
-    if (document.forms.signup.firstName.value.length < 1) {
-      return this.setState({ message: "You must enter a first name." });
-    }
-    if (document.forms.signup.lastName.value.length < 1) {
-      return this.setState({ message: "You must enter a last name." });
-    }
-    if (
-      !document.forms.signup.pass.value.match(
-        document.forms.signup.pass.pattern
-      )
-    ) {
-      return this.setState({
-        message: "Password does not meet our minimum specification."
-      });
-    }
+
     if (document.forms.signup.eula.checked === false) {
       return this.setState({
         message: "You must agree to our license terms to continue."
