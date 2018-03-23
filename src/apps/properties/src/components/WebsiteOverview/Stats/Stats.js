@@ -28,10 +28,7 @@ class Stats extends Component {
         }
       ]
     }
-    return <HorizontalBar
-      data={data}
-      height={90}
-      options={{
+    const options = {
         scales: {
             xAxes: [{
                 ticks: {
@@ -39,7 +36,12 @@ class Stats extends Component {
                 }
             }]
         }
-    }}
+    
+    }
+    return <HorizontalBar
+      data={data}
+      height={40}
+      options={options}
       />
   }
 }
