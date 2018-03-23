@@ -36,7 +36,7 @@ class PropertyCreate extends Component {
   handleChange = evt => {
     this.props.dispatch(addSiteInfo({[evt.target.name]: evt.target.value}))
   }
-  handleClick = evt => {
+  handleClick = () => {
     this.props.dispatch(postNewSite(this.props.propertyName))
       .then(data => {
         this.props.history.push(`/properties/${data.data.ZUID}/blueprint`)

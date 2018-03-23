@@ -6,7 +6,6 @@ export function createSite(state = {}, action) {
     case "ADD_SITE_INFO":
       return { ...state, ...action.payload };
     case "CREATING_SITE":
-      //do some sort of validation
       return state;
     case "CREATE_SITE_SUCCESS":
       return state;
@@ -27,20 +26,6 @@ export const postNewSite = (name) => {
       json: true,
       body: { name }
     })
-      // .then(site => {
-      //   console.log('site-',site)
-      //   dispatch({
-      //     type: "CREATE_SITE_SUCCESS",
-      //     site: site.data
-      //   });
-      // })
-      // .catch(err => {
-      //   console.error(err);
-      //   dispatch({
-      //     type: "CREATE_SITE_ERROR",
-      //     err
-      //   });
-      // });
   };
 };
 
