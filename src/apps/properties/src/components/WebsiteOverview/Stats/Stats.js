@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Bar } from 'react-chartjs-2'
+import { HorizontalBar } from 'react-chartjs-2'
 
 class Stats extends Component {
   render() {
@@ -28,7 +28,19 @@ class Stats extends Component {
         }
       ]
     }
-    return <Bar data={data} />
+    return <HorizontalBar
+      data={data}
+      height={90}
+      options={{
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }}
+      />
   }
 }
 
