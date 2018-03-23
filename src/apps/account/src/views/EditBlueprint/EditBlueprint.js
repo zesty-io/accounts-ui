@@ -22,16 +22,21 @@ class EditBlueprint extends Component {
               alt={blueprint.Name}
             />
             <label>Blueprint Name</label>
-            <Input type="text" placeholder={blueprint.Name} name="edit[name]" />
+            <Input type="text"
+              size={50}
+              placeholder={blueprint.Name}
+              name="edit[name]" />
             <label>Github Repo URL</label>
             <Input
               type="text"
+              size={50}
               placeholder={blueprint.GithubURL}
               name="edit[github_url]"
             />
             <label>Blueprint Example Preview URL</label>
             <Input
               type="text"
+              size={50}
               placeholder={blueprint.PreviewURL}
               name="edit[preview_url]"
             />
@@ -41,6 +46,7 @@ class EditBlueprint extends Component {
             </label>
             <Input
               type="text"
+              size={50}
               placeholder={blueprint.MainImage}
               name="edit[main_image]"
             />
@@ -49,16 +55,15 @@ class EditBlueprint extends Component {
               shield.png in your repo.)
             </label>
             <Input
-              type="text"
+              size={50}
               placeholder={blueprint.CoverImage}
               name="edit[cover_image]"
             />
           </div>
+          <h3 className={styles.description}>Description</h3>
           <div className={styles.rowTwo}>
             <label>Short Description</label>
             <textarea
-              rows={10}
-              cols={25}
               wrap="soft"
               name="edit[short_description]"
               placeholder={blueprint.ShortDescription}
@@ -67,8 +72,6 @@ class EditBlueprint extends Component {
           <div className={styles.rowTwo1}>
             <label>Description</label>
             <textarea
-              rows={20}
-              cols={35}
               wrap="soft"
               name="edit[description]"
               placeholder={blueprint.Description}
@@ -167,7 +170,7 @@ class EditBlueprint extends Component {
         </div>
       </form>
     ) : (
-      <p>No Blueprint Found</p>
+      <p>No Blueprint Found, you may not be the owner of this blueprint</p>
     );
   }
 }
