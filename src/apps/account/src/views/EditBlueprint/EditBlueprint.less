@@ -1,14 +1,26 @@
 @import '../../../../../shell/styles/colors.less';
 
+label {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #5B667D;
+  margin-bottom: 5px;
+}
+
 .blueprints {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: auto auto auto auto;
   grid-template-rows: auto;
-  grid-row-gap: 50px;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
   grid-template-areas: 
     "head head head head"
-    ". mid1 mid2 mid2"
-    "opts opts opts opts";
+    "mid1 mid1 mid2 mid2"
+    "label . . ."
+    "opts1 opts2 opts3 opts4"
+    "bottom1 bottom2 bottom3 bottom4";
     
 }
 .rowOne{
@@ -21,5 +33,29 @@
   grid-area: mid2
 }
 .rowThree{
-  grid-area: opts
+  grid-area: label
+}
+.opts1{
+  grid-area: opts1
+}
+.opts2{
+  grid-area: opts2
+}
+.opts3{
+  grid-area: opts3
+}
+.opts4{
+  grid-area: opts4
+}
+.bottom1{
+  grid-area: bottom1
+}
+.bottom2{
+  grid-area: bottom2
+}
+.bottom3{
+  grid-area: bottom3
+}
+.bottom4{
+  grid-area: bottom4
 }

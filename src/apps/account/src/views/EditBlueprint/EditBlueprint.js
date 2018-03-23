@@ -35,9 +35,6 @@ class EditBlueprint extends Component {
               placeholder={blueprint.PreviewURL}
               name="edit[preview_url]"
             />
-            <a href={`/some way to the creator/${blueprint.ID}/`}>
-              View Plate in Creator
-            </a>
             <label>
               Shield Image URL (Optional. This will override shield.png in your
               repo.)
@@ -77,9 +74,9 @@ class EditBlueprint extends Component {
               placeholder={blueprint.Description}
             />
           </div>
-          <div className={styles.rowThree}>
-            <label>Tags</label>
+          <h3 className={styles.rowThree}>Tags</h3>
             <Input type="hidden" name="edit[tags_csv][]" value="" />
+            <div className={styles.opts1}>
             <h4>Categories</h4>
             <label>
               <Input type="checkbox" name="edit[tags_csv][]" value="18" />Frameworks
@@ -104,6 +101,8 @@ class EditBlueprint extends Component {
             <label>
               <Input type="checkbox" name="edit[tags_csv][]" value="19" />Colorful
             </label>
+            </div>
+            <div className={styles.opts2}>            
             <h4>Trends</h4>
             <label>
               <Input type="checkbox" name="edit[tags_csv][]" value="20" />Flat
@@ -111,6 +110,8 @@ class EditBlueprint extends Component {
             <label>
               <Input type="checkbox" name="edit[tags_csv][]" value="21" />Bootstrap
             </label>
+            </div>
+            <div className={styles.opts3}>            
             <h4>Property Traits</h4>
             <label>
               <Input type="checkbox" name="edit[tags_csv][]" value="6" />Mobile
@@ -135,30 +136,34 @@ class EditBlueprint extends Component {
             <label>
               <Input type="checkbox" name="edit[tags_csv][]" value="12" />Authorship
             </label>
-            <h4>Content Traits</h4>
-            <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="24" />Single
-              Page
-            </label>
-            <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="25" />Multi
-              Page
-            </label>
-            <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="26" />Blogs
-            </label>
-            <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="27" />Galleries
-            </label>
-            <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="28" />Menus
-            </label>
-            <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="29" />Business
-            </label>
-
-            <Button type="submit" text="Save" />
-          </div>
+            </div>
+            <div className={styles.opts4}>
+              <h4>Content Traits</h4>
+              <label>
+                <Input type="checkbox" name="edit[tags_csv][]" value="24" />Single
+                Page
+              </label>
+              <label>
+                <Input type="checkbox" name="edit[tags_csv][]" value="25" />Multi
+                Page
+              </label>
+              <label>
+                <Input type="checkbox" name="edit[tags_csv][]" value="26" />Blogs
+              </label>
+              <label>
+                <Input type="checkbox" name="edit[tags_csv][]" value="27" />Galleries
+              </label>
+              <label>
+                <Input type="checkbox" name="edit[tags_csv][]" value="28" />Menus
+              </label>
+              <label>
+                <Input type="checkbox" name="edit[tags_csv][]" value="29" />Business
+              </label>
+            </div>
+            
+            <Button className={styles.bottom2} type="submit" text="Save" />
+            <Button className={styles.bottom3} text="Cancel" />
+            <Button className={styles.bottom4} text="Edit in Creator" />
         </div>
       </form>
     ) : (
