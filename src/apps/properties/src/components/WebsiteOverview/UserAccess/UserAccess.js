@@ -49,11 +49,6 @@ class UserAccess extends Component {
           </main>
         </div>
         <div className={styles.invite}>
-          {/* <Select selection={{ value: 'editor' }}>
-            <Option value="editor">Editor</Option>
-            <Option value="developer">Developer</Option>
-            <Option value="admin">Admin</Option>
-          </Select> */}
           <Input
                 type="email"
                 placeholder="Email"

@@ -180,7 +180,6 @@ const mapStateToProps = (state, ownProps) => {
     blueprint: Object.keys(state.profile.blueprints)
       .map(i => {
         if (state.profile.blueprints[i].ID == ownProps.match.params.id) {
-          console.log(state.profile.blueprints[i])
           return state.profile.blueprints[i];
         }
       })
