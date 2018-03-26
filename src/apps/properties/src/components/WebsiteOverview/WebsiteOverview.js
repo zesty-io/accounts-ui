@@ -30,7 +30,6 @@ class WebsiteOverview extends Component {
     this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }))
   }
   render() {
-    console.log(this.props)
     return (
       <section className={styles.WebsiteOverviewWrap}>
         {this.props.name ? (

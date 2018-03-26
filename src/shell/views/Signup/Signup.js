@@ -9,7 +9,8 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: ""
+      message: "",
+      submitted: false
     };
   }
   render() {
@@ -76,7 +77,7 @@ class Signup extends Component {
             </a>
             <Input type="checkbox" required className={styles.checkbox} name="eula" />
           </label>
-          <Button type="submit">Create An Account</Button>
+          <Button type="submit" disabled={this.state.submitted}>Create An Account</Button>
           <AppLink to="/login">Already have an account?</AppLink>
         </form>
       </section>
@@ -84,13 +85,7 @@ class Signup extends Component {
   }
   handleSignup = evt => {
     evt.preventDefault();
-
-    if (document.forms.signup.eula.checked === false) {
-      return this.setState({
-        message: "You must agree to our license terms to continue."
-      });
-    }
-
+    this.setState({submitted: true})
     request(`${config.API_ACCOUNTS}/users`, {
       method: "POST",
       json: true,

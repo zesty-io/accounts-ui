@@ -1,18 +1,22 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-export function invite(state = { inviteRole: "editor" }, action) {
+export function invite(
+  state = {
+    inviteRole: "editor",
+    inviteeEmail: "",
+    submitted: false },
+  action
+) {
   switch (action.type) {
     case "INVITE_DATA":
       return { ...state, ...action.payload };
     case "SENDING_INVITE":
-      // this should send the email, and role and site zuid to an endpoint.
-      console.log(state);
-      return state
+      return { ...state, submitted: !state.submitted };
     case "SEND_INVITE_ERROR":
-      return {...state, err}
+      return { ...state, err };
     case "SEND_INVITE_SUCCESS":
-      return { ...state, inviteEmail: "" };
+      return { ...state, inviteeEmail: "", submitted: !state.submitted };
     default:
       return state;
   }
@@ -21,11 +25,6 @@ export function invite(state = { inviteRole: "editor" }, action) {
 export function inviteData(payload) {
   return {
     type: "INVITE_DATA",
-    meta: {
-      debounce: {
-        time: 200
-      }
-    },
     payload
   };
 }
@@ -34,7 +33,7 @@ export function sendInvite(payload) {
   return dispatch => {
     dispatch({
       type: "SENDING_INVITE"
-    })
+    });
     request(`${config.API_ACCOUNTS}/invites`, {
       method: "POST",
       json: true,
@@ -43,18 +42,19 @@ export function sendInvite(payload) {
         InstanceZUID: payload.InstanceZUID,
         RoleZUID: payload.RoleZUID
       }
-    }).then(data => [
-      dispatch({
-        type: "SEND_INVITE_SUCCESS",
-        data
-      })
-    ])
-    .catch(err => {
-      console.table(err);
-      dispatch({
-        type: "SEND_INVITE_ERROR",
-        err
-      })
     })
+      .then(data => [
+        dispatch({
+          type: "SEND_INVITE_SUCCESS",
+          data
+        })
+      ])
+      .catch(err => {
+        console.table(err);
+        dispatch({
+          type: "SEND_INVITE_ERROR",
+          err
+        });
+      });
   };
 }
