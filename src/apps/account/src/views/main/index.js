@@ -5,6 +5,7 @@ import { ErrorBoundary } from './err'
 
 import Blueprints from '../Blueprints'
 import EditBlueprint from '../EditBlueprint'
+import BlueprintCreate from '../BlueprintCreate'
 import Security from '../Security'
 import Account from '../Account'
 
@@ -36,6 +37,7 @@ class Settings extends Component {
               <Switch>
                 <Route path="/settings/account" component={Account} />
                 <Route path="/settings/security" component={Security} />
+                <Route path="/settings/blueprints/create" component={BlueprintCreate} />
                 <Route path="/settings/blueprints/:id" component={EditBlueprint} />
                 <Route path="/settings/blueprints" component={Blueprints} />
               </Switch>

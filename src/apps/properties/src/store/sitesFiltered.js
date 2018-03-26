@@ -24,8 +24,8 @@ export const filter = searchString => {
       for (const zuid in sites) {
         let site = sites[zuid]
         if (
-          site.Name &&
-          site.Name.toLowerCase().includes(searchString.toLowerCase())
+          site.name &&
+          site.name.toLowerCase().includes(searchString.toLowerCase())
         ) {
           filtered[zuid] = site
         } else if (site.ZUID && site.ZUID.includes(searchString)) {

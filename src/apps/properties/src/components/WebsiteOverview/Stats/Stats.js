@@ -40,7 +40,7 @@ class Stats extends Component {
     }
     return <HorizontalBar
       data={data}
-      height={40}
+      height={50}
       options={options}
       />
   }

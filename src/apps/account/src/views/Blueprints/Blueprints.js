@@ -16,10 +16,12 @@ class Blueprints extends Component {
       <div className={styles.blueprints}>
         <h2>Blueprints</h2>
         <a className="button green fr">
-          <Button onClick={this.handleSelect}>
-            <i className="fa fa-columns" aria-hidden="true" />
-            Add Blueprint
-          </Button>
+          <Link to="blueprints/create">
+            <Button>
+              <i className="fa fa-columns" aria-hidden="true" />
+              Add Blueprint
+            </Button>
+          </Link>
           <h5>
             In this area you can manage your own custom Blueprints. Learn how to
             create and maintain your own Blueprints using GitHub through this.
@@ -52,7 +54,7 @@ class Blueprints extends Component {
                       <p>{blueprint.Description}</p>
                     </main>
                     <Link to={`/settings/blueprints/${blueprint.ID}`}>
-                      <Button onClick={this.handleSelect}>
+                      <Button>
                         <i className="fa fa-columns" aria-hidden="true" />
                         Edit
                       </Button>

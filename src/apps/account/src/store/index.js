@@ -34,6 +34,15 @@ export function profile(state = {}, action) {
     case 'FETCHING_ACCOUNT_BLUEPRINTS_ERROR':
       return state
 
+    case 'CREATING_BLUEPRINT':
+      return state
+
+    case 'CREATE_BLUEPRINT_SUCCESS':
+      return {...state, ...action.blueprint}
+
+    case 'CREATE_BLUEPRINT_ERROR':
+      return state
+
     case 'ADD_EMAIL_SUCCESS':
       const emails = state.emails.concat([{email: state.newEmail, options: state.newEmailOptions || ''}])
       return { ...state, newEmail: '', emails }
@@ -85,6 +94,19 @@ export function updateSettingRaw(payload) {
     type: 'UPDATE_SETTINGS',
     payload
   }
+}
+
+export function postNewBlueprint(Name) {
+  return dispatch => {
+    dispatch({
+      type: "CREATING_BLUEPRINT"
+    });
+    return request(`${config.API_ACCOUNTS}/blueprints`, {
+      method: "POST",
+      json: true,
+      body: { Name }
+    })
+  };
 }
 
 export function saveProfile(profile) {
