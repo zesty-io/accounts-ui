@@ -42,11 +42,14 @@ class BlueprintCreate extends Component {
     this.props
       .dispatch(postNewBlueprint(this.props.createBlueprintName))
       .then(data => {
-        this.props.history.push(`settings/blueprints/${data.data.ZUID}`);
-        return this.props.dispatch({
+        this.props.dispatch({
           type: "CREATE_BLUEPRINT_SUCCESS",
           blueprint: data.data
         });
+        return data.data
+      })
+      .then(bp => {
+        return this.props.history.push(`../blueprints/${bp.ID}`);
       })
       .catch(error => {
         console.log(error);

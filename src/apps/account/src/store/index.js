@@ -38,7 +38,8 @@ export function profile(state = {}, action) {
       return state
 
     case 'CREATE_BLUEPRINT_SUCCESS':
-      return {...state, ...action.blueprint}
+      let blueprints = {...state.blueprints, [action.blueprint.ID]:action.blueprint}
+      return {...state, blueprints}
 
     case 'CREATE_BLUEPRINT_ERROR':
       return state
@@ -58,19 +59,19 @@ export function profile(state = {}, action) {
 export function fetchAccountBlueprints() {
   return dispatch => {
     dispatch({
-      type: 'FETCHING_BLUEPRINTS'
+      type: 'FETCHING_ACCOUNT_BLUEPRINTS'
     })
     request(`${config.API_ACCOUNTS}/blueprints`)
       .then(json =>
         dispatch({
-          type: 'FETCHING_BLUEPRINTS_SUCCESS',
+          type: 'FETCHING_ACCOUNT_BLUEPRINTS_SUCCESS',
           blueprints: json.data
         })
       )
       .catch(err => {
         console.table(err)
         dispatch({
-          type: 'FETCHING_BLUEPRINTS_ERROR',
+          type: 'FETCHING_ACCOUNT_BLUEPRINTS_ERROR',
           err
         })
       })

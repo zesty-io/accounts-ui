@@ -32,18 +32,18 @@ class Blueprints extends Component {
         </a>
         <div className={styles.bptable}>
           <main className={styles.Blueprints}>
-            {Object.keys(this.props.blueprints)
+            {this.props.profile.blueprints && Object.keys(this.props.profile.blueprints)
               .filter(i => {
                 if (
-                  !this.props.blueprints[i].Trashed &&
-                  this.props.blueprints[i].CreatedByUserZUID ===
+                  !this.props.profile.blueprints[i].Trashed &&
+                  this.props.profile.blueprints[i].CreatedByUserZUID ===
                     this.props.user.zuid
                 ) {
                   return i;
                 }
               })
               .map(i => {
-                let blueprint = this.props.blueprints[i];
+                let blueprint = this.props.profile.blueprints[i];
                 return (
                   <article className={styles.Blueprint} key={i}>
                     <header>
