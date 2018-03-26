@@ -40,7 +40,7 @@ class BlueprintCreate extends Component {
   };
   handleClick = () => {
     this.props
-      .dispatch(postNewBlueprint(this.props.createBlueprintName))
+      .dispatch(postNewBlueprint(this.props.profile.createBlueprintName))
       .then(data => {
         this.props.dispatch({
           type: "CREATE_BLUEPRINT_SUCCESS",
