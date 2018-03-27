@@ -1,4 +1,4 @@
-@import "../../../../../../shell/styles/colors.less";
+@import '../../../../../../shell/styles/colors.less';
 
 .companyAccess {
   h2 {
@@ -10,6 +10,7 @@
 
   footer {
     display: flex;
+    margin: 0 0 1rem;
     input {
       height: 34px;
     }
@@ -22,7 +23,7 @@
     header {
       display: grid;
       justify-items: start;
-      grid: auto-flow / .2fr 1fr 2fr .5fr;
+      grid: auto-flow / 0.2fr 1fr 2fr 0.5fr;
     }
     main {
       display: grid;
@@ -30,7 +31,7 @@
       padding-bottom: 2%;
       article {
         display: grid;
-        grid-template-columns: .2fr 1fr 2fr .5fr;
+        grid-template-columns: 0.2fr 1fr 2fr 0.5fr;
         &:nth-child(odd) {
           background-color: @zesty-field-blue;
         }
@@ -40,7 +41,7 @@
   .info {
     color: #607394;
     display: block;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: normal;
     overflow-y: visible;

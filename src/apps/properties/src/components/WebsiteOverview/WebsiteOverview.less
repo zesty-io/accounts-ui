@@ -11,7 +11,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   height: 100vh;
   // width: 75vw;
   width: 100vw;
@@ -25,14 +25,18 @@
 
 .WebsiteOverview {
   background: @appBkgColor;
-  padding: 2rem;
+  // padding: 2rem;
+  overflow-y: scroll;
+  height: 100vh;
   width: 75vw;
+  max-width: 900px;
   position: absolute;
   top: 0;
   right: 0;
   // flex: 1;
   header {
-    border-bottom: 1px solid darken(@zesty-light-blue, 5%);
+    padding: 2rem;
+    border-bottom: 1px solid darken(@zesty-light-blue, 1%);
     padding-bottom: 1rem;
     margin-bottom: 1rem;
     .name {
@@ -48,14 +52,17 @@
     }
   }
   main {
-    h2 {
-      margin-top: 2rem;
-    }
+    padding: 2rem;
     .card {
+      margin: 0 0 2rem;
+      background: lighten(#f2f4fb, 2.5%);
+      padding: 1rem;
       h2 {
-        margin-bottom: 1rem;
+        margin: 0 0 1rem;
       }
-      margin: 0 0 4rem;
+      main {
+        padding: 0;
+      }
     }
   }
 }

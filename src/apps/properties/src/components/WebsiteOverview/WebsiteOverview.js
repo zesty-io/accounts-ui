@@ -64,13 +64,13 @@ class WebsiteOverview extends Component {
                 </h2>
                 <Stats site={this.props.ZUID} />
               </article>
-              <article className={styles.card}>
+              {/* <article className={styles.card}>
                 <h2>
                   <i className="fa fa-list" aria-hidden="true" />
                   &nbsp;Recent Site Actions
                 </h2>
-                {/* <Actions site={this.props} /> */}
-              </article>
+                <Actions site={this.props} />
+              </article> */}
               <article className={styles.card}>
                 <h2>
                   <i className="fa fa-users" aria-hidden="true" />

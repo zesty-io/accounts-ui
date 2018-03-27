@@ -9,8 +9,15 @@
   }
   .invite {
     display: flex;
+    margin: 0 0 1rem;
     input {
       flex: 1;
+    }
+    .email {
+      flex: 2;
+    }
+    button {
+      margin-left: 1rem;
     }
   }
   .userTable {
@@ -22,12 +29,12 @@
     main {
       display: grid;
       grid-template-rows: auto;
-      padding-bottom: 2%;      
       article {
+        padding: 1rem;
         display: grid;
-        grid-template-columns: 1fr 1fr 2fr .5fr;
+        grid-template-columns: 1fr 1fr 2fr 0.5fr;
         &:nth-child(odd) {
-          background-color: @zesty-field-blue;
+          background-color: @zesty-white;
         }
       }
     }
