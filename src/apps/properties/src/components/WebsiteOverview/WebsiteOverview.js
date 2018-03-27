@@ -34,7 +34,7 @@ class WebsiteOverview extends Component {
       <section className={styles.WebsiteOverviewWrap}>
         {this.props.name ? (
           <article className={styles.WebsiteOverview}>
-            <header>
+            <header className={styles.WebsiteOverviewHeader}>
               <Link className={styles.close} to="/properties/">
                 <i className="fa fa-times-circle-o" aria-hidden="true" />Close
               </Link>

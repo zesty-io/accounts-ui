@@ -29,16 +29,20 @@
   overflow-y: scroll;
   height: 100vh;
   width: 75vw;
-  max-width: 900px;
+  max-width: 980px;
   position: absolute;
   top: 0;
   right: 0;
   // flex: 1;
-  header {
+  .WebsiteOverviewHeader {
     padding: 2rem;
     border-bottom: 1px solid darken(@zesty-light-blue, 1%);
     padding-bottom: 1rem;
     margin-bottom: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: darken(@appBkgColor, 3%);
     .name {
       font-size: 2rem;
     }
@@ -55,7 +59,7 @@
     padding: 2rem;
     .card {
       margin: 0 0 2rem;
-      background: lighten(#f2f4fb, 2.5%);
+      background: lighten(@appBkgColor, 3%);
       padding: 1rem;
       h2 {
         margin: 0 0 1rem;
