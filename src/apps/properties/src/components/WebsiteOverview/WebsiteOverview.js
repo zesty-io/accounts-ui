@@ -1,32 +1,32 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
-import cx from "classnames";
-import styles from "./WebsiteOverview.less";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
+import cx from 'classnames'
+import styles from './WebsiteOverview.less'
 
-import UserAccess from "./UserAccess";
-import CompanyAccess from "./CompanyAccess";
-import Actions from "./Actions";
-import Domain from "./Domain";
-import Stats from "./Stats";
-import Blueprint from "./Blueprint";
+import UserAccess from './UserAccess'
+import CompanyAccess from './CompanyAccess'
+import Actions from './Actions'
+import Domain from './Domain'
+import Stats from './Stats'
+import Blueprint from './Blueprint'
 
-import { getSiteDetails } from "../../store";
+import { getSiteDetails } from '../../store'
 
-import { fetchSiteUsers } from "../../store/sitesUsers";
-import { fetchSiteCompanies } from "../../store/sitesCompanies";
-import { fetchBlueprint } from "../../store/blueprints";
+import { fetchSiteUsers } from '../../store/sitesUsers'
+import { fetchSiteCompanies } from '../../store/sitesCompanies'
+import { fetchBlueprint } from '../../store/blueprints'
 import { inviteData } from '../../store/invite'
 
 class WebsiteOverview extends Component {
   componentDidMount() {
-    this.props.dispatch(getSiteDetails());
-    this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID));
+    this.props.dispatch(getSiteDetails())
+    this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID))
     this.props.dispatch(
       fetchSiteCompanies(this.props.userZuid, this.props.ZUID)
-    );
-    this.props.dispatch(fetchBlueprint(this.props.blueprintID));
+    )
+    this.props.dispatch(fetchBlueprint(this.props.blueprintID))
     this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }))
   }
   render() {
@@ -50,23 +50,48 @@ class WebsiteOverview extends Component {
                   </span>
                 ) : (
                   <Button>
-                    <i className={cx("fa fa-cog")} aria-hidden="true" />Setup
+                    <i className={cx('fa fa-cog')} aria-hidden="true" />Setup
                     Domain
                   </Button>
                 )}
               </h2>
             </header>
             <main>
-              <h2>Monthly Requests</h2>
-              <Stats site={this.props.ZUID}/>
-              <h2>Recent Site Actions</h2>
-              {/* <Actions site={this.props} /> */}
-              <h2>User Access</h2>
-              <UserAccess site={this.props}/>
-              <h2>Company Access</h2>
-              <CompanyAccess />
-              <h2>Blueprint</h2>
-              <Blueprint site={this.props} />
+              <article className={styles.card}>
+                <h2>
+                  <i className="fa fa-line-chart" aria-hidden="true" />&nbsp;
+                  Monthly Usage
+                </h2>
+                <Stats site={this.props.ZUID} />
+              </article>
+              <article className={styles.card}>
+                <h2>
+                  <i className="fa fa-list" aria-hidden="true" />
+                  &nbsp;Recent Site Actions
+                </h2>
+                {/* <Actions site={this.props} /> */}
+              </article>
+              <article className={styles.card}>
+                <h2>
+                  <i className="fa fa-users" aria-hidden="true" />
+                  &nbsp;User Access
+                </h2>
+                <UserAccess site={this.props} />
+              </article>
+              <article className={styles.card}>
+                <h2>
+                  <i className="fa fa-building" aria-hidden="true" />
+                  &nbsp;Company Access
+                </h2>
+                <CompanyAccess />
+              </article>
+              <article className={styles.card}>
+                <h2>
+                  <i className="fa fa-file-code-o" aria-hidden="true" />
+                  &nbsp;Blueprint
+                </h2>
+                <Blueprint site={this.props} />
+              </article>
             </main>
           </article>
         ) : (
@@ -76,7 +101,7 @@ class WebsiteOverview extends Component {
           </section>
         )}
       </section>
-    );
+    )
   }
 }
 
@@ -84,6 +109,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...state.sites[ownProps.match.params.hash],
     userZuid: state.user.zuid
-  };
-};
-export default withRouter(connect(mapStateToProps)(WebsiteOverview));
+  }
+}
+export default withRouter(connect(mapStateToProps)(WebsiteOverview))
