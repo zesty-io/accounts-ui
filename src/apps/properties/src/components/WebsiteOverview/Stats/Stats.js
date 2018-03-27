@@ -4,7 +4,7 @@ import { HorizontalBar } from 'react-chartjs-2'
 
 class Stats extends Component {
   render() {
-    let consistentFakeStats = this.props.sites[this.props.site].ID.toString().split('')
+    let consistentFakeStats = this.props.sites[this.props.siteZUID].ID.toString().split('')
     const data = {
       labels: ['This Month', 'All Time'],
       datasets: [

@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router'
-import { Link } from 'react-router-dom'
-import cx from 'classnames'
-import styles from './WebsiteOverview.less'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { Link } from "react-router-dom";
+import cx from "classnames";
+import styles from "./WebsiteOverview.less";
 
 import UserAccess from "./UserAccess";
 import CompanyAccess from "./CompanyAccess";
@@ -13,24 +13,30 @@ import Stats from "./Stats";
 import Blueprint from "./Blueprint";
 import Permissions from "./Permissions";
 
-import { getSiteDetails } from '../../store'
+import { getSiteDetails } from "../../store";
 
-import { fetchSiteUsers } from '../../store/sitesUsers'
-import { fetchSiteCompanies } from '../../store/sitesCompanies'
-import { fetchBlueprint } from '../../store/blueprints'
-import { inviteData } from '../../store/invite'
+import { fetchSiteUsers } from "../../store/sitesUsers";
+import { fetchSiteCompanies } from "../../store/sitesCompanies";
+import { fetchBlueprint } from "../../store/blueprints";
+import { inviteData } from "../../store/invite";
 
 class WebsiteOverview extends Component {
   componentDidMount() {
-    this.props.dispatch(getSiteDetails())
-    this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID))
+    this.props.dispatch(getSiteDetails());
+    this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID));
     this.props.dispatch(
       fetchSiteCompanies(this.props.userZuid, this.props.ZUID)
-    )
-    this.props.dispatch(fetchBlueprint(this.props.blueprintID))
-    this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }))
+    );
+    this.props.dispatch(fetchBlueprint(this.props.blueprintID));
+    this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }));
   }
   render() {
+    const fakeUserPrefs = [
+      {
+        title: "Monthly Useage",
+        Component: Stats
+      }
+    ]
     return (
       <section className={styles.WebsiteOverviewWrap}>
         {this.props.name ? (
@@ -51,20 +57,33 @@ class WebsiteOverview extends Component {
                   </span>
                 ) : (
                   <Button>
-                    <i className={cx('fa fa-cog')} aria-hidden="true" />Setup
+                    <i className={cx("fa fa-cog")} aria-hidden="true" />Setup
                     Domain
                   </Button>
                 )}
               </h2>
             </header>
             <main>
-              <article className={styles.card}>
+              {fakeUserPrefs.map((Item, i) => {
+                const DynComponent = Item.Component
+                const site = this.props.site
+                return (
+                  <article className={styles.card} key={i}>
+                    <h2>
+                      <i className="fa fa-line-chart" aria-hidden="true" />&nbsp;
+                      {Item.title}
+                    </h2>
+                    {<DynComponent siteZUID={this.props.ZUID} site={this.props} />}
+                  </article>
+                );
+              })}
+              {/* <article className={styles.card}>
                 <h2>
                   <i className="fa fa-line-chart" aria-hidden="true" />&nbsp;
                   Monthly Usage
                 </h2>
                 <Stats site={this.props.ZUID} />
-              </article>
+              </article> */}
               {/* <article className={styles.card}>
                 <h2>
                   <i className="fa fa-list" aria-hidden="true" />
@@ -109,7 +128,7 @@ class WebsiteOverview extends Component {
           </section>
         )}
       </section>
-    )
+    );
   }
 }
 
@@ -117,6 +136,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...state.sites[ownProps.match.params.hash],
     userZuid: state.user.zuid
-  }
-}
-export default withRouter(connect(mapStateToProps)(WebsiteOverview))
+  };
+};
+export default withRouter(connect(mapStateToProps)(WebsiteOverview));
