@@ -31,11 +31,29 @@ class WebsiteOverview extends Component {
     this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }));
   }
   render() {
+    // at some point we can pull this when the user logs in and let them control how this is rendered out
     const fakeUserPrefs = [
       {
         title: "Monthly Useage",
+        className: 'fa fa-line-chart',
         Component: Stats
-      }
+      },{
+        title: "Permissions",
+        className: 'fa fa-lock',
+        Component: Permissions
+      },{
+        title: "User Access",
+        className: 'fa fa-users',
+        Component: UserAccess
+      },{
+        title: "Company Access",
+        className: 'fa fa-building',
+        Component: CompanyAccess
+      },{
+        title: "Blueprint",
+        className: 'fa fa-file-code-o',
+        Component: Blueprint
+      },
     ]
     return (
       <section className={styles.WebsiteOverviewWrap}>
@@ -70,55 +88,13 @@ class WebsiteOverview extends Component {
                 return (
                   <article className={styles.card} key={i}>
                     <h2>
-                      <i className="fa fa-line-chart" aria-hidden="true" />&nbsp;
+                      <i className={Item.className} aria-hidden="true" />&nbsp;
                       {Item.title}
                     </h2>
                     {<DynComponent siteZUID={this.props.ZUID} site={this.props} />}
                   </article>
                 );
               })}
-              {/* <article className={styles.card}>
-                <h2>
-                  <i className="fa fa-line-chart" aria-hidden="true" />&nbsp;
-                  Monthly Usage
-                </h2>
-                <Stats site={this.props.ZUID} />
-              </article> */}
-              {/* <article className={styles.card}>
-                <h2>
-                  <i className="fa fa-list" aria-hidden="true" />
-                  &nbsp;Recent Site Actions
-                </h2>
-                <Actions site={this.props} />
-              </article> */}
-              <article className={styles.card}>
-                <h2>
-                  <i className="fa fa-users" aria-hidden="true" />
-                  &nbsp;Permissions
-                </h2>
-                <Permissions site={this.props} />
-              </article>
-              <article className={styles.card}>
-                <h2>
-                  <i className="fa fa-users" aria-hidden="true" />
-                  &nbsp;User Access
-                </h2>
-                <UserAccess site={this.props} />
-              </article>
-              <article className={styles.card}>
-                <h2>
-                  <i className="fa fa-building" aria-hidden="true" />
-                  &nbsp;Company Access
-                </h2>
-                <CompanyAccess />
-              </article>
-              <article className={styles.card}>
-                <h2>
-                  <i className="fa fa-file-code-o" aria-hidden="true" />
-                  &nbsp;Blueprint
-                </h2>
-                <Blueprint site={this.props} />
-              </article>
             </main>
           </article>
         ) : (
