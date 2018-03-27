@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteOverview.less'
 
-import UserAccess from './UserAccess'
-import CompanyAccess from './CompanyAccess'
-import Actions from './Actions'
-import Domain from './Domain'
-import Stats from './Stats'
-import Blueprint from './Blueprint'
+import UserAccess from "./UserAccess";
+import CompanyAccess from "./CompanyAccess";
+import Actions from "./Actions";
+import Domain from "./Domain";
+import Stats from "./Stats";
+import Blueprint from "./Blueprint";
+import Permissions from "./Permissions";
 
 import { getSiteDetails } from '../../store'
 
@@ -71,6 +72,13 @@ class WebsiteOverview extends Component {
                 </h2>
                 <Actions site={this.props} />
               </article> */}
+              <article className={styles.card}>
+                <h2>
+                  <i className="fa fa-users" aria-hidden="true" />
+                  &nbsp;Permissions
+                </h2>
+                <Permissions site={this.props} />
+              </article>
               <article className={styles.card}>
                 <h2>
                   <i className="fa fa-users" aria-hidden="true" />

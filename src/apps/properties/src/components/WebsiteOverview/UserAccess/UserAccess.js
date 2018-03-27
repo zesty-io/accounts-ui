@@ -19,18 +19,17 @@ class UserAccess extends Component {
     } else {
       console.log('invite info incomplete') // placeholder for user notice
     }
-  }
+  };
   handleChange = evt => {
     if (evt.target.value.match(evt.target.pattern)) {
       this.props.dispatch(inviteData({ [evt.target.name]: evt.target.value }))
     }
-  }
+  };
   render() {
     return (
       <div className={styles.userAccess}>
         <div className={styles.invite}>
           <Input
-            className={styles.email}
             type="email"
             placeholder="Email"
             name="inviteeEmail"
@@ -38,33 +37,11 @@ class UserAccess extends Component {
             value={this.props.invite.inviteeEmail}
             onChange={this.handleChange}
           />
-          <Select
-            onChange={this.handleChange}
-            name="newUserRole"
-            selection={{
-              value: 'contributor',
-              html: '<option value="own">Contributor</option>'
-            }}
-            options={[
-              {
-                value: 'admin',
-                html: '<option value="view">Admin</option>'
-              },
-              {
-                value: 'developer',
-                html: '<option value="edit">Developer</option>'
-              },
-              {
-                value: 'editor',
-                html: '<option value="own">Editor</option>'
-              },
-              {
-                value: 'contributor',
-                html: '<option value="own">Contributor</option>'
-              }
-            ]}
-          />
-
+          <select name="inviteRole" onChange={this.handleChange}>
+            <option value="editor">Editor</option>
+            <option value="developer">Developer</option>
+            <option value="admin">Admin</option>
+          </select>
           <Button
             onClick={this.handleInvite}
             disabled={this.props.invite.submitted}

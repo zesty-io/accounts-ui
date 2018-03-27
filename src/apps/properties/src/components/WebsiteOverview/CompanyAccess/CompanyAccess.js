@@ -7,51 +7,28 @@ class CompanyAccess extends Component {
   render() {
     return (
       <div className={styles.companyAccess}>
-        <div className={styles.invite} />
-        <footer>
+        <div className={styles.dropdown}>
           <Select
             name="companyAccess"
             selection={{
-              value: 'Company',
-              html: '<option value="Company">Company</option>'
+              value: "Design Corp",
+              html: '<option value="Design Corp">Design Corp</option>'
             }}
             options={[
               {
-                value: 'company',
-                html: '<option value="Company">Company</option>'
+                value: "Design Corp",
+                html: '<option value="Design Corp">Design Corp</option>'
               },
               {
-                value: 'Company2',
-                html: '<option value="Company2">Company2</option>'
+                value: "SEO MASTERS",
+                html: '<option value="SEO MASTERS">SEO MASTERS</option>'
               }
             ]}
           />
-          {/* <Select
-            name="newCompanyRole"
-            selection={{
-              value: 'view',
-              html: '<option value="view">view</option>'
-            }}
-            options={[
-              {
-                value: 'view',
-                html: '<option value="view">view</option>'
-              },
-              {
-                value: 'edit',
-                html: '<option value="edit">edit</option>'
-              },
-              {
-                value: 'own',
-                html: '<option value="own">own</option>'
-              }
-            ]}
-          /> */}
           <Button name="companyAccessSubmit">Grant Access</Button>
-        </footer>
+        </div>
         <div className={styles.companyTable}>
           <header>
-            <h3>#</h3>
             <h3>Company</h3>
             <h3>Contact</h3>
             <h3>Role</h3>
@@ -61,7 +38,6 @@ class CompanyAccess extends Component {
               this.props.sitesCompanies.map((company, i) => {
                 return (
                   <article key={i}>
-                    <span>{i}</span>
                     <span>{company.Name}</span>
                     <span>{company.MainContactEmail}</span>
                     <span>{company.Featured}</span>

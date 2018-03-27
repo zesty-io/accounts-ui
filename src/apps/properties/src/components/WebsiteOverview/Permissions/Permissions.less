@@ -1,0 +1,72 @@
+@import "../../../../../../shell/styles/colors.less";
+
+.permissionsWrapper {
+  display: block;
+  width:100%;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "label base expires"
+    "collections collections collections"
+    ". . createButton";
+  justify-content: start
+}
+.label {
+  grid-area: label
+}
+.base {
+  grid-area: base
+}
+.expires {
+  grid-area: expires
+}
+.collections {
+  grid-area: collections
+}
+.createButton {
+  grid-area: createButton
+}
+
+.selectCollection {
+  display: grid;
+  header {
+    display: grid;
+    grid: auto-flow / 1fr .5fr .5fr .5fr .5fr;
+  }
+  main {
+    display: grid;
+    grid-template-rows: auto;
+    padding-bottom: 2%;      
+    article {
+      display: grid;
+      grid-template-columns: 1fr .5fr .5fr .5fr .5fr;
+      &:nth-child(odd) {
+        background-color: @zesty-field-blue;
+      }
+    }
+  }
+}
+
+.currentRoles {
+  display: grid;
+  header {
+    display: grid;
+    grid: auto-flow / 1fr 1fr;
+  }
+  main {
+    display: grid;
+    grid-template-rows: auto;
+    padding-bottom: 2%;      
+    article {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      &:nth-child(odd) {
+        background-color: @zesty-field-blue;
+      }
+    }
+  }
+}
