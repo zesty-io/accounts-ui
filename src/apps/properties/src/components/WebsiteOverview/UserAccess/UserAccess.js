@@ -74,20 +74,21 @@ class UserAccess extends Component {
         </div>
         <div className={styles.userTable}>
           <header>
-            <h3>First Name</h3>
-            <h3>Last Name</h3>
+            <h3>User Name</h3>
+
+            <h3>Role</h3>
             <h3>Email</h3>
-            <h3>Staff</h3>
           </header>
           <main>
             {Array.isArray(this.props.sitesUsers) ? (
               this.props.sitesUsers.map((user, i) => {
                 return (
                   <article key={i}>
-                    <span>{user.firstName} </span>
-                    <span>{user.lastName} </span>
-                    <span>{user.email} </span>
+                    <span>
+                      {user.firstName} {user.lastName}
+                    </span>
                     <span>{user.staff}</span>
+                    <span>{user.email} </span>
                   </article>
                 )
               })
