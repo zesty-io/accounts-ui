@@ -31,7 +31,7 @@ class CompanyAccess extends Component {
           <header>
             <h3>Company</h3>
             <h3>Contact</h3>
-            <h3>Role</h3>
+            <h3>Access</h3>
           </header>
           <main>
             {Array.isArray(this.props.sitesCompanies) ? (

@@ -1,6 +1,7 @@
 import { Component } from "React";
 import { updateSetting } from "../../../store";
 import { connect } from "react-redux";
+import Toggle from "../../../../../../core/toggle/Toggle";
 class TwoFactor extends Component {
   handleChange = evt => {
     if (evt.target.value.match(evt.target.pattern)) {
