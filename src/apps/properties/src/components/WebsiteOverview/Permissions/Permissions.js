@@ -85,6 +85,12 @@ class Permissions extends Component {
                   <article key={i}>
                     <span>{user.firstName} </span>
                     <span>{user.id} </span>
+                    <span>
+                      <ButtonGroup>
+                        <Button text="Edit" /> 
+                        <Button text="Remove" />
+                      </ButtonGroup>
+                    </span>
                   </article>
                 );
               })}

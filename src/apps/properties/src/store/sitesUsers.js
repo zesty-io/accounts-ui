@@ -17,7 +17,6 @@ export function sitesUsers(state = {}, action) {
 }
 
 export const fetchSiteUsers = (userZuid, siteZuid) => {
-  console.log('user: ', userZuid, 'site: ', siteZuid)
   return dispatch => {
     dispatch({
       type: 'FETCHING_USERS'
