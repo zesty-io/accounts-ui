@@ -4,15 +4,15 @@ import { connect } from "react-redux";
 import styles from "./style.less";
 
 import { inviteData, sendInvite } from "../../../store/invite";
-
+import { notify } from '../../../../../../shell/store/notifications'
 class UserAccess extends Component {
-  constructor(props){
-    super()
+  constructor(props) {
+    super();
     this.state = {
-      message: '',
-      error: '',
-      info: ''
-    }
+      message: "",
+      error: "",
+      info: ""
+    };
   }
   componentWillUnmount() {
     this.props.dispatch({ type: "CLEAR_USERS" });
@@ -29,29 +29,35 @@ class UserAccess extends Component {
           })
         )
         .then(data => {
-          this.setState({message: 'Invite sent!'}, () => {
-            setTimeout(() => this.setState({message: ''}), 3000)
-          })
-          
-          return this.props.dispatch({
-            type: "SEND_INVITE_SUCCESS",
-            data
-          });
+          this.props.dispatch(notify({
+            message:'message here',
+            type: 'success'
+        }))
+          // this.setState({ message: "Invite sent!" }, () => {
+          //   setTimeout(() => this.setState({ message: "" }), 3000);
+          // });
+
+          // return this.props.dispatch({
+          //   type: "SEND_INVITE_SUCCESS",
+          //   data
+          // });
         })
         .catch(err => {
           console.table(err);
-          this.setState({error: 'Invite was not successful'}, () => {
-            setTimeout(() => this.setState({error: ''}), 3000)
-          })
-          this.props.dispatch({
-            type: "SEND_INVITE_ERROR",
-            err
-          });
+          this.props.dispatch(notify({message: 'error here'}))
+          
+          // this.setState({ error: "Invite was not successful" }, () => {
+          //   setTimeout(() => this.setState({ error: "" }), 3000);
+          // });
+          // this.props.dispatch({
+          //   type: "SEND_INVITE_ERROR",
+          //   err
+          // });
         });
     } else {
-      this.setState({info: 'Form is incomplete'}, () => {
-        setTimeout(() => this.setState({info: ''}), 3000)
-      })
+      this.setState({ info: "Form is incomplete" }, () => {
+        setTimeout(() => this.setState({ info: "" }), 3000);
+      });
     }
   };
   handleChange = evt => {
@@ -100,25 +106,13 @@ class UserAccess extends Component {
           />
           {/* Messages to notify succes or failure */}
           {this.state.message ? (
-            <p className={styles.message}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                this.state.message
-              }
-            </p>
+            <Notify style="error" message={this.state.message} />
           ) : null}
           {this.state.info ? (
-            <p className={styles.info}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                this.state.info
-              }
-            </p>
+            <Notify style="info" message={this.state.info} />
           ) : null}
           {this.state.error ? (
-            <p className={styles.error}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                this.state.error
-              }
-            </p>
+            <Notify style="error" message={this.state.eror} />
           ) : null}
           <Button
             onClick={this.handleInvite}

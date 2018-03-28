@@ -11,6 +11,7 @@ import VerifyEmail from '../VerifyEmail'
 
 import AppHeader from '../../components/AppHeader'
 import AppError from '../../components/AppError'
+import Notify from '../../components/Notify'
 
 import styles from './App.less'
 import { fetchUser } from '../../store/user'
@@ -29,6 +30,7 @@ class Shell extends Component {
       <section className={styles.AppShell}>
         <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
         <AppError>
+          <Notify />
           <section className={styles.AppMain}>
             <Switch>
               {/* <Route path="/dashboard" component={Dashboard} /> */}
