@@ -1,3 +1,5 @@
+@import '../../shell/styles/colors.less';
+
 .switch {
   position: relative;
   display: inline-block;
@@ -32,11 +34,11 @@
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: @zesty-green;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px @zesty-green;
 }
 
 input:checked + .slider:before {

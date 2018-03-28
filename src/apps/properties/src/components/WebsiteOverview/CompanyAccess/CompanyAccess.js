@@ -40,7 +40,7 @@ class CompanyAccess extends Component {
                   <article key={i}>
                     <span>{company.Name}</span>
                     <span>{company.MainContactEmail}</span>
-                    <span>{company.Featured}</span>
+                    <span><Toggle /></span>
                   </article>
                 )
               })
