@@ -9,6 +9,7 @@ import styles from "./BlueprintCreate.less";
 
 class BlueprintCreate extends Component {
   render() {
+    console.log
     return (
       <section className={styles.BlueprintCreate}>
         <div className={styles.nameNew}>
@@ -20,7 +21,7 @@ class BlueprintCreate extends Component {
             onChange={this.handleChange}
           />
           <div className={styles.controls}>
-            <Button onClick={this.handleClick}>
+            <Button onClick={this.handleClick} disabled={this.props.profile.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
               Create New Blueprint
             </Button>

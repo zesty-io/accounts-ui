@@ -39,6 +39,7 @@ class Profile extends Component {
           />
           <Button
             className={styles.ProfileSave}
+            disabled={this.props.profile.submitted}
             text="Save"
             onClick={this.handleClick}
           />

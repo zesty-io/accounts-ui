@@ -5,21 +5,13 @@ import styles from "./style.less";
 
 import { inviteData, sendInvite } from "../../../store/invite";
 import { notify } from '../../../../../../shell/store/notifications'
+
 class UserAccess extends Component {
-  constructor(props) {
-    super();
-    this.state = {
-      message: "",
-      error: "",
-      info: ""
-    };
-  }
   componentWillUnmount() {
     this.props.dispatch({ type: "CLEAR_USERS" });
   }
   handleInvite = evt => {
     if (this.props.invite && this.props.invite.inviteeEmail) {
-      this.props.dispatch({ type: "TOGGLE_SEND_INVITE_BUTTON" });
       this.props
         .dispatch(
           sendInvite({
@@ -30,34 +22,30 @@ class UserAccess extends Component {
         )
         .then(data => {
           this.props.dispatch(notify({
-            message:'message here',
+            message:'Invite sent!',
             type: 'success'
         }))
-          // this.setState({ message: "Invite sent!" }, () => {
-          //   setTimeout(() => this.setState({ message: "" }), 3000);
-          // });
-
-          // return this.props.dispatch({
-          //   type: "SEND_INVITE_SUCCESS",
-          //   data
-          // });
+          return this.props.dispatch({
+            type: "SEND_INVITE_SUCCESS",
+            data
+          });
         })
         .catch(err => {
           console.table(err);
-          this.props.dispatch(notify({message: 'error here'}))
-          
-          // this.setState({ error: "Invite was not successful" }, () => {
-          //   setTimeout(() => this.setState({ error: "" }), 3000);
-          // });
-          // this.props.dispatch({
-          //   type: "SEND_INVITE_ERROR",
-          //   err
-          // });
+          this.props.dispatch(notify({
+            message:'There was a problem sending the invite',
+            type: 'error'
+        }))
+          this.props.dispatch({
+            type: "SEND_INVITE_ERROR",
+            err
+          });
         });
     } else {
-      this.setState({ info: "Form is incomplete" }, () => {
-        setTimeout(() => this.setState({ info: "" }), 3000);
-      });
+      this.props.dispatch(notify({
+        message: 'Please input an Email for the invitation.',
+        type: 'info'
+    }))
     }
   };
   handleChange = evt => {
@@ -104,16 +92,6 @@ class UserAccess extends Component {
               }
             ]}
           />
-          {/* Messages to notify succes or failure */}
-          {this.state.message ? (
-            <Notify style="error" message={this.state.message} />
-          ) : null}
-          {this.state.info ? (
-            <Notify style="info" message={this.state.info} />
-          ) : null}
-          {this.state.error ? (
-            <Notify style="error" message={this.state.eror} />
-          ) : null}
           <Button
             onClick={this.handleInvite}
             disabled={this.props.invite.submitted}

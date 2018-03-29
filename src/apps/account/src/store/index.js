@@ -1,7 +1,7 @@
 import { request } from '../../../../util/request'
 import config from '../../../../shell/config'
 
-export function profile(state = {}, action) {
+export function profile(state = {submitted: false}, action) {
   switch (action.type) {
     // case 'FETCHING_SITES':
     //   // TODO show loading state?
@@ -16,6 +16,9 @@ export function profile(state = {}, action) {
       // leave state as is
       return state
 
+    case 'MODIFYING_PROFILE':
+    return {...state, submitted: !state.submitted}
+    
     case 'MODIFY_FAILURE':
       //TODO: deactivate loading state
       //TODO: show global growl of error
@@ -23,7 +26,7 @@ export function profile(state = {}, action) {
 
     case 'MODIFY_PROFILE_SUCCESS':
       //TODO: deactivate loading state
-      return state
+      return {...state, submitted: !state.submitted}
 
     case 'FETCHING_ACCOUNT_BLUEPRINTS':
       return state
@@ -35,11 +38,11 @@ export function profile(state = {}, action) {
       return state
 
     case 'CREATING_BLUEPRINT':
-      return state
+      return {...state, submitted: !state.submitted}
 
     case 'CREATE_BLUEPRINT_SUCCESS':
       let blueprints = {...state.blueprints, [action.blueprint.ID]:action.blueprint}
-      return {...state, blueprints}
+      return {...state, blueprints, submitted: !state.submitted}
 
     case 'CREATE_BLUEPRINT_ERROR':
       return state
@@ -110,11 +113,9 @@ export function postNewBlueprint(Name) {
   };
 }
 
-export function saveProfile(profile) {
+export function saveProfile() {
   return (dispatch, getState) => {
     let { settings } = getState()
-
-    console.log(settings)
     dispatch({
       type: 'MODIFYING_PROFILE'
     })

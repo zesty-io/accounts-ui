@@ -10,7 +10,7 @@ export function sitesUsers(state = {}, action) {
     case 'FETCH_USERS_ERROR':
       return state
     case 'CLEAR_USERS':
-      return null
+      return {}
     default:
       return state
   }

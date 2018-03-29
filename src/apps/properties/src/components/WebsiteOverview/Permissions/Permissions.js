@@ -4,6 +4,10 @@ import { connect } from "react-redux";
 import styles from "./Permissions.less";
 
 class Permissions extends Component {
+  componentWillUnmount() {
+    this.props.dispatch({ type: "CLEAR_ROLES"})
+    this.props.dispatch({ type: "CLEAR_COLLECTIONS"}) // when collections is available
+  }
   render() {
     return (
       <div className={styles.permissionsWrapper}>
@@ -55,7 +59,7 @@ class Permissions extends Component {
                 <h3>delete</h3>
               </header>
               <main>
-                {Array.isArray(this.props.sitesUsers) &&
+                {Array.isArray(this.props.sitesUsers) && // COLLECTIONS endpoint
                   this.props.sitesUsers.map((user, i) => {
                     return (
                       <article key={i}>
@@ -79,12 +83,12 @@ class Permissions extends Component {
             <h3>Expires</h3>
           </header>
           <main>
-            {Array.isArray(this.props.sitesUsers) &&
-              this.props.sitesUsers.map((user, i) => {
+            {Array.isArray(this.props.sitesRoles) &&
+              this.props.sitesRoles.map((role, i) => {
                 return (
                   <article key={i}>
-                    <span>{user.firstName} </span>
-                    <span>{user.id} </span>
+                    <span>{role.Label} </span>
+                    <span>{role.Expiry} </span>
                     <span>
                       <ButtonGroup>
                         <Button text="Edit" /> 

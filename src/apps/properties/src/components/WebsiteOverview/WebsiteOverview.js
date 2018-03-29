@@ -19,6 +19,7 @@ import { fetchSiteUsers } from "../../store/sitesUsers";
 import { fetchSiteCompanies } from "../../store/sitesCompanies";
 import { fetchBlueprint } from "../../store/blueprints";
 import { inviteData } from "../../store/invite";
+import { fetchSiteRoles } from "../../store/sitesRoles";
 
 class WebsiteOverview extends Component {
   componentDidMount() {
@@ -29,6 +30,7 @@ class WebsiteOverview extends Component {
     );
     this.props.dispatch(fetchBlueprint(this.props.blueprintID));
     this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }));
+    this.props.dispatch(fetchSiteRoles(this.props.userZuid, this.props.ZUID));
   }
   render() {
     // at some point we can pull this when the user logs in and let them control how this is rendered out

@@ -7,15 +7,17 @@ import { sitesCompanies } from './sitesCompanies'
 import { sitesFiltered } from './sitesFiltered'
 import { sitesStats } from './sitesStats'
 import { sitesUsers } from './sitesUsers'
+import { sitesRoles } from './sitesRoles'
 import { invite } from './invite'
 import { createSite } from './createSite'
 
 export const propertiesReducers = {
   sites,
-  sitesCompanies,
   sitesFiltered,
+  sitesCompanies,
   sitesStats,
   sitesUsers,
+  sitesRoles,
   invite,
   blueprints,
   createSite
