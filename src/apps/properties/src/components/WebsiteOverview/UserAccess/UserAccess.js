@@ -23,7 +23,11 @@ class UserAccess extends Component {
         .then(data => {
           this.props.dispatch(
             notify({
-              message: "Invite sent!",
+              HTML: `<p>
+        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Invite sent to <i>${
+          this.props.invite.inviteeEmail
+        }</i>
+      </p>`,
               type: "success"
             })
           );
@@ -36,7 +40,9 @@ class UserAccess extends Component {
           console.table(err);
           this.props.dispatch(
             notify({
-              message: "There was a problem sending the invite",
+              HTML: `<p>
+          <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;An error occured sending the invite: ${err}
+        </p>`,
               type: "error"
             })
           );
@@ -48,7 +54,9 @@ class UserAccess extends Component {
     } else {
       this.props.dispatch(
         notify({
-          message: "Please input an Email for the invitation.",
+          HTML: `<p>
+          <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Please provide a valid Email address
+        </p>`,
           type: "info"
         })
       );

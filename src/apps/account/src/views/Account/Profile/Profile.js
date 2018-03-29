@@ -11,7 +11,7 @@ class Profile extends Component {
     this.props.dispatch(saveProfile()).then(data => {
       this.props.dispatch(notify({
         HTML: `<p>
-        <i class="fa fa-thumbs-up" aria-hidden="true" />&nbsp;Name changed to <i>${this.props.profile.firstName} ${this.props.profile.lastName}</i>
+        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name changed to <i>${this.props.profile.firstName} ${this.props.profile.lastName}</i>
       </p>`,
         type: 'success'
       }))

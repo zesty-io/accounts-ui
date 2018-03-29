@@ -12,7 +12,7 @@ class Notify extends Component {
       <section className={styles.Notify}>
         {this.props.notifications.map(notification => {
           return (
-            <Notification {...notification} dispatch={this.props.dispatch} />
+            <Notification {...notification} key={notification.epoch} dispatch={this.props.dispatch} />
           );
         })}
       </section>
