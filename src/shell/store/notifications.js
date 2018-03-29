@@ -18,7 +18,7 @@ export function notifications(state = initialState, action) {
 }
 
 export function notify(data) {
-  if (!data.message) {
+  if (!data.message && !data.HTML) {
     throw new Error("Cannot trigger notification without a message");
   }
   return {

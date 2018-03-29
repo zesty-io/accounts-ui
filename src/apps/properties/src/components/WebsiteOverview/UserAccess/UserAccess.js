@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styles from "./style.less";
 
 import { inviteData, sendInvite } from "../../../store/invite";
-import { notify } from '../../../../../../shell/store/notifications'
+import { notify } from "../../../../../../shell/store/notifications";
 
 class UserAccess extends Component {
   componentWillUnmount() {
@@ -21,10 +21,12 @@ class UserAccess extends Component {
           })
         )
         .then(data => {
-          this.props.dispatch(notify({
-            message:'Invite sent!',
-            type: 'success'
-        }))
+          this.props.dispatch(
+            notify({
+              message: "Invite sent!",
+              type: "success"
+            })
+          );
           return this.props.dispatch({
             type: "SEND_INVITE_SUCCESS",
             data
@@ -32,20 +34,24 @@ class UserAccess extends Component {
         })
         .catch(err => {
           console.table(err);
-          this.props.dispatch(notify({
-            message:'There was a problem sending the invite',
-            type: 'error'
-        }))
+          this.props.dispatch(
+            notify({
+              message: "There was a problem sending the invite",
+              type: "error"
+            })
+          );
           this.props.dispatch({
             type: "SEND_INVITE_ERROR",
             err
           });
         });
     } else {
-      this.props.dispatch(notify({
-        message: 'Please input an Email for the invitation.',
-        type: 'info'
-    }))
+      this.props.dispatch(
+        notify({
+          message: "Please input an Email for the invitation.",
+          type: "info"
+        })
+      );
     }
   };
   handleChange = evt => {
@@ -73,24 +79,22 @@ class UserAccess extends Component {
               value: "contributor",
               html: '<option value="own">Contributor</option>'
             }}
-            options={[
-              {
-                value: "admin",
-                html: '<option value="view">Admin</option>'
-              },
-              {
-                value: "developer",
-                html: '<option value="edit">Developer</option>'
-              },
-              {
-                value: "editor",
-                html: '<option value="own">Editor</option>'
-              },
-              {
-                value: "contributor",
-                html: '<option value="own">Contributor</option>'
-              }
-            ]}
+            options={
+              Array.isArray(this.props.sitesRoles)
+                ? this.props.sitesRoles.map((role, i) => {
+                    return {
+                      value: role.Label || i,
+                      html: `<option value="${role.ZUID}">${role.Label ||
+                        "unlabeled"}</option>`
+                    };
+                  })
+                : [
+                    {
+                      value: "No Roles Created",
+                      html: '<option value="none">No Roles</option>'
+                    }
+                  ]
+            }
           />
           <Button
             onClick={this.handleInvite}
@@ -102,7 +106,6 @@ class UserAccess extends Component {
         <div className={styles.userTable}>
           <header>
             <h3>User Name</h3>
-
             <h3>Role</h3>
             <h3>Email</h3>
           </header>

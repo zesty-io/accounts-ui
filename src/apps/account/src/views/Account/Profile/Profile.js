@@ -3,14 +3,31 @@ import { connect } from 'react-redux'
 import styles from './profile.less'
 
 import { updateSettingRaw, saveProfile } from '../../../store'
+import { notify } from "../../../../../../shell/store/notifications";
 
 class Profile extends Component {
-  handleClick = e => {
-    e.preventDefault()
-    this.props.dispatch(saveProfile())
+  handleClick = evt => {
+    evt.preventDefault()
+    this.props.dispatch(saveProfile()).then(data => {
+      this.props.dispatch(notify({
+        HTML: `<p>
+        <i class="fa fa-thumbs-up" aria-hidden="true" />&nbsp;Name changed to <i>${this.props.profile.firstName} ${this.props.profile.lastName}</i>
+      </p>`,
+        type: 'success'
+      }))
+    })
+    .catch(err => {
+      this.props.dispatch(notify({
+        HTML: `<p>
+        <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Error saving data ${err}
+      </p>`,
+        type: 'error'
+      }))
+    })
+    
   }
-  handleChange = e => {
-    this.props.dispatch(updateSettingRaw({ [e.target.name]: e.target.value }))
+  handleChange = evt => {
+    this.props.dispatch(updateSettingRaw({ [evt.target.name]: evt.target.value }))
   }
   render() {
     return (

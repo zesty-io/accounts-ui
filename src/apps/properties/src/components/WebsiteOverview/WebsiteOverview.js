@@ -33,7 +33,7 @@ class WebsiteOverview extends Component {
     this.props.dispatch(fetchSiteRoles(this.props.userZuid, this.props.ZUID));
   }
   render() {
-    // at some point we can pull this when the user logs in and let them control how this is rendered out
+    // when this lives on the user object, it will be useful
     const fakeUserPrefs = [
       {
         title: "Monthly Useage",

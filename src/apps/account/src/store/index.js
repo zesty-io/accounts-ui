@@ -119,11 +119,14 @@ export function saveProfile() {
     dispatch({
       type: 'MODIFYING_PROFILE'
     })
-    setTimeout(() => {
-      dispatch({
-        type: "MODIFY_PROFILE_SUCCESS",
-      })
-    }, 500)
+    return new Promise((resolve, reject) => { // in place of network call which returns a promise
+      resolve(setTimeout(() => {
+        dispatch({
+          type: "MODIFY_PROFILE_SUCCESS",
+        })
+      }, 500))
+      reject(console.err)
+    })
   }
 }
 

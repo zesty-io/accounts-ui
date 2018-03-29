@@ -3,6 +3,14 @@ import { connect } from "react-redux";
 
 import styles from "./Permissions.less";
 
+const formatDate = date => {
+  if(!date){
+    return ''
+  }
+  const newDate = new Date(date)
+  return `${newDate.getMonth() + 1}-${newDate.getDate()}-${newDate.getFullYear()}`
+}
+
 class Permissions extends Component {
   componentWillUnmount() {
     this.props.dispatch({ type: "CLEAR_ROLES"})
@@ -80,6 +88,7 @@ class Permissions extends Component {
         <div className={styles.currentRoles}>
           <header>
             <h3>Role</h3>
+            <h3>Created</h3>
             <h3>Expires</h3>
           </header>
           <main>
@@ -88,7 +97,8 @@ class Permissions extends Component {
                 return (
                   <article key={i}>
                     <span>{role.Label} </span>
-                    <span>{role.Expiry} </span>
+                    <span>{formatDate(role.createdAt)} </span>
+                    <span>{formatDate(role.Expiry)} </span>
                     <span>
                       <ButtonGroup>
                         <Button text="Edit" /> 
