@@ -96,7 +96,7 @@ class Permissions extends Component {
               this.props.sitesRoles.map((role, i) => {
                 return (
                   <article key={i}>
-                    <span>{role.Label} </span>
+                    <span>{role.name} </span>
                     <span>{formatDate(role.createdAt)} </span>
                     <span>{formatDate(role.Expiry)} </span>
                     <span>

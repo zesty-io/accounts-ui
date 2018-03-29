@@ -1,4 +1,4 @@
-@import '../../shell/styles/colors.less';
+@import "../../shell/styles/colors.less";
 .Input {
   background: #eaecf1;
   border: none;
@@ -11,9 +11,16 @@
   font-weight: 100;
   padding: 0 0 0 0.5em;
   line-height: 3rem;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 
+  &:required {
+    box-shadow: none;
+  }
   &:focus {
     outline: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
     font-weight: 300;
   }
   &:placeholder-shown {
@@ -21,6 +28,10 @@
     font-weight: 100;
   }
   &:focus:required:invalid {
+    -webkit-box-shadow: 0 0 5px 1px @zesty-red;
     box-shadow: 0 0 5px 1px @zesty-red;
   }
+}
+input:required {
+  box-shadow: none;
 }

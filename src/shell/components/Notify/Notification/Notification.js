@@ -15,6 +15,9 @@ export default class Notification extends PureComponent {
   render() {
     // HTML takes priority over plain mesage rendering
     if (this.props.HTML) {
+      if(this.props.HTML.toLowerCase().includes('<script>')){
+        return <p className={styles.Notification}>nope! didnt say the magic word</p>
+      }
       return (
         <article
           key={this.props.epoch}
