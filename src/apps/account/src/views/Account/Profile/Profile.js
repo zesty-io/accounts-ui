@@ -1,34 +1,43 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import styles from './profile.less'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import styles from "./profile.less";
 
-import { updateSettingRaw, saveProfile } from '../../../store'
+import { updateSettingRaw, saveProfile } from "../../../store";
 import { notify } from "../../../../../../shell/store/notifications";
 
 class Profile extends Component {
   handleClick = evt => {
-    evt.preventDefault()
-    this.props.dispatch(saveProfile()).then(data => {
-      this.props.dispatch(notify({
-        HTML: `<p>
-        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name changed to <i>${this.props.profile.firstName} ${this.props.profile.lastName}</i>
+    evt.preventDefault();
+    this.props
+      .dispatch(saveProfile())
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            HTML: `<p>
+        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name changed to <i>${
+          this.props.profile.firstName
+        } ${this.props.profile.lastName}</i>
       </p>`,
-        type: 'success'
-      }))
-    })
-    .catch(err => {
-      this.props.dispatch(notify({
-        HTML: `<p>
+            type: "success"
+          })
+        );
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            HTML: `<p>
         <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Error saving data ${err}
       </p>`,
-        type: 'error'
-      }))
-    })
-    
-  }
+            type: "error"
+          })
+        );
+      });
+  };
   handleChange = evt => {
-    this.props.dispatch(updateSettingRaw({ [evt.target.name]: evt.target.value }))
-  }
+    this.props.dispatch(
+      updateSettingRaw({ [evt.target.name]: evt.target.value })
+    );
+  };
   render() {
     return (
       <section className={styles.profile}>
@@ -62,11 +71,11 @@ class Profile extends Component {
           />
         </div>
       </section>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => {
-  return { profile: state.profile }
-}
-export default connect(mapStateToProps)(Profile)
+  return { profile: state.profile };
+};
+export default connect(mapStateToProps)(Profile);
