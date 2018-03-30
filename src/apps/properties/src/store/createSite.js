@@ -1,14 +1,14 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-export function createSite(state = {}, action) {
+export function createSite(state = {submitted: false}, action) {
   switch (action.type) {
     case "ADD_SITE_INFO":
       return { ...state, ...action.payload };
     case "CREATING_SITE":
-      return state;
+      return {state, submitted: !state.submitted};
     case "CREATE_SITE_SUCCESS":
-      return state;
+    return {state, submitted: !state.submitted};
     case "CREATE_SITE_ERROR":
       return {...state, ...action.error};
     default:
