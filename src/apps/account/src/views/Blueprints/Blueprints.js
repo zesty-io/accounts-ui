@@ -16,8 +16,8 @@ class Blueprints extends Component {
   render() {
     return (
       <div className={styles.blueprints}>
-        <h2>Blueprints</h2>
-        <a className="button green fr">
+        <h1>Blueprints</h1>
+        <div className={styles.message}>
           <Button onClick={() => this.handleClick("blueprints/create")}>
             <i className="fa fa-columns" aria-hidden="true" />
             Add Blueprint
@@ -29,7 +29,7 @@ class Blueprints extends Component {
             co-worker or friend. You may use other public Blueprints by forking
             their repositories, and copying the Github repository url.
           </h5>
-        </a>
+        </div>
         <div className={styles.bptable}>
           <main className={styles.Blueprints}>
             {this.props.profile.blueprints &&
