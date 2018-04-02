@@ -34,9 +34,9 @@ class Preferences extends Component {
       }
     ];
     return (
-      <article>
+      <article className={styles.prefs}>
         <p>Here you can change the order in which Website Overview items are displayed</p>
-        <ol className={styles.prefs}>
+        <ol>
           {fakeUserPrefs.map((item, i) => {
             return <li key={i}>{item.title}</li>;
           })}
