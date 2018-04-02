@@ -20,7 +20,7 @@ class Password extends Component {
   render() {
     return (
       <section className={styles.Password}>
-        <h4>Password</h4>
+        <label>Password</label>
         <div>
           <Input
             name="oldPassword"

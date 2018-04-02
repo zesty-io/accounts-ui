@@ -1,49 +1,52 @@
 @import "../../../../../../shell/styles/colors.less";
 
 .profileEmail {
+  margin: 2rem;
   h2 {
     margin: 20px 0;
   }
   p {
     line-height: 30px;
   }
+  .field {
+    margin-bottom: 20px;
+  }
+  .button {
+    max-height: 50px;
+  }
   .emailTable {
-
-display: grid;
-       header {
-         display: grid;
-         grid: auto-flow / 1fr 1fr;
-       }
-       main {
-         display: grid;
-        grid-template-rows: auto;
-        article {
-          display: grid;
-          padding: .3rem;
-          grid-template-columns: 1fr 1fr;
-          &:nth-child(odd){
-            background-color: @zesty-field-blue;
-          }
+    display: grid;
+    header {
+      display: grid;
+      grid: auto-flow / 1fr 1fr;
+    }
+    main {
+      display: grid;
+      grid-template-rows: auto;
+      article {
+        display: grid;
+        padding: 0.3rem;
+        grid-template-columns: 1fr 1fr;
+        &:nth-child(odd) {
+          background-color: @zesty-field-blue;
         }
-       }
+      }
+    }
 
-       footer {
-         display: flex;
-         input {
-           //height: 34px;
-
-         }
-         button {
-           margin-left: 20px;
-         }
-       }
-
-
+    footer {
+      display: flex;
+      input {
+        //height: 34px;
+      }
+      button {
+        margin-left: 20px;
+      }
+    }
   }
   .info {
     color: #607394;
     display: block;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: normal;
     overflow-y: visible;

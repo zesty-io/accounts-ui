@@ -17,7 +17,6 @@ class Email extends Component {
   render() {
     return (
       <section className={styles.profileEmail}>
-        <h2>Emails</h2>
         <div>
           <div className="info">
             <p>
@@ -35,10 +34,15 @@ class Email extends Component {
                 placeholder="wont@work.com"
                 name="newEmail"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                className={styles.field}
                 value={this.props.newEmail}
                 onChange={this.handleChange}
               />
-              <Button text="Add Email" onClick={this.handleClick} />
+              <Button
+                text="Add Email"
+                onClick={this.handleClick}
+                className={styles.button}
+              />
             </footer>
             <header>
               <h3>Email</h3>
@@ -55,9 +59,7 @@ class Email extends Component {
               </article>
               {this.props.EmailsUnverified ? (
                 <article>
-                  <span>
-                    {this.props.EmailsUnverified}
-                  </span>
+                  <span>{this.props.EmailsUnverified}</span>
                   <span>Unverified</span>
                 </article>
               ) : null}

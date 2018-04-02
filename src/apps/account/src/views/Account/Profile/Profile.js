@@ -41,7 +41,6 @@ class Profile extends Component {
   render() {
     return (
       <section className={styles.profile}>
-        <h2>Profile</h2>
         <div className={styles.field}>
           <div>
             <label>First Name</label>
