@@ -13,14 +13,8 @@ class Account extends Component {
       <div className={styles.Account}>
       <h1>Profile</h1>
         <Profile />
-        <br />
-        <hr />
-        <br />
         <h1>Emails</h1>
         <Email />
-        <br />
-        <hr />
-        <br />
         <h1>Preferences</h1>
         <Preferences />
       </div>

@@ -12,9 +12,6 @@ class Security extends Component {
       <div className={styles.Security}>
         <h1>Security</h1>
         <Password />
-        <br />
-        <hr />
-        <br />
         <h1>Two-factor authentication</h1>
         <TwoFactor />
       </div>
