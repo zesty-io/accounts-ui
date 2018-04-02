@@ -24,7 +24,8 @@
     display: grid;
     header {
       display: grid;
-      grid: auto-flow / 1fr 1fr 2fr;
+      grid-auto-flow: row;
+      grid-template-columns: 1fr 1fr 1fr;
       padding: 0 1rem 0 1rem;
     }
     main {
@@ -33,7 +34,8 @@
       article {
         padding: 1rem;
         display: grid;
-        grid: auto-flow / 1fr 1fr 2fr;
+        grid-auto-flow: row;
+        grid-template-columns: 1fr 1fr 1fr;
         &:nth-child(odd) {
           background-color: @zesty-white;
         }

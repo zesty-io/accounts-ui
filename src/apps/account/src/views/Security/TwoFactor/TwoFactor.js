@@ -47,8 +47,8 @@ class TwoFactor extends Component {
             </p>
             <p>
               Put in the phone number you want to use for authentication below.
-            </p>
-            <div>
+            </p><br />
+              <label>Phone Number</label>
               <Input
                 type="text"
                 size="5"
@@ -63,7 +63,6 @@ class TwoFactor extends Component {
                 pattern="d{3}-\d{3}-\d{4}"
                 onChange={this.handleChange}
               />
-            </div>
             <Button text="Enable Two-factor" onClick={this.handleEnable} />
           </div>
         )}

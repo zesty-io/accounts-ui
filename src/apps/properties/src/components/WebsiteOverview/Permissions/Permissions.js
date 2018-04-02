@@ -84,7 +84,6 @@ class Permissions extends Component {
           </span>
             <Button className={styles.createButton}>Create Role</Button>
         </form>
-        <h3>Existing Roles</h3>
         <div className={styles.currentRoles}>
           <header>
             <h3>Role</h3>
