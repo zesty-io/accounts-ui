@@ -18,12 +18,14 @@
       margin-left: 20px;
     }
   }
+
   .companyTable {
     display: grid;
     header {
       display: grid;
       justify-items: start;
       grid: auto-flow / 1fr 2fr 0.5fr;
+      padding: 0 1rem 0 1rem;      
     }
     main {
       display: grid;
@@ -31,9 +33,10 @@
       padding-bottom: 2%;
       article {
         display: grid;
+        padding: 1rem;        
         grid-template-columns: 1fr 2fr 0.5fr;
         &:nth-child(odd) {
-          background-color: @zesty-field-blue;
+          background-color: @zesty-white;
         }
       }
     }

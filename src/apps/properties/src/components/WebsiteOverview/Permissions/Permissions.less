@@ -36,16 +36,17 @@
   header {
     display: grid;
     grid: auto-flow / 1fr .5fr .5fr .5fr .5fr;
+    padding: 0 1rem 0 1rem;
   }
   main {
     display: grid;
     grid-template-rows: auto;
-    padding-bottom: 2%;      
     article {
+      padding: 1rem;
       display: grid;
       grid-template-columns: 1fr .5fr .5fr .5fr .5fr;
       &:nth-child(odd) {
-        background-color: @zesty-field-blue;
+        background-color: @zesty-white;
       }
     }
   }
@@ -56,16 +57,18 @@
   header {
     display: grid;
     grid: auto-flow / 1fr 1fr 1fr 1fr;
+    padding: 0 1rem 0 1rem;    
   }
   main {
     display: grid;
     grid-template-rows: auto;
     padding-bottom: 2%;      
     article {
+      padding: 1rem;
       display: grid;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       &:nth-child(odd) {
-        background-color: @zesty-field-blue;
+        background-color: @zesty-white;
       }
     }
   }
