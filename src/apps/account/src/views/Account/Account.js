@@ -1,25 +1,22 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from "react";
 
-import Profile from './Profile'
-import Email from './Email'
-import Preferences from './Preferences'
+import Profile from "./Profile";
+import Email from "./Email";
+import Preferences from "./Preferences";
 
-import styles from './Account.less'
+import styles from "./Account.less";
 
-class Account extends Component {
-  render() {
-    return (
-      <div className={styles.Account}>
+const Account = () => {
+  return (
+    <div className={styles.Account}>
       <h1>Profile</h1>
-        <Profile />
-        <h1>Emails</h1>
-        <Email />
-        <h1>Preferences</h1>
-        <Preferences />
-      </div>
-    )
-  }
-}
+      <Profile />
+      <h1>Emails</h1>
+      <Email />
+      <h1>Preferences</h1>
+      <Preferences />
+    </div>
+  );
+};
 
-export default connect(state => state)(Account)
+export default Account;
