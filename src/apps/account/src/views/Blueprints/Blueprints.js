@@ -30,7 +30,7 @@ class Blueprints extends Component {
             their repositories, and copying the Github repository url.
           </h5>
         </div>
-        <div className={styles.bptable}>
+        <div className={styles.BlueprintView}>
           <main className={styles.Blueprints}>
             {this.props.profile.blueprints &&
               Object.keys(this.props.profile.blueprints)
