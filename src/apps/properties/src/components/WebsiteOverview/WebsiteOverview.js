@@ -13,8 +13,6 @@ import Stats from "./Stats";
 import Blueprint from "./Blueprint";
 import Permissions from "./Permissions";
 
-import { getSiteDetails } from "../../store";
-
 import { fetchSiteUsers } from "../../store/sitesUsers";
 import { fetchSiteCompanies } from "../../store/sitesCompanies";
 import { fetchBlueprint } from "../../store/blueprints";
@@ -23,7 +21,6 @@ import { fetchSiteRoles } from "../../store/sitesRoles";
 
 class WebsiteOverview extends Component {
   componentDidMount() {
-    this.props.dispatch(getSiteDetails());
     this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID));
     this.props.dispatch(
       fetchSiteCompanies(this.props.userZuid, this.props.ZUID)
@@ -76,10 +73,11 @@ class WebsiteOverview extends Component {
                     <i className="fa fa-pencil" aria-hidden="true" />
                   </span>
                 ) : (
-                  <Button>
-                    <i className={cx("fa fa-cog")} aria-hidden="true" />Setup
-                    Domain
-                  </Button>
+                  <Domain />
+                  // <Button>
+                  //   <i className={cx("fa fa-cog")} aria-hidden="true" />Setup
+                  //   Domain
+                  // </Button>
                 )}
               </h2>
             </header>

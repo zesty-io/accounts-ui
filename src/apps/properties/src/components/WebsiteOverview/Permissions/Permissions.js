@@ -4,17 +4,27 @@ import { connect } from "react-redux";
 import styles from "./Permissions.less";
 
 const formatDate = date => {
-  if(!date){
-    return ''
+  if (!date) {
+    return "";
   }
-  const newDate = new Date(date)
-  return `${newDate.getMonth() + 1}-${newDate.getDate()}-${newDate.getFullYear()}`
-}
+  const newDate = new Date(date);
+  return `${newDate.getMonth() +
+    1}-${newDate.getDate()}-${newDate.getFullYear()}`;
+};
 
 class Permissions extends Component {
   componentWillUnmount() {
-    this.props.dispatch({ type: "CLEAR_ROLES"})
-    this.props.dispatch({ type: "CLEAR_COLLECTIONS"}) // when collections is available
+    this.props.dispatch({ type: "CLEAR_ROLES" });
+    this.props.dispatch({ type: "CLEAR_COLLECTIONS" }); // when collections is available
+  }
+  handleCreate = evt => {
+    evt.preventDefault();
+  }
+  handleEdit = evt => {
+    evt.preventDefault();
+  }
+  handleRemove = evt => {
+    evt.preventDefault();
   }
   render() {
     return (
@@ -57,7 +67,6 @@ class Permissions extends Component {
             <Input type="date" />
           </span>
           <span className={styles.collections}>
-            <label>Collections</label>
             <div className={styles.selectCollection}>
               <header>
                 <h3>Collection</h3>
@@ -82,7 +91,9 @@ class Permissions extends Component {
               </main>
             </div>
           </span>
-            <Button className={styles.createButton}>Create Role</Button>
+          <Button className={styles.createButton} onClick={this.handleCreate}>
+            Create Role
+          </Button>
         </form>
         <div className={styles.currentRoles}>
           <header>
@@ -100,8 +111,8 @@ class Permissions extends Component {
                     <span>{formatDate(role.Expiry)} </span>
                     <span>
                       <ButtonGroup>
-                        <Button text="Edit" /> 
-                        <Button text="Remove" />
+                        <Button text="Edit" onClick={this.handleEdit} />
+                        <Button text="Remove" onClick={this.handleRemove} />
                       </ButtonGroup>
                     </span>
                   </article>

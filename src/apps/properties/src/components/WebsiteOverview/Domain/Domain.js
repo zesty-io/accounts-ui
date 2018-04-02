@@ -12,7 +12,6 @@ class Domain extends Component {
   }
 
   render() {
-
     return (
       <div>
         <form>
@@ -21,13 +20,13 @@ class Domain extends Component {
             name='domain'
             id='custom'
             onChange={this.onChange}
-            checked={this.props.site.domainSelect === 'custom' ? 'checked' : ''}
+            // checked={this.props.site.domainSelect === 'custom' ? 'checked' : ''}
           />Custom Domain
             <Input
             type='radio'
             name='domain'
             id='vanity'
-            checked={this.props.site.domainSelect === 'vanity' ? 'checked' : ''}
+            // checked={this.props.site.domainSelect === 'vanity' ? 'checked' : ''}
             onChange={this.onChange}
           />Vanity Domain
             <Input
@@ -35,7 +34,7 @@ class Domain extends Component {
             name='domain'
             id='no'
             onChange={this.onChange}
-            checked={this.props.site.domainSelect === 'no' ? 'checked' : ''}
+            // checked={this.props.site.domainSelect === 'no' ? 'checked' : ''}
           />No Domain
           </form>
       </div>
