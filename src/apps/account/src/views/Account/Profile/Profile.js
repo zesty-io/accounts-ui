@@ -40,6 +40,7 @@ class Profile extends Component {
   };
   render() {
     return (
+      this.props.profile.firstName ?
       <section className={styles.profile}>
         <div className={styles.field}>
           <div>
@@ -69,12 +70,9 @@ class Profile extends Component {
             onClick={this.handleClick}
           />
         </div>
-      </section>
+      </section>:<p>loading</p>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return { profile: state.profile };
-};
-export default connect(mapStateToProps)(Profile);
+export default connect(state => {return {profile: state.user}})(Profile);

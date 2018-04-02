@@ -15,7 +15,7 @@ import { getSettings } from '../../store'
 
 class Settings extends Component {
   componentDidMount() {
-    this.props.dispatch(getSettings())
+    this.props.user.zuid && this.props.dispatch(getSettings(this.props.user.zuid))
   }
   render() {
     return (

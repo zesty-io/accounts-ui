@@ -73,9 +73,9 @@ class Email extends Component {
 
 const mapStateToProps = state => {
   return {
-    email: state.profile.email,
-    EmailsVerified: state.profile.EmailsVerified,
-    EmailsUnverified: state.profile.EmailsUnverified
+    email: state.user.email,
+    EmailsVerified: state.user.EmailsVerified,
+    EmailsUnverified: state.user.EmailsUnverified
   };
 };
 

@@ -8,8 +8,7 @@ export function profile(state = {submitted: false}, action) {
     //   return state
 
     case 'FETCH_SETTINGS_SUCCESS':
-      const profile = action.profile
-      return profile
+      return {...state, ...action.payload}
 
     case 'FETCH_SETTINGS_ERROR':
       // TODO show global growl of error
@@ -144,34 +143,25 @@ export function addEmail(payload) {
   }
 }
 
-export function getSettings(id) {
+export function getSettings(userZUID) {
   return (dispatch) => {
     dispatch({
       type: 'FETCHING_SETINGS'
     })
-
-    setTimeout(() => { // fake 500 ms delay
-      dispatch({
-        type: 'FETCH_SETTINGS_SUCCESS',
-        profile: {
-          twofa: false,
-          "id": 21474458,
-          "zuid": "5-556f009-nj0d0g",
-          "firstName": "Grant",
-          "lastName": "Glidewell",
-          "email": "mohammad.oweis@zesty.io",
-          "EmailsVerified": "mohammad.oweis@zesty.io",
-          "EmailsUnverified": "grant@unverified.org",
-          "staff": true,
-          "WebsiteCreator": true,
-          "ThirdPartyOAuthTokens": null,
-          "Prefs": null,
-          "createdAt": "2017-11-02T13:20:25Z",
-          "updatedAt": "2017-11-02T13:20:25Z",
-          "deletedAt": null
-        }
+    request(`${config.API_ACCOUNTS}/users/${userZUID}`)
+      .then(json =>{
+        return dispatch({
+          type: 'FETCHING_SETTINGS_SUCCESS',
+          payload: json.data
+        })}
+      )
+      .catch(err => {
+        console.table(err)
+        dispatch({
+          type: 'FETCHING_SETTINGS_ERROR',
+          err
+        })
       })
-    }, 500)
   }
 }
 
