@@ -4,6 +4,11 @@ import { connect } from 'react-redux'
 import styles from './CompanyAccess.less'
 
 class CompanyAccess extends Component {
+  handleToggle = evt => {
+    if(!confirm(`are you sure you want to remove access from ${evt.target.name}`)){
+      return evt.preventDefault()
+    }
+  }
   render() {
     return (
       <div className={styles.companyAccess}>
@@ -31,6 +36,7 @@ class CompanyAccess extends Component {
           <header>
             <h3>Company</h3>
             <h3>Contact</h3>
+            <h3>Email</h3>
             <h3>Access</h3>
           </header>
           <main>
@@ -39,8 +45,9 @@ class CompanyAccess extends Component {
                 return (
                   <article key={i}>
                     <span>{company.Name}</span>
+                    <span>{company.MainContactName}</span>
                     <span>{company.MainContactEmail}</span>
-                    <span><Toggle /></span>
+                    <span><Toggle defaultChecked name={company.Name} onChange={this.handleToggle} /></span>
                   </article>
                 )
               })
