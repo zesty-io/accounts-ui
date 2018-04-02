@@ -4,15 +4,17 @@ import { connect } from 'react-redux'
 import Password from './Password'
 import TwoFactor from './TwoFactor'
 
+import styles from './Security.less'
+
 class Security extends Component {
   render() {
     return (
-      <React.Fragment>
+      <div className={styles.Security}>
         <h1>Security</h1>
         <Password />
         <h1>Two-factor authentication</h1>
         <TwoFactor />
-      </React.Fragment>
+      </div>
     )
   }
 }

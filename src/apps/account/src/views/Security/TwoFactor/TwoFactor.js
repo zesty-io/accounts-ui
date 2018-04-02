@@ -2,6 +2,9 @@ import { Component } from "React";
 import { updateSetting } from "../../../store";
 import { connect } from "react-redux";
 import Toggle from "../../../../../../core/toggle/Toggle";
+
+import styles from "./TwoFactor.less";
+
 class TwoFactor extends Component {
   handleChange = evt => {
     if (evt.target.value.match(evt.target.pattern)) {
@@ -30,7 +33,7 @@ class TwoFactor extends Component {
   };
   render() {
     return (
-      <section>
+      <section className={styles.TwoFactor}>
         {this.props.twofa ? (
           <div>
             <p>Two-factor authentication currently set up for this account.</p>

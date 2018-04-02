@@ -1,6 +1,9 @@
 import { Component } from "React";
 import { connect } from "react-redux";
 import { updateSetting } from "../../../store";
+
+import styles from "./Password.less";
+
 class Password extends Component {
   handleChange = evt => {
     if (evt.target.value.match(evt.target.pattern)) {
@@ -16,7 +19,7 @@ class Password extends Component {
   };
   render() {
     return (
-      <section>
+      <section className={styles.Password}>
         <h4>Password</h4>
         <div>
           <Input
@@ -25,9 +28,14 @@ class Password extends Component {
             onChange={this.handleChange}
             value={this.props.oldPassword}
             type="password"
+            required
           />
         </div>
-        <div><p>Minimum eight characters, at least one uppercase letter, one lowercase letter and one number:</p>
+        <div>
+          <p>
+            Minimum eight characters, at least one uppercase letter, one
+            lowercase letter and one number
+          </p>
           <Input
             name="newPassword"
             placeholder="New Password"
@@ -35,6 +43,7 @@ class Password extends Component {
             onChange={this.handleChange}
             value={this.props.newPassword}
             type="password"
+            required
           />
         </div>
         <div>
@@ -45,6 +54,7 @@ class Password extends Component {
             onChange={this.handleChange}
             value={this.props.confirmNewPassword}
             type="password"
+            required
           />
         </div>
         <Button text="Submit" onClick={this.handleClick} />
