@@ -73,7 +73,7 @@ class WebsiteOverview extends Component {
                     <i className="fa fa-pencil" aria-hidden="true" />
                   </span>
                 ) : (
-                  <Domain />
+                  <Domain siteZUID={this.props.ZUID} site={this.props}/>
                   // <Button>
                   //   <i className={cx("fa fa-cog")} aria-hidden="true" />Setup
                   //   Domain
