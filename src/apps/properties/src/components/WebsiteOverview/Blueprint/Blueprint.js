@@ -9,6 +9,7 @@ class Blueprint extends Component {
     this.props.history.push(`${this.props.site.ZUID}/blueprint`);
   };
   render() {
+    console.log(this.props, 'props in Blueprint')
     return this.props.blueprints[this.props.site.blueprintID] instanceof
       Object ? (
       <React.Fragment>
@@ -38,7 +39,7 @@ class Blueprint extends Component {
       </React.Fragment>
     ) : (
       <section className={styles.Loading}>
-        <h3>Loading Site</h3>
+        <h3>Loading Blueprint</h3>
         <Loader />
       </section>
     );

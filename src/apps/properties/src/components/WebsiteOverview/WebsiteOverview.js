@@ -20,6 +20,14 @@ import { inviteData } from "../../store/invite";
 import { fetchSiteRoles } from "../../store/sitesRoles";
 
 class WebsiteOverview extends Component {
+  constructor(props){
+    super()
+    this.state = {
+      editName: false,
+      editDomain: false
+    }
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID));
     this.props.dispatch(
@@ -29,6 +37,11 @@ class WebsiteOverview extends Component {
     this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }));
     this.props.dispatch(fetchSiteRoles(this.props.userZuid, this.props.ZUID));
   }
+
+  editName = () => {
+    console.log('click')
+  }
+
   render() {
     // when this lives on the user object, it will be useful
     const fakeUserPrefs = [
@@ -68,7 +81,7 @@ class WebsiteOverview extends Component {
               </Link>
               <h1 className={styles.name}>
                 {this.props.name}&nbsp;
-                <i className="fa fa-pencil" aria-hidden="true" />
+                <i className="fa fa-pencil" aria-hidden="true" onClick={this.editName}/>
               </h1>
               <h2 className={styles.domain}>
                 {this.props.domain ? (
