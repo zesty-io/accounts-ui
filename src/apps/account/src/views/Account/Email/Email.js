@@ -17,9 +17,6 @@ class Email extends Component {
     }
   };
   handleClick = e => {
-    
-    this.props.dispatch({ type: "ADDING_EMAIL" })
-
     if(this.props.newEmail.length){
       this.props
       .dispatch(addEmail())
@@ -48,6 +45,7 @@ class Email extends Component {
           type: "error"
         })
       );
+      return this.props.dispatch({ type: "ADD_EMAIL_FAILURE"})
     }
 
   };
@@ -79,6 +77,7 @@ class Email extends Component {
                 text="Add Email"
                 onClick={this.handleClick}
                 className={styles.button}
+                disabled={this.props.userProfile.submittedEmail}
               />
             </footer>
             <header>
@@ -113,7 +112,8 @@ const mapStateToProps = state => {
     email: state.userProfile.email,
     EmailsVerified: state.userProfile.EmailsVerified,
     EmailsUnverified: state.userProfile.EmailsUnverified,
-    newEmail: state.userProfile.newEmail
+    newEmail: state.userProfile.newEmail,
+    ...state
   };
 };
 

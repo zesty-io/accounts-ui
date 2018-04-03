@@ -31,12 +31,12 @@ export function userProfile(
 
     case "ADDING_EMAIL":
       return { ...state, submittedEmail: !state.submittedEmail };
+
     case "ADD_EMAIL_SUCCESS":
-    return { ...state, submittedEmail: !state.submittedEmail };
+      return { ...state, submittedEmail: !state.submittedEmail };
 
     case "ADD_EMAIL_FAILURE":
-    return { ...state, submittedEmail: !state.submittedEmail };
-
+      return { ...state, submittedEmail: !state.submittedEmail };
 
     case "UPDATE_SETTINGS":
       return { ...state, ...action.payload };

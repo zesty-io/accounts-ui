@@ -72,7 +72,7 @@ class Profile extends Component {
           />
           <Button
             className={styles.ProfileSave}
-            disabled={this.props.profile.submitted}
+            disabled={this.props.userProfile.submittedProfile}
             text="Save"
             onClick={this.handleClick}
           />
@@ -85,5 +85,5 @@ class Profile extends Component {
 }
 
 export default connect(state => {
-  return { profile: state.userProfile, userZUID: state.user.zuid };
+  return { profile: state.userProfile, userZUID: state.user.zuid , ...state};
 })(Profile);
