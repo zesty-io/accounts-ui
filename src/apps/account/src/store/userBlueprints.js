@@ -1,9 +1,8 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-export function userBlueprints(state, action) {
-  switch(action.type){
-
+export function userBlueprints(state = {}, action) {
+  switch (action.type) {
     case "FETCHING_ACCOUNT_BLUEPRINTS":
       return state;
 
@@ -25,7 +24,8 @@ export function userBlueprints(state, action) {
 
     case "CREATE_BLUEPRINT_ERROR":
       return state;
-
+    default:
+      return state;
   }
 }
 

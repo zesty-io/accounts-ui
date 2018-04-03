@@ -11,16 +11,16 @@ import Account from '../Account'
 
 import styles from './styles.less'
 
-import { getSettings } from '../../store'
+import { getSettings } from '../../store/userProfile'
 
 class Settings extends Component {
   componentDidMount() {
-    this.props.user.zuid && this.props.dispatch(getSettings(this.props.user.zuid))
+    this.props.user.ZUID && this.props.dispatch(getSettings(this.props.user.zuid))
   }
   render() {
     return (
       <ErrorBoundary>
-        {Object.keys(this.props.profile).length ? (
+        {Object.keys(this.props.userProfile).length ? (
           <section className={styles.settings}>
             <ul>
               <li>

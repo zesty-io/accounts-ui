@@ -7,7 +7,7 @@ import { user } from './user'
 import { auth } from './auth'
 import { notifications } from './notifications'
 import { propertiesReducers } from '../../apps/properties/src/store'
-import { profile } from '../../apps/account/src/store'
+import { profileReducers } from '../../apps/account/src/store'
 
 const loggerMiddleware = createLogger({
   collapsed: true,
@@ -16,10 +16,10 @@ const loggerMiddleware = createLogger({
 
 const rootReducer = combineReducers({
   ...propertiesReducers,
+  ...profileReducers,
   auth,
   user,
-  notifications,
-  profile
+  notifications
 })
 
 export const store = createStore(

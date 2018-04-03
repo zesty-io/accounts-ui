@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./profile.less";
 
-import { updateSettingRaw, saveProfile } from "../../../store";
+import { updateSettingRaw, saveProfile } from "../../../store/userProfile";
 import { notify } from "../../../../../../shell/store/notifications";
 
 class Profile extends Component {
@@ -75,4 +75,4 @@ class Profile extends Component {
   }
 }
 
-export default connect(state => {return {profile: state.user}})(Profile);
+export default connect(state => {return {profile: state.userProfile}})(Profile);

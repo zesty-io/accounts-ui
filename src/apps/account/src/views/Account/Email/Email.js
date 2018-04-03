@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateSetting, addEmail } from "../../../store";
+import { updateSetting, addEmail } from "../../../store/userProfile";
 import styles from "./email.less";
 
 class Email extends Component {
@@ -73,9 +73,9 @@ class Email extends Component {
 
 const mapStateToProps = state => {
   return {
-    email: state.user.email,
-    EmailsVerified: state.user.EmailsVerified,
-    EmailsUnverified: state.user.EmailsUnverified
+    email: state.userProfile.email,
+    EmailsVerified: state.userProfile.EmailsVerified,
+    EmailsUnverified: state.userProfile.EmailsUnverified
   };
 };
 
