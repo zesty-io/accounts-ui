@@ -10,6 +10,7 @@ class EditBlueprint extends Component {
     console.log("WEEEEEEEEE!"); // disabled for now
   };
   render() {
+    console.log(this.props)
     let { blueprint } = this.props;
     return this.props && this.props.blueprint ? (
       <form id="edit-form" onSubmit={this.handleSubmit}>
@@ -17,27 +18,27 @@ class EditBlueprint extends Component {
           <div className={styles.rowOne}>
             <img
               src={`https://raw.githubusercontent.com/${
-                blueprint.Name
+                blueprint.name
               }/master/shield.png`}
-              alt={blueprint.Name}
+              alt={blueprint.name}
             />
             <label>Blueprint Name</label>
             <Input type="text"
               size={50}
-              placeholder={blueprint.Name}
+              placeholder={blueprint.name}
               name="edit[name]" />
             <label>Github Repo URL</label>
             <Input
               type="text"
               size={50}
-              placeholder={blueprint.GithubURL}
+              placeholder={blueprint.githubURL}
               name="edit[github_url]"
             />
             <label>Blueprint Example Preview URL</label>
             <Input
               type="text"
               size={50}
-              placeholder={blueprint.PreviewURL}
+              placeholder={blueprint.previewURL}
               name="edit[preview_url]"
             />
             <label>
@@ -47,7 +48,7 @@ class EditBlueprint extends Component {
             <Input
               type="text"
               size={50}
-              placeholder={blueprint.MainImage}
+              placeholder={blueprint.mainImage}
               name="edit[main_image]"
             />
             <label>
@@ -56,7 +57,7 @@ class EditBlueprint extends Component {
             </label>
             <Input
               size={50}
-              placeholder={blueprint.CoverImage}
+              placeholder={blueprint.coverImage}
               name="edit[cover_image]"
             />
           </div>
@@ -66,7 +67,7 @@ class EditBlueprint extends Component {
             <textarea
               wrap="soft"
               name="edit[short_description]"
-              placeholder={blueprint.ShortDescription}
+              placeholder={blueprint.shortDescription}
             />
           </div>
           <div className={styles.rowTwo1}>
@@ -74,7 +75,7 @@ class EditBlueprint extends Component {
             <textarea
               wrap="soft"
               name="edit[description]"
-              placeholder={blueprint.Description}
+              placeholder={blueprint.description}
             />
           </div>
           <h3 className={styles.rowThree}>Tags</h3>
@@ -177,10 +178,10 @@ class EditBlueprint extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    blueprint: Object.keys(state.profile.blueprints)
+    blueprint: Object.keys(state.userBlueprints)
       .map(i => {
-        if (state.profile.blueprints[i].ID == ownProps.match.params.id) {
-          return state.profile.blueprints[i];
+        if (state.userBlueprints[i].ID == ownProps.match.params.id) {
+          return state.userBlueprints[i];
         }
       })
       .filter(i => i !== undefined)[0]

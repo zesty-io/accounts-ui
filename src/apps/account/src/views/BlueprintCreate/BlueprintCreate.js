@@ -2,13 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 
-import { updateSetting, postNewBlueprint } from "../../store";
+import { updateSetting, postNewBlueprint } from "../../store/userBlueprints";
 
 import styles from "./BlueprintCreate.less";
 
 class BlueprintCreate extends Component {
   render() {
-    console.log
     return (
       <section className={styles.BlueprintCreate}>
         <div className={styles.nameNew}>
@@ -20,7 +19,7 @@ class BlueprintCreate extends Component {
             onChange={this.handleChange}
           />
           <div className={styles.controls}>
-            <Button onClick={this.handleClick} disabled={this.props.profile.submitted}>
+            <Button onClick={this.handleClick} disabled={this.props.userBlueprints.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
               Create New Blueprint
             </Button>
@@ -40,7 +39,7 @@ class BlueprintCreate extends Component {
   };
   handleClick = () => {
     this.props
-      .dispatch(postNewBlueprint(this.props.profile.createBlueprintName))
+      .dispatch(postNewBlueprint(this.props.userBlueprints.createBlueprintName))
       .then(data => {
         this.props.dispatch({
           type: "CREATE_BLUEPRINT_SUCCESS",

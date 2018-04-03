@@ -13,20 +13,15 @@ export function userProfile(
       return { ...state, ...action.payload };
 
     case "FETCH_SETTINGS_ERROR":
-      // TODO show global growl of error
-      // leave state as is
       return state;
 
     case "MODIFYING_PROFILE":
       return { ...state, submittedProfile: !state.submittedProfile };
 
     case "MODIFY_FAILURE":
-      //TODO: deactivate loading state
-      //TODO: show global growl of error
       return state;
 
     case "MODIFY_PROFILE_SUCCESS":
-      //TODO: deactivate loading state
       return { ...state, submittedProfile: !state.submittedProfile };
 
     case "ADDING_EMAIL":
@@ -126,4 +121,4 @@ export function getSettings(userZUID) {
   };
 }
 
-// add change password, modify user info, toggle 2fa
+// add change password, toggle/add 2fa
