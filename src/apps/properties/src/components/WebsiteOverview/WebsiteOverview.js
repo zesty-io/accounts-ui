@@ -34,26 +34,30 @@ class WebsiteOverview extends Component {
     const fakeUserPrefs = [
       {
         title: "Monthly Useage",
-        className: 'fa fa-line-chart',
+        className: "fa fa-line-chart",
         Component: Stats
-      },{
-        title: "Permissions",
-        className: 'fa fa-lock',
-        Component: Permissions
-      },{
-        title: "User Access",
-        className: 'fa fa-users',
-        Component: UserAccess
-      },{
-        title: "Company Access",
-        className: 'fa fa-building',
-        Component: CompanyAccess
-      },{
-        title: "Blueprint",
-        className: 'fa fa-file-code-o',
-        Component: Blueprint
       },
-    ]
+      {
+        title: "Permissions",
+        className: "fa fa-lock",
+        Component: Permissions
+      },
+      {
+        title: "User Access",
+        className: "fa fa-users",
+        Component: UserAccess
+      },
+      {
+        title: "Company Access",
+        className: "fa fa-building",
+        Component: CompanyAccess
+      },
+      {
+        title: "Blueprint",
+        className: "fa fa-file-code-o",
+        Component: Blueprint
+      }
+    ];
     return (
       <section className={styles.WebsiteOverviewWrap}>
         {this.props.name ? (
@@ -73,7 +77,7 @@ class WebsiteOverview extends Component {
                     <i className="fa fa-pencil" aria-hidden="true" />
                   </span>
                 ) : (
-                  <Domain siteZUID={this.props.ZUID} site={this.props}/>
+                  <Domain siteZUID={this.props.ZUID} site={this.props} />
                   // <Button>
                   //   <i className={cx("fa fa-cog")} aria-hidden="true" />Setup
                   //   Domain
@@ -83,15 +87,20 @@ class WebsiteOverview extends Component {
             </header>
             <main>
               {fakeUserPrefs.map((Item, i) => {
-                const DynComponent = Item.Component
-                const site = this.props.site
+                const DynComponent = Item.Component;
+                const site = this.props.site;
                 return (
                   <article className={styles.card} key={i}>
                     <h2>
                       <i className={Item.className} aria-hidden="true" />&nbsp;
                       {Item.title}
                     </h2>
-                    {<DynComponent siteZUID={this.props.ZUID} site={this.props} />}
+                    {
+                      <DynComponent
+                        siteZUID={this.props.ZUID}
+                        site={this.props}
+                      />
+                    }
                   </article>
                 );
               })}

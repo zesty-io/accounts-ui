@@ -1,15 +1,21 @@
-import { Component } from 'React'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import styles from './PropertyBlueprint.less'
+import { Component } from "React";
+import { connect } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
+import styles from "./PropertyBlueprint.less";
 
-import { fetchBlueprints } from '../../store/blueprints'
-import { addSiteInfo, postNewSite } from '../../store/createSite'
+import { fetchBlueprints } from "../../store/blueprints";
+import { addSiteInfo, postNewSite } from "../../store/createSite";
 
 class PropertyBlueprint extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchBlueprints())
+    this.props.dispatch(fetchBlueprints());
   }
+  handleSelect = id => {
+    return console.log('bpID: ', id, 'siteZuid: ', this.props.siteZUID)
+    // TODO make api request to set blueprint for site
+    this.props.dispatch(addSiteInfo({ blueprintId: id }));
+    // TODO user returned zuid
+  };
   render() {
     return (
       <div>
@@ -29,30 +35,32 @@ class PropertyBlueprint extends Component {
               configured for Zesty.io.
             </p>
             <main className={styles.Blueprints}>
-              {Object.keys(this.props.blueprints).filter(i => {
-                  if(!this.props.blueprints[i].Trashed){
-                    return i
+              {Object.keys(this.props.blueprints)
+                .filter(i => {
+                  if (!this.props.blueprints[i].Trashed) {
+                    return i;
                   }
-                }).map(i => {
-                let blueprint = this.props.blueprints[i]
-                return (
-                  <article className={styles.Blueprint} key={i}>
-                    <header>
-                      <h1 className={styles.name}>{blueprint.Name}</h1>
-                    </header>
-                    <main>
-                      <img src={blueprint.CoverImage} alt="bp img" />
-                      <p>{blueprint.Description}</p>
-                    </main>
-                    <footer>
-                      <Button onClick={() => this.handleSelect(blueprint.ID)}>
-                        <i className="fa fa-columns" aria-hidden="true" />
-                        Select Blueprint
-                      </Button>
-                    </footer>
-                  </article>
-                )
-              })}
+                })
+                .map(i => {
+                  let blueprint = this.props.blueprints[i];
+                  return (
+                    <article className={styles.Blueprint} key={i}>
+                      <header>
+                        <h1 className={styles.name}>{blueprint.Name}</h1>
+                      </header>
+                      <main>
+                        <img src={blueprint.CoverImage} alt="bp img" />
+                        <p>{blueprint.Description}</p>
+                      </main>
+                      <footer>
+                        <Button onClick={() => this.handleSelect(blueprint.ID)}>
+                          <i className="fa fa-columns" aria-hidden="true" />
+                          Select Blueprint
+                        </Button>
+                      </footer>
+                    </article>
+                  );
+                })}
             </main>
           </section>
         ) : (
@@ -62,17 +70,12 @@ class PropertyBlueprint extends Component {
           </div>
         )}
       </div>
-    )
-  }
-  handleSelect = (id) => {
-    // TODO make api request to set blueprint for site
-    this.props.dispatch(addSiteInfo({blueprintId : id}))
-    // TODO user returned zuid
+    );
   }
 }
 
-export default connect(state => {
-  return {
-    blueprints: state.blueprints
-  }
-})(PropertyBlueprint)
+const mapStateToProps = (state, ownProps) => {
+  return { siteZUID: ownProps.match.params.zuid, blueprints: state.blueprints };
+};
+
+export default withRouter(connect(mapStateToProps)(PropertyBlueprint));

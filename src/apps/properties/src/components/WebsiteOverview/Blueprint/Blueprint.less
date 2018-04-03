@@ -1,40 +1,15 @@
 @import "../../../../../../shell/styles/colors.less";
 
-.BlueprintView {
-  padding: 2rem;
+.Blueprint {
+  background: @white;
+
   header {
     display: flex;
     flex-direction: row;
     h1 {
       font-size: 1.4rem;
+      padding: 1.1rem;
       flex: 1;
-      margin-bottom: 5px;
-    }
-  }
-  .description {
-    border-bottom: 1px solid @zesty-light-blue;
-    max-width: 50rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-  }
-}
-
-.Blueprints {
-  display: grid;
-  grid-auto-flow: row;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
-  margin-top: 2rem;
-}
-
-.Blueprint {
-  background: @white;
-
-  header {
-    background: @zesty-white;
-    .name {
-      font-size: 1.1em;
-      margin-left: 1rem;
     }
   }
   main {
