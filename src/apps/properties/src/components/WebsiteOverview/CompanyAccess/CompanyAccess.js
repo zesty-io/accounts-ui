@@ -44,10 +44,10 @@ class CompanyAccess extends Component {
               this.props.sitesCompanies.map((company, i) => {
                 return (
                   <article key={i}>
-                    <span>{company.Name}</span>
-                    <span>{company.MainContactName}</span>
-                    <span>{company.MainContactEmail}</span>
-                    <span><Toggle defaultChecked name={company.Name} onChange={this.handleToggle} /></span>
+                    <span>{company.name}</span>
+                    <span>{company.mainContactName}</span>
+                    <span>{company.mainContactEmail}</span>
+                    <span><Toggle defaultChecked name={company.name} onChange={this.handleToggle} /></span>
                   </article>
                 )
               })
