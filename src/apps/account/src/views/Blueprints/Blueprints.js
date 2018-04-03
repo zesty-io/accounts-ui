@@ -51,7 +51,7 @@ class Blueprints extends Component {
                         <h1 className={styles.name}>{blueprint.Name}</h1>
                       </header>
                       <main>
-                        <img src={blueprint.CoverImage} alt="bp img" />
+                        <img src={blueprint.coverImage} alt="bp img" />
                         <p>{blueprint.Description}</p>
                       </main>
                       <Button

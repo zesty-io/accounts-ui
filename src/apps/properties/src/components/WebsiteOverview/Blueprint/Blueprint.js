@@ -16,18 +16,18 @@ class Blueprint extends Component {
         <article className={styles.Blueprint}>
           <header>
             <h1 className={styles.name}>
-              {this.props.blueprints[this.props.site.blueprintID].Name}
+              {this.props.blueprints[this.props.site.blueprintID].name}
             </h1>
           </header>
           <main>
             <img
               src={
-                this.props.blueprints[this.props.site.blueprintID].CoverImage
+                this.props.blueprints[this.props.site.blueprintID].coverImage
               }
               alt="bp img"
             />
             <p>
-              {this.props.blueprints[this.props.site.blueprintID].Description}
+              {this.props.blueprints[this.props.site.blueprintID].description}
             </p>
           </main>
           <Button onClick={this.handleSelect}>

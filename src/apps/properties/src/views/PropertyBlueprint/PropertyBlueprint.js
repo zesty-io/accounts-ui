@@ -37,7 +37,7 @@ class PropertyBlueprint extends Component {
             <main className={styles.Blueprints}>
               {Object.keys(this.props.blueprints)
                 .filter(i => {
-                  if (!this.props.blueprints[i].Trashed) {
+                  if (!this.props.blueprints[i].trashed) {
                     return i;
                   }
                 })
@@ -46,11 +46,11 @@ class PropertyBlueprint extends Component {
                   return (
                     <article className={styles.Blueprint} key={i}>
                       <header>
-                        <h1 className={styles.name}>{blueprint.Name}</h1>
+                        <h1 className={styles.name}>{blueprint.name}</h1>
                       </header>
                       <main>
-                        <img src={blueprint.CoverImage} alt="bp img" />
-                        <p>{blueprint.Description}</p>
+                        <img src={blueprint.coverImage} alt="bp img" />
+                        <p>{blueprint.description}</p>
                       </main>
                       <footer>
                         <Button onClick={() => this.handleSelect(blueprint.ID)}>

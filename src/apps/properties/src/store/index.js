@@ -1,6 +1,3 @@
-import config from '../../../../shell/config'
-import { request } from '../../../../util/request'
-
 import { blueprints } from './blueprints'
 import { sites } from './sites'
 import { sitesCompanies } from './sitesCompanies'
