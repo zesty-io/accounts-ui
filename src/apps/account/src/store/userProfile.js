@@ -1,7 +1,10 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-export function userProfile(state = { submitted: false }, action) {
+export function userProfile(
+  state = { submittedProfile: false, submittedEmail: false, newEmail: "" },
+  action
+) {
   switch (action.type) {
     case "FETCHING_SETTINGS":
       return state;
@@ -15,7 +18,7 @@ export function userProfile(state = { submitted: false }, action) {
       return state;
 
     case "MODIFYING_PROFILE":
-      return { ...state, submitted: !state.submitted };
+      return { ...state, submittedProfile: !state.submittedProfile };
 
     case "MODIFY_FAILURE":
       //TODO: deactivate loading state
@@ -24,13 +27,16 @@ export function userProfile(state = { submitted: false }, action) {
 
     case "MODIFY_PROFILE_SUCCESS":
       //TODO: deactivate loading state
-      return { ...state, submitted: !state.submitted };
+      return { ...state, submittedProfile: !state.submittedProfile };
 
+    case "ADDING_EMAIL":
+      return { ...state, submittedEmail: !state.submittedEmail };
     case "ADD_EMAIL_SUCCESS":
-      const emails = state.emails.concat([
-        { email: state.newEmail, options: state.newEmailOptions || "" }
-      ]);
-      return { ...state, newEmail: "", emails };
+    return { ...state, submittedEmail: !state.submittedEmail };
+
+    case "ADD_EMAIL_FAILURE":
+    return { ...state, submittedEmail: !state.submittedEmail };
+
 
     case "UPDATE_SETTINGS":
       return { ...state, ...action.payload };
@@ -59,16 +65,14 @@ export function updateSettingRaw(payload) {
   };
 }
 
-
-
 export function saveProfile() {
   return (dispatch, getState) => {
     let { settings } = getState();
     dispatch({
       type: "MODIFYING_PROFILE"
     });
-    const userZUID = getState().user.zuid
-    const profile = getState().userProfile
+    const userZUID = getState().user.zuid;
+    const profile = getState().userProfile;
     return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
       method: "PUT",
       json: true,
@@ -80,17 +84,23 @@ export function saveProfile() {
   };
 }
 
-export function addEmail(payload) {
-  return dispatch => {
+export function addEmail() {
+  return (dispatch, getState) => {
     dispatch({
       type: "ADDING_EMAIL"
     });
-    setTimeout(() => {
-      dispatch({
-        type: "ADD_EMAIL_SUCCESS",
-        payload
-      });
-    }, 500);
+    const userZUID = getState().user.zuid;
+    const unverifiedEmails = getState()
+      .userProfile.unverifiedEmails.split(",")
+      .concat(getState().userProfile.newEmail)
+      .join(",");
+    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+      method: "PUT",
+      json: true,
+      body: {
+        unverifiedEmails
+      }
+    });
   };
 }
 

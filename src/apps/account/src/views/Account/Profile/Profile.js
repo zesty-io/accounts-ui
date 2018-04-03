@@ -11,7 +11,7 @@ import { notify } from "../../../../../../shell/store/notifications";
 
 class Profile extends Component {
   componentDidMount() {
-    this.props.dispatch(getSettings(this.props.userZUID))
+    this.props.dispatch(getSettings(this.props.userZUID));
   }
   handleClick = evt => {
     evt.preventDefault();
@@ -28,7 +28,7 @@ class Profile extends Component {
             type: "success"
           })
         );
-        return this.props.dispatch({ type: "MODIFY_PROFILE_SUCCESS"})
+        return this.props.dispatch({ type: "MODIFY_PROFILE_SUCCESS" });
       })
       .catch(err => {
         this.props.dispatch(
@@ -47,7 +47,6 @@ class Profile extends Component {
     );
   };
   render() {
-    console.log(this.props)
     return this.props.profile.firstName ? (
       <section className={styles.profile}>
         <div className={styles.field}>

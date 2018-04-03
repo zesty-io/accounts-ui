@@ -1,18 +1,55 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
+import { notify } from "../../../../../../shell/store/notifications";
 import { updateSetting, addEmail } from "../../../store/userProfile";
+
 import styles from "./email.less";
 
 class Email extends Component {
   handleChange = evt => {
     if (evt.target.value.match(evt.target.pattern)) {
-      this.props.dispatch(
+      return this.props.dispatch(
         updateSetting({ [evt.target.name]: evt.target.value })
       );
+    } else {
+      return null;
     }
   };
   handleClick = e => {
-    this.props.dispatch(addEmail());
+    
+    this.props.dispatch({ type: "ADDING_EMAIL" })
+
+    if(this.props.newEmail.length){
+      this.props
+      .dispatch(addEmail())
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            message: "Email added",
+            type: "success"
+          })
+        );
+        return this.props.dispatch({ type: "ADD_EMAIL_SUCCESS"})        
+      })
+      .catch(data => {
+        this.props.dispatch(
+          notify({
+            message: "Problem adding email",
+            type: "error"
+          })
+        );
+        return this.props.dispatch({ type: "ADD_EMAIL_FAILURE"})
+      });
+    }else{
+      this.props.dispatch(
+        notify({
+          message: "Please submit valid email",
+          type: "error"
+        })
+      );
+    }
+
   };
   render() {
     return (
@@ -31,11 +68,11 @@ class Email extends Component {
             <footer>
               <Input
                 type="text"
-                placeholder="wont@work.yet"
+                placeholder="email@work.com"
                 name="newEmail"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                 className={styles.field}
-                value={this.props.newEmail}
+                required
                 onChange={this.handleChange}
               />
               <Button
@@ -75,7 +112,8 @@ const mapStateToProps = state => {
   return {
     email: state.userProfile.email,
     EmailsVerified: state.userProfile.EmailsVerified,
-    EmailsUnverified: state.userProfile.EmailsUnverified
+    EmailsUnverified: state.userProfile.EmailsUnverified,
+    newEmail: state.userProfile.newEmail
   };
 };
 
