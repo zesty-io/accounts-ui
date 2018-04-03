@@ -59,18 +59,7 @@ export function updateSettingRaw(payload) {
   };
 }
 
-export function postNewBlueprint(Name) {
-  return dispatch => {
-    dispatch({
-      type: "CREATING_BLUEPRINT"
-    });
-    return request(`${config.API_ACCOUNTS}/blueprints`, {
-      method: "POST",
-      json: true,
-      body: { Name }
-    });
-  };
-}
+
 
 export function saveProfile() {
   return (dispatch, getState) => {
@@ -114,14 +103,14 @@ export function getSettings(userZUID) {
     request(`${config.API_ACCOUNTS}/users/${userZUID}`)
       .then(json => {
         return dispatch({
-          type: "FETCHING_SETTINGS_SUCCESS",
+          type: "FETCH_SETTINGS_SUCCESS",
           payload: json.data
         });
       })
       .catch(err => {
         console.table(err);
         dispatch({
-          type: "FETCHING_SETTINGS_ERROR",
+          type: "FETCH_SETTINGS_ERROR",
           err
         });
       });

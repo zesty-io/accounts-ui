@@ -7,7 +7,7 @@ export function userBlueprints(state = {}, action) {
       return state;
 
     case "FETCHING_ACCOUNT_BLUEPRINTS_SUCCESS":
-      return { ...state, blueprints: action.blueprints };
+      return { ...state, ...action.blueprints };
 
     case "FETCHING_ACCOUNT_BLUEPRINTS_ERROR":
       return state;
@@ -17,7 +17,7 @@ export function userBlueprints(state = {}, action) {
 
     case "CREATE_BLUEPRINT_SUCCESS":
       let blueprints = {
-        ...state.blueprints,
+        ...state,
         [action.blueprint.ID]: action.blueprint
       };
       return { ...state, blueprints, submitted: !state.submitted };
@@ -48,5 +48,17 @@ export function fetchAccountBlueprints() {
           err
         });
       });
+  };
+}
+export function postNewBlueprint(Name) {
+  return dispatch => {
+    dispatch({
+      type: "CREATING_BLUEPRINT"
+    });
+    return request(`${config.API_ACCOUNTS}/blueprints`, {
+      method: "POST",
+      json: true,
+      body: { Name }
+    });
   };
 }

@@ -2,10 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./profile.less";
 
-import { updateSettingRaw, saveProfile } from "../../../store/userProfile";
+import {
+  updateSettingRaw,
+  saveProfile,
+  getSettings
+} from "../../../store/userProfile";
 import { notify } from "../../../../../../shell/store/notifications";
 
 class Profile extends Component {
+  componentDidMount() {
+    this.props.dispatch(getSettings(this.props.userZUID))
+  }
   handleClick = evt => {
     evt.preventDefault();
     this.props
@@ -39,8 +46,8 @@ class Profile extends Component {
     );
   };
   render() {
-    return (
-      this.props.profile.firstName ?
+    console.log(this.props)
+    return this.props.profile.firstName ? (
       <section className={styles.profile}>
         <div className={styles.field}>
           <div>
@@ -70,9 +77,13 @@ class Profile extends Component {
             onClick={this.handleClick}
           />
         </div>
-      </section>:<p>loading</p>
+      </section>
+    ) : (
+      <p>loading</p>
     );
   }
 }
 
-export default connect(state => {return {profile: state.userProfile}})(Profile);
+export default connect(state => {
+  return { profile: state.userProfile, userZUID: state.user.zuid };
+})(Profile);

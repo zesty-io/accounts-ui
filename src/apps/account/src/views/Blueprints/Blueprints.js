@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { fetchAccountBlueprints } from "../../store";
+import { fetchAccountBlueprints } from "../../store/userBlueprints";
 
 import styles from "./Blueprint.less";
 
@@ -32,27 +32,27 @@ class Blueprints extends Component {
         </div>
         <div className={styles.BlueprintView}>
           <main className={styles.Blueprints}>
-            {this.props.profile.blueprints &&
-              Object.keys(this.props.profile.blueprints)
+            {this.props.userBlueprints &&
+              Object.keys(this.props.userBlueprints)
                 .filter(i => {
                   if (
-                    !this.props.profile.blueprints[i].Trashed &&
-                    this.props.profile.blueprints[i].CreatedByUserZUID ===
-                      this.props.user.zuid
+                    !this.props.userBlueprints[i].trashed &&
+                    this.props.userBlueprints[i].createdByUserZUID ===
+                      this.props.user.ZUID
                   ) {
                     return i;
                   }
                 })
                 .map(i => {
-                  let blueprint = this.props.profile.blueprints[i];
+                  let blueprint = this.props.userBlueprints[i];
                   return (
                     <article className={styles.Blueprint} key={i}>
                       <header>
-                        <h1 className={styles.name}>{blueprint.Name}</h1>
+                        <h1 className={styles.name}>{blueprint.name}</h1>
                       </header>
                       <main>
                         <img src={blueprint.coverImage} alt="bp img" />
-                        <p>{blueprint.Description}</p>
+                        <p>{blueprint.description}</p>
                       </main>
                       <Button
                         onClick={() => this.handleClick(`/settings/blueprints/${blueprint.ID}`)}
