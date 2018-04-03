@@ -67,16 +67,15 @@ export function saveProfile() {
     dispatch({
       type: "MODIFYING_PROFILE"
     });
-    return new Promise((resolve, reject) => {
-      // in place of network call which returns a promise
-      resolve(
-        setTimeout(() => {
-          dispatch({
-            type: "MODIFY_PROFILE_SUCCESS"
-          });
-        }, 500)
-      );
-      reject(console.err);
+    const userZUID = getState().user.zuid
+    const profile = getState().userProfile
+    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+      method: "PUT",
+      json: true,
+      body: {
+        firstName: profile.firstName,
+        lastName: profile.lastName
+      }
     });
   };
 }

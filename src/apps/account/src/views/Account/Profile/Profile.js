@@ -28,6 +28,7 @@ class Profile extends Component {
             type: "success"
           })
         );
+        return this.props.dispatch({ type: "MODIFY_PROFILE_SUCCESS"})
       })
       .catch(err => {
         this.props.dispatch(
