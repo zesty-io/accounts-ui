@@ -63,17 +63,16 @@ class WebsiteCard extends Component {
               </Link>
             )}
           </div>
-
-          <Url
-            target="_blank"
-            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
-          >
-            <i className="fa fa-globe" aria-hidden="true" /> Preview
-          </Url>
         </header>
         <main className={styles.WebsiteManage}>
           {/*<Line data={data} options={options} redraw={this.state.shouldRedraw} />*/}
-          <i className={cx(styles.globe, "fa fa-globe")} aria-hidden="true"></i>
+          <Url
+            className={styles.preview}
+            target="_blank"
+            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
+          >
+            <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
+          </Url>
         </main>
         <footer>
           <ButtonGroup className={styles.controls}>
