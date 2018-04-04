@@ -126,7 +126,7 @@ class Permissions extends Component {
 }
 
 const mapStateToProps = state => {
-  // likely need to get site specific permissions
+  // likely need to fetch site specific permissions
   return state;
 };
 

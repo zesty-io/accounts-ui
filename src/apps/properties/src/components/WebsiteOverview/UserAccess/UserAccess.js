@@ -68,6 +68,7 @@ class UserAccess extends Component {
     }
   };
   render() {
+    console.log(this.props)
     return (
       <div className={styles.userAccess}>
         <div className={styles.invite}>
@@ -88,11 +89,11 @@ class UserAccess extends Component {
               html: '<option value="own">Contributor</option>'
             }}
             options={
-              Array.isArray(this.props.sitesRoles)
-                ? this.props.sitesRoles.map((role, i) => {
+              this.props.roles
+                ? Object.keys(this.props.roles).map((role, i) => {
                     return {
-                      value: role.Label || i,
-                      html: `<option value="${role.ZUID}">${role.Label ||
+                      value: this.props.roles[i].name || i,
+                      html: `<option value="${this.props.roles[i].ZUID}">${this.props.roles[i].name ||
                         "unlabeled"}</option>`
                     };
                   })
@@ -140,4 +141,4 @@ class UserAccess extends Component {
   }
 }
 
-export default connect(state => state)(UserAccess);
+export default connect(state => {return {roles : state.sitesRoles, invite : state.invite}})(UserAccess);

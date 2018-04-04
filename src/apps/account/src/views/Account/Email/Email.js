@@ -17,37 +17,35 @@ class Email extends Component {
     }
   };
   handleClick = e => {
-    if(this.props.newEmail.length){
+    if (this.props.newEmail.length) {
       this.props
-      .dispatch(addEmail())
-      .then(data => {
-        this.props.dispatch(
-          notify({
-            message: "Email added",
-            type: "success"
-          })
-        );
-        return this.props.dispatch({ type: "ADD_EMAIL_SUCCESS"})        
-      })
-      .catch(data => {
-        this.props.dispatch(
-          notify({
-            message: "Problem adding email",
-            type: "error"
-          })
-        );
-        return this.props.dispatch({ type: "ADD_EMAIL_FAILURE"})
-      });
-    }else{
+        .dispatch(addEmail())
+        .then(data => {
+          this.props.dispatch(
+            notify({
+              message: "Email added",
+              type: "success"
+            })
+          );
+          return this.props.dispatch({ type: "ADD_EMAIL_SUCCESS" });
+        })
+        .catch(data => {
+          this.props.dispatch(
+            notify({
+              message: "Problem adding email",
+              type: "error"
+            })
+          );
+          return this.props.dispatch({ type: "ADD_EMAIL_FAILURE" });
+        });
+    } else {
       this.props.dispatch(
         notify({
-          message: "Please submit valid email",
+          message: "Please submit a valid email",
           type: "error"
         })
       );
-      return this.props.dispatch({ type: "ADD_EMAIL_FAILURE"})
     }
-
   };
   render() {
     return (

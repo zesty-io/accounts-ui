@@ -9,7 +9,6 @@ class Blueprint extends Component {
     this.props.history.push(`${this.props.site.ZUID}/blueprint`);
   };
   render() {
-    console.log(this.props, 'props in Blueprint')
     return this.props.blueprints[this.props.site.blueprintID] instanceof
       Object ? (
       <React.Fragment>

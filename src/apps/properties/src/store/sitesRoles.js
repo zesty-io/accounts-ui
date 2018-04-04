@@ -6,7 +6,7 @@ export function sitesRoles(state = {}, action) {
     case 'FETCHING_ROLES':
       return state
     case 'FETCH_ROLES_SUCCESS':
-      return action.roles
+      return {...state, ...action.roles}
     case 'FETCH_ROLES_ERROR':
       return state
     case 'CLEAR_ROLES':

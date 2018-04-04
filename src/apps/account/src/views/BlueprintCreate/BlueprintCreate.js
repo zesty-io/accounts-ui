@@ -19,7 +19,10 @@ class BlueprintCreate extends Component {
             onChange={this.handleChange}
           />
           <div className={styles.controls}>
-            <Button onClick={this.handleClick} disabled={this.props.userBlueprints.submitted}>
+            <Button
+              onClick={this.handleClick}
+              disabled={this.props.userBlueprints.submitted}
+            >
               <i className="fa fa-plus" aria-hidden="true" />
               Create New Blueprint
             </Button>
@@ -33,9 +36,7 @@ class BlueprintCreate extends Component {
     );
   }
   handleChange = evt => {
-    this.props.dispatch(
-      updateSetting({ [evt.target.name]: evt.target.value })
-    );
+    this.props.dispatch(updateSetting({ [evt.target.name]: evt.target.value }));
   };
   handleClick = () => {
     this.props
@@ -45,7 +46,7 @@ class BlueprintCreate extends Component {
           type: "CREATE_BLUEPRINT_SUCCESS",
           blueprint: data.data
         });
-        return data.data
+        return data.data;
       })
       .then(bp => {
         return this.props.history.push(`../blueprints/${bp.ID}`);
