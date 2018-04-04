@@ -1,5 +1,5 @@
 export default {
-  API_ACCOUNTS: 'http://accounts.api.zesty.localdev:8080/v1',
+  API_ACCOUNTS: 'http://accounts.api.zesty.localdev:3022/v1',
   API_INSTANCE: '.api.zesty.localdev',
   API_AUTH: 'http://svc.zesty.localdev:3011',
   COOKIE_NAME: 'APP_SID',
