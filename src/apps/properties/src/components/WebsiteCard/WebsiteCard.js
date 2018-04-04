@@ -9,41 +9,41 @@ import { Line } from 'react-chartjs-2'
 class WebsiteCard extends Component {
   constructor(props) {
     super(props)
-    this.state ={
-      shouldRedraw: false
-    }
+    // this.state ={
+    //   shouldRedraw: false
+    // }
   }
-  componentDidMount() {
-    window.addEventListener('resize', this.setRedraw, false)
-  }
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.setRedraw, false)
-  }
-  setRedraw = () => {
-    return this.setState({shouldRedraw: true})
-  }
+  // componentDidMount() {
+  //   window.addEventListener('resize', this.setRedraw, false)
+  // }
+  // componentWillUnmount() {
+  //   window.removeEventListener('resize', this.setRedraw, false)
+  // }
+  // setRedraw = () => {
+  //   return this.setState({shouldRedraw: true})
+  // }
   render() {
-    let data = {
-      labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
-      datasets: [
-        {
-          label: 'requests',
-          data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 7))
-        },
-        {
-          label: 'media',
-          data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 7))
-        }
-      ]
-    }
+    // let data = {
+    //   labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
+    //   datasets: [
+    //     {
+    //       label: 'requests',
+    //       data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 7))
+    //     },
+    //     {
+    //       label: 'media',
+    //       data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 7))
+    //     }
+    //   ]
+    // }
 
-    let options = {
-      elements: {
-        line: {
-          tension: 0 // disables bezier curves
-        }
-      }
-    }
+    // let options = {
+    //   elements: {
+    //     line: {
+    //       tension: 0 // disables bezier curves
+    //     }
+    //   }
+    // }
 
     return (
       <article className={styles.WebsiteCard}>
@@ -72,7 +72,8 @@ class WebsiteCard extends Component {
           </Url>
         </header>
         <main className={styles.WebsiteManage}>
-          <Line data={data} options={options} redraw={this.state.shouldRedraw} />
+          {/*<Line data={data} options={options} redraw={this.state.shouldRedraw} />*/}
+          <i className={cx(styles.globe, "fa fa-globe")} aria-hidden="true"></i>
         </main>
         <footer>
           <ButtonGroup className={styles.controls}>

@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 
-
 import cx from 'classnames'
 import styles from './WebsiteInvite.less'
 
@@ -14,34 +13,35 @@ class WebsiteInvite extends Component {
     this.props.history.push(`/properties/${this.props.site.ZUID}`)
   }
   render() {
-    let data = {
-      labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
-      datasets: [
-        {
-          label: 'requests',
-          data: [2, 4, 0, 6, 2, 4, 9]
-        },
-        {
-          label: 'media',
-          data: [3, 6, 11, 7, 3, 6, 11]
-        }
-      ]
-    }
+    // let data = {
+    //   labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
+    //   datasets: [
+    //     {
+    //       label: 'requests',
+    //       data: [2, 4, 0, 6, 2, 4, 9]
+    //     },
+    //     {
+    //       label: 'media',
+    //       data: [3, 6, 11, 7, 3, 6, 11]
+    //     }
+    //   ]
+    // }
 
-    let options = {
-      elements: {
-        line: {
-          tension: 0 // disables bezier curves
-        }
-      }
-    }
+    // let options = {
+    //   elements: {
+    //     line: {
+    //       tension: 0 // disables bezier curves
+    //     }
+    //   }
+    // }
     return (
       <article className={styles.WebsiteInvite}>
         <header>
           <h1 className={styles.name}>{this.props.site.Name}</h1>
         </header>
         <main className={styles.WebsiteManage}>
-          <Line data={data} options={options} />
+          {/*<Line data={data} options={options} />*/}
+          <i className={cx(styles.globe, "fa fa-globe")} aria-hidden="true"></i>
         </main>
         <footer>
           {/* {this.props.site.Domain ? (

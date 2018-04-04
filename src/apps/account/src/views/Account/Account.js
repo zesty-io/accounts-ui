@@ -9,11 +9,11 @@ import styles from "./Account.less";
 const Account = () => {
   return (
     <div className={styles.Account}>
-      <h1>Profile</h1>
+      <h1 className={styles.title}>Profile</h1>
       <Profile />
-      <h1>Emails</h1>
+      <h1 className={styles.title}>Emails</h1>
       <Email />
-      <h1>Preferences</h1>
+      <h1 className={styles.title}>Preferences</h1>
       <Preferences />
     </div>
   );

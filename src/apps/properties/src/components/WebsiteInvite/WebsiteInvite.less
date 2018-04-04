@@ -1,11 +1,13 @@
 @import url('../../../../../shell/styles/colors.less');
 .WebsiteInvite {
-  background: #e3e3e5;
+  background: @zesty-light-grey;
   margin: 1.5rem;
   max-width: 60rem;
   word-break: break-word;
   display: flex;
   flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 2fr 0fr;
 
   a:visited,
   a {
@@ -30,6 +32,12 @@
     flex: 1;
     a {
       margin: 0;
+    }
+    .globe{
+      font-size: 10rem;
+      color: #f3f3f7;
+      text-align: center;
+      width: 100%;
     }
   }
   footer {

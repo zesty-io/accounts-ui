@@ -16,7 +16,7 @@ class Blueprints extends Component {
   render() {
     return (
       <div className={styles.blueprints}>
-        <h1>Blueprints</h1>
+        <h1 className={styles.title}>Blueprints</h1>
         <div className={styles.message}>
           <Button onClick={() => this.handleClick("blueprints/create")}>
             <i className="fa fa-columns" aria-hidden="true" />
