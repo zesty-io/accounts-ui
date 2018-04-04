@@ -86,14 +86,14 @@ class Email extends Component {
               <article>
                 <span>{this.props.email} </span>
                 <span>
-                  {this.props.email === this.props.EmailsVerified
+                  {this.props.email === this.props.emailsVerified
                     ? "Verified"
                     : "Unverified"}
                 </span>
               </article>
-              {this.props.EmailsUnverified ? (
+              {this.props.emailsUnverified ? (
                 <article>
-                  <span>{this.props.EmailsUnverified}</span>
+                  <span>{this.props.emailsUnverified[0]}</span>
                   <span>Unverified</span>
                 </article>
               ) : null}
@@ -108,8 +108,8 @@ class Email extends Component {
 const mapStateToProps = state => {
   return {
     email: state.userProfile.email,
-    EmailsVerified: state.userProfile.EmailsVerified,
-    EmailsUnverified: state.userProfile.EmailsUnverified,
+    EmailsVerified: state.userProfile.emailsVerified ? state.userProfile.emailsVerified.split(',') : null,
+    EmailsUnverified: state.userProfile.emailsUnverified ? state.userProfile.emailsUnverified.split(',') : null,
     newEmail: state.userProfile.newEmail,
     ...state
   };

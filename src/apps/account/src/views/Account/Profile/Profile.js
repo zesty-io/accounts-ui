@@ -38,7 +38,8 @@ class Profile extends Component {
       </p>`,
             type: "error"
           })
-        );
+        )
+      this.props.disatch({ type: "MODIFY_PROFILE_FAILURE"})
       });
   };
   handleChange = evt => {

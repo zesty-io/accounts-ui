@@ -1,7 +1,7 @@
 import { request } from '../../../../util/request'
 import config from '../../../../shell/config'
 
-export function sitesUsers(state = {}, action) {
+export function sitesUsers(state = [], action) {
   switch (action.type) {
     case 'FETCHING_USERS':
       return state
@@ -10,7 +10,7 @@ export function sitesUsers(state = {}, action) {
     case 'FETCH_USERS_ERROR':
       return state
     case 'CLEAR_USERS':
-      return {}
+      return []
     default:
       return state
   }
