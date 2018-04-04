@@ -11,24 +11,25 @@ class WebsiteCreate extends Component {
     return (
       <article className={styles.WebsiteCreate}>
         <header>
-          <h1 className={styles.name}>Your Web Property</h1>
+          {/* <h1 className={styles.name}>Your Web Property</h1> */}
+          <h1 className={styles.name}>Welcome to Zesty.io</h1>
         </header>
         <main className={styles.WebsiteManage}>
-          <h1>Welcome to Zesty.io</h1>
+          {/* <h1>Welcome to Zesty.io</h1> */}
           <p>
             Get started by creating your first Zesty website in a few easy
             steps.
           </p>
-
-          {/* <Button className={styles.save}>
-
-          </Button> */}
         </main>
         <footer>
-          <Url href="/properties/create">
+          {/* <Url href="/properties/create">
             <i className="fa fa-plus" aria-hidden="true" />&nbsp;Create Web
             Property
-          </Url>
+          </Url> */}
+          <Button className={styles.save}>
+            <i className="fa fa-plus" aria-hidden="true" />&nbsp;Create Web
+            Property
+          </Button>
         </footer>
       </article>
     )

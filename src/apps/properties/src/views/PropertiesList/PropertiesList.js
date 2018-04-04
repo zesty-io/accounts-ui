@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Route } from "react-router-dom";
-import styles from "./PropertiesList.less";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Route } from 'react-router-dom'
+import styles from './PropertiesList.less'
 
-import PropertiesHeader from "../../components/PropertiesHeader";
-import WebsiteOverview from "../../components/WebsiteOverview";
-import WebsiteCard from "../../components/WebsiteCard";
-import WebsiteInvite from "../../components/WebsiteInvite";
-import WebsiteCreate from "../../components/WebsiteCreate";
+import PropertiesHeader from '../../components/PropertiesHeader'
+import WebsiteOverview from '../../components/WebsiteOverview'
+import WebsiteCard from '../../components/WebsiteCard'
+import WebsiteInvite from '../../components/WebsiteInvite'
+import WebsiteCreate from '../../components/WebsiteCreate'
 
-import { fetchSites } from "../../store/sites";
+import { fetchSites } from '../../store/sites'
 
 class Properties extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchSites());
+    this.props.dispatch(fetchSites())
   }
   render() {
     return (
@@ -34,7 +34,7 @@ class Properties extends Component {
                 .map(zuid => {
                   return (
                     <WebsiteInvite key={zuid} site={this.props.sites[zuid]} />
-                  );
+                  )
                 })}
 
               {/* render sites user has access */}
@@ -50,7 +50,7 @@ class Properties extends Component {
                       key={zuid}
                       site={this.props.sitesFiltered[zuid]}
                     />
-                  );
+                  )
                 })}
 
               <Route path="/properties/:hash" component={WebsiteOverview} />
@@ -67,7 +67,7 @@ class Properties extends Component {
           )}
         </main>
       </section>
-    );
+    )
   }
 }
-export default connect(state => state)(Properties);
+export default connect(state => state)(Properties)

@@ -38,10 +38,17 @@ class WebsiteInvite extends Component {
       <article className={styles.WebsiteInvite}>
         <header>
           <h1 className={styles.name}>{this.props.site.Name}</h1>
+          {this.props.site.domain ? (
+            <Url target="_blank" href={`http://${this.props.site.domain}`}>
+              <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
+                this.props.site.domain
+              }
+            </Url>
+          ) : null}
         </header>
         <main className={styles.WebsiteManage}>
           {/*<Line data={data} options={options} />*/}
-          <i className={cx(styles.globe, "fa fa-globe")} aria-hidden="true"></i>
+          <i className={cx(styles.globe, 'fa fa-globe')} aria-hidden="true" />
         </main>
         <footer>
           {/* {this.props.site.Domain ? (
