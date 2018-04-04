@@ -60,6 +60,8 @@ export function sites(state = {}, action) {
       // leave state as is
       return state
 
+    case "UPDATING_SITE":
+      return state
     default:
       return state
   }
@@ -84,5 +86,19 @@ export function fetchSites() {
           err
         })
       })
+  }
+}
+
+export function updateSite(siteZUID, payload) {
+  console.log('payload', payload)
+  return dispatch => {
+    dispatch({
+      type: "UPDATING_SITE"
+    });
+    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}`, {
+      method: "PUT",
+      json: true,
+      body: payload
+    });
   }
 }
