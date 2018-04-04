@@ -36,12 +36,19 @@
   main {
     border-bottom: 1px solid #f2f4fb;
     padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    .globe{
+    .preview {
+      display: flex;
+      align-items: center;
       font-size: 10rem;
-      color: #f3f3f7;
-      text-align: center;
-      width: 100%;
+      justify-content: center;
+      color: #cacad4;
+      &:hover {
+        color: @zesty-orange;
+      }
     }
   }
   footer {

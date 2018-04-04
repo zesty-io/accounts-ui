@@ -16,8 +16,7 @@
   }
   header {
     padding: 1rem;
-    // background: lighten(#f2f4fb, 2%);
-    border-bottom: 1px solid #f2f4fb;
+    border-bottom: 1px solid #9ba4b5;
     min-height: 45px;
     .name {
       font-size: 1.1em;
@@ -27,22 +26,33 @@
     }
   }
   main {
+    border-bottom: 1px solid #9ba4b5;
     padding: 1rem;
-    padding-bottom: 0;
     flex: 1;
-    a {
-      margin: 0;
-    }
-    .globe{
+    // a {
+    //   margin: 0;
+    // }
+    // .globe {
+    //   font-size: 10rem;
+    //   color: #f3f3f7;
+    //   text-align: center;
+    //   width: 100%;
+    // }
+    .preview {
+      display: flex;
+      align-items: center;
       font-size: 10rem;
+      justify-content: center;
+      // color: #cacad4;
       color: #f3f3f7;
-      text-align: center;
-      width: 100%;
+      &:hover {
+        color: @zesty-orange;
+      }
     }
   }
   footer {
     padding: 1rem;
-    padding-top: 0;
+    // padding-top: 0;
 
     .invite {
       width: 100%;
