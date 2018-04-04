@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { notify } from "../../../../../../shell/store/notifications";
-import { updateSetting, addEmail } from "../../../store/userProfile";
+import { updateSetting, addEmail, getSettings } from "../../../store/userProfile";
 
 import styles from "./email.less";
 
@@ -27,12 +27,13 @@ class Email extends Component {
               type: "success"
             })
           );
+          this.props.dispatch(getSettings())
           return this.props.dispatch({ type: "ADD_EMAIL_SUCCESS" });
         })
-        .catch(data => {
+        .catch(error => {
           this.props.dispatch(
             notify({
-              message: "Problem adding email",
+              message: `Problem adding email: ${error}`,
               type: "error"
             })
           );
@@ -48,6 +49,7 @@ class Email extends Component {
     }
   };
   render() {
+    console.log("Props in email", this.props);
     return (
       <section className={styles.profileEmail}>
         <div>
@@ -85,18 +87,28 @@ class Email extends Component {
             <main>
               <article>
                 <span>{this.props.email} </span>
-                <span>
-                  {this.props.email === this.props.emailsVerified
-                    ? "Verified"
-                    : "Unverified"}
-                </span>
+                <span>Primary</span>
               </article>
-              {this.props.emailsUnverified ? (
-                <article>
-                  <span>{this.props.emailsUnverified[0]}</span>
-                  <span>Unverified</span>
-                </article>
-              ) : null}
+              {this.props.verifiedEmails
+                ? this.props.verifiedEmails.map((email, i) => {
+                    return (
+                      <article key={i}>
+                        <span>{email}</span>
+                        <span>Verified</span>
+                      </article>
+                    );
+                  })
+                : null}
+              {this.props.unverifiedEmails
+                ? this.props.unverifiedEmails.map((email, i) => {
+                    return (
+                      <article key={i}>
+                        <span>{email}</span>
+                        <span>Unverified</span>
+                      </article>
+                    );
+                  })
+                : null}
             </main>
           </div>
         </div>
@@ -108,8 +120,12 @@ class Email extends Component {
 const mapStateToProps = state => {
   return {
     email: state.userProfile.email,
-    EmailsVerified: state.userProfile.emailsVerified ? state.userProfile.emailsVerified.split(',') : null,
-    EmailsUnverified: state.userProfile.emailsUnverified ? state.userProfile.emailsUnverified.split(',') : null,
+    unverifiedEmails: state.userProfile.unverifiedEmails
+      ? state.userProfile.unverifiedEmails.split(",")
+      : null,
+    verifiedEmails: state.userProfile.verifiedEmails
+      ? state.userProfile.verifiedEmails.split(",")
+      : null,
     newEmail: state.userProfile.newEmail,
     ...state
   };

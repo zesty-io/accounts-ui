@@ -106,11 +106,11 @@ export function addEmail() {
 }
 
 export function getSettings(userZUID) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: "FETCHING_SETINGS"
     });
-    request(`${config.API_ACCOUNTS}/users/${userZUID}`)
+    request(`${config.API_ACCOUNTS}/users/${userZUID || getState().user.zuid}`)
       .then(json => {
         return dispatch({
           type: "FETCH_SETTINGS_SUCCESS",
