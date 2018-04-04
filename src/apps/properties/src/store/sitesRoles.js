@@ -25,7 +25,7 @@ export const fetchSiteRoles = (userZuid, siteZuid) => {
       .then(roles => {
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
-          roles: [roles.data]
+          roles: roles.data
         })
       })
       .catch(err => {

@@ -3,17 +3,24 @@ import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import styles from "./PropertyBlueprint.less";
 
+import { updateSite } from "../../store/sites";
 import { fetchBlueprints } from "../../store/blueprints";
-import { addSiteInfo, postNewSite } from "../../store/createSite";
 
 class PropertyBlueprint extends Component {
   componentWillMount() {
     this.props.dispatch(fetchBlueprints());
   }
   handleSelect = id => {
-    return console.log('bpID: ', id, 'siteZuid: ', this.props.siteZUID)
     // TODO make api request to set blueprint for site
-    this.props.dispatch(addSiteInfo({ blueprintId: id }));
+    this.props
+      .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
+      .then(data => {
+        this.props.dispatch({ type: "UPDATE_SITE_SUCCESS" });
+        return this.props.history.push(`properties/${this.props.siteZUID}`);
+      })
+      .catch(err => {
+        return console.error(err);
+      });
     // TODO user returned zuid
   };
   render() {
