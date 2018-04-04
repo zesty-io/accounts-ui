@@ -48,7 +48,14 @@ class WebsiteInvite extends Component {
         </header>
         <main className={styles.WebsiteManage}>
           {/*<Line data={data} options={options} />*/}
-          <i className={cx(styles.globe, 'fa fa-globe')} aria-hidden="true" />
+          <Url
+            className={styles.preview}
+            target="_blank"
+            title={`Preview  ${this.props.site.name}`}
+            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
+          >
+            <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
+          </Url>
         </main>
         <footer>
           {/* {this.props.site.Domain ? (

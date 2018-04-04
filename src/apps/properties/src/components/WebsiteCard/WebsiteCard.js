@@ -69,6 +69,7 @@ class WebsiteCard extends Component {
           <Url
             className={styles.preview}
             target="_blank"
+            title={`Preview  ${this.props.site.name}`}
             href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
           >
             <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
