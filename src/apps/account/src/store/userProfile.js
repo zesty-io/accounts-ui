@@ -18,8 +18,8 @@ export function userProfile(
     case "MODIFYING_PROFILE":
       return { ...state, submittedProfile: !state.submittedProfile };
 
-    case "MODIFY_FAILURE":
-      return state;
+    case "MODIFY_PROFILE_FAILURE":
+      return { ...state, submittedProfile: !state.submittedProfile };
 
     case "MODIFY_PROFILE_SUCCESS":
       return { ...state, submittedProfile: !state.submittedProfile };
@@ -85,10 +85,16 @@ export function addEmail() {
       type: "ADDING_EMAIL"
     });
     const userZUID = getState().user.zuid;
-    const unverifiedEmails = getState()
-      .userProfile.unverifiedEmails.split(",")
-      .concat(getState().userProfile.newEmail)
-      .join(",");
+    const unverifiedEmails =
+      getState().userProfile.unverifiedEmails !== null &&
+      getState().userProfile.unverifiedEmails !== ""
+        ? getState()
+            .userProfile.unverifiedEmails.split(",")
+            .concat(getState().userProfile.newEmail)
+            .join(",")
+        : getState().userProfile.newEmail.value;
+
+    console.log("email", unverifiedEmails);
     return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
       method: "PUT",
       json: true,
@@ -100,11 +106,11 @@ export function addEmail() {
 }
 
 export function getSettings(userZUID) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: "FETCHING_SETINGS"
     });
-    request(`${config.API_ACCOUNTS}/users/${userZUID}`)
+    request(`${config.API_ACCOUNTS}/users/${userZUID || getState().user.zuid}`)
       .then(json => {
         return dispatch({
           type: "FETCH_SETTINGS_SUCCESS",

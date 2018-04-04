@@ -1,16 +1,16 @@
 import { request } from '../../../../util/request'
 import config from '../../../../shell/config'
 
-export function sitesRoles(state = {}, action) {
+export function sitesRoles(state = [], action) {
   switch (action.type) {
     case 'FETCHING_ROLES':
       return state
     case 'FETCH_ROLES_SUCCESS':
-      return {...state, ...action.roles}
+      return action.roles
     case 'FETCH_ROLES_ERROR':
       return state
     case 'CLEAR_ROLES':
-      return {}
+      return []
     default:
       return state
   }
@@ -25,7 +25,7 @@ export const fetchSiteRoles = (userZuid, siteZuid) => {
       .then(roles => {
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
-          roles: roles.data
+          roles: [roles.data]
         })
       })
       .catch(err => {
