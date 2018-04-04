@@ -8,11 +8,14 @@ import { sitesRoles } from './sitesRoles'
 import { invite } from './invite'
 import { domain } from './domain'
 import { createSite } from './createSite'
+import { sitesCollections } from './sitesCollections'
+
 
 export const propertiesReducers = {
   sites,
   sitesFiltered,
   sitesCompanies,
+  sitesCollections,
   sitesStats,
   sitesUsers,
   sitesRoles,

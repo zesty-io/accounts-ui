@@ -16,10 +16,14 @@ class PropertyBlueprint extends Component {
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
         this.props.dispatch({ type: "UPDATE_SITE_SUCCESS" });
+        if (newsite) {
+          window.open(`http://www.google.com`, "_blank").focus();
+        } // redirect to manager here
         return this.props.history.push(`properties/${this.props.siteZUID}`);
       })
       .catch(err => {
-        return console.error(err);
+        this.props.dispatch({ type: "UPDATE_SITE_FAILURE" });
+        return console.table(err);
       });
     // TODO user returned zuid
   };

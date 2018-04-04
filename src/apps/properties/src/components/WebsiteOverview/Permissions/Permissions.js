@@ -76,15 +76,15 @@ class Permissions extends Component {
                 <h3>delete</h3>
               </header>
               <main>
-                {Array.isArray(this.props.sitesUsers) && // COLLECTIONS endpoint
-                  this.props.sitesUsers.map((user, i) => {
+                {Array.isArray(this.props.sitesCollections) && // COLLECTIONS endpoint
+                  this.props.sitesCollections.map((collection, i) => {
                     return (
                       <article key={i}>
-                        <span>{user.lastName} </span>
-                        <span>{user.staff ? "X" : ""} </span>
-                        <span>{user.WebsiteCreator ? "X" : ""}</span>
-                        <span>{user.staff ? "X" : ""}</span>
-                        <span>{user.WebsiteCreator ? "X" : ""}</span>
+                        <span>{collection.name}</span>
+                        <span><Toggle /></span>
+                        <span><Toggle /></span>
+                        <span><Toggle /></span>
+                        <span><Toggle /></span>
                       </article>
                     );
                   })}
