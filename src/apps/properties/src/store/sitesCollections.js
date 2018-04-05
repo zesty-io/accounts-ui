@@ -19,7 +19,7 @@ export const fetchSiteCollections = (userZuid, siteZuid) => {
     dispatch({
       type: 'FETCHING_COLLECTIONS'
     })
-    request(`http://${siteZuid}.${config.API_INSTANCE}/v1/collections`)
+    request(`http://${siteZuid}${config.API_INSTANCE}collections/`)
       .then(collections => {
         dispatch({
           type: 'FETCH_COLLECTIONS_SUCCESS',

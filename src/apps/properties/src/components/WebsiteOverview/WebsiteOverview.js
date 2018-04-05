@@ -18,6 +18,7 @@ import { fetchSiteCompanies } from "../../store/sitesCompanies";
 import { fetchBlueprint } from "../../store/blueprints";
 import { inviteData } from "../../store/invite";
 import { fetchSiteRoles } from "../../store/sitesRoles";
+import { fetchSiteCollections } from "../../store/sitesCollections";
 
 class WebsiteOverview extends Component {
   constructor(props){
@@ -30,6 +31,7 @@ class WebsiteOverview extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchSiteUsers(this.props.userZuid, this.props.ZUID));
+    this.props.dispatch(fetchSiteCollections(this.props.userZuid, this.props.ZUID));
     this.props.dispatch(
       fetchSiteCompanies(this.props.userZuid, this.props.ZUID)
     );

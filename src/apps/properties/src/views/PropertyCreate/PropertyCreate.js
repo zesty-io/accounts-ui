@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Link, withRouter } from 'react-router-dom'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { Link, withRouter } from "react-router-dom";
 
-import { addSiteInfo, postNewSite } from '../../store/createSite'
+import { addSiteInfo, postNewSite } from "../../store/createSite";
 
-import styles from './PropertyCreate.less'
+import styles from "./PropertyCreate.less";
 
 class PropertyCreate extends Component {
   render() {
@@ -31,31 +31,32 @@ class PropertyCreate extends Component {
           </div>
         </div>
       </section>
-    )
+    );
   }
   handleChange = evt => {
-    this.props.dispatch(addSiteInfo({[evt.target.name]: evt.target.value}))
-  }
+    this.props.dispatch(addSiteInfo({ [evt.target.name]: evt.target.value }));
+  };
   handleClick = () => {
-    this.props.dispatch(postNewSite(this.props.propertyName))
+    this.props
+      .dispatch(postNewSite(this.props.propertyName))
       .then(data => {
-        this.props.history.push(`/properties/${data.data.ZUID}/blueprint`)
+        this.props.history.push(`/properties/${data.data.ZUID}/blueprint`);
         return this.props.dispatch({
           type: "CREATE_SITE_SUCCESS"
-        })
+        });
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
         return this.props.dispatch({
           type: "CREATE_SITE_ERROR",
           error
-        })
-      })
-  }
+        });
+      });
+  };
 }
 
-const mapStateToProps = (state) => {
-  return {...state.createSite}
-}
+const mapStateToProps = state => {
+  return { ...state.createSite };
+};
 
-export default withRouter(connect(mapStateToProps)(PropertyCreate))
+export default withRouter(connect(mapStateToProps)(PropertyCreate));

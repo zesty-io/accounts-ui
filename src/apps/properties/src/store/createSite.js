@@ -1,22 +1,27 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-export function createSite(state = {submitted: false}, action) {
+export function createSite(
+  state = { submitted: false, newSite: false },
+  action
+) {
   switch (action.type) {
     case "ADD_SITE_INFO":
       return { ...state, ...action.payload };
     case "CREATING_SITE":
-      return {state, submitted: !state.submitted};
+      return { state, submitted: !state.submitted };
     case "CREATE_SITE_SUCCESS":
-    return {state, submitted: !state.submitted};
+      return { state, newSite: true, submitted: !state.submitted };
     case "CREATE_SITE_ERROR":
-      return {...state, ...action.error};
+      return { ...state, ...action.error };
+    case "CLEAR_NEW_SITE":
+      return { ...state, newSite: false, propertyName: "" };
     default:
       return state;
   }
 }
 
-export const postNewSite = (name) => {
+export const postNewSite = name => {
   return dispatch => {
     dispatch({
       type: "CREATING_SITE"
@@ -25,7 +30,7 @@ export const postNewSite = (name) => {
       method: "POST",
       json: true,
       body: { name }
-    })
+    });
   };
 };
 

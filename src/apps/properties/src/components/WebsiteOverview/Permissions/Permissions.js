@@ -63,7 +63,7 @@ class Permissions extends Component {
             />
           </span>
           <span className={styles.expires}>
-            <label>Exires</label>
+            <label>Exipres</label>
             <Input type="date" />
           </span>
           <span className={styles.collections}>
@@ -77,14 +77,14 @@ class Permissions extends Component {
               </header>
               <main>
                 {Array.isArray(this.props.sitesCollections) && // COLLECTIONS endpoint
-                  this.props.sitesCollections.map((collection, i) => {
+                  [{name: 'permission1'}, {name: 'permission2'}].map((collection, i) => {
                     return (
                       <article key={i}>
                         <span>{collection.name}</span>
-                        <span><Toggle /></span>
-                        <span><Toggle /></span>
-                        <span><Toggle /></span>
-                        <span><Toggle /></span>
+                        <span><Toggle name={`view-${collection.name}`} value={`view-${collection.name}`} /></span>
+                        <span><Toggle name={`edit-${collection.name}`} value={`edit-${collection.name}`} /></span>
+                        <span><Toggle name={`pub-${collection.name}`} value={`pub-${collection.name}`} /></span>
+                        <span><Toggle name={`del-${collection.name}`} value={`del-${collection.name}`} /></span>
                       </article>
                     );
                   })}

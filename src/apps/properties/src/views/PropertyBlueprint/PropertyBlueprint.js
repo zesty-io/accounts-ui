@@ -16,8 +16,9 @@ class PropertyBlueprint extends Component {
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
         this.props.dispatch({ type: "UPDATE_SITE_SUCCESS" });
-        if (newsite) {
-          window.open(`http://www.google.com`, "_blank").focus();
+        if (this.props.createSite.newSite) {
+          this.props.dispatch({ type: "CLEAR_NEW_SITE"})
+          window.open(`https://${this.props.siteZUID}.manage.zesty.io/`, "_blank").focus();
         } // redirect to manager here
         return this.props.history.push(`properties/${this.props.siteZUID}`);
       })
@@ -86,7 +87,7 @@ class PropertyBlueprint extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return { siteZUID: ownProps.match.params.zuid, blueprints: state.blueprints };
+  return { siteZUID: ownProps.match.params.zuid, blueprints: state.blueprints, createSite: state.createSite};
 };
 
 export default withRouter(connect(mapStateToProps)(PropertyBlueprint));
