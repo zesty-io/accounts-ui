@@ -70,7 +70,7 @@ class WebsiteCard extends Component {
             className={styles.preview}
             target="_blank"
             title={`Preview  ${this.props.site.name}`}
-            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
+            href={`https://${this.props.site.randomHashID}.preview.zesty.io`}
           >
             <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
           </Url>
@@ -80,7 +80,7 @@ class WebsiteCard extends Component {
             <Url
               className={styles.manager}
               target="_blank"
-              href={`https://${this.props.site.RandomHashID}.manage.zesty.io`}
+              href={`https://${this.props.site.randomHashID}.manage.zesty.io`}
             >
               <i className="fa fa-external-link" aria-hidden="true" /> Site
               Manager

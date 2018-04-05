@@ -13,7 +13,7 @@ export function createSite(
     case "CREATE_SITE_SUCCESS":
       return { state, newSite: true, submitted: !state.submitted };
     case "CREATE_SITE_ERROR":
-      return { ...state, ...action.error };
+      return { ...state, ...action.error, submitted: !state.submitted };
     case "CLEAR_NEW_SITE":
       return { ...state, newSite: false, propertyName: "" };
     default:

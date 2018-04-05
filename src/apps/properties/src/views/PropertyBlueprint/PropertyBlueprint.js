@@ -15,9 +15,10 @@ class PropertyBlueprint extends Component {
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
         this.props.dispatch({ type: "UPDATE_SITE_SUCCESS" });
+        console.log(data.data)
         if (this.props.createSite.newSite) {
           this.props.dispatch({ type: "CLEAR_NEW_SITE"})
-          window.open(`https://${this.props.siteZUID}.manage.zesty.io/`, "_blank").focus();
+          window.open(`https://${data.data.randomHashID || this.props.siteZUID}.manage.zesty.io/`, "_blank").focus();
         } // redirect to manager here
         return this.props.history.push(`properties/${this.props.siteZUID}`);
       })

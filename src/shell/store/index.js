@@ -6,6 +6,7 @@ import createDebounce from 'redux-debounced'
 import { user } from './user'
 import { auth } from './auth'
 import { notifications } from './notifications'
+import { modal } from './modal'
 import { propertiesReducers } from '../../apps/properties/src/store'
 import { profileReducers } from '../../apps/account/src/store'
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   ...profileReducers,
   auth,
   user,
+  modal,
   notifications
 })
 

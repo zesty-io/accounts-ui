@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import CreateRole from './CreateRole'
+
 import styles from "./Permissions.less";
 
 const formatDate = date => {
@@ -19,13 +21,14 @@ class Permissions extends Component {
   }
   handleCreate = evt => {
     evt.preventDefault();
-  }
+    this.props.dispatch({ type: "NEW_MODAL", component: CreateRole})
+  };
   handleEdit = evt => {
     evt.preventDefault();
-  }
+  };
   handleRemove = evt => {
     evt.preventDefault();
-  }
+  };
   render() {
     return (
       <div className={styles.permissionsWrapper}>
@@ -35,62 +38,120 @@ class Permissions extends Component {
             <Input type="text" />
           </span>
           <span className={styles.base}>
-            <label>Base</label>
+            <label>Base Role</label>
             <Select
               name="baseRole"
               selection={{
-                value: "User",
-                html: '<option value="User">User</option>'
+                value: "SEO",
+                html: '<option value="31-71cfc74-s30">SEO</option>'
               }}
-              options={[
+              options={[ // currently these base roles have to be hardcoded
                 {
-                  value: "User",
-                  html: '<option value="User">User</option>'
+                  value: "SEO",
+                  html: '<option value="31-71cfc74-s30">SEO</option>'
+                },
+                {
+                  value: "Publisher",
+                  html: '<option value="31-71cfc74-p0bl1shr">Publisher</option>'
+                },
+                {
+                  value: "Developer",
+                  html: '<option value="31-71cfc74-d3v3l0p3r">Developer</option>'
                 },
                 {
                   value: "Contributor",
-                  html: '<option value="Contributor">Contributor</option>'
-                },
-                {
-                  value: "Editor",
-                  html: '<option value="Editor">Editor</option>'
+                  html: '<option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>'
                 },
                 {
                   value: "Admin",
-                  html: '<option value="Admin">Admin</option>'
+                  html: '<option value="31-71cfc74-4dm13">Admin</option>'
+                },
+                {
+                  value: "Owner",
+                  html: '<option value="31-71cfc74-0wn3r">Owner</option>'
                 }
               ]}
             />
           </span>
           <span className={styles.expires}>
             <label>Exipres</label>
-            <Input type="date" />
+            <Input type="date" name="expires"/>
           </span>
-          <span className={styles.collections}>
+          {/* <span className={styles.collections}>
             <div className={styles.selectCollection}>
               <header>
                 <h3>Collection</h3>
-                <h3>view</h3>
-                <h3>edit</h3>
-                <h3>publish</h3>
+                <h3>create</h3>
+                <h3>read</h3>
+                <h3>update</h3>
                 <h3>delete</h3>
+                <h3>publish</h3>
+                <h3>grant</h3>
+                <h3>super</h3>
               </header>
               <main>
                 {Array.isArray(this.props.sitesCollections) && // COLLECTIONS endpoint
-                  [{name: 'permission1'}, {name: 'permission2'}].map((collection, i) => {
-                    return (
-                      <article key={i}>
-                        <span>{collection.name}</span>
-                        <span><Toggle name={`view-${collection.name}`} value={`view-${collection.name}`} /></span>
-                        <span><Toggle name={`edit-${collection.name}`} value={`edit-${collection.name}`} /></span>
-                        <span><Toggle name={`pub-${collection.name}`} value={`pub-${collection.name}`} /></span>
-                        <span><Toggle name={`del-${collection.name}`} value={`del-${collection.name}`} /></span>
-                      </article>
-                    );
-                  })}
+                  this.props.sitesCollections.map(
+                    (collection, i) => {
+                      return (
+                        <article key={i}>
+                          <span>{collection.name}</span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              name={`create-${collection.name}`}
+                              value={`create-${collection.name}`}
+                            />
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              name={`read-${collection.name}`}
+                              value={`read-${collection.name}`}
+                            />
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              name={`update-${collection.name}`}
+                              value={`update-${collection.name}`}
+                            />
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              name={`delete-${collection.name}`}
+                              value={`delete-${collection.name}`}
+                            />
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              name={`publish-${collection.name}`}
+                              value={`publish-${collection.name}`}
+                            />
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              name={`grant-${collection.name}`}
+                              value={`grant-${collection.name}`}
+                            />
+                          </span>
+                          <span>
+                            <input
+                              type="checkbox"
+                              name={`super-${collection.name}`}
+                              value={`super-${collection.name}`}
+                            />
+                          </span>
+                        </article>
+                      );
+                    }
+                  )}
               </main>
             </div>
-          </span>
+          </span> */}
           <Button className={styles.createButton} onClick={this.handleCreate}>
             Create Role
           </Button>

@@ -4,6 +4,7 @@ import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";
 
 import { addSiteInfo, postNewSite } from "../../store/createSite";
+import { notify } from '../../../../../shell/store/notifications'
 
 import styles from "./PropertyCreate.less";
 
@@ -47,6 +48,10 @@ class PropertyCreate extends Component {
       })
       .catch(error => {
         console.log(error);
+        this.props.dispatch(notify({
+          message: `Problem creating site`,
+          type: "error"
+        }))
         return this.props.dispatch({
           type: "CREATE_SITE_ERROR",
           error

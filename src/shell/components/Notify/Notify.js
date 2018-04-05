@@ -6,7 +6,6 @@ import Notification from './Notification'
 import styles from './Notify.less'
 
 class Notify extends Component {
-
   render() {
     return (
       <section className={styles.Notify}>
