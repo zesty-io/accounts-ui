@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import CreateRole from "./CreateRole";
+import { notify } from "../../../../../../shell/store/notifications";
+import { createRole } from "../../../store/sitesPermissions";
 
 import styles from "./Permissions.less";
 
@@ -25,12 +27,26 @@ class Permissions extends Component {
       payload: {
         [evt.target.name]: evt.target.value
       }
-    })
-  }
+    });
+  };
   handleCreate = evt => {
     evt.preventDefault();
     // check against sitesPermissions before opening modal
-    this.props.dispatch({ type: "NEW_MODAL", component: CreateRole });
+    if (
+      Object.keys(this.props.sitesPermissions).includes("name") &&
+      Object.keys(this.props.sitesPermissions).includes("systemRoleZUID")
+    ) {
+      // this.props.diapatch(createRole())
+      this.props.dispatch({ type: "NEW_MODAL", component: CreateRole });
+    } else {
+      this.props.dispatch(
+        notify({
+          message:
+            "You must include a name and base role to create a new role.",
+          type: "error"
+        })
+      );
+    }
   };
   handleEdit = evt => {
     evt.preventDefault();
@@ -44,18 +60,18 @@ class Permissions extends Component {
         <form className={styles.formGrid}>
           <span className={styles.label}>
             <label>Label</label>
-            <Input type="text" name="name" onChange={this.onChange}/>
+            <Input type="text" name="name" onChange={this.onChange} />
           </span>
           <span className={styles.base}>
             <label>Base Role</label>
             <select name="systemRoleZUID" onChange={this.onChange}>
-            <option value="31-71cfc74-s30">SEO</option>
-            <option value="31-71cfc74-p0bl1shr">Publisher</option>
-            <option value="31-71cfc74-d3v3l0p3r">Developer</option>
-            <option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>
-            <option value="31-71cfc74-4dm13">Admin</option>
-            <option value="31-71cfc74-0wn3r">Owner</option>
-              </select>
+              <option value="31-71cfc74-s30">SEO</option>
+              <option value="31-71cfc74-p0bl1shr">Publisher</option>
+              <option value="31-71cfc74-d3v3l0p3r">Developer</option>
+              <option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>
+              <option value="31-71cfc74-4dm13">Admin</option>
+              <option value="31-71cfc74-0wn3r">Owner</option>
+            </select>
             {/* <Select
               name="baseRole"
               onChange={this.onChange}
