@@ -1,7 +1,9 @@
 @import "../../styles/colors.less";
 
 .Modal {
-  display: flex;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: .1fr auto;
   position: fixed;
   height: 80vh;
   width: 80vw;

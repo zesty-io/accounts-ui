@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import CreateRole from './CreateRole'
+import CreateRole from "./CreateRole";
 
 import styles from "./Permissions.less";
 
@@ -19,9 +19,18 @@ class Permissions extends Component {
     this.props.dispatch({ type: "CLEAR_ROLES" });
     this.props.dispatch({ type: "CLEAR_COLLECTIONS" }); // when collections is available
   }
+  onChange = evt => {
+    this.props.dispatch({
+      type: "UPDATE_PERMISSIONS",
+      payload: {
+        [evt.target.name]: evt.target.value
+      }
+    })
+  }
   handleCreate = evt => {
     evt.preventDefault();
-    this.props.dispatch({ type: "NEW_MODAL", component: CreateRole})
+    // check against sitesPermissions before opening modal
+    this.props.dispatch({ type: "NEW_MODAL", component: CreateRole });
   };
   handleEdit = evt => {
     evt.preventDefault();
@@ -35,17 +44,19 @@ class Permissions extends Component {
         <form className={styles.formGrid}>
           <span className={styles.label}>
             <label>Label</label>
-            <Input type="text" />
+            <Input type="text" name="label" onChange={this.onChange}/>
           </span>
           <span className={styles.base}>
             <label>Base Role</label>
             <Select
               name="baseRole"
+              onChange={this.onChange}
               selection={{
                 value: "SEO",
                 html: '<option value="31-71cfc74-s30">SEO</option>'
               }}
-              options={[ // currently these base roles have to be hardcoded
+              options={[
+                // currently these base roles have to be hardcoded
                 {
                   value: "SEO",
                   html: '<option value="31-71cfc74-s30">SEO</option>'
@@ -56,11 +67,13 @@ class Permissions extends Component {
                 },
                 {
                   value: "Developer",
-                  html: '<option value="31-71cfc74-d3v3l0p3r">Developer</option>'
+                  html:
+                    '<option value="31-71cfc74-d3v3l0p3r">Developer</option>'
                 },
                 {
                   value: "Contributor",
-                  html: '<option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>'
+                  html:
+                    '<option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>'
                 },
                 {
                   value: "Admin",
@@ -75,83 +88,8 @@ class Permissions extends Component {
           </span>
           <span className={styles.expires}>
             <label>Exipres</label>
-            <Input type="date" name="expires"/>
+            <Input type="date" name="expires" onChange={this.onChange} />
           </span>
-          {/* <span className={styles.collections}>
-            <div className={styles.selectCollection}>
-              <header>
-                <h3>Collection</h3>
-                <h3>create</h3>
-                <h3>read</h3>
-                <h3>update</h3>
-                <h3>delete</h3>
-                <h3>publish</h3>
-                <h3>grant</h3>
-                <h3>super</h3>
-              </header>
-              <main>
-                {Array.isArray(this.props.sitesCollections) && // COLLECTIONS endpoint
-                  this.props.sitesCollections.map(
-                    (collection, i) => {
-                      return (
-                        <article key={i}>
-                          <span>{collection.name}</span>
-                          <span>
-                            <input
-                              type="checkbox"
-                              name={`create-${collection.name}`}
-                              value={`create-${collection.name}`}
-                            />
-                          </span>
-                          <span>
-                            <input
-                              type="checkbox"
-                              name={`read-${collection.name}`}
-                              value={`read-${collection.name}`}
-                            />
-                          </span>
-                          <span>
-                            <input
-                              type="checkbox"
-                              name={`update-${collection.name}`}
-                              value={`update-${collection.name}`}
-                            />
-                          </span>
-                          <span>
-                            <input
-                              type="checkbox"
-                              name={`delete-${collection.name}`}
-                              value={`delete-${collection.name}`}
-                            />
-                          </span>
-                          <span>
-                            <input
-                              type="checkbox"
-                              name={`publish-${collection.name}`}
-                              value={`publish-${collection.name}`}
-                            />
-                          </span>
-                          <span>
-                            <input
-                              type="checkbox"
-                              name={`grant-${collection.name}`}
-                              value={`grant-${collection.name}`}
-                            />
-                          </span>
-                          <span>
-                            <input
-                              type="checkbox"
-                              name={`super-${collection.name}`}
-                              value={`super-${collection.name}`}
-                            />
-                          </span>
-                        </article>
-                      );
-                    }
-                  )}
-              </main>
-            </div>
-          </span> */}
           <Button className={styles.createButton} onClick={this.handleCreate}>
             Create Role
           </Button>
