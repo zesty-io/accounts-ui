@@ -85,16 +85,18 @@ class Email extends Component {
               <h3>Options</h3>
             </header>
             <main>
-              <article>
-                <span>{this.props.email} </span>
-                <span>Primary</span>
-              </article>
               {this.props.verifiedEmails
                 ? this.props.verifiedEmails.map((email, i) => {
                     return (
                       <article key={i}>
                         <span>{email}</span>
-                        <span>Verified</span>
+                        {
+                          this.props.email === email ?
+                          <span>Verified (Primary)</span>
+                          :
+                          <span>Verified</span>
+                        }
+                        
                       </article>
                     );
                   })
@@ -104,7 +106,13 @@ class Email extends Component {
                     return (
                       <article key={i}>
                         <span>{email}</span>
-                        <span>Unverified</span>
+                        {
+                          this.props.email === email ?
+                          <span>Unverified (Primary)</span>
+                          :
+                          <span>Unverified</span>
+                        }
+                        
                       </article>
                     );
                   })

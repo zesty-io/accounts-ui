@@ -11,7 +11,6 @@ class PropertyBlueprint extends Component {
     this.props.dispatch(fetchBlueprints());
   }
   handleSelect = id => {
-    // TODO make api request to set blueprint for site
     this.props
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
@@ -26,7 +25,6 @@ class PropertyBlueprint extends Component {
         this.props.dispatch({ type: "UPDATE_SITE_FAILURE" });
         return console.table(err);
       });
-    // TODO user returned zuid
   };
   render() {
     return (
