@@ -36,8 +36,20 @@ class Permissions extends Component {
       Object.keys(this.props.sitesPermissions).includes("name") &&
       Object.keys(this.props.sitesPermissions).includes("systemRoleZUID")
     ) {
-      // this.props.diapatch(createRole())
-      this.props.dispatch({ type: "NEW_MODAL", component: CreateRole });
+      this.props
+        .dispatch(createRole(this.props.siteZUID, this.props.sitesPermissions))
+        .then(data => {
+          this.props.dispatch({ type: "ADDING_ROLE_SUCCESS" });
+          this.props.dispatch({
+            type: "NEW_MODAL",
+            component: CreateRole
+          });
+          return data
+        })
+        .catch(err => {
+          this.props.dispatch({ type: "ADDING_ROLE_SUCCESS" });
+          console.log(err);
+        });
     } else {
       this.props.dispatch(
         notify({
@@ -114,7 +126,11 @@ class Permissions extends Component {
             <label>Exipres(optional)</label>
             <Input type="date" name="expiry" onChange={this.onChange} />
           </span>
-          <Button className={styles.createButton} onClick={this.handleCreate}>
+          <Button
+            className={styles.createButton}
+            onClick={this.handleCreate}
+            disabled={this.props.sitesPermissions.submitted}
+          >
             Create Role
           </Button>
         </form>
