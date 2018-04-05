@@ -44,11 +44,11 @@ class Permissions extends Component {
         <form className={styles.formGrid}>
           <span className={styles.label}>
             <label>Label</label>
-            <Input type="text" name="label" onChange={this.onChange}/>
+            <Input type="text" name="name" onChange={this.onChange}/>
           </span>
           <span className={styles.base}>
             <label>Base Role</label>
-            <select name="baseRole" onChange={this.onChange}>
+            <select name="systemRoleZUID" onChange={this.onChange}>
             <option value="31-71cfc74-s30">SEO</option>
             <option value="31-71cfc74-p0bl1shr">Publisher</option>
             <option value="31-71cfc74-d3v3l0p3r">Developer</option>
@@ -95,8 +95,8 @@ class Permissions extends Component {
             /> */}
           </span>
           <span className={styles.expires}>
-            <label>Exipres</label>
-            <Input type="date" name="expires" onChange={this.onChange} />
+            <label>Exipres(optional)</label>
+            <Input type="date" name="expiry" onChange={this.onChange} />
           </span>
           <Button className={styles.createButton} onClick={this.handleCreate}>
             Create Role
