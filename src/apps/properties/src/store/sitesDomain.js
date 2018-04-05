@@ -1,7 +1,7 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-export function domain(
+export function sitesDomain(
   state = {},
   action
 ) {

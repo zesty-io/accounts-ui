@@ -6,7 +6,7 @@ import { sitesStats } from './sitesStats'
 import { sitesUsers } from './sitesUsers'
 import { sitesRoles } from './sitesRoles'
 import { invite } from './invite'
-import { domain } from './domain'
+import { sitesDomain } from './sitesDomain'
 import { createSite } from './createSite'
 import { sitesCollections } from './sitesCollections'
 
@@ -21,7 +21,7 @@ export const propertiesReducers = {
   sitesRoles,
   invite,
   blueprints,
-  domain,
+  sitesDomain,
   createSite
 }
 

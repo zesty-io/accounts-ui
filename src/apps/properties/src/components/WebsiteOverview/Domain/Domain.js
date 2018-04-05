@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { updateDomain } from "../../../store/domain"
+import { updateDomain } from "../../../store/sitesDomain"
 import { notify } from "../../../../../../shell/store/notifications";
 
 import styles from "./Domain.less";
 
 class Domain extends Component {
   onChange = e => {
-    return console.log(e.target.id)
     // use updateDomain function to handle vanity zesty or custom domains
     this.props.dispatch({
       type: "CHANGE_DOMAIN",
