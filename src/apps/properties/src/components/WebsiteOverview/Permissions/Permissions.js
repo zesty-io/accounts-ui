@@ -54,7 +54,7 @@ class Permissions extends Component {
       this.props.dispatch(
         notify({
           message:
-            "You must include a name and base role to create a new role.",
+            "You must include a name to create a new role.",
           type: "error"
         })
       );

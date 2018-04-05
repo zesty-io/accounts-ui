@@ -1,7 +1,7 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-const defaultState = { submitted: false };
+const defaultState = { submitted: false, systemRoleZUID: "31-71cfc74-s30" };
 
 export function sitesPermissions(state = defaultState, action) {
   switch (action.type) {
