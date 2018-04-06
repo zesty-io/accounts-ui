@@ -10,7 +10,6 @@ class EditBlueprint extends Component {
     console.log("WEEEEEEEEE!"); // disabled for now
   };
   render() {
-    console.log(this.props)
     let { blueprint } = this.props;
     return this.props && this.props.blueprint ? (
       <form id="edit-form" onSubmit={this.handleSubmit}>

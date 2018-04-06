@@ -42,20 +42,12 @@ class PropertyCreate extends Component {
       .dispatch(postNewSite(this.props.propertyName))
       .then(data => {
         this.props.history.push(`/properties/${data.data.ZUID}/blueprint`);
-        return this.props.dispatch({
-          type: "CREATE_SITE_SUCCESS"
-        });
       })
-      .catch(error => {
-        console.log(error);
+      .catch(err => {
         this.props.dispatch(notify({
-          message: `Problem creating site`,
+          message: `Problem creating site: ${err}`,
           type: "error"
         }))
-        return this.props.dispatch({
-          type: "CREATE_SITE_ERROR",
-          error
-        });
       });
   };
 }

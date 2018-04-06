@@ -102,6 +102,15 @@ export function updateSite(siteZUID, payload) {
       method: "PUT",
       json: true,
       body: payload
+    })
+    .then(data => {
+      dispatch({ type: "UPDATE_SITE_SUCCESS" });
+      return data
+    })
+    .catch(err => {
+      dispatch({ type: "UPDATE_SITE_FAILURE" });
+      console.table(err);
+      throw err
     });
   };
 }

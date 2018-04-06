@@ -9,7 +9,6 @@ class CreateRole extends Component {
     return (
       <div className={styles.modalWrapper}>
       <h3>Edit Granular Role Permissions</h3>
-      <h4>{JSON.stringify(this.props.sitesPermissions)}</h4>
       <div className={styles.selectCollection}>
         <header>
           <h3>Collection</h3>

@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import styles from "./PropertyBlueprint.less";
 
+import config from '../../../../../shell/config'
+
 import { updateSite } from "../../store/sites";
 import { fetchBlueprints } from "../../store/blueprints";
 
@@ -14,18 +16,12 @@ class PropertyBlueprint extends Component {
     this.props
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
-        this.props.dispatch({ type: "UPDATE_SITE_SUCCESS" });
-        console.log(data.data)
         if (this.props.createSite.newSite) {
           this.props.dispatch({ type: "CLEAR_NEW_SITE"})
-          window.open(`https://${data.data.randomHashID || this.props.siteZUID}.manage.zesty.io/`, "_blank").focus();
+          window.open(`${config.MANAGER_URL_PROTOCOL}${this.props.createSite.randomHashID}${config.MANAGER_URL}`, "_blank").focus();
         } // redirect to manager here
-        return this.props.history.push(`properties/${this.props.siteZUID}`);
+        return this.props.history.push(`/properties/${this.props.siteZUID}`);
       })
-      .catch(err => {
-        this.props.dispatch({ type: "UPDATE_SITE_FAILURE" });
-        return console.table(err);
-      });
   };
   render() {
     return (

@@ -23,7 +23,7 @@ export function userBlueprints(state = { submitted: false }, action) {
         ...state,
         [action.blueprint.ID]: action.blueprint
       };
-      return { ...state, blueprints, submitted: !state.submitted };
+      return { ...blueprints, submitted: !state.submitted };
 
     case "CREATE_BLUEPRINT_ERROR":
       return { ...state, submitted: !state.submitted };
@@ -63,18 +63,28 @@ export function postNewBlueprint(name) {
       method: "POST",
       json: true,
       body: { name }
-    });
+    })
+    .then(data => {
+      dispatch({
+        type: "CREATE_BLUEPRINT_SUCCESS",
+        blueprint: data.data
+      });
+      return data.data
+    })
+    .catch(err => {
+      console.table(error);
+      dispatch({
+        type: "CREATE_BLUEPRINT_ERROR",
+        err
+      })
+      throw err
+    })
   };
 }
 
 export function updateSetting(payload) {
   return {
     type: "UPDATE_BLUEPRINT",
-    meta: {
-      debounce: {
-        time: 250
-      }
-    },
     payload
   };
 }

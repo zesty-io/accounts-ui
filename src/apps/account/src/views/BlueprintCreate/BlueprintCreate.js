@@ -41,23 +41,9 @@ class BlueprintCreate extends Component {
   handleClick = () => {
     this.props
       .dispatch(postNewBlueprint(this.props.userBlueprints.createBlueprintName))
-      .then(data => {
-        this.props.dispatch({
-          type: "CREATE_BLUEPRINT_SUCCESS",
-          blueprint: data.data
-        });
-        return data.data;
-      })
       .then(bp => {
         return this.props.history.push(`../blueprints/${bp.ID}`);
       })
-      .catch(error => {
-        console.log(error);
-        return this.props.dispatch({
-          type: "CREATE_BLUEPRINT_ERROR",
-          error
-        });
-      });
   };
 }
 

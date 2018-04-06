@@ -1,5 +1,6 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
+import { notify } from "../../../../shell/store/notifications";
 
 export function userProfile(
   state = { submittedProfile: false, submittedEmail: false, newEmail: "" },
@@ -94,13 +95,30 @@ export function addEmail() {
             .join(",")
         : getState().userProfile.newEmail.value;
 
-    console.log("email", unverifiedEmails);
-    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+    request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
       method: "PUT",
       json: true,
       body: {
         unverifiedEmails
       }
+    }).then(data => {
+      dispatch(
+        notify({
+          message: "Email added",
+          type: "success"
+        })
+      );
+      dispatch(getSettings())
+      return dispatch({ type: "ADD_EMAIL_SUCCESS" });
+    })
+    .catch(error => {
+      dispatch(
+        notify({
+          message: `Problem adding email: ${error}`,
+          type: "error"
+        })
+      );
+      return dispatch({ type: "ADD_EMAIL_FAILURE" });
     });
   };
 }

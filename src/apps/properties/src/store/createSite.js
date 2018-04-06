@@ -11,7 +11,12 @@ export function createSite(
     case "CREATING_SITE":
       return { state, submitted: !state.submitted };
     case "CREATE_SITE_SUCCESS":
-      return { state, newSite: true, submitted: !state.submitted };
+      return {
+        state,
+        newSite: true,
+        submitted: !state.submitted,
+        randomHashID: action.data.randomHashID
+      };
     case "CREATE_SITE_ERROR":
       return { ...state, ...action.error, submitted: !state.submitted };
     case "CLEAR_NEW_SITE":
@@ -30,7 +35,20 @@ export const postNewSite = name => {
       method: "POST",
       json: true,
       body: { name }
-    });
+    }).then(data => {
+      dispatch({
+        type: "CREATE_SITE_SUCCESS",
+        data: data.data
+      });
+      return data
+    }).catch(err => {
+      dispatch({
+        type: "CREATE_SITE_ERROR",
+        err
+      })
+      console.table(err)
+      throw err
+    })
   };
 };
 

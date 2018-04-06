@@ -16,41 +16,10 @@ class UserAccess extends Component {
         .dispatch(
           sendInvite({
             inviteeEmail: this.props.invite.inviteeEmail,
-            InstanceZUID: this.props.site.ZUID,
-            RoleZUID: this.props.invite.inviteRole
+            instanceZUID: this.props.site.ZUID,
+            roleZUID: this.props.invite.inviteRole
           })
         )
-        .then(data => {
-          this.props.dispatch(
-            notify({
-              HTML: `<p>
-        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Invite sent to <i>${
-          this.props.invite.inviteeEmail
-        }</i>
-      </p>`,
-              type: "success"
-            })
-          );
-          return this.props.dispatch({
-            type: "SEND_INVITE_SUCCESS",
-            data
-          });
-        })
-        .catch(err => {
-          console.table(err);
-          this.props.dispatch(
-            notify({
-              HTML: `<p>
-          <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;An error occured sending the invite: ${err}
-        </p>`,
-              type: "error"
-            })
-          );
-          this.props.dispatch({
-            type: "SEND_INVITE_ERROR",
-            err
-          });
-        });
     } else {
       this.props.dispatch(
         notify({
