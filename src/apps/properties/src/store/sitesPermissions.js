@@ -101,7 +101,7 @@ export const removeRole = roleZUID => {
     })
     .catch(err => {
       console.table(err)
-      dispatch({ type: "DELETING_ROLE_SUCCESS"})
+      dispatch({ type: "DELETING_ROLE_FAILURE"})
       throw err
     })
   }

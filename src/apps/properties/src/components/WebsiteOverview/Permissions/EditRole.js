@@ -17,7 +17,7 @@ class EditRole extends Component {
     return (
       <div className={styles.modalWrapper}>
         <h3>
-          Edit Granular Role Permissions for {this.props.currentRole.name}
+          Edit Granular Role Permissions for: {this.props.currentRole.name}
         </h3>
         <div className={styles.selectCollection}>
           <header>

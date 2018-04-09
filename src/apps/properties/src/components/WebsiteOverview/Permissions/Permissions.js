@@ -9,6 +9,8 @@ import {
   removeRole
 } from "../../../store/sitesPermissions";
 
+import { fetchSiteRoles } from "../../../store/sitesRoles";
+
 import styles from "./Permissions.less";
 
 const formatDate = date => {
@@ -76,6 +78,9 @@ class Permissions extends Component {
             message: "Role successfully deleted",
             type: "success"
           })
+        );
+        return this.props.dispatch(
+          fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
         );
       });
     }
