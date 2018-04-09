@@ -3,7 +3,11 @@ import { connect } from "react-redux";
 
 import EditRole from "./EditRole";
 import { notify } from "../../../../../../shell/store/notifications";
-import { createRole, changeCurrentRole } from "../../../store/sitesPermissions";
+import {
+  createRole,
+  changeCurrentRole,
+  removeRole
+} from "../../../store/sitesPermissions";
 
 import styles from "./Permissions.less";
 
@@ -62,7 +66,20 @@ class Permissions extends Component {
     });
   };
 
-  handleRemove = ZUID => {};
+  handleRemove = ZUID => {
+    if (!confirm("Are you certain you want to delete this role?")) {
+      return null;
+    } else {
+      return this.props.dispatch(removeRole(ZUID)).then(data => {
+        this.props.dispatch(
+          notify({
+            message: "Role successfully deleted",
+            type: "success"
+          })
+        );
+      });
+    }
+  };
   render() {
     return (
       <div className={styles.permissionsWrapper}>
@@ -105,9 +122,9 @@ class Permissions extends Component {
           <main>
             {Array.isArray(this.props.sitesRoles) &&
               this.props.sitesRoles.map((role, i) => {
-                if (i > 10) {
-                  return null; // temporarily limiting role display
-                }
+                // if (i > 10) {
+                //   return null; // temporarily limiting role display
+                // }
                 return (
                   <article key={i}>
                     <span>{role.name} </span>

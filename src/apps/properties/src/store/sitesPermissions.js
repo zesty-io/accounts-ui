@@ -19,6 +19,12 @@ export function sitesPermissions(state = initialState, action) {
       return { ...state, currentRole: action.role };
     case "ADDING_ROLE_FAILURE":
       return { ...state, submitted: !state.submitted };
+    case "DELETING_ROLE":
+      return state
+    case "DELETING_ROLE_SUCCESS":
+      return state
+    case "DELETING_ROLE_FAILURE":
+      return state
     case "FETCHING_ROLE":
       return state;
     case "FETCHING_ROLE_SUCCESS":
@@ -82,3 +88,21 @@ export const changeCurrentRole = roleZUID => {
     return dispatch({ type: "CHANGE_CURRENT_ROLE", role });
   };
 };
+
+export const removeRole = roleZUID => {
+  return dispatch => {
+    dispatch({ type: "DELETING_ROLE" })
+    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`, {
+      method: "DELETE"
+    })
+    .then(data => {
+      dispatch({ type: "DELETING_ROLE_SUCCESS"})
+      return data
+    })
+    .catch(err => {
+      console.table(err)
+      dispatch({ type: "DELETING_ROLE_SUCCESS"})
+      throw err
+    })
+  }
+}

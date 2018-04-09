@@ -6,18 +6,19 @@ import { getRole, updateRole } from "../../../store/sitesPermissions";
 
 class EditRole extends Component {
   componentDidMount() {
-    this.props.dispatch(getRole(this.props.currentRole.ZUID))
+    this.props.dispatch(getRole(this.props.currentRole.ZUID));
   }
 
   handleClick = evt => {
-    evt.preventDefault()
-  }
+    evt.preventDefault();
+  };
 
   render() {
-    console.log(this.props)
     return (
       <div className={styles.modalWrapper}>
-        <h3>Edit Granular Role Permissions for {this.props.currentRole.name}</h3>
+        <h3>
+          Edit Granular Role Permissions for {this.props.currentRole.name}
+        </h3>
         <div className={styles.selectCollection}>
           <header>
             <h3>Collection</h3>
@@ -40,6 +41,12 @@ class EditRole extends Component {
                         <input
                           type="checkbox"
                           name={`create-${collection.name}`}
+                          checked={
+                            this.props.currentRole.create
+                              ? this.props.currentRole.create
+                              : this.props.currentRole.systemRole &&
+                                this.props.currentRole.systemRole.create
+                          }
                           value={`create-${collection.zuid}`}
                         />
                       </span>
@@ -47,6 +54,12 @@ class EditRole extends Component {
                         <input
                           type="checkbox"
                           name={`read-${collection.name}`}
+                          checked={
+                            this.props.currentRole.read
+                              ? this.props.currentRole.read
+                              : this.props.currentRole.systemRole &&
+                                this.props.currentRole.systemRole.read
+                          }
                           value={`read-${collection.zuid}`}
                         />
                       </span>
@@ -54,6 +67,12 @@ class EditRole extends Component {
                         <input
                           type="checkbox"
                           name={`update-${collection.name}`}
+                          checked={
+                            this.props.currentRole.update
+                              ? this.props.currentRole.update
+                              : this.props.currentRole.systemRole &&
+                                this.props.currentRole.systemRole.update
+                          }
                           value={`update-${collection.zuid}`}
                         />
                       </span>
@@ -61,6 +80,12 @@ class EditRole extends Component {
                         <input
                           type="checkbox"
                           name={`delete-${collection.name}`}
+                          checked={
+                            this.props.currentRole.delete
+                              ? this.props.currentRole.delete
+                              : this.props.currentRole.systemRole &&
+                                this.props.currentRole.systemRole.delete
+                          }
                           value={`delete-${collection.zuid}`}
                         />
                       </span>
@@ -68,6 +93,12 @@ class EditRole extends Component {
                         <input
                           type="checkbox"
                           name={`publish-${collection.name}`}
+                          checked={
+                            this.props.currentRole.publish
+                              ? this.props.currentRole.publish
+                              : this.props.currentRole.systemRole &&
+                                this.props.currentRole.systemRole.publish
+                          }
                           value={`publish-${collection.zuid}`}
                         />
                       </span>
@@ -75,6 +106,12 @@ class EditRole extends Component {
                         <input
                           type="checkbox"
                           name={`grant-${collection.name}`}
+                          checked={
+                            this.props.currentRole.grant
+                              ? this.props.currentRole.grant
+                              : this.props.currentRole.systemRole &&
+                                this.props.currentRole.systemRole.grant
+                          }
                           value={`grant-${collection.name}`}
                         />
                       </span>
@@ -82,13 +119,19 @@ class EditRole extends Component {
                         <input
                           type="checkbox"
                           name={`super-${collection.name}`}
+                          checked={
+                            this.props.currentRole.super
+                              ? this.props.currentRole.super
+                              : this.props.currentRole.systemRole &&
+                                this.props.currentRole.systemRole.super
+                          }
                           value={`super-${collection.zuid}`}
                         />
                       </span>
                     </article>
                   );
                 })}
-                <Button onClick={this.handleClick}>Apply</Button>
+              <Button onClick={this.handleClick}>Apply</Button>
             </form>
           </main>
         </div>
@@ -98,8 +141,10 @@ class EditRole extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
-  return {currentRole: state.sitesPermissions.currentRole, sitesCollections: state.sitesCollections}
-}
+  return {
+    currentRole: state.sitesPermissions.currentRole,
+    sitesCollections: state.sitesCollections
+  };
+};
 
 export default connect(mapStateToProps)(EditRole);
