@@ -23,7 +23,7 @@ class Blueprint extends Component {
               src={
                 this.props.blueprints[this.props.site.blueprintID].coverImage
               }
-              alt="bp img"
+              alt=""
             />
             <p>
               {this.props.blueprints[this.props.site.blueprintID].description}

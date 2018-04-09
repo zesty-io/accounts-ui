@@ -7,7 +7,11 @@ export function blueprints(state = {}, action) {
       return state
     case 'FETCHING_BLUEPRINTS_ERROR':
       // TODO show error message
-      return state
+      return {...state, null: {
+        name: 'Looks like you havent selected a blueprint',
+        coverImage: '',
+        description: 'Click the button to select a blueprint.'
+      }}
     case 'FETCHING_BLUEPRINTS_SUCCESS':
       return { ...state, ...action.blueprints }
     default:

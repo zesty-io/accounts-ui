@@ -48,7 +48,9 @@ class Permissions extends Component {
             type: "NEW_MODAL",
             component: EditRole
           });
-          return data;
+          return this.props.dispatch(
+            fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
+          );
         });
     } else {
       this.props.dispatch(

@@ -21,9 +21,9 @@ class Profile extends Component {
         this.props.dispatch(
           notify({
             HTML: `<p>
-        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name changed to <i>${
-          this.props.profile.firstName
-        } ${this.props.profile.lastName}</i>
+        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name changed to <i>
+        ${this.props.profile.firstName}
+        ${this.props.profile.lastName}</i>
       </p>`,
             type: "success"
           })
@@ -39,7 +39,7 @@ class Profile extends Component {
             type: "error"
           })
         )
-      this.props.disatch({ type: "MODIFY_PROFILE_FAILURE"})
+      this.props.disatch({ type: "MODIFY_PROFILE_FAILURE" })
       });
   };
   handleChange = evt => {
@@ -80,7 +80,7 @@ class Profile extends Component {
         </div>
       </section>
     ) : (
-      <p>loading</p>
+      <Loader />
     );
   }
 }
