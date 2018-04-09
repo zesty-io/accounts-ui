@@ -10,9 +10,21 @@ export function sitesPermissions(state = initialState, action) {
     case "ADDING_ROLE":
       return { ...state, submitted: !state.submitted };
     case "ADDING_ROLE_SUCCESS":
-      return initialState;
+      return {
+        ...state,
+        currentRole: action.role,
+        submitted: !state.submitted
+      };
+    case "CHANGE_CURRENT_ROLE":
+      return { ...state, currentRole: action.role };
     case "ADDING_ROLE_FAILURE":
       return { ...state, submitted: !state.submitted };
+    case "FETCHING_ROLE":
+      return state;
+    case "FETCHING_ROLE_SUCCESS":
+      return { ...state, currentRole: action.role };
+    case "FETCHING_ROLE_FAILURE":
+      return state;
     default:
       return state;
   }
@@ -21,23 +33,52 @@ export function sitesPermissions(state = initialState, action) {
 export const createRole = (siteZUID, body) => {
   return dispatch => {
     dispatch({ type: "ADDING_ROLE" });
-    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}/roles`, {
+    return request(`${config.API_ACCOUNTS}/roles`, {
       method: "POST",
       json: true,
       body: {
+        entityZUID: siteZUID,
         name: body.name,
-        systemRoleZUID: body.systemRoleZUID,
-        expiry: body.expiry || null
+        systemRoleZUID: body.systemRoleZUID
       }
     })
       .then(data => {
-        dispatch({ type: "ADDING_ROLE_SUCCESS" });
-        return data;
+        dispatch({ type: "ADDING_ROLE_SUCCESS", role: data.data });
+        return data.data;
       })
       .catch(err => {
         console.table(err);
         dispatch({ type: "ADDING_ROLE_FAILURE" });
         throw err;
       });
+  };
+};
+
+export const getRole = roleZUID => {
+  return dispatch => {
+    dispatch({ type: "FETCHING_ROLE" });
+    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`)
+      .then(data => {
+        dispatch({ type: "FETCHING_ROLE_SUCCESS", role: data.data });
+        return data.data;
+      })
+      .catch(err => {
+        dispatch({ type: "FETCHING_ROLE_FAILURE" });
+        console.table(err);
+        throw err;
+      });
+  };
+};
+
+export const updateRole = roleZUID => {
+  return null;
+};
+
+export const changeCurrentRole = roleZUID => {
+  return (dispatch, getState) => {
+    const role = getState().sitesRoles.filter(
+      siteRole => siteRole.ZUID === roleZUID
+    )[0];
+    return dispatch({ type: "CHANGE_CURRENT_ROLE", role });
   };
 };

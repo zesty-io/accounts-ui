@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import CreateRole from "./CreateRole";
+import EditRole from "./EditRole";
 import { notify } from "../../../../../../shell/store/notifications";
-import { createRole } from "../../../store/sitesPermissions";
+import { createRole, changeCurrentRole } from "../../../store/sitesPermissions";
 
 import styles from "./Permissions.less";
 
@@ -40,7 +40,7 @@ class Permissions extends Component {
         .then(data => {
           this.props.dispatch({
             type: "NEW_MODAL",
-            component: CreateRole
+            component: EditRole
           });
           return data;
         });
@@ -53,12 +53,16 @@ class Permissions extends Component {
       );
     }
   };
-  handleEdit = evt => {
-    evt.preventDefault();
+
+  handleEdit = ZUID => {
+    this.props.dispatch(changeCurrentRole(ZUID));
+    this.props.dispatch({
+      type: "NEW_MODAL",
+      component: EditRole
+    });
   };
-  handleRemove = evt => {
-    evt.preventDefault();
-  };
+
+  handleRemove = ZUID => {};
   render() {
     return (
       <div className={styles.permissionsWrapper}>
@@ -87,7 +91,9 @@ class Permissions extends Component {
             onClick={this.handleCreate}
             disabled={this.props.sitesPermissions.submitted}
           >
-            {this.props.sitesPermissions.submitted ? 'Creating Role' : 'Create Role'}
+            {this.props.sitesPermissions.submitted
+              ? "Creating Role"
+              : "Create Role"}
           </Button>
         </form>
         <div className={styles.currentRoles}>
@@ -99,15 +105,24 @@ class Permissions extends Component {
           <main>
             {Array.isArray(this.props.sitesRoles) &&
               this.props.sitesRoles.map((role, i) => {
+                if (i > 10) {
+                  return null; // temporarily limiting role display
+                }
                 return (
                   <article key={i}>
                     <span>{role.name} </span>
                     <span>{formatDate(role.createdAt)} </span>
-                    <span>{formatDate(role.Expiry)} </span>
+                    <span>{formatDate(role.expiry)} </span>
                     <span>
                       <ButtonGroup>
-                        <Button text="Edit" onClick={this.handleEdit} />
-                        <Button text="Remove" onClick={this.handleRemove} />
+                        <Button
+                          text="Edit"
+                          onClick={() => this.handleEdit(role.ZUID)}
+                        />
+                        <Button
+                          text="Remove"
+                          onClick={() => this.handleRemove(role.ZUID)}
+                        />
                       </ButtonGroup>
                     </span>
                   </article>
