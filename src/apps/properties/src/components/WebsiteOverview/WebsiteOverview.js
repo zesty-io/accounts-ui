@@ -36,7 +36,7 @@ class WebsiteOverview extends Component {
       fetchSiteCompanies(this.props.userZuid, this.props.ZUID)
     );
     this.props.dispatch(fetchBlueprint(this.props.blueprintID));
-    this.props.dispatch(inviteData({ siteZUID: this.props.ZUID }));
+    this.props.dispatch(inviteData(this.props.ZUID));
     this.props.dispatch(fetchSiteRoles(this.props.userZuid, this.props.ZUID));
   }
 

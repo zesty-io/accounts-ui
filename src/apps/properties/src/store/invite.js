@@ -12,7 +12,7 @@ export function invite(
 ) {
   switch (action.type) {
     case "INVITE_DATA":
-      return { ...state, ...action.payload };
+      return { ...state, ...action.siteZUID };
     case "SENDING_INVITE":
       return { ...state, submitted: !state.submitted };
     case "SEND_INVITE_ERROR":
@@ -24,10 +24,10 @@ export function invite(
   }
 }
 
-export function inviteData(payload) {
+export function inviteData(siteZUID) {
   return {
     type: "INVITE_DATA",
-    payload
+    siteZUID
   };
 }
 
