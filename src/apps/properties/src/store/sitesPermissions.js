@@ -21,7 +21,7 @@ export function sitesPermissions(state = initialState, action) {
 export const createRole = (siteZUID, body) => {
   return dispatch => {
     dispatch({ type: "ADDING_ROLE" });
-    request(`${config.API_ACCOUNTS}/instances/${siteZUID}/roles`, {
+    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}/roles`, {
       method: "POST",
       json: true,
       body: {

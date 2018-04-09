@@ -1,6 +1,11 @@
 @import "../../../styles/colors.less";
-
+@keyframes fadeIn {
+  0% {opacity:0;}
+	100% { opacity: 1; }
+}
 .Notification {
+  bottom: 0;
+  left: 0;
   padding: 1rem;
   margin-top: 10px;
   max-width: 45rem;
@@ -23,4 +28,9 @@
 .info {
   color: @zesty-grey;
   background-color: @zesty-white;
+}
+
+.Animate {
+  animation: fadeIn;
+  animation-duration: 300ms;
 }

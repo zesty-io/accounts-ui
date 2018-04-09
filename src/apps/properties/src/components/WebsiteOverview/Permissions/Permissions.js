@@ -87,7 +87,7 @@ class Permissions extends Component {
             onClick={this.handleCreate}
             disabled={this.props.sitesPermissions.submitted}
           >
-            Create Role
+            {this.props.sitesPermissions.submitted ? 'Creating Role' : 'Create Role'}
           </Button>
         </form>
         <div className={styles.currentRoles}>

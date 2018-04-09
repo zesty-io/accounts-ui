@@ -23,7 +23,7 @@ class PropertyCreate extends Component {
           <div className={styles.controls}>
             <Button onClick={this.handleClick} disabled={this.props.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
-              Create New Property
+              {this.props.submitted ? 'Creating Your Property' : 'Create New Property'}
             </Button>
             <Link to="/properties">
               <i className="fa fa-ban" aria-hidden="true" />
