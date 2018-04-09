@@ -46,6 +46,7 @@ export const createRole = (siteZUID, body) => {
         entityZUID: siteZUID,
         name: body.name,
         systemRoleZUID: body.systemRoleZUID
+        // add expiry once allowed by API again
       }
     })
       .then(data => {

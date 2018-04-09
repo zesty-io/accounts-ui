@@ -75,7 +75,7 @@ class Permissions extends Component {
       return this.props.dispatch(removeRole(ZUID)).then(data => {
         this.props.dispatch(
           notify({
-            message: "Role successfully deleted",
+            message: "Role successfully removed",
             type: "success"
           })
         );
@@ -127,9 +127,6 @@ class Permissions extends Component {
           <main>
             {Array.isArray(this.props.sitesRoles) &&
               this.props.sitesRoles.map((role, i) => {
-                // if (i > 10) {
-                //   return null; // temporarily limiting role display
-                // }
                 return (
                   <article key={i}>
                     <span>{role.name} </span>

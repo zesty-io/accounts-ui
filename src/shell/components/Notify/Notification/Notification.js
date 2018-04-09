@@ -20,6 +20,7 @@ export default class Notification extends PureComponent {
       }
       return (
         <article
+          onClick={() => this.props.dispatch(remove(this.props.epoch))}
           key={this.props.epoch}
           className={cx(styles[this.props.type], styles.Notification, styles.Animate)}
         >
@@ -29,6 +30,7 @@ export default class Notification extends PureComponent {
     }
     return (
       <article
+        onClick={() => this.props.dispatch(remove(this.props.epoch))}
         key={this.props.epoch}
         className={cx(styles[this.props.type], styles.Notification, styles.Animate)}
       >
