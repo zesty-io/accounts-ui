@@ -69,7 +69,7 @@ class Email extends Component {
                 text="Add Email"
                 onClick={this.handleClick}
                 className={styles.button}
-                disabled={this.props.userProfile.submittedEmail}
+                disabled={this.state.submitted}
               />
             </footer>
             <header>

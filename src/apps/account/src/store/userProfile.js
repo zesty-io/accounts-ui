@@ -3,7 +3,7 @@ import config from "../../../../shell/config";
 import { notify } from "../../../../shell/store/notifications";
 
 export function userProfile(
-  state = { submittedProfile: false, submittedEmail: false, newEmail: "" },
+  state = { newEmail: "" },
   action
 ) {
   switch (action.type) {
@@ -26,13 +26,13 @@ export function userProfile(
       return state;
 
     case "ADDING_EMAIL":
-      return { ...state, submittedEmail: !state.submittedEmail };
+      return state;
 
     case "ADD_EMAIL_SUCCESS":
-      return { ...state, submittedEmail: !state.submittedEmail };
+      return state;
 
     case "ADD_EMAIL_FAILURE":
-      return { ...state, submittedEmail: !state.submittedEmail };
+      return state;
 
     case "UPDATE_SETTINGS":
       return { ...state, ...action.payload };
@@ -45,11 +45,6 @@ export function userProfile(
 export function updateSetting(payload) {
   return {
     type: "UPDATE_SETTINGS",
-    meta: {
-      debounce: {
-        time: 250
-      }
-    },
     payload
   };
 }
