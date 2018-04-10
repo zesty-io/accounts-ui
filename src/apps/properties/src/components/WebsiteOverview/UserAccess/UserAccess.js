@@ -95,15 +95,15 @@ class UserAccess extends Component {
             <h3>Email</h3>
           </header>
           <main>
-            {Array.isArray(this.props.sitesUsers) ? (
-              this.props.sitesUsers.map((user, i) => {
+            {this.props.sitesUsers ? (
+              Object.keys(this.props.sitesUsers).map((user, i) => {
                 return (
                   <article key={i}>
                     <span>
-                      {user.firstName} {user.lastName}
+                      {this.props.sitesUsers[user].firstName} {this.props.sitesUsers[user].lastName}
                     </span>
-                    <span>{user.staff}</span>
-                    <span>{user.email} </span>
+                    <span>{this.props.sitesUsers[user].staff}</span>
+                    <span>{this.props.sitesUsers[user].email} </span>
                   </article>
                 );
               })

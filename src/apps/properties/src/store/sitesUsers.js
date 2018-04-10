@@ -1,7 +1,7 @@
 import { request } from '../../../../util/request'
 import config from '../../../../shell/config'
 
-export function sitesUsers(state = [], action) {
+export function sitesUsers(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_USERS':
       return state
@@ -10,7 +10,7 @@ export function sitesUsers(state = [], action) {
     case 'FETCH_USERS_ERROR':
       return state
     case 'CLEAR_USERS':
-      return []
+      return {}
     default:
       return state
   }
@@ -23,9 +23,13 @@ export const fetchSiteUsers = (userZuid, siteZuid) => {
     })
     request(`${config.API_ACCOUNTS}/instances/${siteZuid}/users`)
       .then(users => {
+        let normalizedUsers = {}
+        users.data.forEach(user => {
+          return normalizedUsers[user.ZUID] = user
+        })
         dispatch({
           type: 'FETCH_USERS_SUCCESS',
-          users: users.data
+          users: normalizedUsers
         })
       })
       .catch(err => {
