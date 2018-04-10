@@ -53,7 +53,10 @@ class Permissions extends Component {
       this.setState({ submitted: !this.state.submitted})          
           this.props.dispatch({
             type: "NEW_MODAL",
-            component: EditRole
+            component: EditRole,
+            props: {
+              siteZUID: this.props.siteZUID
+            }
           });
           return this.props.dispatch(
             fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
@@ -73,7 +76,10 @@ class Permissions extends Component {
     this.props.dispatch(changeCurrentRole(ZUID));
     this.props.dispatch({
       type: "NEW_MODAL",
-      component: EditRole
+      component: EditRole,
+      props: {
+        siteZUID: this.props.siteZUID
+      }
     });
   };
 

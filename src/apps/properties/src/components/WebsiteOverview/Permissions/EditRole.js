@@ -11,12 +11,15 @@ class EditRole extends Component {
 
   handleClick = evt => {
     evt.preventDefault();
-    const PermissionValues = Object.keys(document.forms.permissionsForm).map((point, i) => {
-      console.log(document.forms.permissionsForm[i].value)
-    })
+    const PermissionValues = Object.keys(document.forms.permissionsForm).map(
+      (point, i) => {
+        console.log(document.forms.permissionsForm[i].value);
+      }
+    );
   };
 
   render() {
+    const { siteZUID } = this.props.props;
     return (
       <div className={styles.modalWrapper}>
         <h3>
@@ -36,104 +39,168 @@ class EditRole extends Component {
           <main>
             <form name="permissionsForm">
               {this.props.sitesCollections instanceof Object && // COLLECTIONS endpoint
-                Object.keys(this.props.sitesCollections).map((collectionZUID, i) => {
-                  return (
-                    <article key={i}>
-                      <span>{this.props.sitesCollections[collectionZUID].label}</span>
-                      <span>
-                        <input
-                          type="checkbox"
-                          name={`create-${this.props.sitesCollections[collectionZUID].name}`}
-                          checked={
-                            this.props.currentRole.create
-                              ? this.props.currentRole.create
-                              : this.props.currentRole.systemRole &&
-                                this.props.currentRole.systemRole.create
+                Object.keys(this.props.sitesCollections[siteZUID]).map(
+                  (collectionZUID, i) => {
+                    return (
+                      <article key={i}>
+                        <span>
+                          {
+                            this.props.sitesCollections[siteZUID][
+                              collectionZUID
+                            ].label
                           }
-                          value={`create-${this.props.sitesCollections[collectionZUID].zuid}`}
-                        />
-                      </span>
-                      <span>
-                        <input
-                          type="checkbox"
-                          name={`read-${this.props.sitesCollections[collectionZUID].name}`}
-                          checked={
-                            this.props.currentRole.read
-                              ? this.props.currentRole.read
-                              : this.props.currentRole.systemRole &&
-                                this.props.currentRole.systemRole.read
-                          }
-                          value={`read-${this.props.sitesCollections[collectionZUID].zuid}`}
-                        />
-                      </span>
-                      <span>
-                        <input
-                          type="checkbox"
-                          name={`update-${this.props.sitesCollections[collectionZUID].name}`}
-                          checked={
-                            this.props.currentRole.update
-                              ? this.props.currentRole.update
-                              : this.props.currentRole.systemRole &&
-                                this.props.currentRole.systemRole.update
-                          }
-                          value={`update-${this.props.sitesCollections[collectionZUID].zuid}`}
-                        />
-                      </span>
-                      <span>
-                        <input
-                          type="checkbox"
-                          name={`delete-${this.props.sitesCollections[collectionZUID].name}`}
-                          checked={
-                            this.props.currentRole.delete
-                              ? this.props.currentRole.delete
-                              : this.props.currentRole.systemRole &&
-                                this.props.currentRole.systemRole.delete
-                          }
-                          value={`delete-${this.props.sitesCollections[collectionZUID].zuid}`}
-                        />
-                      </span>
-                      <span>
-                        <input
-                          type="checkbox"
-                          name={`publish-${this.props.sitesCollections[collectionZUID].name}`}
-                          checked={
-                            this.props.currentRole.publish
-                              ? this.props.currentRole.publish
-                              : this.props.currentRole.systemRole &&
-                                this.props.currentRole.systemRole.publish
-                          }
-                          value={`publish-${this.props.sitesCollections[collectionZUID].zuid}`}
-                        />
-                      </span>
-                      <span>
-                        <input
-                          type="checkbox"
-                          name={`grant-${this.props.sitesCollections[collectionZUID].name}`}
-                          checked={
-                            this.props.currentRole.grant
-                              ? this.props.currentRole.grant
-                              : this.props.currentRole.systemRole &&
-                                this.props.currentRole.systemRole.grant
-                          }
-                          value={`grant-${this.props.sitesCollections[collectionZUID].name}`}
-                        />
-                      </span>
-                      <span>
-                        <input
-                          type="checkbox"
-                          name={`super-${this.props.sitesCollections[collectionZUID].name}`}
-                          checked={
-                            this.props.currentRole.super
-                              ? this.props.currentRole.super
-                              : this.props.currentRole.systemRole &&
-                                this.props.currentRole.systemRole.super
-                          }
-                          value={`super-${this.props.sitesCollections[collectionZUID].zuid}`}
-                        />
-                      </span>
-                    </article>
-                  );
-                })}
+                        </span>
+                        <span>
+                          <input
+                            type="checkbox"
+                            name={`create-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].name
+                            }`}
+                            checked={
+                              this.props.currentRole.create
+                                ? this.props.currentRole.create
+                                : this.props.currentRole.systemRole &&
+                                  this.props.currentRole.systemRole.create
+                            }
+                            value={`create-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].zuid
+                            }`}
+                          />
+                        </span>
+                        <span>
+                          <input
+                            type="checkbox"
+                            name={`read-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].name
+                            }`}
+                            checked={
+                              this.props.currentRole.read
+                                ? this.props.currentRole.read
+                                : this.props.currentRole.systemRole &&
+                                  this.props.currentRole.systemRole.read
+                            }
+                            value={`read-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].zuid
+                            }`}
+                          />
+                        </span>
+                        <span>
+                          <input
+                            type="checkbox"
+                            name={`update-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].name
+                            }`}
+                            checked={
+                              this.props.currentRole.update
+                                ? this.props.currentRole.update
+                                : this.props.currentRole.systemRole &&
+                                  this.props.currentRole.systemRole.update
+                            }
+                            value={`update-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].zuid
+                            }`}
+                          />
+                        </span>
+                        <span>
+                          <input
+                            type="checkbox"
+                            name={`delete-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].name
+                            }`}
+                            checked={
+                              this.props.currentRole.delete
+                                ? this.props.currentRole.delete
+                                : this.props.currentRole.systemRole &&
+                                  this.props.currentRole.systemRole.delete
+                            }
+                            value={`delete-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].zuid
+                            }`}
+                          />
+                        </span>
+                        <span>
+                          <input
+                            type="checkbox"
+                            name={`publish-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].name
+                            }`}
+                            checked={
+                              this.props.currentRole.publish
+                                ? this.props.currentRole.publish
+                                : this.props.currentRole.systemRole &&
+                                  this.props.currentRole.systemRole.publish
+                            }
+                            value={`publish-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].zuid
+                            }`}
+                          />
+                        </span>
+                        <span>
+                          <input
+                            type="checkbox"
+                            name={`grant-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].name
+                            }`}
+                            checked={
+                              this.props.currentRole.grant
+                                ? this.props.currentRole.grant
+                                : this.props.currentRole.systemRole &&
+                                  this.props.currentRole.systemRole.grant
+                            }
+                            value={`grant-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].name
+                            }`}
+                          />
+                        </span>
+                        <span>
+                          <input
+                            type="checkbox"
+                            name={`super-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].name
+                            }`}
+                            checked={
+                              this.props.currentRole.super
+                                ? this.props.currentRole.super
+                                : this.props.currentRole.systemRole &&
+                                  this.props.currentRole.systemRole.super
+                            }
+                            value={`super-${
+                              this.props.sitesCollections[siteZUID][
+                                collectionZUID
+                              ].zuid
+                            }`}
+                          />
+                        </span>
+                      </article>
+                    );
+                  }
+                )}
               <Button onClick={this.handleClick}>Apply</Button>
             </form>
           </main>
@@ -146,7 +213,7 @@ class EditRole extends Component {
 const mapStateToProps = state => {
   return {
     currentRole: state.sitesPermissions.currentRole,
-    sitesCollections: state.sitesCollections  
+    sitesCollections: state.sitesCollections
   };
 };
 
