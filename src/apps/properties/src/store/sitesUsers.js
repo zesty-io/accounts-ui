@@ -6,7 +6,7 @@ export function sitesUsers(state = {}, action) {
     case "FETCHING_USERS":
       return state;
     case "FETCH_USERS_SUCCESS":
-      return { ...state, [action.siteZuid]: { ...action.users } };
+      return { ...state, [action.siteZuid]: action.users };
     case "FETCH_USERS_ERROR":
       return state;
     default:

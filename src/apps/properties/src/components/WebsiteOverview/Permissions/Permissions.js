@@ -28,10 +28,6 @@ class Permissions extends Component {
       submitted: false
     }
   }
-  componentWillUnmount() {
-    this.props.dispatch({ type: "CLEAR_ROLES" });
-    this.props.dispatch({ type: "CLEAR_COLLECTIONS" });
-  }
   onChange = evt => {
     this.props.dispatch({
       type: "UPDATE_PERMISSIONS",
@@ -140,22 +136,22 @@ class Permissions extends Component {
             <h3>Expires</h3>
           </header>
           <main>
-            {Array.isArray(this.props.sitesRoles) &&
-              this.props.sitesRoles.map((role, i) => {
+            {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
+              Object.keys(this.props.sitesRoles[this.props.siteZUID]).map((ZUID, i) => {
                 return (
                   <article key={i}>
-                    <span>{role.name} </span>
-                    <span>{formatDate(role.createdAt)} </span>
-                    <span>{formatDate(role.expiry)} </span>
+                    <span>{this.props.sitesRoles[this.props.siteZUID][ZUID].name} </span>
+                    <span>{formatDate(this.props.sitesRoles[this.props.siteZUID][ZUID].createdAt)} </span>
+                    <span>{formatDate(this.props.sitesRoles[this.props.siteZUID][ZUID].expiry)} </span>
                     <span>
                       <ButtonGroup>
                         <Button
                           text="Edit"
-                          onClick={() => this.handleEdit(role.ZUID)}
+                          onClick={() => this.handleEdit(ZUID)}
                         />
                         <Button
                           text="Remove"
-                          onClick={() => this.handleRemove(role.ZUID)}
+                          onClick={() => this.handleRemove(ZUID)}
                         />
                       </ButtonGroup>
                     </span>

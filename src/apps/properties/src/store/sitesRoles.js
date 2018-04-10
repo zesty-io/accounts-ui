@@ -1,16 +1,14 @@
 import { request } from '../../../../util/request'
 import config from '../../../../shell/config'
 
-export function sitesRoles(state = [], action) {
+export function sitesRoles(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_ROLES':
       return state
     case 'FETCH_ROLES_SUCCESS':
-      return action.roles
+      return {...state, [action.siteZuid]: action.normalizedRoles}
     case 'FETCH_ROLES_ERROR':
       return state
-    case 'CLEAR_ROLES':
-      return []
     default:
       return state
   }
@@ -23,9 +21,14 @@ export const fetchSiteRoles = (userZuid, siteZuid) => {
     })
     request(`${config.API_ACCOUNTS}/instances/${siteZuid}/roles`)
       .then(roles => {
+        let normalizedRoles = {}
+        roles.data.forEach(role => {
+          return normalizedRoles[role.ZUID] = role
+        })
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
-          roles: roles.data
+          siteZuid,
+          normalizedRoles
         })
       })
       .catch(err => {
