@@ -17,13 +17,13 @@ export function userProfile(
       return state;
 
     case "MODIFYING_PROFILE":
-      return { ...state, submittedProfile: !state.submittedProfile };
+      return state;
 
     case "MODIFY_PROFILE_FAILURE":
-      return { ...state, submittedProfile: !state.submittedProfile };
+      return state;
 
     case "MODIFY_PROFILE_SUCCESS":
-      return { ...state, submittedProfile: !state.submittedProfile };
+      return state;
 
     case "ADDING_EMAIL":
       return { ...state, submittedEmail: !state.submittedEmail };
@@ -95,7 +95,7 @@ export function addEmail() {
             .join(",")
         : getState().userProfile.newEmail.value;
 
-    request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
       method: "PUT",
       json: true,
       body: {
@@ -109,7 +109,8 @@ export function addEmail() {
         })
       );
       dispatch(getSettings())
-      return dispatch({ type: "ADD_EMAIL_SUCCESS" });
+      dispatch({ type: "ADD_EMAIL_SUCCESS" })
+      return data
     })
     .catch(error => {
       dispatch(

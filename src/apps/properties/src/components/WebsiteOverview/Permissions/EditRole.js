@@ -11,6 +11,9 @@ class EditRole extends Component {
 
   handleClick = evt => {
     evt.preventDefault();
+    const PermissionValues = Object.keys(document.forms.permissionsForm).map((point, i) => {
+      console.log(document.forms.permissionsForm[i].value)
+    })
   };
 
   render() {

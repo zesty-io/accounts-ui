@@ -1,7 +1,7 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-export function userBlueprints(state = { submitted: false }, action) {
+export function userBlueprints(state = {}, action) {
   switch (action.type) {
     case "FETCHING_ACCOUNT_BLUEPRINTS":
       return state;
@@ -16,17 +16,17 @@ export function userBlueprints(state = { submitted: false }, action) {
       return { ...state, ...action.payload };
 
     case "CREATING_BLUEPRINT":
-      return { ...state, submitted: !state.submitted };
+      return state;
 
     case "CREATE_BLUEPRINT_SUCCESS":
       let blueprints = {
         ...state,
         [action.blueprint.ID]: action.blueprint
       };
-      return { ...blueprints, submitted: !state.submitted };
+      return { ...blueprints};
 
     case "CREATE_BLUEPRINT_ERROR":
-      return { ...state, submitted: !state.submitted };
+      return state;
 
     default:
       return state;

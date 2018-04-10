@@ -18,8 +18,7 @@ const formatDate = date => {
     return "";
   }
   const newDate = new Date(date);
-  return `${newDate.getMonth() +
-    1}-${newDate.getDate()}-${newDate.getFullYear()}`;
+  return `${newDate.getMonth() + 1}-${newDate.getDate()}-${newDate.getFullYear()}`;
 };
 
 class Permissions extends Component {

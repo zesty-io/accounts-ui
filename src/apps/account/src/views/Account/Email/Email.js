@@ -2,11 +2,21 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { notify } from "../../../../../../shell/store/notifications";
-import { updateSetting, addEmail, getSettings } from "../../../store/userProfile";
+import {
+  updateSetting,
+  addEmail,
+  getSettings
+} from "../../../store/userProfile";
 
 import styles from "./email.less";
 
 class Email extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      submitted: false
+    };
+  }
   handleChange = evt => {
     if (evt.target.value.match(evt.target.pattern)) {
       return this.props.dispatch(
@@ -18,7 +28,10 @@ class Email extends Component {
   };
   handleClick = e => {
     if (this.props.newEmail.length) {
-      this.props.dispatch(addEmail())
+      this.setState({ submitted: !this.state.submitted });
+      this.props.dispatch(addEmail()).then(data => {
+        this.setState({ submitted: !this.state.submitted });
+      });
     } else {
       this.props.dispatch(
         notify({
@@ -29,7 +42,6 @@ class Email extends Component {
     }
   };
   render() {
-    console.log("Props in email", this.props);
     return (
       <section className={styles.profileEmail}>
         <div>
@@ -70,13 +82,11 @@ class Email extends Component {
                     return (
                       <article key={i}>
                         <span>{email}</span>
-                        {
-                          this.props.email === email ?
+                        {this.props.email === email ? (
                           <span>Verified (Primary)</span>
-                          :
+                        ) : (
                           <span>Verified</span>
-                        }
-                        
+                        )}
                       </article>
                     );
                   })
@@ -86,13 +96,11 @@ class Email extends Component {
                     return (
                       <article key={i}>
                         <span>{email}</span>
-                        {
-                          this.props.email === email ?
+                        {this.props.email === email ? (
                           <span>Unverified (Primary)</span>
-                          :
+                        ) : (
                           <span>Unverified</span>
-                        }
-                        
+                        )}
                       </article>
                     );
                   })

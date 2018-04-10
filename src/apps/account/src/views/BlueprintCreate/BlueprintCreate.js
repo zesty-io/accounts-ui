@@ -7,6 +7,12 @@ import { updateSetting, postNewBlueprint } from "../../store/userBlueprints";
 import styles from "./BlueprintCreate.less";
 
 class BlueprintCreate extends Component {
+  constructor(props){
+    super()
+    this.state = {
+      submitted: false
+    }
+  }
   render() {
     return (
       <section className={styles.BlueprintCreate}>
@@ -21,7 +27,7 @@ class BlueprintCreate extends Component {
           <div className={styles.controls}>
             <Button
               onClick={this.handleClick}
-              disabled={this.props.userBlueprints.submitted}
+              disabled={this.state.submitted}
             >
               <i className="fa fa-plus" aria-hidden="true" />
               Create New Blueprint
@@ -39,9 +45,11 @@ class BlueprintCreate extends Component {
     this.props.dispatch(updateSetting({ [evt.target.name]: evt.target.value }));
   };
   handleClick = () => {
+    this.setState({submitted: !this.state.submitted})
     this.props
       .dispatch(postNewBlueprint(this.props.userBlueprints.createBlueprintName))
       .then(bp => {
+        this.setState({submitted: !this.state.submitted})
         return this.props.history.push(`../blueprints/${bp.ID}`);
       })
   };

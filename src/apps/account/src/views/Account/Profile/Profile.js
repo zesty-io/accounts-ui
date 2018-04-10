@@ -10,11 +10,18 @@ import {
 import { notify } from "../../../../../../shell/store/notifications";
 
 class Profile extends Component {
+  constructor() {
+    super();
+    this.state = {
+      submitted: false
+    };
+  }
   componentDidMount() {
     this.props.dispatch(getSettings(this.props.userZUID));
   }
   handleClick = evt => {
     evt.preventDefault();
+    this.setState({ submitted: !this.state.submitted });
     this.props
       .dispatch(saveProfile())
       .then(data => {
@@ -28,6 +35,7 @@ class Profile extends Component {
             type: "success"
           })
         );
+        this.setState({ submitted: !this.state.submitted });
         return this.props.dispatch({ type: "MODIFY_PROFILE_SUCCESS" });
       })
       .catch(err => {
@@ -38,8 +46,9 @@ class Profile extends Component {
       </p>`,
             type: "error"
           })
-        )
-      this.props.disatch({ type: "MODIFY_PROFILE_FAILURE" })
+        );
+        this.props.disatch({ type: "MODIFY_PROFILE_FAILURE" });
+        this.setState({ submitted: !this.state.submitted });
       });
   };
   handleChange = evt => {
@@ -73,7 +82,7 @@ class Profile extends Component {
           />
           <Button
             className={styles.ProfileSave}
-            disabled={this.props.userProfile.submittedProfile}
+            disabled={this.state.submittedProfile}
             text="Save"
             onClick={this.handleClick}
           />
