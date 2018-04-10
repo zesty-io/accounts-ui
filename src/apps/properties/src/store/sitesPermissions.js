@@ -1,24 +1,23 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-const initialState = { submitted: false, systemRoleZUID: "31-71cfc74-s30" };
+const initialState = { systemRoleZUID: "31-71cfc74-s30" };
 
 export function sitesPermissions(state = initialState, action) {
   switch (action.type) {
     case "UPDATE_PERMISSIONS":
       return { ...state, ...action.payload };
     case "ADDING_ROLE":
-      return { ...state, submitted: !state.submitted };
+      return state;
     case "ADDING_ROLE_SUCCESS":
       return {
         ...state,
-        currentRole: action.role,
-        submitted: !state.submitted
+        currentRole: action.role
       };
     case "CHANGE_CURRENT_ROLE":
       return { ...state, currentRole: action.role };
     case "ADDING_ROLE_FAILURE":
-      return { ...state, submitted: !state.submitted };
+      return state;
     case "DELETING_ROLE":
       return state
     case "DELETING_ROLE_SUCCESS":

@@ -22,6 +22,12 @@ const formatDate = date => {
 };
 
 class Permissions extends Component {
+  constructor(props) {
+    super()
+    this.state = {
+      submitted: false
+    }
+  }
   componentWillUnmount() {
     this.props.dispatch({ type: "CLEAR_ROLES" });
     this.props.dispatch({ type: "CLEAR_COLLECTIONS" });
@@ -40,9 +46,11 @@ class Permissions extends Component {
       Object.keys(this.props.sitesPermissions).includes("name") &&
       Object.keys(this.props.sitesPermissions).includes("systemRoleZUID")
     ) {
+      this.setState({ submitted: !this.state.submitted})
       this.props
         .dispatch(createRole(this.props.siteZUID, this.props.sitesPermissions))
         .then(data => {
+      this.setState({ submitted: !this.state.submitted})          
           this.props.dispatch({
             type: "NEW_MODAL",
             component: EditRole
@@ -112,9 +120,9 @@ class Permissions extends Component {
           <Button
             className={styles.createButton}
             onClick={this.handleCreate}
-            disabled={this.props.sitesPermissions.submitted}
+            disabled={this.state.submitted}
           >
-            {this.props.sitesPermissions.submitted
+            {this.state.submitted
               ? "Creating Role"
               : "Create Role"}
           </Button>

@@ -36,7 +36,7 @@ export function sendInvite(payload) {
     dispatch({
       type: "SENDING_INVITE"
     });
-    request(`${config.API_ACCOUNTS}/invites`, {
+    return request(`${config.API_ACCOUNTS}/invites`, {
       method: "POST",
       json: true,
       body: {
@@ -55,10 +55,11 @@ export function sendInvite(payload) {
           type: "success"
         })
       );
-      return dispatch({
+      dispatch({
         type: "SEND_INVITE_SUCCESS",
         data
       });
+      return data;
     })
     .catch(err => {
       console.table(err);

@@ -2,23 +2,22 @@ import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
 export function createSite(
-  state = { submitted: false, newSite: false },
+  state = { newSite: false },
   action
 ) {
   switch (action.type) {
     case "ADD_SITE_INFO":
       return { ...state, ...action.payload };
     case "CREATING_SITE":
-      return { state, submitted: !state.submitted };
+      return state;
     case "CREATE_SITE_SUCCESS":
       return {
         state,
         newSite: true,
-        submitted: !state.submitted,
         randomHashID: action.data.randomHashID
       };
     case "CREATE_SITE_ERROR":
-      return { ...state, ...action.error, submitted: !state.submitted };
+      return { ...state, ...action.error };
     case "CLEAR_NEW_SITE":
       return { ...state, newSite: false, propertyName: "" };
     default:
@@ -55,11 +54,6 @@ export const postNewSite = name => {
 export const addSiteInfo = payload => {
   return {
     type: "ADD_SITE_INFO",
-    meta: {
-      debounce: {
-        time: 250
-      }
-    },
     payload
   };
 };

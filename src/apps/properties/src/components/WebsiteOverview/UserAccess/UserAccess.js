@@ -7,19 +7,32 @@ import { inviteData, sendInvite } from "../../../store/invite";
 import { notify } from "../../../../../../shell/store/notifications";
 
 class UserAccess extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      submitted: false,
+      inviteeEmail: "",
+      inviteRole: "contributor"
+    };
+  }
   componentWillUnmount() {
     this.props.dispatch({ type: "CLEAR_USERS" });
   }
   handleInvite = evt => {
-    if (this.props.invite && this.props.invite.inviteeEmail) {
+    if (this.state.inviteeEmail.includes('@')) {
+      // needs another validity check here
+      this.setState({ submitted: !this.state.submitted });
       this.props
         .dispatch(
           sendInvite({
-            inviteeEmail: this.props.invite.inviteeEmail,
+            inviteeEmail: this.state.inviteeEmail,
             instanceZUID: this.props.site.ZUID,
-            roleZUID: this.props.invite.inviteRole
+            roleZUID: this.state.inviteRole
           })
         )
+        .then(data => {
+          this.setState({ submitted: !this.state.submitted });
+        });
     } else {
       this.props.dispatch(
         notify({
@@ -32,9 +45,8 @@ class UserAccess extends Component {
     }
   };
   handleChange = evt => {
-    if (evt.target.value.match(evt.target.pattern)) {
-      this.props.dispatch(inviteData({ [evt.target.name]: evt.target.value }));
-    }
+    // todo: validity check
+    this.setState({ [evt.target.name]: evt.target.value });
   };
   render() {
     return (
@@ -46,12 +58,12 @@ class UserAccess extends Component {
             placeholder="Email"
             name="inviteeEmail"
             required
-            value={this.props.invite.inviteeEmail}
+            value={this.state.inviteeEmail}
             onChange={this.handleChange}
           />
           <Select
             onChange={this.handleChange}
-            name="newUserRole"
+            name="inviteRole"
             selection={{
               value: "contributor",
               html: '<option value="own">Contributor</option>'
@@ -72,10 +84,7 @@ class UserAccess extends Component {
                   ]
             }
           />
-          <Button
-            onClick={this.handleInvite}
-            disabled={this.props.invite.submitted}
-          >
+          <Button onClick={this.handleInvite} disabled={this.state.submitted}>
             Send Invite
           </Button>
         </div>

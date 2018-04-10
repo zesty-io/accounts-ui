@@ -4,11 +4,17 @@ import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";
 
 import { addSiteInfo, postNewSite } from "../../store/createSite";
-import { notify } from '../../../../../shell/store/notifications'
+import { notify } from "../../../../../shell/store/notifications";
 
 import styles from "./PropertyCreate.less";
 
 class PropertyCreate extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      submitted: false
+    };
+  }
   render() {
     return (
       <section className={styles.PropertyCreate}>
@@ -21,9 +27,11 @@ class PropertyCreate extends Component {
             onChange={this.handleChange}
           />
           <div className={styles.controls}>
-            <Button onClick={this.handleClick} disabled={this.props.submitted}>
+            <Button onClick={this.handleClick} disabled={this.state.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
-              {this.props.submitted ? 'Creating Your Property' : 'Create New Property'}
+              {this.state.submitted
+                ? "Creating Your Property"
+                : "Create New Property"}
             </Button>
             <Link to="/properties">
               <i className="fa fa-ban" aria-hidden="true" />
@@ -38,16 +46,21 @@ class PropertyCreate extends Component {
     this.props.dispatch(addSiteInfo({ [evt.target.name]: evt.target.value }));
   };
   handleClick = () => {
+    this.setState({ submitted: !this.state.submitted });
     this.props
       .dispatch(postNewSite(this.props.propertyName))
       .then(data => {
+        this.setState({ submitted: !this.state.submitted });
         this.props.history.push(`/properties/${data.data.ZUID}/blueprint`);
       })
       .catch(err => {
-        this.props.dispatch(notify({
-          message: `Problem creating site: ${err}`,
-          type: "error"
-        }))
+        this.setState({ submitted: !this.state.submitted });
+        this.props.dispatch(
+          notify({
+            message: `Problem creating site: ${err}`,
+            type: "error"
+          })
+        );
       });
   };
 }
