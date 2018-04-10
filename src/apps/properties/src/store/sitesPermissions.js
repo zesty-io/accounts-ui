@@ -80,11 +80,9 @@ export const updateRole = roleZUID => {
   return null;
 };
 
-export const changeCurrentRole = roleZUID => {
+export const changeCurrentRole = (roleZUID, siteZUID) => {
   return (dispatch, getState) => {
-    const role = getState().sitesRoles.filter(
-      siteRole => siteRole.ZUID === roleZUID
-    )[0];
+    const role = getState().sitesRoles[siteZUID][roleZUID]
     return dispatch({ type: "CHANGE_CURRENT_ROLE", role });
   };
 };

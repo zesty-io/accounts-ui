@@ -68,8 +68,8 @@ class Permissions extends Component {
     }
   };
 
-  handleEdit = ZUID => {
-    this.props.dispatch(changeCurrentRole(ZUID));
+  handleEdit = (roleZUID, siteZuid) => {
+    this.props.dispatch(changeCurrentRole(roleZUID, siteZuid));
     this.props.dispatch({
       type: "NEW_MODAL",
       component: EditRole,
@@ -147,7 +147,7 @@ class Permissions extends Component {
                       <ButtonGroup>
                         <Button
                           text="Edit"
-                          onClick={() => this.handleEdit(ZUID)}
+                          onClick={() => this.handleEdit(ZUID, this.props.siteZUID)}
                         />
                         <Button
                           text="Remove"
