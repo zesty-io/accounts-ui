@@ -3,7 +3,7 @@ const initialState = {isOpen:false};
 export function modal(state = initialState, action) {
   switch (action.type) {
     case "NEW_MODAL":
-      return {...state, isOpen: true, component: action.component, props: action.props };
+      return {...state, isOpen: true, ...action };
     case "REMOVE_MODAL":
      return {...state, isOpen: false};
     default:
