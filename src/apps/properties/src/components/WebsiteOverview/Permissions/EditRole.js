@@ -35,100 +35,100 @@ class EditRole extends Component {
           </header>
           <main>
             <form name="permissionsForm">
-              {Array.isArray(this.props.sitesCollections) && // COLLECTIONS endpoint
-                this.props.sitesCollections.map((collection, i) => {
+              {this.props.sitesCollections instanceof Object && // COLLECTIONS endpoint
+                Object.keys(this.props.sitesCollections).map((collectionZUID, i) => {
                   return (
                     <article key={i}>
-                      <span>{collection.label}</span>
+                      <span>{this.props.sitesCollections[collectionZUID].label}</span>
                       <span>
                         <input
                           type="checkbox"
-                          name={`create-${collection.name}`}
+                          name={`create-${this.props.sitesCollections[collectionZUID].name}`}
                           checked={
                             this.props.currentRole.create
                               ? this.props.currentRole.create
                               : this.props.currentRole.systemRole &&
                                 this.props.currentRole.systemRole.create
                           }
-                          value={`create-${collection.zuid}`}
+                          value={`create-${this.props.sitesCollections[collectionZUID].zuid}`}
                         />
                       </span>
                       <span>
                         <input
                           type="checkbox"
-                          name={`read-${collection.name}`}
+                          name={`read-${this.props.sitesCollections[collectionZUID].name}`}
                           checked={
                             this.props.currentRole.read
                               ? this.props.currentRole.read
                               : this.props.currentRole.systemRole &&
                                 this.props.currentRole.systemRole.read
                           }
-                          value={`read-${collection.zuid}`}
+                          value={`read-${this.props.sitesCollections[collectionZUID].zuid}`}
                         />
                       </span>
                       <span>
                         <input
                           type="checkbox"
-                          name={`update-${collection.name}`}
+                          name={`update-${this.props.sitesCollections[collectionZUID].name}`}
                           checked={
                             this.props.currentRole.update
                               ? this.props.currentRole.update
                               : this.props.currentRole.systemRole &&
                                 this.props.currentRole.systemRole.update
                           }
-                          value={`update-${collection.zuid}`}
+                          value={`update-${this.props.sitesCollections[collectionZUID].zuid}`}
                         />
                       </span>
                       <span>
                         <input
                           type="checkbox"
-                          name={`delete-${collection.name}`}
+                          name={`delete-${this.props.sitesCollections[collectionZUID].name}`}
                           checked={
                             this.props.currentRole.delete
                               ? this.props.currentRole.delete
                               : this.props.currentRole.systemRole &&
                                 this.props.currentRole.systemRole.delete
                           }
-                          value={`delete-${collection.zuid}`}
+                          value={`delete-${this.props.sitesCollections[collectionZUID].zuid}`}
                         />
                       </span>
                       <span>
                         <input
                           type="checkbox"
-                          name={`publish-${collection.name}`}
+                          name={`publish-${this.props.sitesCollections[collectionZUID].name}`}
                           checked={
                             this.props.currentRole.publish
                               ? this.props.currentRole.publish
                               : this.props.currentRole.systemRole &&
                                 this.props.currentRole.systemRole.publish
                           }
-                          value={`publish-${collection.zuid}`}
+                          value={`publish-${this.props.sitesCollections[collectionZUID].zuid}`}
                         />
                       </span>
                       <span>
                         <input
                           type="checkbox"
-                          name={`grant-${collection.name}`}
+                          name={`grant-${this.props.sitesCollections[collectionZUID].name}`}
                           checked={
                             this.props.currentRole.grant
                               ? this.props.currentRole.grant
                               : this.props.currentRole.systemRole &&
                                 this.props.currentRole.systemRole.grant
                           }
-                          value={`grant-${collection.name}`}
+                          value={`grant-${this.props.sitesCollections[collectionZUID].name}`}
                         />
                       </span>
                       <span>
                         <input
                           type="checkbox"
-                          name={`super-${collection.name}`}
+                          name={`super-${this.props.sitesCollections[collectionZUID].name}`}
                           checked={
                             this.props.currentRole.super
                               ? this.props.currentRole.super
                               : this.props.currentRole.systemRole &&
                                 this.props.currentRole.systemRole.super
                           }
-                          value={`super-${collection.zuid}`}
+                          value={`super-${this.props.sitesCollections[collectionZUID].zuid}`}
                         />
                       </span>
                     </article>
@@ -146,7 +146,7 @@ class EditRole extends Component {
 const mapStateToProps = state => {
   return {
     currentRole: state.sitesPermissions.currentRole,
-    sitesCollections: state.sitesCollections
+    sitesCollections: state.sitesCollections  
   };
 };
 

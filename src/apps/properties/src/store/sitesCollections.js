@@ -1,7 +1,7 @@
 import { request } from '../../../../util/request'
 import config from '../../../../shell/config'
 
-export function sitesCollections(state = [], action) {
+export function sitesCollections(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_COLLECTIONS':
       return state
@@ -21,9 +21,13 @@ export const fetchSiteCollections = (userZuid, siteZuid) => {
     })
     request(`http://${siteZuid}${config.API_INSTANCE}collections/`)
       .then(collections => {
+        let normalizedCollections = {}
+        collections.data.forEach(collection => {
+          return normalizedCollections[collection.zuid] = collection
+        })
         dispatch({
           type: 'FETCH_COLLECTIONS_SUCCESS',
-          collections: collections.data
+          collections: normalizedCollections
         })
       })
       .catch(err => {
