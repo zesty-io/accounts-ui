@@ -1,21 +1,22 @@
-import React, { Component } from 'react'
-import { NavLink, Switch, Route } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { ErrorBoundary } from './err'
+import React, { Component } from "react";
+import { NavLink, Switch, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { ErrorBoundary } from "./err";
 
-import Blueprints from '../Blueprints'
-import EditBlueprint from '../EditBlueprint'
-import BlueprintCreate from '../BlueprintCreate'
-import Security from '../Security'
-import Account from '../Account'
+import Blueprints from "../Blueprints";
+import EditBlueprint from "../EditBlueprint";
+import BlueprintCreate from "../BlueprintCreate";
+import Security from "../Security";
+import Account from "../Account";
 
-import styles from './styles.less'
+import styles from "./styles.less";
 
-import { getSettings } from '../../store/userProfile'
+import { fetchUser } from "../../../../../shell/store/user";
 
 class Settings extends Component {
   componentDidMount() {
-    this.props.user.ZUID && this.props.dispatch(getSettings(this.props.user.zuid))
+    this.props.user.ZUID &&
+      this.props.dispatch(fetchUser(this.props.user.zuid));
   }
   render() {
     return (
@@ -37,8 +38,14 @@ class Settings extends Component {
               <Switch>
                 <Route path="/settings/account" component={Account} />
                 <Route path="/settings/security" component={Security} />
-                <Route path="/settings/blueprints/create" component={BlueprintCreate} />
-                <Route path="/settings/blueprints/:id" component={EditBlueprint} />
+                <Route
+                  path="/settings/blueprints/create"
+                  component={BlueprintCreate}
+                />
+                <Route
+                  path="/settings/blueprints/:id"
+                  component={EditBlueprint}
+                />
                 <Route path="/settings/blueprints" component={Blueprints} />
               </Switch>
             </div>
@@ -50,8 +57,8 @@ class Settings extends Component {
           </div>
         )}
       </ErrorBoundary>
-    )
+    );
   }
 }
 
-export default connect(state => state)(Settings)
+export default connect(state => state)(Settings);

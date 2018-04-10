@@ -2,12 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./profile.less";
 
-import {
-  updateSetting,
-  getSettings
-} from "../../../store/userProfile";
-
-import { updateProfile, saveProfile } from '../../../../../../shell/store/user'
+import { updateProfile, saveProfile, fetchUser } from '../../../../../../shell/store/user'
 
 import { notify } from "../../../../../../shell/store/notifications";
 
@@ -20,7 +15,7 @@ class Profile extends Component {
     };
   }
   componentDidMount() {
-    this.props.dispatch(getSettings(this.props.userZUID));
+    this.props.dispatch(fetchUser(this.props.userZUID));
   }
   handleClick = evt => {
     evt.preventDefault();
