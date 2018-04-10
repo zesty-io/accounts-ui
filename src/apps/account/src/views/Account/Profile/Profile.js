@@ -3,11 +3,14 @@ import { connect } from "react-redux";
 import styles from "./profile.less";
 
 import {
-  updateSettingRaw,
-  saveProfile,
+  updateSetting,
   getSettings
 } from "../../../store/userProfile";
+
+import { updateProfile, saveProfile } from '../../../../../../shell/store/user'
+
 import { notify } from "../../../../../../shell/store/notifications";
+
 
 class Profile extends Component {
   constructor() {
@@ -36,7 +39,6 @@ class Profile extends Component {
           })
         );
         this.setState({ submitted: !this.state.submitted });
-        return this.props.dispatch({ type: "MODIFY_PROFILE_SUCCESS" });
       })
       .catch(err => {
         this.props.dispatch(
@@ -47,13 +49,12 @@ class Profile extends Component {
             type: "error"
           })
         );
-        this.props.disatch({ type: "MODIFY_PROFILE_FAILURE" });
         this.setState({ submitted: !this.state.submitted });
       });
   };
   handleChange = evt => {
     this.props.dispatch(
-      updateSettingRaw({ [evt.target.name]: evt.target.value })
+      updateProfile({ [evt.target.name]: evt.target.value })
     );
   };
   render() {
@@ -82,7 +83,7 @@ class Profile extends Component {
           />
           <Button
             className={styles.ProfileSave}
-            disabled={this.state.submittedProfile}
+            disabled={this.state.submitted}
             text="Save"
             onClick={this.handleClick}
           />
@@ -95,5 +96,5 @@ class Profile extends Component {
 }
 
 export default connect(state => {
-  return { profile: state.userProfile, userZUID: state.user.zuid, ...state };
+  return { profile: state.user, userZUID: state.user.zuid };
 })(Profile);

@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import { notify } from "../../../../../../shell/store/notifications";
 import {
-  updateSetting,
+  updateProfile,
   addEmail,
-  getSettings
-} from "../../../store/userProfile";
+  fetchUser
+} from "../../../../../../shell/store/user";
 
 import styles from "./email.less";
 
@@ -14,13 +14,14 @@ class Email extends Component {
   constructor(props) {
     super();
     this.state = {
-      submitted: false
+      submitted: false,
+      newEmail: ''
     };
   }
   handleChange = evt => {
     if (evt.target.value.match(evt.target.pattern)) {
       return this.props.dispatch(
-        updateSetting({ [evt.target.name]: evt.target.value })
+        updateProfile({ [evt.target.name]: evt.target.value })
       );
     } else {
       return null;
@@ -115,14 +116,14 @@ class Email extends Component {
 
 const mapStateToProps = state => {
   return {
-    email: state.userProfile.email,
-    unverifiedEmails: state.userProfile.unverifiedEmails
-      ? state.userProfile.unverifiedEmails.split(",")
+    email: state.user.email,
+    unverifiedEmails: state.user.unverifiedEmails
+      ? state.user.unverifiedEmails.split(",")
       : null,
-    verifiedEmails: state.userProfile.verifiedEmails
-      ? state.userProfile.verifiedEmails.split(",")
+    verifiedEmails: state.user.verifiedEmails
+      ? state.user.verifiedEmails.split(",")
       : null,
-    newEmail: state.userProfile.newEmail,
+    newEmail: state.user.newEmail || "",
     ...state
   };
 };

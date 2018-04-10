@@ -20,7 +20,7 @@ class Settings extends Component {
   render() {
     return (
       <ErrorBoundary>
-        {Object.keys(this.props.userProfile).length ? (
+        {Object.keys(this.props.user).length ? (
           <section className={styles.settings}>
             <ul>
               <li>
