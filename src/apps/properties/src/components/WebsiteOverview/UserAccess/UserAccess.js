@@ -15,9 +15,6 @@ class UserAccess extends Component {
       inviteRole: "contributor"
     };
   }
-  componentWillUnmount() {
-    this.props.dispatch({ type: "CLEAR_USERS" });
-  }
   handleInvite = evt => {
     if (this.state.inviteeEmail.includes('@')) {
       // needs another validity check here
@@ -95,15 +92,15 @@ class UserAccess extends Component {
             <h3>Email</h3>
           </header>
           <main>
-            {this.props.sitesUsers ? (
-              Object.keys(this.props.sitesUsers).map((user, i) => {
+            {this.props.sitesUsers[this.props.siteZUID] instanceof Object ? (
+              Object.keys(this.props.sitesUsers[this.props.siteZUID]).map((user, i) => {
                 return (
                   <article key={i}>
                     <span>
-                      {this.props.sitesUsers[user].firstName} {this.props.sitesUsers[user].lastName}
+                      {this.props.sitesUsers[this.props.siteZUID][user].firstName} {this.props.sitesUsers[this.props.siteZUID][user].lastName}
                     </span>
-                    <span>{this.props.sitesUsers[user].staff}</span>
-                    <span>{this.props.sitesUsers[user].email} </span>
+                    <span>{this.props.sitesUsers[this.props.siteZUID][user].staff}</span>
+                    <span>{this.props.sitesUsers[this.props.siteZUID][user].email} </span>
                   </article>
                 );
               })
