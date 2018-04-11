@@ -23,7 +23,7 @@ export function userBlueprints(state = {}, action) {
         ...state,
         [action.blueprint.ID]: action.blueprint
       };
-      return { ...blueprints};
+      return blueprints;
 
     case "CREATE_BLUEPRINT_ERROR":
       return state;

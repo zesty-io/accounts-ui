@@ -38,7 +38,7 @@ class EditRole extends Component {
           </header>
           <main>
             <form name="permissionsForm">
-              {this.props.sitesCollections instanceof Object && // COLLECTIONS endpoint
+              {this.props.sitesCollections[siteZUID] instanceof Object && // COLLECTIONS endpoint
                 Object.keys(this.props.sitesCollections[siteZUID]).map(
                   (collectionZUID, i) => {
                     return (
