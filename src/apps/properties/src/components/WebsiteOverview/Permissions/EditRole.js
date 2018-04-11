@@ -5,24 +5,31 @@ import styles from "./Permissions.less";
 import { getRole, updateRole } from "../../../store/sitesRoles";
 
 class EditRole extends Component {
+  constructor(props) {
+    super();
+    let { siteZUID, roleZUID } = props.props;
+    this.state = {
+      collections: { ...props.sitesCollections[siteZUID] },
+      role: { ...props.sitesRoles[siteZUID][roleZUID] },
+      siteZUID,
+      roleZUID
+    };
+  }
 
   handleClick = evt => {
     evt.preventDefault();
-    const PermissionValues = Object.keys(document.forms.permissionsForm).map(
-      (point, i) => {
-        console.log(document.forms.permissionsForm[i].value);
-      }
-    );
+    console.log(evt.target.value);
+  };
+
+  handleSubmit = () => {
+    console.log("sumbit!");
   };
 
   render() {
-    let { siteZUID, roleZUID } = this.props.props;
-    return siteZUID && roleZUID && this.props.sitesRoles[siteZUID][roleZUID].ZUID ? (
+    let { siteZUID, roleZUID } = this.state;
+    return (
       <div className={styles.modalWrapper}>
-        <h3>
-          Edit Granular Role Permissions for:{" "}
-          {this.props.sitesRoles[siteZUID][roleZUID].name}
-        </h3>
+        <h3>Edit Granular Role Permissions for: {this.state.role.name}</h3>
         <div className={styles.selectCollection}>
           <header>
             <h3>Collection</h3>
@@ -36,196 +43,156 @@ class EditRole extends Component {
           </header>
           <main>
             <form name="permissionsForm">
-              {this.props.sitesCollections[siteZUID] instanceof Object && // COLLECTIONS endpoint
-                Object.keys(this.props.sitesCollections[siteZUID]).map(
-                  (collectionZUID, i) => {
-                    return (
-                      <article key={i}>
-                        <span>
-                          {
-                            this.props.sitesCollections[siteZUID][
-                              collectionZUID
-                            ].label
-                          }
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            name={`create-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].name
-                            }`}
-                            checked={
-                              this.props.sitesRoles[siteZUID][roleZUID].create
-                                ? this.props.sitesRoles[siteZUID][roleZUID]
-                                    .create
-                                : this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole &&
-                                  this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole.create
-                            }
-                            value={`create-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].zuid
-                            }`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            name={`read-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].name
-                            }`}
-                            checked={
-                              this.props.sitesRoles[siteZUID][roleZUID].read
-                                ? this.props.sitesRoles[siteZUID][roleZUID].read
-                                : this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole &&
-                                  this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole.read
-                            }
-                            value={`read-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].zuid
-                            }`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            name={`update-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].name
-                            }`}
-                            checked={
-                              this.props.sitesRoles[siteZUID][roleZUID].update
-                                ? this.props.sitesRoles[siteZUID][roleZUID]
-                                    .update
-                                : this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole &&
-                                  this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole.update
-                            }
-                            value={`update-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].zuid
-                            }`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            name={`delete-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].name
-                            }`}
-                            checked={
-                              this.props.sitesRoles[siteZUID][roleZUID].delete
-                                ? this.props.sitesRoles[siteZUID][roleZUID]
-                                    .delete
-                                : this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole &&
-                                  this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole.delete
-                            }
-                            value={`delete-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].zuid
-                            }`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            name={`publish-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].name
-                            }`}
-                            checked={
-                              this.props.sitesRoles[siteZUID][roleZUID].publish
-                                ? this.props.sitesRoles[siteZUID][roleZUID]
-                                    .publish
-                                : this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole &&
-                                  this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole.publish
-                            }
-                            value={`publish-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].zuid
-                            }`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            name={`grant-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].name
-                            }`}
-                            checked={
-                              this.props.sitesRoles[siteZUID][roleZUID].grant
-                                ? this.props.sitesRoles[siteZUID][roleZUID]
-                                    .grant
-                                : this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole &&
-                                  this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole.grant
-                            }
-                            value={`grant-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].name
-                            }`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            name={`super-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].name
-                            }`}
-                            checked={
-                              this.props.sitesRoles[siteZUID][roleZUID].super
-                                ? this.props.sitesRoles[siteZUID][roleZUID]
-                                    .super
-                                : this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole &&
-                                  this.props.sitesRoles[siteZUID][roleZUID]
-                                    .systemRole.super
-                            }
-                            value={`super-${
-                              this.props.sitesCollections[siteZUID][
-                                collectionZUID
-                              ].zuid
-                            }`}
-                          />
-                        </span>
-                      </article>
-                    );
-                  }
-                )}
-              <Button onClick={this.handleClick}>Apply</Button>
+              {Object.keys(this.state.collections).map((collectionZUID, i) => {
+                return (
+                  <article key={i}>
+                    <span>{this.state.collections[collectionZUID].label}</span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={this.handleClick}
+                        name={`create,${
+                          this.state.collections[collectionZUID].name
+                        }`}
+                        checked={
+                          this.state.role.read
+                            ? this.state.role.read
+                            : this.state.role.systemRole &&
+                              this.state.role.systemRole.read
+                        }
+                        value={`create,${
+                          this.state.collections[collectionZUID].zuid
+                        }`}
+                      />
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={this.handleClick}
+                        name={`read,${
+                          this.state.collections[collectionZUID].name
+                        }`}
+                        checked={
+                          this.state.role.read
+                            ? this.state.role.read
+                            : this.state.role
+                                .systemRole &&
+                              this.state.role
+                                .systemRole.read
+                        }
+                        value={`read,${
+                          this.state.collections[collectionZUID].zuid
+                        }`}
+                      />
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={this.handleClick}
+                        name={`update,${
+                          this.state.collections[collectionZUID].name
+                        }`}
+                        checked={
+                          this.state.role.update
+                            ? this.state.role.update
+                            : this.state.role
+                                .systemRole &&
+                              this.state.role
+                                .systemRole.update
+                        }
+                        value={`update,${
+                          this.state.collections[collectionZUID].zuid
+                        }`}
+                      />
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={this.handleClick}
+                        name={`delete,${
+                          this.state.collections[collectionZUID].name
+                        }`}
+                        checked={
+                          this.state.role.delete
+                            ? this.state.role.delete
+                            : this.state.role
+                                .systemRole &&
+                              this.state.role
+                                .systemRole.delete
+                        }
+                        value={`delete,${
+                          this.state.collections[collectionZUID].zuid
+                        }`}
+                      />
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={this.handleClick}
+                        name={`publish,${
+                          this.state.collections[collectionZUID].name
+                        }`}
+                        checked={
+                          this.state.role.publish
+                            ? this.state.role.publish
+                            : this.state.role
+                                .systemRole &&
+                              this.state.role
+                                .systemRole.publish
+                        }
+                        value={`publish,${
+                          this.state.collections[collectionZUID].zuid
+                        }`}
+                      />
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={this.handleClick}
+                        name={`grant,${
+                          this.state.collections[collectionZUID].name
+                        }`}
+                        checked={
+                          this.state.role.grant
+                            ? this.state.role.grant
+                            : this.state.role
+                                .systemRole &&
+                              this.state.role
+                                .systemRole.grant
+                        }
+                        value={`grant,${
+                          this.state.collections[collectionZUID].name
+                        }`}
+                      />
+                    </span>
+                    <span>
+                      <input
+                        type="checkbox"
+                        onClick={this.handleClick}
+                        name={`super,${
+                          this.state.collections[collectionZUID].name
+                        }`}
+                        checked={
+                          this.state.role.super
+                            ? this.state.role.super
+                            : this.state.role
+                                .systemRole &&
+                              this.state.role
+                                .systemRole.super
+                        }
+                        value={`super-${
+                          this.state.collections[collectionZUID].zuid
+                        }`}
+                      />
+                    </span>
+                  </article>
+                );
+              })}
+              <Button onClick={this.handleSubmit}>Apply</Button>
             </form>
           </main>
         </div>
       </div>
-    ) : (
-      <LOADER />
     );
   }
 }
