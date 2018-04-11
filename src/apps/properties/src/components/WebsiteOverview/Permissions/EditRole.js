@@ -18,7 +18,9 @@ class EditRole extends Component {
 
   handleClick = evt => {
     evt.preventDefault();
-    console.log(evt.target.value);
+    let action = evt.target.value.split(',')[0];
+    let entity = evt.target.value.split(',')[1];
+    console.log(this.state);
   };
 
   handleSubmit = () => {
