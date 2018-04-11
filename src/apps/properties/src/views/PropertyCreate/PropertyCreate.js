@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";
 
-import { addSiteInfo, postNewSite } from "../../store/createSite";
+import { postNewSite } from "../../store/sites";
 import { notify } from "../../../../../shell/store/notifications";
 
 import styles from "./PropertyCreate.less";
@@ -12,7 +12,8 @@ class PropertyCreate extends Component {
   constructor(props) {
     super();
     this.state = {
-      submitted: false
+      submitted: false,
+      name: ""
     };
   }
   render() {
@@ -43,12 +44,12 @@ class PropertyCreate extends Component {
     );
   }
   handleChange = evt => {
-    this.props.dispatch(addSiteInfo({ [evt.target.name]: evt.target.value }));
+    this.setState({ name: evt.target.value });
   };
   handleClick = () => {
     this.setState({ submitted: !this.state.submitted });
     this.props
-      .dispatch(postNewSite(this.props.propertyName))
+      .dispatch(postNewSite(this.state.name))
       .then(data => {
         this.setState({ submitted: !this.state.submitted });
         this.props.history.push(`/properties/${data.data.ZUID}/blueprint`);

@@ -2,6 +2,7 @@ import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
 import { normalizeSites } from "../store";
+import { notify } from "../../../../shell/store/notifications";
 
 export function sites(state = {}, action) {
   switch (action.type) {
@@ -66,6 +67,18 @@ export function sites(state = {}, action) {
       return state;
     case "UPDATE_SITE_FAILURE":
       return state;
+    case "SENDING_INVITE":
+      return state;
+    case "SEND_INVITE_ERROR":
+      return state;
+    case "SEND_INVITE_SUCCESS":
+      return state;
+    case "CREATING_SITE":
+      return state;
+    case "CREATE_SITE_SUCCESS":
+      return state
+    case "CREATE_SITE_ERROR":
+      return state;
     default:
       return state;
   }
@@ -103,14 +116,91 @@ export function updateSite(siteZUID, payload) {
       json: true,
       body: payload
     })
-    .then(data => {
-      dispatch({ type: "UPDATE_SITE_SUCCESS" });
-      return data
-    })
-    .catch(err => {
-      dispatch({ type: "UPDATE_SITE_FAILURE" });
-      console.table(err);
-      throw err
-    });
+      .then(data => {
+        dispatch({ type: "UPDATE_SITE_SUCCESS" });
+        return data;
+      })
+      .catch(err => {
+        dispatch({ type: "UPDATE_SITE_FAILURE" });
+        console.table(err);
+        throw err;
+      });
   };
 }
+
+export function sendInvite(payload) {
+  return dispatch => {
+    dispatch({
+      type: "SENDING_INVITE"
+    });
+    return request(`${config.API_ACCOUNTS}/invites`, {
+      method: "POST",
+      json: true,
+      body: {
+        inviteeEmail: payload.inviteeEmail,
+        instanceZUID: payload.instanceZUID,
+        roleZUID: payload.roleZUID
+      }
+    })
+      .then(data => {
+        dispatch(
+          notify({
+            HTML: `<p>
+    <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Invite sent to <i>${
+      data.data.inviteeEmail
+    }</i>
+  </p>`,
+            type: "success"
+          })
+        );
+        dispatch({
+          type: "SEND_INVITE_SUCCESS",
+          data
+        });
+        return data;
+      })
+      .catch(err => {
+        console.table(err);
+        dispatch(
+          notify({
+            HTML: `<p>
+      <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;An error occured sending the invite: ${err}
+    </p>`,
+            type: "error"
+          })
+        );
+        dispatch({
+          type: "SEND_INVITE_ERROR",
+          err
+        });
+      });
+  };
+}
+
+export const postNewSite = name => {
+  return dispatch => {
+    dispatch({
+      type: "CREATING_SITE"
+    });
+    return request(`${config.API_ACCOUNTS}/instances`, {
+      method: "POST",
+      json: true,
+      body: { name }
+    })
+      .then(data => {
+        dispatch({
+          type: "CREATE_SITE_SUCCESS",
+          data: data.data
+        });
+        return data;
+      })
+      .catch(err => {
+        dispatch({
+          type: "CREATE_SITE_ERROR",
+          err
+        });
+        console.table(err);
+        throw err;
+      });
+  };
+};

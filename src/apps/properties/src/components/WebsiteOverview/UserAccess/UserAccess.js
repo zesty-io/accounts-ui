@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import styles from "./style.less";
 
-import { inviteData, sendInvite } from "../../../store/invite";
+import { sendInvite } from "../../../store/sites";
 import { notify } from "../../../../../../shell/store/notifications";
 
 class UserAccess extends Component {

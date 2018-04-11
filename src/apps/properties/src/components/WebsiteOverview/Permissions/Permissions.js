@@ -4,12 +4,11 @@ import { connect } from "react-redux";
 import EditRole from "./EditRole";
 import { notify } from "../../../../../../shell/store/notifications";
 import {
+  fetchSiteRoles,
   createRole,
-  changeCurrentRole,
-  removeRole
-} from "../../../store/sitesPermissions";
-
-import { fetchSiteRoles } from "../../../store/sitesRoles";
+  removeRole,
+  getRole
+} from "../../../store/sitesRoles";
 
 import styles from "./Permissions.less";
 
@@ -18,64 +17,72 @@ const formatDate = date => {
     return "";
   }
   const newDate = new Date(date);
-  return `${newDate.getMonth() + 1}-${newDate.getDate()}-${newDate.getFullYear()}`;
+  return `${newDate.getMonth() +
+    1}-${newDate.getDate()}-${newDate.getFullYear()}`;
 };
 
 class Permissions extends Component {
   constructor(props) {
-    super()
+    super();
     this.state = {
-      submitted: false
-    }
+      submitted: false,
+      name: "",
+      systemRoleZUID: "",
+      expiry: ""
+    };
   }
   onChange = evt => {
-    this.props.dispatch({
-      type: "UPDATE_PERMISSIONS",
-      payload: {
-        [evt.target.name]: evt.target.value
-      }
-    });
+    this.setState({ [evt.target.name]: evt.target.value });
   };
   handleCreate = evt => {
     evt.preventDefault();
-    if (
-      Object.keys(this.props.sitesPermissions).includes("name") &&
-      Object.keys(this.props.sitesPermissions).includes("systemRoleZUID")
-    ) {
-      this.setState({ submitted: !this.state.submitted})
+    if (this.state.name.length > 0 && this.state.systemRoleZUID.length > 0) {
+      this.setState({ submitted: !this.state.submitted });
       this.props
-        .dispatch(createRole(this.props.siteZUID, this.props.sitesPermissions))
+        .dispatch(createRole(this.props.siteZUID, { ...this.state }))
         .then(data => {
-      this.setState({ submitted: !this.state.submitted})          
-          this.props.dispatch({
-            type: "NEW_MODAL",
-            component: EditRole,
-            props: {
-              siteZUID: this.props.siteZUID
-            }
-          });
+          this.props
+            .dispatch(getRole(data.ZUID, this.props.siteZUID))
+            .then(data => {
+              this.props.dispatch({
+                type: "NEW_MODAL",
+                component: EditRole,
+                props: {
+                  siteZUID: this.props.siteZUID,
+                  roleZUID: data.ZUID
+                }
+              });
+              this.setState({ submitted: !this.state.submitted, name: "" });
+            });
           return this.props.dispatch(
             fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
           );
+        })
+        .catch(err => {
+          console.table(err);
+          this.setState({ submitted: !this.state.submitted, name: "" });
         });
     } else {
       this.props.dispatch(
         notify({
-          message: "You must include a name to create a new role.",
+          message:
+            "You must include a name and system role to create a new role.",
           type: "error"
         })
       );
     }
   };
 
-  handleEdit = (roleZUID, siteZuid) => {
-    this.props.dispatch(changeCurrentRole(roleZUID, siteZuid));
-    this.props.dispatch({
-      type: "NEW_MODAL",
-      component: EditRole,
-      props: {
-        siteZUID: this.props.siteZUID
-      }
+  handleEdit = (roleZUID, siteZUID) => {
+    this.props.dispatch(getRole(roleZUID, siteZUID)).then(data => {
+      this.props.dispatch({
+        type: "NEW_MODAL",
+        component: EditRole,
+        props: {
+          siteZUID,
+          roleZUID
+        }
+      });
     });
   };
 
@@ -102,7 +109,12 @@ class Permissions extends Component {
         <form className={styles.formGrid}>
           <span className={styles.label}>
             <label>Label</label>
-            <Input type="text" name="name" onChange={this.onChange} />
+            <Input
+              type="text"
+              name="name"
+              value={this.state.name}
+              onChange={this.onChange}
+            />
           </span>
           <span className={styles.base}>
             <label>Base Role</label>
@@ -125,9 +137,7 @@ class Permissions extends Component {
             onClick={this.handleCreate}
             disabled={this.state.submitted}
           >
-            {this.state.submitted
-              ? "Creating Role"
-              : "Create Role"}
+            {this.state.submitted ? "Creating Role" : "Create Role"}
           </Button>
         </form>
         <div className={styles.currentRoles}>
@@ -138,31 +148,53 @@ class Permissions extends Component {
           </header>
           <main>
             {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
-              Object.keys(this.props.sitesRoles[this.props.siteZUID]).map((ZUID, i) => {
-                if (this.props.sitesRoles[this.props.siteZUID][ZUID].name === 'SYSTEM_ROLE') {
-                  return
-                }else {
-                  return (
-                    <article key={i}>
-                      <span>{this.props.sitesRoles[this.props.siteZUID][ZUID].name}</span>
-                      <span>{formatDate(this.props.sitesRoles[this.props.siteZUID][ZUID].createdAt)}</span>
-                      <span>{formatDate(this.props.sitesRoles[this.props.siteZUID][ZUID].expiry)}</span>
-                      <span>
-                        <ButtonGroup>
-                          <Button
-                            text="Edit"
-                            onClick={() => this.handleEdit(ZUID, this.props.siteZUID)}
-                          />
-                          <Button
-                            text="Remove"
-                            onClick={() => this.handleRemove(ZUID)}
-                          />
-                        </ButtonGroup>
-                      </span>
-                    </article>
-                  );
+              Object.keys(this.props.sitesRoles[this.props.siteZUID]).map(
+                (ZUID, i) => {
+                  if (
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                    "SYSTEM_ROLE"
+                  ) {
+                    return;
+                  } else {
+                    return (
+                      <article key={i}>
+                        <span>
+                          {
+                            this.props.sitesRoles[this.props.siteZUID][ZUID]
+                              .name
+                          }
+                        </span>
+                        <span>
+                          {formatDate(
+                            this.props.sitesRoles[this.props.siteZUID][ZUID]
+                              .createdAt
+                          )}
+                        </span>
+                        <span>
+                          {formatDate(
+                            this.props.sitesRoles[this.props.siteZUID][ZUID]
+                              .expiry
+                          )}
+                        </span>
+                        <span>
+                          <ButtonGroup>
+                            <Button
+                              text="Edit"
+                              onClick={() =>
+                                this.handleEdit(ZUID, this.props.siteZUID)
+                              }
+                            />
+                            <Button
+                              text="Remove"
+                              onClick={() => this.handleRemove(ZUID)}
+                            />
+                          </ButtonGroup>
+                        </span>
+                      </article>
+                    );
+                  }
                 }
-              })}
+              )}
           </main>
         </div>
       </div>

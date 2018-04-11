@@ -5,25 +5,19 @@ import { sitesFiltered } from './sitesFiltered'
 import { sitesStats } from './sitesStats'
 import { sitesUsers } from './sitesUsers'
 import { sitesRoles } from './sitesRoles'
-import { invite } from './invite'
 import { sitesDomain } from './sitesDomain'
-import { createSite } from './createSite'
 import { sitesCollections } from './sitesCollections'
-import { sitesPermissions } from './sitesPermissions'
 
 export const propertiesReducers = {
   sites,
   sitesFiltered,
   sitesCompanies,
   sitesCollections,
-  sitesPermissions,
   sitesStats,
   sitesUsers,
   sitesRoles,
-  invite,
   blueprints,
   sitesDomain,
-  createSite
 }
 
 export const normalizeSites = sites => {

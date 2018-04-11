@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./Permissions.less";
 
-import { getRole, updateRole } from "../../../store/sitesPermissions";
+import { getRole, updateRole } from "../../../store/sitesRoles";
 
 class EditRole extends Component {
-  componentDidMount() {
-    this.props.dispatch(getRole(this.props.currentRole.ZUID));
-  }
 
   handleClick = evt => {
     evt.preventDefault();
@@ -19,11 +16,12 @@ class EditRole extends Component {
   };
 
   render() {
-    const { siteZUID } = this.props.props;
-    return (
+    let { siteZUID, roleZUID } = this.props.props;
+    return siteZUID && roleZUID && this.props.sitesRoles[siteZUID][roleZUID].ZUID ? (
       <div className={styles.modalWrapper}>
         <h3>
-          Edit Granular Role Permissions for: {this.props.currentRole.name}
+          Edit Granular Role Permissions for:{" "}
+          {this.props.sitesRoles[siteZUID][roleZUID].name}
         </h3>
         <div className={styles.selectCollection}>
           <header>
@@ -59,10 +57,13 @@ class EditRole extends Component {
                               ].name
                             }`}
                             checked={
-                              this.props.currentRole.create
-                                ? this.props.currentRole.create
-                                : this.props.currentRole.systemRole &&
-                                  this.props.currentRole.systemRole.create
+                              this.props.sitesRoles[siteZUID][roleZUID].create
+                                ? this.props.sitesRoles[siteZUID][roleZUID]
+                                    .create
+                                : this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole &&
+                                  this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole.create
                             }
                             value={`create-${
                               this.props.sitesCollections[siteZUID][
@@ -80,10 +81,12 @@ class EditRole extends Component {
                               ].name
                             }`}
                             checked={
-                              this.props.currentRole.read
-                                ? this.props.currentRole.read
-                                : this.props.currentRole.systemRole &&
-                                  this.props.currentRole.systemRole.read
+                              this.props.sitesRoles[siteZUID][roleZUID].read
+                                ? this.props.sitesRoles[siteZUID][roleZUID].read
+                                : this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole &&
+                                  this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole.read
                             }
                             value={`read-${
                               this.props.sitesCollections[siteZUID][
@@ -101,10 +104,13 @@ class EditRole extends Component {
                               ].name
                             }`}
                             checked={
-                              this.props.currentRole.update
-                                ? this.props.currentRole.update
-                                : this.props.currentRole.systemRole &&
-                                  this.props.currentRole.systemRole.update
+                              this.props.sitesRoles[siteZUID][roleZUID].update
+                                ? this.props.sitesRoles[siteZUID][roleZUID]
+                                    .update
+                                : this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole &&
+                                  this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole.update
                             }
                             value={`update-${
                               this.props.sitesCollections[siteZUID][
@@ -122,10 +128,13 @@ class EditRole extends Component {
                               ].name
                             }`}
                             checked={
-                              this.props.currentRole.delete
-                                ? this.props.currentRole.delete
-                                : this.props.currentRole.systemRole &&
-                                  this.props.currentRole.systemRole.delete
+                              this.props.sitesRoles[siteZUID][roleZUID].delete
+                                ? this.props.sitesRoles[siteZUID][roleZUID]
+                                    .delete
+                                : this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole &&
+                                  this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole.delete
                             }
                             value={`delete-${
                               this.props.sitesCollections[siteZUID][
@@ -143,10 +152,13 @@ class EditRole extends Component {
                               ].name
                             }`}
                             checked={
-                              this.props.currentRole.publish
-                                ? this.props.currentRole.publish
-                                : this.props.currentRole.systemRole &&
-                                  this.props.currentRole.systemRole.publish
+                              this.props.sitesRoles[siteZUID][roleZUID].publish
+                                ? this.props.sitesRoles[siteZUID][roleZUID]
+                                    .publish
+                                : this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole &&
+                                  this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole.publish
                             }
                             value={`publish-${
                               this.props.sitesCollections[siteZUID][
@@ -164,10 +176,13 @@ class EditRole extends Component {
                               ].name
                             }`}
                             checked={
-                              this.props.currentRole.grant
-                                ? this.props.currentRole.grant
-                                : this.props.currentRole.systemRole &&
-                                  this.props.currentRole.systemRole.grant
+                              this.props.sitesRoles[siteZUID][roleZUID].grant
+                                ? this.props.sitesRoles[siteZUID][roleZUID]
+                                    .grant
+                                : this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole &&
+                                  this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole.grant
                             }
                             value={`grant-${
                               this.props.sitesCollections[siteZUID][
@@ -185,10 +200,13 @@ class EditRole extends Component {
                               ].name
                             }`}
                             checked={
-                              this.props.currentRole.super
-                                ? this.props.currentRole.super
-                                : this.props.currentRole.systemRole &&
-                                  this.props.currentRole.systemRole.super
+                              this.props.sitesRoles[siteZUID][roleZUID].super
+                                ? this.props.sitesRoles[siteZUID][roleZUID]
+                                    .super
+                                : this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole &&
+                                  this.props.sitesRoles[siteZUID][roleZUID]
+                                    .systemRole.super
                             }
                             value={`super-${
                               this.props.sitesCollections[siteZUID][
@@ -206,14 +224,16 @@ class EditRole extends Component {
           </main>
         </div>
       </div>
+    ) : (
+      <LOADER />
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    currentRole: state.sitesPermissions.currentRole,
-    sitesCollections: state.sitesCollections
+    sitesCollections: state.sitesCollections,
+    sitesRoles: state.sitesRoles
   };
 };
 
