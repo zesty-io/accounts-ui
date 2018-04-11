@@ -138,25 +138,29 @@ class Permissions extends Component {
           <main>
             {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
               Object.keys(this.props.sitesRoles[this.props.siteZUID]).map((ZUID, i) => {
-                return (
-                  <article key={i}>
-                    <span>{this.props.sitesRoles[this.props.siteZUID][ZUID].name} </span>
-                    <span>{formatDate(this.props.sitesRoles[this.props.siteZUID][ZUID].createdAt)} </span>
-                    <span>{formatDate(this.props.sitesRoles[this.props.siteZUID][ZUID].expiry)} </span>
-                    <span>
-                      <ButtonGroup>
-                        <Button
-                          text="Edit"
-                          onClick={() => this.handleEdit(ZUID, this.props.siteZUID)}
-                        />
-                        <Button
-                          text="Remove"
-                          onClick={() => this.handleRemove(ZUID)}
-                        />
-                      </ButtonGroup>
-                    </span>
-                  </article>
-                );
+                if (this.props.sitesRoles[this.props.siteZUID][ZUID].name === 'SYSTEM_ROLE') {
+                  return
+                }else {
+                  return (
+                    <article key={i}>
+                      <span>{this.props.sitesRoles[this.props.siteZUID][ZUID].name}</span>
+                      <span>{formatDate(this.props.sitesRoles[this.props.siteZUID][ZUID].createdAt)}</span>
+                      <span>{formatDate(this.props.sitesRoles[this.props.siteZUID][ZUID].expiry)}</span>
+                      <span>
+                        <ButtonGroup>
+                          <Button
+                            text="Edit"
+                            onClick={() => this.handleEdit(ZUID, this.props.siteZUID)}
+                          />
+                          <Button
+                            text="Remove"
+                            onClick={() => this.handleRemove(ZUID)}
+                          />
+                        </ButtonGroup>
+                      </span>
+                    </article>
+                  );
+                }
               })}
           </main>
         </div>

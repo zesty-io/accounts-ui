@@ -40,8 +40,8 @@ class CompanyAccess extends Component {
             <h3>Access</h3>
           </header>
           <main>
-            {Array.isArray(this.props.sitesCompanies) ? (
-              this.props.sitesCompanies.map((company, i) => {
+            {Array.isArray(this.props.sitesCompanies[this.props.siteZUID]) ? (
+              this.props.sitesCompanies[this.props.siteZUID].map((company, i) => {
                 return (
                   <article key={i}>
                     <span>{company.name}</span>
