@@ -14,19 +14,19 @@ class Email extends Component {
   constructor(props) {
     super();
     this.state = {
-      submitted: false,
-      newEmail: ''
+      submitted: false
     };
   }
   handleChange = evt => {
-    if (evt.target.value.match(evt.target.pattern)) {
+    if (evt.target.value.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/g)) { // this does not allow caps
       return this.props.dispatch(
         updateProfile({ [evt.target.name]: evt.target.value })
       );
     } else {
       return null;
     }
-  };
+  }
+
   handleClick = e => {
     if (this.props.newEmail.length) {
       this.setState({ submitted: !this.state.submitted });
@@ -41,7 +41,8 @@ class Email extends Component {
         })
       );
     }
-  };
+  }
+
   render() {
     return (
       <section className={styles.profileEmail}>
@@ -59,9 +60,8 @@ class Email extends Component {
             <footer>
               <Input
                 type="text"
-                placeholder="email@work.com"
+                placeholder="email@domain.com"
                 name="newEmail"
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
                 className={styles.field}
                 required
                 onChange={this.handleChange}

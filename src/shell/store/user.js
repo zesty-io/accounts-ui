@@ -123,8 +123,7 @@ export function addEmail() {
             .user.unverifiedEmails.split(",")
             .concat(getState().user.newEmail)
             .join(",")
-        : getState().user.newEmail.value;
-
+        : getState().user.newEmail;
     return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
       method: "PUT",
       json: true,
