@@ -177,10 +177,10 @@ class EditBlueprint extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    blueprint: Object.keys(state.userBlueprints)
+    blueprint: Object.keys(state.blueprints)
       .map(i => {
-        if (state.userBlueprints[i].ID == ownProps.match.params.id) {
-          return state.userBlueprints[i];
+        if (state.blueprints[i].ID == ownProps.match.params.id) {
+          return state.blueprints[i];
         }
       })
       .filter(i => i !== undefined)[0]

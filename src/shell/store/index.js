@@ -8,7 +8,6 @@ import { auth } from './auth'
 import { notifications } from './notifications'
 import { modal } from './modal'
 import { propertiesReducers } from '../../apps/properties/src/store'
-import { profileReducers } from '../../apps/account/src/store'
 
 const loggerMiddleware = createLogger({
   collapsed: true,
@@ -17,7 +16,6 @@ const loggerMiddleware = createLogger({
 
 const rootReducer = combineReducers({
   ...propertiesReducers,
-  ...profileReducers,
   auth,
   user,
   modal,

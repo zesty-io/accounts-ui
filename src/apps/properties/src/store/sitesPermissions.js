@@ -1,7 +1,7 @@
 import { request } from "../../../../util/request";
 import config from "../../../../shell/config";
 
-const initialState = { systemRoleZUID: "31-71cfc74-s30" };
+const initialState = { };
 
 export function sitesPermissions(state = initialState, action) {
   switch (action.type) {

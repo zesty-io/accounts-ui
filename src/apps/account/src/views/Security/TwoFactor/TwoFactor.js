@@ -1,6 +1,8 @@
 import { Component } from "React";
-import { updateSetting } from "../../../store";
 import { connect } from "react-redux";
+
+import { updateSetting } from "../../../../../../shell/store/user";
+
 import Toggle from "../../../../../../core/toggle/Toggle";
 
 import styles from "./TwoFactor.less";

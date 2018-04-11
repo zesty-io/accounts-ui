@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { fetchAccountBlueprints } from "../../store/userBlueprints";
+import { fetchBlueprints } from "../../../../properties/src/store/blueprints";
 
 import styles from "./Blueprint.less";
 
 class Blueprints extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchAccountBlueprints());
+    this.props.dispatch(fetchBlueprints());
   }
 
   handleClick(path) {
@@ -32,19 +32,19 @@ class Blueprints extends Component {
         </div>
         <div className={styles.BlueprintView}>
           <main className={styles.Blueprints}>
-            {this.props.userBlueprints &&
-              Object.keys(this.props.userBlueprints)
+            {this.props.blueprints &&
+              Object.keys(this.props.blueprints)
                 .filter(i => {
                   if (
-                    !this.props.userBlueprints[i].trashed &&
-                    this.props.userBlueprints[i].createdByUserZUID ===
+                    !this.props.blueprints[i].trashed &&
+                    this.props.blueprints[i].createdByUserZUID ===
                       this.props.user.ZUID
                   ) {
                     return i;
                   }
                 })
                 .map(i => {
-                  let blueprint = this.props.userBlueprints[i];
+                  let blueprint = this.props.blueprints[i];
                   return (
                     <article className={styles.Blueprint} key={i}>
                       <header>

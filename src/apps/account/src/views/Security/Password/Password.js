@@ -1,6 +1,6 @@
 import { Component } from "React";
 import { connect } from "react-redux";
-import { updateSetting } from "../../../store";
+import { updateSetting } from "../../../../../../shell/store/user";
 
 import styles from "./Password.less";
 

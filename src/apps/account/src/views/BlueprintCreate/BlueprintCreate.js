@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 
-import { updateSetting, postNewBlueprint } from "../../store/userBlueprints";
+import { postNewBlueprint } from "../../../../properties/src/store/blueprints";
 
 import styles from "./BlueprintCreate.less";
 
@@ -10,7 +10,8 @@ class BlueprintCreate extends Component {
   constructor(props){
     super()
     this.state = {
-      submitted: false
+      submitted: false,
+      name: ''
     }
   }
   render() {
@@ -42,12 +43,12 @@ class BlueprintCreate extends Component {
     );
   }
   handleChange = evt => {
-    this.props.dispatch(updateSetting({ [evt.target.name]: evt.target.value }));
+    this.setState({ name: evt.target.value })
   };
   handleClick = () => {
     this.setState({submitted: !this.state.submitted})
     this.props
-      .dispatch(postNewBlueprint(this.props.userBlueprints.createBlueprintName))
+      .dispatch(postNewBlueprint(this.state.name))
       .then(bp => {
         this.setState({submitted: !this.state.submitted})
         return this.props.history.push(`../blueprints/${bp.ID}`);
