@@ -1,37 +1,26 @@
 import { Component } from "React";
 import { connect } from "react-redux";
 
-import { updateSetting } from "../../../../../../shell/store/user";
-
 import Toggle from "../../../../../../core/toggle/Toggle";
 
 import styles from "./TwoFactor.less";
 
-class TwoFactor extends Component {
-  handleChange = evt => {
-    if (evt.target.value.match(evt.target.pattern)) {
-      return this.props.dispatch(
-        updateSetting({
-          [evt.target.name]: evt.target.value
-        })
-      );
+class TwoFactorOptions extends Component {
+  constructor(props) {
+    super()
+    this.state = {
+      phoneNumberPrefix: '',
+      phoneNumber: ''
     }
+  }
+  handleChange = evt => {
+    this.setState({ [evt.target.name] : evt.target.value })
   };
-  handleEnable = () => {
-    this.props.dispatch(
-      updateSetting({
-        twofa: true,
-        showAuth: true
-      })
-    );
+  handleEnable = (evt) => {
+    evt.preventDefault()
   };
-  handleDisable = () => {
-    this.props.dispatch(
-      updateSetting({
-        twofa: false,
-        showAuth: false
-      })
-    );
+  handleDisable = (evt) => {
+    evt.preventDefault()
   };
   render() {
     return (
@@ -39,6 +28,7 @@ class TwoFactor extends Component {
         {this.props.twofa ? (
           <div>
             <p>Two-factor authentication currently set up for this account.</p>
+            <p>number used ***-***-3321</p>
             <Button text="Disable Two-factor" onClick={this.handleDisable} />
           </div>
         ) : (
@@ -56,13 +46,15 @@ class TwoFactor extends Component {
                 size="5"
                 placeholder="+1"
                 name="phoneNumberPrefix"
+                value={this.state.phoneNumberPrefix}
                 onChange={this.handleChange}
               />
               <Input
                 type="text"
                 placeholder="123-456-7890"
                 name="phoneNumber"
-                pattern="d{3}-\d{3}-\d{4}"
+                required
+                value={this.state.phoneNumber}
                 onChange={this.handleChange}
               />
             <Button text="Enable Two-factor" onClick={this.handleEnable} />
@@ -73,4 +65,4 @@ class TwoFactor extends Component {
   }
 }
 
-export default connect(state => state)(TwoFactor);
+export default connect(state => state.user)(TwoFactorOptions);

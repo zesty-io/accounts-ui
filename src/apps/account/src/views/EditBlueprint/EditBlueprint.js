@@ -2,43 +2,73 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { fetchBlueprints } from '../../../../properties/src/store/blueprints'
+
 import styles from "./EditBlueprint.less";
 
 class EditBlueprint extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      blueprint: props.blueprint
+    };
+  }
+  componentDidMount() {
+    if(!this.props.blueprint){
+      this.props.history.push('/settings/blueprints')
+    }
+  }
   handleSubmit = evt => {
     evt.preventDefault();
     console.log("WEEEEEEEEE!"); // disabled for now
   };
+  onChange = evt => {
+    evt.preventDefault();
+    if (evt.target.name === "tags_csv") {
+      // handle tags csv delta
+      return console.log(evt.target.value);
+    }
+    return this.setState({
+      blueprint: {
+        ...this.state.blueprint,
+        [evt.target.name]: evt.target.value
+      }
+    });
+  };
   render() {
-    let { blueprint } = this.props;
-    return this.props && this.props.blueprint ? (
+    return this.state.blueprint ? (
       <form id="edit-form" onSubmit={this.handleSubmit}>
         <div className={styles.blueprints}>
           <div className={styles.rowOne}>
             <img
               src={`https://raw.githubusercontent.com/${
-                blueprint.name
+                this.state.blueprint.name
               }/master/shield.png`}
-              alt={blueprint.name}
+              alt={this.state.blueprint.name}
             />
             <label>Blueprint Name</label>
-            <Input type="text"
+            <Input
+              type="text"
               size={50}
-              placeholder={blueprint.name}
-              name="edit[name]" />
+              onChange={this.onChange}
+              value={this.state.blueprint.name}
+              name="name"
+            />
             <label>Github Repo URL</label>
             <Input
               type="text"
               size={50}
-              placeholder={blueprint.githubURL}
-              name="edit[github_url]"
+              onChange={this.onChange}
+              value={this.state.blueprint.githubURL}
+              name="githubURL"
             />
             <label>Blueprint Example Preview URL</label>
             <Input
               type="text"
               size={50}
-              placeholder={blueprint.previewURL}
-              name="edit[preview_url]"
+              onChange={this.onChange}
+              value={this.state.blueprint.previewURL}
+              name="previewURL"
             />
             <label>
               Shield Image URL (Optional. This will override shield.png in your
@@ -47,8 +77,9 @@ class EditBlueprint extends Component {
             <Input
               type="text"
               size={50}
-              placeholder={blueprint.mainImage}
-              name="edit[main_image]"
+              onChange={this.onChange}
+              value={this.state.blueprint.mainImage}
+              name="mainImage"
             />
             <label>
               Background Cover Image URL (Optional. This will override
@@ -56,8 +87,9 @@ class EditBlueprint extends Component {
             </label>
             <Input
               size={50}
-              placeholder={blueprint.coverImage}
-              name="edit[cover_image]"
+              onChange={this.onChange}
+              value={this.state.blueprint.coverImage}
+              name="coverImage"
             />
           </div>
           <h3 className={styles.description}>Description</h3>
@@ -65,112 +97,210 @@ class EditBlueprint extends Component {
             <label>Short Description</label>
             <textarea
               wrap="soft"
-              name="edit[short_description]"
-              placeholder={blueprint.shortDescription}
+              name="shortDescription"
+              onChange={this.onChange}
+              value={this.state.blueprint.shortDescription}
             />
           </div>
           <div className={styles.rowTwo1}>
             <label>Description</label>
             <textarea
               wrap="soft"
-              name="edit[description]"
-              placeholder={blueprint.description}
+              name="description"
+              onChange={this.onChange}
+              value={this.state.blueprint.description}
             />
           </div>
           <h3 className={styles.rowThree}>Tags</h3>
-            <Input type="hidden" name="edit[tags_csv][]" value="" />
-            <div className={styles.opts1}>
+          <div className={styles.opts1}>
             <h4>Categories</h4>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="18" />Frameworks
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="18"
+              />Frameworks
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="3" />Bootstrap
-              3.5
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="3"
+              />Bootstrap 3.5
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="1" />Zesty
-              Classic Framework
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="1"
+              />Zesty Classic Framework
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="2" />Landing
-              Pages
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="2"
+              />Landing Pages
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="4" />Developer
-              Starts
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="4"
+              />Developer Starts
             </label>
             <h4>Descriptive</h4>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="19" />Colorful
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="19"
+              />Colorful
             </label>
-            </div>
-            <div className={styles.opts2}>            
+          </div>
+          <div className={styles.opts2}>
             <h4>Trends</h4>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="20" />Flat
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="20"
+              />Flat
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="21" />Bootstrap
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="21"
+              />Bootstrap
             </label>
-            </div>
-            <div className={styles.opts3}>            
+          </div>
+          <div className={styles.opts3}>
             <h4>Property Traits</h4>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="6" />Mobile
-              Responsive
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="6"
+              />Mobile Responsive
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="7" />Social
-              Share Buttons
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="7"
+              />Social Share Buttons
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="8" />Facebook
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="8"
+              />Facebook
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="9" />Instagram
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="9"
+              />Instagram
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="10" />Twitter
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="10"
+              />Twitter
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="11" />Google+
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="11"
+              />Google+
             </label>
             <label>
-              <Input type="checkbox" name="edit[tags_csv][]" value="12" />Authorship
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="12"
+              />Authorship
             </label>
-            </div>
-            <div className={styles.opts4}>
-              <h4>Content Traits</h4>
-              <label>
-                <Input type="checkbox" name="edit[tags_csv][]" value="24" />Single
-                Page
-              </label>
-              <label>
-                <Input type="checkbox" name="edit[tags_csv][]" value="25" />Multi
-                Page
-              </label>
-              <label>
-                <Input type="checkbox" name="edit[tags_csv][]" value="26" />Blogs
-              </label>
-              <label>
-                <Input type="checkbox" name="edit[tags_csv][]" value="27" />Galleries
-              </label>
-              <label>
-                <Input type="checkbox" name="edit[tags_csv][]" value="28" />Menus
-              </label>
-              <label>
-                <Input type="checkbox" name="edit[tags_csv][]" value="29" />Business
-              </label>
-            </div>
-            
-            <Button className={styles.bottom2} type="submit" text="Save" />
-            <Button className={styles.bottom3} text="Cancel" />
-            <Button className={styles.bottom4} text="Edit in Creator" />
+          </div>
+          <div className={styles.opts4}>
+            <h4>Content Traits</h4>
+            <label>
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="24"
+              />Single Page
+            </label>
+            <label>
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="25"
+              />Multi Page
+            </label>
+            <label>
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="26"
+              />Blogs
+            </label>
+            <label>
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="27"
+              />Galleries
+            </label>
+            <label>
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="28"
+              />Menus
+            </label>
+            <label>
+              <Input
+                type="checkbox"
+                name="tags_csv"
+                onChange={this.onChange}
+                value="29"
+              />Business
+            </label>
+          </div>
+
+          <Button className={styles.bottom2} type="submit" text="Save" />
+          <Button className={styles.bottom3} text="Cancel" />
+          <Button className={styles.bottom4} text="Edit in Creator" />
         </div>
       </form>
     ) : (
-      <p>No Blueprint Found, you may not be the owner of this blueprint</p>
+      <Loader />
     );
   }
 }
