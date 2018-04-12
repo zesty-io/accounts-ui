@@ -15,9 +15,6 @@ class UserAccess extends Component {
       inviteRole: ""
     };
   }
-  componentDidMount() {
-    console.log(this.state);
-  }
   handleInvite = evt => {
     if (this.state.inviteeEmail.includes("@")) {
       // needs mo betta validity check here
@@ -31,7 +28,7 @@ class UserAccess extends Component {
           })
         )
         .then(data => {
-          this.setState({ submitted: !this.state.submitted, inviteeEmail: '' });
+          this.setState({ submitted: !this.state.submitted, inviteeEmail: "" });
         });
     } else {
       this.props.dispatch(
@@ -65,7 +62,7 @@ class UserAccess extends Component {
             <option value="none">Select Role</option>
             {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
               Object.keys(this.props.sitesRoles[this.props.siteZUID]).map(
-                roleZUID => {
+                (roleZUID, i) => {
                   if (
                     this.props.sitesRoles[this.props.siteZUID][roleZUID]
                       .name === "SYSTEM_ROLE"
@@ -74,13 +71,10 @@ class UserAccess extends Component {
                   } else {
                     return (
                       <option
-                        value={
-                          this.props.sitesRoles[this.props.siteZUID][roleZUID].ZUID
-                        }
-                      >
-                        {
-                          this.props.sitesRoles[this.props.siteZUID][roleZUID].name
-                        }
+                        key={i}
+                        value={this.props.sitesRoles[this.props.siteZUID][roleZUID].ZUID}
+                        >
+                        {this.props.sitesRoles[this.props.siteZUID][roleZUID].name}
                       </option>
                     );
                   }
@@ -91,23 +85,17 @@ class UserAccess extends Component {
             onChange={this.handleChange}
             name="inviteRole"
             selection={{
-              value: "contributor",
-              html: '<option value="own">Contributor</option>'
+              value: "Select Role",
+              html: '<option value="none">Select Role</option>'
             }}
             options={
-              this.props.sitesRoles.length
-                ? this.props.sitesRoles.map((role, i) => {
-                    return {
-                      value: role.ZUID,
-                      html: `<option value="${role.ZUID}">${role.name}</option>`
-                    };
-                  })
-                : [
-                    {
-                      value: "No Roles Created",
-                      html: '<option value="none">No Roles</option>'
-                    }
-                  ]
+              this.props.sitesRoles[this.props.siteZUID] instanceof Object ?
+              Object.keys(this.props.sitesRoles[this.props.siteZUID]).map((roleZUID, i) => {
+                  return {
+                    value: this.props.sitesRoles[this.props.siteZUID][roleZUID].ZUID,
+                    html: `<option value="${this.props.sitesRoles[this.props.siteZUID][roleZUID].ZUID}">${this.props.sitesRoles[this.props.siteZUID][roleZUID].name}</option>`
+                  };
+                  }) : []
             }
           /> */}
           <Button onClick={this.handleInvite} disabled={this.state.submitted}>
