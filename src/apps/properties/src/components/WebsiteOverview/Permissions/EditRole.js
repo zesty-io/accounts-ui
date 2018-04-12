@@ -11,15 +11,58 @@ class EditRole extends Component {
     this.state = {
       collections: { ...props.sitesCollections[siteZUID] },
       role: { ...props.sitesRoles[siteZUID][roleZUID] },
+      granularRoles: {},
       siteZUID,
       roleZUID
     };
   }
 
+  componentDidMount() {
+    let granularRoles = {};
+    // create granular roles object from granular roles or the system role
+    Object.keys(this.state.collections).forEach(collectionZUID => {
+      this.state.role.granularRoles
+        ? (granularRoles[collectionZUID] = {
+            create:
+              this.state.role.granularRoles[collectionZUID].create ||
+              this.state.role.systemRole.create,
+            read:
+              this.state.role.granularRoles[collectionZUID].read ||
+              this.state.role.systemRole.read,
+            update:
+              this.state.role.granularRoles[collectionZUID].update ||
+              this.state.role.systemRole.update,
+            delete:
+              this.state.role.granularRoles[collectionZUID].delete ||
+              this.state.role.systemRole.delete,
+            publish:
+              this.state.role.granularRoles[collectionZUID].publish ||
+              this.state.role.systemRole.publish,
+            grant:
+              this.state.role.granularRoles[collectionZUID].grant ||
+              this.state.role.systemRole.grant,
+            super:
+              this.state.role.granularRoles[collectionZUID].super ||
+              this.state.role.systemRole.super
+          })
+        : (granularRoles[collectionZUID] = {
+            create: this.state.role.systemRole.create,
+            read: this.state.role.systemRole.read,
+            update: this.state.role.systemRole.update,
+            delete: this.state.role.systemRole.delete,
+            publish: this.state.role.systemRole.publish,
+            grant: this.state.role.systemRole.grant,
+            super: this.state.role.systemRole.super
+          });
+    });
+
+    this.setState({ granularRoles });
+  }
+
   handleClick = evt => {
     evt.preventDefault();
-    let action = evt.target.value.split(',')[0];
-    let entity = evt.target.value.split(',')[1];
+    let action = evt.target.value.split(",")[0];
+    let entity = evt.target.value.split(",")[1];
     console.log(this.state);
   };
 
@@ -57,10 +100,10 @@ class EditRole extends Component {
                           this.state.collections[collectionZUID].name
                         }`}
                         checked={
-                          this.state.role.read
-                            ? this.state.role.read
+                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].create
+                            ? this.state.granularRoles[collectionZUID].create
                             : this.state.role.systemRole &&
-                              this.state.role.systemRole.read
+                              this.state.role.systemRole.create
                         }
                         value={`create,${
                           this.state.collections[collectionZUID].zuid
@@ -75,12 +118,10 @@ class EditRole extends Component {
                           this.state.collections[collectionZUID].name
                         }`}
                         checked={
-                          this.state.role.read
-                            ? this.state.role.read
-                            : this.state.role
-                                .systemRole &&
-                              this.state.role
-                                .systemRole.read
+                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].read
+                            ? this.state.granularRoles[collectionZUID].read
+                            : this.state.role.systemRole &&
+                              this.state.role.systemRole.read
                         }
                         value={`read,${
                           this.state.collections[collectionZUID].zuid
@@ -95,12 +136,10 @@ class EditRole extends Component {
                           this.state.collections[collectionZUID].name
                         }`}
                         checked={
-                          this.state.role.update
-                            ? this.state.role.update
-                            : this.state.role
-                                .systemRole &&
-                              this.state.role
-                                .systemRole.update
+                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].update
+                            ? this.state.granularRoles[collectionZUID].update
+                            : this.state.role.systemRole &&
+                              this.state.role.systemRole.update
                         }
                         value={`update,${
                           this.state.collections[collectionZUID].zuid
@@ -115,12 +154,10 @@ class EditRole extends Component {
                           this.state.collections[collectionZUID].name
                         }`}
                         checked={
-                          this.state.role.delete
-                            ? this.state.role.delete
-                            : this.state.role
-                                .systemRole &&
-                              this.state.role
-                                .systemRole.delete
+                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].delete
+                            ? this.state.granularRoles[collectionZUID].delete
+                            : this.state.role.systemRole &&
+                              this.state.role.systemRole.delete
                         }
                         value={`delete,${
                           this.state.collections[collectionZUID].zuid
@@ -135,12 +172,10 @@ class EditRole extends Component {
                           this.state.collections[collectionZUID].name
                         }`}
                         checked={
-                          this.state.role.publish
-                            ? this.state.role.publish
-                            : this.state.role
-                                .systemRole &&
-                              this.state.role
-                                .systemRole.publish
+                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].publish
+                            ? this.state.granularRoles[collectionZUID].publish
+                            : this.state.role.systemRole &&
+                              this.state.role.systemRole.publish
                         }
                         value={`publish,${
                           this.state.collections[collectionZUID].zuid
@@ -155,12 +190,10 @@ class EditRole extends Component {
                           this.state.collections[collectionZUID].name
                         }`}
                         checked={
-                          this.state.role.grant
-                            ? this.state.role.grant
-                            : this.state.role
-                                .systemRole &&
-                              this.state.role
-                                .systemRole.grant
+                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].grant
+                            ? this.state.granularRoles[collectionZUID].grant
+                            : this.state.role.systemRole &&
+                              this.state.role.systemRole.grant
                         }
                         value={`grant,${
                           this.state.collections[collectionZUID].name
@@ -175,12 +208,10 @@ class EditRole extends Component {
                           this.state.collections[collectionZUID].name
                         }`}
                         checked={
-                          this.state.role.super
-                            ? this.state.role.super
-                            : this.state.role
-                                .systemRole &&
-                              this.state.role
-                                .systemRole.super
+                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].super
+                            ? this.state.granularRoles[collectionZUID].super
+                            : this.state.role.systemRole &&
+                              this.state.role.systemRole.super
                         }
                         value={`super-${
                           this.state.collections[collectionZUID].zuid
