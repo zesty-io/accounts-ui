@@ -60,10 +60,16 @@ class EditRole extends Component {
   }
 
   handleClick = evt => {
-    evt.preventDefault();
     let action = evt.target.value.split(",")[0];
     let entity = evt.target.value.split(",")[1];
-    console.log(this.state);
+    let alteredAction = this.state.granularRoles[entity];
+    alteredAction[action] = !alteredAction[action];
+    return this.setState(state => {
+      return {
+        ...state,
+        granularRoles: { ...this.state.granularRoles, [entity]: alteredAction }
+      };
+    });
   };
 
   handleSubmit = () => {
@@ -89,21 +95,15 @@ class EditRole extends Component {
           <main>
             <form name="permissionsForm">
               {Object.keys(this.state.collections).map((collectionZUID, i) => {
-                return (
+                return this.state.granularRoles[collectionZUID] ? (
                   <article key={i}>
                     <span>{this.state.collections[collectionZUID].label}</span>
                     <span>
                       <input
                         type="checkbox"
                         onClick={this.handleClick}
-                        name={`create,${
-                          this.state.collections[collectionZUID].name
-                        }`}
                         checked={
-                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].create
-                            ? this.state.granularRoles[collectionZUID].create
-                            : this.state.role.systemRole &&
-                              this.state.role.systemRole.create
+                          this.state.granularRoles[collectionZUID].create
                         }
                         value={`create,${
                           this.state.collections[collectionZUID].zuid
@@ -114,15 +114,8 @@ class EditRole extends Component {
                       <input
                         type="checkbox"
                         onClick={this.handleClick}
-                        name={`read,${
-                          this.state.collections[collectionZUID].name
-                        }`}
                         checked={
-                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].read
-                            ? this.state.granularRoles[collectionZUID].read
-                            : this.state.role.systemRole &&
-                              this.state.role.systemRole.read
-                        }
+                          this.state.granularRoles[collectionZUID].read}
                         value={`read,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -132,15 +125,8 @@ class EditRole extends Component {
                       <input
                         type="checkbox"
                         onClick={this.handleClick}
-                        name={`update,${
-                          this.state.collections[collectionZUID].name
-                        }`}
                         checked={
-                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].update
-                            ? this.state.granularRoles[collectionZUID].update
-                            : this.state.role.systemRole &&
-                              this.state.role.systemRole.update
-                        }
+                          this.state.granularRoles[collectionZUID].update}
                         value={`update,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -150,15 +136,8 @@ class EditRole extends Component {
                       <input
                         type="checkbox"
                         onClick={this.handleClick}
-                        name={`delete,${
-                          this.state.collections[collectionZUID].name
-                        }`}
                         checked={
-                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].delete
-                            ? this.state.granularRoles[collectionZUID].delete
-                            : this.state.role.systemRole &&
-                              this.state.role.systemRole.delete
-                        }
+                          this.state.granularRoles[collectionZUID].delete}
                         value={`delete,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -168,15 +147,8 @@ class EditRole extends Component {
                       <input
                         type="checkbox"
                         onClick={this.handleClick}
-                        name={`publish,${
-                          this.state.collections[collectionZUID].name
-                        }`}
                         checked={
-                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].publish
-                            ? this.state.granularRoles[collectionZUID].publish
-                            : this.state.role.systemRole &&
-                              this.state.role.systemRole.publish
-                        }
+                          this.state.granularRoles[collectionZUID].publish}
                         value={`publish,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -186,15 +158,8 @@ class EditRole extends Component {
                       <input
                         type="checkbox"
                         onClick={this.handleClick}
-                        name={`grant,${
-                          this.state.collections[collectionZUID].name
-                        }`}
                         checked={
-                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].grant
-                            ? this.state.granularRoles[collectionZUID].grant
-                            : this.state.role.systemRole &&
-                              this.state.role.systemRole.grant
-                        }
+                          this.state.granularRoles[collectionZUID].grant}
                         value={`grant,${
                           this.state.collections[collectionZUID].name
                         }`}
@@ -204,21 +169,16 @@ class EditRole extends Component {
                       <input
                         type="checkbox"
                         onClick={this.handleClick}
-                        name={`super,${
-                          this.state.collections[collectionZUID].name
-                        }`}
                         checked={
-                          this.state.granularRoles[collectionZUID] && this.state.granularRoles[collectionZUID].super
-                            ? this.state.granularRoles[collectionZUID].super
-                            : this.state.role.systemRole &&
-                              this.state.role.systemRole.super
-                        }
+                          this.state.granularRoles[collectionZUID].super}
                         value={`super-${
                           this.state.collections[collectionZUID].zuid
                         }`}
                       />
                     </span>
                   </article>
+                ) : (
+                  <Loader />
                 );
               })}
               <Button onClick={this.handleSubmit}>Apply</Button>
