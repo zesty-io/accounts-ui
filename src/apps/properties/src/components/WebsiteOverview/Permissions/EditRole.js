@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styles from "./Permissions.less";
 
 import { getRole, updateRole } from "../../../store/sitesRoles";
+import { notify } from "../../../../../../shell/store/notifications";
 
 class EditRole extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class EditRole extends Component {
 
   componentDidMount() {
     let granularRoles = {};
-    // create granular roles object from granular roles or the system role
+    // create granular roles object from granular roles OR the system role
     Object.keys(this.state.collections).forEach(collectionZUID => {
       this.state.role.granularRoles
         ? (granularRoles[collectionZUID] = {
@@ -55,7 +56,6 @@ class EditRole extends Component {
             super: this.state.role.systemRole.super
           });
     });
-
     this.setState({ granularRoles });
   }
 
@@ -72,8 +72,36 @@ class EditRole extends Component {
     });
   };
 
-  handleSubmit = () => {
-    console.log("sumbit!");
+  handleSubmit = evt => {
+    evt.preventDefault();
+    return this.props
+      .dispatch(
+        updateRole({
+          roleZUID: this.state.role.ZUID,
+          granularRoles: this.state.granularRoles
+        })
+      )
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            message: "Role successfully updated",
+            type: "success"
+          })
+        );
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: `Error while updating role- ${err}`,
+            type: "error"
+          })
+        );
+      });
+  };
+
+  handleCancel = evt => {
+    evt.preventDefault();
+    this.props.dispatch({ type: "REMOVE_MODAL" });
   };
 
   render() {
@@ -101,7 +129,7 @@ class EditRole extends Component {
                     <span>
                       <input
                         type="checkbox"
-                        onClick={this.handleClick}
+                        onChange={this.handleClick}
                         checked={
                           this.state.granularRoles[collectionZUID].create
                         }
@@ -113,9 +141,8 @@ class EditRole extends Component {
                     <span>
                       <input
                         type="checkbox"
-                        onClick={this.handleClick}
-                        checked={
-                          this.state.granularRoles[collectionZUID].read}
+                        onChange={this.handleClick}
+                        checked={this.state.granularRoles[collectionZUID].read}
                         value={`read,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -124,9 +151,10 @@ class EditRole extends Component {
                     <span>
                       <input
                         type="checkbox"
-                        onClick={this.handleClick}
+                        onChange={this.handleClick}
                         checked={
-                          this.state.granularRoles[collectionZUID].update}
+                          this.state.granularRoles[collectionZUID].update
+                        }
                         value={`update,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -135,9 +163,10 @@ class EditRole extends Component {
                     <span>
                       <input
                         type="checkbox"
-                        onClick={this.handleClick}
+                        onChange={this.handleClick}
                         checked={
-                          this.state.granularRoles[collectionZUID].delete}
+                          this.state.granularRoles[collectionZUID].delete
+                        }
                         value={`delete,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -146,9 +175,10 @@ class EditRole extends Component {
                     <span>
                       <input
                         type="checkbox"
-                        onClick={this.handleClick}
+                        onChange={this.handleClick}
                         checked={
-                          this.state.granularRoles[collectionZUID].publish}
+                          this.state.granularRoles[collectionZUID].publish
+                        }
                         value={`publish,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -157,9 +187,8 @@ class EditRole extends Component {
                     <span>
                       <input
                         type="checkbox"
-                        onClick={this.handleClick}
-                        checked={
-                          this.state.granularRoles[collectionZUID].grant}
+                        onChange={this.handleClick}
+                        checked={this.state.granularRoles[collectionZUID].grant}
                         value={`grant,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -168,9 +197,8 @@ class EditRole extends Component {
                     <span>
                       <input
                         type="checkbox"
-                        onClick={this.handleClick}
-                        checked={
-                          this.state.granularRoles[collectionZUID].super}
+                        onChange={this.handleClick}
+                        checked={this.state.granularRoles[collectionZUID].super}
                         value={`super,${
                           this.state.collections[collectionZUID].zuid
                         }`}
@@ -178,10 +206,13 @@ class EditRole extends Component {
                     </span>
                   </article>
                 ) : (
-                  <Loader />
+                  <Loader key={i}/>
                 );
               })}
+              <div className={styles.buttons}>
               <Button onClick={this.handleSubmit}>Apply</Button>
+              <Button onClick={this.handleCancel}>Cancel</Button>
+              </div>
             </form>
           </main>
         </div>

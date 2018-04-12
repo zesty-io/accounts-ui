@@ -20,8 +20,17 @@ export function sitesRoles(state = {}, action) {
     case "FETCHING_ROLE":
       return state;
     case "FETCHING_ROLE_SUCCESS":
-      return {...state, [action.siteZUID]: {...state[action.siteZUID], ...action.role}}
+      return {
+        ...state,
+        [action.siteZUID]: { ...state[action.siteZUID], ...action.role }
+      };
     case "FETCHING_ROLE_FAILURE":
+      return state;
+    case "UPDATING_ROLE":
+      return state;
+    case "UPDATING_ROLE_SUCCESS":
+      return state;
+    case "UPDATING_ROLE_FAILURE":
       return state;
     default:
       return state;
@@ -61,7 +70,11 @@ export const getRole = (roleZUID, siteZUID) => {
     return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`)
       .then(data => {
         let fetchedRole = { [data.data.ZUID]: data.data };
-        dispatch({ type: "FETCHING_ROLE_SUCCESS", role: fetchedRole, siteZUID });
+        dispatch({
+          type: "FETCHING_ROLE_SUCCESS",
+          role: fetchedRole,
+          siteZUID
+        });
         return data.data;
       })
       .catch(err => {
@@ -110,6 +123,25 @@ export const removeRole = roleZUID => {
       .catch(err => {
         console.table(err);
         dispatch({ type: "DELETING_ROLE_FAILURE" });
+        throw err;
+      });
+  };
+};
+
+export const updateRole = role => {
+  return dispatch => {
+    dispatch({ type: "UPDATING_ROLE" });
+    return request(`${this}/roles/${this}`, {
+      method: "PUT",
+      body: role
+    })
+      .then(data => {
+        dispatch({ type: "UPDATING_ROLE_SUCCESS" });
+        return data;
+      })
+      .catch(err => {
+        console.table(err);
+        dispatch({ type: "UPDATING_ROLE_FAILURE" });
         throw err;
       });
   };
