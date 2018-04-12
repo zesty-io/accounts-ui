@@ -161,7 +161,7 @@ class EditRole extends Component {
                         checked={
                           this.state.granularRoles[collectionZUID].grant}
                         value={`grant,${
-                          this.state.collections[collectionZUID].name
+                          this.state.collections[collectionZUID].zuid
                         }`}
                       />
                     </span>
@@ -171,7 +171,7 @@ class EditRole extends Component {
                         onClick={this.handleClick}
                         checked={
                           this.state.granularRoles[collectionZUID].super}
-                        value={`super-${
+                        value={`super,${
                           this.state.collections[collectionZUID].zuid
                         }`}
                       />
