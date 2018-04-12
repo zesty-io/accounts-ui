@@ -46,7 +46,7 @@ class WebsiteOverview extends Component {
     // when this lives on the user object, it will be useful
     const fakeUserPrefs = [
       {
-        title: "Monthly Useage",
+        title: "Monthly Usage",
         className: "fa fa-line-chart",
         Component: Stats
       },

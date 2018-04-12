@@ -12,12 +12,15 @@ class UserAccess extends Component {
     this.state = {
       submitted: false,
       inviteeEmail: "",
-      inviteRole: "contributor"
+      inviteRole: ""
     };
   }
+  componentDidMount() {
+    console.log(this.state);
+  }
   handleInvite = evt => {
-    if (this.state.inviteeEmail.includes('@')) {
-      // needs another validity check here
+    if (this.state.inviteeEmail.includes("@")) {
+      // needs mo betta validity check here
       this.setState({ submitted: !this.state.submitted });
       this.props
         .dispatch(
@@ -28,7 +31,7 @@ class UserAccess extends Component {
           })
         )
         .then(data => {
-          this.setState({ submitted: !this.state.submitted });
+          this.setState({ submitted: !this.state.submitted, inviteeEmail: '' });
         });
     } else {
       this.props.dispatch(
@@ -46,7 +49,7 @@ class UserAccess extends Component {
     this.setState({ [evt.target.name]: evt.target.value });
   };
   render() {
-    return (
+    return this.props.sitesRoles ? (
       <div className={styles.userAccess}>
         <div className={styles.invite}>
           <Input
@@ -58,7 +61,33 @@ class UserAccess extends Component {
             value={this.state.inviteeEmail}
             onChange={this.handleChange}
           />
-          <Select
+          <select name="inviteRole" onChange={this.handleChange}>
+            <option value="none">Select Role</option>
+            {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
+              Object.keys(this.props.sitesRoles[this.props.siteZUID]).map(
+                roleZUID => {
+                  if (
+                    this.props.sitesRoles[this.props.siteZUID][roleZUID]
+                      .name === "SYSTEM_ROLE"
+                  ) {
+                    return;
+                  } else {
+                    return (
+                      <option
+                        value={
+                          this.props.sitesRoles[this.props.siteZUID][roleZUID].ZUID
+                        }
+                      >
+                        {
+                          this.props.sitesRoles[this.props.siteZUID][roleZUID].name
+                        }
+                      </option>
+                    );
+                  }
+                }
+              )}
+          </select>
+          {/* <Select
             onChange={this.handleChange}
             name="inviteRole"
             selection={{
@@ -80,7 +109,7 @@ class UserAccess extends Component {
                     }
                   ]
             }
-          />
+          /> */}
           <Button onClick={this.handleInvite} disabled={this.state.submitted}>
             Send Invite
           </Button>
@@ -93,25 +122,44 @@ class UserAccess extends Component {
           </header>
           <main>
             {this.props.sitesUsers[this.props.siteZUID] instanceof Object ? (
-              Object.keys(this.props.sitesUsers[this.props.siteZUID]).map((user, i) => {
-                return (
-                  <article key={i}>
-                    <span>
-                      {this.props.sitesUsers[this.props.siteZUID][user].firstName} {this.props.sitesUsers[this.props.siteZUID][user].lastName}
-                    </span>
-                    <span>{this.props.sitesUsers[this.props.siteZUID][user].staff}</span>
-                    <span>{this.props.sitesUsers[this.props.siteZUID][user].email} </span>
-                  </article>
-                );
-              })
+              Object.keys(this.props.sitesUsers[this.props.siteZUID]).map(
+                (user, i) => {
+                  return (
+                    <article key={i}>
+                      <span>
+                        {
+                          this.props.sitesUsers[this.props.siteZUID][user]
+                            .firstName
+                        }{" "}
+                        {
+                          this.props.sitesUsers[this.props.siteZUID][user]
+                            .lastName
+                        }
+                      </span>
+                      <span>
+                        {this.props.sitesUsers[this.props.siteZUID][user].staff}
+                      </span>
+                      <span>
+                        {this.props.sitesUsers[this.props.siteZUID][user].email}{" "}
+                      </span>
+                    </article>
+                  );
+                }
+              )
             ) : (
               <Loader />
             )}
           </main>
         </div>
       </div>
+    ) : (
+      <Loader />
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { sitesRoles: state.sitesRoles, sitesUsers: state.sitesUsers };
+};
 
 export default connect(state => state)(UserAccess);
