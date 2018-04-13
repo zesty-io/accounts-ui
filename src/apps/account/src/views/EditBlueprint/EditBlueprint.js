@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { fetchBlueprints } from '../../../../properties/src/store/blueprints'
+import { fetchBlueprints } from "../../../../properties/src/store/blueprints";
 
 import styles from "./EditBlueprint.less";
 
@@ -14,8 +14,8 @@ class EditBlueprint extends Component {
     };
   }
   componentDidMount() {
-    if(!this.props.blueprint){
-      this.props.history.push('/settings/blueprints')
+    if (!this.props.blueprint) {
+      this.props.history.push("/settings/blueprints");
     }
   }
   handleSubmit = evt => {
@@ -23,17 +23,40 @@ class EditBlueprint extends Component {
     console.log("WEEEEEEEEE!"); // disabled for now
   };
   onChange = evt => {
-    evt.preventDefault();
     if (evt.target.name === "tags_csv") {
       // handle tags csv delta
-      return console.log(evt.target.value);
-    }
-    return this.setState({
-      blueprint: {
-        ...this.state.blueprint,
-        [evt.target.name]: evt.target.value
+      if (this.state.blueprint.tagsCSV.split(',').includes(evt.target.value)) {
+        let newTags = this.state.blueprint.tagsCSV.split(",");
+        let filteredTags = newTags
+          .filter(tag => {
+            return tag !== evt.target.value;
+          })
+          .toString();
+        return this.setState({
+          blueprint: {
+            ...this.state.blueprint,
+            tagsCSV: filteredTags
+          }
+        });
+      } else {
+        let newTags = this.state.blueprint.tagsCSV.split(",");
+        newTags.push(evt.target.value);
+        let addedTag = newTags.join(",");
+        return this.setState({
+          blueprint: {
+            ...this.state.blueprint,
+            tagsCSV: addedTag
+          }
+        });
       }
-    });
+    } else {
+      return this.setState({
+        blueprint: {
+          ...this.state.blueprint,
+          [evt.target.name]: evt.target.value
+        }
+      });
+    }
   };
   render() {
     return this.state.blueprint ? (
@@ -119,6 +142,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("18")}
                 value="18"
               />Frameworks
             </label>
@@ -126,6 +150,7 @@ class EditBlueprint extends Component {
               <Input
                 type="checkbox"
                 name="tags_csv"
+                checked={this.state.blueprint.tagsCSV.split(',').includes("3")}
                 onChange={this.onChange}
                 value="3"
               />Bootstrap 3.5
@@ -134,7 +159,7 @@ class EditBlueprint extends Component {
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.includes('1')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("1")}
                 onChange={this.onChange}
                 value="1"
               />Zesty Classic Framework
@@ -144,7 +169,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('2')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("2")}
                 value="2"
               />Landing Pages
             </label>
@@ -153,7 +178,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('4')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("4")}
                 value="4"
               />Developer Starts
             </label>
@@ -163,7 +188,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('19')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("19")}
                 value="19"
               />Colorful
             </label>
@@ -173,7 +198,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.includes('20')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("20")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="20"
@@ -184,7 +209,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('21')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("21")}
                 value="21"
               />Bootstrap
             </label>
@@ -196,7 +221,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('6')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("6")}
                 value="6"
               />Mobile Responsive
             </label>
@@ -204,7 +229,7 @@ class EditBlueprint extends Component {
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.includes('7')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("7")}
                 onChange={this.onChange}
                 value="7"
               />Social Share Buttons
@@ -214,7 +239,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('8')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("8")}
                 value="8"
               />Facebook
             </label>
@@ -223,7 +248,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('9')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("9")}
                 value="9"
               />Instagram
             </label>
@@ -232,7 +257,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('10')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("10")}
                 value="10"
               />Twitter
             </label>
@@ -241,7 +266,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.includes('11')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("11")}
                 value="11"
               />Google+
             </label>
@@ -249,7 +274,7 @@ class EditBlueprint extends Component {
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.includes('12')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("12")}
                 onChange={this.onChange}
                 value="12"
               />Authorship
@@ -263,14 +288,14 @@ class EditBlueprint extends Component {
                 name="tags_csv"
                 onChange={this.onChange}
                 value="24"
-                checked={this.state.blueprint.tagsCSV.includes('24')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("24")}
               />Single Page
             </label>
             <label>
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.includes('25')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("25")}
                 onChange={this.onChange}
                 value="25"
               />Multi Page
@@ -278,7 +303,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.includes('26')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("26")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="26"
@@ -287,7 +312,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.includes('27')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("27")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="27"
@@ -296,7 +321,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.includes('28')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("28")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="28"
@@ -305,7 +330,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.includes('29')}
+                checked={this.state.blueprint.tagsCSV.split(',').includes("29")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="29"
