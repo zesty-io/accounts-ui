@@ -16,14 +16,14 @@ export function user(state = {}, action) {
     case "FETCH_AUTH_SUCCESS":
       return {
         ...state,
-        zuid: action.zuid
+        ZUID: action.ZUID
       };
 
     case "FETCH_VERIFY_SUCCESS":
       // console.log('FETCH_AUTH_SUCCESS', action)
       return {
         ...state,
-        zuid: action.zuid
+        ZUID: action.ZUID
       };
 
     case "FETCH_USER_ERROR":
@@ -56,12 +56,12 @@ export function user(state = {}, action) {
   }
 }
 
-export function fetchUser(zuid) {
+export function fetchUser(ZUID) {
   return dispatch => {
     dispatch({
       type: "FETCHING_USER"
     });
-    request(`${config.API_ACCOUNTS}/users/${zuid}`)
+    request(`${config.API_ACCOUNTS}/users/${ZUID}`)
       .then(user => {
         dispatch({
           type: "FETCH_USER_SUCCESS",
@@ -91,7 +91,7 @@ export function saveProfile() {
     dispatch({
       type: "SAVING_PROFILE"
     });
-    const userZUID = getState().user.zuid;
+    const userZUID = getState().user.ZUID;
     const profile = getState().user;
     return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
       method: "PUT",
@@ -118,7 +118,7 @@ export function addEmail() {
     dispatch({
       type: "ADDING_EMAIL"
     });
-    const userZUID = getState().user.zuid;
+    const userZUID = getState().user.ZUID;
     const unverifiedEmails =
       getState().user.unverifiedEmails !== null &&
       getState().user.unverifiedEmails !== ""

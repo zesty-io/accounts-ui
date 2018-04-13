@@ -16,7 +16,7 @@ import { fetchUser } from "../../../../../shell/store/user";
 class Settings extends Component {
   componentDidMount() {
     this.props.user.ZUID &&
-      this.props.dispatch(fetchUser(this.props.user.zuid));
+      this.props.dispatch(fetchUser(this.props.user.ZUID));
   }
   render() {
     return (

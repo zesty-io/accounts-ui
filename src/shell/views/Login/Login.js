@@ -86,10 +86,9 @@ class Login extends Component {
         if (json.code === 200) {
           this.props.dispatch({
             type: "FETCH_AUTH_SUCCESS",
-            zuid: json.meta.userZuid,
+            ZUID: json.meta.userZuid,
             auth: true
           });
-          return this.props.dispatch(fetchUser(json.meta.userZuid));
         } else if (json.code === 202) {
           window.location = "/login/2fa";
         } else {

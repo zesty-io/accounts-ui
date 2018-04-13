@@ -91,5 +91,5 @@ class Profile extends Component {
 }
 
 export default connect(state => {
-  return { profile: state.user, userZUID: state.user.zuid };
+  return { profile: state.user, userZUID: state.user.ZUID };
 })(Profile);

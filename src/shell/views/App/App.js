@@ -1,29 +1,30 @@
-import { Component } from 'react'
-import { connect } from 'react-redux'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Component } from "react";
+import { connect } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
 
-import Login from '../Login'
-import TwoFactor from '../TwoFactor'
-import Signup from '../Signup'
-import ResetPasswordStart from '../ResetPasswordStart'
-import ResetPasswordEnd from '../ResetPasswordEnd'
-import VerifyEmail from '../VerifyEmail'
+import Login from "../Login";
+import TwoFactor from "../TwoFactor";
+import Signup from "../Signup";
+import ResetPasswordStart from "../ResetPasswordStart";
+import ResetPasswordEnd from "../ResetPasswordEnd";
+import VerifyEmail from "../VerifyEmail";
 
-import AppHeader from '../../components/AppHeader'
-import AppError from '../../components/AppError'
-import Notify from '../../components/Notify'
-import Modal from '../../components/Modal'
+import AppHeader from "../../components/AppHeader";
+import AppError from "../../components/AppError";
+import Notify from "../../components/Notify";
+import Modal from "../../components/Modal";
 
-import styles from './App.less'
-import { fetchUser } from '../../store/user'
-import { verifyAuth } from '../../store/auth'
+import styles from "./App.less";
+import { fetchUser } from "../../store/user";
+import { verifyAuth } from "../../store/auth";
 
 class Shell extends Component {
   componentDidMount() {
     //user fetch moved into login call
+    this.props.dispatch(fetchUser(this.props.user.ZUID));
     setInterval(() => {
-      this.props.dispatch(verifyAuth())
-    }, 60000)
+      this.props.dispatch(verifyAuth());
+    }, 60000);
   }
   render() {
     return (
@@ -33,21 +34,28 @@ class Shell extends Component {
           <Notify />
           <Modal />
           <section className={styles.AppMain}>
-            <Switch>
-              {/* <Route path="/dashboard" component={Dashboard} /> */}
-              <Route path="/properties" component={Properties} />
-              <Route path="/settings" component={Settings} />
-              {/* <Route path="/messages" component={Messages} /> */}
-              <Redirect from="/" to="/properties" />
-              {/* TODO: handle no match */}
-            </Switch>
+            {this.props.user.email ? (
+              <Switch>
+                {/* <Route path="/dashboard" component={Dashboard} /> */}
+                <Route path="/properties" component={Properties} />
+                <Route path="/settings" component={Settings} />
+                {/* <Route path="/messages" component={Messages} /> */}
+                <Redirect from="/" to="/properties" />
+                {/* TODO: handle no match */}
+              </Switch>
+            ) : (
+              <div className={styles.loaderWrap}>
+              <h2>Loading all your hopes and dreams</h2>
+                <Loader />
+              </div>
+            )}
           </section>
         </AppError>
       </section>
-    )
+    );
   }
 }
-let AppShell = connect(state => state)(Shell)
+let AppShell = connect(state => state)(Shell);
 
 class App extends Component {
   render() {
@@ -66,7 +74,7 @@ class App extends Component {
           <Redirect to="/login" />
         </Switch>
       </div>
-    )
+    );
   }
 }
-export default connect(state => state)(App)
+export default connect(state => state)(App);

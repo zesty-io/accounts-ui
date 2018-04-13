@@ -133,7 +133,7 @@ class WebsiteOverview extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     ...state.sites[ownProps.match.params.hash],
-    userZuid: state.user.zuid
+    userZuid: state.user.ZUID
   };
 };
 export default withRouter(connect(mapStateToProps)(WebsiteOverview));
