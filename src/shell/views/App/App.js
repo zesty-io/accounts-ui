@@ -20,8 +20,7 @@ import { verifyAuth } from '../../store/auth'
 
 class Shell extends Component {
   componentDidMount() {
-    // TODO how do I get the id?
-    this.props.dispatch(fetchUser(this.props.user.zuid))
+    //user fetch moved into login call
     setInterval(() => {
       this.props.dispatch(verifyAuth())
     }, 60000)

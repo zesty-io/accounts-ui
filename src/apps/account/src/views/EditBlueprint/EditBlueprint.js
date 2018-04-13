@@ -20,8 +20,12 @@ class EditBlueprint extends Component {
   }
   handleSubmit = evt => {
     evt.preventDefault();
-    console.log("WEEEEEEEEE!"); // disabled for now
+    console.log("WEEEEEEEEE!"); // disabled waiting for API endpoint
   };
+  handleCancel = evt => {
+    evt.preventDefault();
+    this.props.history.push("/settings/blueprints");
+  }
   onChange = evt => {
     if (evt.target.name === "tags_csv") {
       // handle tags csv delta
@@ -338,9 +342,8 @@ class EditBlueprint extends Component {
             </label>
           </div>
 
-          <Button className={styles.bottom2} type="submit" text="Save" />
-          <Button className={styles.bottom3} text="Cancel" />
-          <Button className={styles.bottom4} text="Edit in Creator" />
+          <Button className={styles.bottom3} type="submit" text="Save" />
+          <Button className={styles.bottom4} text="Cancel" onClick={this.handleCancel} />
         </div>
       </form>
     ) : (

@@ -1,17 +1,18 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-import { request } from '../../../util/request'
-import config from '../../config'
-import styles from './Login.less'
+import { request } from "../../../util/request";
+import { fetchUser } from "../../store/user";
+import config from "../../config";
+import styles from "./Login.less";
 
 class Login extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      message: ''
-    }
+      message: ""
+    };
   }
   render() {
     return (
@@ -71,10 +72,10 @@ class Login extends Component {
           </footer>
         </div>
       </section>
-    )
+    );
   }
   handleLogin = evt => {
-    evt.preventDefault()
+    evt.preventDefault();
     request(`${config.API_AUTH}/login`, {
       body: {
         email: document.forms.login.email.value,
@@ -84,26 +85,27 @@ class Login extends Component {
       .then(json => {
         if (json.code === 200) {
           this.props.dispatch({
-            type: 'FETCH_AUTH_SUCCESS',
+            type: "FETCH_AUTH_SUCCESS",
             zuid: json.meta.userZuid,
             auth: true
-          })
+          });
+          return this.props.dispatch(fetchUser(json.meta.userZuid));
         } else if (json.code === 202) {
-          window.location = '/login/2fa'
+          window.location = "/login/2fa";
         } else {
           // TODO Display error message
           this.setState({
             message: json.message
-          })
+          });
           this.props.dispatch({
-            type: 'FETCH_AUTH_ERROR',
+            type: "FETCH_AUTH_ERROR",
             auth: false
-          })
+          });
         }
       })
       .catch(err => {
-        console.error('LOGIN ERR', err)
-      })
-  }
+        console.error("LOGIN ERR", err);
+      });
+  };
 }
-export default connect(state => state)(Login)
+export default connect(state => state)(Login);

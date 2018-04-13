@@ -19,8 +19,8 @@ export default class AppHeader extends PureComponent {
           </NavLink> */}
         </nav>
         <span className={styles.logout} title="Logout">
-          <span>
-            {this.props.user.firstname} {this.props.user.lastname}
+          <span className={styles.name}>
+            {this.props.user.firstName} {this.props.user.lastName}
           </span>
           <span onClick={() => this.props.dispatch(logout())}>
             <i className="fa fa-sign-out" aria-hidden="true" /> Logout
