@@ -53,7 +53,7 @@ class Shell extends Component {
               </Switch>
             ) : (
               <div className={styles.loaderWrap}>
-                <h2>Loading all your hopes and dreams</h2>
+                <h2>Loading all your Hopes and Dreams</h2>
                 <Loader />
               </div>
             )}
