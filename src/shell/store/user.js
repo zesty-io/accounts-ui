@@ -63,6 +63,7 @@ export function fetchUser(ZUID) {
     });
     request(`${config.API_ACCOUNTS}/users/${ZUID}`)
       .then(user => {
+        localStorage.setItem("ZUID", user.data.ZUID);
         dispatch({
           type: "FETCH_USER_SUCCESS",
           user: user.data

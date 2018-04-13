@@ -1,6 +1,6 @@
-import Cookies from 'js-cookie'
-import config from '../config'
-import { request } from '../../util/request'
+import Cookies from "js-cookie";
+import config from "../config";
+import { request } from "../../util/request";
 
 export function auth(
   state = {
@@ -10,30 +10,31 @@ export function auth(
   action
 ) {
   switch (action.type) {
-    case 'FETCHING_AUTH':
+    case "FETCHING_AUTH":
       return {
         ...state,
         checking: true
-      }
-    case 'FETCH_AUTH_SUCCESS':
-    case 'FETCH_AUTH_ERROR':
-    case 'FETCH_VERIFY_SUCCESS':
-    case 'FETCH_VERIFY_ERROR':
+      };
+    case "FETCH_AUTH_SUCCESS":
+    case "FETCH_AUTH_ERROR":
+    case "FETCH_VERIFY_SUCCESS":
+    case "FETCH_VERIFY_ERROR":
       return {
         checking: false,
         valid: action.auth
-      }
-    case 'LOGOUT':
+      };
+    case "LOGOUT":
+      localStorage.removeItem("ZUID");
       Cookies.remove(config.COOKIE_NAME, {
-        path: '/',
+        path: "/",
         domain: config.COOKIE_DOMAIN
-      })
+      });
       return {
         checking: false,
         valid: false
-      }
+      };
     default:
-      return state
+      return state;
   }
 }
 
@@ -41,25 +42,25 @@ export function verifyAuth(unsubscribe) {
   return dispatch => {
     request(`${config.API_AUTH}/verify`)
       .then(json => {
-        console.log('VERIFY JSON: ', json)
+        console.log("VERIFY JSON: ", json);
         dispatch({
-          type: 'FETCH_VERIFY_SUCCESS',
+          type: "FETCH_VERIFY_SUCCESS",
           zuid: json.meta.userZuid,
           auth: json.code === 200
-        })
+        });
         if (unsubscribe) {
-          unsubscribe()
+          unsubscribe();
         }
       })
       .catch(err => {
-        console.error('VERIFY ERR', err)
+        console.error("VERIFY ERR", err);
         dispatch({
-          type: 'FETCH_VERIFY_ERROR',
+          type: "FETCH_VERIFY_ERROR",
           auth: false,
           err
-        })
-      })
-  }
+        });
+      });
+  };
 }
 
 export function logout() {
@@ -70,16 +71,16 @@ export function logout() {
     request(`${config.API_AUTH}/logout`)
       .then(json => {
         dispatch({
-          type: 'LOGOUT'
-        })
+          type: "LOGOUT"
+        });
       })
       .catch(err => {
-        console.error(err)
+        console.error(err);
         dispatch({
-          type: 'FETCH_AUTH_ERROR',
+          type: "FETCH_AUTH_ERROR",
           auth: false,
           err
-        })
-      })
-  }
+        });
+      });
+  };
 }

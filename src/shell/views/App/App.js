@@ -21,7 +21,15 @@ import { verifyAuth } from "../../store/auth";
 class Shell extends Component {
   componentDidMount() {
     //user fetch moved into login call
-    this.props.dispatch(fetchUser(this.props.user.ZUID));
+    if (!this.props.user.ZUID) {
+      if (localStorage.getItem("ZUID")) {
+        this.props.dispatch(fetchUser(localStorage.getItem("ZUID")));
+      } else {
+        //do something to elt the user know we've lost their ZUID or redirect to login
+      }
+    } else {
+      this.props.dispatch(fetchUser(this.props.user.ZUID));
+    }
     setInterval(() => {
       this.props.dispatch(verifyAuth());
     }, 60000);
@@ -45,7 +53,7 @@ class Shell extends Component {
               </Switch>
             ) : (
               <div className={styles.loaderWrap}>
-              <h2>Loading all your hopes and dreams</h2>
+                <h2>Loading all your hopes and dreams</h2>
                 <Loader />
               </div>
             )}
