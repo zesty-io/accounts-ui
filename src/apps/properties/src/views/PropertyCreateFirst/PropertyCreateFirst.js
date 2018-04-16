@@ -19,11 +19,10 @@ class PropertyCreateFirst extends Component {
   render() {
     return (
       <section className={styles.PropertyCreate}>
-
-          <h1>Welcome to Zesty.io</h1>
+          <h2>Welcome to Zesty.io</h2>
         <div className={styles.nameNew}>
-        <h2>In order to get started, you need to create your first web property</h2>
-          <h3>Name your new web property</h3>
+        <p>create your first web property to get started</p>
+          <h1>Name your property</h1>
           <Input
             type="text"
             name="propertyName"
@@ -35,11 +34,7 @@ class PropertyCreateFirst extends Component {
               <i className="fa fa-plus" aria-hidden="true" />
               {this.state.submitted
                 ? "Creating Your Property"
-                : "Create New Property"}
-            </Button>
-            <Button onClick={() => this.props.dispatch({ type: "REMOVE_MODAL"})}>
-              <i className="fa fa-ban" aria-hidden="true" />
-              &nbsp;Cancel
+                : "Create Your First Property"}
             </Button>
           </div>
         </div>
