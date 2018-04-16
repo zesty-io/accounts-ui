@@ -75,6 +75,8 @@ class App extends Component {
           ) : null}
           <Route exact path="/login" component={Login} />
           <Route path="/login/2fa" component={TwoFactor} />
+          <Route path="/login/:invited" component={Login} />
+          <Route path="/signup/:invited" component={Signup} />
           <Route path="/signup" component={Signup} />
           <Route exact path="/reset-password" component={ResetPasswordStart} />
           <Route path="/reset-password-confirm" component={ResetPasswordEnd} />

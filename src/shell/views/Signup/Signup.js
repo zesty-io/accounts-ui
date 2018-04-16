@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import styles from "./Signup.less";
 import { request } from "../../../util/request";
@@ -13,10 +14,22 @@ class Signup extends Component {
       submitted: false
     };
   }
+  componentDidMount() {
+    console.log(this.props.match)
+    if (this.props.match.params.invited) {
+      console.log("invited: ", this.props.match.params.invited);
+    } else {
+      console.log("normal account");
+    }
+  }
   render() {
     return (
       <section className={styles.Signup}>
-        <form name="signup" className={styles.SignupForm} onSubmit={this.handleSignup}>
+        <form
+          name="signup"
+          className={styles.SignupForm}
+          onSubmit={this.handleSignup}
+        >
           <img src="/zesty-io-logo.svg" />
           {this.state.message ? (
             <p className={styles.error}>
@@ -75,9 +88,16 @@ class Signup extends Component {
             >
               End User License Agreement
             </a>
-            <Input type="checkbox" required className={styles.checkbox} name="eula" />
+            <Input
+              type="checkbox"
+              required
+              className={styles.checkbox}
+              name="eula"
+            />
           </label>
-          <Button type="submit" disabled={this.state.submitted}>Create An Account</Button>
+          <Button type="submit" disabled={this.state.submitted}>
+            Create An Account
+          </Button>
           <AppLink to="/login">Already have an account?</AppLink>
         </form>
       </section>
@@ -85,7 +105,7 @@ class Signup extends Component {
   }
   handleSignup = evt => {
     evt.preventDefault();
-    this.setState({submitted: true})
+    this.setState({ submitted: true });
     request(`${config.API_ACCOUNTS}/users`, {
       method: "POST",
       json: true,
@@ -98,7 +118,8 @@ class Signup extends Component {
     })
       .then(json => {
         console.log("USER: ", json);
-        if (!json.error) {//this is in place of a code === 201, server only returns an error, no code
+        if (!json.error) {
+          //this is in place of a code === 201, server only returns an error, no code
           // Log user in after signing up
           request(`${config.API_AUTH}/login`, {
             body: {
@@ -134,4 +155,4 @@ class Signup extends Component {
   };
 }
 
-export default connect(state => state)(Signup);
+export default withRouter(connect(state => state)(Signup));

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import { request } from "../../../util/request";
 import { fetchUser } from "../../store/user";
@@ -13,6 +13,13 @@ class Login extends Component {
     this.state = {
       message: ""
     };
+  }
+  componentDidMount() {
+    if (this.props.match.params.invited) {
+      console.log("invited: ", this.props.match.params.invited);
+    } else {
+      console.log("normal login");
+    }
   }
   render() {
     return (
@@ -107,4 +114,4 @@ class Login extends Component {
       });
   };
 }
-export default connect(state => state)(Login);
+export default withRouter(connect(state => state)(Login));
