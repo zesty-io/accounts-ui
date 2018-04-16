@@ -25,7 +25,7 @@ class Shell extends Component {
       if (localStorage.getItem("ZUID")) {
         this.props.dispatch(fetchUser(localStorage.getItem("ZUID")));
       } else {
-        //do something to elt the user know we've lost their ZUID or redirect to login
+        //do something to let the user know we've lost their ZUID or redirect to login
       }
     } else {
       this.props.dispatch(fetchUser(this.props.user.ZUID));
@@ -73,15 +73,25 @@ class App extends Component {
           {this.props.auth.valid ? (
             <Route path="/" component={AppShell} />
           ) : null}
-          <Route exact path="/login" component={Login} />
-          <Route path="/login/2fa" component={TwoFactor} />
-          <Route path="/login/:invited" component={Login} />
-          <Route path="/signup/:invited" component={Signup} />
-          <Route path="/signup" component={Signup} />
-          <Route exact path="/reset-password" component={ResetPasswordStart} />
-          <Route path="/reset-password-confirm" component={ResetPasswordEnd} />
-          <Route path="/verify-email" component={VerifyEmail} />
-          <Redirect to="/login" />
+          <React.Fragment>
+            <Notify />
+            <Route exact path="/login" component={Login} />
+            <Route path="/login/2fa" component={TwoFactor} />
+            <Route path="/login/:invited" component={Login} />
+            <Route path="/signup/:invited" component={Signup} />
+            <Route path="/signup" component={Signup} />
+            <Route
+              exact
+              path="/reset-password"
+              component={ResetPasswordStart}
+            />
+            <Route
+              path="/reset-password-confirm"
+              component={ResetPasswordEnd}
+            />
+            <Route path="/verify-email" component={VerifyEmail} />
+            <Redirect to="/login" />
+          </React.Fragment>
         </Switch>
       </div>
     );

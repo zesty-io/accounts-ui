@@ -20,7 +20,6 @@ export function user(state = {}, action) {
       };
 
     case "FETCH_VERIFY_SUCCESS":
-      // console.log('FETCH_AUTH_SUCCESS', action)
       return {
         ...state,
         ZUID: action.ZUID

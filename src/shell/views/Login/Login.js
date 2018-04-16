@@ -4,7 +4,8 @@ import { Link, withRouter } from "react-router-dom";
 
 import { request } from "../../../util/request";
 import { fetchUser } from "../../store/user";
-import parseUrl from '../../../util/parseUrl'
+import { notify } from "../../store/notifications";
+import parseUrl from "../../../util/parseUrl";
 import config from "../../config";
 import styles from "./Login.less";
 
@@ -12,14 +13,13 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      submitted: false,
       message: ""
     };
   }
   componentDidMount() {
-    if (this.props.match.params.invited || parseUrl(window.location.href)) {
-      console.log("invited: ", this.props.match.params.invited || parseUrl(window.location.href));
-    } else {
-      console.log("normal login");
+    if (parseUrl(window.location.href)) {
+      console.log("invited: ", parseUrl(window.location.href));
     }
   }
   render() {
@@ -55,7 +55,12 @@ class Login extends Component {
                   name="pass"
                 />
               </label>
-              <Button onClick={this.handleLogin}>Log In</Button>
+              <Button
+                onClick={this.handleLogin}
+                disabled={this.state.submitted}
+              >
+                {this.state.submitted ? "Loggin you in" : "Log In"}
+              </Button>
             </form>
 
             <AppLink to="/reset-password">Forgot Password?</AppLink>
@@ -83,6 +88,7 @@ class Login extends Component {
     );
   }
   handleLogin = evt => {
+    this.setState({ submitted: !this.state.submitted });
     evt.preventDefault();
     request(`${config.API_AUTH}/login`, {
       body: {
@@ -100,10 +106,13 @@ class Login extends Component {
         } else if (json.code === 202) {
           window.location = "/login/2fa";
         } else {
-          // TODO Display error message
-          this.setState({
-            message: json.message
-          });
+          this.setState({ submitted: !this.state.submitted });
+          this.props.dispatch(
+            notify({
+              message: "There was a problem loggin in",
+              type: "error"
+            })
+          );
           this.props.dispatch({
             type: "FETCH_AUTH_ERROR",
             auth: false
@@ -111,6 +120,13 @@ class Login extends Component {
         }
       })
       .catch(err => {
+        this.setState({ submitted: !this.state.submitted });
+        this.props.dispatch(
+          notify({
+            message: "There was a problem loggin in",
+            type: "error"
+          })
+        );
         console.error("LOGIN ERR", err);
       });
   };

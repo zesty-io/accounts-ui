@@ -4,7 +4,8 @@ import { withRouter } from "react-router-dom";
 
 import styles from "./Signup.less";
 import { request } from "../../../util/request";
-import parseUrl from '../../../util/parseUrl'
+import { notify } from "../../store/notifications";
+import parseUrl from "../../../util/parseUrl";
 import config from "../../../shell/config";
 
 class Signup extends Component {
@@ -16,10 +17,8 @@ class Signup extends Component {
     };
   }
   componentDidMount() {
-    if (this.props.match.params.invited || parseUrl(window.location.href)) {
-      console.log("invited: ", this.props.match.params.invited || parseUrl(window.location.href));
-    } else {
-      console.log("normal account");
+    if (parseUrl(window.location.href)) {
+      console.log("invited: ", parseUrl(window.location.href));
     }
   }
   render() {
@@ -118,9 +117,15 @@ class Signup extends Component {
     })
       .then(json => {
         console.log("USER: ", json);
+
         if (!json.error) {
           //this is in place of a code === 201, server only returns an error, no code
           // Log user in after signing up
+          this.props.dispatch({
+            type: "FETCH_USER_SUCCESS",
+            user: json.data
+          });
+          localStorage.setItem("ZUID", json.data.ZUID);
           request(`${config.API_AUTH}/login`, {
             body: {
               email: document.forms.signup.email.value,
@@ -128,7 +133,7 @@ class Signup extends Component {
             }
           })
             .then(json => {
-              if (json.code === 200) {
+              if (!json.error) { // in place of 200 code
                 this.props.dispatch({
                   type: "FETCH_AUTH_SUCCESS",
                   zuid: json.meta.userZuid,
@@ -137,10 +142,18 @@ class Signup extends Component {
               } else {
                 // if the user was created but login failed
                 // send them to the login view
+                notify({
+                  message: "There was a problem loggin in",
+                  type: "error"
+                });
                 window.location = "/login";
               }
             })
             .catch(err => {
+              notify({
+                message: "There was a problem loggin in",
+                type: "error"
+              });
               console.table(err);
             });
         } else {
@@ -150,6 +163,12 @@ class Signup extends Component {
         }
       })
       .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: "There was a problem creating your account",
+            type: "error"
+          })
+        );
         console.table(err);
       });
   };

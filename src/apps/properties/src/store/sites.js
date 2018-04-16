@@ -84,7 +84,7 @@ export function sites(state = {}, action) {
   }
 }
 
-export function fetchSites() {
+export function fetchSites() { // may need to update for invite parameter here
   return dispatch => {
     dispatch({
       type: "FETCHING_SITES"

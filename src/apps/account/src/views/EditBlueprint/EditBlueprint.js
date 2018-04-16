@@ -146,7 +146,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("18")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("18")}
                 value="18"
               />Frameworks
             </label>
@@ -154,7 +154,7 @@ class EditBlueprint extends Component {
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("3")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("3")}
                 onChange={this.onChange}
                 value="3"
               />Bootstrap 3.5
@@ -163,7 +163,7 @@ class EditBlueprint extends Component {
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("1")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("1")}
                 onChange={this.onChange}
                 value="1"
               />Zesty Classic Framework
@@ -173,7 +173,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("2")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("2")}
                 value="2"
               />Landing Pages
             </label>
@@ -182,7 +182,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("4")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("4")}
                 value="4"
               />Developer Starts
             </label>
@@ -192,7 +192,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("19")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("19")}
                 value="19"
               />Colorful
             </label>
@@ -202,7 +202,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("20")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("20")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="20"
@@ -213,7 +213,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("21")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("21")}
                 value="21"
               />Bootstrap
             </label>
@@ -225,7 +225,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("6")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("6")}
                 value="6"
               />Mobile Responsive
             </label>
@@ -233,7 +233,7 @@ class EditBlueprint extends Component {
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("7")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("7")}
                 onChange={this.onChange}
                 value="7"
               />Social Share Buttons
@@ -243,7 +243,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("8")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("8")}
                 value="8"
               />Facebook
             </label>
@@ -252,7 +252,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("9")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("9")}
                 value="9"
               />Instagram
             </label>
@@ -261,7 +261,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("10")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("10")}
                 value="10"
               />Twitter
             </label>
@@ -270,7 +270,7 @@ class EditBlueprint extends Component {
                 type="checkbox"
                 name="tags_csv"
                 onChange={this.onChange}
-                checked={this.state.blueprint.tagsCSV.split(',').includes("11")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("11")}
                 value="11"
               />Google+
             </label>
@@ -278,7 +278,7 @@ class EditBlueprint extends Component {
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("12")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("12")}
                 onChange={this.onChange}
                 value="12"
               />Authorship
@@ -292,14 +292,14 @@ class EditBlueprint extends Component {
                 name="tags_csv"
                 onChange={this.onChange}
                 value="24"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("24")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("24")}
               />Single Page
             </label>
             <label>
               <Input
                 type="checkbox"
                 name="tags_csv"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("25")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("25")}
                 onChange={this.onChange}
                 value="25"
               />Multi Page
@@ -307,7 +307,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("26")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("26")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="26"
@@ -316,7 +316,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("27")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("27")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="27"
@@ -325,7 +325,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("28")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("28")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="28"
@@ -334,7 +334,7 @@ class EditBlueprint extends Component {
             <label>
               <Input
                 type="checkbox"
-                checked={this.state.blueprint.tagsCSV.split(',').includes("29")}
+                checked={(this.state.blueprint.tagsCSV || '').split(',').includes("29")}
                 name="tags_csv"
                 onChange={this.onChange}
                 value="29"
