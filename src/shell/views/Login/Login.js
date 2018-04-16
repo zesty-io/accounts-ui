@@ -4,6 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 
 import { request } from "../../../util/request";
 import { fetchUser } from "../../store/user";
+import parseUrl from '../../../util/parseUrl'
 import config from "../../config";
 import styles from "./Login.less";
 
@@ -15,6 +16,8 @@ class Login extends Component {
     };
   }
   componentDidMount() {
+    console.log(window.location)
+    console.log(parseUrl(window.location.href))
     if (this.props.match.params.invited) {
       console.log("invited: ", this.props.match.params.invited);
     } else {
