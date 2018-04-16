@@ -9,6 +9,12 @@ class Blueprints extends Component {
   componentDidMount() {
     this.props.dispatch(fetchBlueprints());
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextProps.blueprints !== this.props.blueprints){
+      return true
+    }
+    return false
+  }
 
   handleClick(path) {
     this.props.history.push(path);
