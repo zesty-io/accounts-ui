@@ -14,7 +14,14 @@ const loggerMiddleware = createLogger({
   diff: true
 })
 
-const rootReducer = combineReducers({
+const rootReducer = (state, action) => {
+  if (action.type === 'LOGOUT') {
+    state = {}
+  }
+  return appReducer(state, action)
+}
+
+const appReducer = combineReducers({
   ...propertiesReducers,
   auth,
   user,
