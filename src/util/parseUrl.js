@@ -5,6 +5,7 @@ export default function(url) {
     return false
   }
   if(url.split("?").length === 1){
+    // console.log(`No query params are present`);
     return false
   }
   const noUrl = url.split("?")[1]

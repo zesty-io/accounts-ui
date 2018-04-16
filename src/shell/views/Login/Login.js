@@ -16,10 +16,8 @@ class Login extends Component {
     };
   }
   componentDidMount() {
-    console.log(window.location)
-    console.log(parseUrl(window.location.href))
-    if (this.props.match.params.invited) {
-      console.log("invited: ", this.props.match.params.invited);
+    if (this.props.match.params.invited || parseUrl(window.location.href)) {
+      console.log("invited: ", this.props.match.params.invited || parseUrl(window.location.href));
     } else {
       console.log("normal login");
     }

@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 
 import styles from "./Signup.less";
 import { request } from "../../../util/request";
+import parseUrl from '../../../util/parseUrl'
 import config from "../../../shell/config";
 
 class Signup extends Component {
@@ -15,9 +16,8 @@ class Signup extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props.match)
-    if (this.props.match.params.invited) {
-      console.log("invited: ", this.props.match.params.invited);
+    if (this.props.match.params.invited || parseUrl(window.location.href)) {
+      console.log("invited: ", this.props.match.params.invited || parseUrl(window.location.href));
     } else {
       console.log("normal account");
     }
