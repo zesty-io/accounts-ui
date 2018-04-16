@@ -53,7 +53,7 @@ class PropertyCreateFirst extends Component {
         this.props.dispatch({
           type: "REMOVE_MODAL"
         })
-        this.props.history.push(`/properties/${data.data.ZUID}/blueprint`);
+        this.props.history.push(`/properties/${data.data.ZUID}/blueprint?randomHashID=${data.data.randomHashID}`);
       })
       .catch(err => {
         this.setState({ submitted: !this.state.submitted });

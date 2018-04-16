@@ -11,6 +11,7 @@ import PropertyBlueprint from "../PropertyBlueprint";
 class Properties extends Component {
   componentDidMount() {
     if (this.props.user && this.props.user.lastLogin === null) {
+      //for first time users they are prompted to create a site
       this.props.dispatch({
         type: "NEW_MODAL",
         component: PropertyCreateFirst

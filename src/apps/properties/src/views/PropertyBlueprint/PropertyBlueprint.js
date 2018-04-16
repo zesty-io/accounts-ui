@@ -1,10 +1,11 @@
 import { Component } from "React";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+
 import styles from "./PropertyBlueprint.less";
 
 import config from "../../../../../shell/config";
-
+import parseUrl from "../../../../../util/parseUrl"
 import { updateSite } from "../../store/sites";
 import { fetchBlueprints } from "../../store/blueprints";
 
@@ -16,6 +17,16 @@ class PropertyBlueprint extends Component {
     this.props
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
+        if (parseUrl(window.location.href)) {
+          window
+            .open(
+              `${config.MANAGER_URL_PROTOCOL}${
+                parseUrl(window.location.href).randomHashID
+              }${config.MANAGER_URL}`,
+              "_blank"
+            )
+            .focus();
+        }
         return this.props.history.push(`/properties/${this.props.siteZUID}`);
       });
   };
@@ -81,7 +92,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     siteZUID: ownProps.match.params.zuid,
     blueprints: state.blueprints,
-    createSite: state.createSite
+    user: state.user
   };
 };
 
