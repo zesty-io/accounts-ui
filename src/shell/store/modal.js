@@ -1,11 +1,11 @@
-const initialState = {isOpen:false};
+const initialState = { isOpen: false };
 
 export function modal(state = initialState, action) {
   switch (action.type) {
     case "NEW_MODAL":
-      return {...state, isOpen: true, ...action };
+      return { ...state, isOpen: true, ...action };
     case "REMOVE_MODAL":
-     return {...state, isOpen: false};
+      return { isOpen: false };
     default:
       return state;
   }
@@ -23,6 +23,6 @@ export function openModal(data) {
 
 export function closeModal() {
   return {
-    type: "REMOVE_MODAL",
-  }
+    type: "REMOVE_MODAL"
+  };
 }
