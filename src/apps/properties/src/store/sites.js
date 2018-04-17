@@ -169,6 +169,12 @@ export function updateSite(siteZUID, payload) {
   };
 }
 
+export function acceptInvite(payload) {
+  return dispatch => {
+    return console.log('accept invite')
+  }
+}
+
 export function sendInvite(payload) {
   return dispatch => {
     dispatch({

@@ -3,38 +3,33 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";
 
-import { postNewSite } from "../../store/sites";
+import { acceptInvite } from "../../store/sites";
 import { notify } from "../../../../../shell/store/notifications";
 
-import styles from "./PropertyCreate.less";
+import styles from "./PropertyAccept.less";
 
-class PropertyCreateFirst extends Component {
+class PropertyAcceptInvite extends Component {
   constructor(props) {
     super();
     this.state = {
       submitted: false,
-      name: ""
     };
+  }
+  componentDidMount() {
+    //fetch site from invite
+    console.log(this.props.invited)
   }
   render() {
     return (
-      <section className={styles.PropertyCreate}>
+      <section className={styles.PropertyAccept}>
           <h2>Welcome to Zesty.io</h2>
         <div className={styles.nameNew}>
-        <p>create your first web property to get started</p>
-          <h1>Name your property</h1>
-          <Input
-            type="text"
-            name="propertyName"
-            placeholder="e.g. My Blog or Company Marketing Website"
-            onChange={this.handleChange}
-          />
+          <h1>Accept the invite to get started</h1>
+          <h1>SOME INFORMATION HERE ABOUT THE SITE</h1>
           <div className={styles.controls}>
             <Button onClick={this.handleClick} disabled={this.state.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
-              {this.state.submitted
-                ? "Creating Your Property"
-                : "Create Your First Property"}
+              Accept Invite
             </Button>
           </div>
         </div>
@@ -47,13 +42,13 @@ class PropertyCreateFirst extends Component {
   handleClick = () => {
     this.setState({ submitted: !this.state.submitted });
     this.props
-      .dispatch(postNewSite(this.state.name))
+      .dispatch(acceptInvite(this.state.name))
       .then(data => {
         this.setState({ submitted: !this.state.submitted });
         this.props.dispatch({
           type: "REMOVE_MODAL"
         })
-        this.props.history.push(`/properties/${data.data.ZUID}/blueprint?randomHashID=${data.data.randomHashID}`);
+        this.props.history.push(`/properties/${data.data.ZUID}/`);
       })
       .catch(err => {
         this.setState({ submitted: !this.state.submitted });
@@ -68,7 +63,8 @@ class PropertyCreateFirst extends Component {
 }
 
 const mapStateToProps = state => {
-  return state
+  return state.user
 };
 
-export default withRouter(connect(mapStateToProps)(PropertyCreateFirst));
+export default withRouter(connect(mapStateToProps)(PropertyAcceptInvite));
+

@@ -50,6 +50,9 @@ export function user(state = {}, action) {
     case "ADD_EMAIL_FAILURE":
       return state;
 
+    case "USER_INVITED":
+      return {...state, ...action.invite}
+
     default:
       return state;
   }

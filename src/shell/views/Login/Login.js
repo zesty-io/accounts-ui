@@ -11,15 +11,20 @@ import styles from "./Login.less";
 
 class Login extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       submitted: false,
       message: ""
     };
   }
   componentDidMount() {
-    if (parseUrl(window.location.href)) {
-      console.log("invited: ", parseUrl(window.location.href));
+    const invite = parseUrl(window.location.href)
+    if (invite) {
+      this.props.dispatch({
+        type: "USER_INVITED",
+        invite
+      })
+      console.table(parseUrl(window.location.href));
     }
   }
   render() {

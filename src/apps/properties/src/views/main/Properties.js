@@ -6,13 +6,20 @@ import styles from "./Websites.less";
 import PropertiesList from "../PropertiesList";
 import PropertyCreate from "../PropertyCreate";
 import PropertyCreateFirst from "../PropertyCreateFirst";
+import PropertyAcceptInvite from "../PropertyAcceptInvite";
 import PropertyBlueprint from "../PropertyBlueprint";
 
 class Properties extends Component {
   componentDidMount() {
-    if (this.props.user && this.props.user.lastLogin === null) {
+    if (this.props.user && this.props.user.invited) {
+      //for invited users they are prompted to accept their invite
+      this.props.dispatch({
+        type: "NEW_MODAL",
+        component: PropertyAcceptInvite
+      });
+    }
+    else if (this.props.user && this.props.user.lastLogin === null) {
       //for first time users they are prompted to create a site
-      //this is also where we need to check if they are invited
       this.props.dispatch({
         type: "NEW_MODAL",
         component: PropertyCreateFirst

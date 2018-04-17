@@ -58,7 +58,7 @@ export function verifyAuth(unsubscribe) {
           type: "FETCH_VERIFY_ERROR",
           auth: false,
           err
-        });
+        });     
       });
   };
 }
@@ -73,6 +73,7 @@ export function logout() {
         dispatch({
           type: "LOGOUT"
         });
+        window.location = '/login' // I do not like doing this
       })
       .catch(err => {
         console.error(err);

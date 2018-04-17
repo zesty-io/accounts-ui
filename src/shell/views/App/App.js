@@ -77,9 +77,7 @@ class App extends Component {
             <Notify />
             <Route exact path="/login" component={Login} />
             <Route path="/login/2fa" component={TwoFactor} />
-            <Route path="/login/:invited" component={Login} />
-            <Route path="/signup/:invited" component={Signup} />
-            <Route path="/signup" component={Signup} />
+            <Route strict path="/signup" component={Signup} />
             <Route
               exact
               path="/reset-password"
@@ -90,7 +88,7 @@ class App extends Component {
               component={ResetPasswordEnd}
             />
             <Route path="/verify-email" component={VerifyEmail} />
-            <Redirect to="/login" />
+            <Route component={Login} /> {/* This can be used for our 404 */}
           </React.Fragment>
         </Switch>
       </div>
