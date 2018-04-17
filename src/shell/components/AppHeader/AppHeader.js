@@ -14,9 +14,6 @@ export default class AppHeader extends PureComponent {
           {/* <NavLink to="/dashboard">Dashboard</NavLink> */}
           <NavLink to="/properties">Web Properties</NavLink>
           <NavLink to="/settings/account">My Account</NavLink>
-          {/* <NavLink to="/messages">
-            <MessageIcon />
-          </NavLink> */}
         </nav>
         <span
           className={styles.logout}
