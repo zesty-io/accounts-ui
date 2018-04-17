@@ -2,13 +2,13 @@
 
 .button {
   align-items: center;
-  background: #5B667D;
-  // background: lighten(@zesty-tab-blue, %30);
+  // background: #5B667D;
+  background: lighten(@zesty-tab-blue, %30);
   border: none;
   border-radius: 3px 3px 0px 3px;
   border-bottom: 3px solid #464e5f;
-  border-right: 2px solid #6F819A;
-  color: #EFEFEF;
+  border-right: 2px solid #6f819a;
+  color: #efefef;
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -16,7 +16,7 @@
   justify-content: flex-start;
   letter-spacing: 0.4px;
   padding: 0.5rem 0.8rem;
-  text-shadow: 1px 1px 1px #525C69;
+  text-shadow: 1px 1px 1px #525c69;
 
   align-items: center;
   display: flex;
@@ -54,6 +54,20 @@
     }
   }
 
+  &.save {
+    background: @zesty-green;
+    color: @zesty-white;
+    text-shadow: 1px 1px 1px darken(@zesty-green, 15%);
+    border-bottom: 3px solid darken(@zesty-green, 6%);
+    border-right: 2px solid darken(@zesty-green, 6%);
+    &:hover {
+      background: lighten(@zesty-green, 5%);
+    }
+    &:active {
+      background: darken(@zesty-green, 3%);
+    }
+  }
+
   &.alt {
     background-color: @zesty-orange;
     border-bottom-color: darken(@zesty-orange, 10%);
@@ -65,7 +79,7 @@
     border-bottom-color: lighten(@zesty-grey, 32%);
     border-right-color: lighten(@zesty-grey, 32%);
     color: @zesty-grey;
-    text-shadow: 1px 1px 1px #FFF;
+    text-shadow: 1px 1px 1px #fff;
     &:hover {
       background: lighten(@zesty-grey, 35%);
     }
