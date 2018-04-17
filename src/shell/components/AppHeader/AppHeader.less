@@ -10,7 +10,7 @@
   height: 5vh;
   max-height: 60px;
   min-height: 30px;
-
+  padding: 0 2rem;
   position: sticky;
   top: 0;
 
@@ -23,34 +23,72 @@
   display: flex;
   flex-direction: row;
   flex: 1;
+  align-items: center;
+  a {
+    border-left: 1px solid #22293e;
+    text-decoration: none;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 0.4rem 0.8rem;
+    text-shadow: 0 0 4px #000;
+    color: #a7afbf;
+    text-align: center;
+    line-height: 1.4em;
+    &:hover,
+    &:focus {
+      color: @zesty-white;
+    }
+  }
+  a:last-child {
+    border-right: 1px solid #22293e;
+  }
 }
-.GlobalNav a {
+
+.UserNav {
+  align-items: center;
+  display: flex;
+  min-width: 120px;
   border-left: 1px solid #22293e;
-  text-decoration: none;
-  letter-spacing: 1px;
-  margin: 0;
-  padding: 0.4rem 0.8rem;
-  text-shadow: 0 0 4px #000;
-  color: #a7afbf;
-  text-align: center;
-  line-height: 1.4em;
-  &:hover,
-  &:focus {
-    color: @zesty-white;
-  }
-}
-.GlobalNav a:last-child {
   border-right: 1px solid #22293e;
-}
-.logout {
-  cursor: pointer;
-  color: #a7afbf;
-  padding: 0.5rem;
-  .name {
-    padding-right: 0.5rem;
+  padding: 0.2rem 0.5rem;
+
+  .avatar {
+    margin-right: 8px;
   }
-  &:hover,
-  &:focus {
-    color: @zesty-orange;
+
+  .UserMenu {
+    background: @globalHeader;
+    display: none;
+    padding: 1.2rem 1rem 1rem 1rem;
+    position: absolute;
+    top: 4.5vh;
+    right: 2rem;
+    min-width: 120px;
+  }
+
+  &:hover {
+    .UserMenu {
+      display: flex;
+      flex-direction: column;
+      li {
+        list-style: none;
+        a {
+          color: @zesty-white;
+          text-decoration: none;
+          // padding: 0.5rem;
+        }
+      }
+      .logout {
+        cursor: pointer;
+        margin-top: 0.5rem;
+        // border-top: 1px solid #fff;
+        padding: 0.5rem 0 0;
+
+        &:hover,
+        &:focus {
+          color: @zesty-orange;
+        }
+      }
+    }
   }
 }
