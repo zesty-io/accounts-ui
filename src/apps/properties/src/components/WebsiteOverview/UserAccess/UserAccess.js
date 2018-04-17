@@ -23,7 +23,7 @@ class UserAccess extends Component {
         .dispatch(
           sendInvite({
             inviteeEmail: this.state.inviteeEmail,
-            instanceZUID: this.props.site.ZUID,
+            entityZUID: this.props.site.ZUID,
             roleZUID: this.state.inviteRole
           })
         )

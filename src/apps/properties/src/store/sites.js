@@ -222,7 +222,7 @@ export function sendInvite(payload) {
       json: true,
       body: {
         inviteeEmail: payload.inviteeEmail,
-        instanceZUID: payload.instanceZUID,
+        entityZUID: payload.entityZUID,
         roleZUID: payload.roleZUID
       }
     })
