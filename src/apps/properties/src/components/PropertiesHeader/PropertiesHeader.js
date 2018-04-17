@@ -1,15 +1,11 @@
-import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import styles from "./PropertiesHeader.less";
+import React, { Component } from 'react'
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import styles from './PropertiesHeader.less'
 
-import { filter } from "../../store/sitesFiltered";
+import { filter } from '../../store/sitesFiltered'
 
 class PropertiesHeader extends Component {
-  handleClick = evt => {
-    // evt.prevenDefault()
-    this.props.history.push('/properties/create')
-  }
   render() {
     return (
       <header className={styles.PropertiesHeader}>
@@ -20,17 +16,19 @@ class PropertiesHeader extends Component {
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
-          <Button className={styles.save} onClick={this.handleClick} >
-              <i className="fa fa-plus"  /> Create Web
-              Property
+          <Button className={styles.save} onClick={this.onCreateSite}>
+            <i className="fa fa-plus" /> Create Web Property
           </Button>
         </div>
       </header>
-    );
+    )
   }
   onSearch = evt => {
-    this.props.dispatch(filter(evt.target.value));
-  };
+    this.props.dispatch(filter(evt.target.value))
+  }
+  onCreateSite = evt => {
+    this.props.history.push('/properties/create')
+  }
 }
 
-export default withRouter(connect(state => state)(PropertiesHeader));
+export default withRouter(connect(state => state)(PropertiesHeader))
