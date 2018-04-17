@@ -10,6 +10,12 @@ export function sites(state = {}, action) {
       // TODO show loading state?
       return state;
 
+    case "FETCH_SITE_SUCCESS":
+      return { ...state, [action.site.ZUID]: action.site };
+      
+    case "FETCH_SITE_FAILURE":
+      return state;
+
     case "FETCH_SITES_SUCCESS":
       let sites = normalizeSites(action.sites);
 
@@ -113,7 +119,7 @@ export function sites(state = {}, action) {
     case "CREATING_SITE":
       return state;
     case "CREATE_SITE_SUCCESS":
-      return state
+      return state;
     case "CREATE_SITE_ERROR":
       return state;
     default:
@@ -121,7 +127,8 @@ export function sites(state = {}, action) {
   }
 }
 
-export function fetchSites() { // may need to update for invite parameter here
+export function fetchSites() {
+  // may need to update for invite parameter here
   return dispatch => {
     dispatch({
       type: "FETCHING_SITES"
@@ -135,12 +142,42 @@ export function fetchSites() { // may need to update for invite parameter here
       })
       .catch(err => {
         console.table(err);
-        dispatch(notify({
-          message: "There was a problem fetching sites",
-          type: "error"
-        }))
+        dispatch(
+          notify({
+            message: "There was a problem fetching sites",
+            type: "error"
+          })
+        );
         dispatch({
           type: "FETCH_SITES_ERROR",
+          err
+        });
+      });
+  };
+}
+
+export function fetchSite(siteZUID) {
+  return dispatch => {
+    dispatch({
+      type: "FETCHING_SITES"
+    });
+    request(`${config.API_ACCOUNTS}/instances/${siteZUID}`)
+      .then(site => {
+        dispatch({
+          type: "FETCH_SITE_SUCCESS",
+          site: site.data
+        });
+      })
+      .catch(err => {
+        console.table(err);
+        dispatch(
+          notify({
+            message: "There was a problem fetching sites",
+            type: "error"
+          })
+        );
+        dispatch({
+          type: "FETCH_SITE_ERROR",
           err
         });
       });
@@ -171,8 +208,8 @@ export function updateSite(siteZUID, payload) {
 
 export function acceptInvite(payload) {
   return dispatch => {
-    return console.log('accept invite')
-  }
+    return console.log("accept invite");
+  };
 }
 
 export function sendInvite(payload) {
