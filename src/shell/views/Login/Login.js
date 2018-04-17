@@ -5,7 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import { request } from "../../../util/request";
 import { fetchUser } from "../../store/user";
 import { notify } from "../../store/notifications";
-import parseUrl from "../../../util/parseUrl";
+import { parseUrl } from "../../../util/parseUrl";
 import config from "../../config";
 import styles from "./Login.less";
 
@@ -18,12 +18,12 @@ class Login extends Component {
     };
   }
   componentDidMount() {
-    const invite = parseUrl(window.location.href)
+    const invite = parseUrl(window.location.href);
     if (invite) {
       this.props.dispatch({
         type: "USER_INVITED",
         invite
-      })
+      });
       console.table(parseUrl(window.location.href));
     }
   }

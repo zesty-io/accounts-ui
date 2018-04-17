@@ -9,6 +9,8 @@ import ResetPasswordStart from "../ResetPasswordStart";
 import ResetPasswordEnd from "../ResetPasswordEnd";
 import VerifyEmail from "../VerifyEmail";
 
+import NotFound from "../../../shell/components/NotFound";
+
 import AppHeader from "../../components/AppHeader";
 import AppError from "../../components/AppError";
 import Notify from "../../components/Notify";
@@ -17,6 +19,7 @@ import Modal from "../../components/Modal";
 import styles from "./App.less";
 import { fetchUser } from "../../store/user";
 import { verifyAuth } from "../../store/auth";
+import { parseUrl, rawQS } from "../../../util/parseUrl";
 
 class Shell extends Component {
   componentDidMount() {
@@ -75,20 +78,33 @@ class App extends Component {
           ) : null}
           <React.Fragment>
             <Notify />
-            <Route exact path="/login" component={Login} />
-            <Route path="/login/2fa" component={TwoFactor} />
-            <Route strict path="/signup" component={Signup} />
-            <Route
-              exact
-              path="/reset-password"
-              component={ResetPasswordStart}
-            />
-            <Route
-              path="/reset-password-confirm"
-              component={ResetPasswordEnd}
-            />
-            <Route path="/verify-email" component={VerifyEmail} />
-            <Route component={Login} /> {/* This can be used for our 404 */}
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route
+                exact
+                path={`/login${rawQS(window.location.href)}`}
+                component={Login}
+              />
+              <Route path="/login/2fa" component={TwoFactor} />
+              <Route strict path="/signup" component={Signup} />
+              <Route
+                exact
+                path={`/signup${rawQS(window.location.href)}`}
+                component={Signup}
+              />
+              <Route
+                exact
+                path="/reset-password"
+                component={ResetPasswordStart}
+              />
+              <Route
+                path="/reset-password-confirm"
+                component={ResetPasswordEnd}
+              />
+              <Route path="/verify-email" component={VerifyEmail} />
+              <Route component={NotFound} /> {/* This can be used for our 404 */}
+              <Redirect from="/" to="/login" />
+            </Switch>
           </React.Fragment>
         </Switch>
       </div>

@@ -5,7 +5,7 @@ import { Link, withRouter } from "react-router-dom";
 import styles from "./PropertyBlueprint.less";
 
 import config from "../../../../../shell/config";
-import parseUrl from "../../../../../util/parseUrl"
+import { parseUrl } from "../../../../../util/parseUrl";
 import { updateSite } from "../../store/sites";
 import { fetchBlueprints } from "../../store/blueprints";
 

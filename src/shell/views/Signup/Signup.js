@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import styles from "./Signup.less";
 import { request } from "../../../util/request";
 import { notify } from "../../store/notifications";
-import parseUrl from "../../../util/parseUrl";
+import { parseUrl } from "../../../util/parseUrl";
 import config from "../../../shell/config";
 
 class Signup extends Component {
@@ -17,12 +17,12 @@ class Signup extends Component {
     };
   }
   componentDidMount() {
-    const invite = parseUrl(window.location.href)
+    const invite = parseUrl(window.location.href);
     if (invite) {
       this.props.dispatch({
         type: "USER_INVITED",
         invite
-      })
+      });
       console.table(parseUrl(window.location.href));
     }
   }

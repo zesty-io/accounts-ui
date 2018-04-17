@@ -25,7 +25,7 @@ class PropertyAcceptInvite extends Component {
           <h2>Welcome to Zesty.io</h2>
         <div className={styles.nameNew}>
           <h1>Accept the invite to get started</h1>
-          <h1>SOME INFORMATION HERE ABOUT THE SITE</h1>
+          <h1>{this.props.invited}</h1>
           <div className={styles.controls}>
             <Button onClick={this.handleClick} disabled={this.state.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
