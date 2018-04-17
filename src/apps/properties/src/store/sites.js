@@ -12,7 +12,7 @@ export function sites(state = {}, action) {
 
     case "FETCH_SITE_SUCCESS":
       return { ...state, [action.site.ZUID]: action.site };
-      
+
     case "FETCH_SITE_FAILURE":
       return state;
 
@@ -133,12 +133,13 @@ export function fetchSites() {
     dispatch({
       type: "FETCHING_SITES"
     });
-    request(`${config.API_ACCOUNTS}/instances`)
+    return request(`${config.API_ACCOUNTS}/instances`)
       .then(sites => {
         dispatch({
           type: "FETCH_SITES_SUCCESS",
           sites: sites.data
         });
+        return sites;
       })
       .catch(err => {
         console.table(err);
@@ -206,9 +207,37 @@ export function updateSite(siteZUID, payload) {
   };
 }
 
-export function acceptInvite(payload) {
+export function acceptInvite(inviteZUID) {
   return dispatch => {
-    return console.log("accept invite");
+    dispatch({ type: "ACCEPT_INVITE" });
+    return request(`${config.API_ACCOUNTS}/instances/${inviteZUID}`, {
+      method: "PUT"
+    })
+      .then(data => {
+        dispatch({ type: "ACCEPT_INVITE_SUCCESS" });
+        return data;
+      })
+      .catch(err => {
+        dispatch({ type: "ACCEPT_INVITE_FAILURE" });
+        throw err;
+      });
+  };
+}
+
+export function deleteInvite(inviteZUID) {
+  return dispatch => {
+    dispatch({ type: "DELETE_INVITE" });
+    return request(`${config.API_ACCOUNTS}/instances/${inviteZUID}`, {
+      method: "DELETE"
+    })
+      .then(data => {
+        dispatch({ type: "DELETE_INVITE_SUCCESS" });
+        return data;
+      })
+      .catch(err => {
+        dispatch({ type: "DELETE_INVITE_FAILURE" });
+        throw err;
+      });
   };
 }
 

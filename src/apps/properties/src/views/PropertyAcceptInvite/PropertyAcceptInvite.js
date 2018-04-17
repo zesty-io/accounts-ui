@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Link, withRouter } from "react-router-dom";
 
-import { acceptInvite } from "../../store/sites";
+import { acceptInvite, fetchSites, deleteInvite } from "../../store/sites";
 import { notify } from "../../../../../shell/store/notifications";
 
 import styles from "./PropertyAccept.less";
@@ -23,32 +23,57 @@ class PropertyAcceptInvite extends Component {
     return (
       <section className={styles.PropertyAccept}>
           <h2>Welcome to Zesty.io</h2>
-        <div className={styles.nameNew}>
           <h1>Accept the invite to get started</h1>
           <h1>{this.props.invited}</h1>
           <div className={styles.controls}>
-            <Button onClick={this.handleClick} disabled={this.state.submitted}>
-              <i className="fa fa-plus" aria-hidden="true" />
+          <ButtonGroup>
+            <Button className={styles.invite} onClick={this.handleAccept}>
+              <i className="fa fa-check-circle-o" aria-hidden="true" />
               Accept Invite
             </Button>
+            <Button type="cancel" onClick={this.handleDecline}>
+              <i className="fa fa-ban" aria-hidden="true" />
+              Decline
+            </Button>
+          </ButtonGroup>
           </div>
-        </div>
       </section>
     );
   }
   handleChange = evt => {
     this.setState({ name: evt.target.value });
   };
-  handleClick = () => {
+  handleAccept = () => {
     this.setState({ submitted: !this.state.submitted });
     this.props
-      .dispatch(acceptInvite(this.state.name))
+      .dispatch(acceptInvite(this.props.invited))
       .then(data => {
         this.setState({ submitted: !this.state.submitted });
         this.props.dispatch({
           type: "REMOVE_MODAL"
         })
         this.props.history.push(`/properties/${data.data.ZUID}/`);
+      })
+      .catch(err => {
+        this.setState({ submitted: !this.state.submitted });
+        this.props.dispatch(
+          notify({
+            message: `Problem creating site: ${err}`,
+            type: "error"
+          })
+        );
+      });
+  };
+  handleDecline = () => {
+    this.setState({ submitted: !this.state.submitted });
+    this.props
+      .dispatch(deleteInvite(this.state.name))
+      .then(data => {
+        this.setState({ submitted: !this.state.submitted });
+        this.props.dispatch({
+          type: "REMOVE_MODAL"
+        })
+        this.props.history.push(`/properties`);
       })
       .catch(err => {
         this.setState({ submitted: !this.state.submitted });

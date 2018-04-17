@@ -36,7 +36,7 @@ class UserAccess extends Component {
           HTML: `<p>
           <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Please provide a valid Email address
         </p>`,
-          type: "info"
+          type: "error"
         })
       );
     }
