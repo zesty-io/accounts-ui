@@ -48,21 +48,19 @@ class WebsiteCard extends Component {
     return (
       <article className={styles.WebsiteCard}>
         <header>
-          <div className={styles.name}>
-            <h1>{this.props.site.name}</h1>
-            {this.props.site.domain ? (
-              <Url target="_blank" href={`http://${this.props.site.domain}`}>
-                <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
-                  this.props.site.domain
-                }
-              </Url>
-            ) : (
-              <Link to={`/properties/${this.props.site.ZUID}`}>
-                <i className="fa fa-plus" aria-hidden="true" />
-                &nbsp;Set Domain
-              </Link>
-            )}
-          </div>
+          <h1>{this.props.site.name}</h1>
+          {this.props.site.domain ? (
+            <Url target="_blank" href={`http://${this.props.site.domain}`}>
+              <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
+                this.props.site.domain
+              }
+            </Url>
+          ) : (
+            <Link to={`/properties/${this.props.site.ZUID}`}>
+              <i className="fa fa-plus" aria-hidden="true" />
+              &nbsp;Set Domain
+            </Link>
+          )}
         </header>
         <main className={styles.WebsiteManage}>
           {/*<Line data={data} options={options} redraw={this.state.shouldRedraw} />*/}

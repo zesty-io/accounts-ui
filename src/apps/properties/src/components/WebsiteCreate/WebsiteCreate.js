@@ -26,9 +26,9 @@ class WebsiteCreate extends Component {
             <i className="fa fa-plus" aria-hidden="true" />&nbsp;Create Web
             Property
           </Url> */}
-          <Button className={styles.save}>
-            <i className="fa fa-plus" aria-hidden="true" />&nbsp;Create Web
-            Property
+          <Button>
+            <i className="fa fa-plus" aria-hidden="true" />
+            Create Web Property
           </Button>
         </footer>
       </article>

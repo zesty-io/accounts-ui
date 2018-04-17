@@ -3,16 +3,11 @@ import styles from './Button.less'
 import cx from 'classnames'
 
 export default function Button(props) {
-  let opts = {
-    className: cx(styles.button, props.className),
-    'data-data': props.data,
-    onClick: props.onClick
-  }
-  if (props.disabled) {
-    opts['disabled'] = 'disabled'
-  }
   return (
-    <button {...opts}>
+    <button
+      {...props}
+      className={cx(styles.button, props.className, styles[props.type])}
+    >
       {props.text}
       {React.Children.map(props.children, (child, i) => {
         // If the first child is an element
