@@ -75,7 +75,7 @@ class Signup extends Component {
               className={styles.input}
               type="password"
               required
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
               name="pass"
             />
           </label>
@@ -133,7 +133,8 @@ class Signup extends Component {
             }
           })
             .then(json => {
-              if (!json.error) { // in place of 200 code
+              if (!json.error) {
+                // in place of 200 code
                 this.props.dispatch({
                   type: "FETCH_AUTH_SUCCESS",
                   zuid: json.meta.userZuid,

@@ -15,7 +15,7 @@ export default function(url) {
   return Object.assign({}, ...keyValue)
 }
 
-/* for testing in console
+/* basic bitch console testing
   function parseUrl(url) {
     if (typeof url !== "string") {
       console.error(`Cannot parse url of type ${typeof url}`);

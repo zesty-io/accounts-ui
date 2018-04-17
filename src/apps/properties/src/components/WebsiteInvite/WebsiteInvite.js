@@ -46,7 +46,7 @@ class WebsiteInvite extends Component {
             Accept Invite
           </Button>
           <Button className={styles.invite} onClick={this.handleDecline}>
-            <i className="fa fa-times-circle" aria-hidden="true" />
+            <i className="fa fa-times-circle-o" aria-hidden="true" />
             Decline Invite
           </Button>
         </footer>

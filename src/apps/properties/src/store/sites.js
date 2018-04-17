@@ -92,7 +92,6 @@ export function sites(state = {}, action) {
       };
 
       return sites;
-    // return {}
 
     case "FETCH_SITES_ERROR":
       // TODO show global growl of error
@@ -136,6 +135,10 @@ export function fetchSites() { // may need to update for invite parameter here
       })
       .catch(err => {
         console.table(err);
+        dispatch(notify({
+          message: "There was a problem fetching sites",
+          type: "error"
+        }))
         dispatch({
           type: "FETCH_SITES_ERROR",
           err
