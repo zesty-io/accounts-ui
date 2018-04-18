@@ -17,6 +17,7 @@
   "dependencies": {
     "chart.js": "2.7.2",
     "classnames": "2.2.5",
+    "qs": "^6.5.1",
     "react": "16.2.0",
     "react-chartjs-2": "2.7.0",
     "react-dom": "16.2.0",

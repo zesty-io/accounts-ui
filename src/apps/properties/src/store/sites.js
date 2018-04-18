@@ -57,7 +57,7 @@ export function fetchSites() {
     dispatch({
       type: "FETCHING_SITES"
     });
-    return request(`${config.API_ACCOUNTS}/instances?getInvited=true`)
+    return request(`${config.API_ACCOUNTS}/instances`) // ?getInvited=true when its fixed
       .then(sites => {
         if (!sites.data.length) {
           dispatch({
@@ -140,7 +140,7 @@ export function updateSite(siteZUID, payload) {
 export function acceptInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: "ACCEPT_INVITE" });
-    return request(`${config.API_ACCOUNTS}/instances/${inviteZUID}`, {
+    return request(`${config.API_ACCOUNTS}/invites/${inviteZUID}`, {
       method: "PUT"
     })
       .then(data => {
@@ -157,7 +157,7 @@ export function acceptInvite(inviteZUID) {
 export function deleteInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: "DELETE_INVITE" });
-    return request(`${config.API_ACCOUNTS}/instances/${inviteZUID}`, {
+    return request(`${config.API_ACCOUNTS}/invites/${inviteZUID}`, {
       method: "DELETE"
     })
       .then(data => {

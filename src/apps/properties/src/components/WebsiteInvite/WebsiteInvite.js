@@ -12,23 +12,16 @@ import { Line } from "react-chartjs-2";
 class WebsiteInvite extends Component {
   handleAccept = evt => {
     // post accepted invite data THEN route to the overview when the user has permissions
-    let inviteZUID = this.props.user.invite;
-    if (!inviteZUID) {
-      //throw an error?
-    } else {
-      this.props.dispatch(acceptInvite(inviteZUID))
-        .then(data => {
-          this.props.dispatch(fetchSites()).then(data => {
-            this.props.history.push(`/properties/${this.props.site.ZUID}`);
-          });
-        })
-    }
+    this.props.dispatch(acceptInvite(this.props.site.inviteZUID)).then(data => {
+      this.props.dispatch(fetchSites()).then(data => {
+        this.props.history.push(`/properties/${this.props.site.ZUID}`);
+      });
+    });
   };
   handleDecline = evt => {
-    let inviteZUID = this.props.user.invite;
-    this.props.dispatch(deleteInvite(inviteZUID)).then(data => {
-      this.props.dispatch(fetchSites())
-    })
+    this.props.dispatch(deleteInvite(this.props.site.inviteZUID)).then(data => {
+      this.props.dispatch(fetchSites());
+    });
 
     console.log(this.props);
   };
@@ -36,7 +29,7 @@ class WebsiteInvite extends Component {
     return (
       <article className={styles.WebsiteInvite}>
         <header>
-          <h1 className={styles.name}>{this.props.site.Name}</h1>
+          <h1 className={styles.name}>{this.props.site.name}</h1>
           {this.props.site.domain ? (
             <Url target="_blank" href={`http://${this.props.site.domain}`}>
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;{

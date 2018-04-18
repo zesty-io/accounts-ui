@@ -4,6 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 
 import styles from "./PropertyBlueprint.less";
 
+import qs from 'qs'
 import config from "../../../../../shell/config";
 import { parseUrl } from "../../../../../util/parseUrl";
 import { updateSite } from "../../store/sites";
