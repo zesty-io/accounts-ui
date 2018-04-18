@@ -3,6 +3,7 @@ import { createLogger } from 'redux-logger'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import createDebounce from 'redux-debounced'
 
+import { settings } from './settings'
 import { user } from './user'
 import { auth } from './auth'
 import { notifications } from './notifications'
@@ -23,6 +24,7 @@ const rootReducer = (state, action) => {
 
 const appReducer = combineReducers({
   ...propertiesReducers,
+  settings,
   auth,
   user,
   modal,

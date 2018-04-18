@@ -1,5 +1,4 @@
 import { request } from "../../../../util/request";
-import config from "../../../../shell/config";
 
 export function blueprints(state = {}, action) {
   switch (action.type) {
@@ -42,11 +41,13 @@ export function blueprints(state = {}, action) {
 }
 
 export function fetchBlueprints() {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: "FETCHING_BLUEPRINTS"
     });
-    request(`${config.API_ACCOUNTS}/blueprints`)
+
+    const state = getState()
+    request(`${state.settings.API_ACCOUNTS}/blueprints`)
       .then(json => {
         let blueprints = json.data.reduce((acc, print) => {
           acc[print.ID] = print;
@@ -68,11 +69,13 @@ export function fetchBlueprints() {
 }
 
 export function fetchBlueprint(id) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: "FETCHING_BLUEPRINTS"
     });
-    request(`${config.API_ACCOUNTS}/blueprints/${id}`)
+
+    const state = getState()
+    request(`${state.settings.API_ACCOUNTS}/blueprints/${id}`)
       .then(blueprint => {
         dispatch({
           type: "FETCHING_BLUEPRINTS_SUCCESS",
@@ -92,11 +95,13 @@ export function fetchBlueprint(id) {
 }
 
 export function postNewBlueprint(name) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: "CREATING_BLUEPRINT"
     });
-    return request(`${config.API_ACCOUNTS}/blueprints`, {
+
+    const state = getState()
+    return request(`${state.settings.API_ACCOUNTS}/blueprints`, {
       method: "POST",
       json: true,
       body: { name }
