@@ -49,7 +49,6 @@ class Properties extends Component {
                     />
                   );
                 })}
-
               <Route path="/properties/:hash" component={WebsiteOverview} />
               <Route
                 path="/properties/invite/:hash"

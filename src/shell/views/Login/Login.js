@@ -64,7 +64,7 @@ class Login extends Component {
                 onClick={this.handleLogin}
                 disabled={this.state.submitted}
               >
-                {this.state.submitted ? "Loggin you in" : "Log In"}
+                {this.state.submitted ? "Logging you in" : "Log In"}
               </Button>
             </form>
 

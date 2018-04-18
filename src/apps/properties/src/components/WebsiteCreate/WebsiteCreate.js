@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import cx from 'classnames'
-import styles from './WebsiteCreate.less'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import cx from "classnames";
+import styles from "./WebsiteCreate.less";
 
-import { Line } from 'react-chartjs-2'
+import { Line } from "react-chartjs-2";
 
 class WebsiteCreate extends Component {
   render() {
@@ -26,14 +26,16 @@ class WebsiteCreate extends Component {
             <i className="fa fa-plus" aria-hidden="true" />&nbsp;Create Web
             Property
           </Url> */}
-          <Button>
-            <i className="fa fa-plus" aria-hidden="true" />
-            Create Web Property
-          </Button>
+          <Link to="/properties/create" className={styles.Button}>
+            <Button>
+              <i className="fa fa-plus" aria-hidden="true" />
+              Create Web Property
+            </Button>
+          </Link>
         </footer>
       </article>
-    )
+    );
   }
 }
 
-export default connect(state => state)(WebsiteCreate)
+export default connect(state => state)(WebsiteCreate);
