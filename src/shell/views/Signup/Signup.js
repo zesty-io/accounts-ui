@@ -29,7 +29,10 @@ class Signup extends Component {
     if (invite) {
       this.props.dispatch({
         type: "USER_INVITED",
-        invite
+        invite: {
+          email: invite.email,
+          invited: invite.invited
+        }
       });
     }
   }

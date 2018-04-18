@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
+import qs from "qs";
 
 import Login from "../Login";
 import TwoFactor from "../TwoFactor";
@@ -23,9 +24,9 @@ import { parseUrl, rawQS } from "../../../util/parseUrl";
 
 class Shell extends Component {
   componentDidMount() {
-    if(!this.props.user.email && this.props.user.ZUID){
+    if (!this.props.user.email && this.props.user.ZUID) {
       // in the case of a hard refresh restores user data
-      this.props.dispatch(fetchUser(this.props.user.ZUID))
+      this.props.dispatch(fetchUser(this.props.user.ZUID));
     }
     setInterval(() => {
       this.props.dispatch(verifyAuth());
@@ -96,7 +97,8 @@ class App extends Component {
                 component={ResetPasswordEnd}
               />
               <Route path="/verify-email" component={VerifyEmail} />
-              <Route component={NotFound} /> {/* This can be used for our 404 */}
+              <Route component={NotFound} />{" "}
+              {/* This can be used for our 404 */}
               <Redirect from="/" to="/login" />
             </Switch>
           </React.Fragment>

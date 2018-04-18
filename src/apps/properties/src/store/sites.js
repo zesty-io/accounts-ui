@@ -57,7 +57,7 @@ export function fetchSites() {
     dispatch({
       type: "FETCHING_SITES"
     });
-    return request(`${config.API_ACCOUNTS}/instances`) // ?getInvited=true when its fixed
+    return request(`${config.API_ACCOUNTS}/instances?getInvited=true`) // ?getInvited=true when its fixed
       .then(sites => {
         if (!sites.data.length) {
           dispatch({
@@ -182,7 +182,8 @@ export function sendInvite(payload) {
       body: {
         inviteeEmail: payload.inviteeEmail,
         entityZUID: payload.entityZUID,
-        roleZUID: payload.roleZUID
+        accessLevel: 3
+        // roleZUID: payload.roleZUID
       }
     })
       .then(data => {
