@@ -22,13 +22,14 @@ class WebsiteInvite extends Component {
             this.props.history.push(`/properties/${this.props.site.ZUID}`);
           });
         })
-        .catch(err => {
-          console.table(err);
-        });
     }
   };
   handleDecline = evt => {
-    // post decline and re-fetch sites
+    let inviteZUID = this.props.user.invite;
+    this.props.dispatch(deleteInvite(inviteZUID)).then(data => {
+      this.props.dispatch(fetchSites())
+    })
+
     console.log(this.props);
   };
   render() {

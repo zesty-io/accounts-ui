@@ -16,6 +16,9 @@ export function sites(state = {}, action) {
     case "FETCH_SITE_FAILURE":
       return state;
 
+    case "FETCH_SITES_SUCCESS_NOSITES":
+      return null;
+
     case "FETCH_SITES_SUCCESS":
       let sites = normalizeSites(action.sites);
 
@@ -135,6 +138,12 @@ export function fetchSites() {
     });
     return request(`${config.API_ACCOUNTS}/instances`)
       .then(sites => {
+        if (!sites.data.length) {
+          dispatch({
+            type: "FETCH_SITES_SUCCESS_NOSITES"
+          });
+          return sites
+        }
         dispatch({
           type: "FETCH_SITES_SUCCESS",
           sites: sites.data

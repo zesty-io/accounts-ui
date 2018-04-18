@@ -20,11 +20,8 @@ class Properties extends Component {
       <section className={styles.Websites}>
         <PropertiesHeader />
         <main className={styles.siteListWrap}>
-          {Object.keys(this.props.sites) ? (
+          {Object.keys(this.props.sitesFiltered).length ? (
             <div className={styles.siteList}>
-              {/* Only show if no site has been created */}
-              {Object.keys(this.props.sites).length ? null : <WebsiteCreate />}
-
               {/* render invites */}
               {Object.keys(this.props.sites)
                 .filter(
@@ -58,6 +55,10 @@ class Properties extends Component {
                 path="/properties/invite/:hash"
                 component={WebsiteOverview}
               />
+            </div>
+          ) : this.props.sites === null ? (
+            <div className={styles.siteList}>
+              <WebsiteCreate />
             </div>
           ) : (
             <div className={styles.LoadingSites}>
