@@ -1,11 +1,17 @@
-import { PureComponent } from 'react'
+import { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './AppHeader.less'
 
 import { logout } from '../../store/auth'
 
-export default class AppHeader extends PureComponent {
+export default class AppHeader extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      userNavOpen: ''
+    }
+  }
   render() {
     return (
       <header className={styles.AppHeader}>
@@ -18,7 +24,7 @@ export default class AppHeader extends PureComponent {
             <i className={cx(styles.icon, "fa fa-question-circle")} aria-hidden="true"></i>
           </a>
         </nav>
-        <nav className={styles.UserNav}>
+        <nav className={cx(styles.UserNav, styles[this.state.userNavOpen])} onClick={this.showUserNav}>
           <img
             className={styles.avatar}
             src={`https://www.gravatar.com/avatar/${
@@ -49,5 +55,10 @@ export default class AppHeader extends PureComponent {
         </nav>
       </header>
     )
+  }
+  showUserNav = (evt) => {
+    this.setState({
+      userNavOpen: this.state.userNavOpen === 'show' ? '' : 'show'
+    })
   }
 }

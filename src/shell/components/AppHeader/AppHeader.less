@@ -36,7 +36,7 @@
     line-height: 1.4em;
     &:hover,
     &:focus {
-      color: @zesty-white;
+      color: @zesty-orange;
     }
   }
   a:last-child {
@@ -60,22 +60,27 @@
 
 .UserNav {
   align-items: center;
+  cursor: pointer;
   display: flex;
-  border-left: 1px solid #22293e;
-  border-right: 1px solid #22293e;
-  padding: 0.5rem;
+  border-radius: 3px;
+  padding: 0.2rem;
 
   .UserMenu {
     background: @globalHeader;
     display: none;
-    padding: 1.2rem 1rem 1rem 1rem;
+    padding: 0.5rem 1rem;
     position: absolute;
-    top: 4.5vh;
+    top: 5vh;
     right: 2rem;
     min-width: 120px;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
+    background: @zesty-orange;
+  }
+
+  &.show {
     .UserMenu {
       display: flex;
       flex-direction: column;
