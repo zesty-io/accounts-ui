@@ -24,7 +24,6 @@ export function auth(
         valid: action.auth
       };
     case "LOGOUT":
-      localStorage.removeItem("ZUID");
       Cookies.remove(config.COOKIE_NAME, {
         path: "/",
         domain: config.COOKIE_DOMAIN
@@ -70,6 +69,7 @@ export function logout() {
     // })
     request(`${config.API_AUTH}/logout`)
       .then(json => {
+        // this clears the redux store of user data
         dispatch({
           type: "LOGOUT"
         });

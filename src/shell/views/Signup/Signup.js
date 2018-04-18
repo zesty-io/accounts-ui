@@ -141,8 +141,6 @@ class Signup extends Component {
       }
     })
       .then(json => {
-        console.log("USER: ", json);
-
         if (!json.error) {
           //this is in place of a code === 201, server only returns an error, no code
           // Log user in after signing up
@@ -150,7 +148,6 @@ class Signup extends Component {
             type: "FETCH_USER_SUCCESS",
             user: json.data
           });
-          localStorage.setItem("ZUID", json.data.ZUID);
           request(`${config.API_AUTH}/login`, {
             body: {
               email: this.state.email,

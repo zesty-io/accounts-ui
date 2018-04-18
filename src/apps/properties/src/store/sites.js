@@ -21,85 +21,6 @@ export function sites(state = {}, action) {
 
     case "FETCH_SITES_SUCCESS":
       let sites = normalizeSites(action.sites);
-
-      // TODO invite site test
-      sites["0-test-invite"] = {
-        invite: true,
-        ID: 7353800,
-        ZUID: "8-45a294a-1zg0cg",
-        EcoID: 144,
-        PropertyTypeID: 1,
-        RandomHashID: "385b14d47412fe6c30292f53473d62a5",
-        Domain: "stuartrunyan.com",
-        DomainVerified: true,
-        DevelopmentWebsite: false,
-        Name: "stuartrunyan.com",
-        LegacyDiscountReason: null,
-        PlanID: 14,
-        Addons: null,
-        UpdatedDate: "2017-10-26T20:16:24Z",
-        PaymentMethod: null,
-        Internal: false,
-        Cancelled: false,
-        CancelledReason: null,
-        CancelledCustomerReason: null,
-        CancelledDate: null,
-        Zesty2Account: false,
-        ContainerNameOverride: null,
-        CDNURL: "https://58h1pb.media.zestyio.com",
-        Plugins: null,
-        EarlyAccessTier: 0,
-        DateActive: null,
-        CreatedDatetime: "2015-04-29T13:08:46Z",
-        CreatedByUserID: 20472736,
-        ThirdPartyOAuthTokens: '{"google":"421"}',
-        Favicon: null,
-        Referrer: "https://zesty.io/",
-        BlueprintID: 15,
-        RequiresTwoFactor: 0,
-        createdAt: null,
-        updatedAt: "2015-05-01T16:31:41Z",
-        deletedAt: null
-      };
-      sites["0-test-invite2"] = {
-        invite: true,
-        ID: 7353800,
-        ZUID: "8-45a194a-1zg0cg",
-        EcoID: 144,
-        PropertyTypeID: 1,
-        RandomHashID: "385b14d47412fe6c30292f53473d62a5",
-        Domain: "stuartrunyan.com",
-        DomainVerified: true,
-        DevelopmentWebsite: false,
-        Name: "NewSite.com",
-        LegacyDiscountReason: null,
-        PlanID: 14,
-        Addons: null,
-        UpdatedDate: "2017-10-26T20:16:24Z",
-        PaymentMethod: null,
-        Internal: false,
-        Cancelled: false,
-        CancelledReason: null,
-        CancelledCustomerReason: null,
-        CancelledDate: null,
-        Zesty2Account: false,
-        ContainerNameOverride: null,
-        CDNURL: "https://58h1pb.media.zestyio.com",
-        Plugins: null,
-        EarlyAccessTier: 0,
-        DateActive: null,
-        CreatedDatetime: "2015-04-29T13:08:46Z",
-        CreatedByUserID: 20472736,
-        ThirdPartyOAuthTokens: '{"google":"421"}',
-        Favicon: null,
-        Referrer: "https://zesty.io/",
-        BlueprintID: 15,
-        RequiresTwoFactor: 0,
-        createdAt: null,
-        updatedAt: "2015-05-01T16:31:41Z",
-        deletedAt: null
-      };
-
       return sites;
 
     case "FETCH_SITES_ERROR":
@@ -136,7 +57,7 @@ export function fetchSites() {
     dispatch({
       type: "FETCHING_SITES"
     });
-    return request(`${config.API_ACCOUNTS}/instances`)
+    return request(`${config.API_ACCOUNTS}/instances?getInvited=true`)
       .then(sites => {
         if (!sites.data.length) {
           dispatch({

@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 
 import { request } from "../../../util/request";
-import { fetchUser } from "../../store/user";
 import { notify } from "../../store/notifications";
 import { parseUrl } from "../../../util/parseUrl";
 import config from "../../config";
 import styles from "./Login.less";
+import { fetchUser } from "../../store/user";
 
 class Login extends Component {
   constructor(props) {
@@ -108,6 +108,7 @@ class Login extends Component {
             ZUID: json.meta.userZuid,
             auth: true
           });
+          return this.props.dispatch(fetchUser(json.meta.userZuid))
         } else if (json.code === 202) {
           window.location = "/login/2fa";
         } else {

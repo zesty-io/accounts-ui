@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 
 import Login from "../Login";
 import TwoFactor from "../TwoFactor";
@@ -23,15 +23,9 @@ import { parseUrl, rawQS } from "../../../util/parseUrl";
 
 class Shell extends Component {
   componentDidMount() {
-    //user fetch moved into login call
-    if (!this.props.user.ZUID) {
-      if (localStorage.getItem("ZUID")) {
-        this.props.dispatch(fetchUser(localStorage.getItem("ZUID")));
-      } else {
-        //do something to let the user know we've lost their ZUID or redirect to login
-      }
-    } else {
-      this.props.dispatch(fetchUser(this.props.user.ZUID));
+    if(!this.props.user.email && this.props.user.ZUID){
+      // in the case of a hard refresh restores user data
+      this.props.dispatch(fetchUser(this.props.user.ZUID))
     }
     setInterval(() => {
       this.props.dispatch(verifyAuth());
@@ -111,4 +105,4 @@ class App extends Component {
     );
   }
 }
-export default connect(state => state)(App);
+export default withRouter(connect(state => state)(App));
