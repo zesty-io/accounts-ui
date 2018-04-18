@@ -36,7 +36,7 @@
     line-height: 1.4em;
     &:hover,
     &:focus {
-      color: @zesty-white;
+      color: @zesty-orange;
     }
   }
   a:last-child {
@@ -44,45 +44,74 @@
   }
 }
 
+.HelpNav {
+  a {
+    color: @zesty-white;
+    &:hover,
+    &:focus {
+      color: @zesty-orange;
+    }
+  }
+  .icon {
+    font-size: 1.4rem;
+    padding: 0.5rem;
+  }
+}
+
 .UserNav {
   align-items: center;
+  cursor: pointer;
   display: flex;
-  min-width: 120px;
-  border-left: 1px solid #22293e;
-  border-right: 1px solid #22293e;
-  padding: 0.2rem 0.5rem;
-
-  .avatar {
-    margin-right: 8px;
-  }
+  border-radius: 3px;
+  padding: 0.2rem;
 
   .UserMenu {
     background: @globalHeader;
     display: none;
-    padding: 1.2rem 1rem 1rem 1rem;
+    padding: 0.5rem 1rem;
     position: absolute;
-    top: 4.5vh;
+    top: 5vh;
     right: 2rem;
     min-width: 120px;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
+    background: @zesty-orange;
+  }
+
+  &.show {
     .UserMenu {
       display: flex;
       flex-direction: column;
       li {
         list-style: none;
+        padding: 0.5rem 0;
         a {
           color: @zesty-white;
           text-decoration: none;
-          // padding: 0.5rem;
+          &:hover,
+          &:focus {
+            color: @zesty-orange;
+          }
+        }
+      }
+      li.user {
+        font-size: 1rem;
+        border-bottom: 1px solid lighten(@globalHeader, 15%);
+        padding-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        span {
+          display: block;
+          padding-bottom: 0;
+        }
+        .email {
+          font-size: 0.8rem;
         }
       }
       .logout {
+        color: @zesty-white;
         cursor: pointer;
-        margin-top: 0.5rem;
-        // border-top: 1px solid #fff;
-        padding: 0.5rem 0 0;
 
         &:hover,
         &:focus {
