@@ -10,22 +10,32 @@ import config from "../../../shell/config";
 
 class Signup extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       message: "",
-      submitted: false
+      submitted: false,
+      email: "",
+      firstName: "",
+      lastName: "",
+      pass: "",
+      eula: false
     };
   }
   componentDidMount() {
     const invite = parseUrl(window.location.href);
+    if (invite.email) {
+      this.setState({ email: invite.email });
+    }
     if (invite) {
       this.props.dispatch({
         type: "USER_INVITED",
         invite
       });
-      console.table(parseUrl(window.location.href));
     }
   }
+  handleChange = evt => {
+    return this.setState({ [evt.target.name]: evt.target.value });
+  };
   render() {
     return (
       <section className={styles.Signup}>
@@ -50,6 +60,8 @@ class Signup extends Component {
               placeholder="e.g. hello@zesty.io"
               required
               name="email"
+              value={this.state.email}
+              onChange={this.handleChange}
             />
           </label>
           <label>
@@ -60,6 +72,8 @@ class Signup extends Component {
               placeholder="Zesty"
               required
               name="firstName"
+              value={this.state.firstName}
+              onChange={this.handleChange}
             />
           </label>
           <label>
@@ -70,6 +84,8 @@ class Signup extends Component {
               placeholder=""
               required
               name="lastName"
+              value={this.state.lastName}
+              onChange={this.handleChange}
             />
           </label>
           <label>
@@ -82,6 +98,8 @@ class Signup extends Component {
               required
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
               name="pass"
+              value={this.state.pass}
+              onChange={this.handleChange}
             />
           </label>
           <label>
@@ -97,6 +115,8 @@ class Signup extends Component {
               required
               className={styles.checkbox}
               name="eula"
+              checked={this.state.eula}
+              onChange={this.handleChange}
             />
           </label>
           <Button type="submit" disabled={this.state.submitted}>
@@ -114,10 +134,10 @@ class Signup extends Component {
       method: "POST",
       json: true,
       body: {
-        email: document.forms.signup.email.value,
-        firstName: document.forms.signup.firstName.value,
-        lastName: document.forms.signup.lastName.value,
-        password: document.forms.signup.pass.value
+        email: this.state.email,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        password: this.state.pass
       }
     })
       .then(json => {
@@ -133,8 +153,8 @@ class Signup extends Component {
           localStorage.setItem("ZUID", json.data.ZUID);
           request(`${config.API_AUTH}/login`, {
             body: {
-              email: document.forms.signup.email.value,
-              password: document.forms.signup.pass.value
+              email: this.state.email,
+              password: this.state.pass
             }
           })
             .then(json => {
@@ -152,7 +172,7 @@ class Signup extends Component {
                   message: "There was a problem loggin in",
                   type: "error"
                 });
-                window.location = "/login";
+                this.props.history.push("/login");
               }
             })
             .catch(err => {

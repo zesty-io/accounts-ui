@@ -95,13 +95,13 @@ export function saveProfile() {
       type: "SAVING_PROFILE"
     });
     const userZUID = getState().user.ZUID;
-    const profile = getState().user;
+    const user = getState().user;
     return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
       method: "PUT",
       json: true,
       body: {
-        firstName: profile.firstName,
-        lastName: profile.lastName
+        firstName: user.firstName,
+        lastName: user.lastName
       }
     })
       .then(data => {

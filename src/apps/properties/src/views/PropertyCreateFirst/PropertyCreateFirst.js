@@ -26,7 +26,7 @@ class PropertyCreateFirst extends Component {
           <Input
             type="text"
             name="propertyName"
-            placeholder="e.g. My Blog or Company Marketing Website"
+            placeholder={`${this.props.user.firstName} ${this.props.user.lastName}'s Website`}
             onChange={this.handleChange}
           />
           <div className={styles.controls}>

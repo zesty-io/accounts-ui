@@ -9,12 +9,7 @@ import WebsiteCard from "../../components/WebsiteCard";
 import WebsiteInvite from "../../components/WebsiteInvite";
 import WebsiteCreate from "../../components/WebsiteCreate";
 
-import { fetchSites } from "../../store/sites";
-
 class Properties extends Component {
-  componentDidMount() {
-    this.props.dispatch(fetchSites());
-  }
   render() {
     return (
       <section className={styles.Websites}>
