@@ -14,7 +14,7 @@ import Blueprint from "./Blueprint";
 import Permissions from "./Permissions";
 
 import { fetchSite } from "../../store/sites";
-import { fetchSiteUsers } from "../../store/sitesUsers";
+import { fetchSiteUsers, fetchSiteUsersPending } from "../../store/sitesUsers";
 import { fetchSiteCompanies } from "../../store/sitesCompanies";
 import { fetchBlueprint } from "../../store/blueprints";
 import { fetchSiteRoles } from "../../store/sitesRoles";
@@ -34,6 +34,7 @@ class WebsiteOverview extends Component {
 
   componentDidMount() {
     this.props.dispatch(fetchSiteUsers(this.props.userZUID, this.props.ZUID));
+    this.props.dispatch(fetchSiteUsersPending(this.props.userZUID, this.props.ZUID));
     this.props.dispatch(
       fetchSiteCollections(this.props.userZUID, this.props.ZUID)
     );
