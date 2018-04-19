@@ -21,7 +21,7 @@ class Properties extends Component {
               {Object.keys(this.props.sites)
                 .filter(
                   zuid =>
-                    this.props.sites[zuid] && this.props.sites[zuid].invite
+                    this.props.sites[zuid] && this.props.sites[zuid].inviteZUID
                 )
                 .map(zuid => {
                   return (
@@ -34,7 +34,7 @@ class Properties extends Component {
                 .filter(
                   zuid =>
                     this.props.sitesFiltered[zuid] &&
-                    !this.props.sitesFiltered[zuid].invite
+                    !this.props.sitesFiltered[zuid].inviteZUID
                 )
                 .map(zuid => {
                   return (

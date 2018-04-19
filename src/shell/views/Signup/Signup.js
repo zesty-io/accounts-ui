@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import qs from "qs";
 
 import styles from "./Signup.less";
 import { request } from "../../../util/request";
 import { notify } from "../../store/notifications";
-import { parseUrl } from "../../../util/parseUrl";
+import { rawQS } from "../../../util/parseUrl";
 import config from "../../../shell/config";
 
 class Signup extends Component {
@@ -22,14 +23,17 @@ class Signup extends Component {
     };
   }
   componentDidMount() {
-    const invite = parseUrl(window.location.href);
+    const invite = qs.parse(rawQS(window.location.href));
     if (invite.email) {
       this.setState({ email: invite.email });
     }
     if (invite) {
       this.props.dispatch({
         type: "USER_INVITED",
-        invite
+        invite: {
+          email: invite.email,
+          invited: invite.invited
+        }
       });
     }
   }
@@ -141,8 +145,6 @@ class Signup extends Component {
       }
     })
       .then(json => {
-        console.log("USER: ", json);
-
         if (!json.error) {
           //this is in place of a code === 201, server only returns an error, no code
           // Log user in after signing up
@@ -150,7 +152,6 @@ class Signup extends Component {
             type: "FETCH_USER_SUCCESS",
             user: json.data
           });
-          localStorage.setItem("ZUID", json.data.ZUID);
           request(`${config.API_AUTH}/login`, {
             body: {
               email: this.state.email,
