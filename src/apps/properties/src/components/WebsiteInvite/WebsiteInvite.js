@@ -23,7 +23,6 @@ class WebsiteInvite extends Component {
             return siteZUID
           }
         })
-        console.log(invitedSites)
         if(invitedSites.length < 1){
           return this.props.history.push(`/properties/${this.props.site.ZUID}`);
         }
