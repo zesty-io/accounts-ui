@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import qs from "qs";
 
 import styles from "./Signup.less";
 import { request } from "../../../util/request";
 import { notify } from "../../store/notifications";
-import { parseUrl } from "../../../util/parseUrl";
+import { rawQS } from "../../../util/parseUrl";
 import config from "../../../shell/config";
 
 class Signup extends Component {
@@ -22,7 +23,7 @@ class Signup extends Component {
     };
   }
   componentDidMount() {
-    const invite = parseUrl(window.location.href);
+    const invite = qs.parse(rawQS(window.location.href));
     if (invite.email) {
       this.setState({ email: invite.email });
     }

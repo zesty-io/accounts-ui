@@ -4,9 +4,9 @@ import { Link, withRouter } from "react-router-dom";
 
 import styles from "./PropertyBlueprint.less";
 
-import qs from 'qs'
+import qs from "qs";
 import config from "../../../../../shell/config";
-import { parseUrl } from "../../../../../util/parseUrl";
+import { rawQS } from "../../../../../util/parseUrl";
 import { updateSite } from "../../store/sites";
 import { fetchBlueprints } from "../../store/blueprints";
 
@@ -18,11 +18,11 @@ class PropertyBlueprint extends Component {
     this.props
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
-        if (parseUrl(window.location.href)) {
+        if (qs.parse(rawQS(window.location.href))) {
           window
             .open(
               `${config.MANAGER_URL_PROTOCOL}${
-                parseUrl(window.location.href).randomHashID
+                qs.parse(rawQS(window.location.href)).randomHashID
               }${config.MANAGER_URL}`,
               "_blank"
             )

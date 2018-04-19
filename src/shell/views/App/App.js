@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
-import qs from "qs";
 
 import Login from "../Login";
 import TwoFactor from "../TwoFactor";
@@ -20,7 +19,6 @@ import Modal from "../../components/Modal";
 import styles from "./App.less";
 import { fetchUser } from "../../store/user";
 import { verifyAuth } from "../../store/auth";
-import { parseUrl, rawQS } from "../../../util/parseUrl";
 
 class Shell extends Component {
   componentDidMount() {
@@ -75,18 +73,7 @@ class App extends Component {
             <Notify />
             <Switch>
               <Route path="/login" component={Login} />
-              <Route
-                exact
-                path={`/login${rawQS(window.location.href)}`}
-                component={Login}
-              />
-              <Route path="/login/2fa" component={TwoFactor} />
-              <Route strict path="/signup" component={Signup} />
-              <Route
-                exact
-                path={`/signup${rawQS(window.location.href)}`}
-                component={Signup}
-              />
+              <Route path="/signup" component={Signup} />
               <Route
                 exact
                 path="/reset-password"

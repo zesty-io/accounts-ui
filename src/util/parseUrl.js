@@ -5,7 +5,6 @@ export function parseUrl(url) {
     return false;
   }
   if (url.split("?").length === 1) {
-    // console.log(`No query params are present`);
     return false;
   }
   const query = url.substr(url.indexOf("?") + 1);
@@ -23,14 +22,3 @@ export function rawQS(url) {
   return url.substr(url.indexOf("?") + 1);
 }
 
-// console.log(parseUrl(2));
-// console.log(parseUrl("www.google.com"));
-// console.log(parseUrl("https://secure.flickr.com/search/?q=kittens"));
-// console.log(
-//   parseUrl("www.google.com/index?key=valueisaa?string&key2=value2&key3=value3")
-// );
-// console.log(
-//   parseUrl(
-//     "www.google.com/jsonapi/watchdog_entity/watchdog_entity?sort=-timestamp&page[limit]=50&page[offset]=100&filter[severityGroup][group][conjunction]=OR&filter[severity4][condition][value]=4&filter[severity4][condition][path]=severity&filter[severity4][condition][memberOf]=severityGroup"
-//   )
-// );

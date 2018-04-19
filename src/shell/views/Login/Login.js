@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import qs from "qs";
 
 import { request } from "../../../util/request";
 import { notify } from "../../store/notifications";
-import { parseUrl } from "../../../util/parseUrl";
+import { rawQS } from "../../../util/parseUrl";
 import config from "../../config";
 import styles from "./Login.less";
 import { fetchUser } from "../../store/user";
@@ -18,7 +19,7 @@ class Login extends Component {
     };
   }
   componentDidMount() {
-    const invite = parseUrl(window.location.href);
+    const invite = qs.parse(rawQS(window.location.href));
     if (invite) {
       this.props.dispatch({
         type: "USER_INVITED",
@@ -27,7 +28,6 @@ class Login extends Component {
           invited: invite.invited
         }
       });
-      console.table(parseUrl(window.location.href));
     }
   }
   render() {
