@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 
+import config from "../../../../../shell/config";
 import { fetchSites, acceptInvite, deleteInvite } from "../../store/sites";
+import { notify } from "../../../../../shell/store/notifications";
 
 import cx from "classnames";
 import styles from "./WebsiteInvite.less";
@@ -13,13 +15,37 @@ class WebsiteInvite extends Component {
   handleAccept = evt => {
     // post accepted invite data THEN route to the overview when the user has permissions
     this.props.dispatch(acceptInvite(this.props.site.inviteZUID)).then(data => {
-      this.props.dispatch(fetchSites()).then(data => {
-        this.props.history.push(`/properties/${this.props.site.ZUID}`);
-      });
+      this.props.dispatch(fetchSites());
+      // .then(data => {
+      //   this.props.history.push(`/properties/${this.props.site.ZUID}`);
+      // });
+      this.props.dispatch(
+        /*
+        **
+        ** NOTE: formatting with prettier will break the link in the string below
+        **
+        */
+        notify({
+          HTML: `<span>
+            <p>You have accepted an invite to ${this.props.site.name}</p>
+            <a href="${`${config.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${config.MANAGER_URL}`}" target="_blank">
+            click here to go to Manager App
+            </a>
+            </span>`,
+          type: "success",
+          timeout: 6000
+        })
+      );
     });
   };
   handleDecline = evt => {
     this.props.dispatch(deleteInvite(this.props.site.inviteZUID)).then(data => {
+      this.props.dispatch(
+        notify({
+          message: `You have declined an invite to ${this.props.site.name}`,
+          type: "info"
+        })
+      );
       this.props.dispatch(fetchSites());
     });
 

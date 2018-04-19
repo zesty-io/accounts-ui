@@ -63,7 +63,7 @@ export function fetchSites() {
           dispatch({
             type: "FETCH_SITES_SUCCESS_NOSITES"
           });
-          return sites
+          return sites;
         }
         dispatch({
           type: "FETCH_SITES_SUCCESS",
@@ -98,7 +98,7 @@ export function fetchSite(siteZUID) {
           type: "FETCH_SITE_SUCCESS",
           site: site.data
         });
-        return site
+        return site;
       })
       .catch(err => {
         console.table(err);
@@ -141,7 +141,7 @@ export function updateSite(siteZUID, payload) {
 export function acceptInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: "ACCEPT_INVITE" });
-    return request(`${config.API_INSTANCE}/invites/${inviteZUID}`, {
+    return request(`${config.API_ACCOUNTS}/invites/${inviteZUID}`, {
       method: "PUT"
     })
       .then(data => {
@@ -150,6 +150,13 @@ export function acceptInvite(inviteZUID) {
       })
       .catch(err => {
         dispatch({ type: "ACCEPT_INVITE_FAILURE" });
+        dispatch(
+          notify({
+            message: `There was an error accepting the invite`,
+            type: "error"
+          })
+        );
+        console.table(err);
         throw err;
       });
   };
@@ -158,7 +165,7 @@ export function acceptInvite(inviteZUID) {
 export function deleteInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: "DELETE_INVITE" });
-    return request(`${config.API_INSTANCE}/invites/${inviteZUID}`, {
+    return request(`${config.API_ACCOUNTS}/invites/${inviteZUID}`, {
       method: "DELETE"
     })
       .then(data => {
