@@ -15,23 +15,32 @@ class WebsiteInvite extends Component {
   handleAccept = evt => {
     // post accepted invite data THEN route to the overview when the user has permissions
     this.props.dispatch(acceptInvite(this.props.site.inviteZUID)).then(data => {
-      this.props.dispatch(fetchSites());
-      // .then(data => {
-      //   this.props.history.push(`/properties/${this.props.site.ZUID}`);
-      // });
+      this.props.dispatch(fetchSites())
+      .then(data => {
+        // if a user has accepted their last invite open the property overview
+        const invitedSites = Object.keys(data.data).filter(siteZUID => {
+          if(data.data[siteZUID].hasOwnProperty('inviteZUID')){
+            return siteZUID
+          }
+        })
+        console.log(invitedSites)
+        if(invitedSites.length < 1){
+          return this.props.history.push(`/properties/${this.props.site.ZUID}`);
+        }
+      });
       this.props.dispatch(
         /*
         **
-        ** NOTE: formatting with prettier will break the link in the string below
+        ** NOTE: formatting with prettier will break the link in the string literal below
         **
         */
         notify({
-          HTML: `<span>
+          HTML: `<div>
             <p>You have accepted an invite to ${this.props.site.name}</p>
             <a href="${`${config.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${config.MANAGER_URL}`}" target="_blank">
             click here to go to Manager App
             </a>
-            </span>`,
+            </div>`,
           type: "success",
           timeout: 6000
         })

@@ -41,6 +41,15 @@ export function user(state = {}, action) {
     case "SAVING_PROFILE_SUCCESS":
       return state;
 
+    case "SAVING_PASSWORD":
+      return state;
+
+    case "SAVING_PASSWORD_ERROR":
+      return state;
+
+    case "SAVING_PASSWORD_SUCCESS":
+      return state;
+
     case "ADDING_EMAIL":
       return state;
 
@@ -51,7 +60,7 @@ export function user(state = {}, action) {
       return state;
 
     case "USER_INVITED":
-      return {...state, ...action.invite}
+      return { ...state, ...action.invite };
 
     default:
       return state;
@@ -110,6 +119,31 @@ export function saveProfile() {
       .catch(err => {
         console.table(err);
         dispatch({ type: "SAVING_PROFILE_ERROR" });
+        throw err;
+      });
+  };
+}
+
+export function updatePassword(password) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: "SAVING_PASSWORD"
+    });
+    const userZUID = getState().user.ZUID;
+    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+      method: "PUT",
+      json: true,
+      body: {
+        password
+      }
+    })
+      .then(data => {
+        dispatch({ type: "SAVING_PASSWORD_SUCCESS" });
+        return data;
+      })
+      .catch(err => {
+        console.table(err);
+        dispatch({ type: "SAVING_PASSWORD_ERROR" });
         throw err;
       });
   };

@@ -1,21 +1,40 @@
 import { Component } from "React";
 import { connect } from "react-redux";
-import { updateSetting } from "../../../../../../shell/store/user";
+import { updatePassword } from "../../../../../../shell/store/user";
 
 import styles from "./Password.less";
+import { notify } from "../../../../../../shell/store/notifications";
 
 class Password extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      oldPassword: "",
+      confirmNewPassword: "",
+      newPassword: ""
+    };
+  }
   handleChange = evt => {
-    if (evt.target.value.match(evt.target.pattern)) {
-      return this.props.dispatch(
-        updateSetting({
-          [evt.target.name]: evt.target.value
+    return this.setState({
+      [evt.target.name]: evt.target.value
+    });
+  };
+
+  handleClick = evt => {
+    if (this.state.newPassword == this.state.confirmNewPassword) {
+      return this.props
+        .dispatch(updatePassword(this.state.newPassword))
+        .then(data => {
+          this.setState({});
+        });
+    } else {
+      this.props.dispatch(
+        notify({
+          message: "Passwords no bueno",
+          type: "error"
         })
       );
     }
-  };
-  handleClick = evt => {
-    console.log("submitting password change");
   };
   render() {
     return (
@@ -26,7 +45,7 @@ class Password extends Component {
             name="oldPassword"
             placeholder="Old Password"
             onChange={this.handleChange}
-            value={this.props.oldPassword}
+            value={this.state.oldPassword}
             type="password"
             required
           />
@@ -39,9 +58,9 @@ class Password extends Component {
           <Input
             name="newPassword"
             placeholder="New Password"
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
             onChange={this.handleChange}
-            value={this.props.newPassword}
+            value={this.state.newPassword}
             type="password"
             required
           />
@@ -50,9 +69,9 @@ class Password extends Component {
           <Input
             name="confirmNewPassword"
             placeholder="Confirm New Password"
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
             onChange={this.handleChange}
-            value={this.props.confirmNewPassword}
+            value={this.state.confirmNewPassword}
             type="password"
             required
           />
