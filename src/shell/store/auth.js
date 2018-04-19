@@ -57,7 +57,7 @@ export function verifyAuth(unsubscribe) {
           type: "FETCH_VERIFY_ERROR",
           auth: false,
           err
-        });     
+        });
       });
   };
 }
@@ -69,11 +69,14 @@ export function logout() {
     // })
     request(`${config.API_AUTH}/logout`)
       .then(json => {
+        window.location = "/login"; // I do not like doing this
+        return data
+      })
+      .then(data => {
         // this clears the redux store of user data
         dispatch({
           type: "LOGOUT"
         });
-        window.location = '/login' // I do not like doing this
       })
       .catch(err => {
         console.error(err);

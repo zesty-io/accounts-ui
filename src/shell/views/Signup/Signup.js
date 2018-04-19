@@ -6,7 +6,6 @@ import qs from "qs";
 import styles from "./Signup.less";
 import { request } from "../../../util/request";
 import { notify } from "../../store/notifications";
-import { rawQS } from "../../../util/parseUrl";
 import config from "../../../shell/config";
 
 class Signup extends Component {
@@ -23,7 +22,7 @@ class Signup extends Component {
     };
   }
   componentDidMount() {
-    const invite = qs.parse(rawQS(window.location.href));
+    const invite = qs.parse(window.location.search.substr(1));
     if (invite.email) {
       this.setState({ email: invite.email });
     }

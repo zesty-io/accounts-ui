@@ -6,8 +6,7 @@ import styles from "./PropertyBlueprint.less";
 
 import qs from "qs";
 import config from "../../../../../shell/config";
-import { rawQS } from "../../../../../util/parseUrl";
-import { updateSite } from "../../store/sites";
+import { updateSite, fetchSite } from "../../store/sites";
 import { fetchBlueprints } from "../../store/blueprints";
 
 class PropertyBlueprint extends Component {
@@ -18,17 +17,21 @@ class PropertyBlueprint extends Component {
     this.props
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
-        if (qs.parse(rawQS(window.location.href))) {
+        if (qs.parse(window.location.search.substr(1)).randomHashID) {
           window
             .open(
               `${config.MANAGER_URL_PROTOCOL}${
-                qs.parse(rawQS(window.location.href)).randomHashID
+                qs.parse(window.location.search.substr(1)).randomHashID
               }${config.MANAGER_URL}`,
               "_blank"
             )
             .focus();
+        } else {
+          // re-fetch sites before the redirect
+          this.props.dispatch(fetchSite(data.data.ZUID)).then(date => {
+            return this.props.history.push(`/properties/${data.data.ZUID}`);
+          });
         }
-        return this.props.history.push(`/properties/${this.props.siteZUID}`);
       });
   };
   render() {
