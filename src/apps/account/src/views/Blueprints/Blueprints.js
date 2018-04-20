@@ -1,30 +1,30 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { fetchBlueprints } from "../../../../properties/src/store/blueprints";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { fetchBlueprints } from '../../../../properties/src/store/blueprints'
 
-import styles from "./Blueprint.less";
+import styles from './Blueprint.less'
 
 class Blueprints extends Component {
   componentDidMount() {
-    this.props.dispatch(fetchBlueprints());
+    this.props.dispatch(fetchBlueprints())
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if(nextProps.blueprints !== this.props.blueprints){
+    if (nextProps.blueprints !== this.props.blueprints) {
       return true
     }
     return false
   }
 
   handleClick(path) {
-    this.props.history.push(path);
+    this.props.history.push(path)
   }
   render() {
     return (
       <div className={styles.blueprints}>
         <h1 className={styles.title}>Blueprints</h1>
         <div className={styles.message}>
-          <Button onClick={() => this.handleClick("blueprints/create")}>
+          <Button onClick={() => this.handleClick('blueprints/create')}>
             <i className="fa fa-columns" aria-hidden="true" />
             Add Blueprint
           </Button>
@@ -38,7 +38,7 @@ class Blueprints extends Component {
         </div>
         <div className={styles.BlueprintView}>
           <main className={styles.Blueprints}>
-            {this.props.blueprints &&
+            {Object.keys(this.props.blueprints).length ? (
               Object.keys(this.props.blueprints)
                 .filter(i => {
                   if (
@@ -46,11 +46,11 @@ class Blueprints extends Component {
                     this.props.blueprints[i].createdByUserZUID ===
                       this.props.user.ZUID
                   ) {
-                    return i;
+                    return i
                   }
                 })
                 .map(i => {
-                  let blueprint = this.props.blueprints[i];
+                  let blueprint = this.props.blueprints[i]
                   return (
                     <article className={styles.Blueprint} key={i}>
                       <header>
@@ -61,20 +61,26 @@ class Blueprints extends Component {
                         <p>{blueprint.description}</p>
                       </main>
                       <Button
-                        onClick={() => this.handleClick(`/settings/blueprints/${blueprint.ID}`)}
-                      >
+                        onClick={() =>
+                          this.handleClick(
+                            `/settings/blueprints/${blueprint.ID}`
+                          )
+                        }>
                         <i className="fa fa-columns" aria-hidden="true" />
                         Edit
                       </Button>
                       <footer />
                     </article>
-                  );
-                })}
+                  )
+                })
+            ) : (
+              <Loader />
+            )}
           </main>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default withRouter(connect(state => state)(Blueprints));
+export default withRouter(connect(state => state)(Blueprints))
