@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 
 import config from '../../../../../shell/config'
-import { fetchSites, acceptInvite, deleteInvite } from '../../store/sites'
+import { fetchSites, acceptInvite, declineInvite } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 
 import cx from 'classnames'
@@ -58,7 +58,7 @@ class WebsiteInvite extends Component {
   }
   handleDecline = evt => {
     this.setState({ declined: true })
-    this.props.dispatch(deleteInvite(this.props.site.inviteZUID)).then(data => {
+    this.props.dispatch(declineInvite(this.props.site.inviteZUID)).then(data => {
       this.props.dispatch(
         notify({
           message: `You have declined an invite to ${this.props.site.name}`,

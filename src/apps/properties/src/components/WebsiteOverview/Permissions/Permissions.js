@@ -44,14 +44,15 @@ class Permissions extends Component {
           this.props
             .dispatch(getRole(data.ZUID, this.props.siteZUID))
             .then(data => {
-              this.props.dispatch({
-                type: "NEW_MODAL",
-                component: EditRole,
-                props: {
-                  siteZUID: this.props.siteZUID,
-                  roleZUID: data.ZUID
-                }
-              });
+              // Lets not immediately go into Granular roles
+              // this.props.dispatch({
+              //   type: "NEW_MODAL",
+              //   component: EditRole,
+              //   props: {
+              //     siteZUID: this.props.siteZUID,
+              //     roleZUID: data.ZUID
+              //   }
+              // });
               this.setState({ submitted: !this.state.submitted, name: "" });
             });
           return this.props.dispatch(
