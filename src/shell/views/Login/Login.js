@@ -5,7 +5,6 @@ import qs from "qs";
 
 import { request } from "../../../util/request";
 import { notify } from "../../store/notifications";
-import { rawQS } from "../../../util/parseUrl";
 import config from "../../config";
 import styles from "./Login.less";
 import { fetchUser } from "../../store/user";
@@ -19,7 +18,7 @@ class Login extends Component {
     };
   }
   componentDidMount() {
-    const invite = qs.parse(rawQS(window.location.href));
+    const invite = qs.parse(window.location.search.substr(1));
     if (invite) {
       this.props.dispatch({
         type: "USER_INVITED",

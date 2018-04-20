@@ -1,24 +1,38 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import styles from "./style.less";
+import styles from './style.less'
 
-import { sendInvite } from "../../../store/sites";
-import { notify } from "../../../../../../shell/store/notifications";
+import { sendInvite, deleteInvite } from '../../../store/sites'
+import { notify } from '../../../../../../shell/store/notifications'
+import {
+  fetchSiteUsersPending,
+  removeSiteUsersPending
+} from '../../../store/sitesUsers'
 
 class UserAccess extends Component {
   constructor(props) {
-    super();
+    super()
     this.state = {
       submitted: false,
-      inviteeEmail: "",
-      inviteRole: ""
-    };
+      inviteeEmail: '',
+      inviteRole: ''
+    }
+  }
+  deleteInvite = inviteZUID => {
+    if (!confirm('Are you sure you want to delete this invite?')) {
+      return null
+    }
+    this.props.dispatch(deleteInvite(inviteZUID)).then(data => {
+      this.props.dispatch(
+        removeSiteUsersPending(data.data.ZUID, this.props.site.ZUID)
+      )
+    })
   }
   handleInvite = evt => {
-    if (this.state.inviteeEmail.includes("@")) {
+    if (this.state.inviteeEmail.includes('@')) {
       // needs mo betta validity check here
-      this.setState({ submitted: !this.state.submitted });
+      this.setState({ submitted: !this.state.submitted })
       this.props
         .dispatch(
           sendInvite({
@@ -28,23 +42,26 @@ class UserAccess extends Component {
           })
         )
         .then(data => {
-          this.setState({ submitted: !this.state.submitted, inviteeEmail: "" });
-        });
+          this.props.dispatch(
+            fetchSiteUsersPending(this.props.user.ZUID, this.props.site.ZUID)
+          )
+          this.setState({ submitted: !this.state.submitted, inviteeEmail: '' })
+        })
     } else {
       this.props.dispatch(
         notify({
           HTML: `<p>
           <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Please provide a valid Email address
         </p>`,
-          type: "error"
+          type: 'error'
         })
-      );
+      )
     }
-  };
+  }
   handleChange = evt => {
     // todo: validity check
-    this.setState({ [evt.target.name]: evt.target.value });
-  };
+    this.setState({ [evt.target.name]: evt.target.value })
+  }
   render() {
     return this.props.sitesRoles ? (
       <div className={styles.userAccess}>
@@ -65,18 +82,23 @@ class UserAccess extends Component {
                 (roleZUID, i) => {
                   if (
                     this.props.sitesRoles[this.props.siteZUID][roleZUID]
-                      .name === "SYSTEM_ROLE"
+                      .name === 'SYSTEM_ROLE'
                   ) {
-                    return;
+                    return
                   } else {
                     return (
                       <option
                         key={i}
-                        value={this.props.sitesRoles[this.props.siteZUID][roleZUID].ZUID}
-                        >
-                        {this.props.sitesRoles[this.props.siteZUID][roleZUID].name}
+                        value={
+                          this.props.sitesRoles[this.props.siteZUID][roleZUID]
+                            .ZUID
+                        }>
+                        {
+                          this.props.sitesRoles[this.props.siteZUID][roleZUID]
+                            .name
+                        }
                       </option>
-                    );
+                    )
                   }
                 }
               )}
@@ -118,20 +140,29 @@ class UserAccess extends Component {
                         {
                           this.props.sitesUsers[this.props.siteZUID][user]
                             .firstName
-                        }{" "}
+                        }{' '}
                         {
                           this.props.sitesUsers[this.props.siteZUID][user]
                             .lastName
                         }
+                        {!this.props.sitesUsers[this.props.siteZUID][user]
+                          .lastName &&
+                          !this.props.sitesUsers[this.props.siteZUID][user]
+                            .firstName && <em>Invited User</em>}
                       </span>
                       <span>
-                        {this.props.sitesUsers[this.props.siteZUID][user].staff}
+                        {this.props.sitesUsers[this.props.siteZUID][user]
+                          .pending ? (
+                          <Button onClick={() => this.deleteInvite(user)}>
+                            Uninvite
+                          </Button>
+                        ) : null}
                       </span>
                       <span>
-                        {this.props.sitesUsers[this.props.siteZUID][user].email}{" "}
+                        {this.props.sitesUsers[this.props.siteZUID][user].email}{' '}
                       </span>
                     </article>
-                  );
+                  )
                 }
               )
             ) : (
@@ -142,12 +173,16 @@ class UserAccess extends Component {
       </div>
     ) : (
       <Loader />
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
-  return { sitesRoles: state.sitesRoles, sitesUsers: state.sitesUsers };
-};
+  return {
+    sitesRoles: state.sitesRoles,
+    sitesUsers: state.sitesUsers,
+    user: state.user
+  }
+}
 
-export default connect(state => state)(UserAccess);
+export default connect(state => state)(UserAccess)

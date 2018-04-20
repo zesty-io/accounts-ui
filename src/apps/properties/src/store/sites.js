@@ -57,13 +57,13 @@ export function fetchSites() {
     dispatch({
       type: "FETCHING_SITES"
     });
-    return request(`${config.API_ACCOUNTS}/instances`) // ?getInvited=true when its fixed
+    return request(`${config.API_ACCOUNTS}/instances?getInvited=true`)
       .then(sites => {
         if (!sites.data.length) {
           dispatch({
             type: "FETCH_SITES_SUCCESS_NOSITES"
           });
-          return sites
+          return sites;
         }
         dispatch({
           type: "FETCH_SITES_SUCCESS",
@@ -92,12 +92,13 @@ export function fetchSite(siteZUID) {
     dispatch({
       type: "FETCHING_SITES"
     });
-    request(`${config.API_ACCOUNTS}/instances/${siteZUID}`)
+    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}`)
       .then(site => {
         dispatch({
           type: "FETCH_SITE_SUCCESS",
           site: site.data
         });
+        return site;
       })
       .catch(err => {
         console.table(err);
@@ -149,6 +150,13 @@ export function acceptInvite(inviteZUID) {
       })
       .catch(err => {
         dispatch({ type: "ACCEPT_INVITE_FAILURE" });
+        dispatch(
+          notify({
+            message: `There was an error accepting the invite`,
+            type: "error"
+          })
+        );
+        console.table(err);
         throw err;
       });
   };
