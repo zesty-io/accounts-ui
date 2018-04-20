@@ -75,6 +75,7 @@ class EditRole extends Component {
 
   diffGrains = role => {
     //returns true if the collection permissions differ
+    
   }
 
   doesExist = collection => {
@@ -88,7 +89,7 @@ class EditRole extends Component {
   handleSubmit = evt => {
     evt.preventDefault()
     // check value of granular roles against role.granularRoles
-    // if !== && granularRole isnt on the role CREATE ROLE WITH CURRENT
+    // if !== && granularRole isnt on the role CREATE ROLE WITH CURRENT GRAINS
     // queue creation first(with values), THEN update calls
     console.log('state;', this.state)
     Object.keys(this.state.granularRoles).map(collectionZUID => {
