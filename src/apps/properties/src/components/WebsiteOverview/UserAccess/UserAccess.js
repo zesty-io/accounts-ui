@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import styles from './style.less'
 
-import { sendInvite, deleteInvite } from '../../../store/sites'
+import { sendInvite, cancelInvite } from '../../../store/sites'
 import { notify } from '../../../../../../shell/store/notifications'
 import {
   fetchSiteUsersPending,
@@ -19,11 +19,11 @@ class UserAccess extends Component {
       inviteRole: ''
     }
   }
-  deleteInvite = inviteZUID => {
-    if (!confirm('Are you sure you want to delete this invite?')) {
+  cancelInvite = inviteZUID => {
+    if (!confirm('Are you sure you want to cancel this invite?')) {
       return null
     }
-    this.props.dispatch(deleteInvite(inviteZUID)).then(data => {
+    this.props.dispatch(cancelInvite(inviteZUID)).then(data => {
       this.props.dispatch(
         removeSiteUsersPending(data.data.ZUID, this.props.site.ZUID)
       )
@@ -153,7 +153,7 @@ class UserAccess extends Component {
                       <span>
                         {this.props.sitesUsers[this.props.siteZUID][user]
                           .pending ? (
-                          <Button onClick={() => this.deleteInvite(user)}>
+                          <Button onClick={() => this.cancelInvite(user)}>
                             Uninvite
                           </Button>
                         ) : null}

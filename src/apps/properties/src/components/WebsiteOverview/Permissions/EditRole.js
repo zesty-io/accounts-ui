@@ -1,29 +1,30 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import styles from "./Permissions.less";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import styles from './Permissions.less'
 
-import { getRole, updateRole } from "../../../store/sitesRoles";
-import { notify } from "../../../../../../shell/store/notifications";
+import { getRole, updateRole } from '../../../store/sitesRoles'
+import { notify } from '../../../../../../shell/store/notifications'
 
 class EditRole extends Component {
   constructor(props) {
-    super();
-    let { siteZUID, roleZUID } = props.props;
+    super()
+    let { siteZUID, roleZUID } = props.props
     this.state = {
       collections: { ...props.sitesCollections[siteZUID] },
       role: { ...props.sitesRoles[siteZUID][roleZUID] },
       granularRoles: {},
       siteZUID,
       roleZUID
-    };
+    }
   }
 
   componentDidMount() {
-    let granularRoles = {};
+    let granularRoles = {}
     // create granular roles object from granular roles OR the system role
     Object.keys(this.state.collections).forEach(collectionZUID => {
-      this.state.role.granularRoles
-        ? (granularRoles[collectionZUID] = {
+      this.state.role.granularRoles &&
+      this.state.role.granularRoles[collectionZUID]
+        ? (this.state.granularRoles[collectionZUID] = {
             create:
               this.state.role.granularRoles[collectionZUID].create ||
               this.state.role.systemRole.create,
@@ -54,61 +55,79 @@ class EditRole extends Component {
             publish: this.state.role.systemRole.publish,
             grant: this.state.role.systemRole.grant,
             super: this.state.role.systemRole.super
-          });
-    });
-    this.setState({ granularRoles });
+          })
+    })
+    this.setState({ granularRoles })
   }
 
   handleClick = evt => {
-    let action = evt.target.value.split(",")[0];
-    let entity = evt.target.value.split(",")[1];
-    let alteredAction = this.state.granularRoles[entity];
-    alteredAction[action] = !alteredAction[action];
+    let action = evt.target.value.split(',')[0]
+    let entity = evt.target.value.split(',')[1]
+    let alteredAction = this.state.granularRoles[entity]
+    alteredAction[action] = !alteredAction[action]
     return this.setState(state => {
       return {
         ...state,
         granularRoles: { ...this.state.granularRoles, [entity]: alteredAction }
-      };
-    });
-  };
+      }
+    })
+  }
+
+  diffGrains = role => {
+    //returns true if the collection permissions differ
+  }
+
+  doesExist = collection => {
+    // retruns true if the granular role exists on the user
+    if (this.state.role.granularRoles === null) {
+      return false
+    }
+    return this.state.role.granularRoles.hasOwnProperty(collection)
+  }
 
   handleSubmit = evt => {
-    evt.preventDefault();
+    evt.preventDefault()
+    // check value of granular roles against role.granularRoles
+    // if !== && granularRole isnt on the role CREATE ROLE WITH CURRENT
+    // queue creation first(with values), THEN update calls
+    console.log('state;', this.state)
+    Object.keys(this.state.granularRoles).map(collectionZUID => {
+      console.log(this.doesExist(collectionZUID))
+    })
+    return
     return this.props
-      .dispatch(
-        updateRole({
-          roleZUID: this.state.role.ZUID,
-          granularRoles: this.state.granularRoles
-        })
-      )
+      .dispatch(updateRole(this.state.granularRoles, this.state.role.ZUID))
       .then(data => {
         this.props.dispatch(
           notify({
-            message: "Role successfully updated",
-            type: "success"
+            message: 'Role successfully updated',
+            type: 'success'
           })
-        );
+        )
       })
       .catch(err => {
         this.props.dispatch(
           notify({
             message: `Error while updating role- ${err}`,
-            type: "error"
+            type: 'error'
           })
-        );
-      });
-  };
+        )
+      })
+  }
 
   handleCancel = evt => {
-    evt.preventDefault();
-    this.props.dispatch({ type: "REMOVE_MODAL" });
-  };
+    evt.preventDefault()
+    this.props.dispatch({ type: 'REMOVE_MODAL' })
+  }
 
   render() {
-    let { siteZUID, roleZUID } = this.state;
+    let { siteZUID, roleZUID, role, granularRoles, collections } = this.state
     return (
       <div className={styles.modalWrapper}>
-        <h3>Edit Granular Role Permissions for: {this.state.role.name}</h3>
+        <h3>
+          Edit Granular Role Permissions for: {this.state.role.name} system
+          base-({this.state.role.systemRole.name})
+        </h3>
         <div className={styles.selectCollection}>
           <header>
             <h3>Collection</h3>
@@ -122,102 +141,87 @@ class EditRole extends Component {
           </header>
           <main>
             <form name="permissionsForm">
-              {Object.keys(this.state.collections).map((collectionZUID, i) => {
-                return this.state.granularRoles[collectionZUID] ? (
+              {Object.keys(collections).map((collectionZUID, i) => {
+                return granularRoles[collectionZUID] ? (
                   <article key={i}>
-                    <span>{this.state.collections[collectionZUID].label}</span>
+                    <span>{collections[collectionZUID].label}</span>
                     <span>
                       <input
                         type="checkbox"
                         onChange={this.handleClick}
-                        checked={
-                          this.state.granularRoles[collectionZUID].create
-                        }
-                        value={`create,${
-                          this.state.collections[collectionZUID].zuid
-                        }`}
+                        disabled={role.systemRole.create}
+                        checked={granularRoles[collectionZUID].create}
+                        value={`create,${collections[collectionZUID].zuid}`}
                       />
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         onChange={this.handleClick}
-                        checked={this.state.granularRoles[collectionZUID].read}
-                        value={`read,${
-                          this.state.collections[collectionZUID].zuid
-                        }`}
+                        disabled={role.systemRole.read}
+                        checked={granularRoles[collectionZUID].read}
+                        value={`read,${collections[collectionZUID].zuid}`}
                       />
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         onChange={this.handleClick}
-                        checked={
-                          this.state.granularRoles[collectionZUID].update
-                        }
-                        value={`update,${
-                          this.state.collections[collectionZUID].zuid
-                        }`}
+                        disabled={role.systemRole.update}
+                        checked={granularRoles[collectionZUID].update}
+                        value={`update,${collections[collectionZUID].zuid}`}
                       />
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         onChange={this.handleClick}
-                        checked={
-                          this.state.granularRoles[collectionZUID].delete
-                        }
-                        value={`delete,${
-                          this.state.collections[collectionZUID].zuid
-                        }`}
+                        disabled={role.systemRole.delete}
+                        checked={granularRoles[collectionZUID].delete}
+                        value={`delete,${collections[collectionZUID].zuid}`}
                       />
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         onChange={this.handleClick}
-                        checked={
-                          this.state.granularRoles[collectionZUID].publish
-                        }
-                        value={`publish,${
-                          this.state.collections[collectionZUID].zuid
-                        }`}
+                        disabled={role.systemRole.publish}
+                        checked={granularRoles[collectionZUID].publish}
+                        value={`publish,${collections[collectionZUID].zuid}`}
                       />
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         onChange={this.handleClick}
-                        checked={this.state.granularRoles[collectionZUID].grant}
-                        value={`grant,${
-                          this.state.collections[collectionZUID].zuid
-                        }`}
+                        disabled={role.systemRole.grant}
+                        checked={granularRoles[collectionZUID].grant}
+                        value={`grant,${collections[collectionZUID].zuid}`}
                       />
                     </span>
                     <span>
                       <input
                         type="checkbox"
                         onChange={this.handleClick}
-                        checked={this.state.granularRoles[collectionZUID].super}
-                        value={`super,${
-                          this.state.collections[collectionZUID].zuid
-                        }`}
+                        disabled={role.systemRole.super}
+                        checked={granularRoles[collectionZUID].super}
+                        value={`super,${collections[collectionZUID].zuid}`}
                       />
                     </span>
                   </article>
                 ) : (
-                  <Loader key={i}/>
-                );
+                  <Loader key={i} />
+                )
               })}
               <div className={styles.buttons}>
-              <Button onClick={this.handleSubmit}>Apply</Button>
-              <Button onClick={this.handleCancel}>Cancel</Button>
+                <Button onClick={this.handleSubmit}>Apply</Button>
+                <Button onClick={this.handleCancel}>Cancel</Button>
               </div>
             </form>
           </main>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -225,7 +229,7 @@ const mapStateToProps = state => {
   return {
     sitesCollections: state.sitesCollections,
     sitesRoles: state.sitesRoles
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(EditRole);
+export default connect(mapStateToProps)(EditRole)

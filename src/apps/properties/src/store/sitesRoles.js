@@ -131,8 +131,8 @@ export const removeRole = roleZUID => {
 export const updateRole = (role, roleZUID) => {
   return dispatch => {
     dispatch({ type: "UPDATING_ROLE" });
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`, {
-      method: "PUT",
+    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
+      method: "POST",
       body: role
     })
       .then(data => {
