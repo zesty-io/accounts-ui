@@ -128,10 +128,10 @@ export const removeRole = roleZUID => {
   };
 };
 
-export const updateRole = role => {
+export const updateRole = (role, roleZUID) => {
   return dispatch => {
     dispatch({ type: "UPDATING_ROLE" });
-    return request(`${this}/roles/${this}`, {
+    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`, {
       method: "PUT",
       body: role
     })

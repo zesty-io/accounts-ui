@@ -1,41 +1,69 @@
-import { Component } from "React";
-import { connect } from "react-redux";
-import { updatePassword } from "../../../../../../shell/store/user";
+import { Component } from 'React'
+import { connect } from 'react-redux'
+import { updatePassword } from '../../../../../../shell/store/user'
 
-import styles from "./Password.less";
-import { notify } from "../../../../../../shell/store/notifications";
+import styles from './Password.less'
+import { notify } from '../../../../../../shell/store/notifications'
 
 class Password extends Component {
   constructor(props) {
-    super();
+    super()
     this.state = {
-      oldPassword: "",
-      confirmNewPassword: "",
-      newPassword: ""
-    };
+      oldPassword: '',
+      confirmNewPassword: '',
+      newPassword: ''
+    }
   }
   handleChange = evt => {
     return this.setState({
       [evt.target.name]: evt.target.value
-    });
-  };
+    })
+  }
 
   handleClick = evt => {
-    if (this.state.newPassword == this.state.confirmNewPassword) {
+    if (
+      this.state.newPassword == this.state.confirmNewPassword &&
+      this.state.oldPassword
+    ) {
       return this.props
-        .dispatch(updatePassword(this.state.newPassword))
+        .dispatch(
+          updatePassword(this.state.oldPassword, this.state.newPassword)
+        )
         .then(data => {
-          this.setState({});
-        });
+          this.setState({
+            oldPassword: '',
+            confirmNewPassword: '',
+            newPassword: ''
+          })
+          this.props.dispatch(
+            notify({
+              message: 'Password was updated',
+              type: 'success'
+            })
+          )
+        })
+        .catch(err => {
+          this.setState({
+            oldPassword: '',
+            confirmNewPassword: '',
+            newPassword: ''
+          })
+          this.props.dispatch(
+            notify({
+              message: 'Password was not updated',
+              type: 'error'
+            })
+          )
+        })
     } else {
       this.props.dispatch(
         notify({
-          message: "Passwords no bueno",
-          type: "error"
+          message: 'Passwords no bueno',
+          type: 'error'
         })
-      );
+      )
     }
-  };
+  }
   render() {
     return (
       <section className={styles.Password}>
@@ -78,8 +106,8 @@ class Password extends Component {
         </div>
         <Button text="Submit" onClick={this.handleClick} />
       </section>
-    );
+    )
   }
 }
 
-export default connect(state => state)(Password);
+export default connect(state => state)(Password)

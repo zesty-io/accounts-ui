@@ -124,24 +124,29 @@ export function saveProfile() {
   };
 }
 
-export function updatePassword(password) {
+export function updatePassword(oldPassword, password) {
   return (dispatch, getState) => {
     dispatch({
       type: "SAVING_PASSWORD"
     });
-    const userZUID = getState().user.ZUID;
-    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
-      method: "PUT",
-      json: true,
+    const user = getState().user
+    return request(`${config.API_AUTH}/login`, {
       body: {
-        password
+        email: user.email,
+        password: oldPassword
       }
-    })
-      .then(data => {
-        dispatch({ type: "SAVING_PASSWORD_SUCCESS" });
-        return data;
-      })
-      .catch(err => {
+    }).then(data => {
+      return request(`${config.API_ACCOUNTS}/users/${user.ZUID}?updatePassword=true`, {
+        method: "PUT",
+        json: true,
+        body: {
+          password
+        }
+      }).then(data => {
+          dispatch({ type: "SAVING_PASSWORD_SUCCESS" });
+          return data;
+        })
+    }).catch(err => {
         console.table(err);
         dispatch({ type: "SAVING_PASSWORD_ERROR" });
         throw err;
