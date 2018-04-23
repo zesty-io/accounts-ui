@@ -120,12 +120,12 @@ class Permissions extends Component {
             <label>Base Role</label>
             <select name="systemRoleZUID" onChange={this.onChange}>
               <option value="">Select Role</option>
-              <option value="31-71cfc74-s30">SEO</option>
-              <option value="31-71cfc74-p0bl1shr">Publisher</option>
-              <option value="31-71cfc74-d3v3l0p3r">Developer</option>
-              <option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>
               <option value="31-71cfc74-4dm13">Admin</option>
+              <option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>
+              <option value="31-71cfc74-d3v3l0p3r">Developer</option>
               <option value="31-71cfc74-0wn3r">Owner</option>
+              <option value="31-71cfc74-p0bl1shr">Publisher</option>
+              <option value="31-71cfc74-s30">SEO</option>
             </select>
           </span>
           <span className={styles.expires}>
