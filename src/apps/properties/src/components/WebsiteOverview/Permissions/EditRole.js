@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './Permissions.less'
 
-import { getRole, updateRole } from '../../../store/sitesRoles'
+import {
+  getRole,
+  updateGranularRole,
+  createGranularRole
+} from '../../../store/sitesRoles'
 import { notify } from '../../../../../../shell/store/notifications'
 
 class EditRole extends Component {
@@ -19,33 +23,23 @@ class EditRole extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch(getRole(this.state.role.ZUID, this.state.siteZUID))
     let granularRoles = {}
     // create granular roles object from granular roles OR the system role
-    Object.keys(this.state.collections).forEach(collectionZUID => {
+    Object.keys(this.state.collections).map(collectionZUID => {
       this.state.role.granularRoles &&
       this.state.role.granularRoles[collectionZUID]
-        ? (this.state.granularRoles[collectionZUID] = {
+        ? (granularRoles[collectionZUID] = {
             create:
-              this.state.role.granularRoles[collectionZUID].create ||
-              this.state.role.systemRole.create,
-            read:
-              this.state.role.granularRoles[collectionZUID].read ||
-              this.state.role.systemRole.read,
+              this.state.role.granularRoles[collectionZUID].create || false,
+            read: this.state.role.granularRoles[collectionZUID].read || false,
             update:
-              this.state.role.granularRoles[collectionZUID].update ||
-              this.state.role.systemRole.update,
+              this.state.role.granularRoles[collectionZUID].update || false,
             delete:
-              this.state.role.granularRoles[collectionZUID].delete ||
-              this.state.role.systemRole.delete,
+              this.state.role.granularRoles[collectionZUID].delete || false,
             publish:
-              this.state.role.granularRoles[collectionZUID].publish ||
-              this.state.role.systemRole.publish,
-            grant:
-              this.state.role.granularRoles[collectionZUID].grant ||
-              this.state.role.systemRole.grant,
-            super:
-              this.state.role.granularRoles[collectionZUID].super ||
-              this.state.role.systemRole.super
+              this.state.role.granularRoles[collectionZUID].publish || false,
+            grant: this.state.role.granularRoles[collectionZUID].grant || false
           })
         : (granularRoles[collectionZUID] = {
             create: this.state.role.systemRole.create,
@@ -53,8 +47,7 @@ class EditRole extends Component {
             update: this.state.role.systemRole.update,
             delete: this.state.role.systemRole.delete,
             publish: this.state.role.systemRole.publish,
-            grant: this.state.role.systemRole.grant,
-            super: this.state.role.systemRole.super
+            grant: this.state.role.systemRole.grant
           })
     })
     this.setState({ granularRoles })
@@ -73,9 +66,41 @@ class EditRole extends Component {
     })
   }
 
-  diffGrains = role => {
+  diffGrains = collection => {
     //returns true if the collection permissions differ
-    
+    if (
+      this.state.role.granularRoles &&
+      this.state.role.granularRoles[collection]
+    ) {
+      return !(
+        this.state.role.granularRoles[collection]['create'] ===
+          this.state.granularRoles[collection]['create'] &&
+        this.state.role.granularRoles[collection]['read'] ===
+          this.state.granularRoles[collection]['read'] &&
+        this.state.role.granularRoles[collection]['update'] ===
+          this.state.granularRoles[collection]['update'] &&
+        this.state.role.granularRoles[collection]['delete'] ===
+          this.state.granularRoles[collection]['delete'] &&
+        this.state.role.granularRoles[collection]['publish'] ===
+          this.state.granularRoles[collection]['publish'] &&
+        this.state.role.granularRoles[collection]['grant'] ===
+          this.state.granularRoles[collection]['grant']
+      )
+    }
+    return !(
+      this.state.role.systemRole['create'] ===
+        this.state.granularRoles[collection]['create'] &&
+      this.state.role.systemRole['read'] ===
+        this.state.granularRoles[collection]['read'] &&
+      this.state.role.systemRole['update'] ===
+        this.state.granularRoles[collection]['update'] &&
+      this.state.role.systemRole['delete'] ===
+        this.state.granularRoles[collection]['delete'] &&
+      this.state.role.systemRole['publish'] ===
+        this.state.granularRoles[collection]['publish'] &&
+      this.state.role.systemRole['grant'] ===
+        this.state.granularRoles[collection]['grant']
+    )
   }
 
   doesExist = collection => {
@@ -93,7 +118,43 @@ class EditRole extends Component {
     // queue creation first(with values), THEN update calls
     console.log('state;', this.state)
     Object.keys(this.state.granularRoles).map(collectionZUID => {
-      console.log(this.doesExist(collectionZUID))
+      if (this.diffGrains(collectionZUID)) {
+        if (this.doesExist(collectionZUID)) {
+          this.props
+            .dispatch(
+              updateGranularRole(
+                collectionZUID,
+                this.state.granularRoles[collectionZUID],
+                this.state.roleZUID
+              )
+            )
+            .then(data => {
+              this.props.dispatch(
+                notify({
+                  message: 'Role Successfully Updated',
+                  type: 'success'
+                })
+              )
+            })
+        } else {
+          this.props
+            .dispatch(
+              createGranularRole(
+                collectionZUID,
+                this.state.granularRoles[collectionZUID],
+                this.state.roleZUID
+              )
+            )
+            .then(data => {
+              this.props.dispatch(
+                notify({
+                  message: 'Granular Role Successfully Created',
+                  type: 'success'
+                })
+              )
+            })
+        }
+      }
     })
     return
     return this.props
@@ -118,6 +179,7 @@ class EditRole extends Component {
 
   handleCancel = evt => {
     evt.preventDefault()
+    //todo: check for changes and confirm lost changes
     this.props.dispatch({ type: 'REMOVE_MODAL' })
   }
 
@@ -138,7 +200,6 @@ class EditRole extends Component {
             <h3>delete</h3>
             <h3>publish</h3>
             <h3>grant</h3>
-            <h3>super</h3>
           </header>
           <main>
             <form name="permissionsForm">
@@ -200,15 +261,6 @@ class EditRole extends Component {
                         value={`grant,${collections[collectionZUID].zuid}`}
                       />
                     </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        onChange={this.handleClick}
-                        disabled={role.systemRole.super}
-                        checked={granularRoles[collectionZUID].super}
-                        value={`super,${collections[collectionZUID].zuid}`}
-                      />
-                    </span>
                   </article>
                 ) : (
                   <Loader key={i} />
@@ -216,7 +268,7 @@ class EditRole extends Component {
               })}
               <div className={styles.buttons}>
                 <Button onClick={this.handleSubmit}>Apply</Button>
-                <Button onClick={this.handleCancel}>Cancel</Button>
+                <Button onClick={this.handleCancel}>Close</Button>
               </div>
             </form>
           </main>

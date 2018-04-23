@@ -32,6 +32,12 @@ export function sitesRoles(state = {}, action) {
       return state
     case 'UPDATING_ROLE_FAILURE':
       return state
+    case 'CREATING_ROLE':
+      return state
+    case 'CREATING_ROLE_SUCCESS':
+      return state
+    case 'CREATING_ROLE_FAILURE':
+      return state
     default:
       return state
   }
@@ -69,10 +75,19 @@ export const getRole = (roleZUID, siteZUID) => {
     dispatch({ type: 'FETCHING_ROLE' })
     return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`)
       .then(data => {
-        let fetchedRole = { [data.data.ZUID]: data.data }
+        let normalizedGranularRoles = {}
+        data.data.granularRoles && data.data.granularRoles.map(role => {
+          normalizedGranularRoles[role.resourceZUID] = { ...role }
+        })
+        let role = {
+          [data.data.ZUID]: {
+            ...data.data,
+            granularRoles: normalizedGranularRoles
+          }
+        }
         dispatch({
           type: 'FETCHING_ROLE_SUCCESS',
-          role: fetchedRole,
+          role,
           siteZUID
         })
         return data.data
@@ -128,12 +143,13 @@ export const removeRole = roleZUID => {
   }
 }
 
-export const updateRole = (role, roleZUID) => {
+export const updateGranularRole = (resourceZUID, role, roleZUID) => {
   return dispatch => {
     dispatch({ type: 'UPDATING_ROLE' })
     return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
-      method: 'POST',
-      body: role
+      method: 'PUT',
+      json: true,
+      body: [{resourceZUID, ...role}]
     })
       .then(data => {
         dispatch({ type: 'UPDATING_ROLE_SUCCESS' })
@@ -141,7 +157,27 @@ export const updateRole = (role, roleZUID) => {
       })
       .catch(err => {
         console.table(err)
-        dispatch({ type: 'UPDATING_ROLE_FAILURE' })
+        dispatch({ type: 'UPDATING_ROLE_FAILURE', err })
+        throw err
+      })
+  }
+}
+
+export const createGranularRole = (resourceZUID, granularRole, roleZUID) => {
+  return dispatch => {
+    dispatch({ type: 'CREATING_ROLE' })
+    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
+      method: 'POST',
+      json: true,
+      body: {resourceZUID, ...granularRole}
+    })
+      .then(data => {
+        dispatch({ type: 'CREATING_ROLE_SUCCESS' })
+        return data
+      })
+      .catch(err => {
+        console.table(err)
+        dispatch({ type: 'CREATING_ROLE_FAILURE', err })
         throw err
       })
   }
