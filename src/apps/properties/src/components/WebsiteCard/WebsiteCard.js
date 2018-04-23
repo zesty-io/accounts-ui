@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
+import config from '../../../../../shell/config'
+
 import { Line } from 'react-chartjs-2'
 
 class WebsiteCard extends Component {
@@ -68,7 +70,9 @@ class WebsiteCard extends Component {
             className={styles.preview}
             target="_blank"
             title={`Preview  ${this.props.site.name}`}
-            href={`https://${this.props.site.randomHashID}.preview.zesty.io`}
+            href={`${config.PREVIEW_URL_PROTOCOL}${
+              this.props.site.randomHashID
+            }${config.PREVIEW_URL}`}
           >
             <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
           </Url>
@@ -78,7 +82,9 @@ class WebsiteCard extends Component {
             <Url
               className={styles.manager}
               target="_blank"
-              href={`https://${this.props.site.randomHashID}.manage.zesty.io`}
+              href={`${config.MANAGER_URL_PROTOCOL}${
+                this.props.site.randomHashID
+              }${config.MANAGER_URL}`}
             >
               <i className="fa fa-external-link" aria-hidden="true" /> Site
               Manager
