@@ -72,6 +72,7 @@ class App extends Component {
           <React.Fragment>
             <Notify />
             <Switch>
+              <Route path="/login/2fa" component={TwoFactor} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route
