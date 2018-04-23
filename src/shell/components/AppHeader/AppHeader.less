@@ -44,27 +44,34 @@
   }
 }
 
-.HelpNav {
-  a {
-    color: @zesty-white;
-    &:hover,
-    &:focus {
-      color: @zesty-orange;
-    }
-  }
-  .icon {
-    font-size: 1.4rem;
-    padding: 0.5rem;
-  }
-}
+// .HelpNav {
+//   a {
+//     color: @zesty-white;
+//     &:hover,
+//     &:focus {
+//       color: @zesty-orange;
+//     }
+//   }
+//   .icon {
+//     font-size: 1.4rem;
+//     padding: 0.5rem;
+//   }
+// }
 
 .UserNav {
   align-items: center;
+  background: @zesty-background-blue;
+  color: @appColor;
   cursor: pointer;
   display: flex;
   border-radius: 3px;
-  padding: 0.2rem;
+  padding: 0.2rem 0.3rem;
   margin-left: 0.5rem;
+
+  .avatar {
+    margin-left: 8px;
+    border-radius: 2px;
+  }
 
   .UserMenu {
     background: @globalHeader;
@@ -74,6 +81,14 @@
     top: 5vh;
     right: 2rem;
     min-width: 120px;
+
+    hr {
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      border-bottom: 1px solid lighten(@globalHeader, 15%);
+      margin: 0.5rem 0;
+    }
   }
 
   &:hover,
@@ -98,17 +113,14 @@
         }
       }
       li.user {
-        font-size: 1rem;
-        border-bottom: 1px solid lighten(@globalHeader, 15%);
-        padding-bottom: 1rem;
-        margin-bottom: 0.5rem;
+        font-size: 0.8rem;
         span {
           display: block;
           padding-bottom: 0;
         }
-        .email {
-          font-size: 0.8rem;
-        }
+        // .email {
+        //   // font-size: 0.8rem;
+        // }
       }
       .logout {
         color: @zesty-white;

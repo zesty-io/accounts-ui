@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
@@ -8,45 +8,8 @@ import config from '../../../../../shell/config'
 
 import { Line } from 'react-chartjs-2'
 
-class WebsiteCard extends Component {
-  constructor(props) {
-    super(props)
-    // this.state ={
-    //   shouldRedraw: false
-    // }
-  }
-  // componentDidMount() {
-  //   window.addEventListener('resize', this.setRedraw, false)
-  // }
-  // componentWillUnmount() {
-  //   window.removeEventListener('resize', this.setRedraw, false)
-  // }
-  // setRedraw = () => {
-  //   return this.setState({shouldRedraw: true})
-  // }
+class WebsiteCard extends PureComponent {
   render() {
-    // let data = {
-    //   labels: ['sun', 'mon', 'tues', 'wed', 'thur', 'fri', 'sat'],
-    //   datasets: [
-    //     {
-    //       label: 'requests',
-    //       data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 7))
-    //     },
-    //     {
-    //       label: 'media',
-    //       data: Array.from({ length: 7 }, () => Math.floor(Math.random() * 7))
-    //     }
-    //   ]
-    // }
-
-    // let options = {
-    //   elements: {
-    //     line: {
-    //       tension: 0 // disables bezier curves
-    //     }
-    //   }
-    // }
-
     return (
       <article className={styles.WebsiteCard}>
         <header>
@@ -65,7 +28,6 @@ class WebsiteCard extends Component {
           )}
         </header>
         <main className={styles.WebsiteManage}>
-          {/*<Line data={data} options={options} redraw={this.state.shouldRedraw} />*/}
           <Url
             className={styles.preview}
             target="_blank"

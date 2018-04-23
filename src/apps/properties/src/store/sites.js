@@ -71,6 +71,17 @@ export function fetchSites() {
           })
           return sites
         }
+
+        sites.data.sort((prev, next) => {
+          if (prev.name < next.name) {
+            return -1
+          }
+          if (prev.name > next.name) {
+            return 1
+          }
+          return 0
+        })
+
         dispatch({
           type: 'FETCH_SITES_SUCCESS',
           sites: sites.data
