@@ -52,6 +52,7 @@ class Login extends Component {
                   type="text"
                   placeholder="e.g. hello@zesty.io"
                   name="email"
+                  autoFocus
                 />
               </label>
               <label>
