@@ -69,14 +69,14 @@ class UserAccess extends Component {
           <Input
             className={styles.email}
             type="email"
-            placeholder="Email"
+            placeholder="Email of user to invite"
             name="inviteeEmail"
             required
             value={this.state.inviteeEmail}
             onChange={this.handleChange}
           />
           <select name="inviteRole" onChange={this.handleChange}>
-            <option value="none">Select Role</option>
+            <option value="none">Select Role for User</option>
             {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
               Object.keys(this.props.sitesRoles[this.props.siteZUID]).map(
                 (roleZUID, i) => {
