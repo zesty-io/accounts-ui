@@ -15,7 +15,7 @@ export function sitesUsers(state = {}, action) {
     case "FETCHING_USERS_PENDING":
       return state;
 
-    case "DELETE_USERS_PENDING":
+    case "DELETE_USER":
       return {...state, [action.siteZUID]: action.users};
 
     case "FETCH_USERS_PENDING_SUCCESS":
@@ -35,7 +35,7 @@ export const fetchSiteUsers = (userZUID, siteZUID) => {
     dispatch({
       type: "FETCHING_USERS"
     });
-    request(`${config.API_ACCOUNTS}/instances/${siteZUID}/users`)
+    request(`${config.API_ACCOUNTS}/instances/${siteZUID}/users?getRoles=true`)
       .then(users => {
         let normalizedUsers = {};
         users.data.forEach(user => {
@@ -92,14 +92,15 @@ export const fetchSiteUsersPending = (userZUID, siteZUID) => {
   };
 };
 
-export const removeSiteUsersPending = (inviteZUID, siteZUID) => {
+export const removeSiteUser = (userZUID, siteZUID) => {
   return (dispatch, getState) => {
     let users = getState().sitesUsers[siteZUID];
-    delete users[inviteZUID]
+    delete users[userZUID]
     return dispatch({
-      type: "DELETE_USERS_PENDING",
+      type: "DELETE_USER",
       users,
       siteZUID
     })
   };
 };
+

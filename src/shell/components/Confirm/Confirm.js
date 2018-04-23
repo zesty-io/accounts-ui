@@ -9,10 +9,15 @@ const Confirm = props => {
     props.isOpen && (
       <section className={styles.Confirm}>
         <Button
-          onClick={() => props.dispatch({ type: "REMOVE_MODAL" })}
-          text="Close"
+          onClick={() => props.dispatch({ type: "REMOVE_CONFIRM" })}
+          text="Continue"
           className={styles.close}
         />
+        <Button
+        onClick={() => props.dispatch({ type: "REMOVE_CONFIRM" })}
+        text="Cancel"
+        className={styles.close}
+      />
       </section>
     )
   );

@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 
 import styles from './style.less'
 
-import { sendInvite, cancelInvite } from '../../../store/sites'
+import { sendInvite, cancelInvite, removeUser } from '../../../store/sites'
 import { notify } from '../../../../../../shell/store/notifications'
 import {
   fetchSiteUsersPending,
-  removeSiteUsersPending
+  fetchSiteUser,
+  removeSiteUser
 } from '../../../store/sitesUsers'
 
 class UserAccess extends Component {
@@ -19,13 +20,34 @@ class UserAccess extends Component {
       inviteRole: ''
     }
   }
+  removeUser = (userZUID, roleZUID) => {
+    this.props
+      .dispatch(removeUser(userZUID, roleZUID))
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            message: 'User Removed',
+            type: 'success'
+          })
+        )
+        this.props.dispatch(removeSiteUser(userZUID, this.props.siteZUID))
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: 'User Not Removed',
+            type: 'error'
+          })
+        )
+      })
+  }
   cancelInvite = inviteZUID => {
     if (!confirm('Are you sure you want to cancel this invite?')) {
       return null
     }
     this.props.dispatch(cancelInvite(inviteZUID)).then(data => {
       this.props.dispatch(
-        removeSiteUsersPending(data.data.ZUID, this.props.site.ZUID)
+        removeSiteUser(data.data.ZUID, this.props.site.ZUID)
       )
     })
   }
@@ -156,10 +178,28 @@ class UserAccess extends Component {
                           <Button onClick={() => this.cancelInvite(user)}>
                             Cancel Invitation
                           </Button>
-                        ) : null}
+                        ) : (
+                          this.props.sitesUsers[this.props.siteZUID][user].role
+                            .name
+                        )}
                       </span>
                       <span>
                         {this.props.sitesUsers[this.props.siteZUID][user].email}{' '}
+                      </span>
+                      <span>
+                        {!this.props.sitesUsers[this.props.siteZUID][user]
+                          .pending ? (
+                          <Button
+                            onClick={() =>
+                              this.removeUser(
+                                user,
+                                this.props.sitesUsers[this.props.siteZUID][user]
+                                  .role.ZUID
+                              )
+                            }>
+                            Remove User
+                          </Button>
+                        ) : null}
                       </span>
                     </article>
                   )

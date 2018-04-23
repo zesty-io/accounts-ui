@@ -46,6 +46,12 @@ export function sites(state = {}, action) {
       return state
     case 'CREATE_SITE_ERROR':
       return state
+    case 'REMOVE_USER':
+      return state
+    case 'REMOVE_USER_ERROR':
+      return state
+    case 'REMOVE_USER_SUCCESS':
+      return state
     default:
       return state
   }
@@ -279,6 +285,21 @@ export const postNewSite = name => {
         })
         console.table(err)
         throw err
+      })
+  }
+}
+
+export const removeUser = (userZUID, roleZUID) => {
+  return dispatch => {
+    dispatch({ type: 'REMOVE_USER' })
+    return request(`${config.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`, {method: 'DELETE'})
+      .then(data => {
+        dispatch({ type: 'REMOVE_USER_SUCCESS', data })
+        return data
+      })
+      .catch(err => {
+        console.table(err)
+        dispatch({ type: 'REMOVE_USER_ERROR' })
       })
   }
 }
