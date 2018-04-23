@@ -19,33 +19,27 @@ class EditRole extends Component {
   }
 
   componentDidMount() {
+    this.props.dispatch(getRole(this.state.role.ZUID, this.state.siteZUID))
     let granularRoles = {}
     // create granular roles object from granular roles OR the system role
-    Object.keys(this.state.collections).forEach(collectionZUID => {
+    Object.keys(this.state.collections).map(collectionZUID => {
       this.state.role.granularRoles &&
       this.state.role.granularRoles[collectionZUID]
-        ? (this.state.granularRoles[collectionZUID] = {
+        ? (granularRoles[collectionZUID] = {
             create:
-              this.state.role.granularRoles[collectionZUID].create ||
-              this.state.role.systemRole.create,
+              this.state.role.granularRoles[collectionZUID].create,
             read:
-              this.state.role.granularRoles[collectionZUID].read ||
-              this.state.role.systemRole.read,
+              this.state.role.granularRoles[collectionZUID].read,
             update:
-              this.state.role.granularRoles[collectionZUID].update ||
-              this.state.role.systemRole.update,
+              this.state.role.granularRoles[collectionZUID].update,
             delete:
-              this.state.role.granularRoles[collectionZUID].delete ||
-              this.state.role.systemRole.delete,
+              this.state.role.granularRoles[collectionZUID].delete,
             publish:
-              this.state.role.granularRoles[collectionZUID].publish ||
-              this.state.role.systemRole.publish,
+              this.state.role.granularRoles[collectionZUID].publish,
             grant:
-              this.state.role.granularRoles[collectionZUID].grant ||
-              this.state.role.systemRole.grant,
+              this.state.role.granularRoles[collectionZUID].grant,
             super:
-              this.state.role.granularRoles[collectionZUID].super ||
-              this.state.role.systemRole.super
+              this.state.role.granularRoles[collectionZUID].super
           })
         : (granularRoles[collectionZUID] = {
             create: this.state.role.systemRole.create,
@@ -75,7 +69,7 @@ class EditRole extends Component {
 
   diffGrains = role => {
     //returns true if the collection permissions differ
-    
+
   }
 
   doesExist = collection => {

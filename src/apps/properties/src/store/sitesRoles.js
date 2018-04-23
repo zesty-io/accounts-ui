@@ -69,10 +69,15 @@ export const getRole = (roleZUID, siteZUID) => {
     dispatch({ type: 'FETCHING_ROLE' })
     return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`)
       .then(data => {
-        let fetchedRole = { [data.data.ZUID]: data.data }
+        console.log(data)
+        let normalizedGranularRoles = {}
+        data.data.granularRoles.map(role => {
+          normalizedGranularRoles[role.resourceZUID] = {...role};
+        })
+        let role = { [data.data.ZUID]: {...data.data, granularRoles: normalizedGranularRoles} }
         dispatch({
           type: 'FETCHING_ROLE_SUCCESS',
-          role: fetchedRole,
+          role,
           siteZUID
         })
         return data.data
