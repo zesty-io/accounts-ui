@@ -152,7 +152,19 @@ class Permissions extends Component {
                 (ZUID, i) => {
                   if (
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
-                    "SYSTEM_ROLE"
+                    "SYSTEM_ROLE" ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                    "Admin" ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                    "Developer" ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                    "Owner" ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                    "SEO" ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                    "Contributor" ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                    "Publisher"
                   ) {
                     return;
                   } else {
@@ -180,14 +192,12 @@ class Permissions extends Component {
                           <ButtonGroup>
                             <Button
                               text="Edit"
-                              disabled={this.props.sitesRoles[this.props.siteZUID][ZUID].createdByUserZUID !== this.props.user.ZUID}
                               onClick={() =>
                                 this.handleEdit(ZUID, this.props.siteZUID)
                               }
                             />
                             <Button
                               text="Remove"
-                              disabled={this.props.sitesRoles[this.props.siteZUID][ZUID].createdByUserZUID !== this.props.user.ZUID}
                               onClick={() => this.handleRemove(ZUID)}
                             />
                           </ButtonGroup>
