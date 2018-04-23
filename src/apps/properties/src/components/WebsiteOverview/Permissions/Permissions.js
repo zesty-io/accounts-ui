@@ -44,15 +44,14 @@ class Permissions extends Component {
           this.props
             .dispatch(getRole(data.ZUID, this.props.siteZUID))
             .then(data => {
-              // Lets not immediately go into Granular roles
-              // this.props.dispatch({
-              //   type: "NEW_MODAL",
-              //   component: EditRole,
-              //   props: {
-              //     siteZUID: this.props.siteZUID,
-              //     roleZUID: data.ZUID
-              //   }
-              // });
+              this.props.dispatch({
+                type: "NEW_MODAL",
+                component: EditRole,
+                props: {
+                  siteZUID: this.props.siteZUID,
+                  roleZUID: data.ZUID
+                }
+              });
               this.setState({ submitted: !this.state.submitted, name: "" });
             });
           return this.props.dispatch(
@@ -181,12 +180,14 @@ class Permissions extends Component {
                           <ButtonGroup>
                             <Button
                               text="Edit"
+                              disabled={this.props.sitesRoles[this.props.siteZUID][ZUID].createdByUserZUID !== this.props.user.ZUID}
                               onClick={() =>
                                 this.handleEdit(ZUID, this.props.siteZUID)
                               }
                             />
                             <Button
                               text="Remove"
+                              disabled={this.props.sitesRoles[this.props.siteZUID][ZUID].createdByUserZUID !== this.props.user.ZUID}
                               onClick={() => this.handleRemove(ZUID)}
                             />
                           </ButtonGroup>
