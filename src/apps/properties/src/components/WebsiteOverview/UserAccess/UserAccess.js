@@ -154,7 +154,7 @@ class UserAccess extends Component {
                         {this.props.sitesUsers[this.props.siteZUID][user]
                           .pending ? (
                           <Button onClick={() => this.cancelInvite(user)}>
-                            Uninvite
+                            Cancel Invitation
                           </Button>
                         ) : null}
                       </span>

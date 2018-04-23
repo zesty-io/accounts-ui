@@ -33,7 +33,6 @@
   position: absolute;
   top: 0;
   right: 0;
-  // flex: 1;
   .WebsiteOverviewHeader {
     padding: 2rem;
     border-bottom: 1px solid darken(@zesty-light-blue, 1%);
@@ -41,10 +40,11 @@
     margin-bottom: 1rem;
     position: sticky;
     top: 0;
-    z-index: 1;
     background: darken(@appBkgColor, 3%);
     .name {
       font-size: 2rem;
+      display: flex;
+      flex-direction: row;
     }
     .domain {
       font-size: 1rem;
