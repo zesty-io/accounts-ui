@@ -11,7 +11,7 @@ import Actions from "./Actions";
 import Domain from "./Domain";
 import Stats from "./Stats";
 import Blueprint from "./Blueprint";
-import Permissions from "./Permissions";
+import Roles from "./Roles";
 
 import { fetchSite } from "../../store/sites";
 import { fetchSiteUsers, fetchSiteUsersPending } from "../../store/sitesUsers";
@@ -81,16 +81,6 @@ class WebsiteOverview extends Component {
     // when this lives on the user object, it will be useful
     const fakeUserPrefs = [
       {
-        title: "Monthly Usage",
-        className: "fa fa-line-chart",
-        Component: Stats
-      },
-      {
-        title: "Permissions",
-        className: "fa fa-lock",
-        Component: Permissions
-      },
-      {
         title: "User Access",
         className: "fa fa-users",
         Component: UserAccess
@@ -99,6 +89,11 @@ class WebsiteOverview extends Component {
         title: "Company Access",
         className: "fa fa-building",
         Component: CompanyAccess
+      },
+      {
+        title: "Roles",
+        className: "fa fa-lock",
+        Component: Roles
       },
       {
         title: "Blueprint",

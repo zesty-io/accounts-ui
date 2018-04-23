@@ -10,7 +10,7 @@ import {
   getRole
 } from "../../../store/sitesRoles";
 
-import styles from "./Permissions.less";
+import styles from "./Roles.less";
 
 const formatDate = date => {
   if (!date) {
@@ -21,7 +21,7 @@ const formatDate = date => {
     1}-${newDate.getDate()}-${newDate.getFullYear()}`;
 };
 
-class Permissions extends Component {
+class Roles extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -219,4 +219,4 @@ const mapStateToProps = state => {
   return state;
 };
 
-export default connect(mapStateToProps)(Permissions);
+export default connect(mapStateToProps)(Roles);

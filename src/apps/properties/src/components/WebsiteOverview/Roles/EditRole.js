@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import styles from './Permissions.less'
+import styles from './Roles.less'
 
 import {
   getRole,
