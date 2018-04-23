@@ -63,6 +63,7 @@ class TwoFactor extends Component {
             zuid: json.meta.userZuid,
             auth: true
           })
+          window.location = '/properties'
         } else {
           this.setState({
             message: json.message

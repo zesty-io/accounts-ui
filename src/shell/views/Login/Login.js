@@ -110,7 +110,6 @@ class Login extends Component {
             ZUID: json.meta.userZuid,
             auth: true
           })
-          // this.props.dispatch(fetchUser(json.meta.userZuid))
           window.location = '/properties'
         } else if (json.code === 202) {
           window.location = '/login/2fa'
