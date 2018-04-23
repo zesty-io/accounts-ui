@@ -27,19 +27,15 @@ class EditRole extends Component {
       this.state.role.granularRoles[collectionZUID]
         ? (granularRoles[collectionZUID] = {
             create:
-              this.state.role.granularRoles[collectionZUID].create,
-            read:
-              this.state.role.granularRoles[collectionZUID].read,
+              this.state.role.granularRoles[collectionZUID].create || false,
+            read: this.state.role.granularRoles[collectionZUID].read || false,
             update:
-              this.state.role.granularRoles[collectionZUID].update,
+              this.state.role.granularRoles[collectionZUID].update || false,
             delete:
-              this.state.role.granularRoles[collectionZUID].delete,
+              this.state.role.granularRoles[collectionZUID].delete || false,
             publish:
-              this.state.role.granularRoles[collectionZUID].publish,
-            grant:
-              this.state.role.granularRoles[collectionZUID].grant,
-            super:
-              this.state.role.granularRoles[collectionZUID].super
+              this.state.role.granularRoles[collectionZUID].publish || false,
+            grant: this.state.role.granularRoles[collectionZUID].grant || false
           })
         : (granularRoles[collectionZUID] = {
             create: this.state.role.systemRole.create,
@@ -47,8 +43,7 @@ class EditRole extends Component {
             update: this.state.role.systemRole.update,
             delete: this.state.role.systemRole.delete,
             publish: this.state.role.systemRole.publish,
-            grant: this.state.role.systemRole.grant,
-            super: this.state.role.systemRole.super
+            grant: this.state.role.systemRole.grant
           })
     })
     this.setState({ granularRoles })
@@ -67,9 +62,24 @@ class EditRole extends Component {
     })
   }
 
-  diffGrains = role => {
+  diffGrains = collection => {
     //returns true if the collection permissions differ
-
+    if(this.state.role.granularRoles && this.state.role.granularRoles[collection]){
+      return !(this.state.role.granularRoles[collection]['create'] === this.state.granularRoles[collection]['create']
+        && this.state.role.granularRoles[collection]['read'] === this.state.granularRoles[collection]['read']
+        && this.state.role.granularRoles[collection]['update'] === this.state.granularRoles[collection]['update']
+        && this.state.role.granularRoles[collection]['delete'] === this.state.granularRoles[collection]['delete']
+        && this.state.role.granularRoles[collection]['publish'] === this.state.granularRoles[collection]['publish']
+        && this.state.role.granularRoles[collection]['grant'] === this.state.granularRoles[collection]['grant']
+      )
+    }
+    return !(this.state.role.systemRole['create'] === this.state.granularRoles[collection]['create']
+      && this.state.role.systemRole['read'] === this.state.granularRoles[collection]['read']
+      && this.state.role.systemRole['update'] === this.state.granularRoles[collection]['update']
+      && this.state.role.systemRole['delete'] === this.state.granularRoles[collection]['delete']
+      && this.state.role.systemRole['publish'] === this.state.granularRoles[collection]['publish']
+      && this.state.role.systemRole['grant'] === this.state.granularRoles[collection]['grant']
+    )
   }
 
   doesExist = collection => {
@@ -87,7 +97,10 @@ class EditRole extends Component {
     // queue creation first(with values), THEN update calls
     console.log('state;', this.state)
     Object.keys(this.state.granularRoles).map(collectionZUID => {
-      console.log(this.doesExist(collectionZUID))
+        console.log('Diff Grains?', collectionZUID, this.diffGrains(collectionZUID))
+      if (this.diffGrains(collectionZUID)) {
+        console.log('Does Exist?', collectionZUID, this.doesExist(collectionZUID))
+      }
     })
     return
     return this.props
@@ -132,7 +145,6 @@ class EditRole extends Component {
             <h3>delete</h3>
             <h3>publish</h3>
             <h3>grant</h3>
-            <h3>super</h3>
           </header>
           <main>
             <form name="permissionsForm">
@@ -192,15 +204,6 @@ class EditRole extends Component {
                         disabled={role.systemRole.grant}
                         checked={granularRoles[collectionZUID].grant}
                         value={`grant,${collections[collectionZUID].zuid}`}
-                      />
-                    </span>
-                    <span>
-                      <input
-                        type="checkbox"
-                        onChange={this.handleClick}
-                        disabled={role.systemRole.super}
-                        checked={granularRoles[collectionZUID].super}
-                        value={`super,${collections[collectionZUID].zuid}`}
                       />
                     </span>
                   </article>
