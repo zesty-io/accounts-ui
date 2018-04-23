@@ -1,22 +1,28 @@
-import React from "react";
+import { Fragment } from 'react'
 
-import Profile from "./Profile";
-import Email from "./Email";
-import Preferences from "./Preferences";
+import Profile from './Profile'
+import Email from './Email'
+import Preferences from './Preferences'
 
-import styles from "./Account.less";
+import styles from './Account.less'
 
 const Account = () => {
   return (
     <div className={styles.Account}>
-      <h1 className={styles.title}>Profile</h1>
-      <Profile />
-      <h1 className={styles.title}>Emails</h1>
-      <Email />
-      <h1 className={styles.title}>Preferences</h1>
-      <Preferences />
+      <article className={styles.AccountSetting}>
+        {/* <h2 className={styles.title}>Profile</h2> */}
+        <Profile />
+      </article>
+      <article className={styles.AccountSetting}>
+        {/* <h2 className={styles.title}>Emails</h2> */}
+        <Email />
+      </article>
+      {/* <article className={styles.AccountSetting}>
+        <h2 className={styles.title}>Preferences</h2>
+        <Preferences />
+      </article> */}
     </div>
-  );
-};
+  )
+}
 
-export default Account;
+export default Account

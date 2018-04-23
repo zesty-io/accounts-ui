@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { fetchBlueprints } from '../../../../properties/src/store/blueprints'
+import { fetchBlueprints } from '../../../../../../properties/src/store/blueprints'
 
 import styles from './Blueprint.less'
 
@@ -22,7 +22,7 @@ class Blueprints extends Component {
   render() {
     return (
       <div className={styles.blueprints}>
-        <h1 className={styles.title}>Blueprints</h1>
+        {/* <h1 className={styles.title}>Blueprints</h1> */}
         <div className={styles.message}>
           <Button onClick={() => this.handleClick('blueprints/create')}>
             <i className="fa fa-columns" aria-hidden="true" />

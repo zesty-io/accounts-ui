@@ -1,40 +1,31 @@
-import React, { Component } from "react";
-import { NavLink, Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
-import { ErrorBoundary } from "./err";
+import React, { Component } from 'react'
+import { NavLink, Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { ErrorBoundary } from './err'
 
-import Blueprints from "../Blueprints";
-import EditBlueprint from "../EditBlueprint";
-import BlueprintCreate from "../BlueprintCreate";
-import Security from "../Security";
-import Account from "../Account";
+import EditBlueprint from '../EditBlueprint'
+import BlueprintCreate from '../BlueprintCreate'
 
-import styles from "./styles.less";
+import Profile from './components/Profile'
+import Email from './components/Email'
+import Password from './components/Password'
+import TwoFactorOptions from './components/TwoFactorOptions'
+import Blueprints from './components/Blueprints'
 
-import { fetchUser } from "../../../../../shell/store/user";
+import styles from './styles.less'
+
+import { fetchUser } from '../../../../../shell/store/user'
 
 class Settings extends Component {
   componentDidMount() {
-    this.props.user.ZUID &&
-      this.props.dispatch(fetchUser(this.props.user.ZUID));
+    this.props.user.ZUID && this.props.dispatch(fetchUser(this.props.user.ZUID))
   }
   render() {
     return (
       <ErrorBoundary>
         {Object.keys(this.props.user).length ? (
           <section className={styles.settings}>
-            <ul>
-              <li>
-                <NavLink to="/settings/account">Account</NavLink>
-              </li>
-              <li>
-                <NavLink to="/settings/security">Security</NavLink>
-              </li>
-              <li>
-                <NavLink to="/settings/blueprints">Blueprints</NavLink>
-              </li>
-            </ul>
-            <div className={styles.content}>
+            {/* <div className={styles.content}>
               <Switch>
                 <Route path="/settings/account" component={Account} />
                 <Route path="/settings/security" component={Security} />
@@ -48,6 +39,32 @@ class Settings extends Component {
                 />
                 <Route path="/settings/blueprints" component={Blueprints} />
               </Switch>
+            </div> */}
+
+            <Switch>
+              <Route
+                path="/settings/blueprints/create"
+                component={BlueprintCreate}
+              />
+              <Route
+                path="/settings/blueprints/:id"
+                component={EditBlueprint}
+              />
+            </Switch>
+
+            <div className={styles.setting}>
+              <h1>Your Account Settings</h1>
+              <div className={styles.SettingCards}>
+                <Profile />
+                <Email />
+                <Password />
+                <TwoFactorOptions />
+              </div>
+            </div>
+
+            <div className={styles.setting}>
+              <h1>Your Blueprint Settings</h1>
+              <Blueprints />
             </div>
           </section>
         ) : (
@@ -57,8 +74,8 @@ class Settings extends Component {
           </div>
         )}
       </ErrorBoundary>
-    );
+    )
   }
 }
 
-export default connect(state => state)(Settings);
+export default connect(state => state)(Settings)
