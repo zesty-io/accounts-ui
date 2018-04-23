@@ -124,7 +124,7 @@ class WebsiteOverview extends Component {
                   this.props.name
                 )}&nbsp;
                 <i
-                  className="fa fa-pencil"
+                  className={this.state.editName? "fa fa-times-circle" : "fa fa-pencil"}
                   aria-hidden="true"
                   onClick={this.editName}
                 />

@@ -41,10 +41,10 @@ class PropertyBlueprint extends Component {
           <section className={styles.BlueprintView}>
             <header>
               <h1>Select a Blueprint</h1>
-              <Url href="/properties">
+              <a href="/properties">
                 <i className="fa fa-ban" aria-hidden="true" />&nbsp;Cancel
                 {/* <Button name="cancel" text="cancel" /> */}
-              </Url>
+              </a>
             </header>
             <p className={styles.description}>
               Blueprints are the starting point of your new website. They can
