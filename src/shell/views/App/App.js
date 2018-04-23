@@ -15,6 +15,7 @@ import AppHeader from '../../components/AppHeader'
 import AppError from '../../components/AppError'
 import Notify from '../../components/Notify'
 import Modal from '../../components/Modal'
+import Confirm from '../../components/Confirm'
 
 import styles from './App.less'
 import { fetchUser } from '../../store/user'
@@ -34,6 +35,7 @@ class App extends Component {
         <AppError>
           <Notify />
           <Modal />
+          <Confirm />
           <section className={styles.AppMain}>
             {this.props.user.email ? (
               <Switch>

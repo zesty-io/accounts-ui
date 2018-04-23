@@ -1,26 +1,27 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import styles from "./Confirm.less";
+import styles from './Confirm.less'
 
 const Confirm = props => {
-  const ConfirmComponent = props.component;
   return (
-    props.isOpen && (
+    (props.isOpen && (
       <section className={styles.Confirm}>
-        <Button
-          onClick={() => props.dispatch({ type: "REMOVE_CONFIRM" })}
-          text="Continue"
-          className={styles.close}
-        />
-        <Button
-        onClick={() => props.dispatch({ type: "REMOVE_CONFIRM" })}
-        text="Cancel"
-        className={styles.close}
-      />
+        <h1>{props.prompt}</h1>
+        <ButtonGroup>
+          <Button
+            onClick={() => props.dispatch({ type: 'REMOVE_CONFIRM' })}
+            text="Continue"
+          />
+          <Button
+            onClick={() => props.dispatch({ type: 'REMOVE_CONFIRM' })}
+            text="Cancel"
+          />
+        </ButtonGroup>
       </section>
-    )
-  );
-};
+    )) ||
+    null
+  )
+}
 
-export default connect(state => state.modal)(Confirm);
+export default connect(state => state.confirm)(Confirm)

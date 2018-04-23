@@ -7,6 +7,7 @@ import { user } from './user'
 import { auth } from './auth'
 import { notifications } from './notifications'
 import { modal } from './modal'
+import { confirm } from './confirm'
 import { propertiesReducers } from '../../apps/properties/src/store'
 
 const loggerMiddleware = createLogger({
@@ -26,6 +27,7 @@ const appReducer = combineReducers({
   auth,
   user,
   modal,
+  confirm,
   notifications
 })
 

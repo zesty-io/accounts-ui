@@ -35,7 +35,7 @@ class UserAccess extends Component {
       .catch(err => {
         this.props.dispatch(
           notify({
-            message: 'User Not Removed',
+            message: 'Error Removing User',
             type: 'error'
           })
         )
