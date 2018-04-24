@@ -86,8 +86,10 @@ class Profile extends Component {
             onClick={this.handleClick}
             className={styles.ProfileSave}
             disabled={this.state.submitted}
-            text="Set Name"
-          />
+          >
+            <i className="fa fa-floppy-o" aria-hidden="true" />
+            Set Name
+          </Button>
         </footer>
       </article>
     )

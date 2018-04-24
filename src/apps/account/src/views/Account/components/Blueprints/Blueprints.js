@@ -31,7 +31,7 @@ class Blueprints extends Component {
           <Button
             onClick={() => (window.location = '/settings/blueprints/create')}
           >
-            <i className="fa fa-columns" aria-hidden="true" />
+            <i className="fa fa-plus" aria-hidden="true" />
             Add Blueprint
           </Button>
         </div>
@@ -59,17 +59,18 @@ class Blueprints extends Component {
                         <img src={blueprint.coverImage} alt="bp img" />
                         <p>{blueprint.description}</p>
                       </main>
-                      <Button
-                        onClick={() =>
-                          this.handleClick(
-                            `/settings/blueprints/${blueprint.ID}`
-                          )
-                        }
-                      >
-                        <i className="fa fa-columns" aria-hidden="true" />
-                        Edit
-                      </Button>
-                      <footer />
+                      <footer>
+                        <Button
+                          onClick={() =>
+                            (window.location = `/settings/blueprints/${
+                              blueprint.ID
+                            }`)
+                          }
+                        >
+                          <i className="fa fa-pencil" aria-hidden="true" />
+                          Edit
+                        </Button>
+                      </footer>
                     </article>
                   )
                 })

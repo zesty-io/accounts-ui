@@ -103,7 +103,10 @@ class Password extends Component {
           />
         </main>
         <footer>
-          <Button text="Set Password" onClick={this.handleClick} />
+          <Button onClick={this.handleClick}>
+            <i className="fa fa-floppy-o" aria-hidden="true" />
+            Set Password
+          </Button>
         </footer>
       </article>
     )

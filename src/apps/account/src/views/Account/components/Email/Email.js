@@ -96,11 +96,13 @@ class Email extends Component {
         </main>
         <footer>
           <Button
-            text="Add Email"
             onClick={this.handleClick}
             className={styles.button}
             disabled={this.state.submitted}
-          />
+          >
+            <i className="fa fa-plus" aria-hidden="true" />
+            Add Email
+          </Button>
         </footer>
       </article>
     )
