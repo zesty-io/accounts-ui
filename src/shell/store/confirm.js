@@ -11,7 +11,7 @@ export function confirm(state = initialState, action) {
   }
 }
 
-export function zConfirm(data, result) {
+export function zConfirm(data) {
   if (!data.prompt) {
     console.error('cannot confirm without a prompt')
   }

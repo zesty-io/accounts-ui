@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import {newConfirm} from '../../store/confirm'
-
 import styles from './Confirm.less'
 
 const Confirm = props => {
