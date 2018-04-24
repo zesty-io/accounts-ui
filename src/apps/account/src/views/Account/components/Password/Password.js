@@ -66,13 +66,15 @@ class Password extends Component {
   }
   render() {
     return (
-      <section className={styles.Password}>
-        <h2>Password</h2>
-        <p>
-          Minimum eight characters, at least one uppercase letter, one lowercase
-          letter and one number
-        </p>
-        <div>
+      <article className={styles.Password}>
+        <header>
+          <h2>Password</h2>
+        </header>
+        <main>
+          <p>
+            Minimum eight characters, at least one uppercase letter, one
+            lowercase letter and one number
+          </p>
           <Input
             name="oldPassword"
             placeholder="Old Password"
@@ -81,8 +83,6 @@ class Password extends Component {
             type="password"
             required
           />
-        </div>
-        <div>
           <Input
             name="newPassword"
             placeholder="New Password"
@@ -92,8 +92,6 @@ class Password extends Component {
             type="password"
             required
           />
-        </div>
-        <div>
           <Input
             name="confirmNewPassword"
             placeholder="Confirm New Password"
@@ -103,9 +101,11 @@ class Password extends Component {
             type="password"
             required
           />
-        </div>
-        <Button text="Set Password" onClick={this.handleClick} />
-      </section>
+        </main>
+        <footer>
+          <Button text="Set Password" onClick={this.handleClick} />
+        </footer>
+      </article>
     )
   }
 }

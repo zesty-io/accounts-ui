@@ -1,14 +1,12 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { connect } from 'react-redux'
-import styles from './Profile.less'
-
+import { notify } from '../../../../../../../shell/store/notifications'
 import {
   updateProfile,
-  saveProfile,
-  fetchUser
+  saveProfile
 } from '../../../../../../../shell/store/user'
 
-import { notify } from '../../../../../../../shell/store/notifications'
+import styles from './Profile.less'
 
 class Profile extends Component {
   constructor() {
@@ -17,9 +15,6 @@ class Profile extends Component {
       submitted: false
     }
   }
-  // componentDidMount() {
-  //   this.props.dispatch(fetchUser(this.props.userZUID))
-  // }
   handleClick = evt => {
     evt.preventDefault()
     this.setState({ submitted: !this.state.submitted })
@@ -55,13 +50,22 @@ class Profile extends Component {
   }
   render() {
     return (
-      <section className={styles.Profile}>
-        <h2>User Name</h2>
+      <article className={styles.Profile}>
+        <header>
+          <h2>Your Profile</h2>
+        </header>
+        <main>
+          <div className={styles.gravatar}>
+            <h3>Gravatar</h3>
+            <img
+              className={styles.avatar}
+              src={`https://www.gravatar.com/avatar/${
+                this.props.profile.emailHash
+              }?d=mm&s=80`}
+            />
+          </div>
 
-        <div className={styles.field}>
-          {/* <div>
-            <label>First Name</label>
-          </div> */}
+          <h3>Name</h3>
           <Input
             type="text"
             value={this.props.profile.firstName}
@@ -69,11 +73,6 @@ class Profile extends Component {
             placeholder="Enter your first name"
             name="firstName"
           />
-        </div>
-        <div>
-          {/* <div>
-            <label>Last Name</label>
-          </div> */}
           <Input
             type="text"
             value={this.props.profile.lastName}
@@ -81,14 +80,16 @@ class Profile extends Component {
             placeholder="Enter your last name"
             name="lastName"
           />
-        </div>
-        <Button
-          onClick={this.handleClick}
-          className={styles.ProfileSave}
-          disabled={this.state.submitted}
-          text="Set Name"
-        />
-      </section>
+        </main>
+        <footer>
+          <Button
+            onClick={this.handleClick}
+            className={styles.ProfileSave}
+            disabled={this.state.submitted}
+            text="Set Name"
+          />
+        </footer>
+      </article>
     )
   }
 }

@@ -15,26 +15,25 @@ class Blueprints extends Component {
     }
     return false
   }
-
-  handleClick(path) {
-    this.props.history.push(path)
-  }
   render() {
     return (
       <div className={styles.blueprints}>
-        <h2 className={styles.title}>Custom Blueprints</h2>
         <div className={styles.message}>
-          <Button onClick={() => this.handleClick('blueprints/create')}>
-            <i className="fa fa-columns" aria-hidden="true" />
-            Add Blueprint
-          </Button>
-          <h5>
+          <h2 className={styles.title}>Custom Blueprints</h2>
+          <p>
             In this area you can manage your own custom Blueprints. Learn how to
             create and maintain your own Blueprints using GitHub through this.
             You may share Blueprints by passing your GitHub repo url to a
             co-worker or friend. You may use other public Blueprints by forking
             their repositories, and copying the Github repository url.
-          </h5>
+          </p>
+
+          <Button
+            onClick={() => (window.location = '/settings/blueprints/create')}
+          >
+            <i className="fa fa-columns" aria-hidden="true" />
+            Add Blueprint
+          </Button>
         </div>
         <div className={styles.BlueprintView}>
           <main className={styles.Blueprints}>
@@ -75,7 +74,10 @@ class Blueprints extends Component {
                   )
                 })
             ) : (
-              <Loader />
+              <div>
+                <h5>Loading your custom blueprints</h5>
+                <Loader />
+              </div>
             )}
           </main>
         </div>

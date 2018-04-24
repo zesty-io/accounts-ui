@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import cx from 'classnames'
 import { notify } from '../../../../../../../shell/store/notifications'
 import {
   updateProfile,
@@ -46,40 +46,45 @@ class Email extends Component {
 
   render() {
     return (
-      <section className={styles.profileEmail}>
-        <h2>Email</h2>
-        <p>
-          Setting up multiple emails lets you accept all of your account
-          invitations in one place.
-        </p>
-        <main className={styles.EmailList}>
+      <article className={styles.EmailSettings}>
+        <header>
+          <h2>Email</h2>
+        </header>
+        <main>
+          <p>
+            Setting up multiple emails lets you accept all of your account
+            invitations in one place.
+          </p>
           {this.props.verifiedEmails.map((email, i) => {
             return (
-              <article key={i}>
+              <article className={styles.Email} key={i}>
+                <i
+                  className={cx(styles.verified, 'fa fa-check-square-o')}
+                  aria-hidden="true"
+                  title="This email is verified"
+                />
                 <span>{email}</span>
                 {this.props.email === email ? (
-                  <span>Verified (Primary)</span>
-                ) : (
-                  <span>Verified</span>
-                )}
+                  <strong className={styles.primary}>(Primary)</strong>
+                ) : null}
               </article>
             )
           })}
           {this.props.unverifiedEmails.map((email, i) => {
             return (
-              <article key={i}>
+              <article className={styles.Email} key={i}>
+                <i
+                  className="fa fa-calendar-check-o"
+                  aria-hidden="true"
+                  title="This email is waiting to be verified"
+                />
                 <span>{email}</span>
                 {this.props.email === email ? (
-                  <span>Unverified (Primary)</span>
-                ) : (
-                  <span>Unverified</span>
-                )}
+                  <strong className={styles.primary}>(Primary)</strong>
+                ) : null}
               </article>
             )
           })}
-        </main>
-
-        <div className={styles.emailTable}>
           <Input
             type="text"
             placeholder="email@domain.com"
@@ -88,14 +93,16 @@ class Email extends Component {
             required
             onChange={this.handleChange}
           />
+        </main>
+        <footer>
           <Button
             text="Add Email"
             onClick={this.handleClick}
             className={styles.button}
             disabled={this.state.submitted}
           />
-        </div>
-      </section>
+        </footer>
+      </article>
     )
   }
 }

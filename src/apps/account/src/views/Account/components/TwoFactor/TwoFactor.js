@@ -24,43 +24,53 @@ class TwoFactor extends Component {
   }
   render() {
     return (
-      <section className={styles.TwoFactor}>
-        <h2>Two Factor Authentication</h2>
-
-        {this.props.twofa ? (
-          <div>
-            <p>Two-factor authentication currently set up for this account.</p>
-            <p>number used ***-***-3321</p>
+      <article className={styles.TwoFactor}>
+        <header>
+          <h2>Two Factor Authentication</h2>
+        </header>
+        <main>
+          {this.props.twofa ? (
+            <div>
+              <p>
+                Two-factor authentication currently set up for this account.
+              </p>
+              <p>number used ***-***-3321</p>
+            </div>
+          ) : (
+            <div>
+              <p>
+                Two-factor authentication is not currently set up for this
+                account. Put in the phone number you want to use for
+                authentication below.
+              </p>
+              <label>Phone Number</label>
+              <Input
+                type="text"
+                size="5"
+                placeholder="+1"
+                name="phoneNumberPrefix"
+                value={this.state.phoneNumberPrefix}
+                onChange={this.handleChange}
+              />
+              <Input
+                type="text"
+                placeholder="123-456-7890"
+                name="phoneNumber"
+                required
+                value={this.state.phoneNumber}
+                onChange={this.handleChange}
+              />
+            </div>
+          )}
+        </main>
+        <footer>
+          {this.props.twofa ? (
             <Button text="Disable Two-factor" onClick={this.handleDisable} />
-          </div>
-        ) : (
-          <div>
-            <p>
-              Two-factor authentication is not currently set up for this
-              account. Put in the phone number you want to use for
-              authentication below.
-            </p>
-            <label>Phone Number</label>
-            <Input
-              type="text"
-              size="5"
-              placeholder="+1"
-              name="phoneNumberPrefix"
-              value={this.state.phoneNumberPrefix}
-              onChange={this.handleChange}
-            />
-            <Input
-              type="text"
-              placeholder="123-456-7890"
-              name="phoneNumber"
-              required
-              value={this.state.phoneNumber}
-              onChange={this.handleChange}
-            />
+          ) : (
             <Button text="Enable Two-factor" onClick={this.handleEnable} />
-          </div>
-        )}
-      </section>
+          )}
+        </footer>
+      </article>
     )
   }
 }
