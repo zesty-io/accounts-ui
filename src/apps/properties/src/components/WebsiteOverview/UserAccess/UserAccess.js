@@ -43,11 +43,20 @@ class UserAccess extends Component {
       })
   }
   cancelInvite = inviteZUID => {
-    this.props.dispatch(newConfirm({ prompt: 'Are you sure you want to cancel this invite?' }))
-      .then(data => console.log('new confirm',data))
-    // this.props.dispatch(cancelInvite(inviteZUID)).then(data => {
-    //   this.props.dispatch(removeSiteUser(data.data.ZUID, this.props.site.ZUID))
-    // })
+    this.props.dispatch(
+      newConfirm({
+        prompt: 'Are you sure you want to cancel this invite?',
+        callback: result => {
+          if (result) { // removes user if confirmed
+            this.props.dispatch(cancelInvite(inviteZUID)).then(data => {
+              this.props.dispatch(
+                removeSiteUser(data.data.ZUID, this.props.site.ZUID)
+              )
+            })
+          }
+        }
+      })
+    )
   }
   handleInvite = evt => {
     if (this.state.inviteeEmail.includes('@')) {
