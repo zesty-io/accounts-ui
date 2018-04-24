@@ -22,25 +22,39 @@ class UserAccess extends Component {
     }
   }
   removeUser = (userZUID, roleZUID) => {
-    this.props
-      .dispatch(removeUser(userZUID, roleZUID))
-      .then(data => {
-        this.props.dispatch(
-          notify({
-            message: 'User Removed',
-            type: 'success'
-          })
-        )
-        this.props.dispatch(removeSiteUser(userZUID, this.props.siteZUID))
+    this.props.dispatch(
+      zConfirm({
+        prompt: 'Are you sure you want to remove this user?',
+        callback: result => {
+          if (result) {
+            // removes user if confirmed
+            if (result) {
+              this.props
+                .dispatch(removeUser(userZUID, roleZUID))
+                .then(data => {
+                  this.props.dispatch(
+                    notify({
+                      message: 'User Removed',
+                      type: 'success'
+                    })
+                  )
+                  this.props.dispatch(
+                    removeSiteUser(userZUID, this.props.siteZUID)
+                  )
+                })
+                .catch(err => {
+                  this.props.dispatch(
+                    notify({
+                      message: 'Error Removing User',
+                      type: 'error'
+                    })
+                  )
+                })
+            }
+          }
+        }
       })
-      .catch(err => {
-        this.props.dispatch(
-          notify({
-            message: 'Error Removing User',
-            type: 'error'
-          })
-        )
-      })
+    )
   }
   cancelInvite = inviteZUID => {
     this.props.dispatch(
@@ -48,7 +62,7 @@ class UserAccess extends Component {
         prompt: 'Are you sure you want to cancel this invite?',
         callback: result => {
           if (result) {
-            // removes user if confirmed
+            // removes invite if confirmed
             this.props.dispatch(cancelInvite(inviteZUID)).then(data => {
               this.props.dispatch(
                 removeSiteUser(data.data.ZUID, this.props.site.ZUID)
