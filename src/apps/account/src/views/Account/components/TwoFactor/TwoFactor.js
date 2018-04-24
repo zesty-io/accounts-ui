@@ -5,7 +5,7 @@ import Toggle from '../../../../../../../core/toggle/Toggle'
 
 import styles from './TwoFactor.less'
 
-class TwoFactorOptions extends Component {
+class TwoFactor extends Component {
   constructor(props) {
     super()
     this.state = {
@@ -65,4 +65,4 @@ class TwoFactorOptions extends Component {
   }
 }
 
-export default connect(state => state.user)(TwoFactorOptions)
+export default connect(state => state.user)(TwoFactor)

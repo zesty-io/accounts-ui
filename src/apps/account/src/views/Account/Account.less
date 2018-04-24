@@ -1,17 +1,27 @@
 @import '../../../../../shell/styles/colors.less';
 
-.Account {
-  background: @zesty-background-blue;
-  // display: flex;
-  padding: 1rem;
-  // flex-direction: column;
-  // height: 100vh;
-  // width: 70vw;
-  // .title {
-  //   margin: .3rem;
-  //   font-size: 1.2rem;
-  // }
-}
+.settings {
+  padding: 2rem;
 
-.AccountSetting {
+  .SettingsTitle {
+    font-size: 1.8rem;
+    margin: 0 2rem;
+  }
+
+  .setting {
+    margin: 2rem;
+
+    .SettingCards {
+      display: flex;
+      section {
+        margin-right: 2rem;
+      }
+      section:last-child {
+        margin: 0;
+      }
+    }
+    h1 {
+      font-size: 1.4rem;
+    }
+  }
 }
