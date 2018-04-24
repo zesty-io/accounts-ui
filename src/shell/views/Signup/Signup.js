@@ -1,52 +1,50 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import qs from "qs";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import qs from 'qs'
 
-import styles from "./Signup.less";
-import { request } from "../../../util/request";
-import { notify } from "../../store/notifications";
-import config from "../../../shell/config";
+import styles from './Signup.less'
+import { request } from '../../../util/request'
+import config from '../../../shell/config'
 
 class Signup extends Component {
   constructor(props) {
-    super();
+    super()
     this.state = {
-      message: "",
+      message: '',
       submitted: false,
-      email: "",
-      firstName: "",
-      lastName: "",
-      pass: "",
+      email: '',
+      firstName: '',
+      lastName: '',
+      pass: '',
       eula: false
-    };
+    }
   }
   componentDidMount() {
-    const invite = qs.parse(window.location.search.substr(1));
+    const invite = qs.parse(window.location.search.substr(1))
     if (invite.email) {
-      this.setState({ email: invite.email });
+      this.setState({ email: invite.email })
     }
     if (invite) {
       this.props.dispatch({
-        type: "USER_INVITED",
+        type: 'USER_INVITED',
         invite: {
           email: invite.email,
           invited: invite.invited
         }
-      });
+      })
     }
   }
   handleChange = evt => {
-    return this.setState({ [evt.target.name]: evt.target.value });
-  };
+    return this.setState({ [evt.target.name]: evt.target.value })
+  }
   render() {
     return (
       <section className={styles.Signup}>
         <form
           name="signup"
           className={styles.SignupForm}
-          onSubmit={this.handleSignup}
-        >
+          onSubmit={this.handleSignup}>
           <img src="/zesty-io-logo.svg" />
           {this.state.message ? (
             <p className={styles.error}>
@@ -109,8 +107,7 @@ class Signup extends Component {
             <h5>I have read and agree to the</h5>
             <a
               href="https://www.zesty.io/en-us/about/end-user-license-agreement/"
-              target="_blank"
-            >
+              target="_blank">
               End User License Agreement
             </a>
             <Input
@@ -128,13 +125,13 @@ class Signup extends Component {
           <AppLink to="/login">Already have an account?</AppLink>
         </form>
       </section>
-    );
+    )
   }
   handleSignup = evt => {
-    evt.preventDefault();
-    this.setState({ submitted: true });
+    evt.preventDefault()
+    this.setState({ submitted: true })
     request(`${config.API_ACCOUNTS}/users`, {
-      method: "POST",
+      method: 'POST',
       json: true,
       body: {
         email: this.state.email,
@@ -148,9 +145,9 @@ class Signup extends Component {
           //this is in place of a code === 201, server only returns an error, no code
           // Log user in after signing up
           this.props.dispatch({
-            type: "FETCH_USER_SUCCESS",
+            type: 'FETCH_USER_SUCCESS',
             user: json.data
-          });
+          })
           request(`${config.API_AUTH}/login`, {
             body: {
               email: this.state.email,
@@ -161,43 +158,35 @@ class Signup extends Component {
               if (!json.error) {
                 // in place of 200 code
                 this.props.dispatch({
-                  type: "FETCH_AUTH_SUCCESS",
+                  type: 'FETCH_AUTH_SUCCESS',
                   zuid: json.meta.userZuid,
                   auth: true
-                });
+                })
               } else {
                 // if the user was created but login failed
                 // send them to the login view
-                notify({
-                  message: "There was a problem loggin in",
-                  type: "error"
-                });
-                this.props.history.push("/login");
+                this.setState({ mesage: 'There was a problem login you in' })
+                this.props.history.push('/login')
               }
             })
             .catch(err => {
               notify({
-                message: "There was a problem loggin in",
-                type: "error"
-              });
-              console.table(err);
-            });
+                message: 'There was a problem loggin in',
+                type: 'error'
+              })
+              console.table(err)
+            })
         } else {
           this.setState({
             message: json.data.error
-          });
+          })
         }
       })
       .catch(err => {
-        this.props.dispatch(
-          notify({
-            message: "There was a problem creating your account",
-            type: "error"
-          })
-        );
-        console.table(err);
-      });
-  };
+        this.setState({ message: 'There was a problem creating your account' })
+        console.table(err)
+      })
+  }
 }
 
-export default withRouter(connect(state => state)(Signup));
+export default withRouter(connect(state => state)(Signup))
