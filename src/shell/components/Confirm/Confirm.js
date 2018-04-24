@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import {newConfirm} from '../../store/confirm'
+
 import styles from './Confirm.less'
 
 const Confirm = props => {
@@ -12,11 +14,17 @@ const Confirm = props => {
         <footer>
           <ButtonGroup className={styles.buttons}>
             <Button
-              onClick={() => props.dispatch({ type: 'REMOVE_CONFIRM_TRUE' })}
+              onClick={() => {
+                props.callback(true)
+                props.dispatch({ type: 'REMOVE_CONFIRM'})
+              }}
               text="Continue"
             />
             <Button
-              onClick={() => props.dispatch({ type: 'REMOVE_CONFIRM_FALSE' })}
+              onClick={() => {
+                props.callback(false)
+                props.dispatch({ type: 'REMOVE_CONFIRM'})
+              }}
               text="Cancel"
             />
           </ButtonGroup>
