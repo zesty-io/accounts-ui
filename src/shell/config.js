@@ -4,7 +4,7 @@ export default {
   API_AUTH: 'http://svc.zesty.localdev:3011',
   MANAGER_URL: '.manage.zesty.localdev:3020',
   MANAGER_URL_PROTOCOL: 'http://',
-  PREVIEW_URL: '.preview.zesty.localdev:3020',
+  PREVIEW_URL: '-dev.preview.zestyio.localdev:3020',
   PREVIEW_URL_PROTOCOL: 'http://',
   COOKIE_NAME: 'APP_SID',
   COOKIE_DOMAIN: '.zesty.localdev'
