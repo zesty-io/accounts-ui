@@ -60,8 +60,8 @@
 
 .UserNav {
   align-items: center;
-  background: @zesty-background-blue;
-  color: @appColor;
+  background: #5b667d;
+  color: @zesty-white;
   cursor: pointer;
   display: flex;
   border-radius: 3px;
@@ -74,11 +74,12 @@
   }
 
   .UserMenu {
-    background: @globalHeader;
+    box-shadow: -3px 3px 8px #000;
+    background: #5b667d;
     display: none;
     padding: 0.5rem 1rem;
     position: absolute;
-    top: 5vh;
+    top: 4.4vh;
     right: 2rem;
     min-width: 120px;
 
@@ -93,7 +94,7 @@
 
   &:hover,
   &:focus {
-    background: @zesty-orange;
+    background: lighten(#5b667d, 10%);
   }
 
   &.show {
