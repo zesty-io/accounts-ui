@@ -68,6 +68,12 @@ class UserAccess extends Component {
                 removeSiteUser(data.data.ZUID, this.props.site.ZUID)
               )
             })
+            this.props.dispatch(
+              notify({
+                message: 'User Invite Cancelled',
+                type: 'success'
+              })
+            )
           }
         }
       })
