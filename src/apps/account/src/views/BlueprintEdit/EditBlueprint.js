@@ -383,7 +383,7 @@ class EditBlueprint extends Component {
           <Button className={styles.bottom3} type="submit" text="Save" />
           <Button
             className={styles.bottom4}
-            onClick={() => (window.location = '/settings/blueprints')}
+            onClick={() => this.props.history.push('/settings/account')}
           >
             Cancel
           </Button>

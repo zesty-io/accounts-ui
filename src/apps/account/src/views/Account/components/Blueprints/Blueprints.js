@@ -29,8 +29,7 @@ class Blueprints extends Component {
           </p>
 
           <Button
-            onClick={() => (window.location = '/settings/blueprints/create')}
-          >
+            onClick={() => (window.location = '/settings/blueprints/create')}>
             <i className="fa fa-plus" aria-hidden="true" />
             Create Blueprint
           </Button>
@@ -61,12 +60,10 @@ class Blueprints extends Component {
                       </main>
                       <footer>
                         <Button
-                          onClick={() =>
-                            (window.location = `/settings/blueprints/${
-                              blueprint.ID
-                            }`)
-                          }
-                        >
+                          onClick={evt => {
+                            evt.preventDefault()
+                            return this.props.history.push(`/settings/blueprints/${ blueprint.ID}`)
+                          }}>
                           <i className="fa fa-pencil" aria-hidden="true" />
                           Edit
                         </Button>
