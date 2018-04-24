@@ -20,7 +20,7 @@ class TwoFactor extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(polling)
+    clearInterval('polling')
   }
 
   poll2fa = () => {
