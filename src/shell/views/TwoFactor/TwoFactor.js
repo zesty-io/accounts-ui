@@ -36,11 +36,20 @@ class TwoFactor extends Component {
             zuid: '',
             auth: true
           })
-          window.location = '/properties'
+          return window.location = '/properties'
         }
       })
       .catch(err => {
-        this.setState({ message: 'Your login failed or was denied' })
+        console.log('error', err)
+        if(err === 401) {
+          this.setState({ message: 'Your login was denied' })
+        }
+        if(err === 404) {
+          this.setState({ message: 'Your login has expired' })
+        }
+        if(err === 500) {
+          this.setState({ message: 'A server error occurred' })
+        }
         setTimeout(() => {
           window.location = '/login'
         }, 5000)
