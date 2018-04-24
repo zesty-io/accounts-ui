@@ -52,6 +52,10 @@ class Settings extends Component {
               />
             </Switch>
 
+            <h1 className={styles.SettingsTitle}>
+              Manage Your Account Settings
+            </h1>
+
             <div className={styles.setting}>
               {/* <h1>Your Account Settings</h1> */}
               <div className={styles.SettingCards}>

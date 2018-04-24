@@ -25,7 +25,7 @@ class TwoFactorOptions extends Component {
   render() {
     return (
       <section className={styles.TwoFactor}>
-        <h2>Two Factor</h2>
+        <h2>Two Factor Authentication</h2>
 
         {this.props.twofa ? (
           <div>
