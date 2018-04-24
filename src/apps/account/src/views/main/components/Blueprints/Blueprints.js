@@ -22,7 +22,7 @@ class Blueprints extends Component {
   render() {
     return (
       <div className={styles.blueprints}>
-        {/* <h1 className={styles.title}>Blueprints</h1> */}
+        <h2 className={styles.title}>Your Blueprints</h2>
         <div className={styles.message}>
           <Button onClick={() => this.handleClick('blueprints/create')}>
             <i className="fa fa-columns" aria-hidden="true" />

@@ -53,7 +53,7 @@ class Settings extends Component {
             </Switch>
 
             <div className={styles.setting}>
-              <h1>Your Account Settings</h1>
+              {/* <h1>Your Account Settings</h1> */}
               <div className={styles.SettingCards}>
                 <Profile />
                 <Email />
@@ -63,7 +63,7 @@ class Settings extends Component {
             </div>
 
             <div className={styles.setting}>
-              <h1>Your Blueprint Settings</h1>
+              {/* <h1>Your Blueprint Settings</h1> */}
               <Blueprints />
             </div>
           </section>
