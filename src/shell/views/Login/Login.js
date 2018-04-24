@@ -4,7 +4,6 @@ import { Link, withRouter } from 'react-router-dom'
 import qs from 'qs'
 
 import { request } from '../../../util/request'
-import { notify } from '../../store/notifications'
 import config from '../../config'
 import styles from './Login.less'
 import { fetchUser } from '../../store/user'
@@ -65,8 +64,7 @@ class Login extends Component {
               </label>
               <Button
                 onClick={this.handleLogin}
-                disabled={this.state.submitted}
-              >
+                disabled={this.state.submitted}>
                 {this.state.submitted ? 'Logging you in' : 'Log In'}
               </Button>
             </form>
@@ -114,15 +112,12 @@ class Login extends Component {
           })
           window.location = '/properties'
         } else if (json.code === 202) {
-          return window.location = '/login/2fa'
+          return (window.location = '/login/2fa')
         } else {
-          this.setState({ submitted: !this.state.submitted })
-          this.props.dispatch(
-            notify({
-              message: 'There was a problem loggin in',
-              type: 'error'
-            })
-          )
+          this.setState({
+            submitted: !this.state.submitted,
+            message: 'There was a problem logging you in'
+          })
           this.props.dispatch({
             type: 'FETCH_AUTH_ERROR',
             auth: false
@@ -130,13 +125,10 @@ class Login extends Component {
         }
       })
       .catch(err => {
-        this.setState({ submitted: !this.state.submitted })
-        this.props.dispatch(
-          notify({
-            message: 'There was a problem loggin in',
-            type: 'error'
-          })
-        )
+        this.setState({
+          submitted: !this.state.submitted,
+          message: 'There was a problem logging you in'
+        })
         console.error('LOGIN ERR', err)
       })
   }

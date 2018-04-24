@@ -41,7 +41,7 @@ export function verifyAuth(unsubscribe) {
   return dispatch => {
     request(`${config.API_AUTH}/verify`)
       .then(json => {
-        console.log("VERIFY JSON: ", json);
+        // console.log("VERIFY JSON: ", json);
         dispatch({
           type: "FETCH_VERIFY_SUCCESS",
           ZUID: json.meta.userZuid,

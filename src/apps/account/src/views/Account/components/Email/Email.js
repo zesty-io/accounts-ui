@@ -114,10 +114,10 @@ const mapStateToProps = state => {
     email: state.user.email,
     unverifiedEmails: state.user.unverifiedEmails
       ? state.user.unverifiedEmails.split(',')
-      : null,
+      : [],
     verifiedEmails: state.user.verifiedEmails
       ? state.user.verifiedEmails.split(',')
-      : null,
+      : [],
     newEmail: state.user.newEmail || '',
     ...state
   }

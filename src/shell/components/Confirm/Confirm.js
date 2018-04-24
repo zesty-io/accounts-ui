@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import {newConfirm} from '../../store/confirm'
-
 import styles from './Confirm.less'
+
+import { REMOVE_CONFIRM } from '../../store/confirm'
 
 const Confirm = props => {
   return (
@@ -16,14 +16,14 @@ const Confirm = props => {
             <Button
               onClick={() => {
                 props.callback(true)
-                props.dispatch({ type: 'REMOVE_CONFIRM'})
+                props.dispatch({ type: REMOVE_CONFIRM })
               }}
               text="Continue"
             />
             <Button
               onClick={() => {
                 props.callback(false)
-                props.dispatch({ type: 'REMOVE_CONFIRM'})
+                props.dispatch({ type: REMOVE_CONFIRM })
               }}
               text="Cancel"
             />

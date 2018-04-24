@@ -1,13 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { zConfirm } from '../../../../../../shell/store/confirm'
+
 import styles from './CompanyAccess.less'
 
 class CompanyAccess extends Component {
   handleToggle = evt => {
-    if(!confirm(`are you sure you want to remove access from ${evt.target.name}`)){
-      return evt.preventDefault()
-    }
+    evt.preventDefault()
+    this.props.dispatch(zConfirm({
+      prompt: `are you sure you want to remove access from ${evt.target.name}`,
+      callback: result => {
+        if(!result){
+          return
+        }
+        // make a call to remove the company
+      }
+    }))
   }
   render() {
     return (

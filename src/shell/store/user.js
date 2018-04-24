@@ -89,6 +89,40 @@ export function fetchUser(ZUID) {
   };
 }
 
+export function update2fa(add, payload) {
+  if(add){
+    // start process of adding 2fa
+    // payload will have user info
+    // have to get authy user ID from somehwere
+  }
+  else {
+    // call db to remove 2fa and do whatever cleanup is also required
+    // PUT update user     "authyEnabled": "false"
+    return (dispatch, getState) => {
+      dispatch({
+        type: "SAVING_PROFILE"
+      });
+      const userZUID = getState().user.ZUID;
+      return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+        method: "PUT",
+        json: true,
+        body: {
+          authyEnabled: false
+        }
+      })
+        .then(data => {
+          dispatch({ type: "SAVING_PROFILE_SUCCESS" });
+          return data;
+        })
+        .catch(err => {
+          console.table(err);
+          dispatch({ type: "SAVING_PROFILE_ERROR" });
+          throw err;
+        });
+    };
+  }
+}
+
 export function updateProfile(payload) {
   return {
     type: "UPDATE_USER_PROFILE",

@@ -1,43 +1,44 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import EditRole from "./EditRole";
-import { notify } from "../../../../../../shell/store/notifications";
+import EditRole from './EditRole'
+import { notify } from '../../../../../../shell/store/notifications'
 import {
   fetchSiteRoles,
   createRole,
   removeRole,
   getRole
-} from "../../../store/sitesRoles";
+} from '../../../store/sitesRoles'
 
-import styles from "./Roles.less";
+import styles from './Roles.less'
+import { zConfirm } from '../../../../../../shell/store/confirm'
 
 const formatDate = date => {
   if (!date) {
-    return "";
+    return ''
   }
-  const newDate = new Date(date);
+  const newDate = new Date(date)
   return `${newDate.getMonth() +
-    1}-${newDate.getDate()}-${newDate.getFullYear()}`;
-};
+    1}-${newDate.getDate()}-${newDate.getFullYear()}`
+}
 
 class Roles extends Component {
   constructor(props) {
-    super();
+    super()
     this.state = {
       submitted: false,
-      name: "",
-      systemRoleZUID: "",
-      expiry: ""
-    };
+      name: '',
+      systemRoleZUID: '',
+      expiry: ''
+    }
   }
   onChange = evt => {
-    this.setState({ [evt.target.name]: evt.target.value });
-  };
+    this.setState({ [evt.target.name]: evt.target.value })
+  }
   handleCreate = evt => {
-    evt.preventDefault();
+    evt.preventDefault()
     if (this.state.name.length > 0 && this.state.systemRoleZUID.length > 0) {
-      this.setState({ submitted: !this.state.submitted });
+      this.setState({ submitted: !this.state.submitted })
       this.props
         .dispatch(createRole(this.props.siteZUID, { ...this.state }))
         .then(data => {
@@ -45,64 +46,70 @@ class Roles extends Component {
             .dispatch(getRole(data.ZUID, this.props.siteZUID))
             .then(data => {
               this.props.dispatch({
-                type: "NEW_MODAL",
+                type: 'NEW_MODAL',
                 component: EditRole,
                 props: {
                   siteZUID: this.props.siteZUID,
                   roleZUID: data.ZUID
                 }
-              });
-              this.setState({ submitted: !this.state.submitted, name: "" });
-            });
+              })
+              this.setState({ submitted: !this.state.submitted, name: '' })
+            })
           return this.props.dispatch(
             fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
-          );
+          )
         })
         .catch(err => {
-          console.table(err);
-          this.setState({ submitted: !this.state.submitted, name: "" });
-        });
+          console.table(err)
+          this.setState({ submitted: !this.state.submitted, name: '' })
+        })
     } else {
       this.props.dispatch(
         notify({
           message:
-            "You must include a name and system role to create a new role.",
-          type: "error"
+            'You must include a name and system role to create a new role.',
+          type: 'error'
         })
-      );
+      )
     }
-  };
+  }
 
   handleEdit = (roleZUID, siteZUID) => {
     this.props.dispatch(getRole(roleZUID, siteZUID)).then(data => {
       this.props.dispatch({
-        type: "NEW_MODAL",
+        type: 'NEW_MODAL',
         component: EditRole,
         props: {
           siteZUID,
           roleZUID
         }
-      });
-    });
-  };
+      })
+    })
+  }
 
   handleRemove = ZUID => {
-    if (!confirm("Are you certain you want to delete this role?")) {
-      return null;
-    } else {
-      return this.props.dispatch(removeRole(ZUID)).then(data => {
-        this.props.dispatch(
-          notify({
-            message: "Role successfully removed",
-            type: "success"
-          })
-        );
-        return this.props.dispatch(
-          fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
-        );
-      });
-    }
-  };
+    this.props.dispatch(
+      zConfirm({
+        prompt: 'Are you certain you want to delete this role?',
+        callback: result => {
+          // remove role if user confirms
+          if (result) {
+            return this.props.dispatch(removeRole(ZUID)).then(data => {
+              this.props.dispatch(
+                notify({
+                  message: 'Role successfully removed',
+                  type: 'success'
+                })
+              )
+              return this.props.dispatch(
+                fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
+              )
+            })
+          }
+        }
+      })
+    )
+  }
   render() {
     return (
       <div className={styles.permissionsWrapper}>
@@ -135,9 +142,8 @@ class Roles extends Component {
           <Button
             className={styles.createButton}
             onClick={this.handleCreate}
-            disabled={this.state.submitted}
-          >
-            {this.state.submitted ? "Creating Role" : "Create Role"}
+            disabled={this.state.submitted}>
+            {this.state.submitted ? 'Creating Role' : 'Create Role'}
           </Button>
         </form>
         <div className={styles.currentRoles}>
@@ -152,21 +158,21 @@ class Roles extends Component {
                 (ZUID, i) => {
                   if (
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
-                    "SYSTEM_ROLE" ||
+                      'SYSTEM_ROLE' ||
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
-                    "Admin" ||
+                      'Admin' ||
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
-                    "Developer" ||
+                      'Developer' ||
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
-                    "Owner" ||
+                      'Owner' ||
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
-                    "SEO" ||
+                      'SEO' ||
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
-                    "Contributor" ||
+                      'Contributor' ||
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
-                    "Publisher"
+                      'Publisher'
                   ) {
-                    return;
+                    return
                   } else {
                     return (
                       <article key={i}>
@@ -203,20 +209,20 @@ class Roles extends Component {
                           </ButtonGroup>
                         </span>
                       </article>
-                    );
+                    )
                   }
                 }
               )}
           </main>
         </div>
       </div>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
   // likely need to fetch site specific permissions
-  return state;
-};
+  return state
+}
 
-export default connect(mapStateToProps)(Roles);
+export default connect(mapStateToProps)(Roles)
