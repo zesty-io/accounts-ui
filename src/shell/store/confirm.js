@@ -11,9 +11,12 @@ export function confirm(state = initialState, action) {
   }
 }
 
-export function newConfirm(data, result) {
+export function zConfirm(data, result) {
   if (!data.prompt) {
     console.error('cannot confirm without a prompt')
+  }
+  if (!data.callback) {
+    console.error('cannot confirm without a callback')
   }
   return({
     type: 'NEW_CONFIRM',

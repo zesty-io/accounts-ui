@@ -41,6 +41,7 @@ class App extends Component {
               <Switch>
                 <Route path="/properties" component={Properties} />
                 <Route path="/settings" component={Settings} />
+                <Redirect exact from="/" to="/properties" />
                 <Route component={NotFound} />
               </Switch>
             ) : (

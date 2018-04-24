@@ -5,7 +5,7 @@ import styles from './style.less'
 
 import { sendInvite, cancelInvite, removeUser } from '../../../store/sites'
 import { notify } from '../../../../../../shell/store/notifications'
-import { newConfirm } from '../../../../../../shell/store/confirm'
+import { zConfirm } from '../../../../../../shell/store/confirm'
 import {
   fetchSiteUsersPending,
   fetchSiteUser,
@@ -44,10 +44,11 @@ class UserAccess extends Component {
   }
   cancelInvite = inviteZUID => {
     this.props.dispatch(
-      newConfirm({
+      zConfirm({
         prompt: 'Are you sure you want to cancel this invite?',
         callback: result => {
-          if (result) { // removes user if confirmed
+          if (result) {
+            // removes user if confirmed
             this.props.dispatch(cancelInvite(inviteZUID)).then(data => {
               this.props.dispatch(
                 removeSiteUser(data.data.ZUID, this.props.site.ZUID)

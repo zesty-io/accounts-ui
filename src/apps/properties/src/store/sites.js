@@ -212,7 +212,7 @@ export function cancelInvite(inviteZUID) {
       }
     )
       .then(data => {
-        dispatch({ type: 'DELETE_INVITE_SUCCESS' })
+        dispatch({ type: 'DELETE_INVITE_SUCCESS', data })
         return data
       })
       .catch(err => {
