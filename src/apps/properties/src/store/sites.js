@@ -259,7 +259,7 @@ export function sendInvite(payload) {
         dispatch(
           notify({
             HTML: `<p>
-      <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;An error occured sending the invite: ${err}
+      <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;An error occurred sending the invite: ${err}
     </p>`,
             type: 'error'
           })
