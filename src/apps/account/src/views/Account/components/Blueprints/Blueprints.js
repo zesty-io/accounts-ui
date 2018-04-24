@@ -32,7 +32,7 @@ class Blueprints extends Component {
             onClick={() => (window.location = '/settings/blueprints/create')}
           >
             <i className="fa fa-plus" aria-hidden="true" />
-            Add Blueprint
+            Create Blueprint
           </Button>
         </div>
         <div className={styles.BlueprintView}>

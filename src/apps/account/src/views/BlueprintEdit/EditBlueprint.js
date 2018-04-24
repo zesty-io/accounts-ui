@@ -13,18 +13,14 @@ class EditBlueprint extends Component {
       blueprint: props.blueprint
     }
   }
-  componentDidMount() {
-    if (!this.props.blueprint) {
-      this.props.history.push('/settings/blueprints')
-    }
-  }
+  // componentDidMount() {
+  //   if (!this.props.blueprint) {
+  //     this.props.history.push('/settings/blueprints')
+  //   }
+  // }
   handleSubmit = evt => {
     evt.preventDefault()
     console.log('WEEEEEEEEE!') // disabled waiting for API endpoint
-  }
-  handleCancel = evt => {
-    evt.preventDefault()
-    this.props.history.push('/settings/blueprints')
   }
   onChange = evt => {
     if (evt.target.name === 'tags_csv') {
@@ -387,9 +383,10 @@ class EditBlueprint extends Component {
           <Button className={styles.bottom3} type="submit" text="Save" />
           <Button
             className={styles.bottom4}
-            text="Cancel"
-            onClick={this.handleCancel}
-          />
+            onClick={() => (window.location = '/settings/blueprints')}
+          >
+            Cancel
+          </Button>
         </div>
       </form>
     ) : (
