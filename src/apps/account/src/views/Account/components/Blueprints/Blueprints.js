@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { fetchBlueprints } from '../../../../properties/src/store/blueprints'
+import { fetchBlueprints } from '../../../../../../properties/src/store/blueprints'
 
 import styles from './Blueprint.less'
 
@@ -15,26 +15,25 @@ class Blueprints extends Component {
     }
     return false
   }
-
-  handleClick(path) {
-    this.props.history.push(path)
-  }
   render() {
     return (
       <div className={styles.blueprints}>
-        <h1 className={styles.title}>Blueprints</h1>
         <div className={styles.message}>
-          <Button onClick={() => this.handleClick('blueprints/create')}>
-            <i className="fa fa-columns" aria-hidden="true" />
-            Add Blueprint
-          </Button>
-          <h5>
+          <h2 className={styles.title}>Custom Blueprints</h2>
+          <p>
             In this area you can manage your own custom Blueprints. Learn how to
             create and maintain your own Blueprints using GitHub through this.
             You may share Blueprints by passing your GitHub repo url to a
             co-worker or friend. You may use other public Blueprints by forking
             their repositories, and copying the Github repository url.
-          </h5>
+          </p>
+
+          <Button
+            onClick={() => (window.location = '/settings/blueprints/create')}
+          >
+            <i className="fa fa-plus" aria-hidden="true" />
+            Create Blueprint
+          </Button>
         </div>
         <div className={styles.BlueprintView}>
           <main className={styles.Blueprints}>
@@ -60,21 +59,26 @@ class Blueprints extends Component {
                         <img src={blueprint.coverImage} alt="bp img" />
                         <p>{blueprint.description}</p>
                       </main>
-                      <Button
-                        onClick={() =>
-                          this.handleClick(
-                            `/settings/blueprints/${blueprint.ID}`
-                          )
-                        }>
-                        <i className="fa fa-columns" aria-hidden="true" />
-                        Edit
-                      </Button>
-                      <footer />
+                      <footer>
+                        <Button
+                          onClick={() =>
+                            (window.location = `/settings/blueprints/${
+                              blueprint.ID
+                            }`)
+                          }
+                        >
+                          <i className="fa fa-pencil" aria-hidden="true" />
+                          Edit
+                        </Button>
+                      </footer>
                     </article>
                   )
                 })
             ) : (
-              <Loader />
+              <div>
+                <h5>Loading your custom blueprints</h5>
+                <Loader />
+              </div>
             )}
           </main>
         </div>

@@ -1,64 +1,29 @@
-import React, { Component } from "react";
-import { NavLink, Switch, Route } from "react-router-dom";
-import { connect } from "react-redux";
-import { ErrorBoundary } from "./err";
+import { Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { ErrorBoundary } from './err'
 
-import Blueprints from "../Blueprints";
-import EditBlueprint from "../EditBlueprint";
-import BlueprintCreate from "../BlueprintCreate";
-import Security from "../Security";
-import Account from "../Account";
+import Account from '../Account'
+import BlueprintEdit from '../BlueprintEdit'
+import BlueprintCreate from '../BlueprintCreate'
 
-import styles from "./styles.less";
-
-import { fetchUser } from "../../../../../shell/store/user";
+import styles from './styles.less'
 
 class Settings extends Component {
-  componentDidMount() {
-    this.props.user.ZUID &&
-      this.props.dispatch(fetchUser(this.props.user.ZUID));
-  }
   render() {
     return (
       <ErrorBoundary>
-        {Object.keys(this.props.user).length ? (
-          <section className={styles.settings}>
-            <ul>
-              <li>
-                <NavLink to="/settings/account">Account</NavLink>
-              </li>
-              <li>
-                <NavLink to="/settings/security">Security</NavLink>
-              </li>
-              <li>
-                <NavLink to="/settings/blueprints">Blueprints</NavLink>
-              </li>
-            </ul>
-            <div className={styles.content}>
-              <Switch>
-                <Route path="/settings/account" component={Account} />
-                <Route path="/settings/security" component={Security} />
-                <Route
-                  path="/settings/blueprints/create"
-                  component={BlueprintCreate}
-                />
-                <Route
-                  path="/settings/blueprints/:id"
-                  component={EditBlueprint}
-                />
-                <Route path="/settings/blueprints" component={Blueprints} />
-              </Switch>
-            </div>
-          </section>
-        ) : (
-          <div className={styles.Loading}>
-            <h1>Loading Account</h1>
-            <Loader />
-          </div>
-        )}
+        <Switch>
+          <Route path="/settings/account" component={Account} />
+          <Route
+            path="/settings/blueprints/create"
+            component={BlueprintCreate}
+          />
+          <Route path="/settings/blueprints/:id" component={BlueprintEdit} />
+        </Switch>
       </ErrorBoundary>
-    );
+    )
   }
 }
 
-export default connect(state => state)(Settings);
+export default connect(state => state)(Settings)

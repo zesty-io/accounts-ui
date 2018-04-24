@@ -1,9 +1,9 @@
 import { Component } from 'React'
 import { connect } from 'react-redux'
-import { updatePassword } from '../../../../../../shell/store/user'
+import { updatePassword } from '../../../../../../../shell/store/user'
 
 import styles from './Password.less'
-import { notify } from '../../../../../../shell/store/notifications'
+import { notify } from '../../../../../../../shell/store/notifications'
 
 class Password extends Component {
   constructor(props) {
@@ -66,9 +66,15 @@ class Password extends Component {
   }
   render() {
     return (
-      <section className={styles.Password}>
-        <label>Password</label>
-        <div>
+      <article className={styles.Password}>
+        <header>
+          <h2>Password</h2>
+        </header>
+        <main>
+          <p>
+            Minimum eight characters, at least one uppercase letter, one
+            lowercase letter and one number
+          </p>
           <Input
             name="oldPassword"
             placeholder="Old Password"
@@ -77,12 +83,6 @@ class Password extends Component {
             type="password"
             required
           />
-        </div>
-        <div>
-          <p>
-            Minimum eight characters, at least one uppercase letter, one
-            lowercase letter and one number
-          </p>
           <Input
             name="newPassword"
             placeholder="New Password"
@@ -92,8 +92,6 @@ class Password extends Component {
             type="password"
             required
           />
-        </div>
-        <div>
           <Input
             name="confirmNewPassword"
             placeholder="Confirm New Password"
@@ -103,9 +101,14 @@ class Password extends Component {
             type="password"
             required
           />
-        </div>
-        <Button text="Submit" onClick={this.handleClick} />
-      </section>
+        </main>
+        <footer>
+          <Button onClick={this.handleClick}>
+            <i className="fa fa-floppy-o" aria-hidden="true" />
+            Set Password
+          </Button>
+        </footer>
+      </article>
     )
   }
 }
