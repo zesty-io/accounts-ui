@@ -107,7 +107,7 @@ class WebsiteOverview extends Component {
           <article className={styles.WebsiteOverview}>
             <header className={styles.WebsiteOverviewHeader}>
               <Link className={styles.close} to="/properties/">
-                <i className="fa fa-times-circle-o" aria-hidden="true" />Close
+                <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
               </Link>
               <h1 className={styles.name}>
                 {this.state.editName ? (
