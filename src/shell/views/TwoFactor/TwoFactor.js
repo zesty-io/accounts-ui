@@ -20,11 +20,12 @@ class TwoFactor extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval('polling')
+    clearInterval(polling)
   }
 
   poll2fa = () => {
     request(`${config.API_AUTH}/auth/verify-2fa`).then(json => {
+      console.log(json)
       if (json.code === 202) {
         return
       }
@@ -36,6 +37,12 @@ class TwoFactor extends Component {
         })
         window.location = '/properties'
       }
+    }).catch(err => {
+      console.table(err)
+      this.setState({ message: 'Your login was denied'})
+      setTimeout(() => {
+        window.location = '/login'
+      }, 5000)
     })
   }
 
