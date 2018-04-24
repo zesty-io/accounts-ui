@@ -15,6 +15,37 @@ class TwoFactor extends Component {
       message: ''
     }
   }
+  componentDidMount() {
+    let polling = setInterval(this.poll2fa, 3000)
+  }
+
+  componentWillUnmount() {
+    clearInterval('polling')
+  }
+
+  poll2fa = () => {
+    request(`${config.API_AUTH}/auth/verify-2fa`).then(json => {
+      console.log(json)
+      if (json.code === 202) {
+        return
+      }
+      if (json.code === 200) {
+        this.props.dispatch({
+          type: 'FETCH_AUTH_SUCCESS',
+          zuid: '',
+          auth: true
+        })
+        window.location = '/properties'
+      }
+    }).catch(err => {
+      console.table(err)
+      this.setState({ message: 'Your login was denied'})
+      setTimeout(() => {
+        window.location = '/login'
+      }, 5000)
+    })
+  }
+
   render() {
     return (
       <section className={styles.TwoFactor}>

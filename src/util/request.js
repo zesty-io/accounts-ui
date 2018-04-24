@@ -58,5 +58,6 @@ export function request(url, opts = {}) {
       // TODO global app notification on total request failure
       console.table(err);
       throw err;
+      return err;
     });
 }

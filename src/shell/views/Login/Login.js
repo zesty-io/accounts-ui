@@ -105,6 +105,7 @@ class Login extends Component {
       }
     })
       .then(json => {
+        console.log('json from login', json)
         if (json.code === 200) {
           this.props.dispatch({
             type: 'FETCH_AUTH_SUCCESS',
@@ -113,7 +114,7 @@ class Login extends Component {
           })
           window.location = '/properties'
         } else if (json.code === 202) {
-          window.location = '/login/2fa'
+          return window.location = '/login/2fa'
         } else {
           this.setState({ submitted: !this.state.submitted })
           this.props.dispatch(
