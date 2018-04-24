@@ -106,7 +106,7 @@ export function postNewBlueprint(name) {
         return data.data
       })
       .catch(err => {
-        console.table(error)
+        console.table(err)
         dispatch({
           type: 'CREATE_BLUEPRINT_ERROR',
           err
