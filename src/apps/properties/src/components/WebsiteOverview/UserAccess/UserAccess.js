@@ -202,6 +202,7 @@ class UserAccess extends Component {
                         {!this.props.sitesUsers[this.props.siteZUID][user]
                           .pending ? (
                           <Button
+                            className={styles.pullButton}
                             onClick={() =>
                               this.removeUser(
                                 user,

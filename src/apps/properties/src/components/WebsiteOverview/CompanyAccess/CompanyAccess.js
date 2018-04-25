@@ -21,8 +21,10 @@ class CompanyAccess extends Component {
   render() {
     return (
       <div className={styles.companyAccess}>
-        <div className={styles.dropdown}>
+        <div className={styles.addCompany}>
+          <div className={styles.dropdownArea}>
           <Select
+            
             name="companyAccess"
             selection={{
               value: "Design Corp",
@@ -39,6 +41,7 @@ class CompanyAccess extends Component {
               }
             ]}
           />
+          </div>
           <Button name="companyAccessSubmit">Grant Access</Button>
         </div>
         <div className={styles.companyTable}>
