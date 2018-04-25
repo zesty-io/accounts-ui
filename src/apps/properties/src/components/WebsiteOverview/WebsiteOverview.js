@@ -115,28 +115,30 @@ class WebsiteOverview extends Component {
               <Link className={styles.close} to="/properties/">
                 <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
               </Link>
-              <h1 className={styles.name}>
-                {this.state.editName ? (
-                  <div>
-                    <Input
-                      value={this.state.name}
-                      onChange={evt => {
-                        this.setState({ name: evt.target.value })
-                      }}
-                    />
-                    <Button onClick={this.handleNameUpdate}>save</Button>
-                  </div>
-                ) : (
-                  this.props.name
-                )}&nbsp;
-                <i
-                  className={
-                    this.state.editName ? 'fa fa-times-circle' : 'fa fa-pencil'
-                  }
-                  aria-hidden="true"
-                  onClick={this.editName}
-                />
-              </h1>
+              <div className={styles.propertyName}>
+                  {this.state.editName ? (
+                    <React.Fragment>
+                      <Input
+                        value={this.state.name}
+                        onChange={evt => {
+                          this.setState({ name: evt.target.value })
+                        }}
+                      />
+                      <Button onClick={this.handleNameUpdate}>save</Button>
+                    </React.Fragment>
+                  ) : (
+                    this.props.name
+                  )}
+                  <i
+                    className={
+                      this.state.editName
+                        ? 'fa fa-times-circle'
+                        : 'fa fa-pencil'
+                    }
+                    aria-hidden="true"
+                    onClick={this.editName}
+                  />
+              </div>
               <h2 className={styles.domain}>
                 {this.props.domain ? (
                   <span>
