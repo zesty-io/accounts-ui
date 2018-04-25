@@ -23,6 +23,10 @@
         justify-self: center;
         max-height: 350px;
         max-width: 350px;
+        @media (max-width: 1485px) {
+          grid-template-columns: 1fr 1fr;
+          max-width: 550px;
+        }
       }
       // article:last-child {
       //   margin: 0;
