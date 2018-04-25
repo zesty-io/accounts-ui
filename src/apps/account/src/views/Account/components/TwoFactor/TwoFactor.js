@@ -39,44 +39,54 @@ class TwoFactorOptions extends Component {
   }
   render() {
     return (
-      <section className={styles.TwoFactor}>
-        {this.props.authyEnabled ? (
-          <div>
-            <p>Two-factor authentication currently set up for this account.</p>
-            <p>number used {this.props.authyPhoneNumber}</p>
+      <article className={styles.TwoFactor}>
+        <header>
+          <h2>Two Factor Authentication</h2>
+        </header>
+        <main>
+          {this.props.authyEnabled ? (
+            <div>
+              <p>
+                Two-factor authentication currently set up for this account.
+              </p>
+              <p>number used {this.props.authyPhoneNumber}</p>
+              <Button text="Disable Two-factor" onClick={this.handleDisable} />
+            </div>
+          ) : (
+            <div>
+              <p>
+                Two-factor authentication is not currently set up for this
+                account. Put in the phone number you want to use for
+                authentication below.
+              </p>
+              <label>Phone Number</label>
+              <Input
+                type="text"
+                size="5"
+                placeholder="+1"
+                name="phoneNumberPrefix"
+                value={this.state.phoneNumberPrefix}
+                onChange={this.handleChange}
+              />
+              <Input
+                type="text"
+                placeholder="123-456-7890"
+                name="phoneNumber"
+                required
+                value={this.state.phoneNumber}
+                onChange={this.handleChange}
+              />
+            </div>
+          )}
+        </main>
+        <footer>
+          {this.props.twofa ? (
             <Button text="Disable Two-factor" onClick={this.handleDisable} />
-          </div>
-        ) : (
-          <div>
-            <p>
-              Two-factor authentication is not currently set up for this
-              account.
-            </p>
-            <p>
-              Put in the phone number you want to use for authentication below.
-            </p>
-            <br />
-            <label>Phone Number</label>
-            <Input
-              type="text"
-              size="5"
-              placeholder="+1"
-              name="authyPhoneCountyCode"
-              value={this.state.authyPhoneCountyCode}
-              onChange={this.handleChange}
-            />
-            <Input
-              type="text"
-              placeholder="123-456-7890"
-              name="authyPhoneNumber"
-              required
-              value={this.state.authyPhoneNumber}
-              onChange={this.handleChange}
-            />
+          ) : (
             <Button text="Enable Two-factor" onClick={this.handleEnable} />
-          </div>
-        )}
-      </section>
+          )}
+        </footer>
+      </article>
     )
   }
 }
