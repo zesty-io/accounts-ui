@@ -8,16 +8,12 @@
     line-height: 30px;
   }
   .invite {
-    display: flex;
-    margin: 0 0 1rem;
+    display: grid;
+    grid-gap: .4rem;
+    justify-content: end;
+    grid-template-columns: 1fr .5fr .5fr;
     input {
-      flex: 1;
-    }
-    .email {
-      flex: 2;
-    }
-    button {
-      margin-left: 1rem;
+      height: 50px;
     }
   }
   .userTable {
@@ -39,13 +35,13 @@
         &:nth-child(odd) {
           background-color: @zesty-white;
         }
+        button {
+          margin-left: 5rem;
+        }
       }
     }
     footer {
       display: flex;
-      button {
-        // margin-left: 20px;
-      }
     }
   }
 }
