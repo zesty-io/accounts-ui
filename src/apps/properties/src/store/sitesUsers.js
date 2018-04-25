@@ -35,7 +35,7 @@ export const fetchSiteUsers = (userZUID, siteZUID) => {
     dispatch({
       type: "FETCHING_USERS"
     });
-    request(`${config.API_ACCOUNTS}/instances/${siteZUID}/users?getRoles=true`)
+    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}/users?getRoles=true`)
       .then(users => {
         let normalizedUsers = {};
         users.data.forEach(user => {
@@ -46,6 +46,7 @@ export const fetchSiteUsers = (userZUID, siteZUID) => {
           siteZUID,
           users: normalizedUsers
         });
+        return users
       })
       .catch(err => {
         console.error(err);
@@ -53,6 +54,7 @@ export const fetchSiteUsers = (userZUID, siteZUID) => {
           type: "FETCH_USERS_ERROR",
           err
         });
+        return err
       });
   };
 };

@@ -1,54 +1,60 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
-import cx from "classnames";
-import styles from "./WebsiteOverview.less";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
+import cx from 'classnames'
+import styles from './WebsiteOverview.less'
 
-import UserAccess from "./UserAccess";
-import CompanyAccess from "./CompanyAccess";
-import Actions from "./Actions";
-import Domain from "./Domain";
-import Stats from "./Stats";
-import Blueprint from "./Blueprint";
-import Roles from "./Roles";
+import UserAccess from './UserAccess'
+import CompanyAccess from './CompanyAccess'
+import Actions from './Actions'
+import Domain from './Domain'
+import Stats from './Stats'
+import Blueprint from './Blueprint'
+import Roles from './Roles'
 
-import { fetchSite } from "../../store/sites";
-import { fetchSiteUsers, fetchSiteUsersPending } from "../../store/sitesUsers";
-import { fetchSiteCompanies } from "../../store/sitesCompanies";
-import { fetchBlueprint } from "../../store/blueprints";
-import { fetchSiteRoles } from "../../store/sitesRoles";
-import { fetchSiteCollections } from "../../store/sitesCollections";
-import { updateSite } from "../../store/sites";
-import { notify } from "../../../../../shell/store/notifications";
+import { fetchSite } from '../../store/sites'
+import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
+import { fetchSiteCompanies } from '../../store/sitesCompanies'
+import { fetchBlueprint } from '../../store/blueprints'
+import { fetchSiteRoles } from '../../store/sitesRoles'
+import { fetchSiteCollections } from '../../store/sitesCollections'
+import { updateSite } from '../../store/sites'
+import { notify } from '../../../../../shell/store/notifications'
 
 class WebsiteOverview extends Component {
   constructor(props) {
-    super();
+    super()
     this.state = {
       editName: false,
-      name: "",
+      name: '',
       editDomain: false
-    };
+    }
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchSiteUsers(this.props.userZUID, this.props.ZUID));
-    this.props.dispatch(fetchSiteUsersPending(this.props.userZUID, this.props.ZUID));
-    this.props.dispatch(
-      fetchSiteCollections(this.props.userZUID, this.props.ZUID)
-    );
+    // fetch users first, then fetch pending users
+    this.props
+      .dispatch(fetchSiteUsers(this.props.userZUID, this.props.ZUID))
+      .then(users => {
+        this.props.dispatch(
+          fetchSiteUsersPending(this.props.userZUID, this.props.ZUID)
+        )
+      })
     this.props.dispatch(
       fetchSiteCompanies(this.props.userZUID, this.props.ZUID)
-    );
-    this.props.dispatch(fetchBlueprint(this.props.blueprintID));
-    this.props.dispatch(fetchSiteRoles(this.props.userZUID, this.props.ZUID));
-    this.setState({ name: this.props.name });
+    )
+    this.props.dispatch(fetchSiteRoles(this.props.userZUID, this.props.ZUID))
+    this.props.dispatch(
+      fetchSiteCollections(this.props.userZUID, this.props.ZUID)
+    )
+    this.props.dispatch(fetchBlueprint(this.props.blueprintID))
+    this.setState({ name: this.props.name })
   }
 
   editName = () => {
-    this.setState({ editName: !this.state.editName });
-  };
+    this.setState({ editName: !this.state.editName })
+  }
 
   handleNameUpdate = () => {
     this.props
@@ -59,48 +65,48 @@ class WebsiteOverview extends Component {
       )
       .then(data => {
         this.props.dispatch(fetchSite(this.props.ZUID))
-          this.props.dispatch(
-            notify({
-              message: "Successfully Updated",
-              type: "success"
-            })
-          );
-        return this.setState({ editName: !this.state.editName });
+        this.props.dispatch(
+          notify({
+            message: 'Successfully Updated',
+            type: 'success'
+          })
+        )
+        return this.setState({ editName: !this.state.editName })
       })
       .catch(err => {
         this.props.dispatch(
           notify({
-            message: "Error Updating",
-            type: "error"
+            message: 'Error Updating',
+            type: 'error'
           })
-        );
-        return this.setState({ editName: !this.state.editName });
-      });
-  };
+        )
+        return this.setState({ editName: !this.state.editName })
+      })
+  }
   render() {
     // when this lives on the user object, it will be useful
     const fakeUserPrefs = [
       {
-        title: "User Access",
-        className: "fa fa-users",
+        title: 'User Access',
+        className: 'fa fa-users',
         Component: UserAccess
       },
       {
-        title: "Company Access",
-        className: "fa fa-building",
+        title: 'Company Access',
+        className: 'fa fa-building',
         Component: CompanyAccess
       },
       {
-        title: "Roles",
-        className: "fa fa-lock",
+        title: 'Roles',
+        className: 'fa fa-lock',
         Component: Roles
       },
       {
-        title: "Blueprint",
-        className: "fa fa-file-code-o",
+        title: 'Blueprint',
+        className: 'fa fa-file-code-o',
         Component: Blueprint
       }
-    ];
+    ]
     return (
       <section className={styles.WebsiteOverviewWrap}>
         {this.props.name ? (
@@ -115,7 +121,7 @@ class WebsiteOverview extends Component {
                     <Input
                       value={this.state.name}
                       onChange={evt => {
-                        this.setState({ name: evt.target.value });
+                        this.setState({ name: evt.target.value })
                       }}
                     />
                     <Button onClick={this.handleNameUpdate}>save</Button>
@@ -124,7 +130,9 @@ class WebsiteOverview extends Component {
                   this.props.name
                 )}&nbsp;
                 <i
-                  className={this.state.editName? "fa fa-times-circle" : "fa fa-pencil"}
+                  className={
+                    this.state.editName ? 'fa fa-times-circle' : 'fa fa-pencil'
+                  }
                   aria-hidden="true"
                   onClick={this.editName}
                 />
@@ -142,8 +150,8 @@ class WebsiteOverview extends Component {
             </header>
             <main>
               {fakeUserPrefs.map((Item, i) => {
-                const DynComponent = Item.Component;
-                const site = this.props.site;
+                const DynComponent = Item.Component
+                const site = this.props.site
                 return (
                   <article className={styles.card} key={i}>
                     <h2>
@@ -157,7 +165,7 @@ class WebsiteOverview extends Component {
                       />
                     }
                   </article>
-                );
+                )
               })}
             </main>
           </article>
@@ -168,7 +176,7 @@ class WebsiteOverview extends Component {
           </section>
         )}
       </section>
-    );
+    )
   }
 }
 
@@ -176,6 +184,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ...state.sites[ownProps.match.params.hash],
     userZUID: state.user.ZUID
-  };
-};
-export default withRouter(connect(mapStateToProps)(WebsiteOverview));
+  }
+}
+export default withRouter(connect(mapStateToProps)(WebsiteOverview))

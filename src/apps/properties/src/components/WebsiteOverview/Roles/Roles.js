@@ -155,7 +155,8 @@ class Roles extends Component {
           <main>
             {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
               Object.keys(this.props.sitesRoles[this.props.siteZUID]).map(
-                (ZUID, i) => {
+                (ZUID) => {
+                  // exclude base system roles in list of custom roles
                   if (
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
                       'SYSTEM_ROLE' ||
@@ -175,7 +176,7 @@ class Roles extends Component {
                     return
                   } else {
                     return (
-                      <article key={i}>
+                      <article key={ZUID}>
                         <span>
                           {
                             this.props.sitesRoles[this.props.siteZUID][ZUID]

@@ -62,7 +62,7 @@ class Blueprints extends Component {
                         <Button
                           onClick={evt => {
                             evt.preventDefault()
-                            return this.props.history.push(`/settings/blueprints/${ blueprint.ID}`)
+                            return this.props.history.push(`/settings/blueprints/${blueprint.ID}`)
                           }}>
                           <i className="fa fa-pencil" aria-hidden="true" />
                           Edit

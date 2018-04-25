@@ -399,7 +399,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     blueprint: Object.keys(state.blueprints)
       .map(i => {
-        if (state.blueprints[i].ID == ownProps.match.params.id) {
+        if (parseInt(state.blueprints[i].ID, 10) === parseInt(ownProps.match.params.id, 10)) {
           return state.blueprints[i]
         }
       })

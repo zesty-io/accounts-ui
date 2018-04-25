@@ -24,7 +24,7 @@ class Profile extends Component {
         this.props.dispatch(
           notify({
             HTML: `<p>
-        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name changed to 
+        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name updated to 
         ${this.props.profile.firstName}
         ${this.props.profile.lastName}
       </p>`,
