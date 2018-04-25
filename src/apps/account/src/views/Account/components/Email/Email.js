@@ -22,7 +22,9 @@ class Email extends Component {
   }
 
   handleAddEmail = evt => {
-    if (this.state.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/g)) {
+    if (
+      this.state.email.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,3}$/g)
+    ) {
       this.setState({
         submitted: true
       })
@@ -109,8 +111,7 @@ class Email extends Component {
           <Button
             className={styles.button}
             disabled={this.state.submitted}
-            onClick={this.handleAddEmail}
-          >
+            onClick={this.handleAddEmail}>
             <i className="fa fa-plus" aria-hidden="true" />
             Add Email
           </Button>

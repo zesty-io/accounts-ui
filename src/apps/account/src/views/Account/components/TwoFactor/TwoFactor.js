@@ -64,23 +64,23 @@ class TwoFactorOptions extends Component {
                 type="text"
                 size="5"
                 placeholder="+1"
-                name="phoneNumberPrefix"
-                value={this.state.phoneNumberPrefix}
+                name="authyPhoneCountyCode"
+                value={this.state.authyPhoneCountyCode}
                 onChange={this.handleChange}
               />
               <Input
                 type="text"
                 placeholder="123-456-7890"
-                name="phoneNumber"
+                name="authyPhoneNumber"
                 required
-                value={this.state.phoneNumber}
+                value={this.state.authyPhoneNumber}
                 onChange={this.handleChange}
               />
             </div>
           )}
         </main>
         <footer>
-          {this.props.twofa ? (
+          {this.props.authyEnabled ? (
             <Button text="Disable Two-factor" onClick={this.handleDisable} />
           ) : (
             <Button text="Enable Two-factor" onClick={this.handleEnable} />
