@@ -29,8 +29,21 @@ class Roles extends Component {
       submitted: false,
       name: '',
       systemRoleZUID: '',
-      expiry: ''
+      expiry: '',
+      selectedRole: {
+        value: 'Select Role',
+        html: '<option value="none">Select Role</option>'
+      }
     }
+  }
+  selectBaseRole = evt => {
+    this.setState({
+      inviteRole: evt.currentTarget.dataset.value,
+      selectedRole: {
+        value: evt.currentTarget.dataset.value,
+        html: evt.target.innerHTML
+      }
+    })
   }
   onChange = evt => {
     this.setState({ [evt.target.name]: evt.target.value })
@@ -125,15 +138,38 @@ class Roles extends Component {
           </span>
           <span className={styles.base}>
             <label>Base Role</label>
-            <select name="systemRoleZUID" onChange={this.onChange}>
-              <option value="">Select Role</option>
-              <option value="31-71cfc74-4dm13">Admin</option>
-              <option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>
-              <option value="31-71cfc74-d3v3l0p3r">Developer</option>
-              <option value="31-71cfc74-0wn3r">Owner</option>
-              <option value="31-71cfc74-p0bl1shr">Publisher</option>
-              <option value="31-71cfc74-s30">SEO</option>
-            </select>
+            <Select
+              onSelect={this.selectBaseRole}
+              selection={this.state.selectedRole}
+              options={[
+                {
+                  value: '31-71cfc74-4dm13',
+                  html: '<option value="31-71cfc74-4dm13">Admin</option>'
+                },
+                {
+                  value: '31-71cfc74-c0ntr1b0t0r',
+                  html:
+                    '<option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>'
+                },
+                {
+                  value: '31-71cfc74-d3v3l0p3r',
+                  html:
+                    '<option value="31-71cfc74-d3v3l0p3r">Developer</option>'
+                },
+                {
+                  value: '31-71cfc74-0wn3r',
+                  html: '<option value="31-71cfc74-0wn3r">Owner</option>'
+                },
+                {
+                  value: '31-71cfc74-p0bl1shr',
+                  html: '<option value="31-71cfc74-p0bl1shr">Publisher</option>'
+                },
+                {
+                  value: '31-71cfc74-s30',
+                  html: '<option value="31-71cfc74-s30">SEO</option>'
+                }
+              ]}
+            />
           </span>
           <span className={styles.expires}>
             <label>Exipres(optional)</label>
@@ -155,7 +191,7 @@ class Roles extends Component {
           <main>
             {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
               Object.keys(this.props.sitesRoles[this.props.siteZUID]).map(
-                (ZUID) => {
+                ZUID => {
                   // exclude base system roles in list of custom roles
                   if (
                     this.props.sitesRoles[this.props.siteZUID][ZUID].name ===

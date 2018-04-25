@@ -18,7 +18,11 @@ class UserAccess extends Component {
     this.state = {
       submitted: false,
       inviteeEmail: '',
-      inviteRole: ''
+      inviteRole: '',
+      selectedRole: {
+        value: 'Select Role',
+        html: '<option value="none">Select Role</option>'
+      }
     }
   }
   removeUser = (userZUID, roleZUID) => {
@@ -109,8 +113,17 @@ class UserAccess extends Component {
     }
   }
   handleChange = evt => {
-    // todo: validity check
-    this.setState({ [evt.target.name]: evt.target.value })
+    if (evt.target.name === undefined) {
+      this.setState({
+        inviteRole: evt.currentTarget.dataset.value,
+        selectedRole: {
+          value: evt.currentTarget.dataset.value,
+          html: evt.target.innerHTML
+        }
+      })
+    } else {
+      this.setState({ [evt.target.name]: evt.target.value })
+    }
   }
   render() {
     return this.props.sitesRoles ? (
@@ -121,55 +134,26 @@ class UserAccess extends Component {
             type="email"
             placeholder="Email of user to invite"
             name="inviteeEmail"
+            onChange={this.handleChange}
             required
             value={this.state.inviteeEmail}
-            onChange={this.handleChange}
           />
-          <select name="inviteRole" onChange={this.handleChange}>
-            <option value="none">Select Role for User</option>
-            {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
-              Object.keys(this.props.sitesRoles[this.props.siteZUID]).map(
-                (roleZUID, i) => {
-                  if (
-                    this.props.sitesRoles[this.props.siteZUID][roleZUID]
-                      .name === 'SYSTEM_ROLE'
-                  ) {
-                    return
-                  } else {
-                    return (
-                      <option
-                        key={i}
-                        value={
-                          this.props.sitesRoles[this.props.siteZUID][roleZUID]
-                            .ZUID
-                        }>
-                        {
-                          this.props.sitesRoles[this.props.siteZUID][roleZUID]
-                            .name
-                        }
-                      </option>
-                    )
-                  }
+          {this.props.sitesRoles[this.props.siteZUID] instanceof Object ? (
+            <Select
+              onSelect={this.handleChange}
+              selection={this.state.selectedRole}
+              options={Object.entries(
+                this.props.sitesRoles[this.props.siteZUID]
+              ).map(roleKV => {
+                return {
+                  value: roleKV[0],
+                  html: `<option name="inviteRole" value="${roleKV[0]}">${
+                    roleKV[1].name
+                  }</option>`
                 }
-              )}
-          </select>
-          {/* <Select
-            onChange={this.handleChange}
-            name="inviteRole"
-            selection={{
-              value: "Select Role",
-              html: '<option value="none">Select Role</option>'
-            }}
-            options={
-              this.props.sitesRoles[this.props.siteZUID] instanceof Object ?
-              Object.keys(this.props.sitesRoles[this.props.siteZUID]).map((roleZUID, i) => {
-                  return {
-                    value: this.props.sitesRoles[this.props.siteZUID][roleZUID].ZUID,
-                    html: `<option value="${this.props.sitesRoles[this.props.siteZUID][roleZUID].ZUID}">${this.props.sitesRoles[this.props.siteZUID][roleZUID].name}</option>`
-                  };
-                  }) : []
-            }
-          /> */}
+              })}
+            />
+          ) : null}
           <Button onClick={this.handleInvite} disabled={this.state.submitted}>
             Send Invite
           </Button>
