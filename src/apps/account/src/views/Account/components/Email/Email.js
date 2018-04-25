@@ -1,12 +1,8 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { connect } from 'react-redux'
 import cx from 'classnames'
 import { notify } from '../../../../../../../shell/store/notifications'
-import {
-  updateProfile,
-  addEmail,
-  fetchUser
-} from '../../../../../../../shell/store/user'
+import { addEmail } from '../../../../store'
 
 import styles from './Email.less'
 
@@ -14,26 +10,43 @@ class Email extends Component {
   constructor(props) {
     super()
     this.state = {
-      submitted: false
-    }
-  }
-  handleChange = evt => {
-    if (evt.target.value.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/g)) {
-      // this does not allow caps
-      return this.props.dispatch(
-        updateProfile({ [evt.target.name]: evt.target.value })
-      )
-    } else {
-      return null
+      submitted: false,
+      email: ''
     }
   }
 
-  handleClick = e => {
-    if (this.props.newEmail.length) {
-      this.setState({ submitted: !this.state.submitted })
-      this.props.dispatch(addEmail()).then(data => {
-        this.setState({ submitted: !this.state.submitted })
+  handleChange = evt => {
+    this.setState({
+      email: evt.target.value
+    })
+  }
+
+  handleAddEmail = evt => {
+    if (this.state.email.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/g)) {
+      this.setState({
+        submitted: true
       })
+      this.props
+        .dispatch(addEmail(this.props.user.ZUID, this.state.email))
+        .then(() => {
+          this.setState({
+            submitted: false
+          })
+          this.props.dispatch(
+            notify({
+              message: 'Email added',
+              type: 'success'
+            })
+          )
+        })
+        .catch(err => {
+          this.props.dispatch(
+            notify({
+              message: `Problem adding email: ${error}`,
+              type: 'error'
+            })
+          )
+        })
     } else {
       this.props.dispatch(
         notify({
@@ -55,7 +68,7 @@ class Email extends Component {
             Setting up multiple emails lets you accept all of your account
             invitations in one place.
           </p>
-          {this.props.verifiedEmails.map((email, i) => {
+          {this.props.user.verifiedEmails.map((email, i) => {
             return (
               <article className={styles.Email} key={i}>
                 <i
@@ -64,13 +77,13 @@ class Email extends Component {
                   title="This email is verified"
                 />
                 <span>{email}</span>
-                {this.props.email === email ? (
+                {this.props.user.email === email ? (
                   <strong className={styles.primary}>(Primary)</strong>
                 ) : null}
               </article>
             )
           })}
-          {this.props.unverifiedEmails.map((email, i) => {
+          {this.props.user.unverifiedEmails.map((email, i) => {
             return (
               <article className={styles.Email} key={i}>
                 <i
@@ -79,7 +92,7 @@ class Email extends Component {
                   title="This email is waiting to be verified"
                 />
                 <span>{email}</span>
-                {this.props.email === email ? (
+                {this.props.user.email === email ? (
                   <strong className={styles.primary}>(Primary)</strong>
                 ) : null}
               </article>
@@ -88,17 +101,15 @@ class Email extends Component {
           <Input
             type="text"
             placeholder="email@domain.com"
-            name="newEmail"
             className={styles.field}
-            required
             onChange={this.handleChange}
           />
         </main>
         <footer>
           <Button
-            onClick={this.handleClick}
             className={styles.button}
             disabled={this.state.submitted}
+            onClick={this.handleAddEmail}
           >
             <i className="fa fa-plus" aria-hidden="true" />
             Add Email
@@ -109,18 +120,6 @@ class Email extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    email: state.user.email,
-    unverifiedEmails: state.user.unverifiedEmails
-      ? state.user.unverifiedEmails.split(',')
-      : [],
-    verifiedEmails: state.user.verifiedEmails
-      ? state.user.verifiedEmails.split(',')
-      : [],
-    newEmail: state.user.newEmail || '',
-    ...state
-  }
-}
-
-export default connect(mapStateToProps)(Email)
+export default connect(state => {
+  return { user: state.user }
+})(Email)

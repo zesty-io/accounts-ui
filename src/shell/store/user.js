@@ -50,15 +50,6 @@ export function user(state = {}, action) {
     case 'SAVING_PASSWORD_SUCCESS':
       return state
 
-    case 'ADDING_EMAIL':
-      return state
-
-    case 'ADD_EMAIL_SUCCESS':
-      return state
-
-    case 'ADD_EMAIL_FAILURE':
-      return state
-
     case 'USER_INVITED':
       return { ...state, ...action.invite }
 
@@ -74,10 +65,22 @@ export function fetchUser(ZUID) {
     })
     request(`${config.API_ACCOUNTS}/users/${ZUID}`)
       .then(user => {
-        dispatch({
-          type: 'FETCH_USER_SUCCESS',
-          user: user.data
-        })
+        if (user.data) {
+          // Parse user data response
+          user.data.unverifiedEmails = user.data.unverifiedEmails
+            ? user.data.unverifiedEmails.split(',')
+            : []
+          user.data.verifiedEmails = user.data.verifiedEmails
+            ? user.data.verifiedEmails.split(',')
+            : []
+
+          dispatch({
+            type: 'FETCH_USER_SUCCESS',
+            user: user.data
+          })
+        } else {
+          throw new Error('API returned missing user data')
+        }
       })
       .catch(err => {
         console.table(err)
@@ -188,50 +191,6 @@ export function updatePassword(oldPassword, password) {
         console.table(err)
         dispatch({ type: 'SAVING_PASSWORD_ERROR' })
         throw err
-      })
-  }
-}
-
-export function addEmail() {
-  return (dispatch, getState) => {
-    dispatch({
-      type: 'ADDING_EMAIL'
-    })
-    const userZUID = getState().user.ZUID
-    const unverifiedEmails =
-      getState().user.unverifiedEmails !== null &&
-      getState().user.unverifiedEmails !== ''
-        ? getState()
-            .user.unverifiedEmails.split(',')
-            .concat(getState().user.newEmail)
-            .join(',')
-        : getState().user.newEmail
-    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
-      method: 'PUT',
-      json: true,
-      body: {
-        unverifiedEmails
-      }
-    })
-      .then(data => {
-        dispatch(
-          notify({
-            message: 'Email added',
-            type: 'success'
-          })
-        )
-        dispatch(fetchUser(userZUID))
-        dispatch({ type: 'ADD_EMAIL_SUCCESS' })
-        return data
-      })
-      .catch(error => {
-        dispatch(
-          notify({
-            message: `Problem adding email: ${error}`,
-            type: 'error'
-          })
-        )
-        return dispatch({ type: 'ADD_EMAIL_FAILURE' })
       })
   }
 }
