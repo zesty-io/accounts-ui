@@ -41,15 +41,6 @@ export function user(state = {}, action) {
     case 'SAVING_PROFILE_SUCCESS':
       return state
 
-    case 'SAVING_PASSWORD':
-      return state
-
-    case 'SAVING_PASSWORD_ERROR':
-      return state
-
-    case 'SAVING_PASSWORD_SUCCESS':
-      return state
-
     case 'USER_INVITED':
       return { ...state, ...action.invite }
 
