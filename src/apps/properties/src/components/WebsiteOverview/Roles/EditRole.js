@@ -156,25 +156,6 @@ class EditRole extends Component {
         }
       }
     })
-    return
-    return this.props
-      .dispatch(updateRole(this.state.granularRoles, this.state.role.ZUID))
-      .then(data => {
-        this.props.dispatch(
-          notify({
-            message: 'Role successfully updated',
-            type: 'success'
-          })
-        )
-      })
-      .catch(err => {
-        this.props.dispatch(
-          notify({
-            message: `Error while updating role- ${err}`,
-            type: 'error'
-          })
-        )
-      })
   }
 
   handleCancel = evt => {

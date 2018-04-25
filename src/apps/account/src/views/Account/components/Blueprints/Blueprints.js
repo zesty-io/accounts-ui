@@ -29,7 +29,9 @@ class Blueprints extends Component {
           </p>
 
           <Button
-            onClick={() => (window.location = '/settings/blueprints/create')}>
+            onClick={(evt) => {
+              evt.preventDefault()
+              this.props.history.push('/settings/blueprints/create')}}>
             <i className="fa fa-plus" aria-hidden="true" />
             Create Blueprint
           </Button>
@@ -56,7 +58,7 @@ class Blueprints extends Component {
                       </header>
                       <main>
                         <img src={blueprint.coverImage} alt="bp img" />
-                        <p>{blueprint.description}</p>
+                        <p>{blueprint.shortDescription}</p>
                       </main>
                       <footer>
                         <Button

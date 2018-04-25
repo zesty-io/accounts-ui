@@ -12,14 +12,21 @@
     margin: 0 0 2rem 0;
 
     .SettingCards {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      justify-content: space-around;
+      grid-gap: 1rem;
+      @media (max-width: 1485px) {
+        grid-template-columns: 1fr 1fr;
+      }
       article {
-        margin-right: 2rem;
+        justify-self: center;
+        max-height: 350px;
+        max-width: 350px;
       }
-      article:last-child {
-        margin: 0;
-      }
+      // article:last-child {
+      //   margin: 0;
+      // }
     }
     h1 {
       font-size: 1.4rem;
