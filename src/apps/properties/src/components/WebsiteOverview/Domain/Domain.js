@@ -141,7 +141,7 @@ class Domain extends Component {
         <span className={styles.siteName}>
           {this.props.site.domain && (
             <React.Fragment>
-              <tt>{this.props.site.domain}</tt>
+              <code>{this.props.site.domain}</code>
               <i
                 className={
                   this.state.editName ? `${styles.invisible}` : 'fa fa-pencil'
