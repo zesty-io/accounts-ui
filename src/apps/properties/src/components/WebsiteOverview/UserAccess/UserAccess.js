@@ -167,9 +167,9 @@ class UserAccess extends Component {
           <main>
             {this.props.sitesUsers[this.props.siteZUID] instanceof Object ? (
               Object.keys(this.props.sitesUsers[this.props.siteZUID]).map(
-                (user, i) => {
+                (user) => {
                   return (
-                    <article key={i}>
+                    <article key={user}>
                       <span>
                         {
                           this.props.sitesUsers[this.props.siteZUID][user]
