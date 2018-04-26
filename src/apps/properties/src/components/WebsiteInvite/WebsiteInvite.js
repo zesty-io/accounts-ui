@@ -67,8 +67,6 @@ class WebsiteInvite extends Component {
       )
       this.props.dispatch(fetchSites())
     })
-
-    console.log(this.props)
   }
   render() {
     return (

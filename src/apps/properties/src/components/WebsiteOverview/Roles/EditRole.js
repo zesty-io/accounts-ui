@@ -67,7 +67,7 @@ class EditRole extends Component {
   }
 
   diffGrains = collection => {
-    //returns true if the collection permissions differ
+    //returns true if the collection permissions have changed
     if (
       this.state.role.granularRoles &&
       this.state.role.granularRoles[collection]
