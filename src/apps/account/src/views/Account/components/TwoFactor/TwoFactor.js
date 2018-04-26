@@ -27,7 +27,7 @@ class TwoFactorOptions extends Component {
     evt.preventDefault()
     this.props.dispatch(
       zConfirm({
-        prompt: 'Are you sure you want to disable 2 factor auth?',
+        prompt: 'Are you sure you want to disable two factor auth?',
         callback: response => {
           if (response) {
             // do the thing that removes 2fa

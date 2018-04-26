@@ -10,9 +10,9 @@ export function blueprints(state = {}, action) {
       return {
         ...state,
         null: {
-          name: 'Looks like you havent selected a blueprint',
+          name: 'Looks like you havent selected a Blueprint',
           coverImage: '',
-          description: 'Click the button to select a blueprint.',
+          description: 'Click the button to select a Blueprint.',
           createdByUserZUID: null
         }
       }

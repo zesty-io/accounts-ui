@@ -21,7 +21,7 @@ class PropertyCreateFirst extends Component {
       <section className={styles.PropertyCreate}>
         <h2>Welcome to Zesty.io</h2>
         <div className={styles.nameNew}>
-          <p>create your first web property to get started</p>
+          <p>Create your first web property to get started</p>
           <h1>Name your property</h1>
           <Input
             type="text"

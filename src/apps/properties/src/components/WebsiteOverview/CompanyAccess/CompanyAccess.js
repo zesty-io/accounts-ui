@@ -9,7 +9,7 @@ class CompanyAccess extends Component {
   handleToggle = evt => {
     evt.preventDefault()
     this.props.dispatch(zConfirm({
-      prompt: `are you sure you want to remove access from ${evt.target.name}`,
+      prompt: `Are you sure you want to remove access from ${evt.target.name}?`,
       callback: result => {
         if(!result){
           return

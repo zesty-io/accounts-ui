@@ -18,7 +18,7 @@ class BlueprintCreate extends Component {
     return (
       <section className={styles.BlueprintCreate}>
         <div className={styles.nameNew}>
-          <h1>Name your new blueprint</h1>
+          <h1>Name your new Blueprint</h1>
           <Input
             type="text"
             name="createBlueprintName"

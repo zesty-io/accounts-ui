@@ -75,7 +75,7 @@ class Blueprints extends Component {
                 })
             ) : (
               <div>
-                <h5>Loading your custom blueprints</h5>
+                <h5>Loading your custom Blueprints</h5>
                 <Loader />
               </div>
             )}
