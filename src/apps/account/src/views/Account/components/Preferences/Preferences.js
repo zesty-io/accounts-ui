@@ -8,7 +8,7 @@ class Preferences extends Component {
     let Stats, Permissions, UserAccess, CompanyAccess, Blueprint
     const fakeUserPrefs = [
       {
-        title: "Monthly Useage",
+        title: "Monthly Usage",
         className: "fa fa-line-chart",
         Component: Stats
       },

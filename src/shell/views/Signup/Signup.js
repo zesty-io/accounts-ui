@@ -165,13 +165,13 @@ class Signup extends Component {
               } else {
                 // if the user was created but login failed
                 // send them to the login view
-                this.setState({ mesage: 'There was a problem login you in' })
+                this.setState({ mesage: 'There was a problem logging you in' })
                 this.props.history.push('/login')
               }
             })
             .catch(err => {
               notify({
-                message: 'There was a problem loggin in',
+                message: 'There was a problem logging in',
                 type: 'error'
               })
               console.table(err)
