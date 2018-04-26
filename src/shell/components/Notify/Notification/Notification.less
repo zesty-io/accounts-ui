@@ -1,0 +1,36 @@
+@import "../../../styles/colors.less";
+@keyframes fadeIn {
+  0% {opacity:0;}
+	100% { opacity: 1; }
+}
+.Notification {
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  margin-top: 1.3rem;
+  max-width: 45rem;
+  min-height: 20px;
+  background-color: @zesty-white;
+  color: @zesty-grey;
+  -webkit-box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
+}
+
+.error {
+  color: @zesty-red;
+  background-color: @zesty-white;
+}
+.success {
+  color: @zesty-green;
+  background-color: @zesty-white;
+}
+.info {
+  color: @zesty-grey;
+  background-color: @zesty-white;
+}
+
+.Animate {
+  animation: fadeIn;
+  animation-duration: 300ms;
+}

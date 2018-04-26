@@ -1,15 +1,39 @@
-import { Component } from 'React'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import styles from './PropertyBlueprint.less'
+import { Component } from "React";
+import { connect } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
 
-import { fetchBlueprints } from '../../store/blueprints'
-import { addSiteInfo, postNewSite } from '../../store/createSite'
+import styles from "./PropertyBlueprint.less";
+
+import qs from "qs";
+import config from "../../../../../shell/config";
+import { updateSite, fetchSite } from "../../store/sites";
+import { fetchBlueprints } from "../../store/blueprints";
 
 class PropertyBlueprint extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchBlueprints())
+    this.props.dispatch(fetchBlueprints());
   }
+  handleSelect = id => {
+    this.props
+      .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
+      .then(data => {
+        if (qs.parse(window.location.search.substr(1)).randomHashID) {
+          window
+            .open(
+              `${config.MANAGER_URL_PROTOCOL}${
+                qs.parse(window.location.search.substr(1)).randomHashID
+              }${config.MANAGER_URL}`,
+              "_blank"
+            )
+            .focus();
+        } else {
+          // re-fetch sites before the redirect
+          this.props.dispatch(fetchSite(data.data.ZUID)).then(date => {
+            return this.props.history.push(`/properties/${data.data.ZUID}`);
+          });
+        }
+      });
+  };
   render() {
     return (
       <div>
@@ -17,10 +41,10 @@ class PropertyBlueprint extends Component {
           <section className={styles.BlueprintView}>
             <header>
               <h1>Select a Blueprint</h1>
-              <Url href="/properties">
+              <a href="/properties">
                 <i className="fa fa-ban" aria-hidden="true" />&nbsp;Cancel
                 {/* <Button name="cancel" text="cancel" /> */}
-              </Url>
+              </a>
             </header>
             <p className={styles.description}>
               Blueprints are the starting point of your new website. They can
@@ -29,30 +53,32 @@ class PropertyBlueprint extends Component {
               configured for Zesty.io.
             </p>
             <main className={styles.Blueprints}>
-              {Object.keys(this.props.blueprints).filter(i => {
-                  if(!this.props.blueprints[i].Trashed){
-                    return i
+              {Object.keys(this.props.blueprints)
+                .filter(i => {
+                  if (!this.props.blueprints[i].trashed) {
+                    return i;
                   }
-                }).map(i => {
-                let blueprint = this.props.blueprints[i]
-                return (
-                  <article className={styles.Blueprint} key={i}>
-                    <header>
-                      <h1 className={styles.name}>{blueprint.Name}</h1>
-                    </header>
-                    <main>
-                      <img src={blueprint.CoverImage} alt="bp img" />
-                      <p>{blueprint.Description}</p>
-                    </main>
-                    <footer>
-                      <Button onClick={() => this.handleSelect(blueprint.ID)}>
-                        <i className="fa fa-columns" aria-hidden="true" />
-                        Select Blueprint
-                      </Button>
-                    </footer>
-                  </article>
-                )
-              })}
+                })
+                .map(i => {
+                  let blueprint = this.props.blueprints[i];
+                  return (
+                    <article className={styles.Blueprint} key={i}>
+                      <header>
+                        <h1 className={styles.name}>{blueprint.name}</h1>
+                      </header>
+                      <main>
+                        <img src={blueprint.coverImage} alt="bp img" />
+                        <p>{blueprint.description}</p>
+                      </main>
+                      <footer>
+                        <Button onClick={() => this.handleSelect(blueprint.ID)}>
+                          <i className="fa fa-columns" aria-hidden="true" />
+                          Select Blueprint
+                        </Button>
+                      </footer>
+                    </article>
+                  );
+                })}
             </main>
           </section>
         ) : (
@@ -62,17 +88,16 @@ class PropertyBlueprint extends Component {
           </div>
         )}
       </div>
-    )
-  }
-  handleSelect = (id) => {
-    // TODO make api request to set blueprint for site
-    this.props.dispatch(addSiteInfo({blueprintId : id}))
-    // TODO user returned zuid
+    );
   }
 }
 
-export default connect(state => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    blueprints: state.blueprints
-  }
-})(PropertyBlueprint)
+    siteZUID: ownProps.match.params.zuid,
+    blueprints: state.blueprints,
+    user: state.user
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(PropertyBlueprint));

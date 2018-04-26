@@ -8,51 +8,41 @@
     line-height: 30px;
   }
   .invite {
-    display: flex;
+    display: grid;
+    grid-gap: .4rem;
+    justify-content: end;
+    grid-template-columns: 1fr .5fr .4fr;
     input {
-      flex: 1;
+      height: 50px;
     }
   }
   .userTable {
     display: grid;
+    margin-bottom: 1rem;
     header {
       display: grid;
-      grid: auto-flow / 1fr 1fr 1fr 1fr;
+      grid-auto-flow: row;
+      grid-template-columns: 1fr .7fr 1fr 1fr;
+      padding: 0 1rem 0 1rem;
     }
     main {
       display: grid;
-      grid-template-rows: auto;
       article {
+        padding: .5rem;
+        align-items: center;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-auto-flow: row;
+        grid-template-columns:  1fr .7fr 1fr 1fr;
         &:nth-child(odd) {
-          background-color: @zesty-field-blue;
+          background-color: @zesty-white;
+        }
+        .pullButton {
+          margin-left: 4rem;
         }
       }
     }
-
     footer {
       display: flex;
-      input {
-        //height: 34px;
-      }
-      button {
-        margin-left: 20px;
-      }
     }
-  }
-  .info {
-    color: #607394;
-    display: block;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    font-weight: normal;
-    overflow-y: visible;
-    position: relative;
-    max-width: 668px;
-    background: #dfeeff;
-    color: #2e436b;
-    border: solid 1px #a2bbd8;
-    border-radius: 4px;
   }
 }

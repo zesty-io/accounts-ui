@@ -1,16 +1,31 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import qs from 'qs'
 
 import { request } from '../../../util/request'
 import config from '../../config'
 import styles from './Login.less'
+import { fetchUser } from '../../store/user'
 
 class Login extends Component {
   constructor(props) {
-    super(props)
+    super()
     this.state = {
+      submitted: false,
       message: ''
+    }
+  }
+  componentDidMount() {
+    const invite = qs.parse(window.location.search.substr(1))
+    if (invite) {
+      this.props.dispatch({
+        type: 'USER_INVITED',
+        invite: {
+          email: invite.email,
+          invited: invite.invited
+        }
+      })
     }
   }
   render() {
@@ -36,6 +51,7 @@ class Login extends Component {
                   type="text"
                   placeholder="e.g. hello@zesty.io"
                   name="email"
+                  autoFocus
                 />
               </label>
               <label>
@@ -46,7 +62,11 @@ class Login extends Component {
                   name="pass"
                 />
               </label>
-              <Button onClick={this.handleLogin}>Log In</Button>
+              <Button
+                onClick={this.handleLogin}
+                disabled={this.state.submitted}>
+                {this.state.submitted ? 'Logging you in' : 'Log In'}
+              </Button>
             </form>
 
             <AppLink to="/reset-password">Forgot Password?</AppLink>
@@ -74,26 +94,29 @@ class Login extends Component {
     )
   }
   handleLogin = evt => {
+    this.setState({ submitted: !this.state.submitted })
     evt.preventDefault()
-    request(`http://${config.API_AUTH}/login`, {
+    request(`${config.API_AUTH}/login`, {
       body: {
         email: document.forms.login.email.value,
         password: document.forms.login.pass.value
       }
     })
       .then(json => {
+        console.log('json from login', json)
         if (json.code === 200) {
           this.props.dispatch({
             type: 'FETCH_AUTH_SUCCESS',
-            zuid: json.meta.userZuid,
+            ZUID: json.meta.userZuid,
             auth: true
           })
+          window.location = '/properties'
         } else if (json.code === 202) {
-          window.location = '/login/2fa'
+          return (window.location = '/login/2fa')
         } else {
-          // TODO Display error message
           this.setState({
-            message: json.message
+            submitted: !this.state.submitted,
+            message: 'There was a problem logging you in'
           })
           this.props.dispatch({
             type: 'FETCH_AUTH_ERROR',
@@ -102,8 +125,12 @@ class Login extends Component {
         }
       })
       .catch(err => {
+        this.setState({
+          submitted: !this.state.submitted,
+          message: 'There was a problem logging you in'
+        })
         console.error('LOGIN ERR', err)
       })
   }
 }
-export default connect(state => state)(Login)
+export default withRouter(connect(state => state)(Login))

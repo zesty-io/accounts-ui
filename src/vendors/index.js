@@ -1,5 +1,6 @@
 // import moment from 'moment'
 import cx from 'classnames'
+import qs from 'qs'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import * as ReactRedux from 'react-redux'
@@ -9,6 +10,7 @@ import * as Redux from 'redux'
 import * as ReduxThunk from 'redux-thunk'
 
 window.cx = cx
+window.qs = qs
 window.React = React
 window.ReactDOM = ReactDOM
 window.ReactRedux = ReactRedux

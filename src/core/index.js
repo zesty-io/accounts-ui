@@ -7,6 +7,7 @@ import Search from './Search'
 import Select from './Select'
 import { Option } from './Select'
 import Input from './Input'
+import Toggle from './Toggle'
 import Infotip from './Infotip'
 
 // We expose these modules on the global scope
@@ -22,3 +23,4 @@ window.Select = Select
 window.Option = Option
 window.Infotip = Infotip
 window.Input = Input
+window.Toggle = Toggle

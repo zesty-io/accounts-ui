@@ -1,0 +1,33 @@
+@import '../../styles/colors.less';
+
+.confirmWrapper {
+  position: fixed;
+  z-index: 2;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  .Confirm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: fixed;
+    top: 0;
+    height: 15vh;
+    width: 40vw;
+    background-color: @zesty-white;
+    -webkit-box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
+    h1 {
+      padding: 1rem;
+      font-size: 1.3rem;
+    }
+  }
+  footer {
+    .buttons {
+      margin: 1rem;
+      height: 50px;
+    }
+  }
+}

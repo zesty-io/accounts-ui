@@ -9,12 +9,7 @@ import WebsiteCard from "../../components/WebsiteCard";
 import WebsiteInvite from "../../components/WebsiteInvite";
 import WebsiteCreate from "../../components/WebsiteCreate";
 
-import { fetchSites } from "../../store/sites";
-
 class Properties extends Component {
-  componentDidMount() {
-    this.props.dispatch(fetchSites());
-  }
   render() {
     return (
       <section className={styles.Websites}>
@@ -22,14 +17,11 @@ class Properties extends Component {
         <main className={styles.siteListWrap}>
           {Object.keys(this.props.sitesFiltered).length ? (
             <div className={styles.siteList}>
-              {/* Only show if no site has been created */}
-              {Object.keys(this.props.sites).length ? <WebsiteCreate /> : null}
-
               {/* render invites */}
               {Object.keys(this.props.sites)
                 .filter(
                   zuid =>
-                    this.props.sites[zuid] && this.props.sites[zuid].invite
+                    this.props.sites[zuid] && this.props.sites[zuid].inviteZUID
                 )
                 .map(zuid => {
                   return (
@@ -42,7 +34,7 @@ class Properties extends Component {
                 .filter(
                   zuid =>
                     this.props.sitesFiltered[zuid] &&
-                    !this.props.sitesFiltered[zuid].invite
+                    !this.props.sitesFiltered[zuid].inviteZUID
                 )
                 .map(zuid => {
                   return (
@@ -52,12 +44,15 @@ class Properties extends Component {
                     />
                   );
                 })}
-
               <Route path="/properties/:hash" component={WebsiteOverview} />
               <Route
                 path="/properties/invite/:hash"
                 component={WebsiteOverview}
               />
+            </div>
+          ) : this.props.sites === null ? (
+            <div className={styles.siteList}>
+              <WebsiteCreate />
             </div>
           ) : (
             <div className={styles.LoadingSites}>

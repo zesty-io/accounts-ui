@@ -1,81 +1,76 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import styles from "./CompanyAccess.less";
+import { zConfirm } from '../../../../../../shell/store/confirm'
+
+import styles from './CompanyAccess.less'
 
 class CompanyAccess extends Component {
+  handleToggle = evt => {
+    evt.preventDefault()
+    this.props.dispatch(zConfirm({
+      prompt: `Are you sure you want to remove access from ${evt.target.name}?`,
+      callback: result => {
+        if(!result){
+          return
+        }
+        // make a call to remove the company
+      }
+    }))
+  }
   render() {
     return (
       <div className={styles.companyAccess}>
-        <div className={styles.invite} />
+        <div className={styles.addCompany}>
+          <div className={styles.dropdownArea}>
+          <Select
+            
+            name="companyAccess"
+            selection={{
+              value: "Design Corp",
+              html: '<option value="Design Corp">Design Corp</option>'
+            }}
+            options={[
+              {
+                value: "Design Corp",
+                html: '<option value="Design Corp">Design Corp</option>'
+              },
+              {
+                value: "SEO MASTERS",
+                html: '<option value="SEO MASTERS">SEO MASTERS</option>'
+              }
+            ]}
+          />
+          </div>
+          <Button name="companyAccessSubmit">Grant Access</Button>
+        </div>
         <div className={styles.companyTable}>
           <header>
-            <h3>#</h3>
             <h3>Company</h3>
             <h3>Contact</h3>
-            <h3>Role</h3>
+            <h3>Email</h3>
+            <h3>Access</h3>
           </header>
           <main>
-            {Array.isArray(this.props.sitesCompanies) ? (
-              this.props.sitesCompanies.map((company, i) => {
+            {Array.isArray(this.props.sitesCompanies[this.props.siteZUID]) ? (
+              this.props.sitesCompanies[this.props.siteZUID].map((company, i) => {
                 return (
                   <article key={i}>
-                    <span>{i}</span>
-                    <span>{company.Name}</span>
-                    <span>{company.MainContactEmail}</span>
-                    <span>{company.Featured}</span>
+                    <span>{company.name}</span>
+                    <span>{company.mainContactName}</span>
+                    <span>{company.mainContactEmail}</span>
+                    <span><Toggle defaultChecked name={company.name} onChange={this.handleToggle} /></span>
                   </article>
-                );
+                )
               })
             ) : (
-              <p>loading</p>
+              <Loader />
             )}
           </main>
         </div>
-        <footer>
-          <Select
-            name="companyAccess"
-            selection={{
-              value: "Company",
-              html: '<option value="Company">Company</option>'
-            }}
-            options={[
-              {
-                value: "company",
-                html: '<option value="Company">Company</option>'
-              },
-              {
-                value: "Company2",
-                html: '<option value="Company2">Company2</option>'
-              }
-            ]}
-          />
-          <Select
-            name="newCompanyRole"
-            selection={{
-              value: "view",
-              html: '<option value="view">view</option>'
-            }}
-            options={[
-              {
-                value: "view",
-                html: '<option value="view">view</option>'
-              },
-              {
-                value: "edit",
-                html: '<option value="edit">edit</option>'
-              },
-              {
-                value: "own",
-                html: '<option value="own">own</option>'
-              }
-            ]}
-          />
-          <Button name="companyAccessSubmit">Grant Access</Button>
-        </footer>
       </div>
-    );
+    )
   }
 }
 
-export default connect(state => state)(CompanyAccess);
+export default connect(state => state)(CompanyAccess)

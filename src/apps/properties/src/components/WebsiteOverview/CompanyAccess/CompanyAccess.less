@@ -1,4 +1,4 @@
-@import "../../../../../../shell/styles/colors.less";
+@import '../../../../../../shell/styles/colors.less';
 
 .companyAccess {
   h2 {
@@ -8,29 +8,43 @@
     line-height: 30px;
   }
 
-  footer {
-    display: flex;
+  .addCompany {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr 1fr;
+    grid-template-areas: '. . input button';
+    .dropdownArea {
+      grid-area: input;
+    }
     input {
-      height: 34px;
+      height: 350px;
     }
     button {
-      margin-left: 20px;
+      margin-left: 1rem;
+      max-width: 150px;
+      grid-area: button;
     }
   }
+
   .companyTable {
     display: grid;
+    margin-bottom: 1rem;
     header {
       display: grid;
-      grid: auto-flow / 1fr 1fr 1fr 1fr;
+      justify-items: start;
+      grid-auto-flow: row;
+      grid-template-columns: 1fr 1fr 1fr 0.5fr;
+      padding: 0 1rem 0 1rem;
     }
     main {
       display: grid;
       grid-template-rows: auto;
+      padding-bottom: 2%;
       article {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        padding: 1rem;        
+        grid-template-columns: 1fr 1fr 1fr 0.5fr;
         &:nth-child(odd) {
-          background-color: @zesty-field-blue;
+          background-color: @zesty-white;
         }
       }
     }
@@ -38,7 +52,7 @@
   .info {
     color: #607394;
     display: block;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: normal;
     overflow-y: visible;

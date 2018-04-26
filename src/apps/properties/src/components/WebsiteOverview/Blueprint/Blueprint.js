@@ -1,9 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-import styles from './Blueprint.less'
+import styles from "./Blueprint.less";
 class Blueprint extends Component {
+  handleSelect = evt => {
+    evt.preventDefault();
+    this.props.history.push(`${this.props.site.ZUID}/blueprint`);
+  };
   render() {
     return this.props.blueprints[this.props.site.blueprintID] instanceof
       Object ? (
@@ -11,33 +15,34 @@ class Blueprint extends Component {
         <article className={styles.Blueprint}>
           <header>
             <h1 className={styles.name}>
-              {this.props.blueprints[this.props.site.blueprintID].Name}
+              {this.props.blueprints[this.props.site.blueprintID].name}
             </h1>
           </header>
           <main>
             <img
               src={
-                this.props.blueprints[this.props.site.blueprintID].CoverImage
+                this.props.blueprints[this.props.site.blueprintID].coverImage
               }
-              alt="bp img"
+              alt=""
             />
             <p>
-              {this.props.blueprints[this.props.site.blueprintID].Description}
+              {this.props.blueprints[this.props.site.blueprintID].description}
             </p>
           </main>
-          <Link to={`${this.props.site.ZUID}/blueprint`}>
           <Button onClick={this.handleSelect}>
             <i className="fa fa-columns" aria-hidden="true" />
             Change Blueprint
           </Button>
-          </Link>
           <footer />
         </article>
       </React.Fragment>
     ) : (
-      <p>loading</p>
+      <section className={styles.Loading}>
+        <h3>Loading Blueprint</h3>
+        <Loader />
+      </section>
     );
   }
 }
 
-export default connect(state => state)(Blueprint);
+export default withRouter(connect(state => state)(Blueprint));
