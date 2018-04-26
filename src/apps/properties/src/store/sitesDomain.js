@@ -31,5 +31,13 @@ export function updateDomain(siteZUID, domain) {
       json: true,
       body: { domain }
     })
+      .then(data => {
+        dispatch({ type: 'UPDATING_DOMAIN_SUCCESS' })
+        return data
+      })
+      .catch(err => {
+        console.table(err)
+        return err
+      })
   }
 }

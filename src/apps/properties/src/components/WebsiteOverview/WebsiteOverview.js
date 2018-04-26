@@ -116,39 +116,28 @@ class WebsiteOverview extends Component {
                 <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
               </Link>
               <div className={styles.propertyName}>
-                  {this.state.editName ? (
-                    <React.Fragment>
-                      <Input
-                        value={this.state.name}
-                        onChange={evt => {
-                          this.setState({ name: evt.target.value })
-                        }}
-                      />
-                      <Button onClick={this.handleNameUpdate}>save</Button>
-                    </React.Fragment>
-                  ) : (
-                    this.props.name
-                  )}
-                  <i
-                    className={
-                      this.state.editName
-                        ? 'fa fa-times-circle'
-                        : 'fa fa-pencil'
-                    }
-                    aria-hidden="true"
-                    onClick={this.editName}
-                  />
-              </div>
-              <h2 className={styles.domain}>
-                {this.props.domain ? (
-                  <span>
-                    {this.props.domain}&nbsp;
-                    <i className="fa fa-pencil" aria-hidden="true" />
-                  </span>
+                {this.state.editName ? (
+                  <React.Fragment>
+                    <Input
+                      value={this.state.name}
+                      onChange={evt => {
+                        this.setState({ name: evt.target.value })
+                      }}
+                    />
+                    <i onClick={this.handleNameUpdate} className='fa fa-save' />
+                  </React.Fragment>
                 ) : (
-                  <Domain siteZUID={this.props.ZUID} site={this.props} />
+                  this.props.name
                 )}
-              </h2>
+                <i
+                  className={
+                    this.state.editName ? 'fa fa-times-circle' : 'fa fa-pencil'
+                  }
+                  aria-hidden="true"
+                  onClick={this.editName}
+                />
+              </div>
+              <Domain siteZUID={this.props.ZUID} site={this.props} />
             </header>
             <main>
               {fakeUserPrefs.map((Item, i) => {
