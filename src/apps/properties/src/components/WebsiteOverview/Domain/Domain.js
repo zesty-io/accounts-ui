@@ -9,6 +9,13 @@ import { zConfirm } from '../../../../../../shell/store/confirm'
 import styles from './Domain.less'
 
 class Domain extends Component {
+  /* TODO: 
+  **  users need to confirm and upgrade their
+  **  accounts in order to use the custom
+  **  domain feature. this will be implemented
+  **  in a future API version
+  */
+
   constructor(props) {
     super()
     this.state = {
@@ -20,10 +27,6 @@ class Domain extends Component {
 
   componentDidMount() {
     let { domain } = this.props.site
-    // check to see what the domain says
-    // if it includes .zesty.sites setState to select vanity
-    // if not and its an empty string set to select none
-    // otherwise its a custom domain
     if (domain && domain.includes('.zesty.sites')) {
       this.setState({
         domainSelect: 'vanity',
@@ -148,9 +151,7 @@ class Domain extends Component {
               />
               <i
                 className={
-                  this.state.editName
-                    ? `${styles.invisible}`
-                    : 'fa fa-times-circle'
+                  this.state.editName ? `${styles.invisible}` : 'fa fa-times'
                 }
                 aria-hidden="true"
                 onClick={this.handleRemove}
