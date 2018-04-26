@@ -82,7 +82,7 @@ class Password extends Component {
     if (this.state.oldPassword === this.state.newPassword) {
       this.props.dispatch(
         notify({
-          message: 'Your new password can not be the same as your old one.',
+          message: 'Your new password cannot be the same as your old one.',
           type: 'error'
         })
       )
