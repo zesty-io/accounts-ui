@@ -10,17 +10,17 @@
 
   .addCompany {
     display: grid;
-    grid-template-columns: .6fr 2.5fr 1fr;
-    grid-template-areas: 'no input button';
+    margin-bottom: 1rem;
+    grid-template-columns: 1fr 1fr 1.5fr 1fr;
+    grid-template-areas: '. . input button';
     .dropdownArea {
       grid-area: input;
     }
     input {
       height: 350px;
-      margin-left: 5rem;
     }
     button {
-      margin-left: 5rem;
+      margin-left: 1rem;
       max-width: 150px;
       grid-area: button;
     }
@@ -28,6 +28,7 @@
 
   .companyTable {
     display: grid;
+    margin-bottom: 1rem;
     header {
       display: grid;
       justify-items: start;

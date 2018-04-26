@@ -9,6 +9,7 @@
   }
   .invite {
     display: grid;
+    margin-bottom: 1rem;
     grid-gap: .4rem;
     justify-content: end;
     grid-template-columns: 1fr .5fr .4fr;
@@ -18,25 +19,26 @@
   }
   .userTable {
     display: grid;
+    margin-bottom: 1rem;
     header {
       display: grid;
       grid-auto-flow: row;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr .7fr 1fr 1fr;
       padding: 0 1rem 0 1rem;
     }
     main {
       display: grid;
-      grid-template-rows: auto;
       article {
-        padding: 1rem;
+        padding: .5rem;
+        align-items: center;
         display: grid;
         grid-auto-flow: row;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns:  1fr .7fr 1fr 1fr;
         &:nth-child(odd) {
           background-color: @zesty-white;
         }
         .pullButton {
-          margin-left: 5rem;
+          margin-left: 4rem;
         }
       }
     }
