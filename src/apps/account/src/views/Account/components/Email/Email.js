@@ -102,7 +102,7 @@ class Email extends Component {
           })}
           <Input
             type="text"
-            placeholder="email@domain.com"
+            placeholder="email@acme-corp.com"
             className={styles.field}
             onChange={this.handleChange}
           />

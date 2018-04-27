@@ -24,7 +24,7 @@ class PropertyCreate extends Component {
           <Input
             type="text"
             name="propertyName"
-            placeholder="e.g. My Blog or Company Marketing Website"
+            placeholder="e.g. Acme Corp. Marketing Website"
             onChange={this.handleChange}
           />
           <div className={styles.controls}>
