@@ -10,9 +10,15 @@
     "build": "node bin/build",
     "prestart": "npm install",
     "start": "node bin/start & npm run serve",
-    "serve": "./node_modules/.bin/serve build --port 6006 --single"
+    "serve": "./node_modules/.bin/serve ./build --port 6006 --single",
+    "prod": "export NODE_ENV=\"production\" && node bin/build",
+    "dev": "export NODE_ENV=\"development\" && node bin/build",
+    "stage": "export NODE_ENV=\"staging\" && node bin/build"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
+  "contributors": [
+    "Grant Glidewell <grant.glidewell@zesty.io>"
+  ],
   "license": "UNLICENSED",
   "dependencies": {
     "chart.js": "2.7.2",

@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "npm install",
     "start": "export NODE_ENV=\"development\" && ../../node_modules/.bin/webpack --watch",
-    "build": "export NODE_ENV=\"production\" && ../../node_modules/.bin/webpack --progress -p"
+    "build": "../../node_modules/.bin/webpack --progress -p"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
   "license": "UNLICENSED",
