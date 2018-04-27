@@ -44,6 +44,7 @@ class Properties extends Component {
                     />
                   );
                 })}
+                {/* TODO: if site and !sitesFiltered display 'no results' */}
               <Route path="/properties/:hash" component={WebsiteOverview} />
               <Route
                 path="/properties/invite/:hash"
