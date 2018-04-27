@@ -38,7 +38,7 @@ class Roles extends Component {
   }
   selectBaseRole = evt => {
     this.setState({
-      inviteRole: evt.currentTarget.dataset.value,
+      systemRoleZUID: evt.currentTarget.dataset.value,
       selectedRole: {
         value: evt.currentTarget.dataset.value,
         html: evt.target.innerHTML
@@ -50,7 +50,7 @@ class Roles extends Component {
   }
   handleCreate = evt => {
     evt.preventDefault()
-    if (this.state.name.length > 0 && this.state.systemRoleZUID.length > 0) {
+    if (this.state.name !== '' && this.state.systemRoleZUID !== '') {
       this.setState({ submitted: !this.state.submitted })
       this.props
         .dispatch(createRole(this.props.siteZUID, { ...this.state }))
