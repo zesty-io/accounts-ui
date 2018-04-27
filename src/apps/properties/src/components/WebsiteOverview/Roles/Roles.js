@@ -132,6 +132,7 @@ class Roles extends Component {
             <Input
               type="text"
               name="name"
+              placeholder="Name custom role"
               value={this.state.name}
               onChange={this.onChange}
             />

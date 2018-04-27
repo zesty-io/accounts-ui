@@ -1,8 +1,4 @@
-import stage from './config.stage'
-import prod from './config.prod'
-
-//default to dev if the environment isnt detected
-let loadConfig = {
+module.exports = {
   API_ACCOUNTS: 'http://accounts.api.zesty.localdev:3022/v1',
   API_INSTANCE: '.api.zesty.localdev:3023/v1/',
   API_AUTH: 'http://svc.zesty.localdev:3011',
@@ -13,12 +9,3 @@ let loadConfig = {
   COOKIE_NAME: 'APP_SID',
   COOKIE_DOMAIN: '.zesty.localdev'
 }
-
-if (process.env.NODE_ENV == 'production') {
-  loadConfig = prod
-}
-if (process.env.NODE_ENV == 'staging') {
-  loadConfig = stage
-}
-
-export default loadConfig

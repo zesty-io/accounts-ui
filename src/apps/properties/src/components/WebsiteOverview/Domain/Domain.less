@@ -1,6 +1,7 @@
 .Domain {
   padding: .5rem;
   display: grid;
+  height:50px;
   width: 100%;
   grid-auto-flow: row;
   grid-template-columns: 1.5fr 1fr 1fr;
@@ -16,18 +17,22 @@
   display: flex;
   flex-direction: row;
   grid-area: input;
-  height: 30px;
+  // height: 30px;
   justify-self: start;
   align-self: center;
+  align-items: center;
   input {
-    height: 30px;
+    // height: 30px;
   }
 }
 
 .siteName {
   grid-area: name;
   justify-self: start;
-  align-self: center;
+  align-self: baseline;
+  i {
+    font-size: 1.2rem;
+  }
 }
 
 .radioSelect {
