@@ -22,7 +22,7 @@ class BlueprintCreate extends Component {
           <Input
             type="text"
             name="createBlueprintName"
-            placeholder="e.g. My New Blueprint"
+            placeholder="e.g. Acme Corp. Default Blueprint"
             onChange={this.handleChange}
           />
           <div className={styles.controls}>
