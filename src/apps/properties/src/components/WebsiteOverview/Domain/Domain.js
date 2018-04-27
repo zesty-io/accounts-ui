@@ -115,6 +115,7 @@ class Domain extends Component {
                     type: 'success'
                   })
                 )
+                this.setState({ domainSelect: '', name: '' })
                 this.props.dispatch(fetchSite(this.props.siteZUID))
               })
               .catch(data => {

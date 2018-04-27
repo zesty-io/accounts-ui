@@ -142,13 +142,13 @@ class UserAccess extends Component {
             <Select
               onSelect={this.handleChange}
               selection={this.state.selectedRole}
-              options={Object.entries(
+              options={Object.keys(
                 this.props.sitesRoles[this.props.siteZUID]
-              ).map(roleKV => {
+              ).map(role => {
                 return {
-                  value: roleKV[0],
-                  html: `<option name="inviteRole" value="${roleKV[0]}">${
-                    roleKV[1].name
+                  value: role,
+                  html: `<option name="inviteRole" value="${role}">${
+                    this.props.sitesRoles[this.props.siteZUID][role].name
                   }</option>`
                 }
               })}
