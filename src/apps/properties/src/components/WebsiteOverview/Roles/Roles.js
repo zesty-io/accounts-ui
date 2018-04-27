@@ -38,7 +38,7 @@ class Roles extends Component {
   }
   selectBaseRole = evt => {
     this.setState({
-      systemRoleZUID: evt.currentTarget.dataset.value,
+      inviteRole: evt.currentTarget.dataset.value,
       selectedRole: {
         value: evt.currentTarget.dataset.value,
         html: evt.target.innerHTML
@@ -190,25 +190,47 @@ class Roles extends Component {
           </header>
           <main>
             {this.props.sitesRoles[this.props.siteZUID] instanceof Object &&
-              Object.entries(this.props.sitesRoles[this.props.siteZUID]).map(
-                ([ZUID, role]) => {
+              Object.keys(this.props.sitesRoles[this.props.siteZUID]).map(
+                ZUID => {
                   // exclude base system roles in list of custom roles
                   if (
-                    role.name === 'SYSTEM_ROLE' ||
-                    role.name === 'Admin' ||
-                    role.name === 'Developer' ||
-                    role.name === 'Owner' ||
-                    role.name === 'SEO' ||
-                    role.name === 'Contributor' ||
-                    role.name === 'Publisher'
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                      'SYSTEM_ROLE' ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                      'Admin' ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                      'Developer' ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                      'Owner' ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                      'SEO' ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                      'Contributor' ||
+                    this.props.sitesRoles[this.props.siteZUID][ZUID].name ===
+                      'Publisher'
                   ) {
                     return
                   } else {
                     return (
                       <article key={ZUID}>
-                        <span>{role.name}</span>
-                        <span>{formatDate(role.createdAt)}</span>
-                        <span>{formatDate(role.expiry)}</span>
+                        <span>
+                          {
+                            this.props.sitesRoles[this.props.siteZUID][ZUID]
+                              .name
+                          }
+                        </span>
+                        <span>
+                          {formatDate(
+                            this.props.sitesRoles[this.props.siteZUID][ZUID]
+                              .createdAt
+                          )}
+                        </span>
+                        <span>
+                          {formatDate(
+                            this.props.sitesRoles[this.props.siteZUID][ZUID]
+                              .expiry
+                          )}
+                        </span>
                         <span>
                           <ButtonGroup>
                             <Button
