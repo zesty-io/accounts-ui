@@ -15,27 +15,39 @@
   a {
     color: #497edf;
     margin: 0;
+    text-decoration: none;
   }
   header {
     display: flex;
-    align-items: top;
+    flex-direction: column;
     padding: 1rem;
     background: lighten(#f2f4fb, 2%);
     border-bottom: 1px solid #f2f4fb;
-    min-height: 45px;
-    .name {
-      flex: 1;
-      h1 {
-        font-size: 1.2em;
-      }
-      a {
-        font-size: 0.9rem;
-      }
+
+    h1 {
+      font-size: 1.2em;
+    }
+    a {
+      font-size: 0.9rem;
     }
   }
   main {
     border-bottom: 1px solid #f2f4fb;
     padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .preview {
+      display: flex;
+      align-items: center;
+      font-size: 10rem;
+      justify-content: center;
+      color: #cacad4;
+      &:hover {
+        color: @zesty-orange;
+      }
+    }
   }
   footer {
     display: flex;

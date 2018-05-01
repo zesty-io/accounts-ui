@@ -1,0 +1,34 @@
+@import '../../../../../../../shell/styles/colors.less';
+
+.EmailSettings {
+  background: #fcfcfe;
+  max-width: 20rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  main {
+    flex: 1;
+    margin: 1rem 0;
+    p {
+      margin: 0 0 1rem 0;
+    }
+    .Email {
+      margin: 0 0 0.5rem 0;
+      i {
+        margin-right: 5px;
+      }
+      .verified {
+        color: @zesty-green;
+      }
+      .primary {
+        margin-left: 5px;
+      }
+    }
+
+    input {
+      min-width: 20rem;
+      margin: 0.5rem 0 0 0;
+    }
+  }
+}

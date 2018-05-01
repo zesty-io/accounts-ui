@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Bar } from 'react-chartjs-2'
+import { HorizontalBar } from 'react-chartjs-2'
 
 class Stats extends Component {
   render() {
-    let consistentFakeStats = this.props.sites[this.props.site].ID.toString().split('')
+    let consistentFakeStats = [3,65,1,56,4,2,84,54,235,64,3,2]
     const data = {
       labels: ['This Month', 'All Time'],
       datasets: [
@@ -28,7 +28,21 @@ class Stats extends Component {
         }
       ]
     }
-    return <Bar data={data} />
+    const options = {
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    
+    }
+    return <HorizontalBar
+      data={data}
+      height={50}
+      options={options}
+      />
   }
 }
 

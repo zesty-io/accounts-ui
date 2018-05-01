@@ -1,39 +1,15 @@
-@import '../../../../../../shell/styles/colors.less';
-
-.BlueprintView {
-  padding: 2rem;
-  header {
-    display: flex;
-    flex-direction: row;
-    h1 {
-      font-size: 1.4rem;
-      flex: 1;
-      margin-bottom: 5px;
-    }
-  }
-  .description {
-    border-bottom: 1px solid @zesty-light-blue;
-    max-width: 50rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-  }
-}
-
-.Blueprints {
-  display: grid;
-  grid: auto-flow / 1fr 1fr 1fr;
-  grid-gap: 1rem;
-  margin-top: 2rem;
-}
+@import "../../../../../../shell/styles/colors.less";
 
 .Blueprint {
   background: @white;
 
   header {
-    background: @zesty-white;
-    .name {
-      font-size: 1.1em;
-      margin-left: 1rem;
+    display: flex;
+    flex-direction: row;
+    h1 {
+      font-size: 1.4rem;
+      padding: 1.1rem;
+      flex: 1;
     }
   }
   main {
@@ -41,11 +17,10 @@
     padding-bottom: 0;
 
     img {
-      width: 100%;
-      padding: 0 0 1rem;
-      // max-width: 30%;
-      // padding: 0 1rem 1rem 0;
-      // float: left;
+      max-height: 25rem;
+      max-width: 15rem;
+      padding: 0 1rem 1rem 0;
+      float: left;
     }
   }
   footer {
@@ -59,6 +34,6 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
-  width: 100vw;
+  height: 4rem;
+  width: 60vw;
 }

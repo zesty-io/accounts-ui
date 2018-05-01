@@ -5,19 +5,30 @@ import createDebounce from 'redux-debounced'
 
 import { user } from './user'
 import { auth } from './auth'
+import { notifications } from './notifications'
+import { modal } from './modal'
+import { confirm } from './confirm'
 import { propertiesReducers } from '../../apps/properties/src/store'
-import { profile } from '../../apps/account/src/store'
 
 const loggerMiddleware = createLogger({
   collapsed: true,
   diff: true
 })
 
-const rootReducer = combineReducers({
+const rootReducer = (state, action) => {
+  if (action.type === 'LOGOUT') {
+    state = {}
+  }
+  return appReducer(state, action)
+}
+
+const appReducer = combineReducers({
   ...propertiesReducers,
   auth,
   user,
-  profile
+  modal,
+  confirm,
+  notifications
 })
 
 export const store = createStore(

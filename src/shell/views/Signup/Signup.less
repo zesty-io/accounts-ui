@@ -3,13 +3,24 @@
 .Signup {
   height: 100vh;
   width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 
   .SignupForm {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     max-width: 60rem;
     max-height: 40rem;
 
@@ -29,7 +40,10 @@
       text-align: left;
     }
     button {
-      justify-content: center;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      min-height: 50px;
       font-size: 1.5em;
     }
     .input {
@@ -41,4 +55,7 @@
       text-shadow: none;
     }
   }
+}
+.checkbox {
+  margin: 5px;
 }

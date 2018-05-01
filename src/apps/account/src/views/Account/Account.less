@@ -1,0 +1,40 @@
+@import '../../../../../shell/styles/colors.less';
+
+.settings {
+  padding: 2rem;
+
+  .SettingsTitle {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .setting {
+    margin: 0 0 2rem 0;
+
+    .SettingCards {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      justify-content: space-around;
+      grid-gap: 1.3rem;
+      @media (max-width: 1485px) {
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1.6rem;
+      }
+      article {
+        justify-self: center;
+        max-height: 350px;
+        max-width: 350px;
+        @media (max-width: 1485px) {
+          grid-template-columns: 1fr 1fr;
+          max-width: 450px;
+        }
+      }
+      // article:last-child {
+      //   margin: 0;
+      // }
+    }
+    h1 {
+      font-size: 1.4rem;
+    }
+  }
+}

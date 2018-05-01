@@ -11,27 +11,52 @@
   position: absolute;
   top: 0;
   right: 0;
-  overflow-y: scroll;
+  // overflow-y: scroll;
   height: 100vh;
-  width: 75vw;
+  // width: 75vw;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.5);
+
   // display: flex;
-  background: @zesty-light-blue;
-  box-shadow: 0px 0px 10px #171b26;
-  animation: slideIn 300ms forwards;
+  // background: @zesty-light-blue;
+  // box-shadow: 0px 0px 10px #171b26;
 }
 
 .WebsiteOverview {
-  padding: 2rem;
-  // flex: 1;
-  header {
-    border-bottom: 1px solid darken(@zesty-light-blue, 5%);
+  animation: slideIn 300ms forwards;
+  background: @appBkgColor;
+  padding: 0;
+  overflow-y: scroll;
+  height: 100vh;
+  width: 75vw;
+  max-width: 980px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  .WebsiteOverviewHeader {
+    padding: 2rem;
+    // border-bottom: 1px solid darken(@zesty-light-blue, 1%);
+    box-shadow: 0px 1px 1px #a2a7b7;
     padding-bottom: 1rem;
     margin-bottom: 1rem;
-    .name {
-      font-size: 2rem;
+    position: sticky;
+    top: 0;
+    background: darken(@appBkgColor, 3%);
+    z-index: 30;
+    .propertyName {
+      font-size: 1.9rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      height: 30px;
+      i {
+        padding: .5rem;
+      }
     }
-    .domain {
-      font-size: 1rem;
+    .close {
+      text-decoration: none;
+      color: @zesty-grey;
+      padding: .5rem;
     }
     a {
       position: absolute;
@@ -40,8 +65,17 @@
     }
   }
   main {
-    h2 {
-      margin-top: 2rem;
+    padding: 2rem;
+    .card {
+      margin: 0 0 2rem;
+      background: lighten(@appBkgColor, 3%);
+      padding: 1rem;
+      h2 {
+        margin: 0 0 1rem;
+      }
+      main {
+        padding: 0;
+      }
     }
   }
 }

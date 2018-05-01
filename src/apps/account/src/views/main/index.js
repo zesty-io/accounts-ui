@@ -1,50 +1,26 @@
-import React, { Component } from 'react'
-import { NavLink, Switch, Route } from 'react-router-dom'
+import { Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { ErrorBoundary } from './err'
 
-import Blueprints from '../Blueprints'
-import Security from '../Security'
 import Account from '../Account'
+import BlueprintEdit from '../BlueprintEdit'
+import BlueprintCreate from '../BlueprintCreate'
 
 import styles from './styles.less'
 
-import { getSettings } from '../../store'
-
 class Settings extends Component {
-  componentDidMount() {
-    this.props.dispatch(getSettings())
-  }
   render() {
     return (
       <ErrorBoundary>
-        {Object.keys(this.props.profile).length ? (
-          <section className={styles.settings}>
-            <ul>
-              <li>
-                <NavLink to="/settings/account">Account</NavLink>
-              </li>
-              <li>
-                <NavLink to="/settings/security">Security</NavLink>
-              </li>
-              <li>
-                <NavLink to="/settings/blueprints">Blueprints</NavLink>
-              </li>
-            </ul>
-            <div style={{ paddingLeft: '25%' }}>
-              <Switch>
-                <Route path="/settings/account" component={Account} />
-                <Route path="/settings/security" component={Security} />
-                <Route path="/settings/blueprints" component={Blueprints} />
-              </Switch>
-            </div>
-          </section>
-        ) : (
-          <div className={styles.Loading}>
-            <h1>Loading Account</h1>
-            <Loader />
-          </div>
-        )}
+        <Switch>
+          <Route path="/settings/account" component={Account} />
+          <Route
+            path="/settings/blueprints/create"
+            component={BlueprintCreate}
+          />
+          <Route path="/settings/blueprints/:id" component={BlueprintEdit} />
+        </Switch>
       </ErrorBoundary>
     )
   }

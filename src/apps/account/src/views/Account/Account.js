@@ -1,19 +1,33 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import Profile from './Profile'
-import Email from './Email'
+import Profile from './components/Profile'
+import Email from './components/Email'
+import Password from './components/Password'
+import TwoFactor from './components/TwoFactor'
+import Blueprints from './components/Blueprints'
+
+import styles from './Account.less'
 
 class Account extends Component {
   render() {
     return (
-      <React.Fragment>
-        <Profile />
-        <br />
-        <hr />
-        <br />
-        <Email />
-      </React.Fragment>
+      <section className={styles.settings}>
+        <h1 className={styles.SettingsTitle}>Manage Your Account Settings</h1>
+        <div className={styles.setting}>
+          <div className={styles.SettingCards}>
+            <Profile />
+            <Email />
+            <Password />
+            <TwoFactor />
+          </div>
+        </div>
+
+        <div className={styles.setting}>
+          {/* <h1>Your Blueprint Settings</h1> */}
+          <Blueprints />
+        </div>
+      </section>
     )
   }
 }

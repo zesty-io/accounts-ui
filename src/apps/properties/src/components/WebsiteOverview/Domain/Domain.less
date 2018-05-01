@@ -1,0 +1,50 @@
+.Domain {
+  padding: .5rem;
+  display: grid;
+  height:50px;
+  width: 100%;
+  grid-auto-flow: row;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  grid-template-areas: 'name input radioSelect';
+  justify-items: end;
+  font-size: 1.3rem;
+  i {
+    padding-left: .8rem;
+  }
+}
+
+.nameInput {
+  display: flex;
+  flex-direction: row;
+  grid-area: input;
+  // height: 30px;
+  justify-self: start;
+  align-self: center;
+  align-items: center;
+  input {
+    // height: 30px;
+  }
+}
+
+.siteName {
+  grid-area: name;
+  justify-self: start;
+  align-self: baseline;
+  i {
+    font-size: 1.2rem;
+  }
+}
+
+.radioSelect {
+  grid-area: radioSelect;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr .05fr;
+  label {
+    padding: .1rem;
+  }
+}
+
+.invisible {
+  display: none;
+}

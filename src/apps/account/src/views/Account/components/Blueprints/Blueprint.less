@@ -1,0 +1,79 @@
+@import '../../../../../../../shell/styles/colors.less';
+
+.blueprints {
+  background: #fcfcfe;
+  padding: 1rem;
+
+  display: flex;
+}
+.message {
+  max-width: 30rem;
+  p {
+    margin: 1rem 0 2rem 0;
+  }
+}
+
+.BlueprintView {
+  flex: 1;
+  // padding: 2rem;
+  header {
+    display: flex;
+    flex-direction: row;
+    h1 {
+      font-size: 1.4rem;
+      flex: 1;
+      margin-bottom: 5px;
+    }
+  }
+  .description {
+    border-bottom: 1px solid @zesty-light-blue;
+    max-width: 50rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.Blueprints {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+  margin-top: 2rem;
+}
+
+.Blueprint {
+  background: @zesty-background-blue;
+
+  header {
+    background: @zesty-white;
+    .name {
+      font-size: 1.1em;
+      margin-left: 1rem;
+    }
+  }
+  main {
+    padding: 1rem;
+    padding-bottom: 0;
+
+    img {
+      width: 100%;
+      padding: 0 0 1rem;
+      // max-width: 30%;
+      // padding: 0 1rem 1rem 0;
+      // float: left;
+    }
+  }
+  footer {
+    clear: both;
+    padding: 1rem;
+  }
+}
+
+.Loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100vw;
+}
