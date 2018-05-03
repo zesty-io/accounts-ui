@@ -35,8 +35,13 @@ class WebsiteCard extends PureComponent {
             href={`${config.PREVIEW_URL_PROTOCOL}${
               this.props.site.randomHashID
             }${config.PREVIEW_URL}`}
-          >
+          > {
+            this.props.site.screenshotUrl ?
+            <img src={this.props.site.screenshotUrl} />
+            : 
             <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
+          }
+            
           </Url>
         </main>
         <footer>
