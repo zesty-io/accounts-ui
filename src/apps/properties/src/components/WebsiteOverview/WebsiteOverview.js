@@ -124,7 +124,7 @@ class WebsiteOverview extends Component {
                         this.setState({ name: evt.target.value })
                       }}
                     />
-                    <i onClick={this.handleNameUpdate} className='fa fa-save' />
+                    <i onClick={this.handleNameUpdate} className="fa fa-save" />
                   </React.Fragment>
                 ) : (
                   this.props.name
@@ -137,7 +137,9 @@ class WebsiteOverview extends Component {
                   onClick={this.editName}
                 />
               </div>
-              <Domain siteZUID={this.props.ZUID} site={this.props} />
+              {this.props.staff ? (
+                <Domain siteZUID={this.props.ZUID} site={this.props} />
+              ) : null}
             </header>
             <main>
               {fakeUserPrefs.map((Item, i) => {
@@ -174,7 +176,8 @@ class WebsiteOverview extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     ...state.sites[ownProps.match.params.hash],
-    userZUID: state.user.ZUID
+    userZUID: state.user.ZUID,
+    staff: state.user.staff
   }
 }
 export default withRouter(connect(mapStateToProps)(WebsiteOverview))
