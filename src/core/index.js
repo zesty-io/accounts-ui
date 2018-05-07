@@ -3,6 +3,7 @@ import ButtonGroup from './ButtonGroup'
 import Url from './Url'
 import AppLink from './AppLink'
 import Loader from './Loader'
+import WithLoader from './WithLoader'
 import Search from './Search'
 import Select from './Select'
 import { Option } from './Select'
@@ -18,6 +19,7 @@ window.ButtonGroup = ButtonGroup
 window.Url = Url
 window.AppLink = AppLink
 window.Loader = Loader
+window.WithLoader = WithLoader
 window.Search = Search
 window.Select = Select
 window.Option = Option
