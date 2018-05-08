@@ -1,17 +1,17 @@
-import { Component } from "React";
-import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import { Component } from 'React'
+import { connect } from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
 
-import styles from "./PropertyBlueprint.less";
+import styles from './PropertyBlueprint.less'
 
-import qs from "qs";
-import config from "../../../../../shell/config";
-import { updateSite, fetchSite } from "../../store/sites";
-import { fetchBlueprints } from "../../store/blueprints";
+import qs from 'qs'
+import config from '../../../../../shell/config'
+import { updateSite, fetchSite } from '../../store/sites'
+import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchBlueprints());
+    this.props.dispatch(fetchBlueprints())
   }
   handleSelect = id => {
     this.props
@@ -23,20 +23,20 @@ class PropertyBlueprint extends Component {
               `${config.MANAGER_URL_PROTOCOL}${
                 qs.parse(window.location.search.substr(1)).randomHashID
               }${config.MANAGER_URL}`,
-              "_blank"
+              '_blank'
             )
-            .focus();
+            .focus()
         } else {
           // re-fetch sites before the redirect
           this.props.dispatch(fetchSite(data.data.ZUID)).then(date => {
-            return this.props.history.push(`/properties/${data.data.ZUID}`);
-          });
+            return this.props.history.push(`/properties/${data.data.ZUID}`)
+          })
         }
-      });
-  };
+      })
+  }
   render() {
     return (
-      <div>
+      <React.Fragment>
         {Object.keys(this.props.blueprints).length ? (
           <section className={styles.BlueprintView}>
             <header>
@@ -52,22 +52,22 @@ class PropertyBlueprint extends Component {
               You can find a selection of common community design frameworks
               configured for Zesty.io.
             </p>
-            <main className={styles.Blueprints}>
+            <span className={styles.Blueprints}>
               {Object.keys(this.props.blueprints)
-                .filter(i => {
-                  if (!this.props.blueprints[i].trashed) {
-                    return i;
-                  }
-                })
+                .filter(i => !this.props.blueprints[i].trashed)
                 .map(i => {
-                  let blueprint = this.props.blueprints[i];
+                  let blueprint = this.props.blueprints[i]
                   return (
                     <article className={styles.Blueprint} key={i}>
                       <header>
                         <h1 className={styles.name}>{blueprint.name}</h1>
                       </header>
                       <main>
-                        <img src={blueprint.coverImage} alt="bp img" />
+                        {blueprint.coverImage === '' ? (
+                          <div className={styles.noimage} aria-hidden="true" />
+                        ) : (
+                          <img src={blueprint.coverImage} alt="bp img broked" />
+                        )}
                         <p>{blueprint.description}</p>
                       </main>
                       <footer>
@@ -77,9 +77,9 @@ class PropertyBlueprint extends Component {
                         </Button>
                       </footer>
                     </article>
-                  );
+                  )
                 })}
-            </main>
+            </span>
           </section>
         ) : (
           <div className={styles.Loading}>
@@ -87,8 +87,8 @@ class PropertyBlueprint extends Component {
             <Loader />
           </div>
         )}
-      </div>
-    );
+      </React.Fragment>
+    )
   }
 }
 
@@ -97,7 +97,7 @@ const mapStateToProps = (state, ownProps) => {
     siteZUID: ownProps.match.params.zuid,
     blueprints: state.blueprints,
     user: state.user
-  };
-};
+  }
+}
 
-export default withRouter(connect(mapStateToProps)(PropertyBlueprint));
+export default withRouter(connect(mapStateToProps)(PropertyBlueprint))

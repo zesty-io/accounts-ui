@@ -32,7 +32,7 @@ class Roles extends Component {
       expiry: '',
       selectedRole: {
         value: 'Select Role',
-        html: '<option value="none">Select Role</option>'
+        text: 'Select Role'
       }
     }
   }
@@ -41,7 +41,7 @@ class Roles extends Component {
       systemRoleZUID: evt.currentTarget.dataset.value,
       selectedRole: {
         value: evt.currentTarget.dataset.value,
-        html: evt.target.innerHTML
+        text: evt.target.innerHTML
       }
     })
   }

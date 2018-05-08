@@ -57,7 +57,11 @@ class Blueprints extends Component {
                         <h1 className={styles.name}>{blueprint.name}</h1>
                       </header>
                       <main>
-                        <img src={blueprint.coverImage} alt="bp img" />
+                      {blueprint.coverImage === '' ? (
+                          <div className={styles.noimage} aria-hidden="true" />
+                        ) : (
+                          <img src={blueprint.coverImage} alt="bp img broked" />
+                        )}
                         <p>{blueprint.shortDescription}</p>
                       </main>
                       <footer>

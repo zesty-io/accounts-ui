@@ -21,7 +21,7 @@ class UserAccess extends Component {
       inviteRole: '',
       selectedRole: {
         value: 'Select Role',
-        html: '<option value="none">Select Role</option>'
+        text: 'Select Role'
       }
     }
   }
@@ -118,7 +118,7 @@ class UserAccess extends Component {
         inviteRole: evt.currentTarget.dataset.value,
         selectedRole: {
           value: evt.currentTarget.dataset.value,
-          html: evt.target.innerHTML
+          text: evt.target.innerHTML
         }
       })
     } else {
@@ -141,7 +141,7 @@ class UserAccess extends Component {
           {this.props.sitesRoles[this.props.siteZUID] instanceof Object ? (
             <Select
               onSelect={this.handleChange}
-              selection={this.state.selectedRole}
+              selection={this.state.selectedRole || 'Select Role'}
               options={Object.keys(
                 this.props.sitesRoles[this.props.siteZUID]
               ).map(role => {

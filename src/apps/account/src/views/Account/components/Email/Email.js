@@ -72,7 +72,7 @@ class Email extends Component {
           </p>
           {this.props.user.verifiedEmails.map((email, i) => {
             return (
-              <article className={styles.Email} key={i}>
+              <span className={styles.Email} key={i}>
                 <i
                   className={cx(styles.verified, 'fa fa-check-square-o')}
                   aria-hidden="true"
@@ -82,12 +82,12 @@ class Email extends Component {
                 {this.props.user.email === email ? (
                   <strong className={styles.primary}>(Primary)</strong>
                 ) : null}
-              </article>
+              </span>
             )
           })}
           {this.props.user.unverifiedEmails.map((email, i) => {
             return (
-              <article className={styles.Email} key={i}>
+              <span className={styles.Email} key={i}>
                 <i
                   className="fa fa-calendar-check-o"
                   aria-hidden="true"
@@ -97,7 +97,7 @@ class Email extends Component {
                 {this.props.user.email === email ? (
                   <strong className={styles.primary}>(Primary)</strong>
                 ) : null}
-              </article>
+              </span>
             )
           })}
           <Input
