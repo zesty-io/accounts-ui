@@ -1,20 +1,24 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
-import styles from './style.less'
+import styles from './UserAccess.less'
 
 import { sendInvite, cancelInvite, removeUser } from '../../../store/sites'
 import { notify } from '../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../shell/store/confirm'
 import {
-  fetchSiteUsersPending,
-  fetchSiteUser,
-  removeSiteUser
+  fetchSiteUsers,
+  fetchSiteUsersPending
+  // removeSiteUser
 } from '../../../store/sitesUsers'
+import { fetchSiteRoles } from '../../../store/sitesRoles'
+
+import UserAccessRow from './UserAccessRow'
 
 class UserAccess extends Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
       submitted: false,
       inviteeEmail: '',
@@ -25,62 +29,60 @@ class UserAccess extends Component {
       }
     }
   }
-  removeUser = (userZUID, roleZUID) => {
-    this.props.dispatch(
-      zConfirm({
-        prompt: 'Are you sure you want to remove this user?',
-        callback: result => {
-          if (result) {
-            // removes user if confirmed
-            if (result) {
-              this.props
-                .dispatch(removeUser(userZUID, roleZUID))
-                .then(data => {
-                  this.props.dispatch(
-                    notify({
-                      message: 'User Removed',
-                      type: 'success'
-                    })
-                  )
-                  this.props.dispatch(
-                    removeSiteUser(userZUID, this.props.siteZUID)
-                  )
-                })
-                .catch(err => {
-                  this.props.dispatch(
-                    notify({
-                      message: 'Error Removing User',
-                      type: 'error'
-                    })
-                  )
-                })
-            }
-          }
-        }
-      })
-    )
+  componentDidMount() {
+    this.props.dispatch(fetchSiteUsers(this.props.site.ZUID))
+    this.props.dispatch(fetchSiteUsersPending(this.props.site.ZUID))
+    this.props.dispatch(fetchSiteRoles(this.props.site.ZUID))
   }
-  cancelInvite = inviteZUID => {
-    this.props.dispatch(
-      zConfirm({
-        prompt: 'Are you sure you want to cancel this invite?',
-        callback: result => {
-          if (result) {
-            // removes invite if confirmed
-            this.props.dispatch(cancelInvite(inviteZUID)).then(data => {
-              this.props.dispatch(
-                removeSiteUser(data.data.ZUID, this.props.site.ZUID)
-              )
-            })
-            this.props.dispatch(
-              notify({
-                message: 'User Invite Cancelled',
-                type: 'success'
-              })
-            )
-          }
-        }
-      })
+  render() {
+    return (
+      <WithLoader condition={Object.keys(this.props.roles).length}>
+        <div className={styles.userAccess}>
+          <div className={styles.invite}>
+            <Input
+              className={styles.email}
+              type="email"
+              placeholder="Email of user to invite"
+              name="inviteeEmail"
+              onChange={this.handleChange}
+              required
+              value={this.state.inviteeEmail}
+            />
+            <Select
+              onSelect={this.handleChange}
+              selection={this.state.selectedRole}
+              options={Object.keys(this.props.roles).map(role => {
+                return {
+                  value: role.ZUID,
+                  html: `<option name="inviteRole" value="${role.ZUID}">${
+                    role.name
+                  }</option>`
+                }
+              })}
+            />
+            <Button onClick={this.handleInvite} disabled={this.state.submitted}>
+              Send Invite
+            </Button>
+          </div>
+          <div className={styles.userTable}>
+            <header>
+              <h3>User Name</h3>
+              <h3>Role</h3>
+              <h3>Email</h3>
+            </header>
+            <main>
+              {Object.keys(this.props.users).map(userZUID => {
+                return (
+                  <UserAccessRow
+                    key={userZUID}
+                    {...this.props.users[userZUID]}
+                  />
+                )
+              })}
+            </main>
+          </div>
+        </div>
+      </WithLoader>
     )
   }
   handleInvite = evt => {
@@ -125,117 +127,14 @@ class UserAccess extends Component {
       this.setState({ [evt.target.name]: evt.target.value })
     }
   }
-  render() {
-    return this.props.sitesRoles ? (
-      <div className={styles.userAccess}>
-        <div className={styles.invite}>
-          <Input
-            className={styles.email}
-            type="email"
-            placeholder="Email of user to invite"
-            name="inviteeEmail"
-            onChange={this.handleChange}
-            required
-            value={this.state.inviteeEmail}
-          />
-          {this.props.sitesRoles[this.props.siteZUID] instanceof Object ? (
-            <Select
-              onSelect={this.handleChange}
-              selection={this.state.selectedRole}
-              options={Object.keys(
-                this.props.sitesRoles[this.props.siteZUID]
-              ).map(role => {
-                return {
-                  value: role,
-                  html: `<option name="inviteRole" value="${role}">${
-                    this.props.sitesRoles[this.props.siteZUID][role].name
-                  }</option>`
-                }
-              })}
-            />
-          ) : null}
-          <Button onClick={this.handleInvite} disabled={this.state.submitted}>
-            Send Invite
-          </Button>
-        </div>
-        <div className={styles.userTable}>
-          <header>
-            <h3>User Name</h3>
-            <h3>Role</h3>
-            <h3>Email</h3>
-          </header>
-          <main>
-            {this.props.sitesUsers[this.props.siteZUID] instanceof Object ? (
-              Object.keys(this.props.sitesUsers[this.props.siteZUID]).map(
-                (user) => {
-                  return (
-                    <article key={user}>
-                      <span>
-                        {
-                          this.props.sitesUsers[this.props.siteZUID][user]
-                            .firstName
-                        }{' '}
-                        {
-                          this.props.sitesUsers[this.props.siteZUID][user]
-                            .lastName
-                        }
-                        {!this.props.sitesUsers[this.props.siteZUID][user]
-                          .lastName &&
-                          !this.props.sitesUsers[this.props.siteZUID][user]
-                            .firstName && <em>Invited User</em>}
-                      </span>
-                      <span>
-                        {this.props.sitesUsers[this.props.siteZUID][user]
-                          .pending ? (
-                          <Button onClick={() => this.cancelInvite(user)}>
-                            Cancel Invite
-                          </Button>
-                        ) : (
-                          this.props.sitesUsers[this.props.siteZUID][user].role
-                            .name
-                        )}
-                      </span>
-                      <span>
-                        {this.props.sitesUsers[this.props.siteZUID][user].email}{' '}
-                      </span>
-                      <span>
-                        {!this.props.sitesUsers[this.props.siteZUID][user]
-                          .pending ? (
-                          <Button
-                            className={styles.pullButton}
-                            onClick={() =>
-                              this.removeUser(
-                                user,
-                                this.props.sitesUsers[this.props.siteZUID][user]
-                                  .role.ZUID
-                              )
-                            }>
-                            Remove User
-                          </Button>
-                        ) : null}
-                      </span>
-                    </article>
-                  )
-                }
-              )
-            ) : (
-              <Loader />
-            )}
-          </main>
-        </div>
-      </div>
-    ) : (
-      <Loader />
-    )
-  }
 }
 
-const mapStateToProps = state => {
-  return {
-    sitesRoles: state.sitesRoles,
-    sitesUsers: state.sitesUsers,
-    user: state.user
-  }
-}
-
-export default connect(state => state)(UserAccess)
+export default withRouter(
+  connect((state, ownProps) => {
+    return {
+      users: state.sitesUsers[ownProps.match.params.hash] || {},
+      roles: state.sitesRoles[ownProps.match.params.hash] || {},
+      site: state.sites[ownProps.match.params.hash] || {}
+    }
+  })(UserAccess)
+)

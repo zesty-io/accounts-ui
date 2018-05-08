@@ -7,6 +7,7 @@ export function sitesRoles(state = {}, action) {
       return state
     case 'FETCH_ROLES_SUCCESS':
       return { ...state, [action.siteZuid]: action.normalizedRoles }
+
     case 'FETCH_ROLES_ERROR':
       return state
     case 'ADDING_ROLE_FAILURE':
@@ -43,7 +44,7 @@ export function sitesRoles(state = {}, action) {
   }
 }
 
-export const fetchSiteRoles = (userZuid, siteZuid) => {
+export const fetchSiteRoles = siteZuid => {
   return dispatch => {
     dispatch({
       type: 'FETCHING_ROLES'
@@ -76,9 +77,10 @@ export const getRole = (roleZUID, siteZUID) => {
     return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`)
       .then(data => {
         let normalizedGranularRoles = {}
-        data.data.granularRoles && data.data.granularRoles.map(role => {
-          normalizedGranularRoles[role.resourceZUID] = { ...role }
-        })
+        data.data.granularRoles &&
+          data.data.granularRoles.map(role => {
+            normalizedGranularRoles[role.resourceZUID] = { ...role }
+          })
         let role = {
           [data.data.ZUID]: {
             ...data.data,
@@ -149,7 +151,7 @@ export const updateGranularRole = (resourceZUID, role, roleZUID) => {
     return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
       method: 'PUT',
       json: true,
-      body: [{resourceZUID, ...role}]
+      body: [{ resourceZUID, ...role }]
     })
       .then(data => {
         dispatch({ type: 'UPDATING_ROLE_SUCCESS' })
@@ -169,7 +171,7 @@ export const createGranularRole = (resourceZUID, granularRole, roleZUID) => {
     return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
       method: 'POST',
       json: true,
-      body: {resourceZUID, ...granularRole}
+      body: { resourceZUID, ...granularRole }
     })
       .then(data => {
         dispatch({ type: 'CREATING_ROLE_SUCCESS' })
