@@ -147,9 +147,7 @@ class UserAccess extends Component {
               ).map(role => {
                 return {
                   value: role,
-                  html: `<option name="inviteRole" value="${role}">${
-                    this.props.sitesRoles[this.props.siteZUID][role].name
-                  }</option>`
+                  text: this.props.sitesRoles[this.props.siteZUID][role].name
                 }
               })}
             />

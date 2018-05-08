@@ -28,16 +28,16 @@ class CompanyAccess extends Component {
             name="companyAccess"
             selection={{
               value: "Design Corp",
-              html: '<option value="Design Corp">Design Corp</option>'
+              text: 'Design Corp'
             }}
             options={[
               {
                 value: "Design Corp",
-                html: '<option value="Design Corp">Design Corp</option>'
+                text: 'Design Corp'
               },
               {
                 value: "SEO MASTERS",
-                html: '<option value="SEO MASTERS">SEO MASTERS</option>'
+                text: 'SEO MASTERS'
               }
             ]}
           />
