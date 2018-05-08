@@ -303,7 +303,10 @@ export const postNewSite = name => {
 export const removeUser = (userZUID, roleZUID) => {
   return dispatch => {
     dispatch({ type: 'REMOVE_USER' })
-    return request(`${config.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`, {method: 'DELETE'})
+    return request(
+      `${config.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
+      { method: 'DELETE' }
+    )
       .then(data => {
         dispatch({ type: 'REMOVE_USER_SUCCESS', data })
         return data

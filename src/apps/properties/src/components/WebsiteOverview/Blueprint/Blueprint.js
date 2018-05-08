@@ -1,33 +1,31 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
-import styles from "./Blueprint.less";
+import { fetchBlueprint } from '../../../store/blueprints'
+
+import styles from './Blueprint.less'
 class Blueprint extends Component {
-  handleSelect = evt => {
-    evt.preventDefault();
-    this.props.history.push(`${this.props.site.ZUID}/blueprint`);
-  };
+  constructor(props) {
+    super(props)
+    console.log('Blueprint: ', props)
+  }
+  componentDidMount() {
+    this.props.dispatch(fetchBlueprint(this.props.site.blueprintID))
+  }
   render() {
-    return this.props.blueprints[this.props.site.blueprintID] instanceof
-      Object ? (
-      <React.Fragment>
+    return (
+      <WithLoader
+        condition={Object.keys(this.props.blueprint).length}
+        message="Loading Blueprint"
+      >
         <article className={styles.Blueprint}>
           <header>
-            <h1 className={styles.name}>
-              {this.props.blueprints[this.props.site.blueprintID].name}
-            </h1>
+            <h1 className={styles.name}>{this.props.blueprint.name}</h1>
           </header>
           <main>
-            <img
-              src={
-                this.props.blueprints[this.props.site.blueprintID].coverImage
-              }
-              alt=""
-            />
-            <p>
-              {this.props.blueprints[this.props.site.blueprintID].description}
-            </p>
+            <img src={this.props.blueprint.coverImage} alt="" />
+            <p>{this.props.blueprint.description}</p>
           </main>
           <Button onClick={this.handleSelect}>
             <i className="fa fa-columns" aria-hidden="true" />
@@ -35,14 +33,21 @@ class Blueprint extends Component {
           </Button>
           <footer />
         </article>
-      </React.Fragment>
-    ) : (
-      <section className={styles.Loading}>
-        <h3>Loading Blueprint</h3>
-        <Loader />
-      </section>
-    );
+      </WithLoader>
+    )
+  }
+  handleSelect = evt => {
+    evt.preventDefault()
+    this.props.history.push(`${this.props.site.ZUID}/blueprint`)
   }
 }
 
-export default withRouter(connect(state => state)(Blueprint));
+export default withRouter(
+  connect((state, ownProps) => {
+    const site = state.sites[ownProps.match.params.hash]
+    return {
+      site: site,
+      blueprint: state.blueprints[site.blueprintID] || {}
+    }
+  })(Blueprint)
+)

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteOverview.less'
 
+import PropertyName from './PropertyName'
 import UserAccess from './UserAccess'
 import CompanyAccess from './CompanyAccess'
 import Actions from './Actions'
@@ -14,167 +15,107 @@ import Blueprint from './Blueprint'
 import Roles from './Roles'
 
 import { fetchSite } from '../../store/sites'
-import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
-import { fetchSiteCompanies } from '../../store/sitesCompanies'
-import { fetchBlueprint } from '../../store/blueprints'
-import { fetchSiteRoles } from '../../store/sitesRoles'
-import { fetchSiteCollections } from '../../store/sitesCollections'
-import { updateSite } from '../../store/sites'
+// import { fetchSiteRoles } from '../../store/sitesRoles'
+// import { fetchSiteCollections } from '../../store/sitesCollections'
+// import { updateSite } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 
 class WebsiteOverview extends Component {
   constructor(props) {
-    super()
-    this.state = {
-      editName: false,
-      name: '',
-      editDomain: false
-    }
+    super(props)
+    console.log('WebsiteOverview: ', props)
+    // this.state = {
+    //   editName: false,
+    //   name: '',
+    //   editDomain: false
+    // }
   }
-
   componentDidMount() {
+    // Fetch Users
+    // pending users
+    // Fetch Companies
+    // Fetch Roles
+    // Fetch Collections
+    // Fetch Blueprints
     // fetch users first, then fetch pending users
-    this.props
-      .dispatch(fetchSiteUsers(this.props.userZUID, this.props.ZUID))
-      .then(users => {
-        this.props.dispatch(
-          fetchSiteUsersPending(this.props.userZUID, this.props.ZUID)
-        )
-      })
-    this.props.dispatch(
-      fetchSiteCompanies(this.props.userZUID, this.props.ZUID)
-    )
-    this.props.dispatch(fetchSiteRoles(this.props.userZUID, this.props.ZUID))
-    this.props.dispatch(
-      fetchSiteCollections(this.props.userZUID, this.props.ZUID)
-    )
-    this.props.dispatch(fetchBlueprint(this.props.blueprintID))
-    this.setState({ name: this.props.name })
-  }
-
-  editName = () => {
-    this.setState({ editName: !this.state.editName })
-  }
-
-  handleNameUpdate = () => {
-    this.props
-      .dispatch(
-        updateSite(this.props.ZUID, {
-          name: this.state.name
-        })
-      )
-      .then(data => {
-        this.props.dispatch(fetchSite(this.props.ZUID))
-        this.props.dispatch(
-          notify({
-            message: 'Successfully Updated',
-            type: 'success'
-          })
-        )
-        return this.setState({ editName: !this.state.editName })
-      })
-      .catch(err => {
-        this.props.dispatch(
-          notify({
-            message: 'Error Updating',
-            type: 'error'
-          })
-        )
-        return this.setState({ editName: !this.state.editName })
-      })
+    // this.props
+    //   .dispatch(fetchSiteUsers(this.props.userZUID, this.props.ZUID))
+    //   .then(users => {
+    //     this.props.dispatch(
+    //       fetchSiteUsersPending(this.props.userZUID, this.props.ZUID)
+    //     )
+    //   })
+    // this.props.dispatch(
+    //   fetchSiteCompanies(this.props.userZUID, this.props.ZUID)
+    // )
+    // this.props.dispatch(fetchSiteRoles(this.props.userZUID, this.props.ZUID))
+    // this.props.dispatch(
+    //   fetchSiteCollections(this.props.userZUID, this.props.ZUID)
+    // )
+    // this.props.dispatch(fetchBlueprint(this.props.blueprintID))
+    // this.setState({
+    //   name: this.props.name
+    // })
   }
   render() {
-    // when this lives on the user object, it will be useful
-    const fakeUserPrefs = [
-      {
-        title: 'User Access',
-        className: 'fa fa-users',
-        Component: UserAccess
-      },
-      {
-        title: 'Company Access',
-        className: 'fa fa-building',
-        Component: CompanyAccess
-      },
-      {
-        title: 'Roles',
-        className: 'fa fa-lock',
-        Component: Roles
-      },
-      {
-        title: 'Blueprint',
-        className: 'fa fa-file-code-o',
-        Component: Blueprint
-      }
-    ]
     return (
       <section className={styles.WebsiteOverviewWrap}>
-        {this.props.name ? (
-          <article className={styles.WebsiteOverview}>
-            <header className={styles.WebsiteOverviewHeader}>
-              <Link className={styles.close} to="/properties/">
-                <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
-              </Link>
-              <div className={styles.propertyName}>
-                {this.state.editName ? (
-                  <React.Fragment>
-                    <Input
-                      value={this.state.name}
-                      onChange={evt => {
-                        this.setState({ name: evt.target.value })
-                      }}
-                    />
-                    <i onClick={this.handleNameUpdate} className='fa fa-save' />
-                  </React.Fragment>
-                ) : (
-                  this.props.name
-                )}
-                <i
-                  className={
-                    this.state.editName ? 'fa fa-times-circle' : 'fa fa-pencil'
-                  }
-                  aria-hidden="true"
-                  onClick={this.editName}
-                />
-              </div>
-              <Domain siteZUID={this.props.ZUID} site={this.props} />
-            </header>
-            <main>
-              {fakeUserPrefs.map((Item, i) => {
-                const DynComponent = Item.Component
-                const site = this.props.site
-                return (
-                  <article className={styles.card} key={i}>
-                    <h2>
-                      <i className={Item.className} aria-hidden="true" />&nbsp;
-                      {Item.title}
-                    </h2>
-                    {
-                      <DynComponent
-                        siteZUID={this.props.ZUID}
-                        site={this.props}
-                      />
-                    }
-                  </article>
-                )
-              })}
-            </main>
-          </article>
-        ) : (
-          <section className={styles.Loading}>
-            <h3>Loading Site</h3>
-            <Loader />
-          </section>
-        )}
+        <article className={styles.WebsiteOverview}>
+          <header className={styles.WebsiteOverviewHeader}>
+            <Link className={styles.close} to="/properties/">
+              <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
+            </Link>
+            <PropertyName name={this.props.name} />
+            <Domain siteZUID={this.props.ZUID} site={this.props} />
+          </header>
+          <main>
+            <article className={styles.card}>
+              <h2>
+                <i className="fa fa-users" aria-hidden="true" />
+                &nbsp;User Access
+              </h2>
+              <UserAccess />
+            </article>
+
+            <article className={styles.card}>
+              <h2>
+                <i className="fa fa-building" aria-hidden="true" />
+                &nbsp;Company Access
+              </h2>
+              <CompanyAccess />
+            </article>
+
+            <article className={styles.card}>
+              <h2>
+                <i className="fa fa-lock" aria-hidden="true" />
+                &nbsp;Site Roles
+              </h2>
+              <Roles />
+            </article>
+
+            <article className={styles.card}>
+              <h2>
+                <i className="fa fa-file-code-o" aria-hidden="true" />
+                &nbsp;Blueprint
+              </h2>
+              <Blueprint />
+            </article>
+          </main>
+        </article>
       </section>
     )
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
+  // return {
+  //   users: state.sitesUsers[ownProps.match.params.hash],
+  //   roles: state.sitesRoles[ownProps.match.params.hash],
+  //   site: state.sites[ownProps.match.params.hash]
+  // }
+
   return {
-    ...state.sites[ownProps.match.params.hash],
-    userZUID: state.user.ZUID
+    ...state.sites[ownProps.match.params.hash]
   }
 }
 export default withRouter(connect(mapStateToProps)(WebsiteOverview))
