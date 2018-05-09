@@ -11,7 +11,7 @@ class Support extends Component {
 
         <section>
           <article>
-            <a href="#!/support/contact/">
+            <a href="#!/support/contact/"> //TODO: where should this link go?
               <i className="fa fa-envelope-o fa-3x" />
               <p> Contact Support </p>
             </a>
