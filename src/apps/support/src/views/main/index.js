@@ -3,7 +3,62 @@ import { connect } from 'react-redux'
 
 import styles from './Support.less'
 
+const BugReport = userData => {
+  return (
+    <div className={styles.bugReport}>
+      <form
+        onSubmit={evt => {
+          evt.preventDefault()
+          const form = { ...userData.props, currentTime: Date.now() }
+          Object.keys(evt.target).map(key => {
+            if (evt.target[key]['name']) {
+              form[evt.target[key]['name']] = evt.target[key]['value']
+            }
+          })
+          console.log(form)
+        }}>
+        <label>Name</label>
+        <Input required type="text" name="name" />
+        <label>Describe the issue</label>
+        <textarea name="issue" wrap="soft" />
+        <label>Where in the app did the happen</label>
+        <textarea name="where" wrap="soft" />
+        <label>Additional context</label>
+        <textarea name="context" wrap="soft" />
+        <label>Contact Email</label>
+        <Input type="email" name="email" />
+        <Input type="submit" />
+      </form>
+    </div>
+  )
+}
+
 class Support extends Component {
+  state = {
+    userInfo: {}
+  }
+  componentDidMount() {
+    this.setState({
+      userInfo: {
+        lang: navigator.language,
+        platform: navigator.platform,
+        browser: navigator.userAgent,
+        connection: navigator.connection,
+        plugins: {
+          ...navigator.plugins
+        }
+      }
+    })
+  }
+  launchBugReport = () => {
+    this.props.dispatch({
+      type: 'NEW_MODAL',
+      component: BugReport,
+      props: {
+        ...this.state.userInfo
+      }
+    })
+  }
   render() {
     return (
       <div className={styles.Support}>
@@ -11,7 +66,10 @@ class Support extends Component {
 
         <section>
           <article>
-            <a href="#!/support/contact/"> //TODO: where should this link go?
+            <a href="#!/support/contact/">
+              {
+                //TODO: where should this link go?
+              }
               <i className="fa fa-envelope-o fa-3x" />
               <p> Contact Support </p>
             </a>
@@ -45,6 +103,16 @@ class Support extends Component {
             <a href="http://chat.zesty.io" target="_blank">
               <i className="fa fa-slack fa-3x" />
               <p> Developer Chat </p>
+            </a>
+          </article>
+        </section>
+        <h2>Report A Bug</h2>
+
+        <section>
+          <article>
+            <a href="#" onClick={this.launchBugReport}>
+              <i className="fa fa-bug fa-3x" />
+              <p> Bug Report </p>
             </a>
           </article>
         </section>
