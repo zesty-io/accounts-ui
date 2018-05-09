@@ -2,6 +2,8 @@
 
 .blueprints {
   background: #fcfcfe;
+  background-color: @smoke-grey;
+  
   padding: 1rem;
 
   display: flex;
@@ -26,11 +28,11 @@
   }
   a {
     margin-left: 1rem;
-    color: @zesty-grey;
+    color: @zesty-light-gray;
     text-decoration: none;
   }
   .description {
-    border-bottom: 1px solid @zesty-light-blue;
+    border-bottom: 1px solid @zesty-light-gray;
     max-width: 50rem;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
@@ -47,23 +49,23 @@
 }
 
 .Blueprint {
+  max-width: 350px;
   background: @white;
   display: grid;
-  grid-template-rows: .2fr 1fr .2fr;
+  grid-template-rows: 0.2fr 1fr 0.2fr;
   header {
-    background: @zesty-white;
+    background: lighten(@zesty-light-gray, 10%);
+    height: 4rem;
     .name {
-      font-size: 1.1em;
-      margin-left: 1rem;
+      margin-top: .5rem;
+      font-size: 0.8em;
     }
   }
   main {
-    // justify-self: flex-start;
-    // padding: 1rem;
     .noimage {
-      min-height:100px;
-      min-width:300px;
-      background-color: @zesty-grey;
+      min-height: 100px;
+      min-width: 300px;
+      background: @zesty-white;
       padding: 0 0 1rem;
     }
     img {

@@ -18,26 +18,33 @@ class Blueprints extends Component {
   render() {
     return (
       <div className={styles.blueprints}>
-        <div className={styles.message}>
-          <h2 className={styles.title}>Custom Blueprints</h2>
-          <p>
-            In this area you can manage your own custom Blueprints. Learn how to
-            create and maintain your own Blueprints using GitHub through this.
-            You may share Blueprints by passing your GitHub repo url to a
-            co-worker or friend. You may use other public Blueprints by forking
-            their repositories, and copying the Github repository url.
-          </p>
-
-          <Button
-            onClick={(evt) => {
-              evt.preventDefault()
-              this.props.history.push('/settings/blueprints/create')}}>
-            <i className="fa fa-plus" aria-hidden="true" />
-            Create Blueprint
-          </Button>
-        </div>
         <div className={styles.BlueprintView}>
           <main className={styles.Blueprints}>
+            <article className={styles.Blueprint}>
+              <header>
+                <h1 className={styles.name}>Custom Blueprints</h1>
+              </header>
+              <main>
+                <p>
+                  In this area you can manage your own custom Blueprints. Learn
+                  how to create and maintain your own Blueprints using GitHub
+                  through this. You may share Blueprints by passing your GitHub
+                  repo url to a co-worker or friend. You may use other public
+                  Blueprints by forking their repositories, and copying the
+                  Github repository url.
+                </p>
+              </main>
+              <footer>
+                <Button
+                  onClick={evt => {
+                    evt.preventDefault()
+                    this.props.history.push('/settings/blueprints/create')
+                  }}>
+                  <i className="fa fa-plus" aria-hidden="true" />
+                  Create Blueprint
+                </Button>
+              </footer>
+            </article>
             {Object.keys(this.props.blueprints).length ? (
               Object.keys(this.props.blueprints)
                 .filter(i => {
@@ -57,7 +64,7 @@ class Blueprints extends Component {
                         <h1 className={styles.name}>{blueprint.name}</h1>
                       </header>
                       <main>
-                      {blueprint.coverImage === '' ? (
+                        {blueprint.coverImage === '' ? (
                           <div className={styles.noimage} aria-hidden="true" />
                         ) : (
                           <img src={blueprint.coverImage} alt="bp img broked" />
@@ -68,7 +75,9 @@ class Blueprints extends Component {
                         <Button
                           onClick={evt => {
                             evt.preventDefault()
-                            return this.props.history.push(`/settings/blueprints/${blueprint.ID}`)
+                            return this.props.history.push(
+                              `/settings/blueprints/${blueprint.ID}`
+                            )
                           }}>
                           <i className="fa fa-pencil" aria-hidden="true" />
                           Edit
