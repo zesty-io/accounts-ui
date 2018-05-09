@@ -37,26 +37,22 @@ class Support extends Component {
   state = {
     userInfo: {}
   }
+
   componentDidMount() {
+    let navClone = {}
+    // have to use a for in loop because object spread wont work on navigator
+    for (const prop in navigator) {
+      navClone[prop] = navigator[prop]
+    }
     this.setState({
-      userInfo: {
-        lang: navigator.language,
-        platform: navigator.platform,
-        browser: navigator.userAgent,
-        connection: navigator.connection,
-        plugins: {
-          ...navigator.plugins
-        }
-      }
+      userInfo: { ...navClone }
     })
   }
   launchBugReport = () => {
     this.props.dispatch({
       type: 'NEW_MODAL',
       component: BugReport,
-      props: {
-        ...this.state.userInfo
-      }
+      props: this.state
     })
   }
   render() {
