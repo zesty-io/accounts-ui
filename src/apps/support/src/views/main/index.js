@@ -21,7 +21,7 @@ const BugReport = userData => {
         <Input required type="text" name="name" />
         <label>Describe the issue</label>
         <textarea name="issue" wrap="soft" />
-        <label>Where in the app did the happen</label>
+        <label>Where in the app did this happen</label>
         <textarea name="where" wrap="soft" />
         <label>Additional context</label>
         <textarea name="context" wrap="soft" />
@@ -40,10 +40,16 @@ class Support extends Component {
 
   componentDidMount() {
     let navClone = {}
-    // have to use a for in loop because object spread wont work on navigator
+    // have to use a for in loop because navigator is magic
     for (const prop in navigator) {
       navClone[prop] = navigator[prop]
     }
+    //remove functions from the object proto
+    Object.keys(navClone).map(key => {
+      if(typeof navClone[key] === "function") {
+        delete navClone[key]
+      }
+    })
     this.setState({
       userInfo: { ...navClone }
     })
