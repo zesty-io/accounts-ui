@@ -2,16 +2,16 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import EditRole from './EditRole'
-import { notify } from '../../../../../../shell/store/notifications'
+import { notify } from '../../../../../../../shell/store/notifications'
 import {
   fetchSiteRoles,
   createRole,
   removeRole,
   getRole
-} from '../../../store/sitesRoles'
+} from '../../../../store/sitesRoles'
 
 import styles from './Roles.less'
-import { zConfirm } from '../../../../../../shell/store/confirm'
+import { zConfirm } from '../../../../../../../shell/store/confirm'
 
 const formatDate = date => {
   if (!date) {

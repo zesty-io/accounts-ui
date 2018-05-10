@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import { fetchBlueprint } from '../../../store/blueprints'
+import { fetchBlueprint } from '../../../../store/blueprints'
 
 import styles from './Blueprint.less'
 class Blueprint extends Component {

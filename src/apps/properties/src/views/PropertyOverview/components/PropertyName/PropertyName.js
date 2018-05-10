@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import styles from './PropertyName.less'
-import { updateSite } from '../../../store/sites'
+import { updateSite } from '../../../../store/sites'
 
 export default class PropertyName extends Component {
   constructor(props) {

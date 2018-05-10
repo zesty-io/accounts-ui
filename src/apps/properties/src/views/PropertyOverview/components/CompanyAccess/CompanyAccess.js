@@ -2,8 +2,8 @@ import { Component } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
-import { zConfirm } from '../../../../../../shell/store/confirm'
-import { fetchSiteCompanies } from '../../../store/sitesCompanies'
+import { zConfirm } from '../../../../../../../shell/store/confirm'
+import { fetchSiteCompanies } from '../../../../store/sitesCompanies'
 
 import styles from './CompanyAccess.less'
 

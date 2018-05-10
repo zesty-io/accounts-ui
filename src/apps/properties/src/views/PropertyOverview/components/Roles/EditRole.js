@@ -6,8 +6,8 @@ import {
   getRole,
   updateGranularRole,
   createGranularRole
-} from '../../../store/sitesRoles'
-import { notify } from '../../../../../../shell/store/notifications'
+} from '../../../../store/sitesRoles'
+import { notify } from '../../../../../../../shell/store/notifications'
 
 class EditRole extends Component {
   constructor(props) {
