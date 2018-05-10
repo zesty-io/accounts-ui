@@ -25,7 +25,7 @@ class UserAccess extends Component {
       inviteRole: '',
       selectedRole: {
         value: 'Select Role',
-        html: '<option value="none">Select Role</option>'
+        text: 'Select Role'
       }
     }
   }
@@ -120,7 +120,7 @@ class UserAccess extends Component {
         inviteRole: evt.currentTarget.dataset.value,
         selectedRole: {
           value: evt.currentTarget.dataset.value,
-          html: evt.target.innerHTML
+          text: evt.target.innerHTML
         }
       })
     } else {

@@ -27,14 +27,16 @@
 .Blueprints {
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
-  margin-top: 2rem;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-auto-rows: minmax(10rem, auto);
+  margin: 1rem 0 0 0;
 }
 
 .Blueprint {
   background: @white;
-
+  display: grid;
+  grid-template-rows: .2fr 1fr .2fr;
   header {
     background: @zesty-white;
     .name {
@@ -43,15 +45,23 @@
     }
   }
   main {
-    padding: 1rem;
-    padding-bottom: 0;
-
+    // justify-self: flex-start;
+    // padding: 1rem;
+    .noimage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 1.5em;
+      min-width: 300px;
+      background: @zesty-white;
+      margin: 0 0 1rem;
+      font-size: 5rem;
+    }
     img {
-      width: 100%;
+      min-width: 100%;
+      font-size: 5rem;
+      height: 1.5em;  
       padding: 0 0 1rem;
-      // max-width: 30%;
-      // padding: 0 1rem 1rem 0;
-      // float: left;
     }
   }
   footer {

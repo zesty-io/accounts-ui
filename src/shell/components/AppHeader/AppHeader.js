@@ -52,6 +52,16 @@ export default class AppHeader extends Component {
             </li>
 
             <li>
+              <NavLink to="/teams">
+                <i
+                  className={cx(styles.icon, 'fa fa-users')}
+                  aria-hidden="true"
+                />{' '}
+                Teams
+              </NavLink>
+            </li>
+
+            <li>
               <NavLink to="/support">
                 <i
                   className={cx(styles.icon, 'fa fa-question-circle')}

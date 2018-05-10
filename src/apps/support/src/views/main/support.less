@@ -1,0 +1,63 @@
+@import '../../../../../shell/styles/colors.less';
+
+.Support {
+  padding: 2rem;
+  .SupportTitle {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+  }
+  section {
+    display: flex;
+    flex-direction: row;
+    article {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 1rem;
+      height: 150px;
+      width: 200px;
+      border-radius: 3px;
+      background-color: @zesty-light-gray;
+      :hover {
+        background-color: @zesty-light-blue;
+        border-radius: 3px;
+      }
+      a {
+        color: @zesty-gray;
+        text-decoration: none;
+        display: flex;
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.bugReport {
+  h2 {
+    margin: 2rem;
+    font-size: 2rem;
+  }
+  margin: 4rem;
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5rem;
+    textarea {
+      margin-left: 0.25rem;
+      width: 80%;
+    }
+    input {
+      max-width: 20rem;
+      margin: 1rem;
+    }
+    p {
+      margin: 0.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+}

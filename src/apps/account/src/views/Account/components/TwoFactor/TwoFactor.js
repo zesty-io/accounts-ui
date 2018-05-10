@@ -50,7 +50,6 @@ class TwoFactorOptions extends Component {
                 Two-factor authentication currently set up for this account.
               </p>
               <p>number used {this.props.authyPhoneNumber}</p>
-              <Button text="Disable Two-factor" onClick={this.handleDisable} />
             </div>
           ) : (
             <div>
