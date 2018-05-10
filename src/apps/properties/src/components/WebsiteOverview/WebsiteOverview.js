@@ -77,13 +77,13 @@ class WebsiteOverview extends Component {
               <UserAccess />
             </article>
 
-            <article className={styles.card}>
+            {/* <article className={styles.card}>
               <h2>
                 <i className="fa fa-building" aria-hidden="true" />
                 &nbsp;Company Access
               </h2>
               <CompanyAccess />
-            </article>
+            </article> */}
 
             <article className={styles.card}>
               <h2>
