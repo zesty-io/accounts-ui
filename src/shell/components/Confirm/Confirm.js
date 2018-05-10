@@ -11,24 +11,24 @@ const Confirm = props => {
       <section className={styles.confirmWrapper}>
         <section className={styles.Confirm}>
           <h1>{props.prompt}</h1>
-        <footer>
-          <ButtonGroup className={styles.buttons}>
-            <Button
-              onClick={() => {
-                props.callback(true)
-                props.dispatch({ type: REMOVE_CONFIRM })
-              }}
-              text="Continue"
-            />
-            <Button
-              onClick={() => {
-                props.callback(false)
-                props.dispatch({ type: REMOVE_CONFIRM })
-              }}
-              text="Cancel"
-            />
-          </ButtonGroup>
-        </footer>
+          <footer>
+            <ButtonGroup className={styles.buttons}>
+              <Button
+                onClick={() => {
+                  props.callback(true)
+                  props.dispatch({ type: REMOVE_CONFIRM })
+                }}
+                text="Yes"
+              />
+              <Button
+                onClick={() => {
+                  props.callback(false)
+                  props.dispatch({ type: REMOVE_CONFIRM })
+                }}
+                text="No"
+              />
+            </ButtonGroup>
+          </footer>
         </section>
       </section>
     )) ||

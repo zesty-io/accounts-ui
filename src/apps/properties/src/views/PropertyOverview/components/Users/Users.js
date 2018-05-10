@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 
 import styles from './Users.less'
 
-import { sendInvite, cancelInvite, removeUser } from '../../../../store/sites'
+import { sendInvite } from '../../../../store/sites'
 import { notify } from '../../../../../../../shell/store/notifications'
-import { zConfirm } from '../../../../../../../shell/store/confirm'
+import { fetchSiteUsersPending } from '../../../../store/sitesUsers'
 
 import UserRow from './UserRow'
 
@@ -23,6 +23,9 @@ export default class Users extends Component {
       }
     }
   }
+  componentWillReceiveProps(state, props) {
+    console.log('Users:componentWillReceiveProps', state, props)
+  }
   render() {
     return (
       <WithLoader condition={Object.keys(this.props.roles).length}>
@@ -33,19 +36,17 @@ export default class Users extends Component {
               type="email"
               placeholder="Email of user to invite"
               name="inviteeEmail"
-              onChange={this.handleChange}
-              required
               value={this.state.inviteeEmail}
+              onChange={this.handleEmail}
+              required
             />
             <Select
-              onSelect={this.handleChange}
+              onSelect={this.handleRole}
               selection={this.state.selectedRole}
-              options={Object.keys(this.props.roles).map(role => {
+              options={Object.keys(this.props.roles).map(ZUID => {
                 return {
-                  value: role.ZUID,
-                  html: `<option name="inviteRole" value="${role.ZUID}">${
-                    role.name
-                  }</option>`
+                  value: ZUID,
+                  html: this.props.roles[ZUID].name
                 }
               })}
             />
@@ -63,9 +64,13 @@ export default class Users extends Component {
               <h3>Email</h3>
             </header>
             <main>
-              {Object.keys(this.props.users).map(userZUID => {
+              {Object.keys(this.props.users).map(ZUID => {
                 return (
-                  <UserRow key={userZUID} {...this.props.users[userZUID]} />
+                  <UserRow
+                    key={ZUID}
+                    dispatch={this.props.dispatch}
+                    {...this.props.users[ZUID]}
+                  />
                 )
               })}
             </main>
@@ -77,20 +82,30 @@ export default class Users extends Component {
   handleInvite = evt => {
     if (this.state.inviteeEmail.includes('@')) {
       // needs mo betta validity check here
-      this.setState({ submitted: !this.state.submitted })
+      this.setState({
+        submitted: !this.state.submitted
+      })
       this.props
         .dispatch(
           sendInvite({
             inviteeEmail: this.state.inviteeEmail,
-            entityZUID: this.props.site.ZUID,
+            entityZUID: this.props.siteZUID,
             roleZUID: this.state.inviteRole
           })
         )
-        .then(data => {
-          this.props.dispatch(
-            fetchSiteUsersPending(this.props.user.ZUID, this.props.site.ZUID)
-          )
-          this.setState({ submitted: !this.state.submitted, inviteeEmail: '' })
+        .then(() => {
+          // this.setState({
+          //   submitted: false,
+          //   inviteeEmail: ''
+          // })
+          this.props
+            .dispatch(fetchSiteUsersPending(this.props.siteZUID))
+            .then(() => {
+              this.setState({
+                submitted: false,
+                inviteeEmail: ''
+              })
+            })
         })
     } else {
       this.props.dispatch(
@@ -103,17 +118,14 @@ export default class Users extends Component {
       )
     }
   }
-  handleChange = evt => {
-    if (evt.target.name === undefined) {
-      this.setState({
-        inviteRole: evt.currentTarget.dataset.value,
-        selectedRole: {
-          value: evt.currentTarget.dataset.value,
-          text: evt.target.innerHTML
-        }
-      })
-    } else {
-      this.setState({ [evt.target.name]: evt.target.value })
-    }
+  handleEmail = evt => {
+    this.setState({
+      inviteeEmail: evt.target.value
+    })
+  }
+  handleRole = evt => {
+    this.setState({
+      inviteRole: evt.target.value
+    })
   }
 }
