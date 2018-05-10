@@ -10,6 +10,7 @@ const sendBugReport = data => {
   console.log(JSON.stringify(data, null, 2))
   request(config.EMAIL_SERVICE, {
     method: 'POST',
+    json: true,
     body: {
       senderHandle: 'bugs',
       senderName: data.name,
@@ -95,7 +96,7 @@ class Support extends Component {
   render() {
     return (
       <div className={styles.Support}>
-        <h2>Support</h2>
+        <h1 className={styles.SupportTitle}>Support</h1>
 
         <section>
           <article>

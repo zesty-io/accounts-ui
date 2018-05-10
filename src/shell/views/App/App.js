@@ -42,6 +42,7 @@ class App extends Component {
                 <Route path="/properties" component={Properties} />
                 <Route path="/settings" component={Settings} />
                 <Route path="/support" component={Support} />
+                <Route path="/teams" component={Teams} />
                 <Redirect exact from="/" to="/properties" />
                 <Route component={NotFound} />
               </Switch>

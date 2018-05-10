@@ -1,0 +1,25 @@
+{
+  "name": "accounts-teams",
+  "version": "1.0.0",
+  "description": "Support for accounts web properties",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "../../../node_modules/.bin/jest",
+    "start": "export NODE_ENV=\"development\" && ../../../node_modules/.bin/webpack --watch",
+    "build": "export NODE_ENV=\"production\" && ../../../node_modules/.bin/webpack --progress -p"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+@import '../../../../../shell/styles/colors.less';
+
+.Teams {
+  padding: 2rem;
+
+  .TeamsTitle {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .Team {
+    margin: 0 0 2rem 0;
+
+    .TeamCard {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      display: grid;
+      grid-auto-flow: row;
+      grid-gap: 1.3rem;
+      @media (max-width: 1750px) {
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 1.6rem;
+      }
+      @media (max-width: 850px) {
+        grid-template-columns: 1fr;
+      }
+      article {
+        justify-self: center;
+        height: 350px;
+        width: 350px;
+        @media (max-width: 1750px) {
+          grid-template-columns: 1fr 1fr;
+          max-width: 450px;
+        }
+        @media (max-width: 850px) {
+          grid-template-columns: 1fr;
+          max-width: 450px;
+        }
+      }
+    }
+    h1 {
+      font-size: 1.4rem;
+    }
+  }
+}
