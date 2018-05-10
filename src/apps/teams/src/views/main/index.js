@@ -12,14 +12,15 @@ import { fetchTeams } from '../../store';
 
 class Teams extends Component {
   state = {
-    userInfo: this.props.user
+    user: this.props.user
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchTeams(this.state.userInfo.ZUID))
+    this.props.dispatch(fetchTeams(this.state.user.ZUID))
   }
   render() {
     return (
+      // this.props.teams
       <section className={styles.Teams}>
         <h1 className={styles.TeamsTitle}>Manage Your Teams</h1>
         <div className={styles.Team}>
@@ -33,6 +34,4 @@ class Teams extends Component {
   }
 }
 
-export default connect(state => {
-  return { user: state.user }
-})(Teams)
+export default connect(state => state)(Teams)
