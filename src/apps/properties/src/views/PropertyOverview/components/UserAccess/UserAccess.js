@@ -4,15 +4,15 @@ import { connect } from 'react-redux'
 
 import styles from './UserAccess.less'
 
-import { sendInvite, cancelInvite, removeUser } from '../../../store/sites'
-import { notify } from '../../../../../../shell/store/notifications'
-import { zConfirm } from '../../../../../../shell/store/confirm'
+import { sendInvite, cancelInvite, removeUser } from '../../../../store/sites'
+import { notify } from '../../../../../../../shell/store/notifications'
+import { zConfirm } from '../../../../../../../shell/store/confirm'
 import {
   fetchSiteUsers,
   fetchSiteUsersPending
   // removeSiteUser
-} from '../../../store/sitesUsers'
-import { fetchSiteRoles } from '../../../store/sitesRoles'
+} from '../../../../store/sitesUsers'
+import { fetchSiteRoles } from '../../../../store/sitesRoles'
 
 import UserAccessRow from './UserAccessRow'
 

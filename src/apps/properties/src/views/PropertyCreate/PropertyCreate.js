@@ -10,7 +10,10 @@ import styles from './PropertyCreate.less'
 
 class PropertyCreate extends Component {
   constructor(props) {
-    super()
+    super(props)
+
+    console.log('props: ', props)
+
     this.state = {
       submitted: false,
       name: ''
@@ -20,7 +23,14 @@ class PropertyCreate extends Component {
     return (
       <section className={styles.PropertyCreate}>
         <div className={styles.nameNew}>
-          <h1>Name your new web property</h1>
+          {!this.props.lastLogin ? (
+            <React.Fragment>
+              <h1>Welcome to Zesty.io</h1>
+              <h2>Let's make your first web property</h2>
+            </React.Fragment>
+          ) : (
+            <h1>Name your new web property</h1>
+          )}
           <Input
             type="text"
             name="propertyName"
@@ -47,13 +57,15 @@ class PropertyCreate extends Component {
     this.setState({ name: evt.target.value })
   }
   handleClick = () => {
-    if (this.state.name === ''){
-      return this.props.dispatch(notify({
-        message: 'you must enter a name for you property',
-        type: 'error'
-      }))
+    if (this.state.name === '') {
+      return this.props.dispatch(
+        notify({
+          message: 'you must enter a name for you property',
+          type: 'error'
+        })
+      )
     }
-      this.setState({ submitted: !this.state.submitted })
+    this.setState({ submitted: !this.state.submitted })
     this.props
       .dispatch(postNewSite(this.state.name))
       .then(data => {
@@ -73,7 +85,10 @@ class PropertyCreate extends Component {
 }
 
 const mapStateToProps = state => {
-  return { ...state.createSite }
+  return {
+    ...state.createSite,
+    lastLogin: state.user.lastLogin
+  }
 }
 
 export default withRouter(connect(mapStateToProps)(PropertyCreate))

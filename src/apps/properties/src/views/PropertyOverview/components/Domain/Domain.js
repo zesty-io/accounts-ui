@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { updateDomain } from '../../../store/sitesDomain'
-import { fetchSite } from '../../../store/sites'
-import { notify } from '../../../../../../shell/store/notifications'
-import { zConfirm } from '../../../../../../shell/store/confirm'
+import { updateDomain } from '../../../../store/sitesDomain'
+import { fetchSite } from '../../../../store/sites'
+import { notify } from '../../../../../../../shell/store/notifications'
+import { zConfirm } from '../../../../../../../shell/store/confirm'
 
 import styles from './Domain.less'
 
 class Domain extends Component {
-  /* TODO: 
+  /* TODO:
   **  users need to confirm and upgrade their
   **  accounts in order to use the custom
   **  domain feature. this will be implemented
