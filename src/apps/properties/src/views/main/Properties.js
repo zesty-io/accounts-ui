@@ -7,7 +7,7 @@ import { fetchSites } from '../../store/sites'
 
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
-import PropertyCreateFirst from '../PropertyCreateFirst'
+// import PropertyCreateFirst from '../PropertyCreateFirst'
 import PropertyBlueprint from '../PropertyBlueprint'
 
 class Properties extends Component {
