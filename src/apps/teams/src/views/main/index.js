@@ -6,26 +6,32 @@ import config from '../../../../../shell/config'
 
 import CreateTeam from '../../components/CreateTeam'
 import TeamList from '../../components/TeamList'
+import TeamCard from '../../components/TeamCard'
 
 import styles from './teams.less'
-import { fetchTeams } from '../../store';
+import { fetchTeams } from '../../store'
 
 class Teams extends Component {
   state = {
-    userInfo: this.props.user
+    user: this.props.user
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchTeams(this.state.userInfo.ZUID))
+    this.props.dispatch(fetchTeams(this.state.user.ZUID))
   }
   render() {
     return (
+      // this.props.teams
       <section className={styles.Teams}>
         <h1 className={styles.TeamsTitle}>Manage Your Teams</h1>
         <div className={styles.Team}>
           <div className={styles.TeamCard}>
             <CreateTeam />
-            <TeamList />
+            {this.props.teams &&
+              Object.keys(this.props.teams).map(team => {
+                return <TeamCard team={this.props.teams[team]} key={this.props.teams[team].ZUID} />
+              })}
+            {/* <TeamList /> */}
           </div>
         </div>
       </section>
@@ -33,6 +39,4 @@ class Teams extends Component {
   }
 }
 
-export default connect(state => {
-  return { user: state.user }
-})(Teams)
+export default connect(state => state)(Teams)

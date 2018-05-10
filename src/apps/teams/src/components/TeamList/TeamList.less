@@ -1,0 +1,31 @@
+@import '../../../../../shell/styles/colors.less';
+
+.TeamList {
+  ul {
+    padding: 1rem;
+    list-style-type: none;
+
+    li {
+      font-size: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      .button {
+        height: 50px;
+        width: 100px;
+      }
+      ul {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        li {
+          padding: 0.5rem;
+          font-size: 1rem;
+          text-align: center;
+        }
+        li:nth-child(odd) {
+          background-color: @zesty-light-grey;
+        }
+      }
+    }
+  }
+}

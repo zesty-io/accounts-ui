@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 class CreateTeam extends Component {
   render() {
     return (
-      <div> List Teams </div>
+      <div> Create Team </div>
     )
   }
 }
