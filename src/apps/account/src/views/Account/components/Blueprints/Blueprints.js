@@ -66,7 +66,7 @@ class Blueprints extends Component {
                       <main>
                         {blueprint.coverImage === '' ? (
                           <div className={styles.noimage} aria-hidden="true">
-                            <i class="fa fa-paper-plane-o" aria-hidden="true" />
+                            <i className="fa fa-paper-plane-o" aria-hidden="true" />
                           </div>
                         ) : (
                           <img src={blueprint.coverImage} alt="bp img broked" />

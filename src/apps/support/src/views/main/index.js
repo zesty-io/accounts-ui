@@ -1,32 +1,54 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import config from '../../../../../shell/config'
+
 import styles from './Support.less'
+
+const sendBugReport = data => {
+  console.log(JSON.stringify(data, null, 2))
+  fetch(config.EMAIL_SERVICE, {
+    method: 'POST',
+    senderHandle: 'bugs',
+    senderName: data.name,
+    emailSubject: `Bug report from Accounts-UI dateTime-${data.currentTime}`,
+    emailBody: JSON.stringify(data, null, 2),
+    toRecipient: 'support@zesty.io'
+  })
+    .then(data => {
+      // close the modal and display a thank you message
+      this.props.dispatch({ type: 'REMOVE_MODAL' })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
 
 const BugReport = userData => {
   return (
     <div className={styles.bugReport}>
+    <h2> Bug Report</h2>
       <form
         onSubmit={evt => {
           evt.preventDefault()
-          const form = { ...userData.props, currentTime: Date.now() }
+          // generate user data object to be send with the bug report
+          const dataObj = { ...userData.props, currentTime: Date.now() }
           Object.keys(evt.target).map(key => {
             if (evt.target[key]['name']) {
-              form[evt.target[key]['name']] = evt.target[key]['value']
+              if (evt.target[key].type === 'checkbox') {
+                return (dataObj[evt.target[key]['name']] = evt.target[key].checked)
+              }
+              dataObj[evt.target[key]['name']] = evt.target[key]['value']
             }
           })
-          console.log(form)
+          sendBugReport(dataObj)
         }}>
-        <label>Name</label>
-        <Input required type="text" name="name" />
+        <p>We appologize that you have experienced issues with our product.<br />
+        In order to make this product better for you please give as much detail as possible.</p>
         <label>Describe the issue</label>
-        <textarea name="issue" wrap="soft" />
-        <label>Where in the app did this happen</label>
-        <textarea name="where" wrap="soft" />
-        <label>Additional context</label>
-        <textarea name="context" wrap="soft" />
-        <label>Contact Email</label>
-        <Input type="email" name="email" />
+        <textarea name="reportedIssue" wrap="soft" />
+        <label>would you like us to follow up with you via email?</label>
+        <input type="checkbox" name="followUp" />
         <Input type="submit" />
       </form>
     </div>
@@ -38,7 +60,7 @@ class Support extends Component {
     userInfo: {}
   }
 
-  componentDidMount() {
+  componentDidMount(props) {
     let navClone = {}
     // have to use a for in loop because navigator is magic
     for (const prop in navigator) {
@@ -46,14 +68,15 @@ class Support extends Component {
     }
     //remove functions from the object proto
     Object.keys(navClone).map(key => {
-      if(typeof navClone[key] === "function") {
+      if (typeof navClone[key] !== 'string') {
         delete navClone[key]
       }
     })
     this.setState({
-      userInfo: { ...navClone }
+      userInfo: { navData: navClone, zestyUser: this.props.user }
     })
   }
+
   launchBugReport = () => {
     this.props.dispatch({
       type: 'NEW_MODAL',
@@ -61,6 +84,7 @@ class Support extends Component {
       props: this.state
     })
   }
+
   render() {
     return (
       <div className={styles.Support}>
@@ -68,7 +92,7 @@ class Support extends Component {
 
         <section>
           <article>
-            <a href="#!/support/contact/">
+            <a href="mailto://support@zesty.io">
               {
                 //TODO: where should this link go?
               }
@@ -123,4 +147,6 @@ class Support extends Component {
   }
 }
 
-export default connect(state => state)(Support)
+export default connect(state => {
+  return { user: state.user }
+})(Support)

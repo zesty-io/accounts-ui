@@ -11,7 +11,8 @@ let loadConfig = {
   PREVIEW_URL: '-dev.preview.zestyio.localdev:3020',
   PREVIEW_URL_PROTOCOL: 'http://',
   COOKIE_NAME: 'APP_SID',
-  COOKIE_DOMAIN: '.zesty.localdev'
+  COOKIE_DOMAIN: '.zesty.localdev',
+  EMAIL_SERVICE: 'https://send-email-dot-zesty-dev.appspot.com/send'
 }
 
 if (process.env.NODE_ENV == 'production') {
