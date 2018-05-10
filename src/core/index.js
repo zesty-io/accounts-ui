@@ -1,5 +1,6 @@
 import Button from './Button'
 import ButtonGroup from './ButtonGroup'
+import Divider from './Divider'
 import Url from './Url'
 import AppLink from './AppLink'
 import Loader from './Loader'
@@ -16,6 +17,7 @@ import Infotip from './Infotip'
 // depend on these components.
 window.Button = Button
 window.ButtonGroup = ButtonGroup
+window.Divider = Divider
 window.Url = Url
 window.AppLink = AppLink
 window.Loader = Loader
