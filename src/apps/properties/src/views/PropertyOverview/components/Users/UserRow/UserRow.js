@@ -1,26 +1,30 @@
 import { PureComponent } from 'react'
-import styles from './UserAccessRow.less'
-export default class UserAccessRow extends PureComponent {
+import styles from './UserRow.less'
+
+export default class UserRow extends PureComponent {
   render() {
     return (
-      <article>
+      <article className={styles.UserRow}>
         <span>
           {this.props.firstName} {this.props.lastName}
           {!this.props.lastName &&
             !this.props.firstName && <em>Invited User</em>}
         </span>
         <span>
+          {this.props.role.systemRole.ZUID === '31-71cfc74-0wn3r' ? (
+            <i className="fa fa-star" aria-hidden="true" />
+          ) : null}
+          {this.props.role.name}
+        </span>
+        <span>{this.props.email}</span>
+        <span>
           {this.props.pending ? (
             <Button onClick={() => this.cancelInvite(user)}>
               Cancel Invite
             </Button>
-          ) : (
-            this.props.role.name
-          )}
-        </span>
-        <span>{this.props.email}</span>
-        <span>
-          {!this.props.pending ? (
+          ) : null}
+          {!this.props.pending &&
+          this.props.role.systemRole.ZUID !== '31-71cfc74-0wn3r' ? (
             <Button
               className={styles.pullButton}
               onClick={() => this.removeUser(user, this.props.role.ZUID)}
