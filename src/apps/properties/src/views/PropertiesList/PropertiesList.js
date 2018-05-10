@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Route } from "react-router-dom";
-import styles from "./PropertiesList.less";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Route } from 'react-router-dom'
+import styles from './PropertiesList.less'
 
-import PropertiesHeader from "../../components/PropertiesHeader";
-import WebsiteOverview from "../../components/WebsiteOverview";
-import WebsiteCard from "../../components/WebsiteCard";
-import WebsiteInvite from "../../components/WebsiteInvite";
-import WebsiteCreate from "../../components/WebsiteCreate";
+import PropertiesHeader from '../../components/PropertiesHeader'
+import WebsiteCard from '../../components/WebsiteCard'
+import WebsiteInvite from '../../components/WebsiteInvite'
+import WebsiteCreate from '../../components/WebsiteCreate'
+
+import PropertyOverview from '../PropertyOverview'
 
 class Properties extends Component {
   render() {
@@ -26,7 +27,7 @@ class Properties extends Component {
                 .map(zuid => {
                   return (
                     <WebsiteInvite key={zuid} site={this.props.sites[zuid]} />
-                  );
+                  )
                 })}
 
               {/* render sites user has access */}
@@ -42,13 +43,13 @@ class Properties extends Component {
                       key={zuid}
                       site={this.props.sitesFiltered[zuid]}
                     />
-                  );
+                  )
                 })}
-                {/* TODO: if site and !sitesFiltered display 'no results' */}
-              <Route path="/properties/:hash" component={WebsiteOverview} />
+              {/* TODO: if site and !sitesFiltered display 'no results' */}
+              <Route path="/properties/:hash" component={PropertyOverview} />
               <Route
                 path="/properties/invite/:hash"
-                component={WebsiteOverview}
+                component={PropertyOverview}
               />
             </div>
           ) : this.props.sites === null ? (
@@ -63,7 +64,7 @@ class Properties extends Component {
           )}
         </main>
       </section>
-    );
+    )
   }
 }
-export default connect(state => state)(Properties);
+export default connect(state => state)(Properties)

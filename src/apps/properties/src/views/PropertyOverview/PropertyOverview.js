@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
-import styles from './WebsiteOverview.less'
+import styles from './PropertyOverview.less'
 
 import PropertyName from './PropertyName'
 import UserAccess from './UserAccess'
@@ -20,10 +20,10 @@ import { fetchSite } from '../../store/sites'
 // import { updateSite } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 
-class WebsiteOverview extends Component {
+class PropertyOverview extends Component {
   constructor(props) {
     super(props)
-    console.log('WebsiteOverview: ', props)
+    console.log('PropertyOverview: ', props)
     // this.state = {
     //   editName: false,
     //   name: '',
@@ -59,9 +59,9 @@ class WebsiteOverview extends Component {
   }
   render() {
     return (
-      <section className={styles.WebsiteOverviewWrap}>
-        <article className={styles.WebsiteOverview}>
-          <header className={styles.WebsiteOverviewHeader}>
+      <section className={styles.PropertyOverviewWrap}>
+        <article className={styles.PropertyOverview}>
+          <header className={styles.PropertyOverviewHeader}>
             <Link className={styles.close} to="/properties/">
               <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
             </Link>
@@ -118,4 +118,4 @@ const mapStateToProps = (state, ownProps) => {
     ...state.sites[ownProps.match.params.hash]
   }
 }
-export default withRouter(connect(mapStateToProps)(WebsiteOverview))
+export default withRouter(connect(mapStateToProps)(PropertyOverview))
