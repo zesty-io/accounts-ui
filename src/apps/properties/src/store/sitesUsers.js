@@ -72,22 +72,14 @@ export const fetchSiteUsersPending = siteZUID => {
     })
     request(`${config.API_ACCOUNTS}/instances/${siteZUID}/users/pending`)
       .then(users => {
-        if (!users.data.length) {
-          dispatch({
-            type: 'FETCH_USERS_PENDING_SUCCESS',
-            siteZUID,
-            users: null
-          })
-        }
-        let normalizedUsers = {}
-        users.data.forEach(user => {
-          user.pending = true
-          return (normalizedUsers[user.inviteZUID] = user)
-        })
         dispatch({
           type: 'FETCH_USERS_PENDING_SUCCESS',
           siteZUID,
-          users: normalizedUsers
+          users: users.data.reduce((acc, user) => {
+            acc[user.inviteZUID] = user
+            acc[user.inviteZUID].pending = true
+            return acc
+          }, {})
         })
       })
       .catch(err => {

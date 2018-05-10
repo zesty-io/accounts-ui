@@ -11,7 +11,7 @@ import Users from './components/Users'
 import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
 
-import { fetchSiteUsers } from '../../store/sitesUsers'
+import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
 // import { fetchSite } from '../../store/sites'
 // import { fetchSiteCollections } from '../../store/sitesCollections'
@@ -32,7 +32,7 @@ class PropertyOverview extends Component {
     // this.props.dispatch(fetchBlueprint(this.props.site.blueprintID))
 
     // pending users
-    // this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID))
+    this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID))
   }
   render() {
     return (
@@ -43,7 +43,7 @@ class PropertyOverview extends Component {
               <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
             </Link>
             <PropertyName name={this.props.site.name} />
-            {/* <Domain siteZUID={this.props.ZUID} site={this.props} /> */}
+            <Domain siteZUID={this.props.site.ZUID} site={this.props.site} />
           </header>
           <main>
             <article className={styles.card}>
@@ -52,6 +52,7 @@ class PropertyOverview extends Component {
                 &nbsp;User Access
               </h2>
               <Users
+                siteZUID={this.props.site.ZUID}
                 dispatch={this.props.dispatch}
                 users={this.props.users}
                 roles={this.props.roles}
