@@ -6,9 +6,10 @@ import config from '../../../../../shell/config'
 
 import CreateTeam from '../../components/CreateTeam'
 import TeamList from '../../components/TeamList'
+import TeamCard from '../../components/TeamCard'
 
 import styles from './teams.less'
-import { fetchTeams } from '../../store';
+import { fetchTeams } from '../../store'
 
 class Teams extends Component {
   state = {
@@ -26,7 +27,11 @@ class Teams extends Component {
         <div className={styles.Team}>
           <div className={styles.TeamCard}>
             <CreateTeam />
-            <TeamList />
+            {this.props.teams &&
+              Object.keys(this.props.teams).map((team, i) => {
+                return <TeamCard team={this.props.teams[team]} />
+              })}
+            {/* <TeamList /> */}
           </div>
         </div>
       </section>
