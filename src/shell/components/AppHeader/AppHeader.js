@@ -26,8 +26,7 @@ export default class AppHeader extends Component {
         </nav> */}
         <nav
           className={cx(styles.UserNav, styles[this.state.userNavOpen])}
-          onClick={this.showUserNav}
-        >
+          onClick={this.showUserNav}>
           {this.props.user.firstName} {this.props.user.lastName}
           <img
             className={styles.avatar}
@@ -53,13 +52,13 @@ export default class AppHeader extends Component {
             </li>
 
             <li>
-              <a href="https://developer.zesty.io" target="_blank">
+              <NavLink to="/support">
                 <i
                   className={cx(styles.icon, 'fa fa-question-circle')}
                   aria-hidden="true"
                 />{' '}
                 Support
-              </a>
+              </NavLink>
             </li>
 
             <hr />
@@ -67,8 +66,7 @@ export default class AppHeader extends Component {
             <li
               className={styles.logout}
               title="Logout"
-              onClick={() => this.props.dispatch(logout())}
-            >
+              onClick={() => this.props.dispatch(logout())}>
               <i className="fa fa-sign-out" aria-hidden="true" />
               &nbsp;Logout
             </li>

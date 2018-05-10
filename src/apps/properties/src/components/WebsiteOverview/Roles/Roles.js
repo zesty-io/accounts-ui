@@ -58,29 +58,27 @@ class Roles extends Component {
               options={[
                 {
                   value: '31-71cfc74-4dm13',
-                  html: '<option value="31-71cfc74-4dm13">Admin</option>'
+                  text: 'Admin'
                 },
                 {
                   value: '31-71cfc74-c0ntr1b0t0r',
-                  html:
-                    '<option value="31-71cfc74-c0ntr1b0t0r">Contributor</option>'
+                  text: 'Contributor'
                 },
                 {
                   value: '31-71cfc74-d3v3l0p3r',
-                  html:
-                    '<option value="31-71cfc74-d3v3l0p3r">Developer</option>'
+                  text: 'Developer'
                 },
                 {
                   value: '31-71cfc74-0wn3r',
-                  html: '<option value="31-71cfc74-0wn3r">Owner</option>'
+                  text: 'Owner'
                 },
                 {
                   value: '31-71cfc74-p0bl1shr',
-                  html: '<option value="31-71cfc74-p0bl1shr">Publisher</option>'
+                  text: 'Publisher'
                 },
                 {
                   value: '31-71cfc74-s30',
-                  html: '<option value="31-71cfc74-s30">SEO</option>'
+                  text: 'SEO'
                 }
               ]}
             />

@@ -17,7 +17,6 @@ class Login extends Component {
     }
   }
   componentDidMount() {
-    console.log(config)
     const invite = qs.parse(window.location.search.substr(1))
     if (invite) {
       this.props.dispatch({

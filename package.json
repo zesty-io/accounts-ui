@@ -11,9 +11,9 @@
     "prestart": "npm install",
     "start": "node bin/start & npm run serve",
     "serve": "./node_modules/.bin/serve ./build --port 6006 --single",
-    "prod": "export NODE_ENV=\"production\" && node bin/build",
-    "dev": "export NODE_ENV=\"development\" && node bin/build",
-    "stage": "export NODE_ENV=\"staging\" && node bin/build"
+    "build-prod": "export NODE_ENV=\"production\" && node bin/build",
+    "build-dev": "export NODE_ENV=\"development\" && node bin/build",
+    "build-stage": "export NODE_ENV=\"staging\" && node bin/build"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
   "contributors": [

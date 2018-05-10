@@ -37,69 +37,7 @@ export default class Select extends React.Component {
       })
     }
   }
-  render() {
-    let opts = {
-      className: cx(
-        'selector',
-        styles.selector,
-        this.state.dropdownOpen ? styles.show : styles.hidden
-      ),
-      onClick: this.toggleDropdown
-    }
-    return (
-      <div {...opts} ref={div => (this.selector = div)}>
-        <input
-          type="hidden"
-          name={this.props.name}
-          value={this.state.selection.value}
-        />
-        <span className={styles.selection}>
-          <i
-            className={cx(
-              'icon icon-chevron-right',
-              styles.chevron,
-              styles['icon-chevron-right']
-            )}
-          />
-          <i
-            className={cx(
-              'icon icon-chevron-down',
-              styles.chevron,
-              styles['icon-chevron-down']
-            )}
-          />
-
-          {this.state.selection.html ? (
-            <span
-              className={styles.content}
-              dangerouslySetInnerHTML={{
-                __html: this.state.selection.html
-              }}
-            />
-          ) : (
-            <span className={styles.content}>{this.state.selection.text}</span>
-          )}
-        </span>
-        <ul className={'selections ' + styles.selections}>
-          {this.renderFilter()}
-          <div className={styles.options}>
-            {this.state.children
-              ? this.state.children
-              : this.state.options.map(opt => {
-                  return (
-                    <Option
-                      key={opt.value}
-                      value={opt.value}
-                      html={opt.html}
-                      onClick={this.setSelection}
-                    />
-                  )
-                })}
-          </div>
-        </ul>
-      </div>
-    )
-  }
+  
   renderFilter() {
     if (
       (this.props.children && this.props.children.length > 50) ||
@@ -210,6 +148,71 @@ export default class Select extends React.Component {
     if (!parent || parent !== this.selector) {
       this.setState({ dropdownOpen: false })
     }
+  }
+
+  render() {
+    let opts = {
+      className: cx(
+        'selector',
+        styles.selector,
+        this.state.dropdownOpen ? styles.show : styles.hidden
+      ),
+      onClick: this.toggleDropdown
+    }
+    return (
+      <div {...opts} ref={div => (this.selector = div)}>
+        <input
+          type="hidden"
+          name={this.props.name}
+          value={this.state.selection.value}
+        />
+        <span className={styles.selection}>
+          <i
+            className={cx(
+              'icon icon-chevron-right',
+              styles.chevron,
+              styles['icon-chevron-right']
+            )}
+          />
+          <i
+            className={cx(
+              'icon icon-chevron-down',
+              styles.chevron,
+              styles['icon-chevron-down']
+            )}
+          />
+
+          {this.state.selection.html ? (
+            <span
+              className={styles.content}
+              dangerouslySetInnerHTML={{
+                __html: this.state.selection.html
+              }}
+            />
+          ) : (
+            <span className={styles.content}>{this.state.selection.text}</span>
+          )}
+        </span>
+        <ul className={'selections ' + styles.selections}>
+          {this.renderFilter()}
+          <div className={styles.options}>
+            {this.state.children
+              ? this.state.children
+              : this.state.options.map(opt => {
+                  return (
+                    <Option
+                      key={opt.value}
+                      value={opt.value}
+                      text={opt.text}
+                      html={opt.html}
+                      onClick={this.setSelection}
+                    />
+                  )
+                })}
+          </div>
+        </ul>
+      </div>
+    )
   }
 }
 
