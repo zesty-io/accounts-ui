@@ -15,6 +15,7 @@ class TeamList extends Component {
               return (
                 <li>
                   {this.props.teams[team].name}
+                  <Button className={styles.button} text="edit" />
                   <ul>
                     {this.props.teams[team].members.map(member => {
                       return<li>{member.name}</li>
