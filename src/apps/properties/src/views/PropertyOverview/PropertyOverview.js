@@ -7,13 +7,13 @@ import styles from './PropertyOverview.less'
 
 import PropertyName from './components/PropertyName'
 import Domain from './components/Domain'
-import UserAccess from './components/UserAccess'
+import Users from './components/Users'
 import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
 
 import { fetchSiteUsers } from '../../store/sitesUsers'
+import { fetchSiteRoles } from '../../store/sitesRoles'
 // import { fetchSite } from '../../store/sites'
-// import { fetchSiteRoles } from '../../store/sitesRoles'
 // import { fetchSiteCollections } from '../../store/sitesCollections'
 // import { updateSite } from '../../store/sites'
 // import { notify } from '../../../../../shell/store/notifications'
@@ -26,31 +26,13 @@ class PropertyOverview extends Component {
   componentDidMount() {
     // Fetch Users
     this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
+    this.props.dispatch(fetchSiteRoles(this.props.siteZUID))
+    // this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
+    // this.props.dispatch(fetchSiteCollections(this.props.siteZUID))
+    // this.props.dispatch(fetchBlueprint(this.props.site.blueprintID))
 
     // pending users
-    // Fetch Companies
-    // Fetch Roles
-    // Fetch Collections
-    // Fetch Blueprints
-    // fetch users first, then fetch pending users
-    // this.props
-    //   .dispatch(fetchSiteUsers(this.props.userZUID, this.props.ZUID))
-    //   .then(users => {
-    //     this.props.dispatch(
-    //       fetchSiteUsersPending(this.props.userZUID, this.props.ZUID)
-    //     )
-    //   })
-    // this.props.dispatch(
-    //   fetchSiteCompanies(this.props.userZUID, this.props.ZUID)
-    // )
-    // this.props.dispatch(fetchSiteRoles(this.props.userZUID, this.props.ZUID))
-    // this.props.dispatch(
-    //   fetchSiteCollections(this.props.userZUID, this.props.ZUID)
-    // )
-    // this.props.dispatch(fetchBlueprint(this.props.blueprintID))
-    // this.setState({
-    //   name: this.props.name
-    // })
+    // this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID))
   }
   render() {
     return (
@@ -60,8 +42,8 @@ class PropertyOverview extends Component {
             <Link className={styles.close} to="/properties/">
               <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
             </Link>
-            <PropertyName name={this.props.name} />
-            <Domain siteZUID={this.props.ZUID} site={this.props} />
+            <PropertyName name={this.props.site.name} />
+            {/* <Domain siteZUID={this.props.ZUID} site={this.props} /> */}
           </header>
           <main>
             <article className={styles.card}>
@@ -69,7 +51,11 @@ class PropertyOverview extends Component {
                 <i className="fa fa-users" aria-hidden="true" />
                 &nbsp;User Access
               </h2>
-              <UserAccess />
+              <Users
+                dispatch={this.props.dispatch}
+                users={this.props.users}
+                roles={this.props.roles}
+              />
             </article>
 
             {/* <article className={styles.card}>
@@ -104,15 +90,12 @@ class PropertyOverview extends Component {
 
 export default withRouter(
   connect((state, props) => {
-    // return {
-    //   users: state.sitesUsers[props.match.params.hash],
-    //   roles: state.sitesRoles[props.match.params.hash],
-    //   site: state.sites[props.match.params.hash]
-    // }
-
+    const siteZUID = props.match.params.hash
     return {
-      siteZUID: props.match.params.hash,
-      ...state.sites[props.match.params.hash]
+      siteZUID,
+      users: state.sitesUsers[siteZUID] || {},
+      roles: state.sitesRoles[siteZUID] || {},
+      site: state.sites[siteZUID] || {}
     }
   })(PropertyOverview)
 )

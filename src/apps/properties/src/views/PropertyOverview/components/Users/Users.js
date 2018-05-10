@@ -2,21 +2,15 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
-import styles from './UserAccess.less'
+import styles from './Users.less'
 
 import { sendInvite, cancelInvite, removeUser } from '../../../../store/sites'
 import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
-import {
-  fetchSiteUsers,
-  fetchSiteUsersPending
-  // removeSiteUser
-} from '../../../../store/sitesUsers'
-import { fetchSiteRoles } from '../../../../store/sitesRoles'
 
-import UserAccessRow from './UserAccessRow'
+import UserRow from './UserRow'
 
-class UserAccess extends Component {
+export default class Users extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -29,15 +23,10 @@ class UserAccess extends Component {
       }
     }
   }
-  componentDidMount() {
-    this.props.dispatch(fetchSiteUsers(this.props.site.ZUID))
-    this.props.dispatch(fetchSiteUsersPending(this.props.site.ZUID))
-    this.props.dispatch(fetchSiteRoles(this.props.site.ZUID))
-  }
   render() {
     return (
       <WithLoader condition={Object.keys(this.props.roles).length}>
-        <div className={styles.userAccess}>
+        <div className={styles.Users}>
           <div className={styles.invite}>
             <Input
               className={styles.email}
@@ -64,7 +53,10 @@ class UserAccess extends Component {
               Send Invite
             </Button>
           </div>
-          <div className={styles.userTable}>
+
+          <Divider />
+
+          <div className={styles.UserList}>
             <header>
               <h3>User Name</h3>
               <h3>Role</h3>
@@ -73,10 +65,7 @@ class UserAccess extends Component {
             <main>
               {Object.keys(this.props.users).map(userZUID => {
                 return (
-                  <UserAccessRow
-                    key={userZUID}
-                    {...this.props.users[userZUID]}
-                  />
+                  <UserRow key={userZUID} {...this.props.users[userZUID]} />
                 )
               })}
             </main>
@@ -128,13 +117,3 @@ class UserAccess extends Component {
     }
   }
 }
-
-export default withRouter(
-  connect((state, ownProps) => {
-    return {
-      users: state.sitesUsers[ownProps.match.params.hash] || {},
-      roles: state.sitesRoles[ownProps.match.params.hash] || {},
-      site: state.sites[ownProps.match.params.hash] || {}
-    }
-  })(UserAccess)
-)
