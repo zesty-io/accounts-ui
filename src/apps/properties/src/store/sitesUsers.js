@@ -8,8 +8,11 @@ export function sitesUsers(state = {}, action) {
 
     case 'FETCH_USERS_SUCCESS':
       return {
-        ...state,
-        [action.siteZUID]: { ...state[action.siteZUID], ...action.users }
+        ...state, // Previous sites
+        [action.siteZUID]: {
+          ...state[action.siteZUID], // Previous site users
+          ...action.users // new site users
+        }
       }
 
     case 'FETCH_USERS_ERROR':
@@ -43,16 +46,14 @@ export const fetchSiteUsers = siteZUID => {
       `${config.API_ACCOUNTS}/instances/${siteZUID}/users?getRoles=true`
     )
       .then(users => {
-        let normalizedUsers = {}
-        users.data.forEach(user => {
-          return (normalizedUsers[user.ZUID] = user)
-        })
         dispatch({
           type: 'FETCH_USERS_SUCCESS',
           siteZUID,
-          users: normalizedUsers
+          users: users.data.reduce((acc, user) => {
+            acc[user.ZUID] = user
+            return acc
+          }, {})
         })
-        // return users
       })
       .catch(err => {
         console.error(err)
@@ -60,7 +61,6 @@ export const fetchSiteUsers = siteZUID => {
           type: 'FETCH_USERS_ERROR',
           err
         })
-        // return err
       })
   }
 }

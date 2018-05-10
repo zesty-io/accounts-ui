@@ -6,13 +6,12 @@ import cx from 'classnames'
 import styles from './PropertyOverview.less'
 
 import PropertyName from './components/PropertyName'
-import UserAccess from './components/UserAccess'
-// import CompanyAccess from './components/CompanyAccess'
 import Domain from './components/Domain'
-// import Stats from './components/Stats'
-import Blueprint from './components/Blueprint'
+import UserAccess from './components/UserAccess'
 import Roles from './components/Roles'
+import Blueprint from './components/Blueprint'
 
+import { fetchSiteUsers } from '../../store/sitesUsers'
 // import { fetchSite } from '../../store/sites'
 // import { fetchSiteRoles } from '../../store/sitesRoles'
 // import { fetchSiteCollections } from '../../store/sitesCollections'
@@ -23,14 +22,11 @@ class PropertyOverview extends Component {
   constructor(props) {
     super(props)
     console.log('PropertyOverview: ', props)
-    // this.state = {
-    //   editName: false,
-    //   name: '',
-    //   editDomain: false
-    // }
   }
   componentDidMount() {
     // Fetch Users
+    this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
+
     // pending users
     // Fetch Companies
     // Fetch Roles
@@ -84,7 +80,7 @@ class PropertyOverview extends Component {
               <CompanyAccess />
             </article> */}
 
-            <article className={styles.card}>
+            {/* <article className={styles.card}>
               <h2>
                 <i className="fa fa-lock" aria-hidden="true" />
                 &nbsp;Site Roles
@@ -98,7 +94,7 @@ class PropertyOverview extends Component {
                 &nbsp;Blueprint
               </h2>
               <Blueprint />
-            </article>
+            </article> */}
           </main>
         </article>
       </section>
@@ -106,15 +102,17 @@ class PropertyOverview extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  // return {
-  //   users: state.sitesUsers[ownProps.match.params.hash],
-  //   roles: state.sitesRoles[ownProps.match.params.hash],
-  //   site: state.sites[ownProps.match.params.hash]
-  // }
+export default withRouter(
+  connect((state, props) => {
+    // return {
+    //   users: state.sitesUsers[props.match.params.hash],
+    //   roles: state.sitesRoles[props.match.params.hash],
+    //   site: state.sites[props.match.params.hash]
+    // }
 
-  return {
-    ...state.sites[ownProps.match.params.hash]
-  }
-}
-export default withRouter(connect(mapStateToProps)(PropertyOverview))
+    return {
+      siteZUID: props.match.params.hash,
+      ...state.sites[props.match.params.hash]
+    }
+  })(PropertyOverview)
+)
