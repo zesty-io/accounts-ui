@@ -8,7 +8,8 @@ import { auth } from './auth'
 import { notifications } from './notifications'
 import { modal } from './modal'
 import { confirm } from './confirm'
-import { propertiesReducers } from '../../apps/properties/src/store'
+import { properties } from '../../apps/properties/src/store'
+import { teams } from '../../apps/teams/src/store'
 
 const loggerMiddleware = createLogger({
   collapsed: true,
@@ -23,9 +24,10 @@ const rootReducer = (state, action) => {
 }
 
 const appReducer = combineReducers({
-  ...propertiesReducers,
-  auth,
+  ...properties,
   user,
+  teams,
+  auth,
   modal,
   confirm,
   notifications
