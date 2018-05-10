@@ -35,7 +35,6 @@ export const fetchTeams = userZUID => {
           members: [
             { name: 'sardfhgdsfa', ZUID: 'userZUsdhsdfhID', email: 'aras@envoy.com' },
             { name: 'sa544554ra', ZUID: 'userZasdfUID', email: 'aras@envoy.com' },
-            { name: 'dave', ZUID: 'userZUsdfhsdID', email: 'aras@envoy.com' },
             { name: 'charles', ZUID: 'userZUsdfhID', email: 'e@mail.com' }
           ]
         },
@@ -46,6 +45,7 @@ export const fetchTeams = userZUID => {
             { name: 'adam', ZUID: 'userasdfZUID', email: 'aras@envoy.com' },
             { name: 'linda', ZUID: 'usersadfZUID', email: 'aras@envoy.com' },
             { name: 'steve', ZUID: 'userasdfZasdfUID', email: 'aras@envoy.com' },
+            { name: 'dave', ZUID: 'userZUsdfhsdID', email: 'aras@envoy.com' },
             { name: 'brett', ZUID: 'userdsaZUID', email: 'e@mail.com' }
           ]
         }
