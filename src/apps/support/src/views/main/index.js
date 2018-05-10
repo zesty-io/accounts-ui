@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import {request} from '../../../../../util/request'
+import { request } from '../../../../../util/request'
 import config from '../../../../../shell/config'
 
 import styles from './Support.less'
@@ -55,9 +55,11 @@ const BugReport = userData => {
         </p>
         <label>Describe the issue</label>
         <textarea name="reportedIssue" wrap="soft" />
-        <label>would you like us to follow up with you via email?</label>
-        <input type="checkbox" name="followUp" />
-        <Input type="submit" />
+        <span className={styles.inline}>
+          <input type="checkbox" name="followUp" />
+          <p>Please follow up with me about this issue.</p>
+        </span>
+        <Button type="submit" text="Submit" />
       </form>
     </div>
   )

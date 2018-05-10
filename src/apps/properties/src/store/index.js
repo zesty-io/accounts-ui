@@ -8,7 +8,7 @@ import { sitesRoles } from './sitesRoles'
 import { sitesDomain } from './sitesDomain'
 import { sitesCollections } from './sitesCollections'
 
-export const propertiesReducers = {
+export const properties = {
   sites,
   sitesFiltered,
   sitesCompanies,

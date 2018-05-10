@@ -9,4 +9,6 @@ class TeamList extends Component {
   }
 }
 
-export default connect(state => state)(TeamList)
+export default connect(state => {
+  return state.userTeams
+})(TeamList)
