@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import {request} from '../../../../../util/request'
 import config from '../../../../../shell/config'
 
 import styles from './Support.less'
 
 const sendBugReport = data => {
   console.log(JSON.stringify(data, null, 2))
-  fetch(config.EMAIL_SERVICE, {
+  request(config.EMAIL_SERVICE, {
     method: 'POST',
-    senderHandle: 'bugs',
-    senderName: data.name,
-    emailSubject: `Bug report from Accounts-UI dateTime-${data.currentTime}`,
-    emailBody: JSON.stringify(data, null, 2),
-    toRecipient: 'support@zesty.io'
+    body: {
+      senderHandle: 'bugs',
+      senderName: data.name,
+      emailSubject: `Bug report from Accounts-UI dateTime-${data.currentTime}`,
+      emailBody: JSON.stringify(data, null, 2),
+      toRecipient: 'support@zesty.io'
+    }
   })
     .then(data => {
       // close the modal and display a thank you message
@@ -27,7 +30,7 @@ const sendBugReport = data => {
 const BugReport = userData => {
   return (
     <div className={styles.bugReport}>
-    <h2> Bug Report</h2>
+      <h2> Bug Report</h2>
       <form
         onSubmit={evt => {
           evt.preventDefault()
@@ -36,15 +39,19 @@ const BugReport = userData => {
           Object.keys(evt.target).map(key => {
             if (evt.target[key]['name']) {
               if (evt.target[key].type === 'checkbox') {
-                return (dataObj[evt.target[key]['name']] = evt.target[key].checked)
+                return (dataObj[evt.target[key]['name']] =
+                  evt.target[key].checked)
               }
               dataObj[evt.target[key]['name']] = evt.target[key]['value']
             }
           })
           sendBugReport(dataObj)
         }}>
-        <p>We appologize that you have experienced issues with our product.<br />
-        In order to make this product better for you please give as much detail as possible.</p>
+        <p>
+          We appologize that you have experienced issues with our product.<br />
+          In order to make this product better for you please give as much
+          detail as possible.
+        </p>
         <label>Describe the issue</label>
         <textarea name="reportedIssue" wrap="soft" />
         <label>would you like us to follow up with you via email?</label>
