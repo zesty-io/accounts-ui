@@ -8,12 +8,16 @@ import CreateTeam from '../../components/CreateTeam'
 import TeamList from '../../components/TeamList'
 
 import styles from './teams.less'
+import { fetchTeams } from '../../store';
 
 class Teams extends Component {
   state = {
     userInfo: this.props.user
   }
 
+  componentDidMount() {
+    this.props.dispatch(fetchTeams(this.state.userInfo.ZUID))
+  }
   render() {
     return (
       <section className={styles.Teams}>
