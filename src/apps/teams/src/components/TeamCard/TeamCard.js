@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
-
+import React, { Component } from 'react'
 
 class TeamCard extends Component {
   render() {
+    const { team } = this.props
     return (
       <div>
-        <p>{JSON.stringify(this.props.team)}</p>
-        </div>
+        <p>{JSON.stringify(team)}</p>
+      </div>
     )
   }
 }
