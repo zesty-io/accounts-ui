@@ -51,7 +51,7 @@ export default class Users extends Component {
               })}
             />
             <Button onClick={this.handleInvite} disabled={this.state.submitted}>
-              Send Invite
+              <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
             </Button>
           </div>
 

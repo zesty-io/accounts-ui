@@ -15,7 +15,7 @@ export default class UserRow extends PureComponent {
             !this.props.firstName && <em>Invited User</em>}
         </span>
         <span className={styles.role}>
-          {this.props.role && this.props.role.systemRole.ZUID === OWNER_ZUID ? (
+          {this.props.role && this.props.role.systemRoleZUID === OWNER_ZUID ? (
             <i className="fa fa-star" aria-hidden="true" />
           ) : null}
           {this.props.role && this.props.role.name}
@@ -24,17 +24,14 @@ export default class UserRow extends PureComponent {
         <span className={styles.action}>
           {this.props.pending ? (
             <Button onClick={() => this.confirm(this.props.inviteZUID)}>
-              Revoke Invite
+              <i className="fa fa-trash-o" aria-hidden="true" />Revoke Invite
             </Button>
           ) : null}
           {!this.props.pending &&
           this.props.role &&
-          this.props.role.systemRole.ZUID !== OWNER_ZUID ? (
-            <Button
-              className={styles.pullButton}
-              onClick={() => this.removeUser(user, this.props.role.ZUID)}
-            >
-              Remove User
+          this.props.role.systemRoleZUID !== OWNER_ZUID ? (
+            <Button onClick={() => this.removeUser(user, this.props.role.ZUID)}>
+              <i className="fa fa-trash-o" aria-hidden="true" />Remove User
             </Button>
           ) : null}
         </span>
