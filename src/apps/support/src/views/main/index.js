@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import { request } from '../../../../../util/request'
@@ -6,27 +6,7 @@ import config from '../../../../../shell/config'
 
 import styles from './Support.less'
 
-const sendBugReport = data => {
-  console.log(JSON.stringify(data, null, 2))
-  request(config.EMAIL_SERVICE, {
-    method: 'POST',
-    json: true,
-    body: {
-      senderHandle: 'bugs',
-      senderName: data.name,
-      emailSubject: `Bug report from Accounts-UI dateTime-${data.currentTime}`,
-      emailBody: JSON.stringify(data, null, 2),
-      toRecipient: 'support@zesty.io'
-    }
-  })
-    .then(data => {
-      // close the modal and display a thank you message
-      this.props.dispatch({ type: 'REMOVE_MODAL' })
-    })
-    .catch(err => {
-      console.log(err)
-    })
-}
+// class BugReport extends PureComponent
 
 const BugReport = userData => {
   return (
@@ -35,19 +15,25 @@ const BugReport = userData => {
       <form
         onSubmit={evt => {
           evt.preventDefault()
+
           // generate user data object to be send with the bug report
-          const dataObj = { ...userData.props, currentTime: Date.now() }
-          Object.keys(evt.target).map(key => {
-            if (evt.target[key]['name']) {
-              if (evt.target[key].type === 'checkbox') {
-                return (dataObj[evt.target[key]['name']] =
-                  evt.target[key].checked)
-              }
-              dataObj[evt.target[key]['name']] = evt.target[key]['value']
+          const dataObj = {
+            ...userData.props,
+            currentTime: Date.now()
+          }
+
+          const formData = new FormData(evt.target)
+          formData.forEach((entry, key) => {
+            if (evt.target[key].type === 'checkbox') {
+              dataObj[key] = evt.target[key].checked
+            } else {
+              dataObj[key] = entry
             }
           })
+
           sendBugReport(dataObj)
-        }}>
+        }}
+      >
         <p>
           We appologize that you have experienced issues with our product.<br />
           In order to make this product better for you please give as much
@@ -83,7 +69,10 @@ class Support extends Component {
       }
     })
     this.setState({
-      userInfo: { navData: navClone, zestyUser: this.props.user }
+      userInfo: {
+        navData: navClone,
+        zestyUser: this.props.user
+      }
     })
   }
 
@@ -155,6 +144,28 @@ class Support extends Component {
       </div>
     )
   }
+}
+
+const sendBugReport = data => {
+  console.log(JSON.stringify(data, null, 2))
+  request(config.EMAIL_SERVICE, {
+    method: 'POST',
+    json: true,
+    body: {
+      senderHandle: 'bugs',
+      senderName: data.name,
+      emailSubject: `Bug report from Accounts-UI dateTime-${data.currentTime}`,
+      emailBody: JSON.stringify(data, null, 2),
+      toRecipient: 'support@zesty.io'
+    }
+  })
+    .then(data => {
+      // close the modal and display a thank you message
+      this.props.dispatch({ type: 'REMOVE_MODAL' })
+    })
+    .catch(err => {
+      console.log(err)
+    })
 }
 
 export default connect(state => {
