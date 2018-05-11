@@ -22,17 +22,37 @@ class PropertyOverview extends Component {
   constructor(props) {
     super(props)
     console.log('PropertyOverview: ', props)
+    this.state = {
+      loadingUsers: true,
+      loadingRoles: true,
+      loadingUsersPending: true,
+      loadingTeams: true,
+      loadingCollections: true,
+      loadingBlueprint: true
+    }
   }
   componentDidMount() {
     // Fetch Users
-    this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
-    this.props.dispatch(fetchSiteRoles(this.props.siteZUID))
+    this.props.dispatch(fetchSiteUsers(this.props.siteZUID)).then(() => {
+      this.setState({
+        loadingUsers: false
+      })
+    })
+    // pending users
+    this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID)).then(() => {
+      this.setState({
+        loadingUsersPending: false
+      })
+    })
+    this.props.dispatch(fetchSiteRoles(this.props.siteZUID)).then(() => {
+      this.setState({
+        loadingRoles: false
+      })
+    })
+
     // this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
     // this.props.dispatch(fetchSiteCollections(this.props.siteZUID))
     // this.props.dispatch(fetchBlueprint(this.props.site.blueprintID))
-
-    // pending users
-    this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID))
 
     document.addEventListener('keydown', this.close)
   }
@@ -61,6 +81,9 @@ class PropertyOverview extends Component {
                 dispatch={this.props.dispatch}
                 users={this.props.users}
                 roles={this.props.roles}
+                loadingUsers={this.state.loadingUsers}
+                loadingUsersPending={this.state.loadingUsersPending}
+                loadingRoles={this.state.loadingRoles}
               />
             </article>
 

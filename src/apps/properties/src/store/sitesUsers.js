@@ -70,7 +70,7 @@ export const fetchSiteUsersPending = siteZUID => {
     dispatch({
       type: 'FETCHING_USERS_PENDING'
     })
-    request(`${config.API_ACCOUNTS}/instances/${siteZUID}/users/pending`)
+    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}/users/pending`)
       .then(users => {
         dispatch({
           type: 'FETCH_USERS_PENDING_SUCCESS',

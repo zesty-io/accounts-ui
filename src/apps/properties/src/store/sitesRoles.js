@@ -49,7 +49,7 @@ export const fetchSiteRoles = siteZuid => {
     dispatch({
       type: 'FETCHING_ROLES'
     })
-    request(`${config.API_ACCOUNTS}/instances/${siteZuid}/roles`)
+    return request(`${config.API_ACCOUNTS}/instances/${siteZuid}/roles`)
       .then(roles => {
         let normalizedRoles = {}
         roles.data.forEach(role => {

@@ -28,55 +28,56 @@ export default class Users extends Component {
   }
   render() {
     return (
-      <WithLoader condition={Object.keys(this.props.roles).length}>
-        <div className={styles.Users}>
-          <div className={styles.invite}>
-            <Input
-              className={styles.email}
-              type="email"
-              placeholder="Email of user to invite"
-              name="inviteeEmail"
-              value={this.state.inviteeEmail}
-              onChange={this.handleEmail}
-              required
-            />
-            <Select
-              onSelect={this.handleRole}
-              selection={this.state.selectedRole}
-              options={Object.keys(this.props.roles).map(ZUID => {
-                return {
-                  value: ZUID,
-                  html: this.props.roles[ZUID].name
-                }
-              })}
-            />
-            <Button onClick={this.handleInvite} disabled={this.state.submitted}>
-              <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
-            </Button>
-          </div>
-
-          <Divider />
-
-          <div className={styles.UserList}>
-            <header>
-              <h3>User Name</h3>
-              <h3>Role</h3>
-              <h3>Email</h3>
-            </header>
-            <main>
-              {Object.keys(this.props.users).map(ZUID => {
-                return (
-                  <UserRow
-                    key={ZUID}
-                    dispatch={this.props.dispatch}
-                    {...this.props.users[ZUID]}
-                  />
-                )
-              })}
-            </main>
-          </div>
+      <div className={styles.Users}>
+        <div className={styles.invite}>
+          <Input
+            className={styles.email}
+            type="email"
+            placeholder="Email of user to invite"
+            name="inviteeEmail"
+            value={this.state.inviteeEmail}
+            onChange={this.handleEmail}
+            required
+          />
+          <Select
+            onSelect={this.handleRole}
+            selection={this.state.selectedRole}
+            options={Object.keys(this.props.roles).map(ZUID => {
+              return {
+                value: ZUID,
+                html: this.props.roles[ZUID].name
+              }
+            })}
+          />
+          <Button onClick={this.handleInvite} disabled={this.state.submitted}>
+            <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
+          </Button>
         </div>
-      </WithLoader>
+
+        <Divider />
+
+        <div className={styles.UserList}>
+          <header>
+            <h3>User Name</h3>
+            <h3>Role</h3>
+            <h3>Email</h3>
+          </header>
+          <main>
+            {Object.keys(this.props.users).map(ZUID => {
+              return (
+                <UserRow
+                  key={ZUID}
+                  dispatch={this.props.dispatch}
+                  {...this.props.users[ZUID]}
+                />
+              )
+            })}
+            {this.props.loadingUsers || this.props.loadingUsersPending ? (
+              <Loader />
+            ) : null}
+          </main>
+        </div>
+      </div>
     )
   }
   handleInvite = evt => {
