@@ -18,12 +18,16 @@ class CompanyAccess extends Component {
   render() {
     return (
       <div className={styles.companyAccess}>
+        <p>
+          By providing a team access you can allow an external group of users
+          access to manage your web property. For example; this is can be used
+          to provide your agencies with access to manage your web property.
+        </p>
         <div className={styles.addCompany}>
-          <div className={styles.dropdownArea}>
-            <Select name="companyAccess" selection={{}} options={[]} />
-          </div>
+          <Input placeholder="Enter team ID" />
           <Button name="companyAccessSubmit">Grant Access</Button>
         </div>
+        <Divider />
         <div className={styles.companyTable}>
           <header>
             <h3>Company</h3>
@@ -32,25 +36,32 @@ class CompanyAccess extends Component {
             <h3>Access</h3>
           </header>
           <main>
-            <WithLoader condition={Object.keys(this.props.companies).length}>
-              {Object.keys(this.props.companies).map(companyZuid => {
-                let company = this.props.companies[companyZuid]
-                return (
-                  <article key={i}>
-                    <span>{company.name}</span>
-                    <span>{company.mainContactName}</span>
-                    <span>{company.mainContactEmail}</span>
-                    <span>
-                      <Toggle
-                        defaultChecked
-                        name={company.name}
-                        onChange={this.handleToggle}
-                      />
-                    </span>
-                  </article>
-                )
-              })}
-            </WithLoader>
+            {Object.keys(this.props.companies).map(ZUID => {
+              let company = this.props.companies[ZUID]
+              return (
+                <article key={ZUID}>
+                  <span>{company.name}</span>
+                  <span>{company.mainContactName}</span>
+                  <span>{company.mainContactEmail}</span>
+                  <span>
+                    <Toggle
+                      defaultChecked
+                      name={company.name}
+                      onChange={this.handleToggle}
+                    />
+                  </span>
+                </article>
+              )
+            })}
+
+            {!Object.keys(this.props.companies).length &&
+            !this.props.loadingTeams ? (
+              <article>
+                <em>No team access add for this web property.</em>
+              </article>
+            ) : null}
+
+            {this.props.loadingTeams ? <Loader /> : null}
           </main>
         </div>
       </div>

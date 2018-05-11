@@ -51,14 +51,13 @@ export const fetchSiteRoles = siteZuid => {
     })
     return request(`${config.API_ACCOUNTS}/instances/${siteZuid}/roles`)
       .then(roles => {
-        let normalizedRoles = {}
-        roles.data.forEach(role => {
-          return (normalizedRoles[role.ZUID] = role)
-        })
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
           siteZuid,
-          normalizedRoles
+          normalizedRoles: roles.data.reduce((acc, role) => {
+            acc[role.ZUID] = role
+            return acc
+          }, {})
         })
       })
       .catch(err => {

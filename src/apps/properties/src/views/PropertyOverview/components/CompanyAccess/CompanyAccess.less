@@ -5,19 +5,15 @@
     margin: 20px 0;
   }
   p {
-    line-height: 30px;
+    margin: 1rem 0;
+    max-width: 40rem;
   }
 
   .addCompany {
-    display: grid;
-    margin-bottom: 1rem;
-    grid-template-columns: 1fr 1fr 1.5fr 1fr;
-    grid-template-areas: '. . input button';
-    .dropdownArea {
-      grid-area: input;
-    }
+    display: flex;
+    padding: 0 0 1rem;
     input {
-      height: 350px;
+      flex: 1;
     }
     button {
       margin-left: 1rem;
@@ -28,7 +24,7 @@
 
   .companyTable {
     display: grid;
-    margin-bottom: 1rem;
+    padding: 1rem 0 0;
     header {
       display: grid;
       justify-items: start;

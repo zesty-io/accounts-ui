@@ -23,9 +23,6 @@ export default class Users extends Component {
       }
     }
   }
-  componentWillReceiveProps(state, props) {
-    console.log('Users:componentWillReceiveProps', state, props)
-  }
   render() {
     return (
       <div className={styles.Users}>
@@ -39,23 +36,26 @@ export default class Users extends Component {
             onChange={this.handleEmail}
             required
           />
-          <Select
-            onSelect={this.handleRole}
-            selection={this.state.selectedRole}
-            options={Object.keys(this.props.roles).map(ZUID => {
-              return {
-                value: ZUID,
-                html: this.props.roles[ZUID].name
-              }
-            })}
-          />
+          {Object.keys(this.props.roles).length ? (
+            <Select
+              onSelect={this.handleRole}
+              selection={this.state.selectedRole}
+              options={Object.keys(this.props.roles).map(ZUID => {
+                return {
+                  value: ZUID,
+                  html: this.props.roles[ZUID].name
+                }
+              })}
+            />
+          ) : (
+            <Loader />
+          )}
+
           <Button onClick={this.handleInvite} disabled={this.state.submitted}>
             <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
           </Button>
         </div>
-
         <Divider />
-
         <div className={styles.UserList}>
           <header>
             <h3>User Name</h3>

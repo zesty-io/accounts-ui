@@ -8,11 +8,13 @@ import styles from './PropertyOverview.less'
 import PropertyName from './components/PropertyName'
 import Domain from './components/Domain'
 import Users from './components/Users'
+import CompanyAccess from './components/CompanyAccess'
 import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
 
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
+import { fetchSiteCompanies } from '../../store/sitesCompanies'
 // import { fetchSite } from '../../store/sites'
 // import { fetchSiteCollections } from '../../store/sitesCollections'
 // import { updateSite } from '../../store/sites'
@@ -50,7 +52,11 @@ class PropertyOverview extends Component {
       })
     })
 
-    // this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
+    this.props.dispatch(fetchSiteCompanies(this.props.siteZUID)).then(() => {
+      this.setState({
+        loadingTeams: false
+      })
+    })
     // this.props.dispatch(fetchSiteCollections(this.props.siteZUID))
     // this.props.dispatch(fetchBlueprint(this.props.site.blueprintID))
 
@@ -87,13 +93,16 @@ class PropertyOverview extends Component {
               />
             </article>
 
-            {/* <article className={styles.card}>
+            <article className={styles.card}>
               <h2>
                 <i className="fa fa-building" aria-hidden="true" />
                 &nbsp;Company Access
               </h2>
-              <CompanyAccess />
-            </article> */}
+              <CompanyAccess
+                companies={this.props.companies}
+                loadingTeams={this.state.loadingTeams}
+              />
+            </article>
 
             {/* <article className={styles.card}>
               <h2>
@@ -127,9 +136,10 @@ export default withRouter(
     const siteZUID = props.match.params.hash
     return {
       siteZUID,
+      site: state.sites[siteZUID] || {},
       users: state.sitesUsers[siteZUID] || {},
       roles: state.sitesRoles[siteZUID] || {},
-      site: state.sites[siteZUID] || {}
+      companies: state.sitesCompanies[siteZUID] || {}
     }
   })(PropertyOverview)
 )
