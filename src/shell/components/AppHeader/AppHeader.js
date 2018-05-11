@@ -21,6 +21,10 @@ export default class AppHeader extends Component {
             <i className="fa fa-globe" aria-hidden="true" />
             &nbsp;Web Properties
           </NavLink>
+          <NavLink to="/teams">
+            <i className="fa fa-users" aria-hidden="true" />
+            &nbsp;Teams
+          </NavLink>
         </nav>
         {/* <nav className={styles.HelpNav}>
           <a href="https://developer.zesty.io" target="_blank">
@@ -52,16 +56,6 @@ export default class AppHeader extends Component {
               <NavLink to="/settings/account">
                 <i className="fa fa-cog" aria-hidden="true" />
                 &nbsp;My Account
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink to="/teams">
-                <i
-                  className={cx(styles.icon, 'fa fa-users')}
-                  aria-hidden="true"
-                />{' '}
-                Teams
               </NavLink>
             </li>
 
