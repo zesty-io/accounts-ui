@@ -43,7 +43,11 @@ export default class Users extends Component {
             {Object.keys(this.props.roles).length ? (
               Object.keys(this.props.roles).map(ZUID => {
                 return (
-                  <Option value={ZUID} text={this.props.roles[ZUID].name} />
+                  <Option
+                    key={ZUID}
+                    value={ZUID}
+                    text={this.props.roles[ZUID].name}
+                  />
                 )
               })
             ) : (

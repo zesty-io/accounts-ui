@@ -69,10 +69,10 @@ class PropertyOverview extends Component {
     return (
       <section className={styles.PropertyOverviewWrap}>
         <article className={styles.PropertyOverview}>
+          <Button className={styles.CloseOverview} onClick={this.close}>
+            <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
+          </Button>
           <header className={styles.PropertyOverviewHeader}>
-            <Button className={styles.close} onClick={this.close}>
-              <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
-            </Button>
             <PropertyName name={this.props.site.name} />
             {/* <Domain siteZUID={this.props.site.ZUID} site={this.props.site} /> */}
           </header>

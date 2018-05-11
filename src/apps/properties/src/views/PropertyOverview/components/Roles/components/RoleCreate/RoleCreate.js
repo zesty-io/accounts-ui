@@ -24,6 +24,7 @@ export class RoleCreate extends Component {
             type="text"
             name="name"
             placeholder="Name this custom role"
+            autoComplete="off"
             value={this.state.name}
             onChange={this.onChange}
           />
@@ -36,7 +37,11 @@ export class RoleCreate extends Component {
           >
             {Object.keys(this.props.systemRoles).map(ZUID => {
               return (
-                <Option value={ZUID} text={this.props.systemRoles[ZUID].name} />
+                <Option
+                  key={ZUID}
+                  value={ZUID}
+                  text={this.props.systemRoles[ZUID].name}
+                />
               )
             })}
           </Select>
