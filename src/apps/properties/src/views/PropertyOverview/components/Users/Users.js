@@ -36,21 +36,20 @@ export default class Users extends Component {
             onChange={this.handleEmail}
             required
           />
-          {Object.keys(this.props.roles).length ? (
-            <Select
-              onSelect={this.handleRole}
-              selection={this.state.selectedRole}
-              options={Object.keys(this.props.roles).map(ZUID => {
-                return {
-                  value: ZUID,
-                  html: this.props.roles[ZUID].name
-                }
-              })}
-            />
-          ) : (
-            <Loader />
-          )}
-
+          <Select
+            onSelect={this.handleRole}
+            selection={this.state.selectedRole}
+          >
+            {Object.keys(this.props.roles).length ? (
+              Object.keys(this.props.roles).map(ZUID => {
+                return (
+                  <Option value={ZUID} text={this.props.roles[ZUID].name} />
+                )
+              })
+            ) : (
+              <Loader />
+            )}
+          </Select>
           <Button onClick={this.handleInvite} disabled={this.state.submitted}>
             <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
           </Button>

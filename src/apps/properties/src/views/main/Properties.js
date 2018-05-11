@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import styles from './Websites.less'
 
 import { fetchSites } from '../../store/sites'
+import { fetchSystemRoles } from '../../../../../shell/store/systemRoles'
 
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
@@ -16,6 +17,7 @@ class Properties extends Component {
       window.location = '/properties/create'
     } else {
       this.props.dispatch(fetchSites())
+      this.props.dispatch(fetchSystemRoles())
     }
   }
   render() {

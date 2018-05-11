@@ -86,7 +86,7 @@ class PropertyOverview extends Component {
                 siteZUID={this.props.site.ZUID}
                 dispatch={this.props.dispatch}
                 users={this.props.users}
-                roles={this.props.roles}
+                roles={this.props.allRoles}
                 loadingUsers={this.state.loadingUsers}
                 loadingUsersPending={this.state.loadingUsersPending}
                 loadingRoles={this.state.loadingRoles}
@@ -109,7 +109,11 @@ class PropertyOverview extends Component {
                 <i className="fa fa-lock" aria-hidden="true" />
                 &nbsp;Site Roles
               </h2>
-              <Roles />
+              <Roles
+                siteZUID={this.props.siteZUID}
+                siteRoles={this.props.siteRoles}
+                systemRoles={this.props.systemRoles}
+              />
             </article>
 
             {/* <article className={styles.card}>
@@ -136,9 +140,14 @@ export default withRouter(
     const siteZUID = props.match.params.hash
     return {
       siteZUID,
+      systemRoles: state.systemRoles,
+      siteRoles: state.sitesRoles[siteZUID] || {},
+      allRoles: {
+        ...state.systemRoles,
+        ...state.sitesRoles[siteZUID]
+      },
       site: state.sites[siteZUID] || {},
       users: state.sitesUsers[siteZUID] || {},
-      roles: state.sitesRoles[siteZUID] || {},
       companies: state.sitesCompanies[siteZUID] || {}
     }
   })(PropertyOverview)
