@@ -33,17 +33,22 @@ class PropertyOverview extends Component {
 
     // pending users
     this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID))
+
+    document.addEventListener('keydown', this.close)
+  }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.close)
   }
   render() {
     return (
       <section className={styles.PropertyOverviewWrap}>
         <article className={styles.PropertyOverview}>
           <header className={styles.PropertyOverviewHeader}>
-            <Link className={styles.close} to="/properties/">
+            <Button className={styles.close} onClick={this.close}>
               <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
-            </Link>
+            </Button>
             <PropertyName name={this.props.site.name} />
-            <Domain siteZUID={this.props.site.ZUID} site={this.props.site} />
+            {/* <Domain siteZUID={this.props.site.ZUID} site={this.props.site} /> */}
           </header>
           <main>
             <article className={styles.card}>
@@ -86,6 +91,11 @@ class PropertyOverview extends Component {
         </article>
       </section>
     )
+  }
+  close = evt => {
+    if (evt.key === 'Escape' || evt.type === 'click') {
+      this.props.history.goBack()
+    }
   }
 }
 
