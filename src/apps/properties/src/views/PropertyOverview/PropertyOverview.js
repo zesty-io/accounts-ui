@@ -104,7 +104,7 @@ class PropertyOverview extends Component {
               />
             </article>
 
-            {/* <article className={styles.card}>
+            <article className={styles.card}>
               <h2>
                 <i className="fa fa-lock" aria-hidden="true" />
                 &nbsp;Site Roles
@@ -112,7 +112,7 @@ class PropertyOverview extends Component {
               <Roles />
             </article>
 
-            <article className={styles.card}>
+            {/* <article className={styles.card}>
               <h2>
                 <i className="fa fa-file-code-o" aria-hidden="true" />
                 &nbsp;Blueprint

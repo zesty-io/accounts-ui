@@ -37,7 +37,7 @@ export default class Select extends React.Component {
       })
     }
   }
-  
+
   renderFilter() {
     if (
       (this.props.children && this.props.children.length > 50) ||
@@ -169,14 +169,14 @@ export default class Select extends React.Component {
         <span className={styles.selection}>
           <i
             className={cx(
-              'icon icon-chevron-right',
+              'fa fa-chevron-right',
               styles.chevron,
               styles['icon-chevron-right']
             )}
           />
           <i
             className={cx(
-              'icon icon-chevron-down',
+              'fa fa-chevron-down',
               styles.chevron,
               styles['icon-chevron-down']
             )}

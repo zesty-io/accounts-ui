@@ -125,8 +125,13 @@ class Roles extends Component {
   }
   render() {
     return (
-      <div className={styles.permissionsWrapper}>
-        <form className={styles.formGrid}>
+      <div className={styles.Roles}>
+        <p>
+          By creating custom roles you can provide fine grained controls of what
+          content specific users can access and what actions the can take.
+        </p>
+
+        <form className={styles.RoleCreate}>
           <span className={styles.label}>
             <label>Label</label>
             <Input
@@ -182,6 +187,9 @@ class Roles extends Component {
             {this.state.submitted ? 'Creating Role' : 'Create Role'}
           </Button>
         </form>
+
+        <Divider />
+
         <div className={styles.currentRoles}>
           <header>
             <h3>Role</h3>
