@@ -8,6 +8,7 @@ import { auth } from './auth'
 import { notifications } from './notifications'
 import { modal } from './modal'
 import { confirm } from './confirm'
+import { systemRoles } from './systemRoles'
 import { properties } from '../../apps/properties/src/store'
 import { teams } from '../../apps/teams/src/store'
 
@@ -30,7 +31,8 @@ const appReducer = combineReducers({
   auth,
   modal,
   confirm,
-  notifications
+  notifications,
+  systemRoles
 })
 
 export const store = createStore(
