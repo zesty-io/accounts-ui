@@ -1,7 +1,7 @@
 import styles from './Select.less'
 import cx from 'classnames'
 
-export default class Select extends React.Component {
+export class Select extends React.Component {
   constructor(props) {
     super(props)
 
@@ -216,7 +216,7 @@ export default class Select extends React.Component {
   }
 }
 
-export const Option = ({ value, html, text, onClick }) => {
+export function Option({ value, html, text, onClick }) {
   if (html) {
     return (
       <li
