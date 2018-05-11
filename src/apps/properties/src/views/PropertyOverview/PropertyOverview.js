@@ -15,6 +15,7 @@ import Blueprint from './components/Blueprint'
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
 import { fetchSiteCompanies } from '../../store/sitesCompanies'
+import { fetchBlueprint } from '../../store/blueprints'
 // import { fetchSite } from '../../store/sites'
 // import { fetchSiteCollections } from '../../store/sitesCollections'
 // import { updateSite } from '../../store/sites'
@@ -34,13 +35,11 @@ class PropertyOverview extends Component {
     }
   }
   componentDidMount() {
-    // Fetch Users
     this.props.dispatch(fetchSiteUsers(this.props.siteZUID)).then(() => {
       this.setState({
         loadingUsers: false
       })
     })
-    // pending users
     this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID)).then(() => {
       this.setState({
         loadingUsersPending: false
@@ -51,14 +50,21 @@ class PropertyOverview extends Component {
         loadingRoles: false
       })
     })
-
     this.props.dispatch(fetchSiteCompanies(this.props.siteZUID)).then(() => {
       this.setState({
         loadingTeams: false
       })
     })
+    this.props
+      .dispatch(fetchBlueprint(this.props.site.blueprintID))
+      .then(() => {
+        console.log('blueprint loaded')
+        this.setState({
+          loadingBlueprint: false
+        })
+      })
+
     // this.props.dispatch(fetchSiteCollections(this.props.siteZUID))
-    // this.props.dispatch(fetchBlueprint(this.props.site.blueprintID))
 
     document.addEventListener('keydown', this.close)
   }
@@ -116,13 +122,17 @@ class PropertyOverview extends Component {
               />
             </article>
 
-            {/* <article className={styles.card}>
+            <article className={styles.card}>
               <h2>
                 <i className="fa fa-file-code-o" aria-hidden="true" />
                 &nbsp;Blueprint
               </h2>
-              <Blueprint />
-            </article> */}
+              <Blueprint
+                loadingBlueprint={this.state.loadingBlueprint}
+                siteZUID={this.props.siteZUID}
+                blueprint={this.props.blueprint}
+              />
+            </article>
           </main>
         </article>
       </section>
@@ -148,7 +158,10 @@ export default withRouter(
       },
       site: state.sites[siteZUID] || {},
       users: state.sitesUsers[siteZUID] || {},
-      companies: state.sitesCompanies[siteZUID] || {}
+      companies: state.sitesCompanies[siteZUID] || {},
+      blueprint: state.sites[siteZUID]
+        ? state.blueprints[state.sites[siteZUID].blueprintID] || {}
+        : {}
     }
   })(PropertyOverview)
 )
