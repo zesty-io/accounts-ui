@@ -10,7 +10,7 @@ import { Line } from 'react-chartjs-2'
 const WebsiteCard = props => {
   const { site } = props
   return (
-    <article className={styles.WebsiteCard}>
+    <article className={styles.WebsiteCard} style={props.style}>
       <header>
         <h1>{site.name}</h1>
         {site.domain ? (
@@ -31,7 +31,8 @@ const WebsiteCard = props => {
           title={`Preview  ${site.name}`}
           href={`${config.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
             config.PREVIEW_URL
-          }`}>
+          }`}
+        >
           {' '}
           {site.screenshotUrl ? (
             <img src={site.screenshotUrl} />
@@ -47,7 +48,8 @@ const WebsiteCard = props => {
             target="_blank"
             href={`${config.MANAGER_URL_PROTOCOL}${site.randomHashID}${
               config.MANAGER_URL
-            }`}>
+            }`}
+          >
             <i className="fa fa-external-link" aria-hidden="true" /> Site
             Manager
           </Url>
