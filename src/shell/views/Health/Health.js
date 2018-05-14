@@ -1,10 +1,8 @@
-import React from 'react'
+import react from 'react'
 
-import build from './build.js'
-
-const Health = () => {
+function Health () {
   return (
-    JSON.stringify(build)
+    <pre>{JSON.stringify(window.APP_HEALTH, null, 2)}</pre>
   )
 }
 
