@@ -5,6 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const copyFiles = require('./copyFiles')
 const runPkgCmd = require('./runPkgCmd')
+const health = require('./health')
 
 const root = path.resolve(__dirname, '../')
 const src = root + '/src'
@@ -12,12 +13,12 @@ const appDir = root + '/src/apps'
 
 copyFiles(root + '/public', root + '/build')
 
-fs.readdirSync(src)
-  .forEach((dir) => {
-    runPkgCmd(path.join(src, dir), 'build')
-  })
+fs.readdirSync(src).forEach(dir => {
+  runPkgCmd(path.join(src, dir), 'build')
+})
 
-fs.readdirSync(appDir)
-  .forEach((app) => {
-    runPkgCmd(path.join(appDir, app), 'build')
-  })
+fs.readdirSync(appDir).forEach(app => {
+  runPkgCmd(path.join(appDir, app), 'build')
+})
+
+health()
