@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
 
+import styles from './TeamCard.less'
 class TeamCard extends Component {
   render() {
     const { team } = this.props
     return (
-      <div>
-        <p>{JSON.stringify(team)}</p>
-      </div>
+      <article>
+        <header>{team.name}</header>
+        <main>
+          {team.members.map(member => {
+            return <p>{`${member.name}, ${member.email}`}</p>
+          })}
+        </main>
+        <footer />
+      </article>
     )
   }
 }

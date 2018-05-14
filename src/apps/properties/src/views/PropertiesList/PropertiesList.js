@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
+import { WindowScroller, List } from 'react-virtualized'
+
 import styles from './PropertiesList.less'
 
 import PropertiesHeader from '../../components/PropertiesHeader'
@@ -18,7 +20,7 @@ class Properties extends Component {
         <main className={styles.siteListWrap}>
           {Object.keys(this.props.sitesFiltered).length ? (
             <div className={styles.siteList}>
-              {/* render invites */}
+              
               {Object.keys(this.props.sites)
                 .filter(
                   zuid =>
@@ -30,14 +32,16 @@ class Properties extends Component {
                   )
                 })}
 
-              {/* render sites user has access */}
               {Object.keys(this.props.sitesFiltered)
                 .filter(
                   zuid =>
                     this.props.sitesFiltered[zuid] &&
                     !this.props.sitesFiltered[zuid].inviteZUID
                 )
-                .map(zuid => {
+                .map((zuid, i) => {
+                  if(i >= 100){
+                    return
+                  }
                   return (
                     <WebsiteCard
                       key={zuid}
@@ -45,7 +49,6 @@ class Properties extends Component {
                     />
                   )
                 })}
-              {/* TODO: if site and !sitesFiltered display 'no results' */}
               <Route path="/properties/:hash" component={PropertyOverview} />
               <Route
                 path="/properties/invite/:hash"
