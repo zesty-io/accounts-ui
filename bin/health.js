@@ -20,10 +20,11 @@ module.exports = function health() {
   //create a health file
   const version = package.version
 
-  const healthDoc = `export default {
+  const healthDoc = `const HEALTH = {
     version: '${version || ''}',
     environment: '${process.env.NODE_ENV || 'no env found'}',
     buildDateTime: '${formatDateTime(Date.now())}'
-  }`
+  }
+  window.APP_HEALTH = HEALTH`
   fs.writeFileSync(`${root}/build/health.js`, healthDoc)
 }
