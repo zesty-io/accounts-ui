@@ -10,56 +10,69 @@ import { Line } from 'react-chartjs-2'
 const WebsiteCard = props => {
   const { site } = props
   return (
-    <article className={styles.WebsiteCard}>
-      <header>
+    <Card className={styles.WebsiteCard}>
+      <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
         {site.domain ? (
           <Url target="_blank" href={`http://${site.domain}`}>
             <i className="fa fa-globe" aria-hidden="true" />&nbsp;{site.domain}
           </Url>
         ) : (
-          <Link to={`/properties/${site.ZUID}`}>
+          <AppLink to={`/properties/${site.ZUID}`}>
             <i className="fa fa-plus" aria-hidden="true" />
             &nbsp;Set Domain
-          </Link>
+          </AppLink>
         )}
-      </header>
-      <main className={styles.WebsiteManage}>
+      </CardHeader>
+      <CardContent className={styles.CardContent}>
         <Url
           className={styles.preview}
           target="_blank"
           title={`Preview  ${site.name}`}
           href={`${config.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
             config.PREVIEW_URL
-          }`}>
-          {' '}
+          }`}
+        >
           {site.screenshotUrl ? (
             <img src={site.screenshotUrl} />
           ) : (
             <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
           )}
         </Url>
-      </main>
-      <footer>
+      </CardContent>
+      <CardFooter>
         <ButtonGroup className={styles.controls}>
           <Url
             className={styles.manager}
             target="_blank"
             href={`${config.MANAGER_URL_PROTOCOL}${site.randomHashID}${
               config.MANAGER_URL
-            }`}>
+            }`}
+          >
             <i className="fa fa-external-link" aria-hidden="true" /> Site
             Manager
           </Url>
-          <Link to={`/properties/${site.ZUID}`}>
+          <AppLink to={`/properties/${site.ZUID}`}>
             <i
               className={cx(styles.settings, 'fa fa-cog')}
               aria-hidden="true"
             />
-          </Link>
+          </AppLink>
         </ButtonGroup>
-      </footer>
-    </article>
+      </CardFooter>
+    </Card>
+
+    // <article className={styles.WebsiteCard}>
+    //   <header>
+    //
+    //   </header>
+    //   <main className={styles.WebsiteManage}>
+    //
+    //   </main>
+    //   <footer>
+    //
+    //   </footer>
+    // </article>
   )
 }
 

@@ -1,43 +1,18 @@
 @import url('../../../../../shell/styles/colors.less');
+
 .WebsiteCard {
-  background: lighten(#f2f4fb, 2.5%);
-  margin: 1.5rem;
-  max-width: 60rem;
-  word-break: break-word;
-
-  display: flex;
-  flex-direction: column;
-
   display: grid;
-  grid-template-rows: 1fr 2fr 0fr;
-
-  a:visited,
-  a {
-    color: #497edf;
-    margin: 0;
-    text-decoration: none;
-  }
-  header {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    background: lighten(#f2f4fb, 2%);
-    border-bottom: 1px solid #f2f4fb;
-
+  grid-template-rows: 1fr 190px 30px;
+  .CardHeader {
     h1 {
       font-size: 1.2em;
     }
     a {
       font-size: 0.9rem;
+      margin: 0;
     }
   }
-  main {
-    border-bottom: 1px solid #f2f4fb;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+  .CardContent {
     .preview {
       display: flex;
       align-items: center;
@@ -54,20 +29,81 @@
       }
     }
   }
-  footer {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-
-    .controls {
-      flex: 1;
-      display: flex;
-      display: grid;
-      grid-template-columns: 1fr 20px;
-      .manager {
-        color: @zesty-orange;
-        text-shadow: 1px 1px 0 @white;
-      }
-    }
+  .controls {
+    display: grid;
+    grid-template-columns: 1fr 20px;
   }
 }
+
+// .WebsiteCard {
+//   background: lighten(#f2f4fb, 2.5%);
+//   margin: 1.5rem;
+//   max-width: 60rem;
+//   word-break: break-word;
+//
+//   display: flex;
+//   flex-direction: column;
+//
+//   display: grid;
+//   grid-template-rows: 1fr 2fr 0fr;
+//
+//   a:visited,
+//   a {
+//     color: #497edf;
+//     margin: 0;
+//     text-decoration: none;
+//   }
+//   header {
+//     display: flex;
+//     flex-direction: column;
+//     padding: 1rem;
+//     background: lighten(#f2f4fb, 2%);
+//     border-bottom: 1px solid #f2f4fb;
+//
+//     h1 {
+//       font-size: 1.2em;
+//     }
+//     a {
+//       font-size: 0.9rem;
+//     }
+//   }
+//   main {
+//     border-bottom: 1px solid #f2f4fb;
+//     padding: 1rem;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//
+//     .preview {
+//       display: flex;
+//       align-items: center;
+//       font-size: 10rem;
+//       justify-content: center;
+//       color: #cacad4;
+//
+//       img {
+//         max-width: 100%;
+//       }
+//
+//       &:hover {
+//         color: @zesty-orange;
+//       }
+//     }
+//   }
+//   footer {
+//     display: flex;
+//     flex-direction: column;
+//     padding: 1rem;
+//
+//     .controls {
+//       flex: 1;
+//       display: flex;
+//       display: grid;
+//       grid-template-columns: 1fr 20px;
+//       .manager {
+//         color: @zesty-orange;
+//         text-shadow: 1px 1px 0 @white;
+//       }
+//     }
+//   }
+// }
