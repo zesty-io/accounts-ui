@@ -9,7 +9,7 @@ class TeamCard extends Component {
         <header>{team.name}</header>
         <main>
           {team.members.map(member => {
-            return <p>{`${member.name}, ${member.email}`}</p>
+            return <p key={member.ZUID}>{`${member.name}, ${member.email}`}</p>
           })}
         </main>
         <footer />
