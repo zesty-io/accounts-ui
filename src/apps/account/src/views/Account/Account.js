@@ -24,7 +24,6 @@ class Account extends Component {
         </div>
 
         <div className={styles.setting}>
-          {/* <h1>Your Blueprint Settings</h1> */}
           <Blueprints />
         </div>
       </section>

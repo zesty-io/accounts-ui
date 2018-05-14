@@ -12,6 +12,10 @@
     margin: 0 0 2rem 0;
 
     .SettingCards {
+      display: grid;
+      grid-gap: 1.3rem;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
@@ -25,26 +29,8 @@
       @media (max-width: 850px) {
         grid-template-columns: 1fr;
       }
-      @media (min-width: 1750px) {
-        display: flex;
-        flex-direction: row;
-      }
       article {
         justify-self: center;
-        height: 350px;
-        width: 350px;
-        // @media (max-width: 1750px) {
-        //   grid-template-columns: 1fr 1fr;
-        //   max-width: 450px;
-        // }
-        // @media (max-width: 850px) {
-        //   grid-template-columns: 1fr;
-        //   max-width: 450px;
-        // }
-        // @media (min-width: 1750px) {
-        //   display: flex;
-        //   flex-direction: row;
-        // }
       }
     }
     h1 {
