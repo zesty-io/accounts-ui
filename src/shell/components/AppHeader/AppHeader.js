@@ -14,13 +14,11 @@ export default class AppHeader extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('mouseup', evt => {
-      if (this.state.userNavOpen === 'show' && evt.target.parentElement.nodeName !== 'LI') {
-        return this.setState(state => {
-          return { userNavOpen: '' }
-        })
-      }
-    })
+    document.addEventListener('mouseup', this.handleOutsideClick)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mouseup', this.handleOutsideClick)
   }
 
   render() {
@@ -97,5 +95,13 @@ export default class AppHeader extends Component {
     this.setState({
       userNavOpen: this.state.userNavOpen === 'show' ? '' : 'show'
     })
+  }
+
+  handleOutsideClick = evt => {
+    if (this.state.userNavOpen === 'show' && evt.target.parentElement.nodeName !== 'LI') {
+      return this.setState(state => {
+        return { userNavOpen: '' }
+      })
+    }
   }
 }
