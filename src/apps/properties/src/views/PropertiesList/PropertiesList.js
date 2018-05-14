@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-import { WindowScroller, List } from 'react-virtualized'
 
 import styles from './PropertiesList.less'
 
@@ -20,7 +19,6 @@ class Properties extends Component {
         <main className={styles.siteListWrap}>
           {Object.keys(this.props.sitesFiltered).length ? (
             <div className={styles.siteList}>
-              
               {Object.keys(this.props.sites)
                 .filter(
                   zuid =>
@@ -39,7 +37,7 @@ class Properties extends Component {
                     !this.props.sitesFiltered[zuid].inviteZUID
                 )
                 .map((zuid, i) => {
-                  if(i >= 100){
+                  if (i >= 100) {
                     return
                   }
                   return (
