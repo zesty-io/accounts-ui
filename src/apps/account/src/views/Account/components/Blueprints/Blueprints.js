@@ -29,13 +29,15 @@ class Blueprints extends Component {
           <WithLoader condition={this.props.blueprints.length}>
             {this.props.blueprints.map(blueprint => {
               return (
-                <article className={styles.Blueprint} key={blueprint.ZUID}>
-                  <header>
-                    <h1 className={styles.name}>{blueprint.name}</h1>
-                  </header>
-                  <main>
+                <Card key={blueprint.ZUID}>
+                  <CardHeader>
+                    <h1>{blueprint.name}</h1>
+                  </CardHeader>
+                  <CardContent className={styles.Blueprint}>
                     {blueprint.coverImage ? (
                       <img
+                        width="300px"
+                        height="150px"
                         src={blueprint.coverImage}
                         alt="Blueprint is missing an image"
                       />
@@ -45,13 +47,13 @@ class Blueprints extends Component {
                       </div>
                     )}
                     <p>{blueprint.shortDescription}</p>
-                  </main>
-                  <footer>
+                  </CardContent>
+                  <CardFooter>
                     <AppLink to={`/settings/blueprints/${blueprint.ID}`}>
-                      Edit
+                      <i className="fa fa-pencil-square-o" aria-hidden="true" />&nbsp;Edit
                     </AppLink>
-                  </footer>
-                </article>
+                  </CardFooter>
+                </Card>
               )
             })}
           </WithLoader>
