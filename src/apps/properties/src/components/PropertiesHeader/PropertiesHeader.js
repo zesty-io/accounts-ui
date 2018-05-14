@@ -9,14 +9,14 @@ class PropertiesHeader extends Component {
   render() {
     return (
       <header className={styles.PropertiesHeader}>
-        <div className={styles.actions}>
+        <div className={styles.Actions}>
           <Search
-            className={styles.filter}
+            className={styles.Search}
             placeholder="Search by web property name or domain"
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
-          <Button className={styles.save} onClick={this.onCreateSite}>
+          <Button className={styles.Create} onClick={this.onCreateSite}>
             <i className="fa fa-plus" /> Create Web Property
           </Button>
         </div>
