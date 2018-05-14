@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import styles from './Blueprint.less'
 
-export default class Blueprint extends Component {
+class Blueprint extends Component {
   constructor(props) {
     super(props)
   }
@@ -35,3 +36,5 @@ export default class Blueprint extends Component {
     this.props.history.push(`${this.props.siteZUID}/blueprint`)
   }
 }
+
+export default withRouter(Blueprint)
