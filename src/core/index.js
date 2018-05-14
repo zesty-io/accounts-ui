@@ -1,5 +1,6 @@
 import Button from './Button'
 import ButtonGroup from './ButtonGroup'
+import { Card, CardHeader, CardContent, CardFooter } from './Card'
 import Divider from './Divider'
 import Url from './Url'
 import AppLink from './AppLink'
@@ -17,6 +18,10 @@ import Infotip from './Infotip'
 // depend on these components.
 window.Button = Button
 window.ButtonGroup = ButtonGroup
+window.Card = Card
+window.CardHeader = CardHeader
+window.CardContent = CardContent
+window.CardFooter = CardFooter
 window.Divider = Divider
 window.Url = Url
 window.AppLink = AppLink
