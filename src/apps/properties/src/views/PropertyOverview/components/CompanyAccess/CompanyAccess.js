@@ -21,7 +21,7 @@ class CompanyAccess extends Component {
         <p>
           By providing a team access you can allow an external group of users
           access to manage your web property. For example; this is can be used
-          to provide your agencies with access to manage your web property.
+          to provide an agency with access to manage your web property.
         </p>
         <div className={styles.addCompany}>
           <Input placeholder="Enter team ID" />
