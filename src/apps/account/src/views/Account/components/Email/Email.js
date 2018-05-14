@@ -14,7 +14,67 @@ class Email extends Component {
       email: ''
     }
   }
-
+  render() {
+    return (
+      <Card>
+        <CardHeader>
+          <h1>Email</h1>
+        </CardHeader>
+        <CardContent className={styles.Email}>
+          <p>
+            Setting up multiple emails lets you accept all of your account
+            invitations in one place.
+          </p>
+          {this.props.user.verifiedEmails.map((email, i) => {
+            return (
+              <div className={styles.Email} key={i}>
+                <i
+                  className={cx(styles.verified, 'fa fa-check-square-o')}
+                  aria-hidden="true"
+                  title="This email is verified"
+                />
+                <span>{email}</span>
+                {this.props.user.email === email ? (
+                  <strong className={styles.primary}>(Primary)</strong>
+                ) : null}
+              </div>
+            )
+          })}
+          {this.props.user.unverifiedEmails.map((email, i) => {
+            return (
+              <div className={styles.Email} key={i}>
+                <i
+                  className="fa fa-calendar-check-o"
+                  aria-hidden="true"
+                  title="This email is waiting to be verified"
+                />
+                <span>{email}</span>
+                {this.props.user.email === email ? (
+                  <strong className={styles.primary}>(Primary)</strong>
+                ) : null}
+              </div>
+            )
+          })}
+          <Input
+            type="text"
+            placeholder="email@acme-corp.com"
+            className={styles.field}
+            onChange={this.handleChange}
+          />
+        </CardContent>
+        <CardFooter>
+          <Button
+            className={styles.button}
+            disabled={this.state.submitted}
+            onClick={this.handleAddEmail}
+          >
+            <i className="fa fa-plus" aria-hidden="true" />
+            Add Email
+          </Button>
+        </CardFooter>
+      </Card>
+    )
+  }
   handleChange = evt => {
     this.setState({
       email: evt.target.value
@@ -57,67 +117,6 @@ class Email extends Component {
         })
       )
     }
-  }
-
-  render() {
-    return (
-      <article className={styles.EmailSettings}>
-        <header>
-          <h2>Email</h2>
-        </header>
-        <main>
-          <p>
-            Setting up multiple emails lets you accept all of your account
-            invitations in one place.
-          </p>
-          {this.props.user.verifiedEmails.map((email, i) => {
-            return (
-              <div className={styles.Email} key={i}>
-                <i
-                  className={cx(styles.verified, 'fa fa-check-square-o')}
-                  aria-hidden="true"
-                  title="This email is verified"
-                />
-                <span>{email}</span>
-                {this.props.user.email === email ? (
-                  <strong className={styles.primary}>(Primary)</strong>
-                ) : null}
-              </div>
-            )
-          })}
-          {this.props.user.unverifiedEmails.map((email, i) => {
-            return (
-              <div className={styles.Email} key={i}>
-                <i
-                  className="fa fa-calendar-check-o"
-                  aria-hidden="true"
-                  title="This email is waiting to be verified"
-                />
-                <span>{email}</span>
-                {this.props.user.email === email ? (
-                  <strong className={styles.primary}>(Primary)</strong>
-                ) : null}
-              </div>
-            )
-          })}
-          <Input
-            type="text"
-            placeholder="email@acme-corp.com"
-            className={styles.field}
-            onChange={this.handleChange}
-          />
-        </main>
-        <footer>
-          <Button
-            className={styles.button}
-            disabled={this.state.submitted}
-            onClick={this.handleAddEmail}>
-            <i className="fa fa-plus" aria-hidden="true" />
-            Add Email
-          </Button>
-        </footer>
-      </article>
-    )
   }
 }
 

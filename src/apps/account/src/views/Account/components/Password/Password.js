@@ -19,11 +19,11 @@ class Password extends Component {
   }
   render() {
     return (
-      <article className={styles.Password}>
-        <header>
-          <h2>Password</h2>
-        </header>
-        <main>
+      <Card>
+        <CardHeader>
+          <h1>Password</h1>
+        </CardHeader>
+        <CardContent className={styles.Password}>
           <p>
             Minimum eight characters, at least one uppercase letter, one
             lowercase letter and one number
@@ -54,14 +54,14 @@ class Password extends Component {
             type="password"
             required
           />
-        </main>
-        <footer>
+        </CardContent>
+        <CardFooter>
           <Button onClick={this.handleClick}>
             <i className="fa fa-floppy-o" aria-hidden="true" />
             Set Password
           </Button>
-        </footer>
-      </article>
+        </CardFooter>
+      </Card>
     )
   }
   handleChange = evt => {

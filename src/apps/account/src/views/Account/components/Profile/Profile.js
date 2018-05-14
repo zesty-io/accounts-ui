@@ -15,6 +15,51 @@ class Profile extends Component {
       submitted: false
     }
   }
+  render() {
+    return (
+      <Card>
+        <CardHeader>
+          <h1>Your Profile</h1>
+        </CardHeader>
+        <CardContent className={styles.Profile}>
+          <div className={styles.gravatar}>
+            <h3>Gravatar</h3>
+            <img
+              className={styles.avatar}
+              src={`https://www.gravatar.com/avatar/${
+                this.props.profile.emailHash
+              }?d=mm&s=80`}
+            />
+          </div>
+          <h3>Name</h3>
+          <Input
+            type="text"
+            value={this.props.profile.firstName}
+            onChange={this.handleChange}
+            placeholder="Enter your first name"
+            name="firstName"
+          />
+          <Input
+            type="text"
+            value={this.props.profile.lastName}
+            onChange={this.handleChange}
+            placeholder="Enter your last name"
+            name="lastName"
+          />
+        </CardContent>
+        <CardFooter>
+          <Button
+            onClick={this.handleClick}
+            className={styles.ProfileSave}
+            disabled={this.state.submitted}
+          >
+            <i className="fa fa-floppy-o" aria-hidden="true" />
+            Set Name
+          </Button>
+        </CardFooter>
+      </Card>
+    )
+  }
   handleClick = evt => {
     evt.preventDefault()
     this.setState({ submitted: !this.state.submitted })
@@ -24,7 +69,7 @@ class Profile extends Component {
         this.props.dispatch(
           notify({
             HTML: `<p>
-        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name updated to 
+        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name updated to
         ${this.props.profile.firstName}
         ${this.props.profile.lastName}
       </p>`,
@@ -48,54 +93,11 @@ class Profile extends Component {
   handleChange = evt => {
     this.props.dispatch(updateProfile({ [evt.target.name]: evt.target.value }))
   }
-  render() {
-    return (
-      <article className={styles.Profile}>
-        <header>
-          <h2>Your Profile</h2>
-        </header>
-        <main>
-          <div className={styles.gravatar}>
-            <h3>Gravatar</h3>
-            <img
-              className={styles.avatar}
-              src={`https://www.gravatar.com/avatar/${
-                this.props.profile.emailHash
-              }?d=mm&s=80`}
-            />
-          </div>
-
-          <h3>Name</h3>
-          <Input
-            type="text"
-            value={this.props.profile.firstName}
-            onChange={this.handleChange}
-            placeholder="Enter your first name"
-            name="firstName"
-          />
-          <Input
-            type="text"
-            value={this.props.profile.lastName}
-            onChange={this.handleChange}
-            placeholder="Enter your last name"
-            name="lastName"
-          />
-        </main>
-        <footer>
-          <Button
-            onClick={this.handleClick}
-            className={styles.ProfileSave}
-            disabled={this.state.submitted}
-          >
-            <i className="fa fa-floppy-o" aria-hidden="true" />
-            Set Name
-          </Button>
-        </footer>
-      </article>
-    )
-  }
 }
 
 export default connect(state => {
-  return { profile: state.user, userZUID: state.user.ZUID }
+  return {
+    profile: state.user,
+    userZUID: state.user.ZUID
+  }
 })(Profile)

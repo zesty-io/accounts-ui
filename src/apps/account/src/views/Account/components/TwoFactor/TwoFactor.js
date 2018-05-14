@@ -39,11 +39,11 @@ class TwoFactorOptions extends Component {
   }
   render() {
     return (
-      <article className={styles.TwoFactor}>
-        <header>
-          <h2>Two Factor Authentication</h2>
-        </header>
-        <main>
+      <Card>
+        <CardHeader>
+          <h1>Two Factor Authentication</h1>
+        </CardHeader>
+        <CardContent className={styles.TwoFactor}>
           {this.props.authyEnabled ? (
             <div>
               <p>
@@ -77,15 +77,15 @@ class TwoFactorOptions extends Component {
               />
             </div>
           )}
-        </main>
-        <footer>
+        </CardContent>
+        <CardFooter>
           {this.props.authyEnabled ? (
             <Button text="Disable Two-factor" onClick={this.handleDisable} />
           ) : (
             <Button text="Enable Two-factor" onClick={this.handleEnable} />
           )}
-        </footer>
-      </article>
+        </CardFooter>
+      </Card>
     )
   }
 }
