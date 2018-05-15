@@ -4,7 +4,6 @@ import cx from 'classnames'
 export class Select extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       dropdownOpen: false,
       selection: props.selection || props.children[0].props || {},
@@ -18,10 +17,6 @@ export class Select extends React.Component {
   componentWillUnmount() {
     document.removeEventListener('click', this.onClose)
     document.removeEventListener('keyup', this.onEsc)
-  }
-
-  componentWillUpdate(props, state) {
-    console.log('Select Update', props, state)
   }
 
   render() {
