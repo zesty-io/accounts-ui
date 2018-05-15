@@ -17,10 +17,10 @@ module.exports = async function health() {
   const healthDoc = `const HEALTH = {
     version: '${version || ''}',
     environment: '${process.env.NODE_ENV || 'no env found'}',
-    gitCommit: ${gitCommit},
-    gitBranch: ${gitBranch},
-    buildEngineer: ${buildEngineer},
-    gitState: ${gitState},
+    gitCommit: '${gitCommit}',
+    gitBranch: '${gitBranch}',
+    buildEngineer: '${buildEngineer}',
+    gitState: '${gitState}',
     buildTimeStamp: '${Date.now()}'
   }
   
