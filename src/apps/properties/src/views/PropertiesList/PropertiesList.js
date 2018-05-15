@@ -18,7 +18,7 @@ class Properties extends Component {
         <PropertiesHeader />
         <main className={styles.siteListWrap}>
           {Object.keys(this.props.sitesFiltered).length ? (
-            <div className={styles.siteList}>
+            <div className={styles.siteList} id="siteListWrapper">
               {Object.keys(this.props.sites)
                 .filter(
                   zuid =>
