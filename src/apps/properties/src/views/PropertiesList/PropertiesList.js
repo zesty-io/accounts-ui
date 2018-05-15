@@ -59,7 +59,7 @@ class Properties extends Component {
             </div>
           ) : (
             <div className={styles.LoadingSites}>
-              <h2>Loading Sites</h2>
+              <h2>Loading Your Web Properties</h2>
               <Loader />
             </div>
           )}

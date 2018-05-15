@@ -12,16 +12,13 @@
     margin: 0 0 2rem 0;
 
     .SettingCards {
-      display: grid;
-      grid-gap: 1.3rem;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       display: grid;
-      grid-auto-flow: row;
       grid-gap: 1.3rem;
+      grid-template-columns: 0fr 1fr 1fr 1fr;
+
       @media (max-width: 1750px) {
         grid-template-columns: 1fr 1fr;
         grid-gap: 1.6rem;

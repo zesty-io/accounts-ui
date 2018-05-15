@@ -61,18 +61,6 @@ const WebsiteCard = props => {
         </ButtonGroup>
       </CardFooter>
     </Card>
-
-    // <article className={styles.WebsiteCard}>
-    //   <header>
-    //
-    //   </header>
-    //   <main className={styles.WebsiteManage}>
-    //
-    //   </main>
-    //   <footer>
-    //
-    //   </footer>
-    // </article>
   )
 }
 
