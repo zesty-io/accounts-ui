@@ -14,7 +14,10 @@ export default class AppHeader extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('mouseup', this.handleOutsideClick)
+    document.addEventListener('click', this.closeUserNav)
+  }
+  componentWillUnmountMount() {
+    document.removeEventListener('click', this.closeUserNav)
   }
 
   render() {
@@ -31,14 +34,15 @@ export default class AppHeader extends Component {
             &nbsp;Teams
           </NavLink>
         </nav>
-        {/* <nav className={styles.HelpNav}>
-          <a href="https://developer.zesty.io" target="_blank">
-            <i className={cx(styles.icon, "fa fa-question-circle")} aria-hidden="true"></i>
-          </a>
-        </nav> */}
         <nav
-          className={cx(styles.UserNav, styles[this.state.userNavOpen])}
-          onClick={this.toggleUserNav}>
+          ref={nav => (this.userNav = nav)}
+          className={cx(
+            'UserNav',
+            styles.UserNav,
+            styles[this.state.userNavOpen]
+          )}
+          onClick={this.toggleUserNav}
+        >
           {this.props.user.firstName} {this.props.user.lastName}
           <img
             className={styles.avatar}
@@ -77,7 +81,8 @@ export default class AppHeader extends Component {
             <li
               className={styles.logout}
               title="Logout"
-              onClick={() => this.props.dispatch(logout())}>
+              onClick={() => this.props.dispatch(logout())}
+            >
               <i className="fa fa-sign-out" aria-hidden="true" />
               &nbsp;Logout
             </li>
@@ -93,15 +98,14 @@ export default class AppHeader extends Component {
     })
   }
 
-  handleOutsideClick = evt => {
-    // make sure click event is outside of the menu
-    if (
-      this.state.userNavOpen === 'show' &&
-      evt.target.parentElement.parentElement.id !== 'userNavDropdown'
-    ) {
-      return this.setState(state => {
-        return { userNavOpen: '' }
-      })
+  closeUserNav = evt => {
+    if (this.state.userNavOpen) {
+      const parent = evt.target.closest('.UserNav')
+      if (!parent || parent !== this.userNav) {
+        this.setState({
+          userNavOpen: ''
+        })
+      }
     }
   }
 }
