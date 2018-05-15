@@ -14,11 +14,7 @@ export default class AppHeader extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('click', this.closeUserNav)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('click', this.closeUserNav)
+    document.addEventListener('mouseup', this.handleOutsideClick)
   }
 
   render() {
@@ -41,10 +37,8 @@ export default class AppHeader extends Component {
           </a>
         </nav> */}
         <nav
-          id="GlobalUserNav"
           className={cx(styles.UserNav, styles[this.state.userNavOpen])}
-          onClick={this.openUserNav}
-        >
+          onClick={this.toggleUserNav}>
           {this.props.user.firstName} {this.props.user.lastName}
           <img
             className={styles.avatar}
@@ -52,7 +46,7 @@ export default class AppHeader extends Component {
               this.props.user.emailHash
             }?d=mm&s=30`}
           />
-          <ul className={styles.UserMenu}>
+          <ul className={styles.UserMenu} id="userNavDropdown">
             <li className={styles.user}>
               <span className={styles.name}>
                 {this.props.user.firstName} {this.props.user.lastName}
@@ -64,8 +58,7 @@ export default class AppHeader extends Component {
 
             <li>
               <NavLink to="/settings/account">
-                <i className="fa fa-cog" aria-hidden="true" />
-                &nbsp;My Account
+                <i className="fa fa-cog" aria-hidden="true" /> My Account
               </NavLink>
             </li>
 
@@ -84,8 +77,7 @@ export default class AppHeader extends Component {
             <li
               className={styles.logout}
               title="Logout"
-              onClick={() => this.props.dispatch(logout())}
-            >
+              onClick={() => this.props.dispatch(logout())}>
               <i className="fa fa-sign-out" aria-hidden="true" />
               &nbsp;Logout
             </li>
@@ -95,34 +87,21 @@ export default class AppHeader extends Component {
     )
   }
 
-  /**
-   * Recursively walk the DOM tree to determine
-   * if click occured within or outside of the
-   * user nav list to figure out if we should close it
-   */
-  closeUserNav = (evt, el) => {
-    if (this.state.userNavOpen) {
-      if (evt) {
-        if (evt.target.id !== 'GlobalUserNav') {
-          const found = this.closeUserNav(null, evt.target.parentElement)
-          if (!found) {
-            this.setState({
-              userNavOpen: ''
-            })
-          }
-        }
-      } else {
-        if (el.id === 'GlobalUserNav') {
-          return true
-        } else if (el.parentElement) {
-          return this.closeUserNav(null, el.parentElement)
-        }
-      }
-    }
-  }
-  openUserNav = evt => {
+  toggleUserNav = evt => {
     this.setState({
-      userNavOpen: 'show'
+      userNavOpen: this.state.userNavOpen === 'show' ? '' : 'show'
     })
+  }
+
+  handleOutsideClick = evt => {
+    // make sure click event is outside of the menu
+    if (
+      this.state.userNavOpen === 'show' &&
+      evt.target.parentElement.parentElement.id !== 'userNavDropdown'
+    ) {
+      return this.setState(state => {
+        return { userNavOpen: '' }
+      })
+    }
   }
 }

@@ -67,15 +67,20 @@ class PropertyOverview extends Component {
     // this.props.dispatch(fetchSiteCollections(this.props.siteZUID))
 
     document.addEventListener('keydown', this.close)
+    document.addEventListener('click', this.close)
   }
   componentWillUnmount() {
+    document.removeEventListener('click', this.close)
     document.removeEventListener('keydown', this.close)
   }
   render() {
     return (
       <section className={styles.PropertyOverviewWrap}>
         <article className={styles.PropertyOverview}>
-          <Button className={styles.CloseOverview} onClick={this.close}>
+          <Button
+            className={styles.CloseOverview}
+            id="closeOverviewButton"
+            onClick={this.close}>
             <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
           </Button>
           <header className={styles.PropertyOverviewHeader}>
@@ -133,8 +138,16 @@ class PropertyOverview extends Component {
     )
   }
   close = evt => {
-    if (evt.key === 'Escape' || evt.type === 'click') {
-      this.props.history.goBack()
+    if (evt.key === 'Escape') {
+      this.props.history.push('/properties')
+    }
+    if (evt.type === 'click') {
+      if (
+        evt.target.parentElement.id === 'siteListWrapper' ||
+        evt.target.id === 'closeOverviewButton'
+      ) {
+        this.props.history.push('/properties')
+      }
     }
   }
 }

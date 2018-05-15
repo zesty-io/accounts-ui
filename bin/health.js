@@ -3,28 +3,28 @@ const path = require('path')
 const package = require('../package.json')
 
 const root = path.resolve(__dirname, '../')
+const execSync = require('child_process').execSync
 
-const formatDateTime = date => {
-  if (!date) {
-    return ''
-  }
-  const newDate = new Date(date)
-  return `${newDate.getMonth() +
-    1}-${newDate.getDate()}-${newDate.getFullYear()} | ${newDate.getHours()}:${(newDate.getMinutes() <
-  10
-    ? '0'
-    : '') + newDate.getMinutes()}`
-}
-
-module.exports = function health() {
+module.exports = async function health() {
   //create a health file
   const version = package.version
+  const buildEngineer = await execSync('whoami').toString().trim(-2)
+  const gitCommit = await execSync('git rev-parse --short HEAD').toString().trim(-2)
+  const gitBranch = await execSync('git rev-parse --abbrev-ref HEAD').toString().trim(-2)
+  let gitState = await execSync('git status --porcelain 2>/dev/null').toString().trim(-2)
+  gitState = gitState === '' ? 'CLEAN' : 'DIRTY'
 
   const healthDoc = `const HEALTH = {
     version: '${version || ''}',
     environment: '${process.env.NODE_ENV || 'no env found'}',
-    buildDateTime: '${formatDateTime(Date.now())}'
+    gitCommit: ${gitCommit},
+    gitBranch: ${gitBranch},
+    buildEngineer: ${buildEngineer},
+    gitState: ${gitState},
+    buildTimeStamp: '${Date.now()}'
   }
+  
   window.APP_HEALTH = HEALTH`
+
   fs.writeFileSync(`${root}/build/health.js`, healthDoc)
 }
