@@ -1,22 +1,20 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react'
+// import { connect } from "react-redux";
 
-import styles from "./Modal.less";
+import styles from './Modal.less'
 
 const Modal = props => {
-  const ModalComponent = props.component;
+  const ModalComponent = props.component
   return (
     props.isOpen && (
       <section className={styles.Modal}>
-        <Button
-          onClick={() => props.dispatch({ type: "REMOVE_MODAL" })}
-          text="Close"
-          className={styles.close}
-        />
-        <ModalComponent props={props.props} />
+        <Button onClick={props.close} className={styles.close}>
+          <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
+        </Button>
+        <div>{props.children}</div>
       </section>
     )
-  );
-};
+  )
+}
 
-export default connect(state => state.modal)(Modal);
+export default Modal

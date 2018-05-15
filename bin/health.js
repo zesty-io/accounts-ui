@@ -23,7 +23,7 @@ module.exports = async function health() {
       "buildEngineer": "${buildEngineer}",
       "gitState": "${gitState}",
       "buildTimeStamp": "${Date.now()}"
-    }
+    }, 
     "message": "healthy"
   }
   

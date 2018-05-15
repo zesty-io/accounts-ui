@@ -12,9 +12,9 @@ export function modal(state = initialState, action) {
 }
 
 export function openModal(data) {
-  if (!data.component) {
-    throw new Error("Cannot trigger modal without a component");
-  }
+  // if (!data.component) {
+  //   throw new Error("Cannot trigger modal without a component");
+  // }
   return {
     type: "NEW_MODAL",
     data

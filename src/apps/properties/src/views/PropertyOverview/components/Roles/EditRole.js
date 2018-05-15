@@ -23,6 +23,7 @@ class EditRole extends Component {
   }
 
   componentDidMount() {
+    console.log('PROPS IN EDITROLS:', this.props)
     this.props.dispatch(getRole(this.state.role.ZUID, this.state.siteZUID))
     let granularRoles = {}
     // create granular roles object from granular roles OR the system role
@@ -50,7 +51,10 @@ class EditRole extends Component {
             grant: this.state.role.systemRole.grant
           })
     })
-    this.setState({ granularRoles })
+    console.log('gran roles object', granularRoles)
+    this.setState({ granularRoles }, () => {
+      console.log('state in editroles',this.state)
+    })
   }
 
   handleClick = evt => {
@@ -165,6 +169,7 @@ class EditRole extends Component {
   }
 
   render() {
+    return (<p>test</p>)
     let { siteZUID, roleZUID, role, granularRoles, collections } = this.state
     return (
       <div className={styles.modalWrapper}>
@@ -266,4 +271,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(EditRole)
+export default connect(state => state)(EditRole)

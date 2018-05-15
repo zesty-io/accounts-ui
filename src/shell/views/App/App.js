@@ -15,7 +15,7 @@ import NotFound from '../../../shell/components/NotFound'
 import AppHeader from '../../components/AppHeader'
 import AppError from '../../components/AppError'
 import Notify from '../../components/Notify'
-import Modal from '../../components/Modal'
+// import Modal from '../../components/Modal'
 import Confirm from '../../components/Confirm'
 
 import styles from './App.less'
@@ -35,7 +35,6 @@ class App extends Component {
         <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
         <AppError>
           <Notify />
-          <Modal />
           <Confirm />
           <section className={styles.AppMain}>
             {this.props.user.email ? (
