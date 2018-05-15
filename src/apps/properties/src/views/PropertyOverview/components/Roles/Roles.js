@@ -1,5 +1,5 @@
 import { Component } from 'react'
-// import { connect } from 'react-redux's
+import { connect } from 'react-redux'
 
 import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
@@ -80,16 +80,6 @@ class Roles extends Component {
   handleEdit = (roleZUID, siteZUID) => {
     this.setState({ roleZUID })
     this.toggleModal()
-    // this.props.dispatch(getRole(roleZUID, siteZUID)).then(data => {
-    //   this.props.dispatch({
-    //     type: 'NEW_MODAL',
-    //     component: EditRole,
-    //     props: {
-    //       siteZUID,
-    //       roleZUID
-    //     }
-    //   })
-    // })
   }
   handleRemove = ZUID => {
     this.props.dispatch(
@@ -119,4 +109,4 @@ class Roles extends Component {
   }
 }
 
-export default Roles
+export default connect(state => {})(Roles)

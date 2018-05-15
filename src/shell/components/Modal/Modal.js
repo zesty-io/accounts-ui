@@ -8,11 +8,9 @@ const Modal = props => {
   return (
     props.isOpen && (
       <section className={styles.Modal}>
-        <Button
-          onClick={props.close}
-          text="Close"
-          className={styles.close}
-        />
+        <Button onClick={props.close} className={styles.close}>
+          <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
+        </Button>
         <div>{props.children}</div>
       </section>
     )

@@ -271,4 +271,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(EditRole)
+export default connect(state => state)(EditRole)
