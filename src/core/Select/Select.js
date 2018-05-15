@@ -4,20 +4,11 @@ import cx from 'classnames'
 export class Select extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       dropdownOpen: false,
-      selection: this.props.selection,
-      options: this.props.options,
-      children: this.props.children
+      selection: props.selection || props.children[0].props || {},
+      children: this.flattenChildren(props.children)
     }
-
-    // bind functions once
-    this.onEsc = this.onEsc.bind(this)
-    this.onClose = this.onClose.bind(this)
-    this.setSelection = this.setSelection.bind(this)
-    this.toggleDropdown = this.toggleDropdown.bind(this)
-    this.handleFilterKeyUp = this.handleFilterKeyUp.bind(this)
   }
   componentDidMount() {
     document.addEventListener('click', this.onClose)
@@ -27,34 +18,76 @@ export class Select extends React.Component {
     document.removeEventListener('click', this.onClose)
     document.removeEventListener('keyup', this.onEsc)
   }
-  componentWillReceiveProps(nextProps) {
-    // For users that provide their own children options
-    // we have to listen for prop changes to determine
-    // if the internal selection state needs to change
-    if (nextProps.selection !== this.state.selection) {
-      this.setState({
-        selection: nextProps.selection
-      })
-    }
-  }
 
-  renderFilter() {
-    if (
-      (this.props.children && this.props.children.length > 50) ||
-      (this.props.options && this.props.options.length > 50)
-    ) {
-      return (
-        <Search
-          className="filter"
-          placeholder="Enter a term to filter this list"
-          onKeyUp={this.handleFilterKeyUp}
+  render() {
+    let opts = {
+      className: cx(
+        'selector',
+        styles.selector,
+        this.state.dropdownOpen ? styles.show : styles.hidden
+      ),
+      onClick: this.toggleDropdown
+    }
+    return (
+      <div {...opts} ref={div => (this.selector = div)}>
+        <input
+          type="hidden"
+          name={this.props.name}
+          value={this.state.selection.value}
         />
-      )
-    }
-    return null
+        <span className={styles.selection}>
+          <i
+            className={cx(
+              'fa fa-chevron-right',
+              styles.chevron,
+              styles['icon-chevron-right']
+            )}
+          />
+          <i
+            className={cx(
+              'fa fa-chevron-down',
+              styles.chevron,
+              styles['icon-chevron-down']
+            )}
+          />
+          {this.state.selection.html ? (
+            <span
+              className={styles.content}
+              dangerouslySetInnerHTML={{
+                __html: this.state.selection.html
+              }}
+            />
+          ) : (
+            <span className={styles.content}>{this.state.selection.text}</span>
+          )}
+        </span>
+        <ul className={'selections ' + styles.selections}>
+          {this.props.children && this.props.children.length > 50 ? (
+            <Search
+              className="filter"
+              placeholder="Enter a term to filter this list"
+              onKeyUp={this.handleFilterKeyUp}
+            />
+          ) : null}
+          <div className={styles.options}>
+            {this.state.children.map(child => {
+              return React.cloneElement(child, {
+                onClick: evt => {
+                  // Individual option event listener
+                  if (child.props.onClick) {
+                    child.props.onClick(evt)
+                  }
+                  this.setSelection(evt)
+                }
+              })
+            })}
+          </div>
+        </ul>
+      </div>
+    )
   }
 
-  toggleDropdown(evt) {
+  toggleDropdown = evt => {
     if (evt.target.closest('.filter')) {
       return false
     }
@@ -95,44 +128,56 @@ export class Select extends React.Component {
     })
   }
 
-  setSelection(evt) {
+  setSelection = evt => {
+    // Top level Select event listener
     if (this.props.onSelect) {
       this.props.onSelect(evt)
     }
 
+    const selected = this.state.children.find(child => {
+      return child.props.value == evt.currentTarget.dataset.value
+    })
+
     this.setState({
-      selection: this.props.options.find(opt => {
-        return opt.value == evt.currentTarget.dataset.value
-      })
+      selection: selected.props
     })
   }
 
-  handleFilterKeyUp(evt) {
+  handleFilterKeyUp = evt => {
     let value = evt.target.value.trim().toLowerCase()
 
     if (value) {
-      if (this.props.children) {
-        this.setState({
-          children: this.props.children.filter(opt => {
-            return opt.props.html.toLowerCase().indexOf(value) !== -1
-          })
-        })
-      } else {
-        this.setState({
-          options: this.props.options.filter(opt => {
-            return opt.html.toLowerCase().indexOf(value) !== -1
-          })
-        })
-      }
-    } else {
       this.setState({
-        options: this.props.options,
-        children: this.props.children
+        children: this.state.children.filter(child => {
+          return (
+            child.props.html.toLowerCase().indexOf(value) !== -1 ||
+            child.props.text.toLowerCase().indexOf(value) !== -1
+          )
+        })
+      })
+    } else {
+      // Reset select to default options
+      this.setState({
+        children: this.flattenChildren(this.props.children)
       })
     }
   }
 
-  onEsc(evt) {
+  /*
+  Flatten react child components
+   */
+  flattenChildren = children => {
+    return children.reduce((acc, child) => {
+      if (Array.isArray(child)) {
+        acc = [...acc, ...child]
+      } else {
+        acc.push(child)
+      }
+      return acc
+    }, [])
+  }
+
+  onEsc = evt => {
     if (evt.which == 27) {
       this.setState({
         dropdownOpen: false
@@ -140,7 +185,7 @@ export class Select extends React.Component {
     }
   }
 
-  onClose(evt) {
+  onClose = evt => {
     const parent = evt.target.closest('.selector')
 
     // Close this select if the click occured
@@ -148,71 +193,6 @@ export class Select extends React.Component {
     if (!parent || parent !== this.selector) {
       this.setState({ dropdownOpen: false })
     }
-  }
-
-  render() {
-    let opts = {
-      className: cx(
-        'selector',
-        styles.selector,
-        this.state.dropdownOpen ? styles.show : styles.hidden
-      ),
-      onClick: this.toggleDropdown
-    }
-    return (
-      <div {...opts} ref={div => (this.selector = div)}>
-        <input
-          type="hidden"
-          name={this.props.name}
-          value={this.state.selection.value}
-        />
-        <span className={styles.selection}>
-          <i
-            className={cx(
-              'fa fa-chevron-right',
-              styles.chevron,
-              styles['icon-chevron-right']
-            )}
-          />
-          <i
-            className={cx(
-              'fa fa-chevron-down',
-              styles.chevron,
-              styles['icon-chevron-down']
-            )}
-          />
-
-          {this.state.selection.html ? (
-            <span
-              className={styles.content}
-              dangerouslySetInnerHTML={{
-                __html: this.state.selection.html
-              }}
-            />
-          ) : (
-            <span className={styles.content}>{this.state.selection.text}</span>
-          )}
-        </span>
-        <ul className={'selections ' + styles.selections}>
-          {this.renderFilter()}
-          <div className={styles.options}>
-            {this.state.children
-              ? this.state.children
-              : this.state.options.map(opt => {
-                  return (
-                    <Option
-                      key={opt.value}
-                      value={opt.value}
-                      text={opt.text}
-                      html={opt.html}
-                      onClick={this.setSelection}
-                    />
-                  )
-                })}
-          </div>
-        </ul>
-      </div>
-    )
   }
 }
 

@@ -86,7 +86,7 @@ class PropertyOverview extends Component {
           </Button>
           <header className={styles.PropertyOverviewHeader}>
             <PropertyName name={this.props.site.name} />
-            {/* <Domain siteZUID={this.props.site.ZUID} site={this.props.site} /> */}
+            <Domain siteZUID={this.props.site.ZUID} site={this.props.site} />
           </header>
           <main className={styles.Cards}>
             <article className={styles.card}>
@@ -107,24 +107,24 @@ class PropertyOverview extends Component {
 
             <article className={styles.card}>
               <h2>
+                <i className="fa fa-lock" aria-hidden="true" />
+                &nbsp;Custom Site Roles
+              </h2>
+              <Roles
+                siteZUID={this.props.siteZUID}
+                siteRoles={this.props.siteRoles}
+                systemRoles={this.props.systemRoles}
+              />
+            </article>
+
+            <article className={styles.card}>
+              <h2>
                 <i className="fa fa-building" aria-hidden="true" />
                 &nbsp;Company Access
               </h2>
               <CompanyAccess
                 companies={this.props.companies}
                 loadingTeams={this.state.loadingTeams}
-              />
-            </article>
-
-            <article className={styles.card}>
-              <h2>
-                <i className="fa fa-lock" aria-hidden="true" />
-                &nbsp;Site Roles
-              </h2>
-              <Roles
-                siteZUID={this.props.siteZUID}
-                siteRoles={this.props.siteRoles}
-                systemRoles={this.props.systemRoles}
               />
             </article>
 
@@ -169,9 +169,6 @@ export default withRouter(
         return acc
       }, [])
       .filter(role => !role.systemRole)
-
-    console.log('systemRoles', systemRoles)
-    console.log('siteRoles', siteRoles)
 
     return {
       siteZUID,
