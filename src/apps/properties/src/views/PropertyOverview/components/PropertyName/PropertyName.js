@@ -5,9 +5,6 @@ import { updateSite } from '../../../../store/sites'
 export default class PropertyName extends Component {
   constructor(props) {
     super(props)
-
-    console.log('PropertyName: ', props)
-
     this.state = {
       editName: false,
       name: this.props.name

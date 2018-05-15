@@ -33,7 +33,7 @@ export default class Users extends Component {
             required
           />
           <Select onSelect={this.handleSelectRole}>
-            <Option key="" value="" text="Select Role" />
+            <Option key="default" value="" text="Select Role" />
             {this.props.roles.map(role => {
               return (
                 <Option key={role.ZUID} value={role.ZUID} text={role.name} />

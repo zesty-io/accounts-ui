@@ -24,7 +24,6 @@ import { fetchBlueprint } from '../../store/blueprints'
 class PropertyOverview extends Component {
   constructor(props) {
     super(props)
-    console.log('PropertyOverview: ', props)
     this.state = {
       loadingUsers: true,
       loadingRoles: true,
@@ -58,7 +57,6 @@ class PropertyOverview extends Component {
     this.props
       .dispatch(fetchBlueprint(this.props.site.blueprintID))
       .then(() => {
-        console.log('blueprint loaded')
         this.setState({
           loadingBlueprint: false
         })

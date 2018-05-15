@@ -8,11 +8,7 @@ import { fetchSiteCompanies } from '../../../../store/sitesCompanies'
 import styles from './CompanyAccess.less'
 
 class CompanyAccess extends Component {
-  constructor(props) {
-    super(props)
-    console.log('CompanyAccess: ', props)
-  }
-  componentDidMount() {
+  componentWillMount() {
     this.props.dispatch(fetchSiteCompanies(this.props.match.params.hash))
   }
   render() {
