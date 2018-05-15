@@ -8,11 +8,7 @@ export class RoleCreate extends Component {
       submitted: false,
       name: '',
       systemRoleZUID: '',
-      expiry: '',
-      selectedRole: {
-        value: 'Select Role',
-        text: 'Select Role'
-      }
+      expiry: ''
     }
   }
   render() {
@@ -31,10 +27,8 @@ export class RoleCreate extends Component {
         </span>
         <span className={styles.base}>
           <label>Base Role</label>
-          <Select
-            onSelect={this.selectBaseRole}
-            selection={this.state.selectedRole}
-          >
+          <Select onSelect={this.selectBaseRole}>
+            <Option value="" text="Select Role" />
             {this.props.systemRoles.map(role => {
               return (
                 <Option key={role.ZUID} value={role.ZUID} text={role.name} />
@@ -61,11 +55,7 @@ export class RoleCreate extends Component {
   }
   selectBaseRole = evt => {
     this.setState({
-      systemRoleZUID: evt.currentTarget.dataset.value,
-      selectedRole: {
-        value: evt.currentTarget.dataset.value,
-        text: evt.target.innerHTML
-      }
+      systemRoleZUID: evt.currentTarget.dataset.value
     })
   }
   handleCreate = evt => {

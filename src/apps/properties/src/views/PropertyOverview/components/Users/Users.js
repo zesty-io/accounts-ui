@@ -16,11 +16,7 @@ export default class Users extends Component {
     this.state = {
       submitted: false,
       inviteeEmail: '',
-      inviteRole: '',
-      selectedRole: {
-        value: 'Select Role',
-        text: 'Select Role'
-      }
+      inviteeRole: ''
     }
   }
   render() {
@@ -36,19 +32,13 @@ export default class Users extends Component {
             onChange={this.handleEmail}
             required
           />
-          <Select
-            onSelect={this.handleRole}
-            selection={this.state.selectedRole}
-          >
-            {this.props.roles.length ? (
-              this.props.roles.map(role => {
-                return (
-                  <Option key={role.ZUID} value={role.ZUID} text={role.name} />
-                )
-              })
-            ) : (
-              <Loader />
-            )}
+          <Select onSelect={this.handleSelectRole}>
+            <Option key="" value="" text="Select Role" />
+            {this.props.roles.map(role => {
+              return (
+                <Option key={role.ZUID} value={role.ZUID} text={role.name} />
+              )
+            })}
           </Select>
           <Button onClick={this.handleInvite} disabled={this.state.submitted}>
             <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
@@ -79,6 +69,16 @@ export default class Users extends Component {
       </div>
     )
   }
+  handleEmail = evt => {
+    this.setState({
+      inviteeEmail: evt.target.value
+    })
+  }
+  handleSelectRole = evt => {
+    this.setState({
+      inviteeRole: evt.target.dataset.value
+    })
+  }
   handleInvite = evt => {
     if (this.state.inviteeEmail.includes('@')) {
       // needs mo betta validity check here
@@ -90,7 +90,7 @@ export default class Users extends Component {
           sendInvite({
             inviteeEmail: this.state.inviteeEmail,
             entityZUID: this.props.siteZUID,
-            roleZUID: this.state.inviteRole
+            roleZUID: this.state.inviteeRole
           })
         )
         .then(() => {
@@ -117,15 +117,5 @@ export default class Users extends Component {
         })
       )
     }
-  }
-  handleEmail = evt => {
-    this.setState({
-      inviteeEmail: evt.target.value
-    })
-  }
-  handleRole = evt => {
-    this.setState({
-      inviteRole: evt.target.value
-    })
   }
 }

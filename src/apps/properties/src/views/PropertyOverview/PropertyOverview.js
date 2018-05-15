@@ -170,8 +170,8 @@ export default withRouter(
       }, [])
       .filter(role => !role.systemRole)
 
-    console.log('systemRoles', systemRoles)
-    console.log('siteRoles', siteRoles)
+    // console.log('systemRoles', systemRoles)
+    // console.log('siteRoles', siteRoles)
 
     return {
       siteZUID,
