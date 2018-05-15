@@ -12,16 +12,19 @@ module.exports = async function health() {
   const gitCommit = await execSync('git rev-parse --short HEAD').toString().trim(-2)
   const gitBranch = await execSync('git rev-parse --abbrev-ref HEAD').toString().trim(-2)
   let gitState = await execSync('git status --porcelain 2>/dev/null').toString().trim(-2)
-  gitState = gitState === '' ? 'CLEAN' : 'DIRTY'
+  gitState = gitState === '' ? 'clean' : 'dirty'
 
   const healthDoc = `const HEALTH = {
-    version: '${version || ''}',
-    environment: '${process.env.NODE_ENV || 'no env found'}',
-    gitCommit: '${gitCommit}',
-    gitBranch: '${gitBranch}',
-    buildEngineer: '${buildEngineer}',
-    gitState: '${gitState}',
-    buildTimeStamp: '${Date.now()}'
+    "data": {
+      "version": "${version}",
+      "environment": "${process.env.NODE_ENV || "env not set"}",
+      "gitCommit": "${gitCommit}",
+      "gitBranch": "${gitBranch}",
+      "buildEngineer": "${buildEngineer}",
+      "gitState": "${gitState}",
+      "buildTimeStamp": "${Date.now()}"
+    }
+    "message": "healthy"
   }
   
   window.APP_HEALTH = HEALTH`
