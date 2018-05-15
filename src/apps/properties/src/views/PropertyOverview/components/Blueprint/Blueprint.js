@@ -1,40 +1,29 @@
-import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 import styles from './Blueprint.less'
 
-class Blueprint extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render() {
-    return (
-      <React.Fragment>
-        <Divider />
-        {!this.props.loadingBlueprint ? (
-          <article className={styles.Blueprint}>
-            <header>
-              <h1 className={styles.name}>{this.props.blueprint.name}</h1>
-            </header>
-            <main>
-              <img src={this.props.blueprint.coverImage} alt="" />
-              <p>{this.props.blueprint.description}</p>
-            </main>
-            <Button onClick={this.handleSelect}>
+export default function Blueprint(props) {
+  return (
+    <React.Fragment>
+      {!props.loadingBlueprint ? (
+        <Card className={styles.Blueprint}>
+          <CardHeader>
+            <h1>
+              <i className="fa fa-file-code-o" aria-hidden="true" />
+              &nbsp;Blueprint
+            </h1>
+            <AppLink to={`${props.siteZUID}/blueprint`}>
               <i className="fa fa-columns" aria-hidden="true" />
-              Change Blueprint
-            </Button>
-            <footer />
-          </article>
-        ) : (
-          <Loader />
-        )}
-      </React.Fragment>
-    )
-  }
-  handleSelect = evt => {
-    evt.preventDefault()
-    this.props.history.push(`${this.props.siteZUID}/blueprint`)
-  }
+              &nbsp;Change Blueprint
+            </AppLink>
+          </CardHeader>
+          <CardContent>
+            <h2 className={styles.name}>{props.blueprint.name}</h2>
+            <img src={props.blueprint.coverImage} alt="" />
+            <p>{props.blueprint.description}</p>
+          </CardContent>
+        </Card>
+      ) : (
+        <Loader />
+      )}
+    </React.Fragment>
+  )
 }
-
-export default withRouter(Blueprint)

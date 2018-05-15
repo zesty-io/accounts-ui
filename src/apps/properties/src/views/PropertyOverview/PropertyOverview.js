@@ -82,7 +82,7 @@ class PropertyOverview extends Component {
             <PropertyName name={this.props.site.name} />
             {/* <Domain siteZUID={this.props.site.ZUID} site={this.props.site} /> */}
           </header>
-          <main>
+          <main className={styles.Cards}>
             <article className={styles.card}>
               <h2>
                 <i className="fa fa-users" aria-hidden="true" />
@@ -122,17 +122,11 @@ class PropertyOverview extends Component {
               />
             </article>
 
-            <article className={styles.card}>
-              <h2>
-                <i className="fa fa-file-code-o" aria-hidden="true" />
-                &nbsp;Blueprint
-              </h2>
-              <Blueprint
-                loadingBlueprint={this.state.loadingBlueprint}
-                siteZUID={this.props.siteZUID}
-                blueprint={this.props.blueprint}
-              />
-            </article>
+            <Blueprint
+              loadingBlueprint={this.state.loadingBlueprint}
+              siteZUID={this.props.siteZUID}
+              blueprint={this.props.blueprint}
+            />
           </main>
         </article>
       </section>
