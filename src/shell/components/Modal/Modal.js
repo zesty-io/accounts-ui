@@ -13,7 +13,7 @@ const Modal = props => {
           text="Close"
           className={styles.close}
         />
-        {props.children}
+        <div>{props.children}</div>
       </section>
     )
   )

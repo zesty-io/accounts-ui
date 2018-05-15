@@ -51,6 +51,7 @@ class EditRole extends Component {
             grant: this.state.role.systemRole.grant
           })
     })
+    console.log('gran roles object', granularRoles)
     this.setState({ granularRoles }, () => {
       console.log('state in editroles',this.state)
     })
