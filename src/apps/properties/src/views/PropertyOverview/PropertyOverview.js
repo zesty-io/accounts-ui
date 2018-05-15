@@ -145,14 +145,14 @@ class PropertyOverview extends Component {
   }
   close = evt => {
     if (evt.key === 'Escape') {
-      this.props.history.goBack()
+      this.props.history.push('/properties')
     }
     if (evt.type === 'click') {
       if (
         evt.target.parentElement.id === 'siteListWrapper' ||
         evt.target.id === 'closeOverviewButton'
       ) {
-        this.props.history.goBack()
+        this.props.history.push('/properties')
       }
     }
   }
