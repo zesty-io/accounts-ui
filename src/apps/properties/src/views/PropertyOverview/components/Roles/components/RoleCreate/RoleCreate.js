@@ -35,13 +35,9 @@ export class RoleCreate extends Component {
             onSelect={this.selectBaseRole}
             selection={this.state.selectedRole}
           >
-            {Object.keys(this.props.systemRoles).map(ZUID => {
+            {this.props.systemRoles.map(role => {
               return (
-                <Option
-                  key={ZUID}
-                  value={ZUID}
-                  text={this.props.systemRoles[ZUID].name}
-                />
+                <Option key={role.ZUID} value={role.ZUID} text={role.name} />
               )
             })}
           </Select>

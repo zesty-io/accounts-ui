@@ -80,7 +80,8 @@ class PropertyOverview extends Component {
           <Button
             className={styles.CloseOverview}
             id="closeOverviewButton"
-            onClick={this.close}>
+            onClick={this.close}
+          >
             <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
           </Button>
           <header className={styles.PropertyOverviewHeader}>
@@ -155,14 +156,28 @@ class PropertyOverview extends Component {
 export default withRouter(
   connect((state, props) => {
     const siteZUID = props.match.params.hash
+
+    let systemRoles = Object.keys(state.systemRoles).reduce((acc, key) => {
+      acc.push(state.systemRoles[key])
+      return acc
+    }, [])
+
+    let siteRoles = state.sitesRoles[siteZUID] || {}
+    siteRoles = Object.keys(siteRoles)
+      .reduce((acc, key) => {
+        acc.push(siteRoles[key])
+        return acc
+      }, [])
+      .filter(role => !role.systemRole)
+
+    console.log('systemRoles', systemRoles)
+    console.log('siteRoles', siteRoles)
+
     return {
       siteZUID,
-      systemRoles: state.systemRoles,
-      siteRoles: state.sitesRoles[siteZUID] || {},
-      allRoles: {
-        ...state.systemRoles,
-        ...state.sitesRoles[siteZUID]
-      },
+      systemRoles,
+      siteRoles,
+      allRoles: [...systemRoles, ...siteRoles],
       site: state.sites[siteZUID] || {},
       users: state.sitesUsers[siteZUID] || {},
       companies: state.sitesCompanies[siteZUID] || {},

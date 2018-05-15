@@ -41,10 +41,9 @@ export default class Roles extends Component {
             <h3>Expires</h3>
           </header>
           <main>
-            {Object.keys(this.props.siteRoles).map(ZUID => {
-              const role = this.props.siteRoles[ZUID]
+            {this.props.siteRoles.map(role => {
               return (
-                <article key={ZUID}>
+                <article key={role.ZUID}>
                   <span>{role.name}</span>
                   <span>{formatDate(role.createdAt)}</span>
                   <span>{formatDate(role.expiry)}</span>
@@ -53,12 +52,12 @@ export default class Roles extends Component {
                       <Button
                         text="Edit"
                         onClick={() =>
-                          this.handleEdit(ZUID, this.props.siteZUID)
+                          this.handleEdit(role.ZUID, this.props.siteZUID)
                         }
                       />
                       <Button
                         text="Remove"
-                        onClick={() => this.handleRemove(ZUID)}
+                        onClick={() => this.handleRemove(role.ZUID)}
                       />
                     </ButtonGroup>
                   </span>

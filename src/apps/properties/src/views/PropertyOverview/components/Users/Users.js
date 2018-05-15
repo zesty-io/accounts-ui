@@ -40,14 +40,10 @@ export default class Users extends Component {
             onSelect={this.handleRole}
             selection={this.state.selectedRole}
           >
-            {Object.keys(this.props.roles).length ? (
-              Object.keys(this.props.roles).map(ZUID => {
+            {this.props.roles.length ? (
+              this.props.roles.map(role => {
                 return (
-                  <Option
-                    key={ZUID}
-                    value={ZUID}
-                    text={this.props.roles[ZUID].name}
-                  />
+                  <Option key={role.ZUID} value={role.ZUID} text={role.name} />
                 )
               })
             ) : (
