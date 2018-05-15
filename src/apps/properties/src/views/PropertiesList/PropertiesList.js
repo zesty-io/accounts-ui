@@ -37,6 +37,7 @@ class Properties extends Component {
                     !this.props.sitesFiltered[zuid].inviteZUID
                 )
                 .map((zuid, i) => {
+                  // TODO: remove when windowing is functional
                   if (i >= 100) {
                     return
                   }

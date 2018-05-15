@@ -1,5 +1,5 @@
 import { Component } from 'react'
-// import { connect } from 'react-redux'
+// import { connect } from 'react-redux's
 
 import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
@@ -10,6 +10,7 @@ import {
   getRole
 } from '../../../../store/sitesRoles'
 
+import Modal from '../../../../../../../shell/components/Modal'
 import EditRole from './EditRole'
 import { RoleCreate } from './components/RoleCreate'
 
@@ -24,10 +25,18 @@ const formatDate = date => {
     1}-${newDate.getDate()}-${newDate.getFullYear()}`
 }
 
-export default class Roles extends Component {
+class Roles extends Component {
+  state = {
+    modalIsOpen: false
+  }
   render() {
     return (
       <div className={styles.Roles}>
+        <Modal
+          component={<EditRole />}
+          toggle={this.toggleModal}
+          isOpen={this.state.modalIsOpen}
+        />
         <p>
           By creating custom roles you can provide fine grained controls of what
           content specific users can access and what actions the can take.
@@ -70,16 +79,17 @@ export default class Roles extends Component {
     )
   }
   handleEdit = (roleZUID, siteZUID) => {
-    this.props.dispatch(getRole(roleZUID, siteZUID)).then(data => {
-      this.props.dispatch({
-        type: 'NEW_MODAL',
-        component: EditRole,
-        props: {
-          siteZUID,
-          roleZUID
-        }
-      })
-    })
+    this.toggleModal()
+    // this.props.dispatch(getRole(roleZUID, siteZUID)).then(data => {
+    //   this.props.dispatch({
+    //     type: 'NEW_MODAL',
+    //     component: EditRole,
+    //     props: {
+    //       siteZUID,
+    //       roleZUID
+    //     }
+    //   })
+    // })
   }
   handleRemove = ZUID => {
     this.props.dispatch(
@@ -104,4 +114,9 @@ export default class Roles extends Component {
       })
     )
   }
+  toggleModal = evt => {
+    this.setState({ modalIsOpen: !this.state.modalIsOpen })
+  }
 }
+
+export default Roles
