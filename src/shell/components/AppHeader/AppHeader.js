@@ -14,11 +14,11 @@ export default class AppHeader extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('mouseup', this.handleOutsideClick)
+    document.addEventListener('click', this.closeUserNav)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('mouseup', this.handleOutsideClick)
+    document.removeEventListener('click', this.closeUserNav)
   }
 
   render() {
@@ -41,8 +41,9 @@ export default class AppHeader extends Component {
           </a>
         </nav> */}
         <nav
+          id="GlobalUserNav"
           className={cx(styles.UserNav, styles[this.state.userNavOpen])}
-          onClick={this.showUserNav}
+          onClick={this.openUserNav}
         >
           {this.props.user.firstName} {this.props.user.lastName}
           <img
@@ -93,20 +94,35 @@ export default class AppHeader extends Component {
       </header>
     )
   }
-  showUserNav = evt => {
-    this.setState({
-      userNavOpen: this.state.userNavOpen === 'show' ? '' : 'show'
-    })
-  }
 
-  handleOutsideClick = evt => {
-    if (
-      this.state.userNavOpen === 'show' &&
-      evt.target.parentElement.nodeName !== 'LI'
-    ) {
-      return this.setState(state => {
-        return { userNavOpen: '' }
-      })
+  /**
+   * Recursively walk the DOM tree to determine
+   * if click occured within or outside of the
+   * user nav list to figure out if we should close it
+   */
+  closeUserNav = (evt, el) => {
+    if (this.state.userNavOpen) {
+      if (evt) {
+        if (evt.target.id !== 'GlobalUserNav') {
+          const found = this.closeUserNav(null, evt.target.parentElement)
+          if (!found) {
+            this.setState({
+              userNavOpen: ''
+            })
+          }
+        }
+      } else {
+        if (el.id === 'GlobalUserNav') {
+          return true
+        } else if (el.parentElement) {
+          return this.closeUserNav(null, el.parentElement)
+        }
+      }
     }
+  }
+  openUserNav = evt => {
+    this.setState({
+      userNavOpen: 'show'
+    })
   }
 }
