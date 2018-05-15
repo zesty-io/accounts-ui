@@ -27,16 +27,15 @@ const formatDate = date => {
 
 class Roles extends Component {
   state = {
-    modalIsOpen: false
+    modalIsOpen: false,
+    roleZUID: ''
   }
   render() {
     return (
       <div className={styles.Roles}>
-        <Modal
-          component={<EditRole />}
-          toggle={this.toggleModal}
-          isOpen={this.state.modalIsOpen}
-        />
+        <Modal close={this.toggleModal} isOpen={this.state.modalIsOpen}>
+          <EditRole props={{ ...this.props, roleZUID: this.state.roleZUID }} />
+        </Modal>
         <p>
           By creating custom roles you can provide fine grained controls of what
           content specific users can access and what actions the can take.
@@ -79,6 +78,7 @@ class Roles extends Component {
     )
   }
   handleEdit = (roleZUID, siteZUID) => {
+    this.setState({ roleZUID })
     this.toggleModal()
     // this.props.dispatch(getRole(roleZUID, siteZUID)).then(data => {
     //   this.props.dispatch({
