@@ -109,4 +109,6 @@ class Roles extends Component {
   }
 }
 
-export default connect(state => {})(Roles)
+export default connect(state => {
+  return {}
+})(Roles)

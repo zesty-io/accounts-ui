@@ -2,24 +2,25 @@
   display: flex;
   padding: 0 0 1rem;
 
-  & > span {
-    margin-right: 0.5rem;
-  }
-  .label {
-    flex: 3;
+  label {
     input {
       width: 100%;
     }
   }
-  .base {
+
+  .Name,
+  .Base,
+  .Expiry {
+    margin-right: 0.5rem;
+  }
+
+  .Name {
+    flex: 3;
+  }
+  .Base {
     flex: 2;
   }
-  .expires {
-    input {
-      width: 170px;
-    }
-  }
-  button {
-    max-height: 50px;
+  .Expiry {
+    width: 170px;
   }
 }

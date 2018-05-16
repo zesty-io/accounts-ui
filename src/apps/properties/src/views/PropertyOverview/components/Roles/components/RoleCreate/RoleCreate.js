@@ -14,19 +14,20 @@ export class RoleCreate extends Component {
   render() {
     return (
       <form className={styles.RoleCreate}>
-        <span className={styles.label}>
-          <label>Role Name</label>
+        <label className={styles.Name}>
+          Role Name
           <Input
             type="text"
             name="name"
             placeholder="Name this custom role"
             autoComplete="off"
             value={this.state.name}
-            onChange={this.onChange}
+            onChange={this.setName}
           />
-        </span>
-        <span className={styles.base}>
-          <label>Base Role</label>
+        </label>
+
+        <label className={styles.Base}>
+          Base Role
           <Select onSelect={this.selectBaseRole}>
             <Option key="default" value="" text="Select Role" />
             {this.props.systemRoles.map(role => {
@@ -35,23 +36,32 @@ export class RoleCreate extends Component {
               )
             })}
           </Select>
-        </span>
-        <span className={styles.expires}>
-          <label>Exipres(optional)</label>
-          <Input type="date" name="expiry" onChange={this.onChange} />
-        </span>
-        <Button
-          className={styles.createButton}
-          onClick={this.handleCreate}
-          disabled={this.state.submitted}
-        >
+        </label>
+
+        <label className={styles.Expiry}>
+          Exipres(optional)
+          <Input type="date" name="expiry" onChange={this.setExpiry} />
+        </label>
+
+        {/* <span className={styles.label} />
+        <span className={styles.base} />
+        <span className={styles.expires} /> */}
+
+        <Button onClick={this.handleCreate} disabled={this.state.submitted}>
           {this.state.submitted ? 'Creating Role' : 'Create Role'}
         </Button>
       </form>
     )
   }
-  onChange = evt => {
-    this.setState({ [evt.target.name]: evt.target.value })
+  setName = evt => {
+    this.setState({
+      name: evt.target.value
+    })
+  }
+  setExpiry = evt => {
+    this.setState({
+      expiry: evt.target.value
+    })
   }
   selectBaseRole = evt => {
     this.setState({
