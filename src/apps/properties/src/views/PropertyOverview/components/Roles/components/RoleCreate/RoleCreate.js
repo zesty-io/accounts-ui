@@ -1,9 +1,16 @@
 import { Component } from 'React'
+import { connect } from 'react-redux'
+import { notify } from '../../../../../../../../../shell/store/notifications'
+import { createRole } from '../../../../../../store/sitesRoles'
+
 import styles from './RoleCreate.less'
 
-export class RoleCreate extends Component {
+class RoleCreate extends Component {
   constructor(props) {
     super(props)
+
+    console.log('RoleCreate', props)
+
     this.state = {
       submitted: false,
       name: '',
@@ -70,40 +77,62 @@ export class RoleCreate extends Component {
   }
   handleCreate = evt => {
     evt.preventDefault()
-    if (this.state.name !== '' && this.state.systemRoleZUID !== '') {
-      this.setState({ submitted: !this.state.submitted })
+    if (this.state.name && this.state.systemRoleZUID) {
+      this.setState({
+        submitted: true
+      })
+
       this.props
         .dispatch(createRole(this.props.siteZUID, { ...this.state }))
         .then(data => {
-          this.props
-            .dispatch(getRole(data.ZUID, this.props.siteZUID))
-            .then(data => {
-              this.props.dispatch({
-                type: 'NEW_MODAL',
-                component: EditRole,
-                props: {
-                  siteZUID: this.props.siteZUID,
-                  roleZUID: data.ZUID
-                }
-              })
-              this.setState({ submitted: !this.state.submitted, name: '' })
-            })
-          return this.props.dispatch(
-            fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
-          )
+          // We just created a new role so load the role
+          // permissions editing view
+
+          this.props.dispatch({
+            type: 'NEW_MODAL',
+            component: EditRole,
+            props: {
+              siteZUID: this.props.siteZUID,
+              roleZUID: data.ZUID
+            }
+          })
+
+          // this.props
+          //   .dispatch(getRole(data.ZUID, this.props.siteZUID))
+          //   .then(data => {
+          //     this.props.dispatch({
+          //       type: 'NEW_MODAL',
+          //       component: EditRole,
+          //       props: {
+          //         siteZUID: this.props.siteZUID,
+          //         roleZUID: data.ZUID
+          //       }
+          //     })
+          //     this.setState({ submitted: !this.state.submitted, name: '' })
+          //   })
+          // return this.props.dispatch(
+          //   fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
+          // )
         })
         .catch(err => {
           console.table(err)
-          this.setState({ submitted: !this.state.submitted, name: '' })
+          this.setState({
+            submitted: !this.state.submitted,
+            name: ''
+          })
         })
     } else {
       this.props.dispatch(
         notify({
           message:
-            'You must include a name and system role to create a new role.',
+            'You must include a name and select a role to create a new custom role.',
           type: 'error'
         })
       )
     }
   }
 }
+
+export default connect(state => {
+  return {}
+})(RoleCreate)

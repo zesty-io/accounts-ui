@@ -115,7 +115,10 @@ export const createRole = (siteZUID, body) => {
       }
     })
       .then(data => {
-        dispatch({ type: 'ADDING_ROLE_SUCCESS', role: data.data })
+        dispatch({
+          type: 'ADDING_ROLE_SUCCESS',
+          role: data.data
+        })
         return data.data
       })
       .catch(err => {

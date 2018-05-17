@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
+import { Route } from 'react-router'
 
 import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
@@ -10,9 +11,10 @@ import {
   getRole
 } from '../../../../store/sitesRoles'
 
-import Modal from '../../../../../../../shell/components/Modal'
+// import Modal from '../../../../../../../shell/components/Modal'
+
 import EditRole from './EditRole'
-import { RoleCreate } from './components/RoleCreate'
+import RoleCreate from './components/RoleCreate'
 
 import styles from './Roles.less'
 
@@ -25,62 +27,87 @@ const formatDate = date => {
     1}-${newDate.getDate()}-${newDate.getFullYear()}`
 }
 
-class Roles extends Component {
-  state = {
-    modalIsOpen: false,
-    roleZUID: ''
+export default class Roles extends Component {
+  constructor(props) {
+    super(props)
+
+    console.log('Roles: ', props)
+
+    // this.state = {
+    //   modalIsOpen: false,
+    //   roleZUID: ''
+    // }
   }
   render() {
     return (
-      <div className={styles.Roles}>
-        <Modal close={this.toggleModal} isOpen={this.state.modalIsOpen}>
-          <EditRole props={{ ...this.props, roleZUID: this.state.roleZUID }} />
-        </Modal>
-        <p>
-          By creating custom roles you can provide fine grained controls of what
-          content specific users can access and what actions the can take.
-        </p>
-        <RoleCreate systemRoles={this.props.systemRoles} />
-        <Divider />
-        <div className={styles.currentRoles}>
-          <header>
-            <h3>Role</h3>
-            <h3>Created</h3>
-            <h3>Expires</h3>
-          </header>
-          <main>
-            {this.props.siteRoles.map(role => {
-              return (
-                <article key={role.ZUID}>
-                  <span>{role.name}</span>
-                  <span>{formatDate(role.createdAt)}</span>
-                  <span>{formatDate(role.expiry)}</span>
-                  <span>
-                    <ButtonGroup>
-                      <Button
-                        text="Edit"
-                        onClick={() =>
-                          this.handleEdit(role.ZUID, this.props.siteZUID)
-                        }
-                      />
-                      <Button
-                        text="Remove"
-                        onClick={() => this.handleRemove(role.ZUID)}
-                      />
-                    </ButtonGroup>
-                  </span>
-                </article>
-              )
-            })}
-          </main>
-        </div>
-      </div>
+      <Card>
+        <CardHeader>
+          <h2>
+            <i className="fa fa-lock" aria-hidden="true" />
+            &nbsp;Custom Site Roles
+          </h2>
+        </CardHeader>
+        <CardContent>
+          <div className={styles.Roles}>
+            <Route
+              exact
+              path={`/properties/:siteZUID/role/:roleZUID`}
+              component={EditRole}
+            />
+
+            {/* <Modal close={this.toggleModal} isOpen={this.state.modalIsOpen}>
+              <EditRole props={{ ...this.props, roleZUID: this.state.roleZUID }} />
+            </Modal> */}
+
+            <p>
+              By creating custom roles you can provide fine grained controls of
+              what content specific users can access and what actions the can
+              take.
+            </p>
+            <RoleCreate
+              dispatch={this.props.dispatch}
+              systemRoles={this.props.systemRoles}
+            />
+            <Divider />
+            <div className={styles.currentRoles}>
+              <header>
+                <h3>Role</h3>
+                <h3>Created</h3>
+                <h3>Expires</h3>
+              </header>
+              <main>
+                {this.props.siteRoles.map(role => {
+                  return (
+                    <article key={role.ZUID}>
+                      <span>{role.name}</span>
+                      <span>{formatDate(role.createdAt)}</span>
+                      <span>{formatDate(role.expiry)}</span>
+                      <span>
+                        <ButtonGroup>
+                          <AppLink
+                            to={`${this.props.match.url}/role/${role.ZUID}`}
+                          >
+                            <i className="fa fa-pencil" aria-hidden="true" />&nbsp;Edit
+                          </AppLink>
+                          <Button onClick={() => this.handleRemove(role.ZUID)}>
+                            <i className="fa fa-trash-o" aria-hidden="true" />Remove
+                          </Button>
+                        </ButtonGroup>
+                      </span>
+                    </article>
+                  )
+                })}
+              </main>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     )
   }
-  handleEdit = (roleZUID, siteZUID) => {
-    this.setState({ roleZUID })
-    this.toggleModal()
-  }
+  // handleEdit = (roleZUID, siteZUID) => {
+  //   this.setState({ roleZUID })
+  //   this.toggleModal()
+  // }
   handleRemove = ZUID => {
     this.props.dispatch(
       zConfirm({
@@ -88,27 +115,31 @@ class Roles extends Component {
         callback: result => {
           // remove role if user confirms
           if (result) {
-            return this.props.dispatch(removeRole(ZUID)).then(data => {
+            this.props.dispatch(removeRole(ZUID)).then(data => {
               this.props.dispatch(
                 notify({
                   message: 'Role successfully removed',
                   type: 'success'
                 })
               )
-              return this.props.dispatch(
-                fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
-              )
+              // return this.props.dispatch(
+              //   fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
+              // )
             })
           }
         }
       })
     )
   }
-  toggleModal = evt => {
-    this.setState({ modalIsOpen: !this.state.modalIsOpen })
-  }
+  // toggleModal = evt => {
+  //   this.setState({
+  //     modalIsOpen: !this.state.modalIsOpen
+  //   })
+  // }
 }
 
-export default connect(state => {
-  return {}
-})(Roles)
+// export default connect((state, props) => {
+//   console.log('connect:Roles: ', state, props)
+//
+//   return {}
+// })(Roles)

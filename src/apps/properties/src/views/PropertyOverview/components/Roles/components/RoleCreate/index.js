@@ -1,2 +1,2 @@
-import { RoleCreate } from './RoleCreate'
-export { RoleCreate }
+import RoleCreate from './RoleCreate'
+export default RoleCreate

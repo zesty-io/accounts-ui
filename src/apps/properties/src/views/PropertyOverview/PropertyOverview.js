@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
@@ -17,7 +18,6 @@ import { fetchSiteRoles } from '../../store/sitesRoles'
 import { fetchSiteCompanies } from '../../store/sitesCompanies'
 import { fetchBlueprint } from '../../store/blueprints'
 // import { fetchSite } from '../../store/sites'
-// import { fetchSiteCollections } from '../../store/sitesCollections'
 // import { updateSite } from '../../store/sites'
 // import { notify } from '../../../../../shell/store/notifications'
 
@@ -62,8 +62,6 @@ class PropertyOverview extends Component {
         })
       })
 
-    // this.props.dispatch(fetchSiteCollections(this.props.siteZUID))
-
     document.addEventListener('keydown', this.close)
     document.addEventListener('click', this.close)
   }
@@ -84,10 +82,66 @@ class PropertyOverview extends Component {
           </Button>
           <header className={styles.PropertyOverviewHeader}>
             <PropertyName name={this.props.site.name} />
-            <Domain siteZUID={this.props.site.ZUID} site={this.props.site} />
+            {/* <Domain siteZUID={this.props.site.ZUID} site={this.props.site} /> */}
           </header>
           <main className={styles.Cards}>
-            <article className={styles.card}>
+            <Route
+              path="/properties/:siteZUID"
+              render={routeProps => {
+                return (
+                  <Users
+                    {...routeProps}
+                    siteZUID={this.props.site.ZUID}
+                    dispatch={this.props.dispatch}
+                    users={this.props.users}
+                    roles={this.props.allRoles}
+                    loadingUsers={this.state.loadingUsers}
+                    loadingUsersPending={this.state.loadingUsersPending}
+                    loadingRoles={this.state.loadingRoles}
+                  />
+                )
+              }}
+            />
+            <Route
+              path="/properties/:siteZUID"
+              render={routeProps => {
+                return (
+                  <Roles
+                    {...routeProps}
+                    dispatch={this.props.dispatch}
+                    siteZUID={this.props.siteZUID}
+                    siteRoles={this.props.siteRoles}
+                    systemRoles={this.props.systemRoles}
+                  />
+                )
+              }}
+            />
+            <Route
+              path="/properties/:siteZUID"
+              render={routeProps => {
+                return (
+                  <CompanyAccess
+                    companies={this.props.companies}
+                    loadingTeams={this.state.loadingTeams}
+                  />
+                )
+              }}
+            />
+
+            <Route
+              path="/properties/:siteZUID"
+              render={routeProps => {
+                return (
+                  <Blueprint
+                    loadingBlueprint={this.state.loadingBlueprint}
+                    siteZUID={this.props.siteZUID}
+                    blueprint={this.props.blueprint}
+                  />
+                )
+              }}
+            />
+
+            {/* <article className={styles.card}>
               <h2>
                 <i className="fa fa-users" aria-hidden="true" />
                 &nbsp;User Access
@@ -101,21 +155,22 @@ class PropertyOverview extends Component {
                 loadingUsersPending={this.state.loadingUsersPending}
                 loadingRoles={this.state.loadingRoles}
               />
-            </article>
+            </article> */}
 
-            <article className={styles.card}>
+            {/* <article className={styles.card}>
               <h2>
                 <i className="fa fa-lock" aria-hidden="true" />
                 &nbsp;Custom Site Roles
               </h2>
               <Roles
+                dispatch={this.props.dispatch}
                 siteZUID={this.props.siteZUID}
                 siteRoles={this.props.siteRoles}
                 systemRoles={this.props.systemRoles}
               />
-            </article>
+            </article> */}
 
-            <article className={styles.card}>
+            {/* <article className={styles.card}>
               <h2>
                 <i className="fa fa-building" aria-hidden="true" />
                 &nbsp;Company Access
@@ -124,13 +179,13 @@ class PropertyOverview extends Component {
                 companies={this.props.companies}
                 loadingTeams={this.state.loadingTeams}
               />
-            </article>
+            </article> */}
 
-            <Blueprint
+            {/* <Blueprint
               loadingBlueprint={this.state.loadingBlueprint}
               siteZUID={this.props.siteZUID}
               blueprint={this.props.blueprint}
-            />
+            /> */}
           </main>
         </article>
       </section>
