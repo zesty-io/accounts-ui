@@ -67,6 +67,19 @@
     }
   }
 
+  &.warn {
+    background: lighten(@btnWarn, 10%);
+    text-shadow: 1px 1px 1px darken(@btnWarn, 15%);
+    border-bottom: 3px solid darken(@btnWarn, 6%);
+    border-right: 2px solid darken(@btnWarn, 6%);
+    &:hover {
+      background: lighten(@btnWarn, 13%);
+    }
+    &:active {
+      background: darken(@btnWarn, 7%);
+    }
+  }
+
   &.alt {
     background-color: @btnAlt;
     border-bottom-color: darken(@btnAlt, 10%);

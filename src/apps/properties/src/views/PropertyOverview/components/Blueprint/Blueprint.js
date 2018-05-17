@@ -10,10 +10,12 @@ export default function Blueprint(props) {
               <i className="fa fa-file-code-o" aria-hidden="true" />
               &nbsp;Blueprint
             </h1>
-            <AppLink to={`${props.siteZUID}/blueprint`}>
+            <Button
+              type="warn"
+              onClick={evt => handleChangeBlueprint(evt)}>
               <i className="fa fa-columns" aria-hidden="true" />
               &nbsp;Change Blueprint
-            </AppLink>
+            </Button>
           </CardHeader>
           <CardContent>
             <h2 className={styles.name}>{props.blueprint.name}</h2>
@@ -26,4 +28,7 @@ export default function Blueprint(props) {
       )}
     </React.Fragment>
   )
+  const handleChangeBlueprint = evt => {
+    console.log(evt)
+  }
 }
