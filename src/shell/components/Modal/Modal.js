@@ -3,16 +3,14 @@ import React, { Component } from 'react'
 
 import styles from './Modal.less'
 
-const Modal = props => {
+export default function Modal(props) {
   // const ModalComponent = props.component
   return (
     <section className={styles.Modal}>
-      <Button onClick={props.close} className={styles.close}>
+      <Button onClick={() => props.history.goBack()} className={styles.close}>
         <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
       </Button>
       <div>{props.children}</div>
     </section>
   )
 }
-
-export default Modal
