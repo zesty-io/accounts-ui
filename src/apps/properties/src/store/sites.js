@@ -43,7 +43,7 @@ export function sites(state = {}, action) {
     case 'CREATING_SITE':
       return state
     case 'CREATE_SITE_SUCCESS':
-      return state
+      return { ...state, [action.site.ZUID]: action.site }
     case 'CREATE_SITE_ERROR':
       return state
     case 'REMOVE_USER':
@@ -115,6 +115,7 @@ export function fetchSite(siteZUID) {
           type: 'FETCH_SITE_SUCCESS',
           site: site.data
         })
+        dispatch(fetchSites())
         return site
       })
       .catch(err => {
@@ -285,7 +286,7 @@ export const postNewSite = name => {
       .then(data => {
         dispatch({
           type: 'CREATE_SITE_SUCCESS',
-          data: data.data
+          site: data.data
         })
         return data
       })
