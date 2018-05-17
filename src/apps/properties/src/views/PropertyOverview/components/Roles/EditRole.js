@@ -60,7 +60,7 @@ class EditRole extends Component {
 
   render() {
     return (
-      <Modal>
+      <Modal {...this.props}>
         <div className={styles.modalWrapper}>
           <h3>
             Edit Granular Role Permissions for: {this.props.role.name} system
