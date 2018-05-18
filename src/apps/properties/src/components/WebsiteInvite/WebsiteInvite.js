@@ -19,6 +19,53 @@ class WebsiteInvite extends Component {
       declined: false
     }
   }
+
+  render() {
+    return (
+      <article className={styles.WebsiteInvite}>
+        <header>
+          <h1 className={styles.name}>{this.props.site.name}</h1>
+          {this.props.site.domain ? (
+            <Url target="_blank" href={`http://${this.props.site.domain}`}>
+              <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
+                this.props.site.domain
+              }
+            </Url>
+          ) : null}
+        </header>
+        <main className={styles.WebsiteManage}>
+          <Url
+            className={styles.preview}
+            target="_blank"
+            title={`Preview  ${this.props.site.name}`}
+            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
+          >
+            <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
+          </Url>
+        </main>
+        <footer>
+          <ButtonGroup>
+            <Button
+              className={styles.invite}
+              onClick={this.handleAccept}
+              disabled={this.state.accepted}
+            >
+              <i className="fa fa-check-circle-o" aria-hidden="true" />
+              Accept Invite
+            </Button>
+            <Button
+              type="cancel"
+              onClick={this.handleDecline}
+              disabled={this.state.declined}
+            >
+              <i className="fa fa-ban" aria-hidden="true" />
+              Decline
+            </Button>
+          </ButtonGroup>
+        </footer>
+      </article>
+    )
+  }
   handleAccept = evt => {
     this.setState({ accepted: true })
     // post accepted invite data THEN route to the overview when the user has permissions
@@ -43,7 +90,9 @@ class WebsiteInvite extends Component {
         notify({
           HTML: `<div>
             <p>You have accepted an invite to ${this.props.site.name}</p><br>
-            <a href="${`${config.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${config.MANAGER_URL}`}" target="_blank">
+            <a href="${`${config.MANAGER_URL_PROTOCOL}${
+              this.props.site.randomHashID
+            }${config.MANAGER_URL}`}" target="_blank">
             click here to go to Manager App
             </a><br>
             <a href="/properties/${this.props.site.ZUID}">
@@ -58,52 +107,17 @@ class WebsiteInvite extends Component {
   }
   handleDecline = evt => {
     this.setState({ declined: true })
-    this.props.dispatch(declineInvite(this.props.site.inviteZUID)).then(data => {
-      this.props.dispatch(
-        notify({
-          message: `You have declined an invite to ${this.props.site.name}`,
-          type: 'info'
-        })
-      )
-      this.props.dispatch(fetchSites())
-    })
-  }
-  render() {
-    return (
-      <article className={styles.WebsiteInvite}>
-        <header>
-          <h1 className={styles.name}>{this.props.site.name}</h1>
-          {this.props.site.domain ? (
-            <Url target="_blank" href={`http://${this.props.site.domain}`}>
-              <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
-                this.props.site.domain
-              }
-            </Url>
-          ) : null}
-        </header>
-        <main className={styles.WebsiteManage}>
-          <Url
-            className={styles.preview}
-            target="_blank"
-            title={`Preview  ${this.props.site.name}`}
-            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}>
-            <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
-          </Url>
-        </main>
-        <footer>
-          <ButtonGroup>
-            <Button className={styles.invite} onClick={this.handleAccept} disabled={this.state.accepted}>
-              <i className="fa fa-check-circle-o" aria-hidden="true" />
-              Accept Invite
-            </Button>
-            <Button type="cancel" onClick={this.handleDecline} disabled={this.state.declined}>
-              <i className="fa fa-ban" aria-hidden="true" />
-              Decline
-            </Button>
-          </ButtonGroup>
-        </footer>
-      </article>
-    )
+    this.props
+      .dispatch(declineInvite(this.props.site.inviteZUID))
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            message: `You have declined an invite to ${this.props.site.name}`,
+            type: 'info'
+          })
+        )
+        this.props.dispatch(fetchSites())
+      })
   }
 }
 
