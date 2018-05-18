@@ -6,7 +6,7 @@ This also aligns us with eventually making this a PWA.
 
 ## Running Locally
 
-This app requires the Zesty.io platform(`zesty-io/zesty-dev`) to be running and available in order to load data, handle authentication, etc. The app itself can be ran locally with the command:
+This app requires the Zesty.io platform(`zesty-io/zesty-dev`) to be running and available in order to load data, handle authentication, etc. The app itself can be run locally with the command:
 
     npm start
 
