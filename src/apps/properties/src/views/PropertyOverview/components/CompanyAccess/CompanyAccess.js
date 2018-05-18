@@ -32,7 +32,7 @@ class CompanyAccess extends Component {
               <Input placeholder="Enter team ID" />
               <Button name="companyAccessSubmit">Grant Access</Button>
             </div>
-            <Divider />
+            {/* <Divider /> */}
             <div className={styles.companyTable}>
               <header>
                 <h3>Company</h3>
@@ -62,7 +62,7 @@ class CompanyAccess extends Component {
                 {!Object.keys(this.props.companies).length &&
                 !this.props.loadingTeams ? (
                   <article>
-                    <em>No team access add for this web property.</em>
+                    <em>No team access added for this web property.</em>
                   </article>
                 ) : null}
 

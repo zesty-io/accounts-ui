@@ -59,10 +59,10 @@ export default class Users extends Component {
                 <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
               </Button>
             </div>
-            <Divider />
+            {/* <Divider /> */}
             <div className={styles.UserList}>
               <header>
-                <h3>User Name</h3>
+                <h3>Name</h3>
                 <h3>Email</h3>
                 <h3>Actions</h3>
               </header>

@@ -1,16 +1,15 @@
 import styles from './Blueprint.less'
 
 export default function Blueprint(props) {
-  console.log('Blueprint', props)
   return (
     <React.Fragment>
       {!props.loadingBlueprint ? (
         <Card className={styles.Blueprint}>
           <CardHeader>
-            <h1>
+            <h2>
               <i className="fa fa-file-code-o" aria-hidden="true" />
               &nbsp;Blueprint
-            </h1>
+            </h2>
             <AppLink type="cancel" to={`${props.match.url}/blueprint`}>
               <i className="fa fa-columns" aria-hidden="true" />
               &nbsp;Change Blueprint

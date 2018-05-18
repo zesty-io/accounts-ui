@@ -44,15 +44,15 @@ class Domain extends Component {
   render() {
     return (
       <div className={styles.Domain}>
-        {this.state.domain ? (
+        {this.props.site.domain ? (
           <h2 className={styles.Name} onClick={this.handleEdit}>
-            http://{this.state.domain}
+            http://{this.props.site.domain}
             <i className="fa fa-pencil" />
           </h2>
         ) : (
           <div className={styles.Edit}>
             <Input
-              value={this.state.domain}
+              value={this.props.site.domain}
               placeholder="Set a custom domain"
               onChange={this.handleDomain}
             />
@@ -157,9 +157,7 @@ class Domain extends Component {
     this.props
       .dispatch(updateDomain(this.props.siteZUID, this.state.name))
       .then(domain => {
-        this.setState({
-          domain
-        })
+        this.setState({ domain })
       })
   }
 

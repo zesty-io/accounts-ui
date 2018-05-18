@@ -30,8 +30,7 @@ const formatDate = date => {
 export default class Roles extends Component {
   constructor(props) {
     super(props)
-
-    console.log('Roles: ', props)
+    // console.log('Roles: ', props)
 
     // this.state = {
     //   modalIsOpen: false,
@@ -54,11 +53,6 @@ export default class Roles extends Component {
               path={`/properties/:siteZUID/role/:roleZUID`}
               component={EditRole}
             />
-
-            {/* <Modal close={this.toggleModal} isOpen={this.state.modalIsOpen}>
-              <EditRole props={{ ...this.props, roleZUID: this.state.roleZUID }} />
-            </Modal> */}
-
             <p>
               By creating custom roles you can provide fine grained controls of
               what content specific users can access and what actions the can
@@ -68,7 +62,7 @@ export default class Roles extends Component {
               dispatch={this.props.dispatch}
               systemRoles={this.props.systemRoles}
             />
-            <Divider />
+            {/* <Divider /> */}
             <div className={styles.currentRoles}>
               <header>
                 <h3>Role</h3>
