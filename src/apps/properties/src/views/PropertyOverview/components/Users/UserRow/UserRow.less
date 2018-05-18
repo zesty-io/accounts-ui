@@ -11,7 +11,15 @@
     background-color: @zesty-white;
   }
   span:last-child {
-    justify-content: right;
-    display: inherit;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-height: 50px;
+    .select {
+      flex: 3;
+    }
+    .trash {
+      margin: .4rem;
+    }
   }
 }

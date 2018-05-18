@@ -16,6 +16,13 @@ class PropertiesHeader extends Component {
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
+          {this.props.user.staff ? (
+            <Select onSelect={this.filterByEco}>
+              <Option key="default" value="" text="Select Ecosystem" />
+              <Option key="test1" value="" text="Ecosystem" />
+              <Option key="test2" value="" text="Ecosystem2" />
+            </Select>
+          ) : null}
           <Button className={styles.Create} onClick={this.onCreateSite}>
             <i className="fa fa-plus" /> Create Web Property
           </Button>
@@ -28,6 +35,10 @@ class PropertiesHeader extends Component {
   }
   onCreateSite = evt => {
     this.props.history.push('/properties/create')
+  }
+  filterByEco = evt => {
+    // TODO: fetch ecosystems, build into filteredSites
+    console.log('filter by ecosystem')
   }
 }
 
