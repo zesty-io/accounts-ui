@@ -1,11 +1,11 @@
 module.exports = {
-  API_ACCOUNTS: 'http://accounts.api.zesty.localdev:3022/v1',
-  API_INSTANCE: '.api.zesty.localdev:3023/v1/',
-  API_AUTH: 'http://svc.zesty.localdev:3011',
-  MANAGER_URL: '.manage.zesty.localdev:3020',
-  MANAGER_URL_PROTOCOL: 'http://',
-  PREVIEW_URL: '-dev.preview.zestyio.localdev:3020',
-  PREVIEW_URL_PROTOCOL: 'http://',
-  COOKIE_NAME: 'APP_SID',
-  COOKIE_DOMAIN: '.zesty.localdev'
+  API_ACCOUNTS: 'https://accounts.api.stage-zesty.io/v1',
+  API_INSTANCE: '.api.stage-zesty.io/v1/',
+  API_AUTH: 'https://svc.stage-zesty.io/auth',
+  MANAGER_URL: '.manage.stage-zesty.io',
+  MANAGER_URL_PROTOCOL: 'https://',
+  PREVIEW_URL: '-dev.preview.stage-zesty.io',
+  PREVIEW_URL_PROTOCOL: 'https://',
+  COOKIE_NAME: 'STAGE_APP_SID',
+  COOKIE_DOMAIN: '.stage-zesty.io'
 }
