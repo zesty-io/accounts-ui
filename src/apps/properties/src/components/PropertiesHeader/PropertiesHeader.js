@@ -17,7 +17,7 @@ class PropertiesHeader extends Component {
             onKeyUp={this.onSearch}
           />
           {this.props.user.staff ? (
-            <Select clasName={styles.Eco} onSelect={this.filterByEco}>
+            <Select onSelect={this.filterByEco}>
               <Option key="default" value="" text="Select Ecosystem" />
               <Option key="test1" value="" text="Ecosystem" />
               <Option key="test2" value="" text="Ecosystem2" />

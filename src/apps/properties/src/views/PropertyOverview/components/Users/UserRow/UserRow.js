@@ -6,6 +6,12 @@ import { zConfirm } from '../../../../../../../../shell/store/confirm'
 const OWNER_ZUID = '31-71cfc74-0wn3r'
 
 export default class UserRow extends PureComponent {
+  state = {
+    roleZUID: ''
+  }
+  componentDidMount() {
+    this.props.role && this.setState({ roleZUID: this.props.role.ZUID })
+  }
   render() {
     return (
       <article className={styles.UserRow}>
@@ -30,15 +36,34 @@ export default class UserRow extends PureComponent {
           {!this.props.pending &&
           this.props.role &&
           this.props.role.systemRoleZUID !== OWNER_ZUID ? (
-            <Button onClick={() => this.removeUser(user, this.props.role.ZUID)}>
-              <i className="fa fa-trash-o" aria-hidden="true" />Remove User
-            </Button>
+            <span className={styles.select}>
+              <Select onSelect={this.handleSelectRole}>
+                <Option key="default" value="" text="Select Role" />
+                {this.props.roles.map(role => {
+                  return (
+                    <Option
+                      key={role.ZUID}
+                      value={role.ZUID}
+                      text={role.name}
+                    />
+                  )
+                })}
+              </Select>
+              <i
+                className={styles.trash + " fa fa-trash-o"}
+                aria-hidden="true"
+                onClick={() =>
+                  this.removeUser(this.props.ZUID, this.props.role.ZUID)
+                }
+              />
+            </span>
           ) : null}
         </span>
       </article>
     )
   }
   removeUser = (userZUID, roleZUID) => {
+    console.log(userZUID, roleZUID)
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to remove this user?',
@@ -95,5 +120,8 @@ export default class UserRow extends PureComponent {
         }
       })
     )
+  }
+  handleSelectRole = evt => {
+    console.log('change the users role', evt)
   }
 }
