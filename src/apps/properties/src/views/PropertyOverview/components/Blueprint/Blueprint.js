@@ -1,6 +1,7 @@
 import styles from './Blueprint.less'
 
 export default function Blueprint(props) {
+  console.log('Blueprint', props)
   return (
     <React.Fragment>
       {!props.loadingBlueprint ? (
@@ -10,17 +11,22 @@ export default function Blueprint(props) {
               <i className="fa fa-file-code-o" aria-hidden="true" />
               &nbsp;Blueprint
             </h1>
-            <Button
-              type="warn"
-              onClick={evt => handleChangeBlueprint(evt)}>
+            <AppLink type="cancel" to={`${props.match.url}/blueprint`}>
               <i className="fa fa-columns" aria-hidden="true" />
               &nbsp;Change Blueprint
-            </Button>
+            </AppLink>
           </CardHeader>
           <CardContent>
             <h2 className={styles.name}>{props.blueprint.name}</h2>
             <img src={props.blueprint.coverImage} alt="" />
             <p>{props.blueprint.description}</p>
+
+            {props.blueprint.githubURL ? (
+              <Url href={props.blueprint.githubURL} target="_blank">
+                <i className="fa fa-github" aria-hidden="true" />
+                View On Github
+              </Url>
+            ) : null}
           </CardContent>
         </Card>
       ) : (

@@ -137,6 +137,7 @@ class PropertyOverview extends Component {
               render={routeProps => {
                 return (
                   <Blueprint
+                    {...routeProps}
                     loadingBlueprint={this.state.loadingBlueprint}
                     siteZUID={this.props.siteZUID}
                     blueprint={this.props.blueprint}
