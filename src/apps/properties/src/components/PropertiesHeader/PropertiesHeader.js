@@ -10,19 +10,19 @@ class PropertiesHeader extends Component {
     return (
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
-          {this.props.user.staff ? (
-            <Select onSelect={this.filterByEco}>
-              <Option key="default" value="" text="Select Ecosystem" />
-              <Option key="test1" value="" text="Ecosystem" />
-              <Option key="test2" value="" text="Ecosystem2" />
-            </Select>
-          ) : null}
           <Search
             className={styles.Search}
             placeholder="Search by web property name or domain"
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
+          {this.props.user.staff ? (
+            <Select clasName={styles.Eco} onSelect={this.filterByEco}>
+              <Option key="default" value="" text="Select Ecosystem" />
+              <Option key="test1" value="" text="Ecosystem" />
+              <Option key="test2" value="" text="Ecosystem2" />
+            </Select>
+          ) : null}
           <Button className={styles.Create} onClick={this.onCreateSite}>
             <i className="fa fa-plus" /> Create Web Property
           </Button>
