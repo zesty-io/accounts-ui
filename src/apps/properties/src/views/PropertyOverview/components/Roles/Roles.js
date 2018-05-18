@@ -13,7 +13,7 @@ import {
 
 // import Modal from '../../../../../../../shell/components/Modal'
 
-import EditRole from './EditRole'
+import EditRole from './components/EditRole'
 import RoleCreate from './components/RoleCreate'
 
 import styles from './Roles.less'
