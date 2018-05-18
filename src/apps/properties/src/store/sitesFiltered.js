@@ -22,25 +22,29 @@ export const filter = searchString => {
     let sites = getState().sites
     if (searchString !== '') {
       let filtered = {}
-      for (const zuid in sites) {
-        let site = sites[zuid]
-        if (
-          site.name &&
-          site.name.toLowerCase().includes(searchString.toLowerCase())
-        ) {
-          filtered[zuid] = site
-        } else if (site.ZUID && site.ZUID.includes(searchString)) {
-          filtered[zuid] = site
-        } else if (
-          site.RandomHashID &&
-          site.RandomHashID.includes(searchString)
-        ) {
-          filtered[zuid] = site
-        } else if (
-          site.ecoID &&
-          site.ecoID.toString() === searchString.toString()
-        ) {
-          filtered[zuid] = site
+      if (typeof searchString !== 'number') {
+        for (const zuid in sites) {
+          let site = sites[zuid]
+          if (
+            site.name &&
+            site.name.toLowerCase().includes(searchString.toLowerCase())
+          ) {
+            filtered[zuid] = site
+          } else if (site.ZUID && site.ZUID.includes(searchString)) {
+            filtered[zuid] = site
+          } else if (
+            site.RandomHashID &&
+            site.RandomHashID.includes(searchString)
+          ) {
+            filtered[zuid] = site
+          }
+        }
+      } else {
+        for (const zuid in sites) {
+          let site = sites[zuid]
+          if (site.ecoID && site.ecoID == searchString) {
+            filtered[zuid] = site
+          }
         }
       }
       dispatch({

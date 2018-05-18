@@ -19,9 +19,10 @@ class PropertiesHeader extends Component {
           {this.props.user.staff ? (
             <Select onSelect={this.filterByEco}>
               <Option key="default" value="" text="Select Ecosystem" />
-              <Option key="petDesk" value="24291" text="Pet Desk" />
-              <Option key="alphaUniverse" value="154" text="Alpha Universe" />
-              <Option key="Hofhaus" value="24290" text="Hofbrauhaus" />
+              <Option key="petDesk" value={24291} text="Pet Desk" />
+              <Option key="alphaUniverse" value={154} text="Alpha Universe" />
+              <Option key="Hofhaus" value={24290} text="Hofbrauhaus" />
+              <Option key="Zesty" value={1} text="Zesty" />
             </Select>
           ) : null}
           <Button className={styles.Create} onClick={this.onCreateSite}>
@@ -38,7 +39,7 @@ class PropertiesHeader extends Component {
     this.props.history.push('/properties/create')
   }
   filterByEco = evt => {
-    this.props.dispatch(filter(evt.target.dataset.value))
+    this.props.dispatch(filter(Number(evt.target.dataset.value)))
   }
 }
 
