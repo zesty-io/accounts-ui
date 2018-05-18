@@ -16,8 +16,7 @@ import Modal from '../../../../../../../../../shell/components/Modal'
 class EditRole extends Component {
   constructor(props) {
     super(props)
-
-    console.log('EditRole: ', props)
+    // console.log('EditRole: ', props)
   }
 
   componentWillMount() {
@@ -64,7 +63,7 @@ class EditRole extends Component {
     return (
       <Modal {...this.props}>
         <div className={styles.EditRole}>
-          <h3 className={styles.RoleName}>Editing: {this.props.role.name}</h3>
+          <h1 className={styles.RoleName}>Editing: {this.props.role.name}</h1>
           <header>
             <h3>Collection</h3>
             <h3>create</h3>
@@ -221,53 +220,55 @@ class EditRole extends Component {
   //   return this.state.role.granularRoles.hasOwnProperty(collection)
   // }
   //
-  // handleSubmit = evt => {
-  //   evt.preventDefault()
-  //   // check value of granular roles against role.granularRoles
-  //   // if !== && granularRole isnt on the role CREATE ROLE WITH CURRENT GRAINS
-  //   // queue creation first(with values), THEN update calls
-  //   console.log('state;', this.state)
-  //   Object.keys(this.state.granularRoles).map(collectionZUID => {
-  //     if (this.diffGrains(collectionZUID)) {
-  //       if (this.doesExist(collectionZUID)) {
-  //         this.props
-  //           .dispatch(
-  //             updateGranularRole(
-  //               collectionZUID,
-  //               this.state.granularRoles[collectionZUID],
-  //               this.state.roleZUID
-  //             )
-  //           )
-  //           .then(data => {
-  //             this.props.dispatch(
-  //               notify({
-  //                 message: 'Role Successfully Updated',
-  //                 type: 'success'
-  //               })
-  //             )
-  //           })
-  //       } else {
-  //         this.props
-  //           .dispatch(
-  //             createGranularRole(
-  //               collectionZUID,
-  //               this.state.granularRoles[collectionZUID],
-  //               this.state.roleZUID
-  //             )
-  //           )
-  //           .then(data => {
-  //             this.props.dispatch(
-  //               notify({
-  //                 message: 'Granular Role Successfully Created',
-  //                 type: 'success'
-  //               })
-  //             )
-  //           })
-  //       }
-  //     }
-  //   })
-  // }
-  //
+  handleSubmit = evt => {
+    evt.preventDefault()
+
+    // check value of granular roles against role.granularRoles
+    // if !== && granularRole isnt on the role CREATE ROLE WITH CURRENT GRAINS
+    // queue creation first(with values), THEN update calls
+    console.log('state; ', this.state)
+
+    // Object.keys(this.state.granularRoles).map(collectionZUID => {
+    //   if (this.diffGrains(collectionZUID)) {
+    //     if (this.doesExist(collectionZUID)) {
+    //       this.props
+    //         .dispatch(
+    //           updateGranularRole(
+    //             collectionZUID,
+    //             this.state.granularRoles[collectionZUID],
+    //             this.state.roleZUID
+    //           )
+    //         )
+    //         .then(data => {
+    //           this.props.dispatch(
+    //             notify({
+    //               message: 'Role Successfully Updated',
+    //               type: 'success'
+    //             })
+    //           )
+    //         })
+    //     } else {
+    //       this.props
+    //         .dispatch(
+    //           createGranularRole(
+    //             collectionZUID,
+    //             this.state.granularRoles[collectionZUID],
+    //             this.state.roleZUID
+    //           )
+    //         )
+    //         .then(data => {
+    //           this.props.dispatch(
+    //             notify({
+    //               message: 'Granular Role Successfully Created',
+    //               type: 'success'
+    //             })
+    //           )
+    //         })
+    //     }
+    //   }
+    // })
+  }
+
   // handleCancel = evt => {
   //   evt.preventDefault()
   //   //todo: check for changes and confirm lost changes
