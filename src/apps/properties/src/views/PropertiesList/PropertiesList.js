@@ -38,7 +38,7 @@ class Properties extends Component {
                 )
                 .map((zuid, i) => {
                   // TODO: remove when windowing is functional
-                  if (i >= 100) {
+                  if (i >= 200) {
                     return
                   }
                   return (
