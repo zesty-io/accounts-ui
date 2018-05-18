@@ -1,10 +1,32 @@
-.propertyName {
-  font-size: 1.9rem;
+.PropertyName {
   display: flex;
   flex-direction: row;
   align-items: center;
-  height: 30px;
-  i {
-    padding: 0.5rem;
+  margin-bottom: 0.5rem;
+
+  .Name {
+    cursor: pointer;
+    font-size: 1.6em;
+    .Edit {
+      display: none;
+      padding: 0.5rem;
+    }
+    &:hover {
+      .Edit {
+        display: inline;
+      }
+    }
+  }
+
+  .EditName {
+    display: flex;
+    align-items: center;
+    input {
+      line-height: 1.8em;
+      margin-right: 0.5rem;
+    }
+    i {
+      font-size: 1.8em;
+    }
   }
 }

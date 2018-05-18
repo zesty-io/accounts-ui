@@ -15,9 +15,9 @@ export default class PropertyName extends Component {
   }
   render() {
     return (
-      <div className={styles.propertyName}>
+      <div className={styles.PropertyName}>
         {this.state.editName ? (
-          <React.Fragment>
+          <div className={styles.EditName}>
             <Input
               value={this.state.name}
               onChange={evt => {
@@ -27,15 +27,11 @@ export default class PropertyName extends Component {
               }}
             />
             <i onClick={this.handleNameUpdate} className="fa fa-save" />
-          </React.Fragment>
+          </div>
         ) : (
-          <h1>
+          <h1 className={styles.Name} onClick={this.editName}>
             {this.props.name}
-            <i
-              className={cx('fa fa-pencil')}
-              aria-hidden="true"
-              onClick={this.editName}
-            />
+            <i className={cx('fa fa-pencil', styles.Edit)} aria-hidden="true" />
           </h1>
         )}
       </div>
