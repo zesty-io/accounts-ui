@@ -5,7 +5,7 @@
   align-items: center;
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: 1fr 0.7fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
 
   &:nth-child(odd) {
     background-color: @zesty-white;
@@ -20,7 +20,8 @@
     }
     .trash {
       margin: .4rem;
-      color: @zesty-light-grey
+      color: @zesty-light-grey;
+      cursor: pointer;
     }
   }
 }

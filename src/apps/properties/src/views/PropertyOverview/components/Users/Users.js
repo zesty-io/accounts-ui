@@ -63,8 +63,8 @@ export default class Users extends Component {
             <div className={styles.UserList}>
               <header>
                 <h3>User Name</h3>
-                <h3>Role</h3>
                 <h3>Email</h3>
+                <h3>Actions</h3>
               </header>
               <main>
                 {Object.keys(this.props.users).map(ZUID => {
