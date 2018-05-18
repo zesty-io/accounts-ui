@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import styles from './Roles.less'
+import styles from './EditRole.less'
 
-import { fetchSiteCollections } from '../../../../store/sitesCollections'
+import { fetchSiteCollections } from '../../../../../../store/sitesCollections'
 
 import {
   getRole,
   updateGranularRole,
   createGranularRole
-} from '../../../../store/sitesRoles'
+} from '../../../../../../store/sitesRoles'
 
-import { notify } from '../../../../../../../shell/store/notifications'
-import Modal from '../../../../../../../shell/components/Modal'
+import { notify } from '../../../../../../../../../shell/store/notifications'
+import Modal from '../../../../../../../../../shell/components/Modal'
 
 class EditRole extends Component {
   constructor(props) {
@@ -63,109 +63,101 @@ class EditRole extends Component {
   render() {
     return (
       <Modal {...this.props}>
-        <div className={styles.modalWrapper}>
-          <h3>
-            Edit Granular Role Permissions for: {this.props.role.name} system
-            base-({this.props.baseRole.name})
-          </h3>
-          <div className={styles.selectCollection}>
-            <header>
-              <h3>Collection</h3>
-              <h3>create</h3>
-              <h3>read</h3>
-              <h3>update</h3>
-              <h3>publish</h3>
-              <h3>delete</h3>
+        <div className={styles.EditRole}>
+          <h3 className={styles.RoleName}>Editing: {this.props.role.name}</h3>
+          <header>
+            <h3>Collection</h3>
+            <h3>create</h3>
+            <h3>read</h3>
+            <h3>update</h3>
+            <h3>publish</h3>
+            <h3>delete</h3>
+          </header>
+          <main>
+            <WithLoader condition={this.props.collections.length}>
+              <form className={styles.Permissions} name="permissions">
+                {this.props.collections.map(col => {
+                  return (
+                    <article key={col.ZUID}>
+                      <span>{col.label}</span>
+                      <Input type="checkbox" name="create" />
+                      <Input type="checkbox" name="update" />
+                      <Input type="checkbox" name="read" />
+                      <Input type="checkbox" name="publish" />
+                      <Input type="checkbox" name="delete" />
+                    </article>
+                  )
+                })}
 
-              {/* <h3>grant</h3> */}
-            </header>
-            <main>
-              <WithLoader condition={this.props.collections}>
-                <form name="permissionsForm">
-                  {this.props.collections.map(col => {
-                    return (
-                      <article key={col.ZUID}>
-                        <span>{col.label}</span>
-                        <Input type="checkbox" name="create" />
-                        <Input type="checkbox" name="update" />
-                        <Input type="checkbox" name="read" />
-                        <Input type="checkbox" name="publish" />
-                        <Input type="checkbox" name="delete" />
-                      </article>
-                    )
-                  })}
-
-                  {/* {Object.keys(collections).map((collectionZUID, i) => {
-                    return granularRoles[collectionZUID] ? (
-                      <article key={i}>
-                        <span>{collections[collectionZUID].label}</span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            onChange={this.handleClick}
-                            disabled={role.systemRole.create}
-                            checked={granularRoles[collectionZUID].create}
-                            value={`create,${collections[collectionZUID].zuid}`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            onChange={this.handleClick}
-                            disabled={role.systemRole.read}
-                            checked={granularRoles[collectionZUID].read}
-                            value={`read,${collections[collectionZUID].zuid}`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            onChange={this.handleClick}
-                            disabled={role.systemRole.update}
-                            checked={granularRoles[collectionZUID].update}
-                            value={`update,${collections[collectionZUID].zuid}`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            onChange={this.handleClick}
-                            disabled={role.systemRole.delete}
-                            checked={granularRoles[collectionZUID].delete}
-                            value={`delete,${collections[collectionZUID].zuid}`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            onChange={this.handleClick}
-                            disabled={role.systemRole.publish}
-                            checked={granularRoles[collectionZUID].publish}
-                            value={`publish,${collections[collectionZUID].zuid}`}
-                          />
-                        </span>
-                        <span>
-                          <input
-                            type="checkbox"
-                            onChange={this.handleClick}
-                            disabled={role.systemRole.grant}
-                            checked={granularRoles[collectionZUID].grant}
-                            value={`grant,${collections[collectionZUID].zuid}`}
-                          />
-                        </span>
-                      </article>
-                    ) : (
-                      <Loader key={i} />
-                    )
-                  })} */}
-                  <div className={styles.buttons}>
-                    <Button onClick={this.handleSubmit}>Apply</Button>
-                    <Button onClick={this.handleCancel}>Close</Button>
-                  </div>
-                </form>
-              </WithLoader>
-            </main>
-          </div>
+                {/* {Object.keys(collections).map((collectionZUID, i) => {
+                  return granularRoles[collectionZUID] ? (
+                    <article key={i}>
+                      <span>{collections[collectionZUID].label}</span>
+                      <span>
+                        <input
+                          type="checkbox"
+                          onChange={this.handleClick}
+                          disabled={role.systemRole.create}
+                          checked={granularRoles[collectionZUID].create}
+                          value={`create,${collections[collectionZUID].zuid}`}
+                        />
+                      </span>
+                      <span>
+                        <input
+                          type="checkbox"
+                          onChange={this.handleClick}
+                          disabled={role.systemRole.read}
+                          checked={granularRoles[collectionZUID].read}
+                          value={`read,${collections[collectionZUID].zuid}`}
+                        />
+                      </span>
+                      <span>
+                        <input
+                          type="checkbox"
+                          onChange={this.handleClick}
+                          disabled={role.systemRole.update}
+                          checked={granularRoles[collectionZUID].update}
+                          value={`update,${collections[collectionZUID].zuid}`}
+                        />
+                      </span>
+                      <span>
+                        <input
+                          type="checkbox"
+                          onChange={this.handleClick}
+                          disabled={role.systemRole.delete}
+                          checked={granularRoles[collectionZUID].delete}
+                          value={`delete,${collections[collectionZUID].zuid}`}
+                        />
+                      </span>
+                      <span>
+                        <input
+                          type="checkbox"
+                          onChange={this.handleClick}
+                          disabled={role.systemRole.publish}
+                          checked={granularRoles[collectionZUID].publish}
+                          value={`publish,${collections[collectionZUID].zuid}`}
+                        />
+                      </span>
+                      <span>
+                        <input
+                          type="checkbox"
+                          onChange={this.handleClick}
+                          disabled={role.systemRole.grant}
+                          checked={granularRoles[collectionZUID].grant}
+                          value={`grant,${collections[collectionZUID].zuid}`}
+                        />
+                      </span>
+                    </article>
+                  ) : (
+                    <Loader key={i} />
+                  )
+                })} */}
+                <Button className={styles.Submit} onClick={this.handleSubmit}>
+                  Apply Permissions
+                </Button>
+              </form>
+            </WithLoader>
+          </main>
         </div>
       </Modal>
     )
