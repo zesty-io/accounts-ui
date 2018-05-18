@@ -10,6 +10,13 @@ class PropertiesHeader extends Component {
     return (
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
+          {this.props.user.staff ? (
+            <Select onSelect={this.filterByEco}>
+              <Option key="default" value="" text="Select Ecosystem" />
+              <Option key="test1" value="" text="Ecosystem" />
+              <Option key="test2" value="" text="Ecosystem2" />
+            </Select>
+          ) : null}
           <Search
             className={styles.Search}
             placeholder="Search by web property name or domain"
@@ -28,6 +35,10 @@ class PropertiesHeader extends Component {
   }
   onCreateSite = evt => {
     this.props.history.push('/properties/create')
+  }
+  filterByEco = evt => {
+    // TODO: fetch ecosystems, build into filteredSites
+    console.log('filter by ecosystem')
   }
 }
 
