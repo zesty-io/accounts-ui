@@ -38,8 +38,6 @@ class PropertiesHeader extends Component {
     this.props.history.push('/properties/create')
   }
   filterByEco = evt => {
-    // TODO: fetch ecosystems, build into filteredSites
-    console.log(evt.target.dataset.value)
     this.props.dispatch(filter(evt.target.dataset.value))
   }
 }
