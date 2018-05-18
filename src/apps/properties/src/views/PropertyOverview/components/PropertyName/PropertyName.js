@@ -1,5 +1,8 @@
 import { Component } from 'react'
+import cx from 'classnames'
 import styles from './PropertyName.less'
+
+import { notify } from '../../../../../../../shell/store/notifications'
 import { updateSite } from '../../../../store/sites'
 
 export default class PropertyName extends Component {
@@ -7,7 +10,7 @@ export default class PropertyName extends Component {
     super(props)
     this.state = {
       editName: false,
-      name: this.props.name
+      name: this.props.name || ''
     }
   }
   render() {
@@ -26,15 +29,15 @@ export default class PropertyName extends Component {
             <i onClick={this.handleNameUpdate} className="fa fa-save" />
           </React.Fragment>
         ) : (
-          this.props.name
+          <h1>
+            {this.props.name}
+            <i
+              className={cx('fa fa-pencil')}
+              aria-hidden="true"
+              onClick={this.editName}
+            />
+          </h1>
         )}
-        <i
-          className={
-            this.state.editName ? 'fa fa-times-circle' : 'fa fa-pencil'
-          }
-          aria-hidden="true"
-          onClick={this.editName}
-        />
       </div>
     )
   }
@@ -46,28 +49,35 @@ export default class PropertyName extends Component {
   handleNameUpdate = () => {
     this.props
       .dispatch(
-        updateSite(this.props.ZUID, {
+        updateSite(this.props.siteZUID, {
           name: this.state.name
         })
       )
-      .then(data => {
-        this.props.dispatch(fetchSite(this.props.ZUID))
+      .then(res => {
+        this.props.dispatch({
+          type: 'FETCH_SITE_SUCCESS',
+          site: res.data
+        })
         this.props.dispatch(
           notify({
-            message: 'Successfully Updated',
+            message: 'Name Successfully Updated',
             type: 'success'
           })
         )
-        return this.setState({ editName: !this.state.editName })
+        return this.setState({
+          editName: false
+        })
       })
       .catch(err => {
         this.props.dispatch(
           notify({
-            message: 'Error Updating',
+            message: 'Error Updating Name',
             type: 'error'
           })
         )
-        return this.setState({ editName: !this.state.editName })
+        return this.setState({
+          editName: false
+        })
       })
   }
 }

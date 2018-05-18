@@ -81,7 +81,11 @@ class PropertyOverview extends Component {
             <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
           </Button>
           <header className={styles.PropertyOverviewHeader}>
-            <PropertyName name={this.props.site.name} />
+            <PropertyName
+              siteZUID={this.props.site.ZUID}
+              name={this.props.site.name}
+              dispatch={this.props.dispatch}
+            />
             {/* <Domain siteZUID={this.props.site.ZUID} site={this.props.site} /> */}
           </header>
           <main className={styles.Cards}>
