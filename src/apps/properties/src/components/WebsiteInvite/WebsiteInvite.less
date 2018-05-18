@@ -1,59 +1,38 @@
 @import url('../../../../../shell/styles/colors.less');
-.WebsiteInvite {
-  background: @zesty-light-grey;
-  margin: 1.5rem;
-  max-width: 60rem;
-  word-break: break-word;
-  display: flex;
-  flex-direction: column;
-  display: grid;
-  grid-template-rows: 1fr 2fr 0fr;
 
-  a:visited,
-  a {
-    color: #497edf;
-    margin: 0;
-  }
+.WebsiteInvite {
+  background: @zesty-tab-blue;
   header {
-    padding: 1rem;
-    border-bottom: 1px solid #9ba4b5;
-    min-height: 45px;
-    .name {
+    border-bottom: 1px solid #5c708a;
+    .Name {
+      color: @zesty-white;
       font-size: 1.1em;
-      .icon {
-        margin-right: 5px;
-      }
     }
   }
   main {
-    border-bottom: 1px solid #9ba4b5;
-    padding: 1rem;
-    flex: 1;
-    // a {
-    //   margin: 0;
-    // }
-    // .globe {
-    //   font-size: 10rem;
-    //   color: #f3f3f7;
-    //   text-align: center;
-    //   width: 100%;
-    // }
-    .preview {
+    .Preview {
       display: flex;
       align-items: center;
       font-size: 10rem;
       justify-content: center;
-      // color: #cacad4;
-      color: #f3f3f7;
+      color: #b2c7d6;
+
+      img {
+        max-width: 100%;
+      }
+
       &:hover {
         color: @zesty-orange;
       }
     }
   }
+
   footer {
-    padding: 1rem;
-    .invite {
-      flex: 2;
+    border-top: 1px solid #5c708a;
+    .Actions {
+      .invite {
+        flex: 2;
+      }
     }
   }
 }
