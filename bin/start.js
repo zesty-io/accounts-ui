@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const copyFiles = require('./copyFiles')
 const runPkgCmd = require('./runPkgCmd')
-const health = require('./health')
+const buildInfo = require('./buildInfo')
 
 const root = path.resolve(__dirname, '../')
 const src = root + '/src'
@@ -23,4 +23,4 @@ fs.readdirSync(appDir)
     runPkgCmd(path.join(appDir, app), 'start')
   })
 
-  health()
+  buildInfo()
