@@ -82,23 +82,8 @@ class WebsiteInvite extends Component {
         }
       })
       this.props.dispatch(
-        /*
-        **
-        ** NOTE: formatting with prettier will break the link in the string literals below
-        **
-        */
         notify({
-          HTML: `<div>
-            <p>You have accepted an invite to ${this.props.site.name}</p><br>
-            <a href="${`${config.MANAGER_URL_PROTOCOL}${
-              this.props.site.randomHashID
-            }${config.MANAGER_URL}`}" target="_blank">
-            click here to go to Manager App
-            </a><br>
-            <a href="/properties/${this.props.site.ZUID}">
-            click here to see Overview
-            </a>
-            </div>`,
+          message: `You accepted your invite to ${this.props.site.name}`,
           type: 'success',
           timeout: 6000
         })
@@ -112,7 +97,7 @@ class WebsiteInvite extends Component {
       .then(data => {
         this.props.dispatch(
           notify({
-            message: `You have declined an invite to ${this.props.site.name}`,
+            message: `You have declined your invite to ${this.props.site.name}`,
             type: 'info'
           })
         )
