@@ -1,17 +1,14 @@
 import { PureComponent } from 'react'
 import styles from './UserRow.less'
 
+import { updateSiteUserRole } from '../../../../../store/sitesUsers'
+
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
+import { notify } from '../../../../../../../../shell/store/notifications'
 
 const OWNER_ZUID = '31-71cfc74-0wn3r'
 
 export default class UserRow extends PureComponent {
-  state = {
-    roleZUID: ''
-  }
-  componentDidMount() {
-    this.props.role && this.setState({ roleZUID: this.props.role.ZUID })
-  }
   render() {
     return (
       <article className={styles.UserRow}>
@@ -33,24 +30,28 @@ export default class UserRow extends PureComponent {
               <i className="fa fa-trash-o" aria-hidden="true" />Revoke Invite
             </Button>
           ) : null}
-          {!this.props.pending &&
-          this.props.role &&
-          this.props.role.systemRoleZUID !== OWNER_ZUID ? (
+          {this.props.role && this.props.role.systemRoleZUID !== OWNER_ZUID ? (
             <span className={styles.select}>
               <Select onSelect={this.handleSelectRole}>
-                <Option key="default" value="" text="Select Role" />
-                {this.props.roles.map(role => {
-                  return (
-                    <Option
-                      key={role.ZUID}
-                      value={role.ZUID}
-                      text={role.name}
-                    />
-                  )
-                })}
+                <Option
+                  key={this.props.role.ZUID}
+                  value={this.props.role.ZUID}
+                  text={this.props.role.name}
+                />
+                {this.props.roles
+                  .filter(role => role.ZUID !== this.props.role.ZUID)
+                  .map(role => {
+                    return (
+                      <Option
+                        key={role.ZUID}
+                        value={role.ZUID}
+                        text={role.name}
+                      />
+                    )
+                  })}
               </Select>
               <i
-                className={styles.trash + " fa fa-trash-o"}
+                className={styles.trash + ' fa fa-trash-o'}
                 aria-hidden="true"
                 onClick={() =>
                   this.removeUser(this.props.ZUID, this.props.role.ZUID)
@@ -63,7 +64,6 @@ export default class UserRow extends PureComponent {
     )
   }
   removeUser = (userZUID, roleZUID) => {
-    console.log(userZUID, roleZUID)
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to remove this user?',
@@ -122,6 +122,27 @@ export default class UserRow extends PureComponent {
     )
   }
   handleSelectRole = evt => {
-    console.log('change the users role', evt)
+    const newRole = evt.target.dataset.value
+    updateSiteUserRole(
+      this.props.ZUID,
+      this.props.role.ZUID,
+      newRole
+    )
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            message: `${this.props.firstName}'s role has been updated`,
+            type: 'success'
+          })
+        )
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: 'There was a problem updating the role',
+            type: 'error'
+          })
+        )
+      })
   }
 }
