@@ -64,7 +64,6 @@ export default class UserRow extends PureComponent {
     )
   }
   removeUser = (userZUID, roleZUID) => {
-    console.log(userZUID, roleZUID)
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to remove this user?',
@@ -123,8 +122,6 @@ export default class UserRow extends PureComponent {
     )
   }
   handleSelectRole = evt => {
-    console.log('change the users role', evt.target.dataset.value)
-    //TODO: update user role call
     const newRole = evt.target.dataset.value
     updateSiteUserRole(
       this.props.ZUID,
