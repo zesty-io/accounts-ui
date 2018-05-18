@@ -94,7 +94,7 @@ class PropertyOverview extends Component {
                     siteZUID={this.props.site.ZUID}
                     dispatch={this.props.dispatch}
                     users={this.props.users}
-                    roles={this.props.allRoles}
+                    roles={this.props.siteRoles}
                     loadingUsers={this.state.loadingUsers}
                     loadingUsersPending={this.state.loadingUsersPending}
                     loadingRoles={this.state.loadingRoles}
@@ -227,7 +227,7 @@ export default withRouter(
       siteZUID,
       systemRoles,
       siteRoles,
-      allRoles: [...systemRoles, ...siteRoles],
+      // allRoles: [...systemRoles, ...siteRoles],
       site: state.sites[siteZUID] || {},
       users: state.sitesUsers[siteZUID] || {},
       companies: state.sitesCompanies[siteZUID] || {},

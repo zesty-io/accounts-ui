@@ -103,3 +103,21 @@ export const removeSiteUser = (userZUID, siteZUID) => {
     })
   }
 }
+
+export const updateSiteUserRole = (userZUID, oldRoleZUID, newRoleZUID) => {
+  return request(
+    `${config.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
+    {
+      method: 'PUT',
+      json: true,
+      body: {
+        roleZUID: newRoleZUID
+      }
+    }
+  )
+    .then(data => data)
+    .catch(err => {
+      console.log(err)
+      return er
+    })
+}
