@@ -8,7 +8,6 @@ import Signup from '../Signup'
 import ResetPasswordStart from '../ResetPasswordStart'
 import ResetPasswordEnd from '../ResetPasswordEnd'
 import VerifyEmail from '../VerifyEmail'
-import Health from '../Health'
 
 import NotFound from '../../../shell/components/NotFound'
 
@@ -43,7 +42,6 @@ class App extends Component {
                 <Route path="/settings" component={Settings} />
                 <Route path="/support" component={Support} />
                 <Route path="/teams" component={Teams} />
-                <Route path="/health" component={Health} />
                 <Redirect exact from="/" to="/properties" />
                 <Route component={NotFound} />
               </Switch>
@@ -80,7 +78,6 @@ class Shell extends Component {
               />
               <Route path="/reset-password" component={ResetPasswordStart} />
               <Route path="/verify-email" component={VerifyEmail} />
-              <Route path="/health" component={Health} />
               <Redirect from="/" to="/login" />
             </Switch>
           </React.Fragment>

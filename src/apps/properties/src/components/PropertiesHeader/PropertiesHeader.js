@@ -39,6 +39,9 @@ class PropertiesHeader extends Component {
     this.props.history.push('/properties/create')
   }
   filterByEco = evt => {
+    if (evt.target.dataset.value === '') {
+      return this.props.dispatch(filter(''))
+    }
     this.props.dispatch(filter(Number(evt.target.dataset.value)))
   }
 }

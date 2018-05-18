@@ -11,7 +11,6 @@ export function sitesFiltered(state = {}, action) {
       return {}
     case 'FILTER_PROPERTIES':
       return action.filtered
-
     default:
       return state
   }

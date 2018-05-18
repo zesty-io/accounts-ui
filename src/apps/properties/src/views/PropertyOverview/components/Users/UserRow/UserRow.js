@@ -17,12 +17,12 @@ export default class UserRow extends PureComponent {
           {!this.props.lastName &&
             !this.props.firstName && <em>Invited User</em>}
         </span>
-        <span className={styles.role}>
+        {/* <span className={styles.role}>
           {this.props.role && this.props.role.systemRoleZUID === OWNER_ZUID ? (
             <i className="fa fa-star" aria-hidden="true" />
           ) : null}
           {this.props.role && this.props.role.name}
-        </span>
+        </span> */}
         <span className={styles.email}>{this.props.email}</span>
         <span className={styles.action}>
           {this.props.pending ? (
