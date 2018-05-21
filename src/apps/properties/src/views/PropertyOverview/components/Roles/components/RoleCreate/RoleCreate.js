@@ -5,6 +5,15 @@ import { createRole } from '../../../../../../store/sitesRoles'
 
 import styles from './RoleCreate.less'
 
+const today = () => {
+  const newDate = new Date()
+  return `${newDate.getFullYear()}-${
+    newDate.getMonth().length > 1
+      ? newDate.getMonth()
+      : '0' + (newDate.getMonth() + 1)
+  }-${newDate.getDate() + 1}`
+}
+
 class RoleCreate extends Component {
   constructor(props) {
     super(props)
@@ -47,7 +56,12 @@ class RoleCreate extends Component {
 
         <label className={styles.Expiry}>
           Exipres(optional)
-          <Input type="date" name="expiry" onChange={this.setExpiry} />
+          <Input
+            type="date"
+            min={today()}
+            name="expiry"
+            onChange={this.setExpiry}
+          />
         </label>
 
         {/* <span className={styles.label} />
