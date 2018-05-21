@@ -28,7 +28,7 @@ export default class ResetPasswordStart extends Component {
           ) : null}
           <label>
             <p>
-              Enter the email for associated with your account and we will send
+              Enter the email associated with your account and we will send
               an email with instructions for resetting your password.
             </p>
             <Input className={styles.input} type="email" name="email" />
