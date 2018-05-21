@@ -166,7 +166,7 @@ class PropertyOverview extends Component {
                 return (
                   <Meta
                     {...routeProps}
-                    siteZUID={this.props.siteZUID}
+                    site={this.props.site}
                   />
                 )
               }}
