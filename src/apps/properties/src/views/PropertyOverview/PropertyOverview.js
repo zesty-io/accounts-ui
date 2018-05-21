@@ -12,6 +12,7 @@ import Users from './components/Users'
 import CompanyAccess from './components/CompanyAccess'
 import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
+import Meta from './components/Meta'
 
 import config from '../../../../../shell/config'
 
@@ -154,6 +155,18 @@ class PropertyOverview extends Component {
                     loadingBlueprint={this.state.loadingBlueprint}
                     siteZUID={this.props.siteZUID}
                     blueprint={this.props.blueprint}
+                  />
+                )
+              }}
+            />
+
+            <Route
+              path="/properties/:siteZUID"
+              render={routeProps => {
+                return (
+                  <Meta
+                    {...routeProps}
+                    siteZUID={this.props.siteZUID}
                   />
                 )
               }}
