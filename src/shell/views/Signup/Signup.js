@@ -44,7 +44,8 @@ class Signup extends Component {
         <form
           name="signup"
           className={styles.SignupForm}
-          onSubmit={this.handleSignup}>
+          onSubmit={this.handleSignup}
+        >
           <img src="/zesty-io-logo.svg" />
           {this.state.message ? (
             <p className={styles.error}>
@@ -107,7 +108,8 @@ class Signup extends Component {
             <h5>I have read and agree to the</h5>
             <a
               href="https://www.zesty.io/en-us/about/end-user-license-agreement/"
-              target="_blank">
+              target="_blank"
+            >
               End User License Agreement
             </a>
             <Input
@@ -162,10 +164,13 @@ class Signup extends Component {
                   zuid: json.meta.userZuid,
                   auth: true
                 })
+                this.props.history.push('/')
               } else {
                 // if the user was created but login failed
                 // send them to the login view
-                this.setState({ mesage: 'There was a problem logging you in' })
+                this.setState({
+                  mesage: 'There was a problem logging you in'
+                })
                 this.props.history.push('/login')
               }
             })
@@ -183,7 +188,9 @@ class Signup extends Component {
         }
       })
       .catch(err => {
-        this.setState({ message: 'There was a problem creating your account' })
+        this.setState({
+          message: 'There was a problem creating your account'
+        })
         console.table(err)
       })
   }
