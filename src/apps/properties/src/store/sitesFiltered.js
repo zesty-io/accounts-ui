@@ -19,6 +19,7 @@ export function sitesFiltered(state = {}, action) {
 export const filter = searchString => {
   return function(dispatch, getState) {
     let sites = getState().sites
+
     if (searchString !== '') {
       let filtered = {}
       if (typeof searchString !== 'number') {
