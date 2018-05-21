@@ -2,17 +2,18 @@ import react, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { request } from '../../../../../util/request'
+import { notify } from '../../../../../shell/store/notifications'
 import config from '../../../../../shell/config'
 
 import styles from './BugReport.less'
 class BugReport extends Component {
   componentDidMount() {
     let navClone = {}
-    // have to use a for in loop because navigator is magic
+    // have to use a for in loop because navigator is all proto
     for (const prop in navigator) {
       navClone[prop] = navigator[prop]
     }
-    //remove functions from the object proto
+    // remove functions from the object proto
     Object.keys(navClone).map(key => {
       if (typeof navClone[key] !== 'string') {
         delete navClone[key]
@@ -27,7 +28,6 @@ class BugReport extends Component {
   }
 
   render() {
-    const { userData } = this.props.user
     return (
       <div className={styles.bugReport}>
         <h2> Bug Report</h2>
@@ -36,12 +36,10 @@ class BugReport extends Component {
             evt.preventDefault()
             // generate user data object to be send with the bug report
             const dataObj = {
-              ...userData,
               currentTime: Date.now()
             }
 
             const formData = new FormData(evt.target)
-            console.log(formData)
             formData.forEach((entry, key) => {
               if (evt.target[key].type === 'checkbox') {
                 dataObj[key] = evt.target[key].checked
@@ -49,6 +47,7 @@ class BugReport extends Component {
                 dataObj[key] = entry
               }
             })
+            dataObj.user = this.state.userInfo
 
             this.sendBugReport(dataObj)
           }}>
@@ -76,13 +75,12 @@ class BugReport extends Component {
   }
 
   sendBugReport = data => {
-    console.log(JSON.stringify(data, null, 2))
     request(config.EMAIL_SERVICE, {
       method: 'POST',
       json: true,
       body: {
         senderHandle: 'bugs',
-        senderName: data.name,
+        senderName: `${data.user.zestyUser.firstName} ${data.user.zestyUser.lastName}`,
         emailSubject: `Bug report from Accounts-UI dateTime-${
           data.currentTime
         }`,
@@ -91,10 +89,20 @@ class BugReport extends Component {
       }
     })
       .then(data => {
-        // close the modal and display a thank you message
-        this.props.dispatch({ type: 'REMOVE_MODAL' })
+        this.props.dispatch(
+          notify({
+            message: 'Thank you for your feedback',
+            type: 'success'
+          })
+        )
       })
       .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: 'there was a problem with the bug report',
+            type: 'error'
+          })
+        )
         console.log(err)
       })
   }

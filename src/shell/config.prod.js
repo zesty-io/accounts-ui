@@ -7,5 +7,6 @@ module.exports = {
   PREVIEW_URL: '-dev.preview.zestyio.com',
   PREVIEW_URL_PROTOCOL: 'https://',
   COOKIE_NAME: 'APP_SID',
+  EMAIL_SERVICE: 'https://email.zesty.io/send',
   COOKIE_DOMAIN: '.zesty.io'
 }

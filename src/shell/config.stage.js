@@ -7,5 +7,6 @@ module.exports = {
   PREVIEW_URL: '-dev.preview.stage-zesty.io',
   PREVIEW_URL_PROTOCOL: 'https://',
   COOKIE_NAME: 'STAGE_APP_SID',
-  COOKIE_DOMAIN: '.stage-zesty.io'
+  COOKIE_DOMAIN: '.stage-zesty.io',
+  EMAIL_SERVICE: 'https://email.zesty.io/send'
 }
