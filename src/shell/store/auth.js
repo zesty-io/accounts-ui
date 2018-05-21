@@ -63,16 +63,8 @@ export function verifyAuth(unsubscribe) {
 
 export function logout() {
   return dispatch => {
-    // dispatch({
-    //   type: 'FETCHING_AUTH'
-    // })
     request(`${config.API_AUTH}/logout`)
       .then(json => {
-        window.location = '/login' // I do not like doing this
-        return data
-      })
-      .then(data => {
-        // this clears the redux store of user data
         dispatch({
           type: 'LOGOUT'
         })
