@@ -13,6 +13,8 @@ import CompanyAccess from './components/CompanyAccess'
 import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
 
+import config from '../../../../../shell/config'
+
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
 import { fetchSiteCompanies } from '../../store/sitesCompanies'
@@ -87,6 +89,17 @@ class PropertyOverview extends Component {
               dispatch={this.props.dispatch}
             />
             <Domain siteZUID={this.props.site.ZUID} site={this.props.site} />
+
+            <Url
+              className={styles.manager}
+              target="_blank"
+              href={`${config.MANAGER_URL_PROTOCOL}${
+                this.props.site.randomHashID
+              }${config.MANAGER_URL}`}
+            >
+              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Site
+              Manager
+            </Url>
           </header>
           <main className={styles.Cards}>
             <Route
