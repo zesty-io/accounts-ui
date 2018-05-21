@@ -203,7 +203,7 @@ class PropertyOverview extends Component {
     if (evt.type === 'click') {
       if (
         evt.target.parentElement.id === 'siteListWrapper' ||
-        evt.target.id === 'closeOverviewButton'
+        evt.target.parentElement.id === 'closeOverviewButton'
       ) {
         this.props.history.push('/properties')
       }
