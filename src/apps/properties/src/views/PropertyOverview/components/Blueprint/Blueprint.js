@@ -11,7 +11,7 @@ export default function Blueprint(props) {
               &nbsp;Blueprint
             </h2>
             <AppLink type="cancel" to={`${props.match.url}/blueprint`}>
-              <i className="fa fa-columns" aria-hidden="true" />
+              <i className="fa fa-file-code-o" aria-hidden="true" />
               &nbsp;Change Blueprint
             </AppLink>
           </CardHeader>
