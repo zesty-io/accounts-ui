@@ -25,7 +25,8 @@ export class Select extends React.Component {
       className: cx(
         'selector',
         styles.selector,
-        this.state.dropdownOpen ? styles.show : styles.hidden
+        this.state.dropdownOpen ? styles.show : styles.hidden,
+        this.props.className
       ),
       onClick: this.toggleDropdown
     }
