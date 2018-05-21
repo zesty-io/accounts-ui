@@ -11,7 +11,9 @@
     display: grid;
     grid-auto-flow: row;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding: 0 0.5rem 0.5rem;
+    justify-items: center;
+    background-color: @zesty-white;
+    padding: 0.5rem;
     h3 {
       font-size: 1em;
     }
@@ -19,6 +21,7 @@
   main {
     padding: 0.5rem;
     display: grid;
+    justify-items: center;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     &:nth-child(odd) {
       background-color: @zesty-white;
