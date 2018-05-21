@@ -10,10 +10,14 @@ import { updateSite, fetchSite } from '../../store/sites'
 import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchBlueprints())
   }
+  state = {
+    selected: ''
+  }
   handleSelect = id => {
+    this.setState({ selected: id })
     this.props
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
@@ -65,7 +69,10 @@ class PropertyBlueprint extends Component {
                       <main>
                         {blueprint.coverImage === '' ? (
                           <div className={styles.noimage} aria-hidden="true">
-                            <i className="fa fa-pied-piper" aria-hidden="true"></i>
+                            <i
+                              className="fa fa-pied-piper"
+                              aria-hidden="true"
+                            />
                           </div>
                         ) : (
                           <img src={blueprint.coverImage} alt="bp img broked" />
@@ -73,7 +80,7 @@ class PropertyBlueprint extends Component {
                         <p>{blueprint.description}</p>
                       </main>
                       <footer>
-                        <Button onClick={() => this.handleSelect(blueprint.ID)}>
+                        <Button disabled={this.state.selected == blueprint.ID} onClick={() => this.handleSelect(blueprint.ID)}>
                           <i className="fa fa-columns" aria-hidden="true" />
                           Select Blueprint
                         </Button>
