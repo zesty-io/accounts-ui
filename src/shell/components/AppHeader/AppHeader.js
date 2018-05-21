@@ -29,10 +29,10 @@ export default class AppHeader extends Component {
             <i className="fa fa-globe" aria-hidden="true" />
             &nbsp;Web Properties
           </NavLink>
-          <NavLink to="/teams">
+          {/* <NavLink to="/teams">
             <i className="fa fa-users" aria-hidden="true" />
             &nbsp;Teams
-          </NavLink>
+          </NavLink> */}
         </nav>
         <nav
           ref={nav => (this.userNav = nav)}
