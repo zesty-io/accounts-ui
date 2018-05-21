@@ -23,39 +23,6 @@ class TwoFactor extends Component {
     clearInterval('polling')
   }
 
-  // Poll Auth service for OneTouch
-  poll2fa = () => {
-    request(`${config.API_AUTH}/auth/verify-2fa`)
-      .then(json => {
-        if (json.code === 202) {
-          return
-        }
-        if (json.code === 200) {
-          this.props.dispatch({
-            type: 'FETCH_AUTH_SUCCESS',
-            zuid: '',
-            auth: true
-          })
-          return window.location = '/properties'
-        }
-      })
-      .catch(err => {
-        console.log('error', err)
-        if(err === 401) {
-          this.setState({ message: 'Your login was denied' })
-        }
-        if(err === 404) {
-          this.setState({ message: 'Your login has expired' })
-        }
-        if(err === 500) {
-          this.setState({ message: 'A server error occurred' })
-        }
-        setTimeout(() => {
-          window.location = '/login'
-        }, 5000)
-      })
-  }
-
   render() {
     return (
       <section className={styles.TwoFactor}>
@@ -90,6 +57,7 @@ class TwoFactor extends Component {
       </section>
     )
   }
+
   handle2FA = evt => {
     evt.preventDefault()
     request(`${config.API_AUTH}/verify-2fa`, {
@@ -118,6 +86,38 @@ class TwoFactor extends Component {
       .catch(err => {
         console.table(err)
         throw err
+      })
+  }
+  // Poll Auth service for OneTouch
+  poll2fa = () => {
+    request(`${config.API_AUTH}/verify-2fa`)
+      .then(json => {
+        if (json.code === 202) {
+          return
+        }
+        if (json.code === 200) {
+          this.props.dispatch({
+            type: 'FETCH_AUTH_SUCCESS',
+            zuid: '',
+            auth: true
+          })
+          return (window.location = '/properties')
+        }
+      })
+      .catch(err => {
+        console.log('error', err)
+        if (err === 401) {
+          this.setState({ message: 'Your login was denied' })
+        }
+        if (err === 404) {
+          this.setState({ message: 'Your login has expired' })
+        }
+        if (err === 500) {
+          this.setState({ message: 'A server error occurred' })
+        }
+        setTimeout(() => {
+          window.location = '/login'
+        }, 5000)
       })
   }
 }
