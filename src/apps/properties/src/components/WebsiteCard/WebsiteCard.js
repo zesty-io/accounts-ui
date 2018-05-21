@@ -40,7 +40,7 @@ const WebsiteCard = props => {
           )}
         </Url>
       </CardContent>
-      <CardFooter>
+      <CardFooter className={styles.CardFooter}>
         <ButtonGroup className={styles.controls}>
           <Url
             className={styles.manager}
