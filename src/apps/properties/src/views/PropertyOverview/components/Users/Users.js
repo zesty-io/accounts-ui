@@ -54,8 +54,7 @@ export default class Users extends Component {
               </Select>
               <Button
                 onClick={this.handleInvite}
-                disabled={this.state.submitted}
-              >
+                disabled={this.state.submitted}>
                 <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
               </Button>
             </div>

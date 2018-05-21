@@ -7,7 +7,8 @@ export class Select extends React.Component {
     this.state = {
       dropdownOpen: false,
       selection: props.selection || props.children[0].props || {},
-      children: this.flattenChildren(props.children)
+      filter: ''
+      // children: this.flattenChildren(props.children)
     }
   }
   componentDidMount() {
@@ -62,7 +63,8 @@ export class Select extends React.Component {
           )}
         </span>
         <ul className={'selections ' + styles.selections}>
-          {this.props.children && this.props.children.length > 50 ? (
+          {this.props.children &&
+          this.flattenChildren(this.props.children).length > 50 ? (
             <Search
               className="filter"
               placeholder="Enter a term to filter this list"
@@ -70,17 +72,34 @@ export class Select extends React.Component {
             />
           ) : null}
           <div className={styles.options}>
-            {this.state.children.map(child => {
-              return React.cloneElement(child, {
-                onClick: evt => {
-                  // Individual option event listener
-                  if (child.props.onClick) {
-                    child.props.onClick(evt)
-                  }
-                  this.setSelection(evt)
+            {this.flattenChildren(this.props.children)
+              .filter(child => {
+                if (this.state.filter) {
+                  return (
+                    (child.props.html &&
+                      child.props.html
+                        .toLowerCase()
+                        .indexOf(this.state.filter) !== -1) ||
+                    (child.props.text &&
+                      child.props.text
+                        .toLowerCase()
+                        .indexOf(this.state.filter) !== -1)
+                  )
+                } else {
+                  return true
                 }
               })
-            })}
+              .map(child => {
+                return React.cloneElement(child, {
+                  onClick: evt => {
+                    // Individual option event listener
+                    if (child.props.onClick) {
+                      child.props.onClick(evt)
+                    }
+                    this.setSelection(evt)
+                  }
+                })
+              })}
           </div>
         </ul>
       </div>
@@ -134,7 +153,7 @@ export class Select extends React.Component {
       this.props.onSelect(evt)
     }
 
-    const selected = this.state.children.find(child => {
+    const selected = this.flattenChildren(this.props.children).find(child => {
       return child.props.value == evt.currentTarget.dataset.value
     })
 
@@ -144,23 +163,24 @@ export class Select extends React.Component {
   }
 
   handleFilterKeyUp = evt => {
-    let value = evt.target.value.trim().toLowerCase()
+    this.setState({ filter: evt.target.value.trim().toLowerCase() })
+    // let value = evt.target.value.trim().toLowerCase()
 
-    if (value) {
-      this.setState({
-        children: this.state.children.filter(child => {
-          return (
-            child.props.html.toLowerCase().indexOf(value) !== -1 ||
-            child.props.text.toLowerCase().indexOf(value) !== -1
-          )
-        })
-      })
-    } else {
-      // Reset select to default options
-      this.setState({
-        children: this.flattenChildren(this.props.children)
-      })
-    }
+    // if (value) {
+    //   this.setState({
+    //     children: this.state.children.filter(child => {
+    //       return (
+    //         child.props.html.toLowerCase().indexOf(value) !== -1 ||
+    //         child.props.text.toLowerCase().indexOf(value) !== -1
+    //       )
+    //     })
+    //   })
+    // } else {
+    //   // Reset select to default options
+    //   this.setState({
+    //     children: this.flattenChildren(this.props.children)
+    //   })
+    // }
   }
 
   /*
