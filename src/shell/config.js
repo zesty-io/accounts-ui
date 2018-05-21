@@ -18,7 +18,7 @@ if (process.env.NODE_ENV == 'production') {
     PREVIEW_URL_PROTOCOL: 'http://',
     COOKIE_NAME: 'APP_SID',
     COOKIE_DOMAIN: '.zesty.localdev',
-    EMAIL_SERVICE: 'https://send-email-dot-zesty-dev.appspot.com/send'
+    EMAIL_SERVICE: 'https://email.zesty.io/send'
   }
 }
 
