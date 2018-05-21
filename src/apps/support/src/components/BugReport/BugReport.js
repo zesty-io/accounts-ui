@@ -80,7 +80,7 @@ class BugReport extends Component {
       json: true,
       body: {
         senderHandle: 'bugs',
-        senderName: this.state.userInfo.zestyUser.firstName,
+        senderName: `${data.user.zestyUser.firstName} ${data.user.zestyUser.lastName}`,
         emailSubject: `Bug report from Accounts-UI dateTime-${
           data.currentTime
         }`,
