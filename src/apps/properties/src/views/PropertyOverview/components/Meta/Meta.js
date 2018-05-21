@@ -18,7 +18,7 @@ export default class Meta extends Component {
         <CardHeader>
           <h2>
             <i className="fa fa-info-circle" aria-hidden="true" />
-            &nbsp;Site Metadata
+            &nbsp;Metadata
           </h2>
         </CardHeader>
         <CardContent>
