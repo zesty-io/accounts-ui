@@ -78,7 +78,7 @@ class PropertyOverview extends Component {
             id="closeOverviewButton"
             onClick={this.close}
           >
-            <i className="fa fa-times-circle-o" aria-hidden="true" /> Close
+            <i className="fa fa-times-circle-o" aria-hidden="true" />
           </Button>
           <header className={styles.PropertyOverviewHeader}>
             <PropertyName
