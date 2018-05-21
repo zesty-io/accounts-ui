@@ -11,6 +11,7 @@ class PropertiesHeader extends Component {
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
           {this.props.user.staff ? (
+<<<<<<< HEAD
             <span className={styles.Eco}>
               <Select onSelect={this.filterByEco}>
                 <Option key="default" value="" text="Select Ecosystem" />
@@ -20,6 +21,15 @@ class PropertiesHeader extends Component {
                 <Option key="Zesty" value={1} text="Zesty" />
               </Select>
             </span>
+=======
+            <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
+              <Option key="default" value="" text="Select Ecosystem" />
+              <Option key="petDesk" value={24291} text="Pet Desk" />
+              <Option key="alphaUniverse" value={154} text="Alpha Universe" />
+              <Option key="Hofhaus" value={24290} text="Hofbrauhaus" />
+              <Option key="Zesty" value={1} text="Zesty" />
+            </Select>
+>>>>>>> 4c1b1818b0d95ae3785e57a4b52bc4debedb49e8
           ) : null}
           <Search
             className={styles.Search}
@@ -28,7 +38,7 @@ class PropertiesHeader extends Component {
             onKeyUp={this.onSearch}
           />
           <Button className={styles.Create} onClick={this.onCreateSite}>
-            <i className="fa fa-plus" /> Create Web Property
+            <i className="fa fa-plus" />Create Web Property
           </Button>
         </div>
       </header>
