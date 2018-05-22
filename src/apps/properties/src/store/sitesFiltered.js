@@ -16,6 +16,41 @@ export function sitesFiltered(state = {}, action) {
   }
 }
 
+export const sortSites = (sortBy, reverse) => {
+  return (dispatch, getState) => {
+    const sitesObj = getState().sitesFiltered
+    let sites = Object.keys(sitesObj).map(site => sitesObj[site])
+    if (reverse) {
+      sites.sort((prev, next) => {
+        if (prev[sortBy] < next[sortBy]) {
+          return 1
+        }
+        if (prev[sortBy] > next[sortBy]) {
+          return -1
+        }
+        return 0
+      })
+      return dispatch({
+        type: 'FILTER_PROPERTIES',
+        filtered: sites
+      })
+    }
+    sites.sort((prev, next) => {
+      if (prev[sortBy] < next[sortBy]) {
+        return -1
+      }
+      if (prev[sortBy] > next[sortBy]) {
+        return 1
+      }
+      return 0
+    })
+    return dispatch({
+      type: 'FILTER_PROPERTIES',
+      filtered: sites
+    })
+  }
+}
+
 export const filter = searchString => {
   return function(dispatch, getState) {
     let sites = getState().sites
@@ -63,6 +98,7 @@ export const filter = searchString => {
 
 export const filterEcosystem = searchString => {
   return function(dispatch, getState) {
+    //uses the currently filtered sites list
     let sites = getState().sitesFiltered
 
     if (searchString !== '') {

@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './PropertiesHeader.less'
 
-import { filter, filterEcosystem } from '../../store/sitesFiltered'
+import { filter, filterEcosystem, sortSites } from '../../store/sitesFiltered'
 
 class PropertiesHeader extends Component {
   state = {
@@ -22,6 +22,7 @@ class PropertiesHeader extends Component {
                 <Option key="Hofhaus" value={24290} text="Hofbrauhaus" />
                 <Option key="Zesty" value={1} text="Zesty" />
               </Select>
+              {/* <Button onClick={this.sort} text="sort" /> */}
             </span>
           ) : null}
           <Search
@@ -37,6 +38,7 @@ class PropertiesHeader extends Component {
       </header>
     )
   }
+
   onSearch = evt => {
     if (this.state.eco) {
       this.props.dispatch(filterEcosystem(evt.target.value))
@@ -44,9 +46,11 @@ class PropertiesHeader extends Component {
       this.props.dispatch(filter(evt.target.value))
     }
   }
+
   onCreateSite = evt => {
     this.props.history.push('/instances/create')
   }
+
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {
       this.setState({ eco: false })
@@ -54,6 +58,10 @@ class PropertiesHeader extends Component {
     }
     this.setState({ eco: true })
     this.props.dispatch(filter(Number(evt.target.dataset.value)))
+  }
+
+  sort = evt => {
+    this.props.dispatch(sortSites('createdAt', true))
   }
 }
 
