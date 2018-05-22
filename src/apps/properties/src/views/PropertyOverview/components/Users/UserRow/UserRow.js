@@ -1,7 +1,11 @@
 import { PureComponent } from 'react'
 import styles from './UserRow.less'
 
-import { updateSiteUserRole } from '../../../../../store/sitesUsers'
+import {
+  updateSiteUserRole,
+  removeSiteUser
+} from '../../../../../store/sitesUsers'
+import { cancelInvite } from '../../../../../store/sites'
 
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
@@ -10,6 +14,7 @@ const OWNER_ZUID = '31-71cfc74-0wn3r'
 
 export default class UserRow extends PureComponent {
   render() {
+    console.log('props in userRow', this.props)
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>
@@ -105,17 +110,22 @@ export default class UserRow extends PureComponent {
         callback: result => {
           if (result) {
             // removes invite if confirmed
-            this.props.dispatch(cancelInvite(inviteZUID)).then(data => {
-              this.props.dispatch(
-                removeSiteUser(data.data.ZUID, this.props.site.ZUID)
-              )
-            })
-            this.props.dispatch(
-              notify({
-                message: 'User Invite Cancelled',
-                type: 'success'
+            this.props
+              .dispatch(cancelInvite(inviteZUID))
+              .then(data => {
+                this.props.dispatch(
+                  removeSiteUser(inviteZUID, this.props.siteZUID)
+                )
+                return data
               })
-            )
+              .then(data => {
+                this.props.dispatch(
+                  notify({
+                    message: 'User Invite Cancelled',
+                    type: 'success'
+                  })
+                )
+              })
           }
         }
       })
@@ -123,11 +133,7 @@ export default class UserRow extends PureComponent {
   }
   handleSelectRole = evt => {
     const newRole = evt.target.dataset.value
-    updateSiteUserRole(
-      this.props.ZUID,
-      this.props.role.ZUID,
-      newRole
-    )
+    updateSiteUserRole(this.props.ZUID, this.props.role.ZUID, newRole)
       .then(data => {
         this.props.dispatch(
           notify({

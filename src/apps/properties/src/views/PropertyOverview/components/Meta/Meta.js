@@ -12,7 +12,6 @@ const formatDate = date => {
 }
 export default class Meta extends Component {
   render() {
-    console.log('props in meta', this.props)
     return (
       <Card>
         <CardHeader>

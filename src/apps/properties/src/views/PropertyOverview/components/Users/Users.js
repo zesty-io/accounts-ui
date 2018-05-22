@@ -70,6 +70,7 @@ export default class Users extends Component {
                   return (
                     <UserRow
                       key={ZUID}
+                      siteZUID={this.props.siteZUID}
                       roles={this.props.roles}
                       dispatch={this.props.dispatch}
                       {...this.props.users[ZUID]}
