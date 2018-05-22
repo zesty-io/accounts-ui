@@ -23,7 +23,7 @@ class PropertiesHeader extends Component {
           ) : null}
           <Search
             className={styles.Search}
-            placeholder="Search by web property name or domain"
+            placeholder="Search by instance name or domain"
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
