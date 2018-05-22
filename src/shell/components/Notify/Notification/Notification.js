@@ -15,6 +15,7 @@ export default class Notification extends PureComponent {
   render() {
     // HTML takes priority over plain mesage rendering
     if (this.props.HTML) {
+      // TODO: real sanitizing or remove html rendering
       if (this.props.HTML.toLowerCase().includes('<script>')) {
         return (
           <p className={(styles.Notification, styles.Animate)}>

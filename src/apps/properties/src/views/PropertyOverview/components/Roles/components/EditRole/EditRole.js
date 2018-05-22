@@ -16,7 +16,6 @@ import Modal from '../../../../../../../../../shell/components/Modal'
 class EditRole extends Component {
   constructor(props) {
     super(props)
-    // console.log('EditRole: ', props)
   }
 
   componentWillMount() {
