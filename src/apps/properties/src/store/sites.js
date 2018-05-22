@@ -81,7 +81,7 @@ export function fetchSites() {
           }
           return 0
         })
-
+        
         dispatch({
           type: 'FETCH_SITES_SUCCESS',
           sites: sites.data
