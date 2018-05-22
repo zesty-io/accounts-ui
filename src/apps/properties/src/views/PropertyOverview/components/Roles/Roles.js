@@ -5,10 +5,10 @@ import { Route } from 'react-router'
 import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import {
-  fetchSiteRoles,
+  // fetchSiteRoles,
   // createRole,
-  removeRole,
-  getRole
+  removeRole
+  // getRole
 } from '../../../../store/sitesRoles'
 
 // import Modal from '../../../../../../../shell/components/Modal'
@@ -28,16 +28,9 @@ const formatDate = date => {
 }
 
 export default class Roles extends Component {
-  constructor(props) {
-    super(props)
-    // console.log('Roles: ', props)
-
-    // this.state = {
-    //   modalIsOpen: false,
-    //   roleZUID: ''
-    // }
-  }
   render() {
+    console.log('props in Roles', this.props)
+
     return (
       <Card>
         <CardHeader>
@@ -61,6 +54,7 @@ export default class Roles extends Component {
             <RoleCreate
               dispatch={this.props.dispatch}
               systemRoles={this.props.systemRoles}
+              siteZUID={this.props.siteZUID}
             />
             {/* <Divider /> */}
             <div className={styles.currentRoles}>
@@ -79,8 +73,7 @@ export default class Roles extends Component {
                       <span>
                         <ButtonGroup>
                           <AppLink
-                            to={`${this.props.match.url}/role/${role.ZUID}`}
-                          >
+                            to={`${this.props.match.url}/role/${role.ZUID}`}>
                             <i className="fa fa-pencil" aria-hidden="true" />&nbsp;Edit
                           </AppLink>
                           <Button onClick={() => this.handleRemove(role.ZUID)}>
@@ -98,10 +91,6 @@ export default class Roles extends Component {
       </Card>
     )
   }
-  // handleEdit = (roleZUID, siteZUID) => {
-  //   this.setState({ roleZUID })
-  //   this.toggleModal()
-  // }
   handleRemove = ZUID => {
     this.props.dispatch(
       zConfirm({
@@ -109,31 +98,19 @@ export default class Roles extends Component {
         callback: result => {
           // remove role if user confirms
           if (result) {
-            this.props.dispatch(removeRole(ZUID)).then(data => {
-              this.props.dispatch(
-                notify({
-                  message: 'Role successfully removed',
-                  type: 'success'
-                })
-              )
-              // return this.props.dispatch(
-              //   fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
-              // )
-            })
+            this.props
+              .dispatch(removeRole(ZUID, this.props.siteZUID))
+              .then(data => {
+                this.props.dispatch(
+                  notify({
+                    message: 'Role successfully removed',
+                    type: 'success'
+                  })
+                )
+              })
           }
         }
       })
     )
   }
-  // toggleModal = evt => {
-  //   this.setState({
-  //     modalIsOpen: !this.state.modalIsOpen
-  //   })
-  // }
 }
-
-// export default connect((state, props) => {
-//   console.log('connect:Roles: ', state, props)
-//
-//   return {}
-// })(Roles)

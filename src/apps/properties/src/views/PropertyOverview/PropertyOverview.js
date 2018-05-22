@@ -128,6 +128,7 @@ class PropertyOverview extends Component {
                     {...routeProps}
                     dispatch={this.props.dispatch}
                     siteZUID={this.props.siteZUID}
+                    userZUID={this.props.userZUID}
                     siteRoles={this.props.siteRoles}
                     systemRoles={this.props.systemRoles}
                   />
@@ -258,7 +259,7 @@ export default withRouter(
       siteZUID,
       systemRoles,
       siteRoles,
-      // allRoles: [...systemRoles, ...siteRoles],
+      userZUID: state.user.ZUID,
       site: state.sites[siteZUID] || {},
       users: state.sitesUsers[siteZUID] || {},
       companies: state.sitesCompanies[siteZUID] || {},

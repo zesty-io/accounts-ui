@@ -6,16 +6,23 @@ export function sitesRoles(state = {}, action) {
     case 'FETCHING_ROLES':
       return state
     case 'FETCH_ROLES_SUCCESS':
-      return { ...state, [action.siteZuid]: action.normalizedRoles }
+      return { ...state, [action.siteZUID]: action.normalizedRoles }
 
     case 'FETCH_ROLES_ERROR':
       return state
     case 'ADDING_ROLE_FAILURE':
       return state
+    case 'ADDING_ROLE_SUCCESS':
+      return {
+        ...state,
+        [action.siteZUID]: {...state[action.siteZUID],
+          [action.role.ZUID]: action.role
+        }
+      }
     case 'DELETING_ROLE':
       return state
     case 'DELETING_ROLE_SUCCESS':
-      return state
+      return { ...state, [action.siteZUID]: action.siteRoles }
     case 'DELETING_ROLE_FAILURE':
       return state
     case 'FETCHING_ROLE':
@@ -44,16 +51,16 @@ export function sitesRoles(state = {}, action) {
   }
 }
 
-export const fetchSiteRoles = siteZuid => {
+export const fetchSiteRoles = siteZUID => {
   return dispatch => {
     dispatch({
       type: 'FETCHING_ROLES'
     })
-    return request(`${config.API_ACCOUNTS}/instances/${siteZuid}/roles`)
+    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}/roles`)
       .then(roles => {
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
-          siteZuid,
+          siteZUID,
           normalizedRoles: roles.data.reduce((acc, role) => {
             acc[role.ZUID] = role
             return acc
@@ -117,6 +124,7 @@ export const createRole = (siteZUID, body) => {
       .then(data => {
         dispatch({
           type: 'ADDING_ROLE_SUCCESS',
+          siteZUID,
           role: data.data
         })
         return data.data
@@ -129,14 +137,17 @@ export const createRole = (siteZUID, body) => {
   }
 }
 
-export const removeRole = roleZUID => {
-  return dispatch => {
+export const removeRole = (roleZUID, siteZUID) => {
+  return (dispatch, getState) => {
+    //create an object with the role deleted
+    const siteRoles = getState().sitesRoles[siteZUID]
+    delete siteRoles[roleZUID]
     dispatch({ type: 'DELETING_ROLE' })
     return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`, {
       method: 'DELETE'
     })
       .then(data => {
-        dispatch({ type: 'DELETING_ROLE_SUCCESS' })
+        dispatch({ type: 'DELETING_ROLE_SUCCESS', roleZUID, siteRoles })
         return data
       })
       .catch(err => {

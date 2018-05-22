@@ -1,7 +1,7 @@
 import { Component } from 'React'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../../../shell/store/notifications'
-import { createRole } from '../../../../../../store/sitesRoles'
+import { createRole, getRole } from '../../../../../../store/sitesRoles'
 
 import styles from './RoleCreate.less'
 
@@ -101,32 +101,8 @@ class RoleCreate extends Component {
         .then(data => {
           // We just created a new role so load the role
           // permissions editing view
-
-          this.props.dispatch({
-            type: 'NEW_MODAL',
-            component: EditRole,
-            props: {
-              siteZUID: this.props.siteZUID,
-              roleZUID: data.ZUID
-            }
-          })
-
-          // this.props
-          //   .dispatch(getRole(data.ZUID, this.props.siteZUID))
-          //   .then(data => {
-          //     this.props.dispatch({
-          //       type: 'NEW_MODAL',
-          //       component: EditRole,
-          //       props: {
-          //         siteZUID: this.props.siteZUID,
-          //         roleZUID: data.ZUID
-          //       }
-          //     })
-          //     this.setState({ submitted: !this.state.submitted, name: '' })
-          //   })
-          // return this.props.dispatch(
-          //   fetchSiteRoles(this.props.user.ZUID, this.props.siteZUID)
-          // )
+          this.props.history.push(`${this.props.match.url}/role/${role.ZUID}`)
+          this.setState({ submitted: !this.state.submitted, name: '' })
         })
         .catch(err => {
           console.table(err)

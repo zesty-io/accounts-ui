@@ -14,7 +14,6 @@ const OWNER_ZUID = '31-71cfc74-0wn3r'
 
 export default class UserRow extends PureComponent {
   render() {
-    console.log('props in userRow', this.props)
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>

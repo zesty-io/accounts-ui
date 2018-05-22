@@ -29,10 +29,10 @@ export default class Meta extends Component {
               <h3>Hash Id</h3>
             </header>
             <main>
-              <h3>{this.props.site.ZUID}</h3>
-              <h3>{formatDate(this.props.site.createdAt)}</h3>
-              <h3>{formatDate(this.props.site.updatedAt)}</h3>
-              <h3>{this.props.site.randomHashID}</h3>
+              <h5>{this.props.site.ZUID}</h5>
+              <h5>{formatDate(this.props.site.createdAt)}</h5>
+              <h5>{formatDate(this.props.site.updatedAt)}</h5>
+              <h5>{this.props.site.randomHashID}</h5>
             </main>
           </div>
         </CardContent>
