@@ -38,7 +38,7 @@ class PropertiesHeader extends Component {
     this.props.dispatch(filter(evt.target.value))
   }
   onCreateSite = evt => {
-    this.props.history.push('/properties/create')
+    this.props.history.push('/instances/create')
   }
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {

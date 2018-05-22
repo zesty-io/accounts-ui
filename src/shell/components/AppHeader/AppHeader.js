@@ -25,9 +25,9 @@ export default class AppHeader extends Component {
       <header className={styles.AppHeader}>
         <img className={styles.logo} src="/zesty-z-logo.svg" />
         <nav className={styles.GlobalNav}>
-          <NavLink to="/properties">
+          <NavLink to="/instances">
             <i className="fa fa-globe" aria-hidden="true" />
-            &nbsp;Web Properties
+            &nbsp;Instances
           </NavLink>
           {/* <NavLink to="/teams">
             <i className="fa fa-users" aria-hidden="true" />

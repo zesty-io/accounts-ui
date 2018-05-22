@@ -14,7 +14,7 @@ import PropertyBlueprint from '../PropertyBlueprint'
 class Properties extends Component {
   componentWillMount() {
     if (this.props.user.lastLogin === null) {
-      window.location = '/properties/create'
+      window.location = '/instances/create'
     } else {
       this.props.dispatch(fetchSites())
       this.props.dispatch(fetchSystemRoles())
@@ -26,11 +26,11 @@ class Properties extends Component {
         <Switch>
           <Route
             exact
-            path="/properties/:zuid/blueprint"
+            path="/instances/:zuid/blueprint"
             component={PropertyBlueprint}
           />
-          <Route exact path="/properties/create" component={PropertyCreate} />
-          <Route path="/properties" component={PropertiesList} />
+          <Route exact path="/instances/create" component={PropertyCreate} />
+          <Route path="/instances" component={PropertiesList} />
         </Switch>
       </section>
     )

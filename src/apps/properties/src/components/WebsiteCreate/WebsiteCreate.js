@@ -22,11 +22,11 @@ class WebsiteCreate extends Component {
           </p>
         </main>
         <footer>
-          {/* <Url href="/properties/create">
+          {/* <Url href="/instances/create">
             <i className="fa fa-plus" aria-hidden="true" />&nbsp;Create Web
             Property
           </Url> */}
-          <Link to="/properties/create" className={styles.Button}>
+          <Link to="/instances/create" className={styles.Button}>
             <Button>
               <i className="fa fa-plus" aria-hidden="true" />
               Create Web Property

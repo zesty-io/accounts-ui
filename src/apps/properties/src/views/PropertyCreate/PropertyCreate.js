@@ -26,10 +26,10 @@ class PropertyCreate extends Component {
           {!this.props.lastLogin ? (
             <React.Fragment>
               <h1>Welcome to Zesty.io</h1>
-              <h2>Let's make your first web property</h2>
+              <h2>Let's make your first instance</h2>
             </React.Fragment>
           ) : (
-            <h1>Name your new web property</h1>
+            <h1>Name your new instance</h1>
           )}
           <Input
             type="text"
@@ -41,10 +41,10 @@ class PropertyCreate extends Component {
             <Button onClick={this.handleClick} disabled={this.state.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
               {this.state.submitted
-                ? 'Creating Your Property'
-                : 'Create New Property'}
+                ? 'Creating Your Instance'
+                : 'Create New Instance'}
             </Button>
-            <Link to="/properties">
+            <Link to="/instances">
               <i className="fa fa-ban" aria-hidden="true" />
               &nbsp;Cancel
             </Link>
@@ -60,7 +60,7 @@ class PropertyCreate extends Component {
     if (this.state.name === '') {
       return this.props.dispatch(
         notify({
-          message: 'you must enter a name for you property',
+          message: 'you must enter a name for you instance',
           type: 'error'
         })
       )
@@ -70,7 +70,7 @@ class PropertyCreate extends Component {
       .dispatch(postNewSite(this.state.name))
       .then(data => {
         this.setState({ submitted: !this.state.submitted })
-        this.props.history.push(`/properties/${data.data.ZUID}/blueprint`)
+        this.props.history.push(`/instances/${data.data.ZUID}/blueprint`)
       })
       .catch(err => {
         this.setState({ submitted: !this.state.submitted })

@@ -52,7 +52,7 @@ class PropertyAcceptInvite extends Component {
         this.props.dispatch({
           type: "REMOVE_MODAL"
         })
-        this.props.history.push(`/properties/${data.data.ZUID}/`);
+        this.props.history.push(`/instances/${data.data.ZUID}/`);
       })
       .catch(err => {
         this.setState({ submitted: !this.state.submitted });
@@ -73,7 +73,7 @@ class PropertyAcceptInvite extends Component {
         this.props.dispatch({
           type: "REMOVE_MODAL"
         })
-        this.props.history.push(`/properties`);
+        this.props.history.push(`/instances`);
       })
       .catch(err => {
         this.setState({ submitted: !this.state.submitted });

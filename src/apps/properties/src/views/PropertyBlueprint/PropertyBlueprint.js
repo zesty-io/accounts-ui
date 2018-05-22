@@ -23,7 +23,7 @@ class PropertyBlueprint extends Component {
           <section className={styles.BlueprintView}>
             <header>
               <h1>Select a Blueprint</h1>
-              <AppLink type="cancel" to={`/properties`}>
+              <AppLink type="cancel" to={`/instances`}>
                 <i className="fa fa-ban" aria-hidden="true" />&nbsp;Cancel
               </AppLink>
             </header>
@@ -90,7 +90,7 @@ class PropertyBlueprint extends Component {
         } else {
           // re-fetch sites before the redirect
           this.props.dispatch(fetchSite(data.data.ZUID)).then(date => {
-            return this.props.history.push(`/properties/${data.data.ZUID}`)
+            return this.props.history.push(`/instances/${data.data.ZUID}`)
           })
         }
       })

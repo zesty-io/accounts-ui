@@ -50,7 +50,7 @@ export default class Roles extends Component {
           <div className={styles.Roles}>
             <Route
               exact
-              path={`/properties/:siteZUID/role/:roleZUID`}
+              path={`/instances/:siteZUID/role/:roleZUID`}
               component={EditRole}
             />
             <p>

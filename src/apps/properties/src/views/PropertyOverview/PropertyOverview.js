@@ -104,7 +104,7 @@ class PropertyOverview extends Component {
           </header>
           <main className={styles.Cards}>
             <Route
-              path="/properties/:siteZUID"
+              path="/instances/:siteZUID"
               render={routeProps => {
                 return (
                   <Users
@@ -121,7 +121,7 @@ class PropertyOverview extends Component {
               }}
             />
             <Route
-              path="/properties/:siteZUID"
+              path="/instances/:siteZUID"
               render={routeProps => {
                 return (
                   <Roles
@@ -135,7 +135,7 @@ class PropertyOverview extends Component {
               }}
             />
             <Route
-              path="/properties/:siteZUID"
+              path="/instances/:siteZUID"
               render={routeProps => {
                 return (
                   <CompanyAccess
@@ -147,7 +147,7 @@ class PropertyOverview extends Component {
             />
 
             <Route
-              path="/properties/:siteZUID"
+              path="/instances/:siteZUID"
               render={routeProps => {
                 return (
                   <Blueprint
@@ -161,7 +161,7 @@ class PropertyOverview extends Component {
             />
 
             <Route
-              path="/properties/:siteZUID"
+              path="/instances/:siteZUID"
               render={routeProps => {
                 return (
                   <Meta
@@ -224,14 +224,14 @@ class PropertyOverview extends Component {
   }
   close = evt => {
     if (evt.key === 'Escape') {
-      this.props.history.push('/properties')
+      this.props.history.push('/instances')
     }
     if (evt.type === 'click') {
       if (
         evt.target.parentElement.id === 'siteListWrapper' ||
         evt.target.parentElement.id === 'closeOverviewButton'
       ) {
-        this.props.history.push('/properties')
+        this.props.history.push('/instances')
       }
     }
   }

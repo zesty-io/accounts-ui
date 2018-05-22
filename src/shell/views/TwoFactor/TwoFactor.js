@@ -72,7 +72,7 @@ class TwoFactor extends Component {
             zuid: json.meta.userZuid,
             auth: true
           })
-          window.location = '/properties'
+          window.location = '/instances'
         } else {
           this.setState({
             message: json.message
@@ -101,7 +101,7 @@ class TwoFactor extends Component {
             zuid: '',
             auth: true
           })
-          return (window.location = '/properties')
+          return (window.location = '/instances')
         }
       })
       .catch(err => {

@@ -38,11 +38,11 @@ class App extends Component {
           <section className={styles.AppMain}>
             {this.props.user.email ? (
               <Switch>
-                <Route path="/properties" component={Properties} />
+                <Route path="/instances" component={Properties} />
                 <Route path="/settings" component={Settings} />
                 <Route path="/support" component={Support} />
                 <Route path="/teams" component={Teams} />
-                <Redirect exact from="/" to="/properties" />
+                <Redirect exact from="/" to="/instances" />
                 <Route component={NotFound} />
               </Switch>
             ) : (

@@ -110,7 +110,7 @@ class Login extends Component {
             ZUID: json.meta.userZuid,
             auth: true
           })
-          window.location = '/properties'
+          window.location = '/instances'
         } else if (json.code === 202) {
           return (window.location = '/login/2fa')
         } else {

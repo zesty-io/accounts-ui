@@ -72,7 +72,7 @@ class WebsiteInvite extends Component {
           }
         })
         if (invitedSites.length < 1) {
-          return this.props.history.push(`/properties/${this.props.site.ZUID}`)
+          return this.props.history.push(`/instances/${this.props.site.ZUID}`)
         }
       })
       this.props.dispatch(

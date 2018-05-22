@@ -18,7 +18,7 @@ const WebsiteCard = props => {
             <i className="fa fa-globe" aria-hidden="true" />&nbsp;{site.domain}
           </Url>
         ) : (
-          <AppLink to={`/properties/${site.ZUID}`}>
+          <AppLink to={`/instances/${site.ZUID}`}>
             <i className="fa fa-plus" aria-hidden="true" />
             &nbsp;Set Domain
           </AppLink>
@@ -52,7 +52,7 @@ const WebsiteCard = props => {
             <i className="fa fa-external-link" aria-hidden="true" /> Site
             Manager
           </Url>
-          <AppLink to={`/properties/${site.ZUID}`}>
+          <AppLink to={`/instances/${site.ZUID}`}>
             <i
               className={cx(styles.settings, 'fa fa-cog')}
               aria-hidden="true"
