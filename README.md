@@ -21,9 +21,16 @@ This will do the following tasks:
 
 ### Building
 
-It's very important when deploying to production a "production" webpack build is done. This will add large optimizations to the bundle size and runtime code. In order to make a production build run:
+It's very important when deploying to production a "production" webpack build is done. This will add large optimizations to the bundle size and runtime code.
 
     npm run build
+
+Build environments-
+
+    npm run build-dev
+    npm run build-stage
+    npm run build-prod
+
 
 ### Deploying
 
