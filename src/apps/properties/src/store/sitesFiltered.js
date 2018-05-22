@@ -60,3 +60,39 @@ export const filter = searchString => {
     }
   }
 }
+
+export const filterEcosystem = searchString => {
+  return function(dispatch, getState) {
+    let sites = getState().sitesFiltered
+
+    if (searchString !== '') {
+      let filtered = {}
+      for (const zuid in sites) {
+        let site = sites[zuid]
+        if (
+          site.name &&
+          site.name.toLowerCase().includes(searchString.toLowerCase())
+        ) {
+          filtered[zuid] = site
+        } else if (site.ZUID && site.ZUID.includes(searchString)) {
+          filtered[zuid] = site
+        } else if (
+          site.RandomHashID &&
+          site.RandomHashID.includes(searchString)
+        ) {
+          filtered[zuid] = site
+        }
+      }
+      dispatch({
+        meta: { debounce: { time: 250 } },
+        type: 'FILTER_PROPERTIES',
+        filtered
+      })
+    } else {
+      dispatch({
+        type: 'FILTER_PROPERTIES',
+        filtered: sites
+      })
+    }
+  }
+}

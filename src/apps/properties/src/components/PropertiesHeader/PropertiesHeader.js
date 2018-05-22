@@ -3,9 +3,12 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './PropertiesHeader.less'
 
-import { filter } from '../../store/sitesFiltered'
+import { filter, filterEcosystem } from '../../store/sitesFiltered'
 
 class PropertiesHeader extends Component {
+  state = {
+    eco: false
+  }
   render() {
     return (
       <header className={styles.PropertiesHeader}>
@@ -28,22 +31,28 @@ class PropertiesHeader extends Component {
             onKeyUp={this.onSearch}
           />
           <Button className={styles.Create} onClick={this.onCreateSite}>
-            <i className="fa fa-plus" />Create Web Property
+            <i className="fa fa-plus" />Create Instance
           </Button>
         </div>
       </header>
     )
   }
   onSearch = evt => {
-    this.props.dispatch(filter(evt.target.value))
+    if (this.state.eco) {
+      this.props.dispatch(filterEcosystem(evt.target.value))
+    } else {
+      this.props.dispatch(filter(evt.target.value))
+    }
   }
   onCreateSite = evt => {
     this.props.history.push('/instances/create')
   }
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {
+      this.setState({ eco: false })
       return this.props.dispatch(filter(''))
     }
+    this.setState({ eco: true })
     this.props.dispatch(filter(Number(evt.target.dataset.value)))
   }
 }
