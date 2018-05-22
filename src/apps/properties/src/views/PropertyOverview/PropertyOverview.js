@@ -120,7 +120,9 @@ class PropertyOverview extends Component {
                 )
               }}
             />
-            <Route
+
+            {/* Custom roles are on pause until legacy cuts over */}
+            {/* <Route
               path="/instances/:siteZUID"
               render={routeProps => {
                 return (
@@ -134,7 +136,7 @@ class PropertyOverview extends Component {
                   />
                 )
               }}
-            />
+            /> */}
             <Route
               path="/instances/:siteZUID"
               render={routeProps => {
@@ -164,12 +166,7 @@ class PropertyOverview extends Component {
             <Route
               path="/instances/:siteZUID"
               render={routeProps => {
-                return (
-                  <Meta
-                    {...routeProps}
-                    site={this.props.site}
-                  />
-                )
+                return <Meta {...routeProps} site={this.props.site} />
               }}
             />
 
