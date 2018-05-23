@@ -10,10 +10,12 @@ export default function Blueprint(props) {
               <i className="fa fa-file-code-o" aria-hidden="true" />
               &nbsp;Blueprint
             </h2>
-            <AppLink type="cancel" to={`${props.match.url}/blueprint`}>
-              <i className="fa fa-file-code-o" aria-hidden="true" />
-              &nbsp;Change Blueprint
-            </AppLink>
+            {props.isAdmin ? (
+              <AppLink type="cancel" to={`${props.match.url}/blueprint`}>
+                <i className="fa fa-file-code-o" aria-hidden="true" />
+                &nbsp;Change Blueprint
+              </AppLink>
+            ) : null}
           </CardHeader>
           <CardContent>
             <h2 className={styles.name}>{props.blueprint.name}</h2>
