@@ -15,7 +15,8 @@ export default class PropertyName extends Component {
   }
   render() {
     return (
-      <div className={styles.PropertyName}>
+      <label className={styles.PropertyName}>
+        Name:&nbsp;
         {this.state.editName ? (
           <div className={styles.EditName}>
             <Input
@@ -29,12 +30,12 @@ export default class PropertyName extends Component {
             <i onClick={this.handleNameUpdate} className="fa fa-save" />
           </div>
         ) : (
-          <h1 className={styles.Name} onClick={this.editName}>
+          <span className={styles.Name} onClick={this.editName}>
             {this.props.name}
             <i className={cx('fa fa-pencil', styles.Edit)} aria-hidden="true" />
-          </h1>
+          </span>
         )}
-      </div>
+      </label>
     )
   }
   editName = () => {

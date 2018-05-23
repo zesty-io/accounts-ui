@@ -1,29 +1,31 @@
 @import '../../../../../../../shell/styles/colors.less';
 
 .Meta {
-  p {
-    margin: 0 0 1rem 0;
-  }
-
-  display: grid;
-  padding: 1rem 0 0;
+  // p {
+  //   margin: 0 0 1rem 0;
+  // }
+  // display: grid;
+  // padding: 1rem 0 0;
   header {
     display: grid;
-    grid-auto-flow: row;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    background-color: @zesty-white;
+    // grid-auto-flow: row;
+    grid-template-columns: 175px 100px 100px 1fr;
+    // justify-items: center;
+    // background-color: @zesty-white;
     padding: 0.5rem;
     h3 {
       font-size: 1em;
     }
   }
   main {
-    padding: 0.5rem;
-    display: grid;
-    justify-items: center;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    &:nth-child(odd) {
+    article {
+      padding: 0.5rem;
+      display: grid;
+      // justify-items: center;
+      grid-template-columns: 175px 100px 100px 1fr;
+    }
+
+    article:nth-child(odd) {
       background-color: @zesty-white;
     }
   }

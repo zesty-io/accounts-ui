@@ -24,31 +24,28 @@ export default class Meta extends Component {
           </h2>
         </CardHeader>
         <CardContent>
-          <div>
-            name:&nbsp;<PropertyName
-              siteZUID={this.props.site.ZUID}
-              name={this.props.site.name}
-              dispatch={this.props.dispatch}
-            />
-          </div>
-          <div>
-            domain:&nbsp;<Domain
-              siteZUID={this.props.site.ZUID}
-              site={this.props.site}
-            />
-          </div>
+          <PropertyName
+            siteZUID={this.props.site.ZUID}
+            name={this.props.site.name}
+            dispatch={this.props.dispatch}
+          />
+          <Domain siteZUID={this.props.site.ZUID} site={this.props.site} />
           <div className={styles.Meta}>
             <header>
-              <h3>Zuid</h3>
+              <h3>
+                Zesty Unique ID(<small>ZUID</small>)
+              </h3>
               <h3>Created</h3>
               <h3>Updated</h3>
-              <h3>Hash Id</h3>
+              <h3>Hash ID</h3>
             </header>
             <main>
-              <h5>{this.props.site.ZUID}</h5>
-              <h5>{formatDate(this.props.site.createdAt)}</h5>
-              <h5>{formatDate(this.props.site.updatedAt)}</h5>
-              <h5>{this.props.site.randomHashID}</h5>
+              <article>
+                <span>{this.props.site.ZUID}</span>
+                <span>{formatDate(this.props.site.createdAt)}</span>
+                <span>{formatDate(this.props.site.updatedAt)}</span>
+                <span>{this.props.site.randomHashID}</span>
+              </article>
             </main>
           </div>
         </CardContent>

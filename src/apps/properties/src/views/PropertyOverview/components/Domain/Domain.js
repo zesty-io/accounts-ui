@@ -43,12 +43,13 @@ class Domain extends Component {
 
   render() {
     return (
-      <div className={styles.Domain}>
+      <label className={styles.Domain}>
+        Domain:&nbsp;
         {this.props.site.domain ? (
-          <h2 className={styles.Name} onClick={this.handleEdit}>
+          <span className={styles.Name} onClick={this.handleEdit}>
             http://{this.props.site.domain}
             <i className="fa fa-pencil" />
-          </h2>
+          </span>
         ) : (
           <div className={styles.Edit}>
             <Input
@@ -63,7 +64,7 @@ class Domain extends Component {
             />
           </div>
         )}
-      </div>
+      </label>
 
       // <article className={styles.Domain}>
       //   <span className={styles.siteName}>
