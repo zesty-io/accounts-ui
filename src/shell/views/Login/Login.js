@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import qs from 'qs'
 
 import { request } from '../../../util/request'
-import config from '../../config'
+
 import styles from './Login.less'
 import { fetchUser } from '../../store/user'
 
@@ -96,7 +96,7 @@ class Login extends Component {
   handleLogin = evt => {
     this.setState({ submitted: !this.state.submitted })
     evt.preventDefault()
-    request(`${config.API_AUTH}/login`, {
+    request(`${CONFIG.API_AUTH}/login`, {
       body: {
         email: document.forms.login.email.value,
         password: document.forms.login.pass.value

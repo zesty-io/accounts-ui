@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 export function sitesDomain(state = {}, action) {
   switch (action.type) {
@@ -26,7 +26,7 @@ export function updateDomain(siteZUID, domain) {
     dispatch({
       type: 'UPDATING_DOMAIN'
     })
-    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}`, {
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}`, {
       method: 'PUT',
       json: true,
       body: { domain }

@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 export function sitesUsers(state = {}, action) {
   switch (action.type) {
@@ -43,7 +43,7 @@ export const fetchSiteUsers = siteZUID => {
       type: 'FETCHING_USERS'
     })
     return request(
-      `${config.API_ACCOUNTS}/instances/${siteZUID}/users?getRoles=true`
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users?getRoles=true`
     )
       .then(users => {
         dispatch({
@@ -70,7 +70,7 @@ export const fetchSiteUsersPending = siteZUID => {
     dispatch({
       type: 'FETCHING_USERS_PENDING'
     })
-    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}/users/pending`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/pending`)
       .then(users => {
         dispatch({
           type: 'FETCH_USERS_PENDING_SUCCESS',
@@ -106,7 +106,7 @@ export const removeSiteUser = (userZUID, siteZUID) => {
 
 export const updateSiteUserRole = (userZUID, oldRoleZUID, newRoleZUID) => {
   return request(
-    `${config.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
+    `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
     {
       method: 'PUT',
       json: true,

@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 import { normalizeSites } from '../store'
 import { notify } from '../../../../shell/store/notifications'
@@ -63,7 +63,7 @@ export function fetchSites() {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    return request(`${config.API_ACCOUNTS}/instances?getInvited=true`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances?getInvited=true`)
       .then(sites => {
         if (!sites.data.length) {
           dispatch({
@@ -109,7 +109,7 @@ export function fetchSite(siteZUID) {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}`)
       .then(site => {
         dispatch({
           type: 'FETCH_SITE_SUCCESS',
@@ -139,7 +139,7 @@ export function updateSite(siteZUID, payload) {
     dispatch({
       type: 'UPDATING_SITE'
     })
-    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}`, {
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}`, {
       method: 'PUT',
       json: true,
       body: payload
@@ -160,7 +160,7 @@ export function acceptInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: 'ACCEPT_INVITE' })
     return request(
-      `${config.API_ACCOUNTS}/invites/${inviteZUID}?acceptInvite=true`,
+      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?acceptInvite=true`,
       {
         method: 'PUT'
       }
@@ -187,7 +187,7 @@ export function declineInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: 'DELETE_INVITE' })
     return request(
-      `${config.API_ACCOUNTS}/invites/${inviteZUID}?declineInvite=true`,
+      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?declineInvite=true`,
       {
         method: 'PUT'
       }
@@ -207,7 +207,7 @@ export function cancelInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: 'DELETE_INVITE' })
     return request(
-      `${config.API_ACCOUNTS}/invites/${inviteZUID}?cancelInvite=true`,
+      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?cancelInvite=true`,
       {
         method: 'PUT'
       }
@@ -228,7 +228,7 @@ export function sendInvite(payload) {
     dispatch({
       type: 'SENDING_INVITE'
     })
-    return request(`${config.API_ACCOUNTS}/invites`, {
+    return request(`${CONFIG.API_ACCOUNTS}/invites`, {
       method: 'POST',
       json: true,
       body: {
@@ -278,7 +278,7 @@ export const postNewSite = name => {
     dispatch({
       type: 'CREATING_SITE'
     })
-    return request(`${config.API_ACCOUNTS}/instances`, {
+    return request(`${CONFIG.API_ACCOUNTS}/instances`, {
       method: 'POST',
       json: true,
       body: { name }
@@ -305,7 +305,7 @@ export const removeUser = (userZUID, roleZUID) => {
   return dispatch => {
     dispatch({ type: 'REMOVE_USER' })
     return request(
-      `${config.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
+      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
       { method: 'DELETE' }
     )
       .then(data => {

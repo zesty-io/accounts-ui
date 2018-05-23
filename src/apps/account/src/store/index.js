@@ -1,4 +1,3 @@
-import config from '../../../../shell/config'
 import { request } from '../../../../util/request'
 
 export function addEmail(userZUID, email) {
@@ -6,7 +5,7 @@ export function addEmail(userZUID, email) {
     let state = getState()
     state.user.unverifiedEmails.push(email)
 
-    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+    return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
       method: 'PUT',
       json: true,
       body: {
@@ -22,7 +21,7 @@ export function updatePassword(oldPassword, newPassword) {
 
     // TODO this endpoint does not return json which breaks our
     // request handler
-    return request(`${config.API_ACCOUNTS}/users/${ZUID}?updatePassword=true`, {
+    return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}?updatePassword=true`, {
       method: 'PUT',
       json: true,
       body: {
@@ -34,7 +33,7 @@ export function updatePassword(oldPassword, newPassword) {
 
     // TODO this won't work because it does not account for 2FA login flows
     // we need to figure out another way to validate the old password
-    // return request(`${config.API_AUTH}/login`, {
+    // return request(`${CONFIG.API_AUTH}/login`, {
     //   body: {
     //     email: email,
     //     password: oldPassword

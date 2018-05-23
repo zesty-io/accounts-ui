@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 export function sitesCollections(state = {}, action) {
   switch (action.type) {
@@ -19,7 +19,7 @@ export const fetchSiteCollections = siteZuid => {
     dispatch({
       type: 'FETCHING_COLLECTIONS'
     })
-    request(`http://${siteZuid}${config.API_INSTANCE}collections/`)
+    request(`http://${siteZuid}${CONFIG.API_INSTANCE}collections/`)
       .then(collections => {
         let normalizedCollections = {}
         collections.data.forEach(collection => {

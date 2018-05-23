@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie'
-import config from '../config'
+
 import { request } from '../../util/request'
 
 export function auth(
   state = {
     checking: false,
-    valid: Cookies.get(config.COOKIE_NAME) ? true : false
+    valid: Cookies.get(CONFIG.COOKIE_NAME) ? true : false
   },
   action
 ) {
@@ -24,9 +24,9 @@ export function auth(
         valid: action.auth
       }
     case 'LOGOUT':
-      Cookies.remove(config.COOKIE_NAME, {
+      Cookies.remove(CONFIG.COOKIE_NAME, {
         path: '/',
-        domain: config.COOKIE_DOMAIN
+        domain: CONFIG.COOKIE_DOMAIN
       })
       return {
         checking: false,
@@ -39,7 +39,7 @@ export function auth(
 
 export function verifyAuth(unsubscribe) {
   return dispatch => {
-    request(`${config.API_AUTH}/verify`)
+    request(`${CONFIG.API_AUTH}/verify`)
       .then(json => {
         dispatch({
           type: 'FETCH_VERIFY_SUCCESS',
@@ -63,7 +63,7 @@ export function verifyAuth(unsubscribe) {
 
 export function logout() {
   return dispatch => {
-    request(`${config.API_AUTH}/logout`)
+    request(`${CONFIG.API_AUTH}/logout`)
       .then(json => {
         dispatch({
           type: 'LOGOUT'

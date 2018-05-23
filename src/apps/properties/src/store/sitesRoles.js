@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 export function sitesRoles(state = {}, action) {
   switch (action.type) {
@@ -56,7 +56,7 @@ export const fetchSiteRoles = siteZUID => {
     dispatch({
       type: 'FETCHING_ROLES'
     })
-    return request(`${config.API_ACCOUNTS}/instances/${siteZUID}/roles`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/roles`)
       .then(roles => {
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
@@ -80,7 +80,7 @@ export const fetchSiteRoles = siteZUID => {
 export const getRole = (roleZUID, siteZUID) => {
   return dispatch => {
     dispatch({ type: 'FETCHING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`)
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}`)
       .then(data => {
         let normalizedGranularRoles = {}
         data.data.granularRoles &&
@@ -111,7 +111,7 @@ export const getRole = (roleZUID, siteZUID) => {
 export const createRole = (siteZUID, body) => {
   return dispatch => {
     dispatch({ type: 'ADDING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles`, {
+    return request(`${CONFIG.API_ACCOUNTS}/roles`, {
       method: 'POST',
       json: true,
       body: {
@@ -143,7 +143,7 @@ export const removeRole = (roleZUID, siteZUID) => {
     const siteRoles = getState().sitesRoles[siteZUID]
     delete siteRoles[roleZUID]
     dispatch({ type: 'DELETING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`, {
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}`, {
       method: 'DELETE'
     })
       .then(data => {
@@ -161,7 +161,7 @@ export const removeRole = (roleZUID, siteZUID) => {
 export const updateGranularRole = (resourceZUID, role, roleZUID) => {
   return dispatch => {
     dispatch({ type: 'UPDATING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
       method: 'PUT',
       json: true,
       body: [{ resourceZUID, ...role }]
@@ -181,7 +181,7 @@ export const updateGranularRole = (resourceZUID, role, roleZUID) => {
 export const createGranularRole = (resourceZUID, granularRole, roleZUID) => {
   return dispatch => {
     dispatch({ type: 'CREATING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
       method: 'POST',
       json: true,
       body: { resourceZUID, ...granularRole }

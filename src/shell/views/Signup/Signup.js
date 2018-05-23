@@ -5,7 +5,7 @@ import qs from 'qs'
 
 import styles from './Signup.less'
 import { request } from '../../../util/request'
-import config from '../../../shell/config'
+
 
 class Signup extends Component {
   constructor(props) {
@@ -132,7 +132,7 @@ class Signup extends Component {
   handleSignup = evt => {
     evt.preventDefault()
     this.setState({ submitted: true })
-    request(`${config.API_ACCOUNTS}/users`, {
+    request(`${CONFIG.API_ACCOUNTS}/users`, {
       method: 'POST',
       json: true,
       body: {
@@ -150,7 +150,7 @@ class Signup extends Component {
             type: 'FETCH_USER_SUCCESS',
             user: json.data
           })
-          request(`${config.API_AUTH}/login`, {
+          request(`${CONFIG.API_AUTH}/login`, {
             body: {
               email: this.state.email,
               password: this.state.pass

@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 export function teams(state = {}, action) {
   switch (action.type) {
@@ -18,7 +18,7 @@ export const fetchTeams = userZUID => {
   //TODO: endpoint for teams
   // return dispatch => {
   //   dispatch({ type: 'FETCHING_TEAMS' })
-  //   return request(`${config.API_ACCOUNTS}/teams/${userZUID}`)
+  //   return request(`${CONFIG.API_ACCOUNTS}/teams/${userZUID}`)
   //     .then(res => {
   //       dispatch({ type: 'FETCHING_TEAMS_SUCCESS', data: res.data })
   //       return res.data

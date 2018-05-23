@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { request } from '../../../../../util/request'
-import config from '../../../../../shell/config'
+
 
 import styles from './support.less'
 

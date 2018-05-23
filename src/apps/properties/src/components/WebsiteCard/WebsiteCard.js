@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
-import config from '../../../../../shell/config'
 
 import { Line } from 'react-chartjs-2'
 
@@ -29,8 +28,8 @@ const WebsiteCard = props => {
           className={styles.preview}
           target="_blank"
           title={`Preview  ${site.name}`}
-          href={`${config.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
-            config.PREVIEW_URL
+          href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
+            CONFIG.PREVIEW_URL
           }`}
         >
           {site.screenshotUrl ? (
@@ -45,8 +44,8 @@ const WebsiteCard = props => {
           <Url
             className={styles.manager}
             target="_blank"
-            href={`${config.MANAGER_URL_PROTOCOL}${site.randomHashID}${
-              config.MANAGER_URL
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
+              CONFIG.MANAGER_URL
             }`}
           >
             <i className="fa fa-external-link" aria-hidden="true" /> Site
