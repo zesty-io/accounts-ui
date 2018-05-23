@@ -41,7 +41,7 @@ class PropertiesHeader extends Component {
 
   onSearch = evt => {
     if (this.state.eco) {
-      this.props.dispatch(filterEcosystem(evt.target.value))
+      this.props.dispatch(filterEcosystem(evt.target.value, this.state.eco))
     } else {
       this.props.dispatch(filter(evt.target.value))
     }
@@ -56,7 +56,7 @@ class PropertiesHeader extends Component {
       this.setState({ eco: false })
       return this.props.dispatch(filter(''))
     }
-    this.setState({ eco: true })
+    this.setState({ eco: evt.target.dataset.value })
     this.props.dispatch(filter(Number(evt.target.dataset.value)))
   }
 

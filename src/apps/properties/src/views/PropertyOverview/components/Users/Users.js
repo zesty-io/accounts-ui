@@ -83,6 +83,7 @@ export default class Users extends Component {
                           <UserPendingRow
                             key={ZUID}
                             siteZUID={this.props.siteZUID}
+                            siteRoles={this.props.siteRoles}
                             dispatch={this.props.dispatch}
                             isAdmin={this.props.isAdmin}
                             {...user}

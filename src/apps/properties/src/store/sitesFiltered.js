@@ -1,6 +1,5 @@
 import { request } from '../../../../util/request'
 
-
 import { normalizeSites } from '../store'
 
 export function sitesFiltered(state = {}, action) {
@@ -96,15 +95,24 @@ export const filter = searchString => {
   }
 }
 
-export const filterEcosystem = searchString => {
+export const filterEcosystem = (searchString, ecoID) => {
   return function(dispatch, getState) {
-    //uses the currently filtered sites list
-    let sites = getState().sitesFiltered
-
+    let sites = getState().sites
+    let ecosystem = {}
+    // filter sites so we are only dealing with selected ecosystem
+    for (const zuid in sites) {
+      let site = sites[zuid]
+      if (site.ecoID && site.ecoID == ecoID) {
+        ecosystem[zuid] = site
+      }
+    }
     if (searchString !== '') {
       let filtered = {}
-      for (const zuid in sites) {
-        let site = sites[zuid]
+      for (const zuid in ecosystem) {
+        const site = sites[zuid]
+        if (site.ecoID && site.ecoID == searchString) {
+          filtered[zuid] = site
+        }
         if (
           site.name &&
           site.name.toLowerCase().includes(searchString.toLowerCase())
@@ -119,6 +127,7 @@ export const filterEcosystem = searchString => {
           filtered[zuid] = site
         }
       }
+
       dispatch({
         meta: { debounce: { time: 250 } },
         type: 'FILTER_PROPERTIES',
@@ -127,7 +136,7 @@ export const filterEcosystem = searchString => {
     } else {
       dispatch({
         type: 'FILTER_PROPERTIES',
-        filtered: sites
+        filtered: ecosystem
       })
     }
   }

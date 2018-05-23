@@ -10,16 +10,17 @@ import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
   state = {
-    selected: ''
+    selected: '',
+    effect: ''
   }
   componentDidMount() {
     this.props.dispatch(fetchBlueprints())
   }
   render() {
     return (
-      <React.Fragment>
+      <div className={styles.BlueprintView}>
         {Object.keys(this.props.blueprints).length ? (
-          <section className={styles.BlueprintView}>
+          <section className={styles[this.state.effect]}>
             <header>
               <h1>Select a Blueprint</h1>
               <AppLink type="cancel" to={`/instances`}>
@@ -69,11 +70,11 @@ class PropertyBlueprint extends Component {
             <Loader />
           </div>
         )}
-      </React.Fragment>
+      </div>
     )
   }
   handleSelect = id => {
-    this.setState({ selected: id })
+    this.setState({ selected: id, effect: 'blurred' })
     this.props
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
