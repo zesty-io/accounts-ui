@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 
-import config from '../../../../../shell/config'
-
 // NOTE: Fetch Sites seems unecessary. Should be able to fetch the individual site
 import { fetchSites, acceptInvite, declineInvite } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'

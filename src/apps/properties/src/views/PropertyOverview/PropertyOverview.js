@@ -14,7 +14,7 @@ import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
 import Meta from './components/Meta'
 
-import config from '../../../../../shell/config'
+
 
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
@@ -94,9 +94,9 @@ class PropertyOverview extends Component {
             <Url
               className={styles.manager}
               target="_blank"
-              href={`${config.MANAGER_URL_PROTOCOL}${
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${
                 this.props.site.randomHashID
-              }${config.MANAGER_URL}`}
+              }${CONFIG.MANAGER_URL}`}
             >
               <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Site
               Manager

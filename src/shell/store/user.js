@@ -1,4 +1,4 @@
-import config from '../config'
+
 import { request } from '../../util/request'
 import { notify } from '../store/notifications'
 
@@ -54,7 +54,7 @@ export function fetchUser(ZUID) {
     dispatch({
       type: 'FETCHING_USER'
     })
-    request(`${config.API_ACCOUNTS}/users/${ZUID}`)
+    request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}`)
       .then(user => {
         if (user.data) {
           // Parse user data response
@@ -96,7 +96,7 @@ export function update2fa(add, payload) {
         type: 'SAVING_PROFILE'
       })
       const userZUID = getState().user.ZUID
-      return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+      return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
         method: 'PUT',
         json: true,
         body: {
@@ -131,7 +131,7 @@ export function saveProfile() {
     })
     const userZUID = getState().user.ZUID
     const user = getState().user
-    return request(`${config.API_ACCOUNTS}/users/${userZUID}`, {
+    return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
       method: 'PUT',
       json: true,
       body: {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { request } from '../../../../../util/request'
-import config from '../../../../../shell/config'
+
 
 import CreateTeam from '../../components/CreateTeam'
 import TeamList from '../../components/TeamList'

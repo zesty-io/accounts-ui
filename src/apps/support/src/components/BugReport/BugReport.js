@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { request } from '../../../../../util/request'
 import { notify } from '../../../../../shell/store/notifications'
-import config from '../../../../../shell/config'
+
 
 import styles from './BugReport.less'
 class BugReport extends Component {
@@ -75,7 +75,7 @@ class BugReport extends Component {
   }
 
   sendBugReport = data => {
-    request(config.EMAIL_SERVICE, {
+    request(CONFIG.EMAIL_SERVICE, {
       method: 'POST',
       json: true,
       body: {

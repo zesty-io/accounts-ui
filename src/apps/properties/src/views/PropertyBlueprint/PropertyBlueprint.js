@@ -5,7 +5,6 @@ import { Link, withRouter } from 'react-router-dom'
 import styles from './PropertyBlueprint.less'
 
 import qs from 'qs'
-import config from '../../../../../shell/config'
 import { updateSite, fetchSite } from '../../store/sites'
 import { fetchBlueprints } from '../../store/blueprints'
 
@@ -81,9 +80,9 @@ class PropertyBlueprint extends Component {
         if (qs.parse(window.location.search.substr(1)).randomHashID) {
           window
             .open(
-              `${config.MANAGER_URL_PROTOCOL}${
+              `${CONFIG.MANAGER_URL_PROTOCOL}${
                 qs.parse(window.location.search.substr(1)).randomHashID
-              }${config.MANAGER_URL}`,
+              }${CONFIG.MANAGER_URL}`,
               '_blank'
             )
             .focus()

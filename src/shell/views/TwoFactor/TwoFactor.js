@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import styles from './TwoFactor.less'
 import { request } from '../../../util/request'
-import config from '../../../shell/config'
+
 
 // TODO poll 2FA for one touch
 class TwoFactor extends Component {
@@ -60,7 +60,7 @@ class TwoFactor extends Component {
 
   handle2FA = evt => {
     evt.preventDefault()
-    request(`${config.API_AUTH}/verify-2fa`, {
+    request(`${CONFIG.API_AUTH}/verify-2fa`, {
       body: {
         token: document.forms.TwoFactor.token.value
       }
@@ -90,7 +90,7 @@ class TwoFactor extends Component {
   }
   // Poll Auth service for OneTouch
   poll2fa = () => {
-    request(`${config.API_AUTH}/verify-2fa`)
+    request(`${CONFIG.API_AUTH}/verify-2fa`)
       .then(json => {
         if (json.code === 202) {
           return

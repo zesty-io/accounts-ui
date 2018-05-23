@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 export function blueprints(state = {}, action) {
   switch (action.type) {
@@ -43,7 +43,7 @@ export function fetchBlueprints() {
     dispatch({
       type: 'FETCHING_BLUEPRINTS'
     })
-    return request(`${config.API_ACCOUNTS}/blueprints`)
+    return request(`${CONFIG.API_ACCOUNTS}/blueprints`)
       .then(json => {
         dispatch({
           type: 'FETCHING_BLUEPRINTS_SUCCESS',
@@ -68,7 +68,7 @@ export function fetchBlueprint(id) {
     dispatch({
       type: 'FETCHING_BLUEPRINTS'
     })
-    return request(`${config.API_ACCOUNTS}/blueprints/${id}`)
+    return request(`${CONFIG.API_ACCOUNTS}/blueprints/${id}`)
       .then(blueprint => {
         dispatch({
           type: 'FETCHING_BLUEPRINTS_SUCCESS',
@@ -92,7 +92,7 @@ export function postNewBlueprint(name) {
     dispatch({
       type: 'CREATING_BLUEPRINT'
     })
-    return request(`${config.API_ACCOUNTS}/blueprints`, {
+    return request(`${CONFIG.API_ACCOUNTS}/blueprints`, {
       method: 'POST',
       json: true,
       body: { name }
