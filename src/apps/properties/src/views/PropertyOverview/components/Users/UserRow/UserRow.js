@@ -1,4 +1,4 @@
-import { PureComponent } from 'react'
+import { Component } from 'react'
 import styles from './UserRow.less'
 
 import {
@@ -12,12 +12,11 @@ import { notify } from '../../../../../../../../shell/store/notifications'
 
 const OWNER_ZUID = '31-71cfc74-0wn3r'
 
-export default class UserRow extends PureComponent {
+export default class UserRow extends Component {
   state = {
     submitted: false
   }
   render() {
-    console.log('UserRow', this.props)
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>
@@ -34,42 +33,40 @@ export default class UserRow extends PureComponent {
                 <i className="fa fa-trash-o" aria-hidden="true" />Revoke Invite
               </Button>
             ) : null}
-            {this.props.role &&
-            this.props.role.systemRoleZUID !== OWNER_ZUID ? (
-              !this.state.submitted ? (
-                <span className={styles.select}>
-                  <Select
-                    onSelect={this.handleSelectRole}
-                    selection={
-                      this.props.siteRoles
-                        .filter(role => role.ZUID === this.props.role.ZUID)
-                        .map(item => {
-                          return { value: item.ZUID, text: item.name }
-                        })[0]
-                    }
-                  >
-                    {this.props.siteRoles.map(role => {
-                      return (
-                        <Option
-                          key={role.ZUID}
-                          value={role.ZUID}
-                          text={role.name}
-                        />
-                      )
-                    })}
-                  </Select>
-                  <i
-                    className={styles.trash + ' fa fa-trash-o'}
-                    aria-hidden="true"
-                    onClick={() =>
-                      this.removeUser(this.props.ZUID, this.props.role.ZUID)
-                    }
-                  />
-                </span>
-              ) : (
-                <Loader />
-              )
-            ) : null}
+
+            {!this.state.submitted ? (
+              <span className={styles.select}>
+                <Select
+                  onSelect={this.handleSelectRole}
+                  selection={
+                    this.props.siteRoles
+                      .filter(role => role.ZUID === this.props.role.ZUID)
+                      .map(item => {
+                        return { value: item.ZUID, text: item.name }
+                      })[0]
+                  }
+                >
+                  {this.props.siteRoles.map(role => {
+                    return (
+                      <Option
+                        key={role.ZUID}
+                        value={role.ZUID}
+                        text={role.name}
+                      />
+                    )
+                  })}
+                </Select>
+                <i
+                  className={styles.trash + ' fa fa-trash-o'}
+                  aria-hidden="true"
+                  onClick={() =>
+                    this.removeUser(this.props.ZUID, this.props.role.ZUID)
+                  }
+                />
+              </span>
+            ) : (
+              <Loader />
+            )}
           </span>
         ) : (
           <span className={styles.action}>{this.props.role.name}</span>
