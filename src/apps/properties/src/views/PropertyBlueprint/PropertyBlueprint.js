@@ -6,11 +6,12 @@ import styles from './PropertyBlueprint.less'
 
 import qs from 'qs'
 import { updateSite, fetchSite } from '../../store/sites'
+import { notify } from '../../../../../shell/store/notifications'
 import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
   state = {
-    selected: '',
+    selected: false,
     effect: ''
   }
   componentDidMount() {
@@ -52,7 +53,7 @@ class PropertyBlueprint extends Component {
                     </CardContent>
                     <CardFooter>
                       <Button
-                        disabled={this.state.selected == blueprint.ID}
+                        disabled={this.state.selected}
                         onClick={() => this.handleSelect(blueprint.ID)}
                       >
                         <i className="fa fa-file-code-o" aria-hidden="true" />
@@ -74,7 +75,7 @@ class PropertyBlueprint extends Component {
     )
   }
   handleSelect = id => {
-    this.setState({ selected: id, effect: 'blurred' })
+    this.setState({ selected: true, effect: 'blurred' })
     this.props
       .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
       .then(data => {
@@ -94,6 +95,13 @@ class PropertyBlueprint extends Component {
           })
         }
       })
+      .catch(err => {
+        this.setState({ selected: false, effect: '' })
+        this.props.dispatch(notify({
+          type: 'error',
+          message: 'There was a problem selecting the blueprint'
+        }))
+      })
   }
 }
 
@@ -105,7 +113,6 @@ export default withRouter(
         return acc
       }, [])
       .filter(blueprint => !blueprint.trashed)
-
     return {
       siteZUID: ownProps.match.params.zuid,
       blueprints
