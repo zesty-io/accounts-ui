@@ -14,8 +14,6 @@ import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
 import Meta from './components/Meta'
 
-
-
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
 import { fetchSiteCompanies } from '../../store/sitesCompanies'
@@ -274,10 +272,8 @@ export default withRouter(
         state.sitesUsers[siteZUID][state.user.ZUID]
       ) {
         if (
-          state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole.name ===
-            'Owner' ||
-          state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole.name ===
-            'Admin'
+          state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner' ||
+          state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Admin'
         ) {
           isAdmin = true
         }
