@@ -17,13 +17,6 @@ const loggerMiddleware = createLogger({
   diff: true
 })
 
-const rootReducer = (state, action) => {
-  if (action.type === 'LOGOUT') {
-    state = {}
-  }
-  return appReducer(state, action)
-}
-
 const appReducer = combineReducers({
   ...properties,
   user,
@@ -35,12 +28,20 @@ const appReducer = combineReducers({
   systemRoles
 })
 
+const rootReducer = (state, action) => {
+  if (action.type === 'LOGOUT') {
+    state = {}
+  }
+  return appReducer(state, action)
+}
+
+const middleware =
+  CONFIG.ENV === 'production'
+    ? applyMiddleware(createDebounce(), thunkMiddleware)
+    : applyMiddleware(createDebounce(), thunkMiddleware, loggerMiddleware)
+
 export const store = createStore(
   rootReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(
-    createDebounce(),
-    thunkMiddleware, // lets us dispatch() functions
-    loggerMiddleware // neat middleware that logs actions
-  )
+  middleware
 )

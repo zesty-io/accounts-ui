@@ -12,6 +12,7 @@ const env = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : ''
 
 if (env === 'production') {
   config = `window.CONFIG = {
+    ENV: 'production',
     API_ACCOUNTS: 'https://accounts.api.zesty.io/v1',
     API_INSTANCE: '.api.zesty.io/v1/',
     API_AUTH: 'https://svc.zesty.io/auth',
@@ -54,7 +55,4 @@ if (env === 'production') {
   }`
 }
 
-fs.writeFileSync(
-  path.resolve(process.cwd(), 'build/config.js'),
-  config
-)
+fs.writeFileSync(path.resolve(process.cwd(), 'build/config.js'), config)
