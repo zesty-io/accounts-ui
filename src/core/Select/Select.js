@@ -11,6 +11,14 @@ export class Select extends React.Component {
       // children: this.flattenChildren(props.children)
     }
   }
+  getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.selection) {
+      if (nextProps.selection.value !== prevState.selection.value) {
+        return { ...prevState, selection: nextProps.selection }
+      }
+    }
+    return null
+  }
   componentDidMount() {
     document.addEventListener('click', this.onClose)
     document.addEventListener('keyup', this.onEsc)

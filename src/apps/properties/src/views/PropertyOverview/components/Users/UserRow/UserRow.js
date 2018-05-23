@@ -14,7 +14,7 @@ const OWNER_ZUID = '31-71cfc74-0wn3r'
 
 export default class UserRow extends PureComponent {
   state = {
-    submited: false
+    submitted: false
   }
   render() {
     return (
@@ -24,12 +24,6 @@ export default class UserRow extends PureComponent {
           {!this.props.lastName &&
             !this.props.firstName && <em>Invited User</em>}
         </span>
-        {/* <span className={styles.role}>
-          {this.props.role && this.props.role.systemRoleZUID === OWNER_ZUID ? (
-            <i className="fa fa-star" aria-hidden="true" />
-          ) : null}
-          {this.props.role && this.props.role.name}
-        </span> */}
         <span className={styles.email}>{this.props.email}</span>
         <span className={styles.action}>
           {this.props.pending ? (
@@ -38,34 +32,42 @@ export default class UserRow extends PureComponent {
             </Button>
           ) : null}
           {this.props.role && this.props.role.systemRoleZUID !== OWNER_ZUID ? (
-            <span className={styles.select}>
-              <Select onSelect={this.handleSelectRole}>
-                <Option
-                  key={this.props.role.ZUID}
-                  value={this.props.role.ZUID}
-                  text={this.props.role.name}
+            !this.state.submitted ? (
+              <span className={styles.select}>
+                <Select
+                  onSelect={this.handleSelectRole}
+                  selection={
+                    this.props.roles
+                      .filter(role => role.ZUID === this.props.role.ZUID)
+                      .map(item => {
+                        return { value: item.ZUID, text: item.name }
+                      })[0]
+                  }>
+                  {this.props.roles
+                    .map(role => {
+                      return (
+                        <Option
+                          key={role.ZUID}
+                          value={role.ZUID}
+                          text={role.name}
+                        />
+                      )
+                    })}
+                </Select>
+                <i
+                  className={styles.trash + ' fa fa-trash-o'}
+                  aria-hidden="true"
+                  onClick={() =>
+                    this.removeUser(this.props.ZUID, this.props.role.ZUID)
+                  }
                 />
-                {this.props.roles
-                  .filter(role => role.ZUID !== this.props.role.ZUID)
-                  .map(role => {
-                    return (
-                      <Option
-                        key={role.ZUID}
-                        value={role.ZUID}
-                        text={role.name}
-                      />
-                    )
-                  })}
-              </Select>
-              <i
-                className={styles.trash + ' fa fa-trash-o'}
-                aria-hidden="true"
-                onClick={() =>
-                  this.removeUser(this.props.ZUID, this.props.role.ZUID)
-                }
-              />
-            </span>
-          ) : <h4>Owner</h4>}
+              </span>
+            ) : (
+              <Loader />
+            )
+          ) : null}
+          {this.props.role &&
+            this.props.role.systemRoleZUID === OWNER_ZUID && <h4>Owner</h4>}
         </span>
       </article>
     )
@@ -135,8 +137,20 @@ export default class UserRow extends PureComponent {
   }
   handleSelectRole = evt => {
     const newRole = evt.target.dataset.value
-    updateSiteUserRole(this.props.ZUID, this.props.role.ZUID, newRole)
+    this.setState({
+      submitted: true
+    })
+    this.props
+      .dispatch(
+        updateSiteUserRole(
+          this.props.ZUID,
+          this.props.role.ZUID,
+          newRole,
+          this.props.siteZUID
+        )
+      )
       .then(data => {
+        this.setState({ submitted: false })
         this.props.dispatch(
           notify({
             message: `${this.props.firstName}'s role has been updated`,

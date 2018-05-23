@@ -1,6 +1,5 @@
 import { request } from '../../../../util/request'
 
-
 export function sitesUsers(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_USERS':
@@ -32,6 +31,17 @@ export function sitesUsers(state = {}, action) {
     case 'FETCH_USERS_PENDING_ERROR':
       return state
 
+    case 'UPDATE_USER_ROLE':
+      return {
+        ...state,
+        [action.siteZUID]: {
+          ...state[action.siteZUID],
+          [action.userZUID]: {
+            ...state[action.siteZUID][action.userZUID],
+            role: action.role
+          }
+        }
+      }
     default:
       return state
   }
@@ -104,20 +114,36 @@ export const removeSiteUser = (userZUID, siteZUID) => {
   }
 }
 
-export const updateSiteUserRole = (userZUID, oldRoleZUID, newRoleZUID) => {
-  return request(
-    `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
-    {
-      method: 'PUT',
-      json: true,
-      body: {
-        roleZUID: newRoleZUID
+export const updateSiteUserRole = (
+  userZUID,
+  oldRoleZUID,
+  newRoleZUID,
+  siteZUID
+) => {
+  return (dispatch, getState) => {
+    const newRole = getState().sitesRoles[siteZUID][newRoleZUID]
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
+      {
+        method: 'PUT',
+        json: true,
+        body: {
+          roleZUID: newRoleZUID
+        }
       }
-    }
-  )
-    .then(data => data)
-    .catch(err => {
-      console.log(err)
-      return er
-    })
+    )
+      .then(data => {
+        dispatch({
+          type: 'UPDATE_USER_ROLE',
+          userZUID,
+          siteZUID,
+          role: newRole
+        })
+        return data
+      })
+      .catch(err => {
+        console.log(err)
+        return er
+      })
+  }
 }
