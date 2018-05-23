@@ -5,7 +5,7 @@ import {
   updateSiteUserRole,
   removeSiteUser
 } from '../../../../../store/sitesUsers'
-import { cancelInvite } from '../../../../../store/sites'
+import { cancelInvite, removeUser } from '../../../../../store/sites'
 
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
@@ -60,7 +60,10 @@ export default class UserRow extends Component {
                   className={styles.trash + ' fa fa-trash-o'}
                   aria-hidden="true"
                   onClick={() =>
-                    this.removeUser(this.props.ZUID, this.props.role.ZUID)
+                    this.removeUserFromInstance(
+                      this.props.ZUID,
+                      this.props.role.ZUID
+                    )
                   }
                 />
               </span>
@@ -74,7 +77,7 @@ export default class UserRow extends Component {
       </article>
     )
   }
-  removeUser = (userZUID, roleZUID) => {
+  removeUserFromInstance = (userZUID, roleZUID) => {
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to remove this user?',
