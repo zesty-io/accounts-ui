@@ -75,8 +75,7 @@ class PropertyOverview extends Component {
           <Button
             className={styles.CloseOverview}
             id="closeOverviewButton"
-            onClick={this.close}
-          >
+            onClick={this.close}>
             <i className="fa fa-times-circle-o" aria-hidden="true" />
           </Button>
           <header className={styles.PropertyOverviewHeader}>
@@ -85,8 +84,7 @@ class PropertyOverview extends Component {
               target="_blank"
               href={`${CONFIG.MANAGER_URL_PROTOCOL}${
                 this.props.site.randomHashID
-              }${CONFIG.MANAGER_URL}`}
-            >
+              }${CONFIG.MANAGER_URL}`}>
               <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Instance
               Manager
             </Url>
@@ -95,16 +93,14 @@ class PropertyOverview extends Component {
               target="_blank"
               href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
                 this.props.site.randomHashID
-              }${CONFIG.PREVIEW_URL}`}
-            >
+              }${CONFIG.PREVIEW_URL}`}>
               <i className="fa fa-eye" aria-hidden="true" />&nbsp;Instance
               Preview
             </Url>
             <Url
               className={styles.manager}
               target="_blank"
-              href={`http://${this.props.site.domain}`}
-            >
+              href={`http://${this.props.site.domain}`}>
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
             </Url>
           </header>
@@ -112,7 +108,13 @@ class PropertyOverview extends Component {
             <Route
               path="/instances/:siteZUID"
               render={routeProps => {
-                return <Meta {...routeProps} site={this.props.site} />
+                return (
+                  <Meta
+                    {...routeProps}
+                    dispatch={this.props.dispatch}
+                    site={this.props.site}
+                  />
+                )
               }}
             />
 
