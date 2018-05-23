@@ -122,7 +122,6 @@ class PropertyOverview extends Component {
                 return (
                   <Users
                     {...routeProps}
-                    // viewerSystemRole={this.props.viewerSystemRole}
                     isAdmin={this.props.isAdmin}
                     siteZUID={this.props.site.ZUID}
                     dispatch={this.props.dispatch}
@@ -219,11 +218,6 @@ export default withRouter(
         return acc
       }, [])
       .filter(role => !role.systemRole)
-
-    // let viewerSystemRole =
-    //   state.sitesUsers[siteZUID] && state.sitesUsers[siteZUID][state.user.ZUID]
-    //     ? state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole
-    //     : {}
 
     // Determine users permissions for instance
     let isAdmin = false
