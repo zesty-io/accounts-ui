@@ -14,6 +14,7 @@ const OWNER_ZUID = '31-71cfc74-0wn3r'
 
 export default class UserRow extends PureComponent {
   render() {
+    console.log('UserRow', this.props)
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>
@@ -21,49 +22,50 @@ export default class UserRow extends PureComponent {
           {!this.props.lastName &&
             !this.props.firstName && <em>Invited User</em>}
         </span>
-        {/* <span className={styles.role}>
-          {this.props.role && this.props.role.systemRoleZUID === OWNER_ZUID ? (
-            <i className="fa fa-star" aria-hidden="true" />
-          ) : null}
-          {this.props.role && this.props.role.name}
-        </span> */}
+
         <span className={styles.email}>{this.props.email}</span>
-        <span className={styles.action}>
-          {this.props.pending ? (
-            <Button onClick={() => this.confirm(this.props.inviteZUID)}>
-              <i className="fa fa-trash-o" aria-hidden="true" />Revoke Invite
-            </Button>
-          ) : null}
-          {this.props.role && this.props.role.systemRoleZUID !== OWNER_ZUID ? (
-            <span className={styles.select}>
-              <Select onSelect={this.handleSelectRole}>
-                <Option
-                  key={this.props.role.ZUID}
-                  value={this.props.role.ZUID}
-                  text={this.props.role.name}
+
+        {this.props.isAdmin ? (
+          <span className={styles.action}>
+            {this.props.pending ? (
+              <Button onClick={() => this.confirm(this.props.inviteZUID)}>
+                <i className="fa fa-trash-o" aria-hidden="true" />Revoke Invite
+              </Button>
+            ) : null}
+            {this.props.role &&
+            this.props.role.systemRoleZUID !== OWNER_ZUID ? (
+              <span className={styles.select}>
+                <Select onSelect={this.handleSelectRole}>
+                  <Option
+                    key={this.props.role.ZUID}
+                    value={this.props.role.ZUID}
+                    text={this.props.role.name}
+                  />
+                  {this.props.siteRoles
+                    .filter(role => role.ZUID !== this.props.role.ZUID)
+                    .map(role => {
+                      return (
+                        <Option
+                          key={role.ZUID}
+                          value={role.ZUID}
+                          text={role.name}
+                        />
+                      )
+                    })}
+                </Select>
+                <i
+                  className={styles.trash + ' fa fa-trash-o'}
+                  aria-hidden="true"
+                  onClick={() =>
+                    this.removeUser(this.props.ZUID, this.props.role.ZUID)
+                  }
                 />
-                {this.props.roles
-                  .filter(role => role.ZUID !== this.props.role.ZUID)
-                  .map(role => {
-                    return (
-                      <Option
-                        key={role.ZUID}
-                        value={role.ZUID}
-                        text={role.name}
-                      />
-                    )
-                  })}
-              </Select>
-              <i
-                className={styles.trash + ' fa fa-trash-o'}
-                aria-hidden="true"
-                onClick={() =>
-                  this.removeUser(this.props.ZUID, this.props.role.ZUID)
-                }
-              />
-            </span>
-          ) : null}
-        </span>
+              </span>
+            ) : null}
+          </span>
+        ) : (
+          <span className={styles.action}>{this.props.role.name}</span>
+        )}
       </article>
     )
   }

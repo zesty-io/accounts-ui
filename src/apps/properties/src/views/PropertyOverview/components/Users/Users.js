@@ -30,56 +30,64 @@ export default class Users extends Component {
         </CardHeader>
         <CardContent>
           <div className={styles.Users}>
-            <div className={styles.invite}>
-              <Input
-                className={styles.email}
-                type="email"
-                placeholder="Email of user to invite"
-                name="inviteeEmail"
-                value={this.state.inviteeEmail}
-                onChange={this.handleEmail}
-                required
-              />
-              <Select onSelect={this.handleSelectRole}>
-                <Option key="default" value="" text="Select Role" />
-                {this.props.roles.map(role => {
-                  return (
-                    <Option
-                      key={role.ZUID}
-                      value={role.ZUID}
-                      text={role.name}
-                    />
-                  )
-                })}
-              </Select>
-              <Button
-                onClick={this.handleInvite}
-                disabled={this.state.submitted}>
-                <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
-              </Button>
-            </div>
-            {/* <Divider /> */}
+            {this.props.isAdmin ? (
+              <div className={styles.invite}>
+                <Input
+                  className={styles.email}
+                  type="email"
+                  placeholder="Email of user to invite"
+                  name="inviteeEmail"
+                  value={this.state.inviteeEmail}
+                  onChange={this.handleEmail}
+                  required
+                />
+                <Select onSelect={this.handleSelectRole}>
+                  <Option key="default" value="" text="Select Role" />
+                  {this.props.siteRoles.map(role => {
+                    return (
+                      <Option
+                        key={role.ZUID}
+                        value={role.ZUID}
+                        text={role.name}
+                      />
+                    )
+                  })}
+                </Select>
+                <Button
+                  onClick={this.handleInvite}
+                  disabled={this.state.submitted}
+                >
+                  <i className="fa fa-envelope-o" aria-hidden="true" />Send
+                  Invite
+                </Button>
+              </div>
+            ) : null}
+
             <div className={styles.UserList}>
               <header>
                 <h3>Name</h3>
                 <h3>Email</h3>
-                <h3>Actions</h3>
+                <h3>Role</h3>
               </header>
               <main>
-                {Object.keys(this.props.users).map(ZUID => {
-                  return (
-                    <UserRow
-                      key={ZUID}
-                      siteZUID={this.props.siteZUID}
-                      roles={this.props.roles}
-                      dispatch={this.props.dispatch}
-                      {...this.props.users[ZUID]}
-                    />
-                  )
-                })}
                 {this.props.loadingUsers || this.props.loadingUsersPending ? (
                   <Loader />
-                ) : null}
+                ) : (
+                  <div>
+                    {Object.keys(this.props.users).map(ZUID => {
+                      return (
+                        <UserRow
+                          key={ZUID}
+                          siteZUID={this.props.siteZUID}
+                          siteRoles={this.props.siteRoles}
+                          dispatch={this.props.dispatch}
+                          isAdmin={this.props.isAdmin}
+                          {...this.props.users[ZUID]}
+                        />
+                      )
+                    })}
+                  </div>
+                )}
               </main>
             </div>
           </div>

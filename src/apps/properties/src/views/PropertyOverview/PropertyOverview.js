@@ -109,10 +109,12 @@ class PropertyOverview extends Component {
                 return (
                   <Users
                     {...routeProps}
+                    // viewerSystemRole={this.props.viewerSystemRole}
+                    isAdmin={this.props.isAdmin}
                     siteZUID={this.props.site.ZUID}
                     dispatch={this.props.dispatch}
                     users={this.props.users}
-                    roles={this.props.siteRoles}
+                    siteRoles={this.props.siteRoles}
                     loadingUsers={this.state.loadingUsers}
                     loadingUsersPending={this.state.loadingUsersPending}
                     loadingRoles={this.state.loadingRoles}
@@ -137,17 +139,20 @@ class PropertyOverview extends Component {
                 )
               }}
             /> */}
-            <Route
-              path="/instances/:siteZUID"
-              render={routeProps => {
-                return (
-                  <CompanyAccess
-                    companies={this.props.companies}
-                    loadingTeams={this.state.loadingTeams}
-                  />
-                )
-              }}
-            />
+
+            {this.props.isAdmin ? (
+              <Route
+                path="/instances/:siteZUID"
+                render={routeProps => {
+                  return (
+                    <CompanyAccess
+                      companies={this.props.companies}
+                      loadingTeams={this.state.loadingTeams}
+                    />
+                  )
+                }}
+              />
+            ) : null}
 
             <Route
               path="/instances/:siteZUID"
@@ -155,6 +160,7 @@ class PropertyOverview extends Component {
                 return (
                   <Blueprint
                     {...routeProps}
+                    isAdmin={this.props.isAdmin}
                     loadingBlueprint={this.state.loadingBlueprint}
                     siteZUID={this.props.siteZUID}
                     blueprint={this.props.blueprint}
@@ -244,6 +250,7 @@ export default withRouter(
       return acc
     }, [])
 
+    // Get all non system roles for instance
     let siteRoles = state.sitesRoles[siteZUID] || {}
     siteRoles = Object.keys(siteRoles)
       .reduce((acc, key) => {
@@ -252,11 +259,38 @@ export default withRouter(
       }, [])
       .filter(role => !role.systemRole)
 
+    // let viewerSystemRole =
+    //   state.sitesUsers[siteZUID] && state.sitesUsers[siteZUID][state.user.ZUID]
+    //     ? state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole
+    //     : {}
+
+    // Determine users permissions for instance
+    let isAdmin = false
+    if (state.user.staff) {
+      isAdmin = true
+    } else {
+      if (
+        state.sitesUsers[siteZUID] &&
+        state.sitesUsers[siteZUID][state.user.ZUID]
+      ) {
+        if (
+          state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole.name ===
+            'Owner' ||
+          state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole.name ===
+            'Admin'
+        ) {
+          isAdmin = true
+        }
+      }
+    }
+
     return {
       siteZUID,
       systemRoles,
       siteRoles,
       userZUID: state.user.ZUID,
+      isAdmin,
+      // viewerSystemRole,
       site: state.sites[siteZUID] || {},
       users: state.sitesUsers[siteZUID] || {},
       companies: state.sitesCompanies[siteZUID] || {},
