@@ -13,6 +13,9 @@ import { notify } from '../../../../../../../../shell/store/notifications'
 const OWNER_ZUID = '31-71cfc74-0wn3r'
 
 export default class UserRow extends PureComponent {
+  state = {
+    submited: false
+  }
   render() {
     return (
       <article className={styles.UserRow}>
@@ -62,7 +65,7 @@ export default class UserRow extends PureComponent {
                 }
               />
             </span>
-          ) : null}
+          ) : <h4>Owner</h4>}
         </span>
       </article>
     )
