@@ -4,9 +4,11 @@ import { connect } from 'react-redux'
 import { request } from '../../../../../util/request'
 import { notify } from '../../../../../shell/store/notifications'
 
-
 import styles from './BugReport.less'
 class BugReport extends Component {
+  state = {
+    submitted: false
+  }
   componentDidMount() {
     let navClone = {}
     // have to use a for in loop because navigator is all proto
@@ -62,7 +64,7 @@ class BugReport extends Component {
             <input type="checkbox" name="followUp" />
             <p>Please follow up with me about this issue.</p>
           </span>
-          <Button type="submit" text="Submit" />
+          <Button disabled={this.state.submitted} type="submit" text="Submit" />
           <Button type="cancel" text="Cancel" onClick={this.cancel} />
         </form>
       </div>
@@ -75,12 +77,15 @@ class BugReport extends Component {
   }
 
   sendBugReport = data => {
+    this.setState({ submitted: true })
     request(CONFIG.EMAIL_SERVICE, {
       method: 'POST',
       json: true,
       body: {
         senderHandle: 'bugs',
-        senderName: `${data.user.zestyUser.firstName} ${data.user.zestyUser.lastName}`,
+        senderName: `${data.user.zestyUser.firstName} ${
+          data.user.zestyUser.lastName
+        }`,
         emailSubject: `Bug report from Accounts-UI dateTime-${
           data.currentTime
         }`,
@@ -95,6 +100,7 @@ class BugReport extends Component {
             type: 'success'
           })
         )
+        this.setState({ submitted: false })
       })
       .catch(err => {
         this.props.dispatch(
@@ -103,6 +109,7 @@ class BugReport extends Component {
             type: 'error'
           })
         )
+        this.setState({ submitted: false })
         console.log(err)
       })
   }
