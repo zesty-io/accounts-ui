@@ -9,6 +9,7 @@ import { notify } from '../../../../../../../shell/store/notifications'
 import { fetchSiteUsersPending } from '../../../../store/sitesUsers'
 
 import UserRow from './UserRow'
+import UserPendingRow from './UserPendingRow'
 
 export default class Users extends Component {
   constructor(props) {
@@ -75,16 +76,30 @@ export default class Users extends Component {
                 ) : (
                   <div>
                     {Object.keys(this.props.users).map(ZUID => {
-                      return (
-                        <UserRow
-                          key={ZUID}
-                          siteZUID={this.props.siteZUID}
-                          siteRoles={this.props.siteRoles}
-                          dispatch={this.props.dispatch}
-                          isAdmin={this.props.isAdmin}
-                          {...this.props.users[ZUID]}
-                        />
-                      )
+                      const user = this.props.users[ZUID]
+
+                      if (user.pending) {
+                        return (
+                          <UserPendingRow
+                            key={ZUID}
+                            siteZUID={this.props.siteZUID}
+                            dispatch={this.props.dispatch}
+                            isAdmin={this.props.isAdmin}
+                            {...user}
+                          />
+                        )
+                      } else {
+                        return (
+                          <UserRow
+                            key={ZUID}
+                            siteZUID={this.props.siteZUID}
+                            siteRoles={this.props.siteRoles}
+                            dispatch={this.props.dispatch}
+                            isAdmin={this.props.isAdmin}
+                            {...user}
+                          />
+                        )
+                      }
                     })}
                   </div>
                 )}
