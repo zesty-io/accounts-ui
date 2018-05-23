@@ -43,6 +43,7 @@ class App extends Component {
                 <Route path="/support" component={Support} />
                 <Route path="/teams" component={Teams} />
                 <Redirect exact from="/" to="/instances" />
+                <Redirect exact from="/login" to="/instances" />
                 <Route component={NotFound} />
               </Switch>
             ) : (
