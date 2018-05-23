@@ -145,6 +145,7 @@ class PropertyOverview extends Component {
                   return (
                     <CompanyAccess
                       companies={this.props.companies}
+                      siteRoles={this.props.siteRoles}
                       loadingTeams={this.state.loadingTeams}
                     />
                   )

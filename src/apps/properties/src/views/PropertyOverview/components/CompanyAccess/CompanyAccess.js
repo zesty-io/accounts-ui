@@ -8,6 +8,13 @@ import { fetchSiteCompanies } from '../../../../store/sitesCompanies'
 import styles from './CompanyAccess.less'
 
 class CompanyAccess extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      team: '',
+      role: ''
+    }
+  }
   componentWillMount() {
     this.props.dispatch(fetchSiteCompanies(this.props.match.params.hash))
   }
@@ -29,10 +36,21 @@ class CompanyAccess extends Component {
               property.
             </p>
             <div className={styles.addCompany}>
-              <Input placeholder="Enter team ID" />
+              <Input placeholder="Enter team ID" onChange={this.handleTream} />
+              <Select onSelect={this.handleRole}>
+                <Option key="default" value="" text="Select Role" />
+                {this.props.siteRoles.map(role => {
+                  return (
+                    <Option
+                      key={role.ZUID}
+                      value={role.ZUID}
+                      text={role.name}
+                    />
+                  )
+                })}
+              </Select>
               <Button name="companyAccessSubmit">Grant Access</Button>
             </div>
-            {/* <Divider /> */}
             <div className={styles.companyTable}>
               <header>
                 <h3>Company</h3>
@@ -89,6 +107,16 @@ class CompanyAccess extends Component {
         }
       })
     )
+  }
+  handleTeam = evt => {
+    this.setState({
+      team: evt.target.value
+    })
+  }
+  handleRole = evt => {
+    this.setState({
+      role: evt.target.dataset.value
+    })
   }
 }
 
