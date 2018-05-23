@@ -7,7 +7,7 @@ import { fetchSiteCompanies } from '../../../../store/sitesCompanies'
 
 import styles from './CompanyAccess.less'
 
-class CompanyAccess extends Component {
+export default class CompanyAccess extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,7 +16,7 @@ class CompanyAccess extends Component {
     }
   }
   componentWillMount() {
-    this.props.dispatch(fetchSiteCompanies(this.props.match.params.hash))
+    this.props.dispatch(fetchSiteCompanies(this.props.match.params.siteZUID))
   }
   render() {
     return (
@@ -119,11 +119,3 @@ class CompanyAccess extends Component {
     })
   }
 }
-
-export default withRouter(
-  connect((state, ownProps) => {
-    return {
-      companies: state.sitesCompanies[ownProps.match.params.hash] || {}
-    }
-  })(CompanyAccess)
-)

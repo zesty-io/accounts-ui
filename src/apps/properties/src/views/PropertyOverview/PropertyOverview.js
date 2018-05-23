@@ -158,6 +158,8 @@ class PropertyOverview extends Component {
                 render={routeProps => {
                   return (
                     <CompanyAccess
+                      {...routeProps}
+                      dispatch={this.props.dispatch}
                       companies={this.props.companies}
                       siteRoles={this.props.siteRoles}
                       loadingTeams={this.state.loadingTeams}
