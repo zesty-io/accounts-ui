@@ -1,41 +1,41 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import cx from "classnames";
-import styles from "./WebsiteCreate.less";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import cx from 'classnames'
+import styles from './WebsiteCreate.less'
 
-import { Line } from "react-chartjs-2";
+import { Line } from 'react-chartjs-2'
 
 class WebsiteCreate extends Component {
   render() {
     return (
       <article className={styles.WebsiteCreate}>
         <header>
-          {/* <h1 className={styles.name}>Your Web Property</h1> */}
           <h1 className={styles.name}>Welcome to Zesty.io</h1>
         </header>
         <main className={styles.WebsiteManage}>
-          {/* <h1>Welcome to Zesty.io</h1> */}
           <p>
-            Get started by creating your first Zesty website in a few easy
+            Get started by creating your first Zesty web instance in a few easy
             steps.
+          </p>
+          <p>
+            <em>
+              Instances are a way for you to categorize content by a domain.
+              This could either be a website or an API to serve managed content.
+            </em>
           </p>
         </main>
         <footer>
-          {/* <Url href="/instances/create">
-            <i className="fa fa-plus" aria-hidden="true" />&nbsp;Create Web
-            Property
-          </Url> */}
           <Link to="/instances/create" className={styles.Button}>
             <Button>
               <i className="fa fa-plus" aria-hidden="true" />
-              Create Web Property
+              Create Web Instance
             </Button>
           </Link>
         </footer>
       </article>
-    );
+    )
   }
 }
 
-export default connect(state => state)(WebsiteCreate);
+export default connect(state => state)(WebsiteCreate)

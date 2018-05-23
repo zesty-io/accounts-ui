@@ -23,14 +23,6 @@ class PropertyCreate extends Component {
     return (
       <section className={styles.PropertyCreate}>
         <div className={styles.nameNew}>
-          {!this.props.lastLogin ? (
-            <React.Fragment>
-              <h1>Welcome to Zesty.io</h1>
-              <h2>Let's make your first instance</h2>
-            </React.Fragment>
-          ) : (
-            <h1>Name your new instance</h1>
-          )}
           <Input
             type="text"
             name="propertyName"
@@ -86,8 +78,7 @@ class PropertyCreate extends Component {
 
 const mapStateToProps = state => {
   return {
-    ...state.createSite,
-    lastLogin: state.user.lastLogin
+    ...state.createSite
   }
 }
 

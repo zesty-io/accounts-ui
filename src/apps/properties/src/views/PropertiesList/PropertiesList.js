@@ -49,10 +49,10 @@ class Properties extends Component {
                   )
                 })}
               <Route path="/instances/:hash" component={PropertyOverview} />
-              <Route
+              {/* <Route
                 path="/instances/invite/:hash"
                 component={PropertyOverview}
-              />
+              /> */}
             </div>
           ) : this.props.sites === null ? (
             <div className={styles.siteList}>

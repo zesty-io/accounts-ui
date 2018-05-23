@@ -8,17 +8,12 @@ import { fetchSystemRoles } from '../../../../../shell/store/systemRoles'
 
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
-// import PropertyCreateFirst from '../PropertyCreateFirst'
 import PropertyBlueprint from '../PropertyBlueprint'
 
 class Properties extends Component {
   componentWillMount() {
-    if (this.props.user.lastLogin === null) {
-      window.location = '/instances/create'
-    } else {
-      this.props.dispatch(fetchSites())
-      this.props.dispatch(fetchSystemRoles())
-    }
+    this.props.dispatch(fetchSites())
+    this.props.dispatch(fetchSystemRoles())
   }
   render() {
     return (
