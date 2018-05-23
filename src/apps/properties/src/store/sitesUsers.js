@@ -121,6 +121,16 @@ export const updateSiteUserRole = (
   siteZUID
 ) => {
   return (dispatch, getState) => {
+    /*
+    **
+    ** for role updates in the meantime, it looks like what we need to do is a `POST` to 
+    ** `https://stage-accounts.zesty.io/+/actions/manage-permissions/site/set-role-for-user
+    ** ` (base URL varies per environment), and send it a body like:
+    **
+    ** ```website_hash_id=090z7hxt&user_id=21474534&new_role_id=5```
+    **
+    ** and set the auth cookie on the request.
+    */
     const newRole = getState().sitesRoles[siteZUID][newRoleZUID]
     return request(
       `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,

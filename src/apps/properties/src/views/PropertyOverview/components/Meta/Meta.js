@@ -29,7 +29,7 @@ export default class Meta extends Component {
             name={this.props.site.name}
             dispatch={this.props.dispatch}
           />
-          <Domain siteZUID={this.props.site.ZUID} site={this.props.site} />
+          <Domain siteZUID={this.props.site.ZUID} site={this.props.site} dispatch={this.props.dispatch} />
           <div className={styles.Meta}>
             <header>
               <h3>
