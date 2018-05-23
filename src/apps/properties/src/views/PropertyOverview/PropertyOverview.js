@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './PropertyOverview.less'
 
-import PropertyName from './components/PropertyName'
-import Domain from './components/Domain'
 import Users from './components/Users'
 import CompanyAccess from './components/CompanyAccess'
 import Roles from './components/Roles'
@@ -82,13 +80,6 @@ class PropertyOverview extends Component {
             <i className="fa fa-times-circle-o" aria-hidden="true" />
           </Button>
           <header className={styles.PropertyOverviewHeader}>
-            <PropertyName
-              siteZUID={this.props.site.ZUID}
-              name={this.props.site.name}
-              dispatch={this.props.dispatch}
-            />
-            <Domain siteZUID={this.props.site.ZUID} site={this.props.site} />
-
             <Url
               className={styles.manager}
               target="_blank"
@@ -96,11 +87,35 @@ class PropertyOverview extends Component {
                 this.props.site.randomHashID
               }${CONFIG.MANAGER_URL}`}
             >
-              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Site
+              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Instance
               Manager
+            </Url>
+            <Url
+              className={styles.manager}
+              target="_blank"
+              href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
+                this.props.site.randomHashID
+              }${CONFIG.PREVIEW_URL}`}
+            >
+              <i className="fa fa-eye" aria-hidden="true" />&nbsp;Instance
+              Preview
+            </Url>
+            <Url
+              className={styles.manager}
+              target="_blank"
+              href={`http://${this.props.site.domain}`}
+            >
+              <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
             </Url>
           </header>
           <main className={styles.Cards}>
+            <Route
+              path="/instances/:siteZUID"
+              render={routeProps => {
+                return <Meta {...routeProps} site={this.props.site} />
+              }}
+            />
+
             <Route
               path="/instances/:siteZUID"
               render={routeProps => {
@@ -167,59 +182,6 @@ class PropertyOverview extends Component {
                 )
               }}
             />
-
-            <Route
-              path="/instances/:siteZUID"
-              render={routeProps => {
-                return <Meta {...routeProps} site={this.props.site} />
-              }}
-            />
-
-            {/* <article className={styles.card}>
-              <h2>
-                <i className="fa fa-users" aria-hidden="true" />
-                &nbsp;User Access
-              </h2>
-              <Users
-                siteZUID={this.props.site.ZUID}
-                dispatch={this.props.dispatch}
-                users={this.props.users}
-                roles={this.props.allRoles}
-                loadingUsers={this.state.loadingUsers}
-                loadingUsersPending={this.state.loadingUsersPending}
-                loadingRoles={this.state.loadingRoles}
-              />
-            </article> */}
-
-            {/* <article className={styles.card}>
-              <h2>
-                <i className="fa fa-lock" aria-hidden="true" />
-                &nbsp;Custom Site Roles
-              </h2>
-              <Roles
-                dispatch={this.props.dispatch}
-                siteZUID={this.props.siteZUID}
-                siteRoles={this.props.siteRoles}
-                systemRoles={this.props.systemRoles}
-              />
-            </article> */}
-
-            {/* <article className={styles.card}>
-              <h2>
-                <i className="fa fa-building" aria-hidden="true" />
-                &nbsp;Company Access
-              </h2>
-              <CompanyAccess
-                companies={this.props.companies}
-                loadingTeams={this.state.loadingTeams}
-              />
-            </article> */}
-
-            {/* <Blueprint
-              loadingBlueprint={this.state.loadingBlueprint}
-              siteZUID={this.props.siteZUID}
-              blueprint={this.props.blueprint}
-            /> */}
           </main>
         </article>
       </section>

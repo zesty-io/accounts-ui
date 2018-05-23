@@ -1,4 +1,6 @@
 import { Component } from 'react'
+import PropertyName from '../PropertyName'
+import Domain from '../Domain'
 
 import styles from './Meta.less'
 
@@ -10,6 +12,7 @@ const formatDate = date => {
   return `${newDate.getMonth() +
     1}-${newDate.getDate()}-${newDate.getFullYear()}`
 }
+
 export default class Meta extends Component {
   render() {
     return (
@@ -17,10 +20,23 @@ export default class Meta extends Component {
         <CardHeader>
           <h2>
             <i className="fa fa-info-circle" aria-hidden="true" />
-            &nbsp;Metadata
+            &nbsp;Instance Settings
           </h2>
         </CardHeader>
         <CardContent>
+          <div>
+            name:&nbsp;<PropertyName
+              siteZUID={this.props.site.ZUID}
+              name={this.props.site.name}
+              dispatch={this.props.dispatch}
+            />
+          </div>
+          <div>
+            domain:&nbsp;<Domain
+              siteZUID={this.props.site.ZUID}
+              site={this.props.site}
+            />
+          </div>
           <div className={styles.Meta}>
             <header>
               <h3>Zuid</h3>
