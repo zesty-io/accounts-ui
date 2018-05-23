@@ -7,13 +7,14 @@
   },
   "main": "webpack.config.js",
   "scripts": {
+    "prebuild": "node bin/preBuild",
     "build": "node bin/build",
-    "prestart": "npm install",
-    "start": "node bin/start & npm run serve",
+    "prestart": "npm install & npm run prebuild",
+    "start": "node bin/start",
     "serve": "./node_modules/.bin/serve ./build --port 6006 --single",
-    "build-prod": "export NODE_ENV=\"production\" && node bin/build",
-    "build-dev": "export NODE_ENV=\"development\" && node bin/build",
-    "build-stage": "export NODE_ENV=\"staging\" && node bin/build"
+    "build-prod": "export NODE_ENV=\"production\" && npm run build",
+    "build-dev": "export NODE_ENV=\"development\" && npm run build",
+    "build-stage": "export NODE_ENV=\"staging\" && npm run build"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
   "contributors": [
