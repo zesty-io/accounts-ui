@@ -166,7 +166,7 @@ export const updateSiteUserRole = (
       }
     }
     if (newRole === 'Owner') {
-      return request(`${CONFIG.LEGACY_ACCOUNTS}/+/actions/manage-permissions/site/set-role-for-user`, {
+      return request(`${CONFIG.LEGACY_ACCOUNTS}/+/actions/manage-permissions/site/transfer-ownership`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -176,7 +176,7 @@ export const updateSiteUserRole = (
     }
 
     return (
-      request(`${CONFIG.LEGACY_ACCOUNTS}/+/actions/manage-permissions/site/transfer-ownership`, {
+      request(`${CONFIG.LEGACY_ACCOUNTS}/+/actions/manage-permissions/site/set-role-for-user`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
