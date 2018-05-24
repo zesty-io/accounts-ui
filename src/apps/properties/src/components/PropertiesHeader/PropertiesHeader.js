@@ -14,16 +14,13 @@ class PropertiesHeader extends Component {
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
           {this.props.user.staff ? (
-            <span className={styles.Eco}>
-              <Select onSelect={this.filterByEco}>
-                <Option key="default" value="" text="Select Ecosystem" />
-                <Option key="petDesk" value={24291} text="Pet Desk" />
-                <Option key="alphaUniverse" value={154} text="Alpha Universe" />
-                <Option key="Hofhaus" value={24290} text="Hofbrauhaus" />
-                <Option key="Zesty" value={1} text="Zesty" />
-              </Select>
-              {/* <Button onClick={this.sort} text="sort" /> */}
-            </span>
+            <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
+              <Option key="default" value="" text="Select Ecosystem" />
+              <Option key="petDesk" value={24291} text="Pet Desk" />
+              <Option key="alphaUniverse" value={154} text="Alpha Universe" />
+              <Option key="Hofhaus" value={24290} text="Hofbrauhaus" />
+              <Option key="Zesty" value={1} text="Zesty" />
+            </Select>
           ) : null}
           <Search
             className={styles.Search}
