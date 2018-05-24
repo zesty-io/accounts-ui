@@ -15,7 +15,11 @@ export default class Blueprint extends PureComponent {
                 &nbsp;Blueprint
               </h2>
               {this.props.isAdmin ? (
-                <Button className={styles.Button} type="cancel" onClick={this.handleChangeBlueprint}>
+                <Button
+                  className={styles.Button}
+                  type="cancel"
+                  onClick={this.handleChangeBlueprint}
+                >
                   <i className="fa fa-file-code-o" aria-hidden="true" />
                   &nbsp;Change Blueprint
                 </Button>
@@ -23,9 +27,15 @@ export default class Blueprint extends PureComponent {
             </CardHeader>
             <CardContent>
               <h2 className={styles.name}>{this.props.blueprint.name}</h2>
-              <img src={this.props.blueprint.coverImage} alt="" />
+              {this.props.blueprint.coverImage ? (
+                <img src={this.props.blueprint.coverImage} alt="" />
+              ) : this.props.blueprint.mainImage ? (
+                <img src={this.props.blueprint.mainImage} alt="" />
+              ) : (
+                <p>No cover image set for this blueprint</p>
+              )}
               <p>{this.props.blueprint.description}</p>
-  
+
               {this.props.blueprint.githubURL ? (
                 <Url href={this.props.blueprint.githubURL} target="_blank">
                   <i className="fa fa-github" aria-hidden="true" />
