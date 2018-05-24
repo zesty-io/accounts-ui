@@ -75,7 +75,8 @@ class PropertyOverview extends Component {
           <Button
             className={styles.CloseOverview}
             id="closeOverviewButton"
-            onClick={this.close}>
+            onClick={this.close}
+          >
             <i className="fa fa-times-circle-o" aria-hidden="true" />
           </Button>
           <header className={styles.PropertyOverviewHeader}>
@@ -84,7 +85,8 @@ class PropertyOverview extends Component {
               target="_blank"
               href={`${CONFIG.MANAGER_URL_PROTOCOL}${
                 this.props.site.randomHashID
-              }${CONFIG.MANAGER_URL}`}>
+              }${CONFIG.MANAGER_URL}`}
+            >
               <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Instance
               Manager
             </Url>
@@ -93,14 +95,16 @@ class PropertyOverview extends Component {
               target="_blank"
               href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
                 this.props.site.randomHashID
-              }${CONFIG.PREVIEW_URL}`}>
+              }${CONFIG.PREVIEW_URL}`}
+            >
               <i className="fa fa-eye" aria-hidden="true" />&nbsp;Instance
               Preview
             </Url>
             <Url
               className={styles.manager}
               target="_blank"
-              href={`http://${this.props.site.domain}`}>
+              href={`http://${this.props.site.domain}`}
+            >
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
             </Url>
           </header>
@@ -205,55 +209,53 @@ class PropertyOverview extends Component {
   }
 }
 
-export default withRouter(
-  connect((state, props) => {
-    const siteZUID = props.match.params.hash
+export default connect((state, props) => {
+  const siteZUID = props.match.params.siteZUID
 
-    let systemRoles = Object.keys(state.systemRoles).reduce((acc, key) => {
-      acc.push(state.systemRoles[key])
+  let systemRoles = Object.keys(state.systemRoles).reduce((acc, key) => {
+    acc.push(state.systemRoles[key])
+    return acc
+  }, [])
+
+  // Get all non system roles for instance
+  let siteRoles = state.sitesRoles[siteZUID] || {}
+  siteRoles = Object.keys(siteRoles)
+    .reduce((acc, key) => {
+      acc.push(siteRoles[key])
       return acc
     }, [])
+    .filter(role => !role.systemRole)
 
-    // Get all non system roles for instance
-    let siteRoles = state.sitesRoles[siteZUID] || {}
-    siteRoles = Object.keys(siteRoles)
-      .reduce((acc, key) => {
-        acc.push(siteRoles[key])
-        return acc
-      }, [])
-      .filter(role => !role.systemRole)
-
-    // Determine users permissions for instance
-    let isAdmin = false
-    if (state.user.staff) {
-      isAdmin = true
-    } else {
+  // Determine users permissions for instance
+  let isAdmin = false
+  if (state.user.staff) {
+    isAdmin = true
+  } else {
+    if (
+      state.sitesUsers[siteZUID] &&
+      state.sitesUsers[siteZUID][state.user.ZUID]
+    ) {
       if (
-        state.sitesUsers[siteZUID] &&
-        state.sitesUsers[siteZUID][state.user.ZUID]
+        state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner' ||
+        state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Admin'
       ) {
-        if (
-          state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner' ||
-          state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Admin'
-        ) {
-          isAdmin = true
-        }
+        isAdmin = true
       }
     }
+  }
 
-    return {
-      siteZUID,
-      systemRoles,
-      siteRoles,
-      userZUID: state.user.ZUID,
-      isAdmin,
-      // viewerSystemRole,
-      site: state.sites[siteZUID] || {},
-      users: state.sitesUsers[siteZUID] || {},
-      companies: state.sitesCompanies[siteZUID] || {},
-      blueprint: state.sites[siteZUID]
-        ? state.blueprints[state.sites[siteZUID].blueprintID] || {}
-        : {}
-    }
-  })(PropertyOverview)
-)
+  return {
+    siteZUID,
+    systemRoles,
+    siteRoles,
+    userZUID: state.user.ZUID,
+    isAdmin,
+    // viewerSystemRole,
+    site: state.sites[siteZUID] || {},
+    users: state.sitesUsers[siteZUID] || {},
+    companies: state.sitesCompanies[siteZUID] || {},
+    blueprint: state.sites[siteZUID]
+      ? state.blueprints[state.sites[siteZUID].blueprintID] || {}
+      : {}
+  }
+})(PropertyOverview)

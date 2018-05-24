@@ -17,51 +17,21 @@ class Properties extends Component {
       <section className={styles.Websites}>
         <PropertiesHeader />
         <main className={styles.siteListWrap}>
-          {Object.keys(this.props.sitesFiltered).length ? (
+          {this.props.sites.length ? (
             <div className={styles.siteList} id="siteListWrapper">
-              {Object.keys(this.props.sites)
-                .filter(
-                  zuid =>
-                    this.props.sites[zuid] && this.props.sites[zuid].inviteZUID
-                )
-                .map(zuid => {
-                  return (
-                    <WebsiteInvite key={zuid} site={this.props.sites[zuid]} />
-                  )
-                })}
+              {this.props.sitesInvited.map(site => {
+                return <WebsiteInvite key={site.ZUID} site={site} />
+              })}
 
-              {Object.keys(this.props.sitesFiltered)
-                .filter(
-                  zuid =>
-                    this.props.sitesFiltered[zuid] &&
-                    !this.props.sitesFiltered[zuid].inviteZUID
-                )
-                .map((zuid, i) => {
-                  // TODO: remove when windowing is functional
-                  if (i >= 200) {
-                    return
-                  }
-                  return (
-                    <WebsiteCard
-                      key={zuid}
-                      site={this.props.sitesFiltered[zuid]}
-                    />
-                  )
-                })}
-              <Route path="/instances/:hash" component={PropertyOverview} />
-              {/* <Route
-                path="/instances/invite/:hash"
-                component={PropertyOverview}
-              /> */}
-            </div>
-          ) : this.props.sites === null ? (
-            <div className={styles.siteList}>
-              <WebsiteCreate />
+              {this.props.sitesFiltered.map(site => {
+                return <WebsiteCard key={site.ZUID} site={site} />
+              })}
+              <Route path="/instances/:siteZUID" component={PropertyOverview} />
             </div>
           ) : (
-            <div className={styles.LoadingSites}>
-              <h2>Loading Your Instances</h2>
-              <Loader />
+            // No sites so create a new one
+            <div className={styles.siteList}>
+              <WebsiteCreate />
             </div>
           )}
         </main>
@@ -69,4 +39,15 @@ class Properties extends Component {
     )
   }
 }
-export default connect(state => state)(Properties)
+export default connect(state => {
+  const sites = Object.keys(state.sitesFiltered).reduce((acc, ZUID) => {
+    acc.push(state.sitesFiltered[ZUID])
+    return acc
+  }, [])
+
+  return {
+    sites,
+    sitesFiltered: sites.filter(site => !site.inviteZUID),
+    sitesInvited: sites.filter(site => site.inviteZUID)
+  }
+})(Properties)

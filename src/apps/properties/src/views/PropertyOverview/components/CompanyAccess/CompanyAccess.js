@@ -24,16 +24,15 @@ export default class CompanyAccess extends Component {
         <CardHeader>
           <h2>
             <i className="fa fa-building" aria-hidden="true" />
-            &nbsp;Company Access
+            &nbsp;Team Access
           </h2>
         </CardHeader>
         <CardContent>
           <div className={styles.companyAccess}>
             <p>
               By providing a team access you can allow an external group of
-              users access to manage your web property. For example; this is can
-              be used to provide an agency with access to manage your web
-              property.
+              users access to manage your instance. For example; this is can be
+              used to provide an agency with access to manage your website.
             </p>
             <div className={styles.addCompany}>
               <Input placeholder="Enter team ID" onChange={this.handleTream} />
@@ -53,7 +52,7 @@ export default class CompanyAccess extends Component {
             </div>
             <div className={styles.companyTable}>
               <header>
-                <h3>Company</h3>
+                <h3>Team</h3>
                 <h3>Contact</h3>
                 <h3>Email</h3>
                 <h3>Access</h3>
