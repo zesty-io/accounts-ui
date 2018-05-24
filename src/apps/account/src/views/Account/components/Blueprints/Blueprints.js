@@ -51,19 +51,14 @@ class Blueprints extends Component {
                     )}
                     <p>{blueprint.shortDescription}</p>
                   </CardContent>
-                  <CardFooter>
-                    <ButtonGroup clasName={styles.BlueprintAction}>
-                      <Url href={blueprint.githubURL} target="_blank">
-                        <i className="fa fa-github" aria-hidden="true" />
-                        View On Github
-                      </Url>
-                      <AppLink to={`/settings/blueprints/${blueprint.ID}`}>
-                        <i
-                          className="fa fa-pencil-square-o"
-                          aria-hidden="true"
-                        />&nbsp;Edit
-                      </AppLink>
-                    </ButtonGroup>
+                  <CardFooter className={styles.BlueprintAction}>
+                    <Url href={blueprint.githubURL} target="_blank">
+                      <i className="fa fa-github" aria-hidden="true" />
+                      View On Github
+                    </Url>
+                    <AppLink to={`/settings/blueprints/${blueprint.ID}`}>
+                      <i className="fa fa-pencil-square-o" aria-hidden="true" />&nbsp;Edit
+                    </AppLink>
                   </CardFooter>
                 </Card>
               )
