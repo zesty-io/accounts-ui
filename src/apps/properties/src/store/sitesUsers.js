@@ -123,37 +123,93 @@ export const updateSiteUserRole = (
   return (dispatch, getState) => {
     /*
     **
-    ** for role updates in the meantime, it looks like what we need to do is a `POST` to 
+    ** for role updates until the API can handle ZUID roles
+    ** it looks like what we need to do is a `POST` to 
     ** `https://stage-accounts.zesty.io/+/actions/manage-permissions/site/set-role-for-user
     ** ` (base URL varies per environment), and send it a body like:
     **
     ** ```website_hash_id=090z7hxt&user_id=21474534&new_role_id=5```
     **
     ** and set the auth cookie on the request.
+    **
+    **  const ROLE_ADMIN = 1; // Admin
+    **  const ROLE_DEVELOPER = 2; // Developer
+    **  const ROLE_SEO = 3; // SEO
+    **  const ROLE_PUBLISHER = 4; // content editor/publisher
+    **  const ROLE_CONTRIBUTOR = 5; // contributor
+    **
+
     */
-    const newRole = getState().sitesRoles[siteZUID][newRoleZUID]
-    return request(
-      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
-      {
-        method: 'PUT',
-        json: true,
-        body: {
-          roleZUID: newRoleZUID
-        }
+
+    // this will not work for custom roles
+
+    const newRole = getState().sitesRoles[siteZUID][newRoleZUID].name
+    const instanceID = getState().sites[siteZUID].randomHashID
+    const userID = getState().sitesUsers[siteZUID][userZUID].ID
+
+    const newRoleID = role => {
+      switch (role) {
+        case 'Owner':
+          return 0
+        case 'Admin':
+          return 1
+        case 'Contributor':
+          return 5
+        case 'Publisher':
+          return 4
+        case 'Developer':
+          return 2
+        case 'SEO':
+          return 3
+        default:
+          return 5
       }
-    )
-      .then(data => {
-        dispatch({
-          type: 'UPDATE_USER_ROLE',
-          userZUID,
-          siteZUID,
-          role: newRole
+    }
+    if (newRole === 'Owner') {
+      return request(`${CONFIG.LEGACY_ACCOUNTS}/+/actions/manage-permissions/site/set-role-for-user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `website_hash_id=${instanceID}&user_id=${userID}`
+      })
+    }
+
+    return (
+      request(`${CONFIG.LEGACY_ACCOUNTS}/+/actions/manage-permissions/site/transfer-ownership`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `website_hash_id=${instanceID}&user_id=${userID}&new_role_id=${newRoleID(
+          newRole
+        )}`
+      })
+        // temporarily use the old API so that roles apply across all apps
+        //
+        // return request(
+        //   `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
+        //   {
+        //     method: 'PUT',
+        //     json: true,
+        //     body: {
+        //       roleZUID: newRoleZUID
+        //     }
+        //   }
+        // )
+        .then(data => {
+          dispatch({
+            type: 'UPDATE_USER_ROLE',
+            userZUID,
+            siteZUID,
+            role: newRole
+          })
+          return data
         })
-        return data
-      })
-      .catch(err => {
-        console.log(err)
-        return er
-      })
+        .catch(err => {
+          console.log(err)
+          return er
+        })
+    )
   }
 }

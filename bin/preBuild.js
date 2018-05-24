@@ -22,7 +22,9 @@ if (env === 'production') {
     PREVIEW_URL_PROTOCOL: 'https://',
     COOKIE_NAME: 'APP_SID',
     EMAIL_SERVICE: 'https://email.zesty.io/send',
-    COOKIE_DOMAIN: '.zesty.io'
+    COOKIE_DOMAIN: '.zesty.io',
+    ROLES_ENDPOINT: 'https://accounts.zesty.io/+/actions/manage-permissions/site/set-role-for-user',
+    MAKE_OWNER: 'https://accounts.zesty.io/+/actions/manage-permissions/site/transfer-ownership'
   }`
 } else if (env === 'stage') {
   throw new Error(
@@ -51,7 +53,7 @@ if (env === 'production') {
     PREVIEW_URL_PROTOCOL: 'http://',
     COOKIE_NAME: 'APP_SID',
     COOKIE_DOMAIN: '.zesty.localdev',
-    EMAIL_SERVICE: 'https://email.zesty.io/send'
+    LEGACY_ACCOUNTS: 'http://accounts.zesty.localdev:3002'
   }`
 }
 
