@@ -28,7 +28,11 @@ class PropertiesHeader extends Component {
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
-          <Button className={styles.Create} onClick={this.onCreateSite}>
+          <Button
+            type="save"
+            className={styles.Create}
+            onClick={this.onCreateSite}
+          >
             <i className="fa fa-plus" />Create Instance
           </Button>
         </div>

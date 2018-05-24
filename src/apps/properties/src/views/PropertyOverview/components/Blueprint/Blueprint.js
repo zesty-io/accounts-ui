@@ -23,9 +23,14 @@ export default function Blueprint(props) {
           width="100%"
         >
           <h2 className={styles.name}>{props.blueprint.name}</h2>
-          <img src={props.blueprint.coverImage} alt="" />
+          {props.blueprint.coverImage ? (
+            <img src={props.blueprint.coverImage} alt="" />
+          ) : props.blueprint.mainImage ? (
+            <img src={props.blueprint.mainImage} alt="" />
+          ) : (
+            <p>No cover image set for this blueprint</p>
+          )}
           <p>{props.blueprint.description}</p>
-
           {props.blueprint.githubURL ? (
             <Url href={props.blueprint.githubURL} target="_blank">
               <i className="fa fa-github" aria-hidden="true" />
