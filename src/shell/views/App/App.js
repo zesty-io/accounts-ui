@@ -33,10 +33,11 @@ class App extends Component {
       <section className={styles.AppShell}>
         <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
         <AppError>
-          <Notify />
-          <Confirm />
           <section className={styles.AppMain}>
-            {this.props.user.email ? (
+            <WithLoader
+              condition={this.props.user.email}
+              message="Finding Your Account"
+            >
               <Switch>
                 <Route path="/instances" component={Properties} />
                 <Route path="/settings" component={Settings} />
@@ -46,13 +47,10 @@ class App extends Component {
                 <Redirect exact from="/login" to="/instances" />
                 <Route component={NotFound} />
               </Switch>
-            ) : (
-              <div className={styles.loaderWrap}>
-                <h2>Loading Your Account</h2>
-                <Loader />
-              </div>
-            )}
+            </WithLoader>
           </section>
+          <Notify />
+          <Confirm />
         </AppError>
       </section>
     )

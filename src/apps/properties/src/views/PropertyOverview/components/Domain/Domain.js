@@ -53,7 +53,7 @@ class Domain extends Component {
         ) : (
           <div className={styles.Edit}>
             <Input
-              value={this.props.site.domain}
+              value={this.props.site.domain || ''}
               placeholder="Set a custom domain"
               onChange={this.handleDomain}
             />

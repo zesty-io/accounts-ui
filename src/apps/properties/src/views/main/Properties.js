@@ -9,24 +9,38 @@ import { fetchSystemRoles } from '../../../../../shell/store/systemRoles'
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
 import PropertyBlueprint from '../PropertyBlueprint'
+import PropertyOverview from '../PropertyOverview'
 
 class Properties extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loadingSites: true
+    }
+  }
   componentWillMount() {
-    this.props.dispatch(fetchSites())
+    this.props.dispatch(fetchSites()).then(() => {
+      this.setState({ loadingSites: false })
+    })
     this.props.dispatch(fetchSystemRoles())
   }
   render() {
     return (
       <section className={styles.Websites}>
-        <Switch>
-          <Route
-            exact
-            path="/instances/:zuid/blueprint"
-            component={PropertyBlueprint}
-          />
-          <Route exact path="/instances/create" component={PropertyCreate} />
-          <Route path="/instances" component={PropertiesList} />
-        </Switch>
+        <WithLoader
+          condition={!this.state.loadingSites}
+          message="Loading Your Instances"
+        >
+          <Switch>
+            <Route
+              exact
+              path="/instances/:zuid/blueprint"
+              component={PropertyBlueprint}
+            />
+            <Route exact path="/instances/create" component={PropertyCreate} />
+            <Route path="/instances" component={PropertiesList} />
+          </Switch>
+        </WithLoader>
       </section>
     )
   }
