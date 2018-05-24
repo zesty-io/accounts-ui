@@ -204,8 +204,9 @@ class PropertyOverview extends Component {
     }
     if (evt.type === 'click') {
       if (
-        evt.target.parentElement.id === 'siteListWrapper' ||
-        evt.target.parentElement.id === 'closeOverviewButton'
+        evt.target.parentElement &&
+        (evt.target.parentElement.id === 'siteListWrapper' ||
+          evt.target.parentElement.id === 'closeOverviewButton')
       ) {
         this.props.history.push('/instances')
       }

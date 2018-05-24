@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { updateDomain } from '../../../../store/sitesDomain'
 import { fetchSite } from '../../../../store/sites'
 import { notify } from '../../../../../../../shell/store/notifications'
-import { zConfirm } from '../../../../../../../shell/store/confirm'
 
 import styles from './Domain.less'
 
@@ -18,42 +17,27 @@ class Domain extends Component {
 
   constructor(props) {
     super(props)
-    // this.state = {
-    //   editName: false,
-    //   domainSelect: '',
-    //   name: ''
-    // }
-
     this.state = {
+      submitted: false,
+      editing: false,
       domain: props.site.domain || ''
     }
   }
-
-  // componentDidMount() {
-  //   let { domain } = this.props.site
-  //   if (domain && domain.includes('.zesty.sites')) {
-  //     this.setState({
-  //       domainSelect: 'vanity',
-  //       name: domain.substr(0, domain.indexOf('.'))
-  //     })
-  //   } else if (domain !== null && domain !== '') {
-  //     this.setState({ domainSelect: 'custom', name: domain })
-  //   }
-  // }
-
   render() {
     return (
       <label className={styles.Domain}>
         Domain:&nbsp;
-        {this.props.site.domain ? (
+        {this.state.submitted ? (
+          <span>Saving&elipse;</span>
+        ) : this.props.site.domain && !this.state.editing ? (
           <span className={styles.Name} onClick={this.handleEdit}>
-            http://{this.props.site.domain}
+            http://{this.state.domain}
             <i className="fa fa-pencil" />
           </span>
         ) : (
           <div className={styles.Edit}>
             <Input
-              value={this.props.site.domain || ''}
+              value={this.state.domain}
               placeholder="Set a custom domain"
               onChange={this.handleDomain}
             />
@@ -65,86 +49,12 @@ class Domain extends Component {
           </div>
         )}
       </label>
-
-      // <article className={styles.Domain}>
-      //   <span className={styles.siteName}>
-      //     {this.props.site.domain && (
-      //       <React.Fragment>
-      //         <code>{this.props.site.domain}</code>
-      //         <i
-      //           className={
-      //             this.state.editName ? `${styles.invisible}` : 'fa fa-pencil'
-      //           }
-      //           aria-hidden="true"
-      //           onClick={this.onEditClick}
-      //         />
-      //         <i
-      //           className={
-      //             this.state.editName ? `${styles.invisible}` : 'fa fa-times'
-      //           }
-      //           aria-hidden="true"
-      //           onClick={this.handleRemove}
-      //         />
-      //       </React.Fragment>
-      //     )}
-      //   </span>
-      //   {this.state.editName ? (
-      //     <span className={styles.nameInput}>
-      //       {this.state.domainSelect === 'vanity' ? (
-      //         <React.Fragment>
-      //           <Input
-      //             type="text"
-      //             name="name"
-      //             value={this.state.name}
-      //             onChange={this.handleName}
-      //           />
-      //           <tt>.zesty.sites</tt>
-      //         </React.Fragment>
-      //       ) : (
-      //         <Input
-      //           type="text"
-      //           name="name"
-      //           value={this.state.name}
-      //           onChange={this.handleName}
-      //         />
-      //       )}
-      //       <i
-      //         className="fa fa-save"
-      //         aria-hidden="true"
-      //         onClick={this.onUpdate}
-      //       />
-      //       <i
-      //         className="fa fa-times-circle"
-      //         aria-hidden="true"
-      //         onClick={this.onEditClick}
-      //       />
-      //     </span>
-      //   ) : null}
-      //   <span className={styles.radioSelect}>
-      //     <label>Custom Domain</label>
-      //     <Input
-      //       type="radio"
-      //       name="domain"
-      //       id="custom"
-      //       onChange={this.onChange}
-      //       checked={this.state.domainSelect === 'custom'}
-      //     />
-      //     <label>Zesty.io Vanity URL</label>
-      //     <Input
-      //       type="radio"
-      //       name="domain"
-      //       id="vanity"
-      //       checked={this.state.domainSelect === 'vanity'}
-      //       onChange={this.onChange}
-      //     />
-      //   </span>
-      // </article>
     )
   }
 
   handleEdit = () => {
     this.setState({
-      domain: ''
+      editing: true
     })
   }
 
@@ -155,111 +65,33 @@ class Domain extends Component {
   }
 
   handleSave = () => {
+    this.setState({ submitted: true })
     this.props
-      .dispatch(updateDomain(this.props.siteZUID, this.state.name))
+      .dispatch(updateDomain(this.props.siteZUID, this.state.domain))
       .then(domain => {
-        this.setState({ domain })
+        console.log('Domain update success', domain)
+        this.setState({
+          domain,
+          submitted: false,
+          editing: false
+        })
+        this.props.dispatch(
+          notify({
+            message: `Your domain has been set to ${domain}`,
+            type: 'success'
+          })
+        )
+      })
+      .catch(data => {
+        this.setState({ submitted: false })
+        this.props.dispatch(
+          notify({
+            message: `There was an error changing your domain`,
+            type: 'error'
+          })
+        )
       })
   }
-
-  // onEditClick = () => {
-  //   this.setState({ editName: !this.state.editName })
-  // }
-  //
-  // onChange = evt => {
-  //   this.setState({
-  //     domainSelect: evt.target.id,
-  //     editName: !this.state.editName
-  //   })
-  // }
-  //
-  // onSelect = evt => {
-  //   evt.preventDefault()
-  // }
-  //
-  // onUpdate = () => {
-  //   this.setState({ editName: !this.state.editName })
-  //   if (this.state.domainSelect === 'vanity') {
-  //     return this.setState({ name: `${this.state.name}.zesty.sites` }, () => {
-  //       this.props
-  //         .dispatch(updateDomain(this.props.siteZUID, this.state.name))
-  //         .then(data => {
-  //           this.props.dispatch(
-  //             notify({
-  //               message: `Your domain has been changed to ${data.data.domain}`,
-  //               type: 'success'
-  //             })
-  //           )
-  //           this.props.dispatch(fetchSite(this.props.siteZUID))
-  //         })
-  //         .catch(data => {
-  //           this.props.dispatch(
-  //             notify({
-  //               message: `There was a problem changing your domain`,
-  //               type: 'error'
-  //             })
-  //           )
-  //         })
-  //     })
-  //   }
-  //   this.props
-  //     .dispatch(updateDomain(this.props.siteZUID, this.state.name))
-  //     .then(data => {
-  //       this.props.dispatch(
-  //         notify({
-  //           message: `Your domain has been changed to ${data.data.domain}`,
-  //           type: 'success'
-  //         })
-  //       )
-  //       this.props.dispatch(fetchSite(this.props.siteZUID))
-  //     })
-  //     .catch(data => {
-  //       this.props.dispatch(
-  //         notify({
-  //           message: `There was a problem changing your domain`,
-  //           type: 'error'
-  //         })
-  //       )
-  //     })
-  // }
-  //
-  // handleRemove = () => {
-  //   this.props.dispatch(
-  //     zConfirm({
-  //       prompt: `Are you sure you want to remove the ${
-  //         this.state.domainSelect
-  //       } domain?`,
-  //       callback: response => {
-  //         if (response) {
-  //           return this.props
-  //             .dispatch(updateDomain(this.props.siteZUID, null))
-  //             .then(data => {
-  //               this.props.dispatch(
-  //                 notify({
-  //                   message: `Your domain has been removed`,
-  //                   type: 'success'
-  //                 })
-  //               )
-  //               this.setState({ domainSelect: '', name: '' })
-  //               this.props.dispatch(fetchSite(this.props.siteZUID))
-  //             })
-  //             .catch(data => {
-  //               this.props.dispatch(
-  //                 notify({
-  //                   message: `There was a problem changing your domain`,
-  //                   type: 'error'
-  //                 })
-  //               )
-  //             })
-  //         }
-  //       }
-  //     })
-  //   )
-  // }
-  //
-  // handleName = evt => {
-  //   this.setState({ [evt.target.name]: evt.target.value })
-  // }
 }
 
 export default connect(state => state)(Domain)
