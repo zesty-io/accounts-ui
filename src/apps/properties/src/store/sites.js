@@ -8,12 +8,11 @@ export function sites(state = {}, action) {
       // TODO show loading state?
       return state
 
+    case 'FETCH_SITES_SUCCESS':
+      return normalizeSites(action.sites)
+
     case 'FETCH_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
-
-    case 'FETCH_SITES_SUCCESS':
-      let sites = normalizeSites(action.sites)
-      return sites
 
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
