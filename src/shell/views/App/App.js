@@ -1,6 +1,7 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Route, Switch, withRouter } from 'react-router-dom'
+import cx from 'classnames'
 
 import Login from '../Login'
 import TwoFactor from '../TwoFactor'
@@ -33,7 +34,7 @@ class App extends Component {
       <section className={styles.AppShell}>
         <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
         <AppError>
-          <section className={styles.AppMain}>
+          <section className={cx('AppMain', styles.AppMain)}>
             <WithLoader
               condition={this.props.user.email}
               message="Finding Your Account"
