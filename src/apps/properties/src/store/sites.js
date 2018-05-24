@@ -106,8 +106,6 @@ export function fetchSite(siteZUID) {
           type: 'FETCH_SITE_SUCCESS',
           site: site.data
         })
-        dispatch(fetchSites())
-        return site
       })
       .catch(err => {
         console.table(err)
