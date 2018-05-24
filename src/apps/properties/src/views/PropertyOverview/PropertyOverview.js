@@ -178,21 +178,6 @@ class PropertyOverview extends Component {
                 }}
               />
 
-            <Route
-              path="/instances/:siteZUID"
-              render={routeProps => {
-                return (
-                  <Blueprint
-                    {...routeProps}
-                    isAdmin={this.props.isAdmin}
-                    loadingBlueprint={this.state.loadingBlueprint}
-                    siteZUID={this.props.siteZUID}
-                    blueprint={this.props.blueprint}
-                    dispatch={this.props.dispatch}
-                  />
-                )
-              }}
-            />
               <Route
                 path="/instances/:siteZUID"
                 render={routeProps => {
