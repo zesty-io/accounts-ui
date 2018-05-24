@@ -109,86 +109,91 @@ class PropertyOverview extends Component {
             </Url>
           </header>
           <main className={styles.Cards}>
-            <Route
-              path="/instances/:siteZUID"
-              render={routeProps => {
-                return (
-                  <Meta
-                    {...routeProps}
-                    dispatch={this.props.dispatch}
-                    site={this.props.site}
-                  />
-                )
-              }}
-            />
-
-            <Route
-              path="/instances/:siteZUID"
-              render={routeProps => {
-                return (
-                  <Users
-                    {...routeProps}
-                    isAdmin={this.props.isAdmin}
-                    siteZUID={this.props.site.ZUID}
-                    dispatch={this.props.dispatch}
-                    users={this.props.users}
-                    siteRoles={this.props.siteRoles}
-                    loadingUsers={this.state.loadingUsers}
-                    loadingUsersPending={this.state.loadingUsersPending}
-                    loadingRoles={this.state.loadingRoles}
-                  />
-                )
-              }}
-            />
-
-            {/* Custom roles are on pause until legacy cuts over */}
-            {/* <Route
-              path="/instances/:siteZUID"
-              render={routeProps => {
-                return (
-                  <Roles
-                    {...routeProps}
-                    dispatch={this.props.dispatch}
-                    siteZUID={this.props.siteZUID}
-                    userZUID={this.props.userZUID}
-                    siteRoles={this.props.siteRoles}
-                    systemRoles={this.props.systemRoles}
-                  />
-                )
-              }}
-            /> */}
-
-            {this.props.isAdmin ? (
+            <WithLoader
+              condition={Object.keys(this.props.users).length}
+              message="Loading Instance Permissions"
+            >
               <Route
                 path="/instances/:siteZUID"
                 render={routeProps => {
                   return (
-                    <CompanyAccess
+                    <Meta
                       {...routeProps}
                       dispatch={this.props.dispatch}
-                      companies={this.props.companies}
-                      siteRoles={this.props.siteRoles}
-                      loadingTeams={this.state.loadingTeams}
+                      site={this.props.site}
                     />
                   )
                 }}
               />
-            ) : null}
 
-            <Route
-              path="/instances/:siteZUID"
-              render={routeProps => {
-                return (
-                  <Blueprint
-                    {...routeProps}
-                    isAdmin={this.props.isAdmin}
-                    loadingBlueprint={this.state.loadingBlueprint}
-                    siteZUID={this.props.siteZUID}
-                    blueprint={this.props.blueprint}
-                  />
-                )
-              }}
-            />
+              <Route
+                path="/instances/:siteZUID"
+                render={routeProps => {
+                  return (
+                    <Users
+                      {...routeProps}
+                      isAdmin={this.props.isAdmin}
+                      siteZUID={this.props.site.ZUID}
+                      dispatch={this.props.dispatch}
+                      users={this.props.users}
+                      siteRoles={this.props.siteRoles}
+                      loadingUsers={this.state.loadingUsers}
+                      loadingUsersPending={this.state.loadingUsersPending}
+                      loadingRoles={this.state.loadingRoles}
+                    />
+                  )
+                }}
+              />
+
+              {/* Custom roles are on pause until legacy cuts over */}
+              {/* <Route
+                path="/instances/:siteZUID"
+                render={routeProps => {
+                  return (
+                    <Roles
+                      {...routeProps}
+                      dispatch={this.props.dispatch}
+                      siteZUID={this.props.siteZUID}
+                      userZUID={this.props.userZUID}
+                      siteRoles={this.props.siteRoles}
+                      systemRoles={this.props.systemRoles}
+                    />
+                  )
+                }}
+              /> */}
+
+              {this.props.isAdmin ? (
+                <Route
+                  path="/instances/:siteZUID"
+                  render={routeProps => {
+                    return (
+                      <CompanyAccess
+                        {...routeProps}
+                        dispatch={this.props.dispatch}
+                        companies={this.props.companies}
+                        siteRoles={this.props.siteRoles}
+                        loadingTeams={this.state.loadingTeams}
+                      />
+                    )
+                  }}
+                />
+              ) : null}
+
+              <Route
+                path="/instances/:siteZUID"
+                render={routeProps => {
+                  return (
+                    <Blueprint
+                      {...routeProps}
+                      isAdmin={this.props.isAdmin}
+                      loadingBlueprint={this.state.loadingBlueprint}
+                      siteZUID={this.props.siteZUID}
+                      blueprint={this.props.blueprint}
+                    />
+                  )
+                }}
+              />
+            </WithLoader>
           </main>
         </article>
       </section>
@@ -250,7 +255,6 @@ export default connect((state, props) => {
     siteRoles,
     userZUID: state.user.ZUID,
     isAdmin,
-    // viewerSystemRole,
     site: state.sites[siteZUID] || {},
     users: state.sitesUsers[siteZUID] || {},
     companies: state.sitesCompanies[siteZUID] || {},

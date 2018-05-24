@@ -1,7 +1,6 @@
 import styles from './Blueprint.less'
 
 export default function Blueprint(props) {
-  console.log('Blueprint: ', props)
   return (
     <Card className={styles.Blueprint}>
       <CardHeader>
@@ -20,7 +19,7 @@ export default function Blueprint(props) {
         <WithLoader
           condition={!props.loadingBlueprint}
           message="Loading Instance Blueprint"
-          height="200px"
+          height="100px"
           width="100%"
         >
           <h2 className={styles.name}>{props.blueprint.name}</h2>

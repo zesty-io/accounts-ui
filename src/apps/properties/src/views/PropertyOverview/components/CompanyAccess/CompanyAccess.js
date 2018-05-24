@@ -58,32 +58,37 @@ export default class CompanyAccess extends Component {
                 <h3>Access</h3>
               </header>
               <main>
-                {Object.keys(this.props.companies).map(ZUID => {
-                  let company = this.props.companies[ZUID]
-                  return (
-                    <article key={ZUID}>
-                      <span>{company.name}</span>
-                      <span>{company.mainContactName}</span>
-                      <span>{company.mainContactEmail}</span>
-                      <span>
-                        <Toggle
-                          defaultChecked
-                          name={company.name}
-                          onChange={this.handleToggle}
-                        />
-                      </span>
+                <WithLoader
+                  condition={!this.props.loadingTeams}
+                  message="Loading Instance Teams"
+                  height="100px"
+                  width="100%"
+                >
+                  {Object.keys(this.props.companies).map(ZUID => {
+                    let company = this.props.companies[ZUID]
+                    return (
+                      <article key={ZUID}>
+                        <span>{company.name}</span>
+                        <span>{company.mainContactName}</span>
+                        <span>{company.mainContactEmail}</span>
+                        <span>
+                          <Toggle
+                            defaultChecked
+                            name={company.name}
+                            onChange={this.handleToggle}
+                          />
+                        </span>
+                      </article>
+                    )
+                  })}
+
+                  {!Object.keys(this.props.companies).length &&
+                  !this.props.loadingTeams ? (
+                    <article>
+                      <em>No team access added for this web property.</em>
                     </article>
-                  )
-                })}
-
-                {!Object.keys(this.props.companies).length &&
-                !this.props.loadingTeams ? (
-                  <article>
-                    <em>No team access added for this web property.</em>
-                  </article>
-                ) : null}
-
-                {this.props.loadingTeams ? <Loader /> : null}
+                  ) : null}
+                </WithLoader>
               </main>
             </div>
           </div>
