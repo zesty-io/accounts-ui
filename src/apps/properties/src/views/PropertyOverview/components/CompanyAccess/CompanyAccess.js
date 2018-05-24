@@ -29,7 +29,7 @@ export default class CompanyAccess extends Component {
         </CardHeader>
         <CardContent>
           <div className={styles.companyAccess}>
-            {this.props.isAdmin.break() ? (
+            {this.props.isAdmin ? (
               <React.Fragment>
                 <p>
                   By providing a team access you can allow an external group of
