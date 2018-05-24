@@ -188,6 +188,7 @@ class PropertyOverview extends Component {
                       loadingBlueprint={this.state.loadingBlueprint}
                       siteZUID={this.props.siteZUID}
                       blueprint={this.props.blueprint}
+                      dispatch={this.props.dispatch}
                     />
                   )
                 }}
