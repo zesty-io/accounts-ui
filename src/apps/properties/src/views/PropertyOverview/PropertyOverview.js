@@ -162,22 +162,21 @@ class PropertyOverview extends Component {
                 }}
               /> */}
 
-              {this.props.isAdmin ? (
-                <Route
-                  path="/instances/:siteZUID"
-                  render={routeProps => {
-                    return (
-                      <CompanyAccess
-                        {...routeProps}
-                        dispatch={this.props.dispatch}
-                        companies={this.props.companies}
-                        siteRoles={this.props.siteRoles}
-                        loadingTeams={this.state.loadingTeams}
-                      />
-                    )
-                  }}
-                />
-              ) : null}
+              <Route
+                path="/instances/:siteZUID"
+                render={routeProps => {
+                  return (
+                    <CompanyAccess
+                      {...routeProps}
+                      isAdmin={this.props.isAdmin}
+                      dispatch={this.props.dispatch}
+                      companies={this.props.companies}
+                      siteRoles={this.props.siteRoles}
+                      loadingTeams={this.state.loadingTeams}
+                    />
+                  )
+                }}
+              />
 
               <Route
                 path="/instances/:siteZUID"

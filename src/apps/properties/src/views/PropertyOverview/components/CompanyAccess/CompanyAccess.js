@@ -29,27 +29,35 @@ export default class CompanyAccess extends Component {
         </CardHeader>
         <CardContent>
           <div className={styles.companyAccess}>
-            <p>
-              By providing a team access you can allow an external group of
-              users access to manage your instance. For example; this is can be
-              used to provide an agency with access to manage your website.
-            </p>
-            <div className={styles.addCompany}>
-              <Input placeholder="Enter team ID" onChange={this.handleTream} />
-              <Select onSelect={this.handleRole}>
-                <Option key="default" value="" text="Select Role" />
-                {this.props.siteRoles.map(role => {
-                  return (
-                    <Option
-                      key={role.ZUID}
-                      value={role.ZUID}
-                      text={role.name}
-                    />
-                  )
-                })}
-              </Select>
-              <Button name="companyAccessSubmit">Grant Access</Button>
-            </div>
+            {this.props.isAdmin.break() ? (
+              <React.Fragment>
+                <p>
+                  By providing a team access you can allow an external group of
+                  users access to manage your instance. For example; this is can
+                  be used to provide an agency with access to manage your
+                  website.
+                </p>
+                <div className={styles.addCompany}>
+                  <Input
+                    placeholder="Enter team ID"
+                    onChange={this.handleTream}
+                  />
+                  <Select onSelect={this.handleRole}>
+                    <Option key="default" value="" text="Select Role" />
+                    {this.props.siteRoles.map(role => {
+                      return (
+                        <Option
+                          key={role.ZUID}
+                          value={role.ZUID}
+                          text={role.name}
+                        />
+                      )
+                    })}
+                  </Select>
+                  <Button name="companyAccessSubmit">Grant Access</Button>
+                </div>
+              </React.Fragment>
+            ) : null}
             <div className={styles.companyTable}>
               <header>
                 <h3>Team</h3>
@@ -85,7 +93,7 @@ export default class CompanyAccess extends Component {
                   {!Object.keys(this.props.companies).length &&
                   !this.props.loadingTeams ? (
                     <article>
-                      <em>No team access added for this web property.</em>
+                      <em>No team access added for this instance.</em>
                     </article>
                   ) : null}
                 </WithLoader>
