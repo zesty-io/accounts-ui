@@ -183,21 +183,35 @@ export const updateSiteUserRole = (
       )
     }
 
-    return (
-      request(
-        `${
-          CONFIG.LEGACY_ACCOUNTS
-        }/+/actions/manage-permissions/site/set-role-for-user`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-          },
-          body: `website_hash_id=${instanceID}&user_id=${userID}&new_role_id=${newRoleID(
-            newRole
-          )}`
-        }
-      )
+    return request(
+      `${
+        CONFIG.LEGACY_ACCOUNTS
+      }/+/actions/manage-permissions/site/set-role-for-user`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `website_hash_id=${instanceID}&user_id=${userID}&new_role_id=${newRoleID(
+          newRole
+        )}`
+      }
+    )
+      .then(data => {
+        console.log(data)
+        dispatch({
+          type: 'UPDATE_USER_ROLE',
+          userZUID,
+          siteZUID,
+          role: newRole
+        })
+        return data
+      })
+      .catch(err => {
+        console.log(err)
+        return err
+      })
+
         // temporarily use the old API so that roles apply across all apps
         //
         // return request(
@@ -210,19 +224,5 @@ export const updateSiteUserRole = (
         //     }
         //   }
         // )
-        .then(data => {
-          dispatch({
-            type: 'UPDATE_USER_ROLE',
-            userZUID,
-            siteZUID,
-            role: newRole
-          })
-          return data
-        })
-        .catch(err => {
-          console.log(err)
-          return er
-        })
-    )
   }
 }

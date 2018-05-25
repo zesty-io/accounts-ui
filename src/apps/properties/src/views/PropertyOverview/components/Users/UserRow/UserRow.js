@@ -6,6 +6,7 @@ import {
   removeSiteUser
 } from '../../../../../store/sitesUsers'
 import { removeUser } from '../../../../../store/sites'
+import { fetchSiteUsers } from '../../../../../store/sitesUsers'
 
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
@@ -33,8 +34,7 @@ export default class UserRow extends Component {
                       .map(item => {
                         return { value: item.ZUID, text: item.name }
                       })[0]
-                  }
-                >
+                  }>
                   {this.props.siteRoles.map(role => {
                     return (
                       <Option
@@ -124,8 +124,10 @@ export default class UserRow extends Component {
             type: 'success'
           })
         )
+        this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
       })
       .catch(err => {
+        console.log(err)
         this.props.dispatch(
           notify({
             message: 'There was a problem updating the role',
