@@ -143,6 +143,9 @@ export const updateSiteUserRole = (
 
     // this will not work for custom roles
 
+    // make a call to get the form so i can attrach the XCRF header to the request
+    // http://accounts.zesty.localdev:3002/+/leaves/account-details-tabs/access?account_id=f49f89b3&account_id=f49f89b3&tab=access
+
     const newRole = getState().sitesRoles[siteZUID][newRoleZUID].name
     const instanceID = getState().sites[siteZUID].randomHashID
     const userID = getState().sitesUsers[siteZUID][userZUID].ID
