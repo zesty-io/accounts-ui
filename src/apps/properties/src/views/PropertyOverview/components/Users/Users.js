@@ -71,13 +71,17 @@ export default class Users extends Component {
                 <h3>Role</h3>
               </header>
               <main>
-                {this.props.loadingUsers || this.props.loadingUsersPending ? (
-                  <Loader />
-                ) : (
+                <WithLoader
+                  condition={
+                    !this.props.loadingUsers && !this.props.loadingUsersPending
+                  }
+                  message="Loading Instance Users"
+                  height="100px"
+                  width="100%"
+                >
                   <div>
                     {Object.keys(this.props.users).map(ZUID => {
                       const user = this.props.users[ZUID]
-
                       if (user.pending) {
                         return (
                           <UserPendingRow
@@ -103,7 +107,7 @@ export default class Users extends Component {
                       }
                     })}
                   </div>
-                )}
+                </WithLoader>
               </main>
             </div>
           </div>

@@ -1,41 +1,66 @@
+import { PureComponent } from 'react'
 import styles from './Blueprint.less'
 
-export default function Blueprint(props) {
-  return (
-    <React.Fragment>
-      {!props.loadingBlueprint ? (
-        <Card className={styles.Blueprint}>
-          <CardHeader>
-            <h2>
-              <i className="fa fa-file-code-o" aria-hidden="true" />
-              &nbsp;Blueprint
-            </h2>
-            {props.isAdmin ? (
-              <AppLink type="cancel" to={`${props.match.url}/blueprint`}>
-                <i className="fa fa-file-code-o" aria-hidden="true" />
-                &nbsp;Change Blueprint
-              </AppLink>
-            ) : null}
-          </CardHeader>
-          <CardContent>
-            <h2 className={styles.name}>{props.blueprint.name}</h2>
-            <img src={props.blueprint.coverImage} alt="" />
-            <p>{props.blueprint.description}</p>
+import { zConfirm } from '../../../../../../../shell/store/confirm'
 
-            {props.blueprint.githubURL ? (
-              <Url href={props.blueprint.githubURL} target="_blank">
-                <i className="fa fa-github" aria-hidden="true" />
-                View On Github
-              </Url>
-            ) : null}
-          </CardContent>
-        </Card>
-      ) : (
-        <Loader />
-      )}
-    </React.Fragment>
-  )
-  const handleChangeBlueprint = evt => {
-    console.log(evt)
+export default class Blueprint extends PureComponent {
+  render() {
+    return (
+      <React.Fragment>
+        {!this.props.loadingBlueprint ? (
+          <Card className={styles.Blueprint}>
+            <CardHeader>
+              <h2>
+                <i className="fa fa-file-code-o" aria-hidden="true" />
+                &nbsp;Blueprint
+              </h2>
+              {this.props.isAdmin ? (
+                <Button
+                  className={styles.Button}
+                  type="cancel"
+                  onClick={this.handleChangeBlueprint}
+                >
+                  <i className="fa fa-file-code-o" aria-hidden="true" />
+                  &nbsp;Change Blueprint
+                </Button>
+              ) : null}
+            </CardHeader>
+            <CardContent>
+              <h2 className={styles.name}>{this.props.blueprint.name}</h2>
+              {this.props.blueprint.coverImage ? (
+                <img src={this.props.blueprint.coverImage} alt="" />
+              ) : this.props.blueprint.mainImage ? (
+                <img src={this.props.blueprint.mainImage} alt="" />
+              ) : (
+                <p>No cover image set for this blueprint</p>
+              )}
+              <p>{this.props.blueprint.description}</p>
+
+              {this.props.blueprint.githubURL ? (
+                <Url href={this.props.blueprint.githubURL} target="_blank">
+                  <i className="fa fa-github" aria-hidden="true" />
+                  View On Github
+                </Url>
+              ) : null}
+            </CardContent>
+          </Card>
+        ) : (
+          <Loader />
+        )}
+      </React.Fragment>
+    )
+  }
+  handleChangeBlueprint = evt => {
+    evt.preventDefault()
+    this.props.dispatch(
+      zConfirm({
+        prompt: 'Are you sure you want to change the blueprint?',
+        callback: response => {
+          if (response) {
+            this.props.history.push(`${this.props.match.url}/blueprint`)
+          }
+        }
+      })
+    )
   }
 }

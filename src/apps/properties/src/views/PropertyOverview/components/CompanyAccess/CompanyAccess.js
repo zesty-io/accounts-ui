@@ -24,67 +24,79 @@ export default class CompanyAccess extends Component {
         <CardHeader>
           <h2>
             <i className="fa fa-building" aria-hidden="true" />
-            &nbsp;Company Access
+            &nbsp;Team Access
           </h2>
         </CardHeader>
         <CardContent>
           <div className={styles.companyAccess}>
-            <p>
-              By providing a team access you can allow an external group of
-              users access to manage your web property. For example; this is can
-              be used to provide an agency with access to manage your web
-              property.
-            </p>
-            <div className={styles.addCompany}>
-              <Input placeholder="Enter team ID" onChange={this.handleTream} />
-              <Select onSelect={this.handleRole}>
-                <Option key="default" value="" text="Select Role" />
-                {this.props.siteRoles.map(role => {
-                  return (
-                    <Option
-                      key={role.ZUID}
-                      value={role.ZUID}
-                      text={role.name}
-                    />
-                  )
-                })}
-              </Select>
-              <Button name="companyAccessSubmit">Grant Access</Button>
-            </div>
+            {this.props.isAdmin ? (
+              <React.Fragment>
+                <p>
+                  By providing a team access you can allow an external group of
+                  users access to manage your instance. For example; this is can
+                  be used to provide an agency with access to manage your
+                  website.
+                </p>
+                <div className={styles.addCompany}>
+                  <Input
+                    placeholder="Enter team ID"
+                    onChange={this.handleTream}
+                  />
+                  <Select onSelect={this.handleRole}>
+                    <Option key="default" value="" text="Select Role" />
+                    {this.props.siteRoles.map(role => {
+                      return (
+                        <Option
+                          key={role.ZUID}
+                          value={role.ZUID}
+                          text={role.name}
+                        />
+                      )
+                    })}
+                  </Select>
+                  <Button name="companyAccessSubmit">Grant Access</Button>
+                </div>
+              </React.Fragment>
+            ) : null}
             <div className={styles.companyTable}>
               <header>
-                <h3>Company</h3>
+                <h3>Team</h3>
                 <h3>Contact</h3>
                 <h3>Email</h3>
                 <h3>Access</h3>
               </header>
               <main>
-                {Object.keys(this.props.companies).map(ZUID => {
-                  let company = this.props.companies[ZUID]
-                  return (
-                    <article key={ZUID}>
-                      <span>{company.name}</span>
-                      <span>{company.mainContactName}</span>
-                      <span>{company.mainContactEmail}</span>
-                      <span>
-                        <Toggle
-                          defaultChecked
-                          name={company.name}
-                          onChange={this.handleToggle}
-                        />
-                      </span>
+                <WithLoader
+                  condition={!this.props.loadingTeams}
+                  message="Loading Instance Teams"
+                  height="100px"
+                  width="100%"
+                >
+                  {Object.keys(this.props.companies).map(ZUID => {
+                    let company = this.props.companies[ZUID]
+                    return (
+                      <article key={ZUID}>
+                        <span>{company.name}</span>
+                        <span>{company.mainContactName}</span>
+                        <span>{company.mainContactEmail}</span>
+                        <span>
+                          <Toggle
+                            defaultChecked
+                            name={company.name}
+                            onChange={this.handleToggle}
+                          />
+                        </span>
+                      </article>
+                    )
+                  })}
+
+                  {!Object.keys(this.props.companies).length &&
+                  !this.props.loadingTeams ? (
+                    <article>
+                      <em>No team access added for this instance.</em>
                     </article>
-                  )
-                })}
-
-                {!Object.keys(this.props.companies).length &&
-                !this.props.loadingTeams ? (
-                  <article>
-                    <em>No team access added for this web property.</em>
-                  </article>
-                ) : null}
-
-                {this.props.loadingTeams ? <Loader /> : null}
+                  ) : null}
+                </WithLoader>
               </main>
             </div>
           </div>

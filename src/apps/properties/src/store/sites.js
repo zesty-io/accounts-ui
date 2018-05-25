@@ -1,6 +1,4 @@
 import { request } from '../../../../util/request'
-
-
 import { normalizeSites } from '../store'
 import { notify } from '../../../../shell/store/notifications'
 
@@ -10,48 +8,15 @@ export function sites(state = {}, action) {
       // TODO show loading state?
       return state
 
+    case 'FETCH_SITES_SUCCESS':
+      return normalizeSites(action.sites)
+
     case 'FETCH_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
-    case 'FETCH_SITE_FAILURE':
-      return state
-
-    case 'FETCH_SITES_SUCCESS_NOSITES':
-      return null
-
-    case 'FETCH_SITES_SUCCESS':
-      let sites = normalizeSites(action.sites)
-      return sites
-
-    case 'FETCH_SITES_ERROR':
-      // TODO show global growl of error
-      // leave state as is
-      return state
-
-    case 'UPDATING_SITE':
-      return state
-    case 'UPDATE_SITE _SUCCESS':
-      return state
-    case 'UPDATE_SITE_FAILURE':
-      return state
-    case 'SENDING_INVITE':
-      return state
-    case 'SEND_INVITE_ERROR':
-      return state
-    case 'SEND_INVITE_SUCCESS':
-      return state
-    case 'CREATING_SITE':
-      return state
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
-    case 'CREATE_SITE_ERROR':
-      return state
-    case 'REMOVE_USER':
-      return state
-    case 'REMOVE_USER_ERROR':
-      return state
-    case 'REMOVE_USER_SUCCESS':
-      return state
+
     default:
       return state
   }
@@ -65,13 +30,6 @@ export function fetchSites() {
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances?getInvited=true`)
       .then(sites => {
-        if (!sites.data.length) {
-          dispatch({
-            type: 'FETCH_SITES_SUCCESS_NOSITES'
-          })
-          return sites
-        }
-
         sites.data.sort((prev, next) => {
           if (prev.name < next.name) {
             return -1
@@ -81,12 +39,11 @@ export function fetchSites() {
           }
           return 0
         })
-        
+
         dispatch({
           type: 'FETCH_SITES_SUCCESS',
           sites: sites.data
         })
-        return sites
       })
       .catch(err => {
         console.table(err)
@@ -115,8 +72,6 @@ export function fetchSite(siteZUID) {
           type: 'FETCH_SITE_SUCCESS',
           site: site.data
         })
-        dispatch(fetchSites())
-        return site
       })
       .catch(err => {
         console.table(err)
