@@ -169,25 +169,35 @@ export const updateSiteUserRole = (
       }
     }
     if (newRole === 'Owner') {
-      return request(`${CONFIG.LEGACY_ACCOUNTS}/+/actions/manage-permissions/site/transfer-ownership`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        },
-        body: `website_hash_id=${instanceID}&user_id=${userID}`
-      })
+      return request(
+        `${
+          CONFIG.LEGACY_ACCOUNTS
+        }/+/actions/manage-permissions/site/transfer-ownership`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          },
+          body: `website_hash_id=${instanceID}&user_id=${userID}`
+        }
+      )
     }
 
     return (
-      request(`${CONFIG.LEGACY_ACCOUNTS}/+/actions/manage-permissions/site/set-role-for-user`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        },
-        body: `website_hash_id=${instanceID}&user_id=${userID}&new_role_id=${newRoleID(
-          newRole
-        )}`
-      })
+      request(
+        `${
+          CONFIG.LEGACY_ACCOUNTS
+        }/+/actions/manage-permissions/site/set-role-for-user`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+          },
+          body: `website_hash_id=${instanceID}&user_id=${userID}&new_role_id=${newRoleID(
+            newRole
+          )}`
+        }
+      )
         // temporarily use the old API so that roles apply across all apps
         //
         // return request(
