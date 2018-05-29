@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { fetchBlueprints, updateBlueprint } from '../../../../properties/src/store/blueprints'
+import { notify } from '../../../../../shell/store/notifications'
+import {
+  fetchBlueprints,
+  updateBlueprint
+} from '../../../../properties/src/store/blueprints'
 
 import styles from './EditBlueprint.less'
 
@@ -18,19 +22,7 @@ class EditBlueprint extends Component {
       this.props.history.push('/settings/account')
     }
   }
-  handleSubmit = evt => {
-    evt.preventDefault()
-    console.log('state in blueprint edit', this.state)
-    this.props.dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
-  }
-  onChange = evt => {
-    return this.setState({
-      blueprint: {
-        ...this.state.blueprint,
-        [evt.target.name]: evt.target.value
-      }
-    })
-  }
+
   render() {
     return this.state.blueprint ? (
       <form id="edit-form" onSubmit={this.handleSubmit}>
@@ -111,15 +103,43 @@ class EditBlueprint extends Component {
           <Button
             className={styles.bottom4}
             type="cancel"
-            text="Cancel"
+            text="Done"
             onClick={() => this.props.history.push('/settings/account')}
-          >
-          </Button>
+          />
         </div>
       </form>
     ) : (
       <Loader />
     )
+  }
+  handleSubmit = evt => {
+    evt.preventDefault()
+    this.props
+      .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            type: 'success',
+            message: 'successfully saved changes'
+          })
+        )
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: 'something went wrong saving your changes'
+          })
+        )
+      })
+  }
+  onChange = evt => {
+    return this.setState({
+      blueprint: {
+        ...this.state.blueprint,
+        [evt.target.name]: evt.target.value
+      }
+    })
   }
 }
 
@@ -127,7 +147,10 @@ const mapStateToProps = (state, ownProps) => {
   return {
     blueprint: Object.keys(state.blueprints)
       .map(i => {
-        if (parseInt(state.blueprints[i].ID, 10) === parseInt(ownProps.match.params.id, 10)) {
+        if (
+          parseInt(state.blueprints[i].ID, 10) ===
+          parseInt(ownProps.match.params.id, 10)
+        ) {
           return state.blueprints[i]
         }
       })

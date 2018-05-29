@@ -95,7 +95,7 @@ export function postNewBlueprint(name) {
     return request(`${CONFIG.API_ACCOUNTS}/blueprints`, {
       method: 'POST',
       json: true,
-      body: { name }
+      body
     })
       .then(data => {
         dispatch({
