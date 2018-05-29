@@ -18,7 +18,7 @@ class Login extends Component {
   }
   componentDidMount() {
     const invite = qs.parse(window.location.search.substr(1))
-    if (invite) {
+    if (invite.invited) {
       this.props.dispatch({
         type: 'USER_INVITED',
         invite: {

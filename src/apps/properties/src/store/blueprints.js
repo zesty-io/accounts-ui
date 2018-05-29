@@ -95,7 +95,7 @@ export function postNewBlueprint(name) {
     return request(`${CONFIG.API_ACCOUNTS}/blueprints`, {
       method: 'POST',
       json: true,
-      body: { name }
+      body
     })
       .then(data => {
         dispatch({
@@ -108,6 +108,36 @@ export function postNewBlueprint(name) {
         console.table(err)
         dispatch({
           type: 'CREATE_BLUEPRINT_ERROR',
+          err
+        })
+        throw err
+      })
+  }
+}
+
+export function updateBlueprint(ID, body) {
+  return dispatch => {
+    dispatch({
+      type: 'UPDATING_BLUEPRINT',
+      ID,
+      body
+    })
+    return request(`${CONFIG.API_ACCOUNTS}/blueprints/${ID}`, {
+      method: 'PUT',
+      json: true,
+      body
+    })
+      .then(data => {
+        dispatch({
+          type: 'UPDATE_BLUEPRINT_SUCCESS',
+          blueprint: data.data
+        })
+        return data.data
+      })
+      .catch(err => {
+        console.table(err)
+        dispatch({
+          type: 'UPDATE_BLUEPRINT_ERROR',
           err
         })
         throw err
