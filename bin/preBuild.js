@@ -23,8 +23,8 @@ if (env === 'production') {
     COOKIE_NAME: 'APP_SID',
     EMAIL_SERVICE: 'https://email.zesty.io/send',
     COOKIE_DOMAIN: '.zesty.io',
-    ROLES_ENDPOINT: 'https://accounts.zesty.io/+/actions/manage-permissions/site/set-role-for-user',
-    MAKE_OWNER: 'https://accounts.zesty.io/+/actions/manage-permissions/site/transfer-ownership'
+    LEGACY_ACCOUNTS: 'http://accounts.zesty.io'
+
   }`
 } else if (env === 'stage') {
   throw new Error(
