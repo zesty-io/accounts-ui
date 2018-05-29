@@ -8,7 +8,6 @@ export class Select extends React.Component {
       dropdownOpen: false,
       selection: props.selection || props.children[0].props || {},
       filter: ''
-      // children: this.flattenChildren(props.children)
     }
   }
   getDerivedStateFromProps(nextProps, prevState) {
@@ -120,12 +119,12 @@ export class Select extends React.Component {
       return false
     }
 
-    const body = document.querySelector('#bodySection')
-    const content = document.querySelector('#contentView')
+    const body = document.querySelector('.AppMain')
+    const content = document.querySelector('.AppMain')
 
     if (body && content) {
-      const contentHeight = content.getHeight()
-      const selectorPosition = this.selector.getPosition()
+      const contentHeight = content.scrollHeight
+      const selectorPosition = this.selector.getBoundingClientRect()
       const filter = this.selector.querySelector('.filter')
       const selections = this.selector.querySelector('.selections')
       const initialSelectionsHeight = selections.offsetHeight
@@ -172,24 +171,9 @@ export class Select extends React.Component {
   }
 
   handleFilterKeyUp = evt => {
-    this.setState({ filter: evt.target.value.trim().toLowerCase() })
-    // let value = evt.target.value.trim().toLowerCase()
-
-    // if (value) {
-    //   this.setState({
-    //     children: this.state.children.filter(child => {
-    //       return (
-    //         child.props.html.toLowerCase().indexOf(value) !== -1 ||
-    //         child.props.text.toLowerCase().indexOf(value) !== -1
-    //       )
-    //     })
-    //   })
-    // } else {
-    //   // Reset select to default options
-    //   this.setState({
-    //     children: this.flattenChildren(this.props.children)
-    //   })
-    // }
+    this.setState({
+      filter: evt.target.value.trim().toLowerCase()
+    })
   }
 
   /*

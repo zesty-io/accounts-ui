@@ -26,7 +26,10 @@ class Blueprints extends Component {
           </AppLink>
         </header>
         <main className={styles.BlueprintList}>
-          <WithLoader condition={this.props.blueprints.length}>
+          <WithLoader
+            condition={this.props.blueprints.length}
+            message="Loading Your Custom Blueprints"
+          >
             {this.props.blueprints.map(blueprint => {
               return (
                 <Card key={blueprint.ZUID}>
@@ -43,12 +46,16 @@ class Blueprints extends Component {
                       />
                     ) : (
                       <div className={styles.noimage} aria-hidden="true">
-                        <i className="fa fa-pied-piper" aria-hidden="true" />
+                        <i className="fa fa-file-code-o" aria-hidden="true" />
                       </div>
                     )}
                     <p>{blueprint.shortDescription}</p>
                   </CardContent>
-                  <CardFooter>
+                  <CardFooter className={styles.BlueprintAction}>
+                    <Url href={blueprint.githubURL} target="_blank">
+                      <i className="fa fa-github" aria-hidden="true" />
+                      View On Github
+                    </Url>
                     <AppLink to={`/settings/blueprints/${blueprint.ID}`}>
                       <i className="fa fa-pencil-square-o" aria-hidden="true" />&nbsp;Edit
                     </AppLink>

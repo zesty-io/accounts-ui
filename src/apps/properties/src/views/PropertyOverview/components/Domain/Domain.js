@@ -67,7 +67,9 @@ class Domain extends Component {
   handleSave = () => {
     this.setState({ submitted: true })
     this.props
-      .dispatch(updateDomain(this.props.siteZUID, this.state.domain))
+      .dispatch(
+        updateDomain(this.props.siteZUID, this.state.domain.toLowerCase())
+      )
       .then(domain => {
         console.log('Domain update success', domain)
         this.setState({
