@@ -52,7 +52,7 @@ class PropertyCreate extends Component {
     if (this.state.name === '') {
       return this.props.dispatch(
         notify({
-          message: 'you must enter a name for you instance',
+          message: 'You must enter a name for your instance',
           type: 'error'
         })
       )
