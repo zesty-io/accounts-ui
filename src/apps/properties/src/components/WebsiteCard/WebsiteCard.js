@@ -72,7 +72,7 @@ const WebsiteCard = props => {
             }`}
           >
             Instance Manager&nbsp;<i
-              className="fa fa-arrow-circle-right"
+              className="fa fa-external-link-square"
               aria-hidden="true"
             />
           </Url>
