@@ -32,23 +32,21 @@ class PropertiesHeader extends Component {
           ) : null}
 
           <ButtonGroup>
-            <Button>
-              <i
-                className={`fa fa-calendar-o`}
-                onClick={() => {
-                  this.sort('createdAt')
-                  this.setState({ sort: 'date' })
-                }}
-              />
+            <Button
+              disabled={this.state.sort === 'date'}
+              onClick={() => {
+                this.setState({ sort: 'date' })
+                return this.sort('createdAt')
+              }}>
+              <i className={`fa fa-calendar-o`} />
             </Button>
-            <Button>
-              <i
-                className={`fa fa-sort-alpha-asc`}
-                onClick={() => {
-                  this.sort('name')
-                  this.setState({ sort: 'name' })
-                }}
-              />
+            <Button
+              disabled={this.state.sort === 'name'}
+              onClick={() => {
+                this.setState({ sort: 'name' })
+                return this.sort('name')
+              }}>
+              <i className={`fa fa-sort-alpha-asc`} />
             </Button>
           </ButtonGroup>
 
