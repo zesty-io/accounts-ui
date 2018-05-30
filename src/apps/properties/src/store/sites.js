@@ -22,7 +22,7 @@ export function sites(state = {}, action) {
   }
 }
 
-export function fetchSites(userZUID) {
+export function fetchSites() {
   // may need to update for invite parameter here
   return dispatch => {
     dispatch({
