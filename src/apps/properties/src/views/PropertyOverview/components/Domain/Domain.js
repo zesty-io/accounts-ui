@@ -28,7 +28,7 @@ class Domain extends Component {
       <label className={styles.Domain}>
         Domain:&nbsp;
         {this.state.submitted ? (
-          <span>Saving&elipse;</span>
+          <span>Saving&hellip;</span>
         ) : this.props.site.domain && !this.state.editing ? (
           <span className={styles.Name} onClick={this.handleEdit}>
             http://{this.state.domain}
