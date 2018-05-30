@@ -12,10 +12,10 @@ const WebsiteCard = props => {
       <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
       </CardHeader>
-      {site.screenshotUrl ? (
+      {site.screenshotURL ? (
         <CardContent
           className={cx(styles.CardContent, styles.cover)}
-          style={{ backgroundImage: `url(${site.screenshotUrl})` }}
+          style={{ backgroundImage: `url(${site.screenshotURL})` }}
         />
       ) : (
         <CardContent className={cx(styles.CardContent, styles.Offline)}>
