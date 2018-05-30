@@ -28,11 +28,7 @@ export function fetchSites(userZUID) {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances`, {
-      headers: {
-        'User-Zuid': userZUID
-      }
-    })
+    return request(`${CONFIG.API_ACCOUNTS}/instances`)
       .then(sites => {
         sites.data.sort((prev, next) => {
           if (prev.name < next.name) {
