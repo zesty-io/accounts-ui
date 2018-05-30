@@ -28,7 +28,7 @@ export function fetchSites() {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances?getInvited=true`)
       .then(sites => {
         sites.data.sort((prev, next) => {
           if (prev.name < next.name) {
@@ -49,7 +49,7 @@ export function fetchSites() {
         console.table(err)
         dispatch(
           notify({
-            message: 'There was a problem fetching sites',
+            message: 'There was a problem fetching your instances',
             type: 'error'
           })
         )
