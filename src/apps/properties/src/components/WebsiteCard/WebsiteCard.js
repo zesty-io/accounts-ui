@@ -46,7 +46,8 @@ const WebsiteCard = props => {
             title={`Preview instance: ${site.name}`}
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.PREVIEW_URL
-            }`}>
+            }`}
+          >
             <i className={'fa fa-eye'} aria-hidden="true" />
           </Url>
 
@@ -54,7 +55,8 @@ const WebsiteCard = props => {
             <Url
               href={`http://${site.domain}`}
               target="_blank"
-              title="View live domain">
+              title="View live domain"
+            >
               <i className="fa fa-globe" aria-hidden="true" />
             </Url>
           ) : (
@@ -67,9 +69,12 @@ const WebsiteCard = props => {
             title="Load instance manager"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.MANAGER_URL
-            }`}>
-            <i className="fa fa-external-link" aria-hidden="true" />&nbsp;
-            Manager App
+            }`}
+          >
+            Instance Manager&nbsp;<i
+              className="fa fa-arrow-circle-right"
+              aria-hidden="true"
+            />
           </Url>
         </ButtonGroup>
       </CardFooter>
