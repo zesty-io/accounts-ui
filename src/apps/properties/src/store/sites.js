@@ -22,13 +22,17 @@ export function sites(state = {}, action) {
   }
 }
 
-export function fetchSites() {
+export function fetchSites(userZUID) {
   // may need to update for invite parameter here
   return dispatch => {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances?getInvited=true`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances`, {
+      headers: {
+        'User-Zuid': userZUID
+      }
+    })
       .then(sites => {
         sites.data.sort((prev, next) => {
           if (prev.name < next.name) {

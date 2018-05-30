@@ -19,30 +19,64 @@ export const sortSites = (sortBy, reverse) => {
   return (dispatch, getState) => {
     const sitesObj = getState().sitesFiltered
     let sites = Object.keys(sitesObj).map(site => sitesObj[site])
-    if (reverse) {
-      sites.sort((prev, next) => {
-        if (prev[sortBy] < next[sortBy]) {
-          return 1
-        }
-        if (prev[sortBy] > next[sortBy]) {
-          return -1
-        }
-        return 0
-      })
-      return dispatch({
-        type: 'FILTER_PROPERTIES',
-        filtered: sites
-      })
+    if (sortBy !== 'name') {
+      if (reverse) {
+        sites.sort((prev, next) => {
+          if (prev[sortBy] < next[sortBy]) {
+            return 1
+          }
+          if (prev[sortBy] > next[sortBy]) {
+            return -1
+          }
+          return 0
+        })
+        return dispatch({
+          type: 'FILTER_PROPERTIES',
+          filtered: sites
+        })
+      } else {
+        sites.sort((prev, next) => {
+          if (prev[sortBy] < next[sortBy]) {
+            return -1
+          }
+          if (prev[sortBy] > next[sortBy]) {
+            return 1
+          }
+          return 0
+        })
+      }
     }
-    sites.sort((prev, next) => {
-      if (prev[sortBy] < next[sortBy]) {
-        return -1
+    if (sortBy === 'createdAt') {
+      if (reverse) {
+        sites.sort((prev, next) => {
+          const prevDate = Date.parse(prev[sortBy])
+          const nextDate = Date.parse(next[sortBy])
+          if (prevDate < nextDate) {
+            return 1
+          }
+          if (prevDate > nextDate) {
+            return -1
+          }
+          return 0
+        })
+        return dispatch({
+          type: 'FILTER_PROPERTIES',
+          filtered: sites
+        })
+      } else {
+        sites.sort((prev, next) => {
+          const prevDate = Date.parse(prev[sortBy])
+          const nextDate = Date.parse(next[sortBy])
+          if (prevDate < nextDate) {
+            return -1
+          }
+          if (prevDate > nextDate) {
+            return 1
+          }
+          return 0
+        })
       }
-      if (prev[sortBy] > next[sortBy]) {
-        return 1
-      }
-      return 0
-    })
+    }
     return dispatch({
       type: 'FILTER_PROPERTIES',
       filtered: sites

@@ -7,7 +7,8 @@ import { filter, filterEcosystem, sortSites } from '../../store/sitesFiltered'
 
 class PropertiesHeader extends Component {
   state = {
-    eco: false
+    eco: false,
+    sortBy: 'name'
   }
   render() {
     return (
@@ -29,17 +30,24 @@ class PropertiesHeader extends Component {
               </Select>
             )
           ) : null}
+          <i
+            className={`fa fa-sort-${
+              this.state.sortBy === 'name' ? 'amount-desc' : 'amount-asc'
+            } fa-3x`}
+            onClick={this.sort}
+          />
+
           <Search
             className={styles.Search}
             placeholder="Search by instance name or domain"
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
+
           <Button
             type="save"
             className={styles.Create}
-            onClick={this.onCreateSite}
-          >
+            onClick={this.onCreateSite}>
             <i className="fa fa-plus" />Create Instance
           </Button>
         </div>
@@ -56,6 +64,7 @@ class PropertiesHeader extends Component {
   }
 
   onCreateSite = evt => {
+    evt.preventDefault()
     this.props.history.push('/instances/create')
   }
 
@@ -69,7 +78,17 @@ class PropertiesHeader extends Component {
   }
 
   sort = evt => {
-    this.props.dispatch(sortSites('createdAt', true))
+    evt.preventDefault()
+    if (this.state.sortBy === 'createdAt') {
+      this.setState({ sortBy: 'name' }, () => {
+        this.props.dispatch(sortSites(this.state.sortBy, true))
+      })
+    }
+    if (this.state.sortBy === 'name') {
+      this.setState({ sortBy: 'createdAt' }, () => {
+        this.props.dispatch(sortSites(this.state.sortBy, false))
+      })
+    }
   }
 }
 

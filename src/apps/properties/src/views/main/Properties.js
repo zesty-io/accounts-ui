@@ -18,8 +18,8 @@ class Properties extends Component {
       loadingSites: true
     }
   }
-  componentWillMount() {
-    this.props.dispatch(fetchSites()).then(() => {
+  componentDidMount() {
+    this.props.dispatch(fetchSites(this.props.user.ZUID)).then(() => {
       this.setState({ loadingSites: false })
     })
     this.props.dispatch(fetchSystemRoles())
