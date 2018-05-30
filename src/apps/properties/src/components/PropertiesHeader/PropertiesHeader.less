@@ -1,14 +1,18 @@
 @import url('../../../../../shell/styles/colors.less');
 
 .PropertiesHeader {
+  background: @zesty-white;
+  padding: 1rem 0 0.5rem;
+  position: sticky;
+  top: 0;
+
   .Actions {
     display: flex;
     margin: 3px 0 0;
     .Ecosystem {
-      // margin-right: 1rem;
-      line-height: 3.2rem;
-      font-size: 1.3rem;
-      width: 300px;
+      line-height: 2.8rem;
+      font-size: 1rem;
+      width: 250px;
       flex: inherit;
     }
     .Search {
@@ -26,7 +30,6 @@
       }
     }
     .Create {
-      // padding: 1rem;
       margin-left: 1rem;
       a {
         color: lighten(@zesty-light-blue, 5%);
