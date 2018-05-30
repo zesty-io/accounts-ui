@@ -31,31 +31,35 @@ class PropertiesHeader extends Component {
             )
           ) : null}
 
-          <ButtonGroup>
-            <Button
-              disabled={this.state.sort === 'date'}
-              onClick={() => {
-                this.setState({ sort: 'date' })
-                return this.sort('createdAt')
-              }}>
-              <i className={`fa fa-calendar-o`} />
-            </Button>
-            <Button
-              disabled={this.state.sort === 'name'}
-              onClick={() => {
-                this.setState({ sort: 'name' })
-                return this.sort('name')
-              }}>
-              <i className={`fa fa-sort-alpha-asc`} />
-            </Button>
-          </ButtonGroup>
-
           <Search
             className={styles.Search}
             placeholder="Search by instance name or domain"
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
+
+          <ButtonGroup className={styles.Sort}>
+            <Button
+              title="Sort by created date"
+              disabled={this.state.sort === 'date'}
+              onClick={() => {
+                this.setState({ sort: 'date' })
+                return this.sort('createdAt')
+              }}
+            >
+              <i className={`fa fa-calendar-o`} />
+            </Button>
+            <Button
+              title="Sort alphabetically by name"
+              disabled={this.state.sort === 'name'}
+              onClick={() => {
+                this.setState({ sort: 'name' })
+                return this.sort('name')
+              }}
+            >
+              <i className={`fa fa-sort-alpha-asc`} />
+            </Button>
+          </ButtonGroup>
 
           <Button className={styles.Create} onClick={this.onCreateSite}>
             <i className="fa fa-plus" />Create Instance

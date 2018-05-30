@@ -23,9 +23,9 @@ class Properties extends Component {
                 return <WebsiteInvite key={site.ZUID} site={site} />
               })}
 
-              {/* {this.props.siteStarred.map(site => {
+              {this.props.sitesStarred.map(site => {
                 return <WebsiteCard key={site.ZUID} site={site} starred={true} />
-              })} */}
+              })}
 
               {this.props.sitesFiltered.map(site => {
                 return <WebsiteCard key={site.ZUID} site={site} />
@@ -44,7 +44,7 @@ class Properties extends Component {
   }
 }
 export default connect(state => {
-  // const userStarred = state.user.prefs.starred
+  const userStarred = state.user.prefs.starred || []
   const sites = Object.keys(state.sitesFiltered).reduce((acc, ZUID) => {
     acc.push(state.sitesFiltered[ZUID])
     return acc
@@ -55,8 +55,8 @@ export default connect(state => {
     sitesFiltered: sites.filter(site => !site.inviteZUID),
     sitesInvited: sites.filter(site => site.inviteZUID),
     // filter sites by starred status
-    // sitesStarred: userStarred.map(siteZUID => {
-    //   siteZUID = sites[siteZUID]
-    // })
+    sitesStarred: userStarred.map(siteZUID => {
+      siteZUID === sites[siteZUID]
+    })
   }
 })(Properties)

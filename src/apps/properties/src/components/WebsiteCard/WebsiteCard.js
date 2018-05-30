@@ -34,15 +34,22 @@ const WebsiteCard = props => {
       )}
       <CardFooter className={styles.CardFooter}>
         <ButtonGroup className={styles.controls}>
+          <AppLink to={`/instances/${site.ZUID}`}>
+            <i
+              className={'fa fa-cog'}
+              aria-hidden="true"
+              title="Edit instance settings"
+            />
+          </AppLink>
+
           <Url
-            className={styles.manager}
             target="_blank"
-            title="Load instance manager"
-            href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
-              CONFIG.MANAGER_URL
-            }`}>
-            <i className="fa fa-external-link" aria-hidden="true" />&nbsp;
-            Manager App
+            title={`Preview instance: ${site.name}`}
+            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
+              CONFIG.PREVIEW_URL
+            }`}
+          >
+            <i className={'fa fa-eye'} aria-hidden="true" />
           </Url>
 
           {site.domain ? (
@@ -57,20 +64,18 @@ const WebsiteCard = props => {
           )}
 
           <Url
+            className={styles.manager}
             target="_blank"
-            title={`Preview instance: ${site.name}`}
-            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
-              CONFIG.PREVIEW_URL
-            }`}>
-            <i className={'fa fa-eye'} aria-hidden="true" />
-          </Url>
-          <AppLink to={`/instances/${site.ZUID}`}>
-            <i
-              className={'fa fa-cog'}
+            title="Load instance manager"
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
+              CONFIG.MANAGER_URL
+            }`}
+          >
+            Instance Manager&nbsp;<i
+              className="fa fa-external-link-square"
               aria-hidden="true"
-              title="Edit instance settings"
             />
-          </AppLink>
+          </Url>
         </ButtonGroup>
       </CardFooter>
     </Card>

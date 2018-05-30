@@ -4,6 +4,14 @@
   display: grid;
   grid-template-rows: 1fr 3fr 35px;
   padding: 0;
+  box-shadow: 0 0 5px #d6e1f3;
+
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0 0 10px #8398bd;
+  }
+
   .CardHeader {
     padding: 0 1rem;
     display: flex;
@@ -47,17 +55,17 @@
     padding: 0;
     .controls {
       display: grid;
-      grid-template-columns: 1fr 35px 35px 35px;
+      grid-template-columns: 35px 35px 35px 1fr;
 
       a {
-        border-left: 1px solid @zesty-field-blue;
+        border-right: 1px solid @zesty-field-blue;
         padding: 9px;
         margin: 0;
         text-align: center;
       }
-      a:first-child {
+      a:last-child {
         border: none;
-        text-align: left;
+        text-align: right;
         padding: 4px 9px;
       }
     }

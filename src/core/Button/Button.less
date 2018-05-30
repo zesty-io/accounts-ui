@@ -99,11 +99,14 @@
     &:active {
       background: lighten(@btnDisabled, 40%);
     }
+    .icon {
+      color: @btnDisabled;
+      text-shadow: 1px 1px 1px #fff;
+    }
   }
 
   .icon {
     margin-right: 0.5rem;
-    // opacity: 0.7;
     color: @btnDefaultText;
   }
 }
