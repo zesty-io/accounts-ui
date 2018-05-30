@@ -13,6 +13,7 @@ window.cx = cx
 window.qs = qs
 window.React = React
 window.ReactDOM = ReactDOM
+window.ReactDom = ReactDOM
 window.ReactRedux = ReactRedux
 window.ReactRouter = ReactRouter
 window.ReactRouterDOM = ReactRouterDOM

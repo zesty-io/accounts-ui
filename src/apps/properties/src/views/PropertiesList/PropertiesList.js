@@ -17,28 +17,26 @@ class Properties extends Component {
     return (
       <section className={styles.Websites}>
         <PropertiesHeader />
-        <main className={styles.siteListWrap}>
+        <main className={styles.siteList} id="siteListWrapper">
           {this.props.sites.length ? (
-            <div className={styles.siteList} id="siteListWrapper">
+            <React.Fragment>
               {this.props.sitesInvited.map(site => {
                 return <WebsiteInvite key={site.ZUID} site={site} />
               })}
 
-              {this.props.sitesFiltered.map(site => {
+              {this.props.sitesFiltered.map((site, i) => {
                 return (
-                  <LazyLoad key={site.ZUID}>
+                  <LazyLoad key={i} height={290} offset={600} once>
                     <WebsiteCard key={site.ZUID} site={site} />
                   </LazyLoad>
                 )
               })}
 
               <Route path="/instances/:siteZUID" component={PropertyOverview} />
-            </div>
+            </React.Fragment>
           ) : (
             // No sites so create a new one
-            <div className={styles.siteList}>
-              <WebsiteCreate />
-            </div>
+            <WebsiteCreate />
           )}
         </main>
       </section>
