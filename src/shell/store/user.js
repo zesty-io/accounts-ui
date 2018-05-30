@@ -66,6 +66,7 @@ export function fetchUser(ZUID) {
             ? user.data.verifiedEmails.split(',')
             : []
 
+          user.data.prefs = JSON.parse(user.data.prefs)
           dispatch({
             type: 'FETCH_USER_SUCCESS',
             user: user.data
