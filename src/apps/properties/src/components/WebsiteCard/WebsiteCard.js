@@ -11,7 +11,11 @@ const WebsiteCard = props => {
     <Card className={styles.WebsiteCard}>
       <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
-        {props.starred && <i className="fa fa-star" aria-hidden="true" />}
+          {props.starred ? (
+            <i className="fa fa-star" aria-hidden="true" />
+          ) : (
+            <i className="fa fa-star-o" aria-hidden="true" />
+          )}
       </CardHeader>
       {site.screenshotURL ? (
         <CardContent
@@ -47,8 +51,7 @@ const WebsiteCard = props => {
             title={`Preview instance: ${site.name}`}
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.PREVIEW_URL
-            }`}
-          >
+            }`}>
             <i className={'fa fa-eye'} aria-hidden="true" />
           </Url>
 
@@ -69,8 +72,7 @@ const WebsiteCard = props => {
             title="Load instance manager"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.MANAGER_URL
-            }`}
-          >
+            }`}>
             Instance Manager&nbsp;<i
               className="fa fa-external-link-square"
               aria-hidden="true"

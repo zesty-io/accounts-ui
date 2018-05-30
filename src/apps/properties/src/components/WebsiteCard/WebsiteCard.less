@@ -14,7 +14,9 @@
 
   .CardHeader {
     padding: 0 1rem;
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr, 35px;
     align-items: center;
     h1 {
       font-size: 1.2em;
@@ -23,6 +25,9 @@
     a {
       font-size: 0.9rem;
       margin: 0;
+    }
+    i {
+      justify-self: flex-end;
     }
   }
 
