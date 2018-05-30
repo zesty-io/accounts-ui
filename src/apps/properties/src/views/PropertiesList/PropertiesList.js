@@ -27,7 +27,7 @@ class Properties extends Component {
               {this.props.sitesFiltered.map(site => {
                 return (
                   <LazyLoad key={site.ZUID}>
-                    <p>TEST</p>
+                    <WebsiteCard key={site.ZUID} site={site} />
                   </LazyLoad>
                 )
               })}

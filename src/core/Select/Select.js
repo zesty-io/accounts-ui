@@ -1,7 +1,8 @@
+import { Component } from 'react'
 import styles from './Select.less'
 import cx from 'classnames'
 
-export class Select extends React.Component {
+export class Select extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -10,7 +11,7 @@ export class Select extends React.Component {
       filter: ''
     }
   }
-  getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps = (nextProps, prevState) => {
     if (nextProps.selection) {
       if (nextProps.selection.value !== prevState.selection.value) {
         return { ...prevState, selection: nextProps.selection }
