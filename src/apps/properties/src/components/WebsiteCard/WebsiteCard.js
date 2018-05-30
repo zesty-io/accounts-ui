@@ -18,11 +18,15 @@ const WebsiteCard = props => {
           style={{ backgroundImage: `url(${site.screenshotUrl})` }}
         />
       ) : (
-        <CardContent className={styles.CardContent}>
+        <CardContent className={cx(styles.CardContent, styles.Offline)}>
           <i
             className={cx(styles.icon, 'fa fa-picture-o')}
             aria-hidden="true"
           />
+          <p>
+            <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;
+            Instance Offline
+          </p>
         </CardContent>
       )}
       <CardFooter className={styles.CardFooter}>

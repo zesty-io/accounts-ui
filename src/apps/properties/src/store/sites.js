@@ -28,8 +28,7 @@ export function fetchSites() {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances`, {
-    })
+    return request(`${CONFIG.API_ACCOUNTS}/instances`)
       .then(sites => {
         sites.data.sort((prev, next) => {
           if (prev.name < next.name) {
