@@ -47,15 +47,15 @@
     padding: 0;
     .controls {
       display: grid;
-      grid-template-columns: 1fr 35px 35px 35px;
+      grid-template-columns: 35px 35px 35px 1fr;
 
       a {
-        border-left: 1px solid @zesty-field-blue;
+        border-right: 1px solid @zesty-field-blue;
         padding: 9px;
         margin: 0;
         text-align: center;
       }
-      a:first-child {
+      a:last-child {
         border: none;
         text-align: left;
         padding: 4px 9px;
