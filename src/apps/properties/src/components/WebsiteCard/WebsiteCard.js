@@ -44,23 +44,17 @@ const WebsiteCard = props => {
             <i className="fa fa-external-link" aria-hidden="true" />&nbsp;
             Manager App
           </Url>
-
           {site.domain ? (
             <Url
-              href={`http://${site.domain}`}
               target="_blank"
-              title="Load instance manager"
-              href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
-                CONFIG.MANAGER_URL
-              }`}
+              title={`Preview instance: ${site.name}`}
+              href={`http://${site.domain}`}
             >
-              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;
-              Manager App
+              <i className={'fa fa-globe'} aria-hidden="true" />
             </Url>
           ) : (
             <span />
           )}
-
           <Url
             target="_blank"
             title={`Preview instance: ${site.name}`}
