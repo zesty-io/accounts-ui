@@ -23,10 +23,12 @@ const WebsiteCard = props => {
             className={cx(styles.icon, 'fa fa-picture-o')}
             aria-hidden="true"
           />
-          <p>
-            <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;
-            Instance Offline
-          </p>
+
+          <AppLink to={`/instances/${site.ZUID}`}>
+            <Button type="save">
+              <i className="fa fa-rocket" aria-hidden="true" />Launch Instance
+            </Button>
+          </AppLink>
         </CardContent>
       )}
       <CardFooter className={styles.CardFooter}>
@@ -45,19 +47,14 @@ const WebsiteCard = props => {
 
           {site.domain ? (
             <Url
-              href={`//${site.domain}`}
+              href={`http://${site.domain}`}
               target="_blank"
               title="View live domain"
             >
               <i className="fa fa-globe" aria-hidden="true" />
             </Url>
           ) : (
-            <AppLink
-              to={`/instances/${site.ZUID}`}
-              title="Setup instance domain"
-            >
-              <i className="fa fa-plus" aria-hidden="true" />
-            </AppLink>
+            <span />
           )}
 
           <Url

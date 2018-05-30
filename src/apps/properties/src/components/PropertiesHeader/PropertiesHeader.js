@@ -31,7 +31,7 @@ class PropertiesHeader extends Component {
               </Select>
             )
           ) : null}
-          
+
           <i
             className={`fa fa-sort-${
               this.state.sortRev ? 'amount-desc' : 'amount-asc'
@@ -56,10 +56,7 @@ class PropertiesHeader extends Component {
             onKeyUp={this.onSearch}
           />
 
-          <Button
-            type="save"
-            className={styles.Create}
-            onClick={this.onCreateSite}>
+          <Button className={styles.Create} onClick={this.onCreateSite}>
             <i className="fa fa-plus" />Create Instance
           </Button>
         </div>
