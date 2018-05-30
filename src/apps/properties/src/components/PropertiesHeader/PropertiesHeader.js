@@ -8,8 +8,7 @@ import { filter, filterEcosystem, sortSites } from '../../store/sitesFiltered'
 class PropertiesHeader extends Component {
   state = {
     eco: false,
-    sortBy: 'name',
-    sortRev: false
+    sort: 'name'
   }
   render() {
     return (
@@ -32,22 +31,26 @@ class PropertiesHeader extends Component {
             )
           ) : null}
 
-          <i
-            className={`fa fa-sort-${
-              this.state.sortRev ? 'amount-desc' : 'amount-asc'
-            } fa-3x`}
-            onClick={() =>
-              this.setState({ sortRev: !this.state.sortRev }, () => {
-                this.sort('rev')
-              })
-            }
-          />
-          <i
-            className={`fa fa-sort-${
-              this.state.sortBy === 'name' ? 'alpha-asc' : 'numeric-asc'
-            } fa-3x`}
-            onClick={this.sort}
-          />
+          <ButtonGroup>
+            <Button>
+              <i
+                className={`fa fa-calendar-o`}
+                onClick={() => {
+                  this.sort('createdAt')
+                  this.setState({ sort: 'date' })
+                }}
+              />
+            </Button>
+            <Button>
+              <i
+                className={`fa fa-sort-alpha-asc`}
+                onClick={() => {
+                  this.sort('name')
+                  this.setState({ sort: 'name' })
+                }}
+              />
+            </Button>
+          </ButtonGroup>
 
           <Search
             className={styles.Search}
@@ -86,22 +89,8 @@ class PropertiesHeader extends Component {
     this.props.dispatch(filter(Number(evt.target.dataset.value)))
   }
 
-  sort = evt => {
-    if (evt === 'rev') {
-      return this.props.dispatch(
-        sortSites(this.state.sortBy, this.state.sortRev)
-      )
-    }
-    if (this.state.sortBy === 'createdAt') {
-      this.setState({ sortBy: 'name' }, () => {
-        this.props.dispatch(sortSites(this.state.sortBy, this.state.sortRev))
-      })
-    }
-    if (this.state.sortBy === 'name') {
-      this.setState({ sortBy: 'createdAt' }, () => {
-        this.props.dispatch(sortSites(this.state.sortBy, this.state.sortRev))
-      })
-    }
+  sort = by => {
+    this.props.dispatch(sortSites(by))
   }
 }
 
