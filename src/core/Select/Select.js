@@ -10,7 +10,7 @@ export class Select extends React.Component {
       filter: ''
     }
   }
-  getDerivedStateFromProps(nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.selection) {
       if (nextProps.selection.value !== prevState.selection.value) {
         return { ...prevState, selection: nextProps.selection }
