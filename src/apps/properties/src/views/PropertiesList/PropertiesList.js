@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
+import LazyLoad from 'react-lazyload'
 
 import styles from './PropertiesList.less'
 
@@ -24,8 +25,13 @@ class Properties extends Component {
               })}
 
               {this.props.sitesFiltered.map(site => {
-                return <WebsiteCard key={site.ZUID} site={site} />
+                return (
+                  <LazyLoad key={site.ZUID}>
+                    <p>TEST</p>
+                  </LazyLoad>
+                )
               })}
+
               <Route path="/instances/:siteZUID" component={PropertyOverview} />
             </div>
           ) : (

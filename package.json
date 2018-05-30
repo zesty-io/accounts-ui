@@ -17,10 +17,8 @@
     "build-stage": "export NODE_ENV=\"staging\" && npm run build"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
-  "contributors": [
-    "Grant Glidewell <grant.glidewell@zesty.io>"
-  ],
-  "license": "UNLICENSED",
+  "contributors": ["Grant Glidewell <grant.glidewell@zesty.io>"],
+  "license": "",
   "dependencies": {
     "chart.js": "2.7.2",
     "classnames": "2.2.5",
@@ -28,6 +26,7 @@
     "react": "16.2.0",
     "react-chartjs-2": "2.7.0",
     "react-dom": "16.2.0",
+    "react-lazyload": "^2.3.0",
     "react-redux": "5.0.7",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",

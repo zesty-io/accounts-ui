@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
@@ -49,9 +49,13 @@ const WebsiteCard = props => {
             <Url
               href={`http://${site.domain}`}
               target="_blank"
-              title="View live domain"
+              title="Load instance manager"
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
+                CONFIG.MANAGER_URL
+              }`}
             >
-              <i className="fa fa-globe" aria-hidden="true" />
+              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;
+              Manager App
             </Url>
           ) : (
             <span />
