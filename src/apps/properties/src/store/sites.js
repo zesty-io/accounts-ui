@@ -44,6 +44,7 @@ export function fetchSites() {
           type: 'FETCH_SITES_SUCCESS',
           sites: sites.data
         })
+        return sites
       })
       .catch(err => {
         console.table(err)
@@ -183,13 +184,32 @@ export function sendInvite(payload) {
     dispatch({
       type: 'SENDING_INVITE'
     })
+    let roleName = payload.role
+    const newRoleID = role => {
+      switch (role) {
+        case 'Owner':
+          return 0
+        case 'Admin':
+          return 1
+        case 'Contributor':
+          return 5
+        case 'Publisher':
+          return 4
+        case 'Developer':
+          return 2
+        case 'SEO':
+          return 3
+        default:
+          return 5
+      }
+    }
     return request(`${CONFIG.API_ACCOUNTS}/invites`, {
       method: 'POST',
       json: true,
       body: {
         inviteeEmail: payload.inviteeEmail,
         entityZUID: payload.entityZUID,
-        accessLevel: 3
+        accessLevel: newRoleID(roleName)
         // roleZUID: payload.roleZUID
       }
     })

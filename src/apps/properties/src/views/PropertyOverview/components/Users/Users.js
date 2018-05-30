@@ -122,7 +122,7 @@ export default class Users extends Component {
   }
   handleSelectRole = evt => {
     this.setState({
-      inviteeRole: evt.target.dataset.value
+      inviteeRole: evt.target.innerText
     })
   }
   handleInvite = evt => {
@@ -136,7 +136,7 @@ export default class Users extends Component {
           sendInvite({
             inviteeEmail: this.state.inviteeEmail,
             entityZUID: this.props.siteZUID,
-            roleZUID: this.state.inviteeRole
+            role: this.state.inviteeRole
           })
         )
         .then(() => {

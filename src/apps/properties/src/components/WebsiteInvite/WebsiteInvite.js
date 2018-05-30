@@ -30,8 +30,7 @@ class WebsiteInvite extends Component {
             className={styles.Preview}
             target="_blank"
             title={`Preview  ${this.props.site.name}`}
-            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
-          >
+            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}>
             <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
           </Url>
         </CardContent>
@@ -40,16 +39,14 @@ class WebsiteInvite extends Component {
             <Button
               className={styles.invite}
               onClick={this.handleAccept}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               <i className="fa fa-check-circle-o" aria-hidden="true" />
               Accept Invite
             </Button>
             <Button
               type="cancel"
               onClick={this.handleDecline}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               <i className="fa fa-ban" aria-hidden="true" />
               Decline
             </Button>
@@ -69,9 +66,7 @@ class WebsiteInvite extends Component {
             return siteZUID
           }
         })
-        if (invitedSites.length < 1) {
-          return this.props.history.push(`/instances/${this.props.site.ZUID}`)
-        }
+        return this.props.history.push(`/instances/${this.props.site.ZUID}`)
       })
       this.props.dispatch(
         notify({
