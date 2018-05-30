@@ -44,7 +44,7 @@ class PropertiesHeader extends Component {
           />
           <i
             className={`fa fa-sort-${
-              this.state.sortBy === 'name' ? 'alpha-desc' : 'numeric-asc'
+              this.state.sortBy === 'name' ? 'alpha-asc' : 'numeric-asc'
             } fa-3x`}
             onClick={this.sort}
           />
