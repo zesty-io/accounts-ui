@@ -1,6 +1,5 @@
 import { request } from '../../../../util/request'
 
-
 export function blueprints(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_BLUEPRINTS':
@@ -95,7 +94,7 @@ export function postNewBlueprint(name) {
     return request(`${CONFIG.API_ACCOUNTS}/blueprints`, {
       method: 'POST',
       json: true,
-      body
+      body: { name }
     })
       .then(data => {
         dispatch({
