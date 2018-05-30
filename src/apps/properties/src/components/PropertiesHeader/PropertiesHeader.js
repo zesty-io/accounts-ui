@@ -8,7 +8,8 @@ import { filter, filterEcosystem, sortSites } from '../../store/sitesFiltered'
 class PropertiesHeader extends Component {
   state = {
     eco: false,
-    sortBy: 'name'
+    sortBy: 'name',
+    sortRev: false
   }
   render() {
     return (
@@ -30,9 +31,20 @@ class PropertiesHeader extends Component {
               </Select>
             )
           ) : null}
+          
           <i
             className={`fa fa-sort-${
-              this.state.sortBy === 'name' ? 'amount-desc' : 'amount-asc'
+              this.state.sortRev ? 'amount-desc' : 'amount-asc'
+            } fa-3x`}
+            onClick={() =>
+              this.setState({ sortRev: !this.state.sortRev }, () => {
+                this.sort('rev')
+              })
+            }
+          />
+          <i
+            className={`fa fa-sort-${
+              this.state.sortBy === 'name' ? 'alpha-desc' : 'numeric-asc'
             } fa-3x`}
             onClick={this.sort}
           />
@@ -78,15 +90,19 @@ class PropertiesHeader extends Component {
   }
 
   sort = evt => {
-    evt.preventDefault()
+    if (evt === 'rev') {
+      return this.props.dispatch(
+        sortSites(this.state.sortBy, this.state.sortRev)
+      )
+    }
     if (this.state.sortBy === 'createdAt') {
       this.setState({ sortBy: 'name' }, () => {
-        this.props.dispatch(sortSites(this.state.sortBy, true))
+        this.props.dispatch(sortSites(this.state.sortBy, this.state.sortRev))
       })
     }
     if (this.state.sortBy === 'name') {
       this.setState({ sortBy: 'createdAt' }, () => {
-        this.props.dispatch(sortSites(this.state.sortBy, false))
+        this.props.dispatch(sortSites(this.state.sortBy, this.state.sortRev))
       })
     }
   }
