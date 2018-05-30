@@ -12,9 +12,9 @@ const WebsiteCard = props => {
       <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
           {props.starred ? (
-            <i className="fa fa-star" aria-hidden="true" />
+            <i className="fa fa-star" aria-hidden="true" onClick={() => props.starSite(props.site.ZUID)} />
           ) : (
-            <i className="fa fa-star-o" aria-hidden="true" />
+            <i className="fa fa-star-o" aria-hidden="true" onClick={() => props.starSite(props.site.ZUID)} />
           )}
       </CardHeader>
       {site.screenshotURL ? (

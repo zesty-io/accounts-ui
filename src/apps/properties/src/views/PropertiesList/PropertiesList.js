@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 
+import { updateProfile } from '../../../../../shell/store/user'
+
 import styles from './PropertiesList.less'
 
 import PropertiesHeader from '../../components/PropertiesHeader'
@@ -28,7 +30,7 @@ class Properties extends Component {
               })}
 
               {this.props.sitesFiltered.map(site => {
-                return <WebsiteCard key={site.ZUID} site={site} />
+                return <WebsiteCard key={site.ZUID} site={site}  starSite={this.starSite}/>
               })}
               <Route path="/instances/:siteZUID" component={PropertyOverview} />
             </div>
@@ -42,6 +44,11 @@ class Properties extends Component {
       </section>
     )
   }
+  starSite = site => {
+    console.log(site)
+    // update the user prefs object to contain the 'favorite'
+
+  }
 }
 export default connect(state => {
   const userStarred = state.user.prefs.starred || []
@@ -51,6 +58,7 @@ export default connect(state => {
   }, [])
 
   return {
+    user,
     sites,
     sitesFiltered: sites.filter(site => !site.inviteZUID),
     sitesInvited: sites.filter(site => site.inviteZUID),
