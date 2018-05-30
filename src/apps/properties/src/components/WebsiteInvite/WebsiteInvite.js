@@ -60,12 +60,17 @@ class WebsiteInvite extends Component {
     // post accepted invite data THEN route to the overview when the user has permissions
     this.props.dispatch(acceptInvite(this.props.site.inviteZUID)).then(data => {
       this.props.dispatch(fetchSites()).then(data => {
-        // if a user has accepted their last invite open the property overview
-        const invitedSites = Object.keys(data.data).filter(siteZUID => {
-          if (data.data[siteZUID].hasOwnProperty('inviteZUID')) {
-            return siteZUID
-          }
+        const invitedSite = data.data.filter(site => {
+          return site.ZUID === this.props.site.ZUID
         })
+        // open the site in manager
+        window.open(
+          `${CONFIG.MANAGER_URL_PROTOCOL}${invitedSite[0].randomHashID}${
+            CONFIG.MANAGER_URL
+          }`,
+          '_blank'
+        )
+        // open the site's overview
         return this.props.history.push(`/instances/${this.props.site.ZUID}`)
       })
       this.props.dispatch(
