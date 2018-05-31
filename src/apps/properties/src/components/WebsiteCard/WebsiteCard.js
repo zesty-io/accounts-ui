@@ -3,19 +3,35 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
+import { favoriteSite, saveProfile } from '../../../../../shell/store/user'
+
 // import { Line } from 'react-chartjs-2'
 
-const WebsiteCard = props => {
+export default props => {
   const { site } = props
   return (
     <Card className={styles.WebsiteCard}>
       <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
-          {props.starred ? (
-            <i className="fa fa-star" aria-hidden="true" onClick={() => props.starSite(props.site.ZUID)} />
-          ) : (
-            <i className="fa fa-star-o" aria-hidden="true" onClick={() => props.starSite(props.site.ZUID)} />
-          )}
+        {props.favorite ? (
+          <i
+            className={cx('fa fa-star', styles.favorite)}
+            aria-hidden="true"
+            onClick={() => {
+              props.dispatch(favoriteSite(site.ZUID, 'REMOVE'))
+              props.dispatch(saveProfile())
+            }}
+          />
+        ) : (
+          <i
+            className={cx('fa fa-star-o', styles.NonFavorite)}
+            aria-hidden="true"
+            onClick={() => {
+              props.dispatch(favoriteSite(site.ZUID, 'ADD'))
+              props.dispatch(saveProfile())
+            }}
+          />
+        )}
       </CardHeader>
       {site.screenshotURL ? (
         <CardContent
@@ -51,7 +67,8 @@ const WebsiteCard = props => {
             title={`Preview instance: ${site.name}`}
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.PREVIEW_URL
-            }`}>
+            }`}
+          >
             <i className={'fa fa-eye'} aria-hidden="true" />
           </Url>
 
@@ -59,7 +76,8 @@ const WebsiteCard = props => {
             <Url
               href={`http://${site.domain}`}
               target="_blank"
-              title="View live domain">
+              title="View live domain"
+            >
               <i className="fa fa-globe" aria-hidden="true" />
             </Url>
           ) : (
@@ -72,7 +90,8 @@ const WebsiteCard = props => {
             title="Load instance manager"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.MANAGER_URL
-            }`}>
+            }`}
+          >
             Instance Manager&nbsp;<i
               className="fa fa-external-link-square"
               aria-hidden="true"
@@ -83,5 +102,3 @@ const WebsiteCard = props => {
     </Card>
   )
 }
-
-export default WebsiteCard

@@ -14,10 +14,29 @@
 
   .CardHeader {
     padding: 0 1rem;
-    display: grid;
-    grid-auto-flow: column;
-    grid-template-columns: 1fr, 35px;
+    display: flex;
     align-items: center;
+    position: relative;
+
+    .favorite {
+      cursor: pointer;
+      color: @zesty-orange;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    .NonFavorite {
+      cursor: pointer;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      &:hover,
+      &:active,
+      &:focus {
+        color: @zesty-orange;
+      }
+    }
+
     h1 {
       font-size: 1.2em;
       word-break: break-word;
