@@ -1,4 +1,3 @@
-
 import { request } from '../../util/request'
 import { notify } from '../store/notifications'
 
@@ -65,7 +64,6 @@ export function fetchUser(ZUID) {
           user.data.verifiedEmails = user.data.verifiedEmails
             ? user.data.verifiedEmails.split(',')
             : []
-
           dispatch({
             type: 'FETCH_USER_SUCCESS',
             user: user.data
@@ -132,12 +130,14 @@ export function saveProfile() {
     })
     const userZUID = getState().user.ZUID
     const user = getState().user
+    user.prefs = JSON.stringify(user.prefs)
     return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
       method: 'PUT',
       json: true,
       body: {
         firstName: user.firstName,
-        lastName: user.lastName
+        lastName: user.lastName,
+        prefs: user.prefs
       }
     })
       .then(data => {
