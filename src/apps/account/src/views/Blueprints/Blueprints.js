@@ -17,10 +17,10 @@ class Blueprints extends Component {
     }
   }
   render() {
-    console.log(this.props)
     return (
-      <section className={styles.BlueprintCreate}>
+      <section className={styles.Blueprints}>
         <SelectBlueprint
+          className={styles.List}
           blueprints={this.props.userBlueprints}
           selection={this.state.selection}
           handleSelect={this.handleSelect}
@@ -33,6 +33,7 @@ class Blueprints extends Component {
     )
   }
   handleSelect = blueprint => {
+    console.log(blueprint)
     this.setState({ selected: blueprint })
   }
 }
@@ -42,7 +43,7 @@ const mapStateToProps = state => {
   const userZUID = state.user.ZUID
 
   const userBlueprints = Object.keys(blueprints).reduce((acc, bp) => {
-    if(state.blueprints[bp].createdByUserZUID === userZUID){
+    if (state.blueprints[bp].createdByUserZUID === userZUID) {
       acc.push(blueprints[bp])
     }
     return acc
