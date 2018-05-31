@@ -10,11 +10,8 @@ import { postNewBlueprint } from '../../../../properties/src/store/blueprints'
 import styles from './Blueprints.less'
 
 class Blueprints extends Component {
-  constructor(props) {
-    super()
-    this.state = {
-      selection: ''
-    }
+  state = {
+    selected: ''
   }
   render() {
     return (
@@ -26,15 +23,14 @@ class Blueprints extends Component {
           handleSelect={this.handleSelect}
         />
         <BlueprintEdit
-          selection={this.state.selection}
-          blueprint={this.props.blueprints[this.state.selection]}
+          blueprint={this.state.selected}
         />
       </section>
     )
   }
   handleSelect = blueprint => {
     console.log(blueprint)
-    this.setState({ selected: blueprint })
+    this.setState({ selected: this.props.blueprints[blueprint] })
   }
 }
 
@@ -48,6 +44,7 @@ const mapStateToProps = state => {
     }
     return acc
   }, [])
+
   return {
     blueprints,
     userBlueprints,

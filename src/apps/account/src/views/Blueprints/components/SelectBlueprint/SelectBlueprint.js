@@ -5,7 +5,7 @@ const SelectBlueprint = props => {
 
   return <ul className={styles.List} >
     {props.blueprints.map(bp => {
-      return <li key={bp.ZUID} onClick={() => props.handleSelect(bp.ZUID)}>{bp.name}</li>
+      return <li key={bp.ZUID} onClick={() => props.handleSelect(bp.ID)}>{bp.name}</li>
 })}
   </ul>
 }

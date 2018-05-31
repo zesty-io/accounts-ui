@@ -14,105 +14,109 @@ class EditBlueprint extends Component {
   constructor(props) {
     super()
     this.state = {
-      blueprint: props.blueprint
+      blueprint: {
+        name: '',
+        githubURL: '',
+        description: '',
+        shortDescription: '',
+        previewURL: '',
+        coverImage: '',
+        mainImage: ''
+      }
     }
   }
-  componentDidMount() {
-    if (!this.props.blueprint) {
-      this.props.history.push('/settings/account')
+
+  componentWillReceiveProps(props) {
+    console.log('static running', props)
+    if (props.blueprint.ID !== this.state.blueprint.ID) {
+      this.setState({
+        blueprint: props.blueprint
+      })
+    } else {
+      return null
     }
   }
 
   render() {
-    return this.state.blueprint ? (
-      <form id="edit-form" onSubmit={this.handleSubmit}>
-        <div className={styles.blueprints}>
-          <div className={styles.rowOne}>
-            <img
-              src={`https://raw.githubusercontent.com/${
-                this.state.blueprint.name
-              }/master/shield.png`}
-              alt={this.state.blueprint.name}
-            />
-            <label>Blueprint Name</label>
-            <Input
-              type="text"
-              size={50}
-              onChange={this.onChange}
-              value={this.state.blueprint.name}
-              name="name"
-            />
-            <label>Github Repo URL</label>
-            <Input
-              type="text"
-              size={50}
-              onChange={this.onChange}
-              value={this.state.blueprint.githubURL}
-              name="githubURL"
-            />
-            <label>Blueprint Example Preview URL</label>
-            <Input
-              type="text"
-              size={50}
-              onChange={this.onChange}
-              value={this.state.blueprint.previewURL}
-              name="previewURL"
-            />
-            <label>
-              Shield Image URL (Optional. This will override shield.png in your
-              repo.)
-            </label>
-            <Input
-              type="text"
-              size={50}
-              onChange={this.onChange}
-              value={this.state.blueprint.mainImage}
-              name="mainImage"
-            />
-            <label>
-              Background Cover Image URL (Optional. This will override
-              shield.png in your repo.)
-            </label>
-            <Input
-              size={50}
-              onChange={this.onChange}
-              value={this.state.blueprint.coverImage}
-              name="coverImage"
-            />
+    return (
+      this.state.blueprint && (
+        <form id="edit-form" onSubmit={this.handleSubmit}>
+          <div className={styles.blueprints}>
+            <div className={styles.rowOne}>
+              <label>Blueprint Name</label>
+              <Input
+                type="text"
+                size={50}
+                onChange={this.onChange}
+                value={this.state.blueprint.name}
+                name="name"
+              />
+              <label>Github Repo URL</label>
+              <Input
+                type="text"
+                size={50}
+                onChange={this.onChange}
+                value={this.state.blueprint.githubURL}
+                name="githubURL"
+              />
+              <label>Blueprint Example Preview URL</label>
+              <Input
+                type="text"
+                size={50}
+                onChange={this.onChange}
+                value={this.state.blueprint.previewURL}
+                name="previewURL"
+              />
+              <label>
+                Shield Image URL (Optional. This will override shield.png in
+                your repo.)
+              </label>
+              <Input
+                type="text"
+                size={50}
+                onChange={this.onChange}
+                value={this.state.blueprint.mainImage}
+                name="mainImage"
+              />
+              <label>
+                Background Cover Image URL (Optional. This will override
+                shield.png in your repo.)
+              </label>
+              <Input
+                size={50}
+                onChange={this.onChange}
+                value={this.state.blueprint.coverImage}
+                name="coverImage"
+              />
+            </div>
+            <h3 className={styles.description}>Description</h3>
+            <div className={styles.rowTwo}>
+              <label>Short Description</label>
+              <textarea
+                wrap="soft"
+                name="shortDescription"
+                onChange={this.onChange}
+                value={this.state.blueprint.shortDescription}
+              />
+            </div>
+            <div className={styles.rowTwo1}>
+              <label>Description</label>
+              <textarea
+                wrap="soft"
+                name="description"
+                onChange={this.onChange}
+                value={this.state.blueprint.description}
+              />
+            </div>
+            // TODO: ternary to create vs save on ID
+            <Button className={styles.bottom3} type="submit" text="Save" />
           </div>
-          <h3 className={styles.description}>Description</h3>
-          <div className={styles.rowTwo}>
-            <label>Short Description</label>
-            <textarea
-              wrap="soft"
-              name="shortDescription"
-              onChange={this.onChange}
-              value={this.state.blueprint.shortDescription}
-            />
-          </div>
-          <div className={styles.rowTwo1}>
-            <label>Description</label>
-            <textarea
-              wrap="soft"
-              name="description"
-              onChange={this.onChange}
-              value={this.state.blueprint.description}
-            />
-          </div>
-          <Button className={styles.bottom3} type="submit" text="Save" />
-          <Button
-            className={styles.bottom4}
-            type="cancel"
-            text="Done"
-            onClick={() => this.props.history.push('/settings/account')}
-          />
-        </div>
-      </form>
-    ) : (
-      <Loader />
+        </form>
+      )
     )
   }
   handleSubmit = evt => {
+    // TODO: check if we are saving or updating based on ID?
     evt.preventDefault()
     this.props
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
@@ -158,4 +162,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(EditBlueprint))
+export default EditBlueprint
