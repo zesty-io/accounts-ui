@@ -29,7 +29,7 @@ const WebsiteCard = props => {
             aria-hidden="true"
           />
 
-          <AppLink to={`/instances/${site.ZUID}`}>
+          <AppLink to={`/instances/${site.ZUID}/launch`}>
             <Button type="save">
               <i className="fa fa-rocket" aria-hidden="true" />Launch Instance
             </Button>

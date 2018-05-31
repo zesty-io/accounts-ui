@@ -15,20 +15,12 @@ class PropertiesHeader extends Component {
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
           {this.props.ecosystems.length ? (
-            this.props.ecosystems.length === 1 ? (
-              <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
-                {this.props.ecosystems.map(eco => {
-                  return <Option key={eco.id} value={eco.id} text={eco.name} />
-                })}
-              </Select>
-            ) : (
-              <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
-                <Option key="default" value="" text="Select Ecosystem" />
-                {this.props.ecosystems.map(eco => {
-                  return <Option key={eco.id} value={eco.id} text={eco.name} />
-                })}
-              </Select>
-            )
+            <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
+              <Option key="default" value="" text="Select Ecosystem" />
+              {this.props.ecosystems.map(eco => {
+                return <Option key={eco.id} value={eco.id} text={eco.name} />
+              })}
+            </Select>
           ) : null}
 
           <Search
