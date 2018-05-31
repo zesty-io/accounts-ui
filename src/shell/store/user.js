@@ -3,10 +3,6 @@ import { notify } from '../store/notifications'
 
 export function user(state = {}, action) {
   switch (action.type) {
-    case 'FETCHING_USER':
-      // TODO show loading state?
-      return state
-
     case 'FETCH_USER_SUCCESS':
       // console.log('Last login for User: ', action.user.lastLogin)
       return {
@@ -18,31 +14,34 @@ export function user(state = {}, action) {
         ...state,
         ZUID: action.ZUID
       }
-
     case 'FETCH_VERIFY_SUCCESS':
       return {
         ...state,
         ZUID: action.ZUID
       }
 
-    case 'FETCH_USER_ERROR':
-      // TODO handle failure
-      return state
-
     case 'UPDATE_USER_PROFILE':
       return { ...state, ...action.payload }
 
-    case 'SAVING_PROFILE':
-      return state
-
-    case 'SAVING_PROFILE_ERROR':
-      return state
-
-    case 'SAVING_PROFILE_SUCCESS':
-      return state
-
     case 'USER_INVITED':
       return { ...state, ...action.invite }
+
+    case 'FAVORITE_SITE':
+      const favs = state.prefs.favorite_sites || []
+
+      if (action.action === 'ADD') {
+        favs.push(action.ZUID)
+      } else if (action.action === 'REMOVE') {
+        favs.splice(favs.indexOf(action.ZUID), 1)
+      }
+
+      return {
+        ...state,
+        prefs: {
+          ...state.prefs,
+          favorite_sites: favs
+        }
+      }
 
     default:
       return state
@@ -64,6 +63,9 @@ export function fetchUser(ZUID) {
           user.data.verifiedEmails = user.data.verifiedEmails
             ? user.data.verifiedEmails.split(',')
             : []
+          user.data.prefs = JSON.parse(user.data.prefs || '{}')
+          user.data.prefs.favorite_sites = user.data.prefs.favorite_sites || []
+
           dispatch({
             type: 'FETCH_USER_SUCCESS',
             user: user.data
@@ -124,20 +126,18 @@ export function updateProfile(payload) {
 
 export function saveProfile() {
   return (dispatch, getState) => {
-    let { settings } = getState()
     dispatch({
       type: 'SAVING_PROFILE'
     })
-    const userZUID = getState().user.ZUID
+
     const user = getState().user
-    user.prefs = JSON.stringify(user.prefs)
-    return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
+    return request(`${CONFIG.API_ACCOUNTS}/users/${user.ZUID}`, {
       method: 'PUT',
       json: true,
       body: {
         firstName: user.firstName,
         lastName: user.lastName,
-        prefs: user.prefs
+        prefs: JSON.stringify(user.prefs)
       }
     })
       .then(data => {
@@ -149,5 +149,13 @@ export function saveProfile() {
         dispatch({ type: 'SAVING_PROFILE_ERROR' })
         throw err
       })
+  }
+}
+
+export function favoriteSite(ZUID, action) {
+  return {
+    type: 'FAVORITE_SITE',
+    ZUID,
+    action
   }
 }

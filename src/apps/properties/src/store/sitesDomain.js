@@ -2,7 +2,7 @@ import { request } from '../../../../util/request'
 
 export function updateDomain(siteZUID, domain) {
   return dispatch => {
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}`, {
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}?updateDomain=true`, {
       method: 'PUT',
       json: true,
       body: { domain }
