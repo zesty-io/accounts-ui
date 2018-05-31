@@ -17,9 +17,11 @@ class Blueprints extends Component {
     }
   }
   render() {
+    console.log(this.props)
     return (
       <section className={styles.BlueprintCreate}>
         <SelectBlueprint
+          blueprints={this.props.userBlueprints}
           selection={this.state.selection}
           handleSelect={this.handleSelect}
         />
@@ -36,7 +38,20 @@ class Blueprints extends Component {
 }
 
 const mapStateToProps = state => {
-  return state
+  const blueprints = state.blueprints
+  const userZUID = state.user.ZUID
+
+  const userBlueprints = Object.keys(blueprints).reduce((acc, bp) => {
+    if(state.blueprints[bp].createdByUserZUID === userZUID){
+      acc.push(blueprints[bp])
+    }
+    return acc
+  }, [])
+  return {
+    blueprints,
+    userBlueprints,
+    userZUID
+  }
 }
 
-export default withRouter(connect(state => state)(Blueprints))
+export default withRouter(connect(mapStateToProps)(Blueprints))

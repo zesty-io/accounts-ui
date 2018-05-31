@@ -2,7 +2,12 @@ import React from 'react'
 import styles from './SelectBlueprint.less'
 
 const SelectBlueprint = props => {
-  return <div>list</div>
+
+  return <ul>
+    {props.blueprints.map(bp => {
+      return <li>{bp.name}</li>
+})}
+  </ul>
 }
 
 export default SelectBlueprint
