@@ -7,15 +7,15 @@ import { favoriteSite, saveProfile } from '../../../../../shell/store/user'
 
 // import { Line } from 'react-chartjs-2'
 
-const WebsiteCard = props => {
+export default props => {
   const { site } = props
   return (
     <Card className={styles.WebsiteCard}>
       <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
-        {props.starred ? (
+        {props.favorite ? (
           <i
-            className="fa fa-star"
+            className={cx('fa fa-star', styles.favorite)}
             aria-hidden="true"
             onClick={() => {
               props.dispatch(favoriteSite(site.ZUID, 'REMOVE'))
@@ -24,7 +24,7 @@ const WebsiteCard = props => {
           />
         ) : (
           <i
-            className="fa fa-star-o"
+            className={cx('fa fa-star-o', styles.NonFavorite)}
             aria-hidden="true"
             onClick={() => {
               props.dispatch(favoriteSite(site.ZUID, 'ADD'))
@@ -102,5 +102,3 @@ const WebsiteCard = props => {
     </Card>
   )
 }
-
-export default WebsiteCard

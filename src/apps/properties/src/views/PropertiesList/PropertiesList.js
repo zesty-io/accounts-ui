@@ -28,7 +28,7 @@ class Properties extends Component {
                     key={`${site.ZUID}-fave`}
                     site={site}
                     dispatch={this.props.dispatch}
-                    starred={true}
+                    favorite={true}
                   />
                 )
               })}
