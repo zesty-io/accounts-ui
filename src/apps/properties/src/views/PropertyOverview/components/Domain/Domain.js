@@ -31,7 +31,7 @@ class Domain extends Component {
           <span>Saving&hellip;</span>
         ) : this.props.site.domain && !this.state.editing ? (
           <span className={styles.Name} onClick={this.handleEdit}>
-            http://{this.state.domain}
+            {this.state.domain}
             <i className="fa fa-pencil" />
           </span>
         ) : (
