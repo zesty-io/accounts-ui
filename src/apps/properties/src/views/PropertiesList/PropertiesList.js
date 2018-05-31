@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 
-import { updateProfile } from '../../../../../shell/store/user'
+import { updateProfile, saveProfile } from '../../../../../shell/store/user'
 
 import styles from './PropertiesList.less'
 
@@ -26,11 +26,24 @@ class Properties extends Component {
               })}
 
               {this.props.sitesStarred.map(site => {
-                return <WebsiteCard key={site.ZUID} site={site} starred={true} />
+                return (
+                  <WebsiteCard
+                    key={`${site}-fave`}
+                    site={site}
+                    starred={true}
+                    starSite={this.unstarSite}
+                  />
+                )
               })}
 
               {this.props.sitesFiltered.map(site => {
-                return <WebsiteCard key={site.ZUID} site={site}  starSite={this.starSite}/>
+                return (
+                  <WebsiteCard
+                    key={site.ZUID}
+                    site={site}
+                    starSite={this.starSite}
+                  />
+                )
               })}
               <Route path="/instances/:siteZUID" component={PropertyOverview} />
             </div>
@@ -45,26 +58,43 @@ class Properties extends Component {
     )
   }
   starSite = site => {
-    console.log(site)
+    console.log(site, this.props)
+    const prefs = this.props.user.prefs
+    const starred = [...prefs.starred] || []
+    starred.push(site)
     // update the user prefs object to contain the 'favorite'
-
+    this.props.dispatch(
+      updateProfile({
+        prefs: { ...prefs, starred }
+      })
+    )
+  }
+  unstarSite = site => {
+    console.log(site, this.props)
+    const prefs = this.props.user.prefs
+    const starred = [...prefs.starred] || []
+    starred.splice(starred.indexOf(site), 1)
+    // update the user prefs object to contain the 'favorite'
+    this.props.dispatch(
+      updateProfile({
+        prefs: { ...prefs, starred }
+      })
+    )
   }
 }
 export default connect(state => {
   const userStarred = state.user.prefs.starred || []
+  const sitesStarred = userStarred.map(site => state.sites[site])
   const sites = Object.keys(state.sitesFiltered).reduce((acc, ZUID) => {
     acc.push(state.sitesFiltered[ZUID])
     return acc
   }, [])
-
   return {
-    user,
+    ...state,
     sites,
     sitesFiltered: sites.filter(site => !site.inviteZUID),
     sitesInvited: sites.filter(site => site.inviteZUID),
     // filter sites by starred status
-    sitesStarred: userStarred.map(siteZUID => {
-      siteZUID === sites[siteZUID]
-    })
+    sitesStarred
   }
 })(Properties)

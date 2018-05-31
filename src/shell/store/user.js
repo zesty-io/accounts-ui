@@ -67,6 +67,9 @@ export function fetchUser(ZUID) {
             : []
 
           user.data.prefs = JSON.parse(user.data.prefs)
+          if(!user.data.prefs.starred) {
+            user.data.prefs.starred = []
+          }
           dispatch({
             type: 'FETCH_USER_SUCCESS',
             user: user.data
@@ -133,12 +136,14 @@ export function saveProfile() {
     })
     const userZUID = getState().user.ZUID
     const user = getState().user
+    user.prefs = JSON.stringify(user.prefs)
     return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
       method: 'PUT',
       json: true,
       body: {
         firstName: user.firstName,
-        lastName: user.lastName
+        lastName: user.lastName,
+        prefs: user.prefs
       }
     })
       .then(data => {
