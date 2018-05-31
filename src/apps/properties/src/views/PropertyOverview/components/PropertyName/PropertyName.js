@@ -16,7 +16,6 @@ export default class PropertyName extends Component {
   render() {
     return (
       <label className={styles.PropertyName}>
-        Name:&nbsp;
         {this.state.editName ? (
           <div className={styles.EditName}>
             <Input
@@ -29,6 +28,9 @@ export default class PropertyName extends Component {
             />
             <Button onClick={this.handleNameUpdate}>
               <i className="fa fa-save" />Save
+            </Button>
+            <Button type="cancel" onClick={() => {}}>
+              <i className="fa fa-ban" />&nbsp;
             </Button>
           </div>
         ) : (

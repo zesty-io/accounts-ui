@@ -20,7 +20,7 @@ export default class CompanyAccess extends Component {
   }
   render() {
     return (
-      <Card>
+      <Card className={styles.TeamAccess}>
         <CardHeader>
           <h2>
             <i className="fa fa-building" aria-hidden="true" />
@@ -28,77 +28,74 @@ export default class CompanyAccess extends Component {
           </h2>
         </CardHeader>
         <CardContent>
-          <div className={styles.companyAccess}>
-            {this.props.isAdmin ? (
-              <React.Fragment>
-                <p>
-                  By providing a team access you can allow an external group of
-                  users access to manage your instance. For example; this is can
-                  be used to provide an agency with access to manage your
-                  website.
-                </p>
-                <div className={styles.addCompany}>
-                  <Input
-                    placeholder="Enter team ID"
-                    onChange={this.handleTream}
-                  />
-                  <Select onSelect={this.handleRole}>
-                    <Option key="default" value="" text="Select Role" />
-                    {this.props.siteRoles.map(role => {
-                      return (
-                        <Option
-                          key={role.ZUID}
-                          value={role.ZUID}
-                          text={role.name}
-                        />
-                      )
-                    })}
-                  </Select>
-                  <Button name="companyAccessSubmit">Grant Access</Button>
-                </div>
-              </React.Fragment>
-            ) : null}
-            <div className={styles.companyTable}>
-              <header>
-                <h3>Team</h3>
-                <h3>Contact</h3>
-                <h3>Email</h3>
-                <h3>Access</h3>
-              </header>
-              <main>
-                <WithLoader
-                  condition={!this.props.loadingTeams}
-                  message="Loading Instance Teams"
-                  height="100px"
-                  width="100%"
-                >
-                  {Object.keys(this.props.companies).map(ZUID => {
-                    let company = this.props.companies[ZUID]
+          {this.props.isAdmin ? (
+            <React.Fragment>
+              <p>
+                By providing a team access you can allow an external group of
+                users access to manage your instance. For example; this is can
+                be used to provide an agency with access to manage your website.
+              </p>
+              <div className={styles.addCompany}>
+                <Input
+                  placeholder="Enter team ID"
+                  onChange={this.handleTream}
+                />
+                <Select onSelect={this.handleRole}>
+                  <Option key="default" value="" text="Select Role" />
+                  {this.props.siteRoles.map(role => {
                     return (
-                      <article key={ZUID}>
-                        <span>{company.name}</span>
-                        <span>{company.mainContactName}</span>
-                        <span>{company.mainContactEmail}</span>
-                        <span>
-                          <Toggle
-                            defaultChecked
-                            name={company.name}
-                            onChange={this.handleToggle}
-                          />
-                        </span>
-                      </article>
+                      <Option
+                        key={role.ZUID}
+                        value={role.ZUID}
+                        text={role.name}
+                      />
                     )
                   })}
-
-                  {!Object.keys(this.props.companies).length &&
-                  !this.props.loadingTeams ? (
-                    <article>
-                      <em>No team access added for this instance.</em>
+                </Select>
+                <Button name="companyAccessSubmit">Grant Access</Button>
+              </div>
+            </React.Fragment>
+          ) : null}
+          <div className={styles.companyTable}>
+            <header>
+              <h3>Team</h3>
+              <h3>Contact</h3>
+              <h3>Email</h3>
+              <h3>Access</h3>
+            </header>
+            <main>
+              <WithLoader
+                condition={!this.props.loadingTeams}
+                message="Loading Instance Teams"
+                height="100px"
+                width="100%"
+              >
+                {Object.keys(this.props.companies).map(ZUID => {
+                  let company = this.props.companies[ZUID]
+                  return (
+                    <article key={ZUID}>
+                      <span>{company.name}</span>
+                      <span>{company.mainContactName}</span>
+                      <span>{company.mainContactEmail}</span>
+                      <span>
+                        <Toggle
+                          defaultChecked
+                          name={company.name}
+                          onChange={this.handleToggle}
+                        />
+                      </span>
                     </article>
-                  ) : null}
-                </WithLoader>
-              </main>
-            </div>
+                  )
+                })}
+
+                {!Object.keys(this.props.companies).length &&
+                !this.props.loadingTeams ? (
+                  <article>
+                    <em>No team access added for this instance.</em>
+                  </article>
+                ) : null}
+              </WithLoader>
+            </main>
           </div>
         </CardContent>
       </Card>
