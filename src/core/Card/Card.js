@@ -3,7 +3,7 @@ import styles from './Card.less'
 
 export function Card(props) {
   return (
-    <article className={cx(styles.Card, props.className)}>
+    <article {...props} className={cx(styles.Card, props.className)}>
       {props.children}
     </article>
   )
@@ -19,7 +19,7 @@ export function CardHeader(props) {
 
 export function CardContent(props) {
   return (
-    <main className={cx(styles.CardContent, props.className)}>
+    <main {...props} className={cx(styles.CardContent, props.className)}>
       {props.children}
     </main>
   )

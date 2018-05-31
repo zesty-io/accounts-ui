@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
-
-import { Line } from 'react-chartjs-2'
+// import { Line } from 'react-chartjs-2'
 
 const WebsiteCard = props => {
   const { site } = props
@@ -12,51 +11,71 @@ const WebsiteCard = props => {
     <Card className={styles.WebsiteCard}>
       <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
-        {site.domain ? (
-          <Url target="_blank" href={`http://${site.domain}`}>
-            <i className="fa fa-globe" aria-hidden="true" />&nbsp;{site.domain}
-          </Url>
-        ) : (
-          <AppLink to={`/instances/${site.ZUID}`}>
-            <i className="fa fa-plus" aria-hidden="true" />
-            &nbsp;Set Domain
-          </AppLink>
-        )}
       </CardHeader>
-      <CardContent className={styles.CardContent}>
-        <Url
-          className={styles.preview}
-          target="_blank"
-          title={`Preview  ${site.name}`}
-          href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
-            CONFIG.PREVIEW_URL
-          }`}
-        >
-          {site.screenshotUrl ? (
-            <img src={site.screenshotUrl} />
-          ) : (
-            <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
-          )}
-        </Url>
-      </CardContent>
+      {site.screenshotURL ? (
+        <CardContent
+          className={cx(styles.CardContent, styles.cover)}
+          style={{ backgroundImage: `url(${site.screenshotURL})` }}
+        />
+      ) : (
+        <CardContent className={cx(styles.CardContent, styles.Offline)}>
+          <i
+            className={cx(styles.icon, 'fa fa-picture-o')}
+            aria-hidden="true"
+          />
+
+          <AppLink to={`/instances/${site.ZUID}/launch`}>
+            <Button type="save">
+              <i className="fa fa-rocket" aria-hidden="true" />Launch Instance
+            </Button>
+          </AppLink>
+        </CardContent>
+      )}
       <CardFooter className={styles.CardFooter}>
         <ButtonGroup className={styles.controls}>
+          <AppLink to={`/instances/${site.ZUID}`}>
+            <i
+              className={'fa fa-cog'}
+              aria-hidden="true"
+              title="Edit instance settings"
+            />
+          </AppLink>
+
+          <Url
+            target="_blank"
+            title={`Preview instance: ${site.name}`}
+            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
+              CONFIG.PREVIEW_URL
+            }`}
+          >
+            <i className={'fa fa-eye'} aria-hidden="true" />
+          </Url>
+
+          {site.domain ? (
+            <Url
+              href={`http://${site.domain}`}
+              target="_blank"
+              title="View live domain"
+            >
+              <i className="fa fa-globe" aria-hidden="true" />
+            </Url>
+          ) : (
+            <span />
+          )}
+
           <Url
             className={styles.manager}
             target="_blank"
+            title="Load instance manager"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.MANAGER_URL
             }`}
           >
-            <i className="fa fa-external-link" aria-hidden="true" /> Site
-            Manager
-          </Url>
-          <AppLink to={`/instances/${site.ZUID}`}>
-            <i
-              className={cx(styles.settings, 'fa fa-cog')}
+            Instance Manager&nbsp;<i
+              className="fa fa-external-link-square"
               aria-hidden="true"
             />
-          </AppLink>
+          </Url>
         </ButtonGroup>
       </CardFooter>
     </Card>

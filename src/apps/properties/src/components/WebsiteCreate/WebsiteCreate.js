@@ -27,7 +27,7 @@ class WebsiteCreate extends Component {
         </main>
         <footer>
           <Link to="/instances/create" className={styles.Button}>
-            <Button>
+            <Button type="save">
               <i className="fa fa-plus" aria-hidden="true" />
               Create Your First Instance
             </Button>

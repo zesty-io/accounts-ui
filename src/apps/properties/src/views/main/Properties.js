@@ -18,7 +18,7 @@ class Properties extends Component {
       loadingSites: true
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.dispatch(fetchSites()).then(() => {
       this.setState({ loadingSites: false })
     })

@@ -9,6 +9,7 @@ export function user(state = {}, action) {
       return state
 
     case 'FETCH_USER_SUCCESS':
+      // console.log('Last login for User: ', action.user.lastLogin)
       return {
         ...state,
         ...action.user

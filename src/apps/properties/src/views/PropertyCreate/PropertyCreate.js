@@ -23,6 +23,7 @@ class PropertyCreate extends Component {
     return (
       <section className={styles.PropertyCreate}>
         <div className={styles.nameNew}>
+          <h1>Name your new instance</h1>
           <Input
             type="text"
             name="propertyName"
@@ -52,7 +53,7 @@ class PropertyCreate extends Component {
     if (this.state.name === '') {
       return this.props.dispatch(
         notify({
-          message: 'you must enter a name for you instance',
+          message: 'You must enter a name for your instance',
           type: 'error'
         })
       )

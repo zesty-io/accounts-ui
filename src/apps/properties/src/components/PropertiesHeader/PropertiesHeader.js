@@ -7,32 +7,53 @@ import { filter, filterEcosystem, sortSites } from '../../store/sitesFiltered'
 
 class PropertiesHeader extends Component {
   state = {
-    eco: false
+    eco: false,
+    sort: 'name'
   }
   render() {
     return (
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
-          {this.props.user.staff ? (
+          {this.props.ecosystems.length ? (
             <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
               <Option key="default" value="" text="Select Ecosystem" />
-              <Option key="petDesk" value={24291} text="Pet Desk" />
-              <Option key="alphaUniverse" value={154} text="Alpha Universe" />
-              <Option key="Hofhaus" value={24290} text="Hofbrauhaus" />
-              <Option key="Zesty" value={1} text="Zesty" />
+              {this.props.ecosystems.map(eco => {
+                return <Option key={eco.id} value={eco.id} text={eco.name} />
+              })}
             </Select>
           ) : null}
+
           <Search
             className={styles.Search}
             placeholder="Search by instance name or domain"
             onClick={this.onSearch}
             onKeyUp={this.onSearch}
           />
-          <Button
-            type="save"
-            className={styles.Create}
-            onClick={this.onCreateSite}
-          >
+
+          <ButtonGroup className={styles.Sort}>
+            <Button
+              title="Sort by created date"
+              disabled={this.state.sort === 'date'}
+              onClick={() => {
+                this.setState({ sort: 'date' })
+                return this.sort('createdAt')
+              }}
+            >
+              <i className={`fa fa-calendar-o`} />
+            </Button>
+            <Button
+              title="Sort alphabetically by name"
+              disabled={this.state.sort === 'name'}
+              onClick={() => {
+                this.setState({ sort: 'name' })
+                return this.sort('name')
+              }}
+            >
+              <i className={`fa fa-sort-alpha-asc`} />
+            </Button>
+          </ButtonGroup>
+
+          <Button className={styles.Create} onClick={this.onCreateSite}>
             <i className="fa fa-plus" />Create Instance
           </Button>
         </div>
@@ -49,6 +70,7 @@ class PropertiesHeader extends Component {
   }
 
   onCreateSite = evt => {
+    evt.preventDefault()
     this.props.history.push('/instances/create')
   }
 
@@ -61,8 +83,8 @@ class PropertiesHeader extends Component {
     this.props.dispatch(filter(Number(evt.target.dataset.value)))
   }
 
-  sort = evt => {
-    this.props.dispatch(sortSites('createdAt', true))
+  sort = by => {
+    this.props.dispatch(sortSites(by))
   }
 }
 

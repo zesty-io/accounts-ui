@@ -15,16 +15,29 @@ export function sitesFiltered(state = {}, action) {
   }
 }
 
-export const sortSites = (sortBy, reverse) => {
+export const sortSites = (sortBy) => {
   return (dispatch, getState) => {
     const sitesObj = getState().sitesFiltered
     let sites = Object.keys(sitesObj).map(site => sitesObj[site])
-    if (reverse) {
+    if (sortBy === 'name') {
       sites.sort((prev, next) => {
         if (prev[sortBy] < next[sortBy]) {
-          return 1
+          return -1
         }
         if (prev[sortBy] > next[sortBy]) {
+          return 1
+        }
+        return 0
+      })
+    }
+    if (sortBy === 'createdAt') {
+      sites.sort((prev, next) => {
+        const prevDate = Date.parse(prev[sortBy])
+        const nextDate = Date.parse(next[sortBy])
+        if (prevDate < nextDate) {
+          return 1
+        }
+        if (prevDate > nextDate) {
           return -1
         }
         return 0
@@ -34,15 +47,6 @@ export const sortSites = (sortBy, reverse) => {
         filtered: sites
       })
     }
-    sites.sort((prev, next) => {
-      if (prev[sortBy] < next[sortBy]) {
-        return -1
-      }
-      if (prev[sortBy] > next[sortBy]) {
-        return 1
-      }
-      return 0
-    })
     return dispatch({
       type: 'FILTER_PROPERTIES',
       filtered: sites

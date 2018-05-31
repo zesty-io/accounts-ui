@@ -30,8 +30,7 @@ class WebsiteInvite extends Component {
             className={styles.Preview}
             target="_blank"
             title={`Preview  ${this.props.site.name}`}
-            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}
-          >
+            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}>
             <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
           </Url>
         </CardContent>
@@ -40,16 +39,14 @@ class WebsiteInvite extends Component {
             <Button
               className={styles.invite}
               onClick={this.handleAccept}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               <i className="fa fa-check-circle-o" aria-hidden="true" />
               Accept Invite
             </Button>
             <Button
               type="cancel"
               onClick={this.handleDecline}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               <i className="fa fa-ban" aria-hidden="true" />
               Decline
             </Button>
@@ -63,15 +60,18 @@ class WebsiteInvite extends Component {
     // post accepted invite data THEN route to the overview when the user has permissions
     this.props.dispatch(acceptInvite(this.props.site.inviteZUID)).then(data => {
       this.props.dispatch(fetchSites()).then(data => {
-        // if a user has accepted their last invite open the property overview
-        const invitedSites = Object.keys(data.data).filter(siteZUID => {
-          if (data.data[siteZUID].hasOwnProperty('inviteZUID')) {
-            return siteZUID
-          }
+        const invitedSite = data.data.filter(site => {
+          return site.ZUID === this.props.site.ZUID
         })
-        if (invitedSites.length < 1) {
-          return this.props.history.push(`/instances/${this.props.site.ZUID}`)
-        }
+        // open the site in manager
+        window.open(
+          `${CONFIG.MANAGER_URL_PROTOCOL}${invitedSite[0].randomHashID}${
+            CONFIG.MANAGER_URL
+          }`,
+          '_blank'
+        )
+        // open the site's overview
+        return this.props.history.push(`/instances/${this.props.site.ZUID}`)
       })
       this.props.dispatch(
         notify({

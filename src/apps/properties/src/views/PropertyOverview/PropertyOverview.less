@@ -13,8 +13,8 @@
   right: 0;
   height: 100vh;
   width: 100vw;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 10;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 40;
 }
 
 .PropertyOverview {
@@ -31,7 +31,7 @@
 
   .CloseOverview {
     position: fixed;
-    top: 5px;
+    top: 10px;
     right: 20px;
     z-index: 40;
 
@@ -44,6 +44,7 @@
     text-shadow: 1px 1px 1px #fff;
     i {
       margin: 0;
+      color: #a7afbf;
     }
   }
 
@@ -56,14 +57,11 @@
     top: 0;
     background: darken(@appBkgColor, 3%);
     z-index: 30;
-    // .manager {
-    //   margin-top: 4rem;
-    // }
   }
   .Cards {
     padding: 1rem;
     article {
-      margin: 0 0 0.5rem;
+      margin: 0 0 1.5rem;
     }
   }
 }

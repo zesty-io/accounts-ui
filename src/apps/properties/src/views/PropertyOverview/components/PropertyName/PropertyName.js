@@ -27,7 +27,9 @@ export default class PropertyName extends Component {
                 })
               }}
             />
-            <i onClick={this.handleNameUpdate} className="fa fa-save" />
+            <Button onClick={this.handleNameUpdate}>
+              <i className="fa fa-save" />Save
+            </Button>
           </div>
         ) : (
           <span className={styles.Name} onClick={this.editName}>
