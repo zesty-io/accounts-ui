@@ -11,6 +11,7 @@ import CompanyAccess from './components/CompanyAccess'
 import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
 import Meta from './components/Meta'
+import LaunchWizard from './components/LaunchWizard'
 
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
@@ -113,6 +114,20 @@ class PropertyOverview extends Component {
               condition={Object.keys(this.props.users).length}
               message="Loading Instance Permissions"
             >
+              <Route
+                path="/instances/:siteZUID/launch"
+                render={routeProps => {
+                  return (
+                    <LaunchWizard
+                      {...routeProps}
+                      isAdmin={this.props.isAdmin}
+                      dispatch={this.props.dispatch}
+                      site={this.props.site}
+                    />
+                  )
+                }}
+              />
+
               <Route
                 path="/instances/:siteZUID"
                 render={routeProps => {

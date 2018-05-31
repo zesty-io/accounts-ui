@@ -41,11 +41,9 @@ class Domain extends Component {
               placeholder="Set a custom domain"
               onChange={this.handleDomain}
             />
-            <i
-              className="fa fa-save"
-              aria-hidden="true"
-              onClick={this.handleSave}
-            />
+            <Button onClick={this.handleSave}>
+              <i className="fa fa-save" aria-hidden="true" />Save
+            </Button>
           </div>
         )}
       </label>
