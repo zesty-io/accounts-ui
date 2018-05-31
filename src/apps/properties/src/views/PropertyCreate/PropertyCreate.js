@@ -23,6 +23,7 @@ class PropertyCreate extends Component {
     return (
       <section className={styles.PropertyCreate}>
         <div className={styles.nameNew}>
+          <h1>Name your new instance</h1>
           <Input
             type="text"
             name="propertyName"
