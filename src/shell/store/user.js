@@ -1,4 +1,3 @@
-
 import { request } from '../../util/request'
 import { notify } from '../store/notifications'
 
@@ -65,10 +64,6 @@ export function fetchUser(ZUID) {
           user.data.verifiedEmails = user.data.verifiedEmails
             ? user.data.verifiedEmails.split(',')
             : []
-
-          // if(!user.data.prefs.starred) {
-          //   user.data.prefs.starred = []
-          // }
           dispatch({
             type: 'FETCH_USER_SUCCESS',
             user: user.data

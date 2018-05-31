@@ -58,7 +58,6 @@ class Properties extends Component {
     )
   }
   starSite = site => {
-    console.log(site, this.props)
     const prefs = JSON.parse(this.props.user.prefs)
     const starred = [...prefs.starred] || []
     starred.push(site)
@@ -70,7 +69,6 @@ class Properties extends Component {
     this.props.dispatch(saveProfile())
   }
   unstarSite = site => {
-    console.log(site, this.props)
     const prefs = JSON.parse(this.props.user.prefs)
     const starred = [...prefs.starred] || []
     starred.splice(starred.indexOf(site), 1)
@@ -87,7 +85,9 @@ export default connect(state => {
   const userStarred = JSON.parse(state.user.prefs).starred || []
   const sitesStarred = userStarred.map(site => state.sites[site])
   const sites = Object.keys(state.sitesFiltered).reduce((acc, ZUID) => {
-    acc.push(state.sitesFiltered[ZUID])
+    if (!userStarred.includes(ZUID)) {
+      acc.push(state.sitesFiltered[ZUID])
+    }
     return acc
   }, [])
   return {
