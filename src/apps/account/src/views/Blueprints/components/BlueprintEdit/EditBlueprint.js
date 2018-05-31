@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { notify } from '../../../../../shell/store/notifications'
+import { notify } from '../../../../../../../shell/store/notifications'
 import {
   fetchBlueprints,
   updateBlueprint
-} from '../../../../properties/src/store/blueprints'
+} from '../../../../../../properties/src/store/blueprints'
 
 import styles from './EditBlueprint.less'
 
