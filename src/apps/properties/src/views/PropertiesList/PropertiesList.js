@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
-
-import { updateProfile, saveProfile } from '../../../../../shell/store/user'
-
 import styles from './PropertiesList.less'
 
 import PropertiesHeader from '../../components/PropertiesHeader'
@@ -25,13 +22,13 @@ class Properties extends Component {
                 return <WebsiteInvite key={site.ZUID} site={site} />
               })}
 
-              {this.props.sitesStarred.map(site => {
+              {this.props.sitesFavorite.map(site => {
                 return (
                   <WebsiteCard
                     key={`${site.ZUID}-fave`}
                     site={site}
+                    dispatch={this.props.dispatch}
                     starred={true}
-                    starSite={this.unstarSite}
                   />
                 )
               })}
@@ -41,7 +38,7 @@ class Properties extends Component {
                   <WebsiteCard
                     key={site.ZUID}
                     site={site}
-                    starSite={this.starSite}
+                    dispatch={this.props.dispatch}
                   />
                 )
               })}
@@ -57,46 +54,21 @@ class Properties extends Component {
       </section>
     )
   }
-  starSite = site => {
-    const prefs = JSON.parse(this.props.user.prefs)
-    const starred = prefs.starred || []
-    starred.push(site)
-    this.props.dispatch(
-      updateProfile({
-        prefs: { ...prefs, starred }
-      })
-    )
-    this.props.dispatch(saveProfile())
-  }
-  unstarSite = site => {
-    const prefs = JSON.parse(this.props.user.prefs)
-    const starred = prefs.starred || []
-    starred.splice(starred.indexOf(site), 1)
-    this.props.dispatch(
-      updateProfile({
-        prefs: { ...prefs, starred }
-      })
-    )
-    this.props.dispatch(saveProfile())
-  }
 }
-export default connect(state => {
-  //TODO: make sure there are not duplicate sites across segments
-  const prefs = JSON.parse(state.user.prefs)
-  const userStarred = prefs.starred || []
-  const sitesStarred = userStarred.map(site => state.sites[site])
+export default connect((state, props) => {
+  const favorites = state.user.prefs.favorite_sites
   const sites = Object.keys(state.sitesFiltered).reduce((acc, ZUID) => {
-    if (!userStarred.includes(ZUID)) {
+    if (!favorites.includes(ZUID)) {
       acc.push(state.sitesFiltered[ZUID])
     }
     return acc
   }, [])
+
   return {
-    ...state,
     sites,
     sitesFiltered: sites.filter(site => !site.inviteZUID),
     sitesInvited: sites.filter(site => site.inviteZUID),
-    // filter sites by starred status
-    sitesStarred
+    sitesFavorite: favorites.map(ZUID => state.sites[ZUID]),
+    dispatch: props.dispatch
   }
 })(Properties)
