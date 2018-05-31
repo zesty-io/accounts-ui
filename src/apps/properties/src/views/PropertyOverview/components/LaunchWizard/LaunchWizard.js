@@ -7,7 +7,7 @@ export default class LaunchWizard extends Component {
   render() {
     return (
       <Card className={styles.LaunchWizard}>
-        <CardHeader>
+        <CardHeader className={styles.CardHeader}>
           <h2>
             <i className="fa fa-rocket" aria-hidden="true" />
             &nbsp;Sending Your Instance Live!

@@ -101,13 +101,16 @@ class PropertyOverview extends Component {
               <i className="fa fa-eye" aria-hidden="true" />&nbsp;Instance
               Preview
             </Url>
-            <Url
-              className={styles.manager}
-              target="_blank"
-              href={`http://${this.props.site.domain}`}
-            >
-              <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
-            </Url>
+            {this.props.site.domain ? (
+              <Url
+                className={styles.manager}
+                target="_blank"
+                href={`http://${this.props.site.domain}`}
+              >
+                <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live
+                Domain
+              </Url>
+            ) : null}
           </header>
           <main className={styles.Cards}>
             <WithLoader
@@ -134,6 +137,7 @@ class PropertyOverview extends Component {
                   return (
                     <Meta
                       {...routeProps}
+                      isAdmin={this.props.isAdmin}
                       dispatch={this.props.dispatch}
                       site={this.props.site}
                     />

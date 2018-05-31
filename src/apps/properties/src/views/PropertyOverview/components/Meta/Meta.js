@@ -29,12 +29,18 @@ export default class Meta extends Component {
         </CardHeader>
         <CardContent className={styles.CardContent}>
           <p className={styles.domain}>
-            <span className={styles.title}>Domain:</span>
-            <Domain
-              siteZUID={this.props.site.ZUID}
-              site={this.props.site}
-              dispatch={this.props.dispatch}
-            />
+            <span className={styles.title}>Domain:&nbsp;</span>
+            {this.props.isAdmin ? (
+              <Domain
+                siteZUID={this.props.site.ZUID}
+                site={this.props.site}
+                dispatch={this.props.dispatch}
+              />
+            ) : this.props.site.domain ? (
+              this.props.site.domain
+            ) : (
+              <em>Ask your instance owner to set a domain</em>
+            )}
           </p>
 
           <article>
