@@ -28,7 +28,7 @@ class Properties extends Component {
               {this.props.sitesStarred.map(site => {
                 return (
                   <WebsiteCard
-                    key={`${site}-fave`}
+                    key={`${site.ZUID}-fave`}
                     site={site}
                     starred={true}
                     starSite={this.unstarSite}
@@ -59,31 +59,32 @@ class Properties extends Component {
   }
   starSite = site => {
     console.log(site, this.props)
-    const prefs = this.props.user.prefs
+    const prefs = JSON.parse(this.props.user.prefs)
     const starred = [...prefs.starred] || []
     starred.push(site)
-    // update the user prefs object to contain the 'favorite'
     this.props.dispatch(
       updateProfile({
         prefs: { ...prefs, starred }
       })
     )
+    this.props.dispatch(saveProfile())
   }
   unstarSite = site => {
     console.log(site, this.props)
-    const prefs = this.props.user.prefs
+    const prefs = JSON.parse(this.props.user.prefs)
     const starred = [...prefs.starred] || []
     starred.splice(starred.indexOf(site), 1)
-    // update the user prefs object to contain the 'favorite'
     this.props.dispatch(
       updateProfile({
         prefs: { ...prefs, starred }
       })
     )
+    this.props.dispatch(saveProfile())
   }
 }
 export default connect(state => {
-  const userStarred = state.user.prefs.starred || []
+  //TODO: make sure there are not duplicate sites across segments
+  const userStarred = JSON.parse(state.user.prefs).starred || []
   const sitesStarred = userStarred.map(site => state.sites[site])
   const sites = Object.keys(state.sitesFiltered).reduce((acc, ZUID) => {
     acc.push(state.sitesFiltered[ZUID])

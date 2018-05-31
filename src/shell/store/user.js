@@ -66,10 +66,9 @@ export function fetchUser(ZUID) {
             ? user.data.verifiedEmails.split(',')
             : []
 
-          user.data.prefs = JSON.parse(user.data.prefs)
-          if(!user.data.prefs.starred) {
-            user.data.prefs.starred = []
-          }
+          // if(!user.data.prefs.starred) {
+          //   user.data.prefs.starred = []
+          // }
           dispatch({
             type: 'FETCH_USER_SUCCESS',
             user: user.data
