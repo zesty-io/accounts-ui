@@ -59,7 +59,7 @@ class Properties extends Component {
   }
   starSite = site => {
     const prefs = JSON.parse(this.props.user.prefs)
-    const starred = [...prefs.starred] || []
+    const starred = prefs.starred || []
     starred.push(site)
     this.props.dispatch(
       updateProfile({
@@ -70,7 +70,7 @@ class Properties extends Component {
   }
   unstarSite = site => {
     const prefs = JSON.parse(this.props.user.prefs)
-    const starred = [...prefs.starred] || []
+    const starred = prefs.starred || []
     starred.splice(starred.indexOf(site), 1)
     this.props.dispatch(
       updateProfile({
@@ -82,7 +82,8 @@ class Properties extends Component {
 }
 export default connect(state => {
   //TODO: make sure there are not duplicate sites across segments
-  const userStarred = JSON.parse(state.user.prefs).starred || []
+  const prefs = JSON.parse(state.user.prefs)
+  const userStarred = prefs.starred || []
   const sitesStarred = userStarred.map(site => state.sites[site])
   const sites = Object.keys(state.sitesFiltered).reduce((acc, ZUID) => {
     if (!userStarred.includes(ZUID)) {
