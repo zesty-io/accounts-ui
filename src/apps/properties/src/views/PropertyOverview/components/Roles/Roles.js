@@ -45,8 +45,8 @@ export default class Roles extends Component {
               component={EditRole}
             />
             <p>
-              By creating custom roles you can provide fine grained controls of
-              what content specific users can access and what actions the can
+              By creating custom roles you can have fine grained control over
+              what content specific users can access and what actions they can
               take.
             </p>
             <RoleCreate
@@ -102,7 +102,7 @@ export default class Roles extends Component {
               .then(data => {
                 this.props.dispatch(
                   notify({
-                    message: 'Role successfully removed',
+                    message: 'Role successfully deleted',
                     type: 'success'
                   })
                 )
