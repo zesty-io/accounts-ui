@@ -41,7 +41,7 @@ class TwoFactorOptions extends Component {
     return (
       <Card>
         <CardHeader>
-          <h1>Two Factor Authentication</h1>
+          <h1>Two-Factor Authentication</h1>
         </CardHeader>
         <CardContent className={styles.TwoFactor}>
           {this.props.authyEnabled ? (

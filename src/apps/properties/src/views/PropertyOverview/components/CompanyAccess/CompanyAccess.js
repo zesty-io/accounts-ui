@@ -32,8 +32,9 @@ export default class CompanyAccess extends Component {
             <React.Fragment>
               <p>
                 By providing a team access you can allow an external group of
-                users access to manage your instance. For example; this is can
-                be used to provide an agency with access to manage your website.
+                users access to manage your instance. For example: this can
+                be used to provide an agency with access to manage your
+                website.
               </p>
               <div className={styles.addCompany}>
                 <Input

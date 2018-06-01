@@ -18,7 +18,7 @@ class Blueprints extends Component {
             create and maintain your own Blueprints using GitHub through this.
             You may share Blueprints by passing your GitHub repo url to a
             co-worker or friend. You may use other public Blueprints by forking
-            their repositories, and copying the Github repository url.
+            their repositories, and copying the GitHub repository url.
           </p>
           <AppLink to="/settings/blueprints/create">
             <i className="fa fa-plus" aria-hidden="true" />
@@ -54,7 +54,7 @@ class Blueprints extends Component {
                   <CardFooter className={styles.BlueprintAction}>
                     <Url href={blueprint.githubURL} target="_blank">
                       <i className="fa fa-github" aria-hidden="true" />
-                      View On Github
+                      View On GitHub
                     </Url>
                     <AppLink to={`/settings/blueprints/${blueprint.ID}`}>
                       <i className="fa fa-pencil-square-o" aria-hidden="true" />&nbsp;Edit

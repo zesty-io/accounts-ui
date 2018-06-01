@@ -76,7 +76,7 @@ class Login extends Component {
               <h2>Create an Account</h2>
               <p>
                 Welcome to Zesty.io. Sign up to start creating and managing
-                content ready to be delivered securely, quickily and scalably to
+                content ready to be delivered securely, quickly and scalably to
                 everywhere from anywhere.<br />
               </p>
               <AppLink to="/signup">Create Account</AppLink>
