@@ -123,16 +123,17 @@ class BlueprintEdit extends Component {
               disabled={this.state.saving}
               className={styles.button}
               onClick={this.handleSubmit}
-              type="submit"
-              text="Save"
-            />
+              type="submit">
+              <i className="fa fa-save" /> Save
+            </Button>
           ) : (
             <Button
               disabled={this.state.saving}
               className={styles.button}
               onClick={this.handleCreate}
-              type="submit"
-            ><i className="fa fa-plus" /> Create</Button>
+              type="submit">
+              <i className="fa fa-plus" /> Create
+            </Button>
           )}
         </div>
       )
