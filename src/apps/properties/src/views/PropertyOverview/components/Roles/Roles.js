@@ -30,7 +30,7 @@ const formatDate = date => {
 export default class Roles extends Component {
   render() {
     return (
-      <Card>
+      <Card className={styles.Roles}>
         <CardHeader>
           <h2>
             <i className="fa fa-lock" aria-hidden="true" />
@@ -38,7 +38,7 @@ export default class Roles extends Component {
           </h2>
         </CardHeader>
         <CardContent>
-          <div className={styles.Roles}>
+          <div>
             <Route
               exact
               path={`/instances/:siteZUID/role/:roleZUID`}
@@ -71,7 +71,8 @@ export default class Roles extends Component {
                       <span>
                         <ButtonGroup>
                           <AppLink
-                            to={`${this.props.match.url}role/${role.ZUID}`}>
+                            to={`${this.props.match.url}role/${role.ZUID}`}
+                          >
                             <i className="fa fa-pencil" aria-hidden="true" />&nbsp;Edit
                           </AppLink>
                           <Button onClick={() => this.handleRemove(role.ZUID)}>
