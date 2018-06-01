@@ -15,13 +15,11 @@ class Properties extends Component {
     return (
       <section className={styles.Websites}>
         <PropertiesHeader />
-        <main className={styles.siteListWrap}>
-          {this.props.sites.length ? (
-            <div className={styles.siteList} id="siteListWrapper">
-              {this.props.sitesInvited.map(site => {
-                return <WebsiteInvite key={site.ZUID} site={site} />
-              })}
 
+        {this.props.sitesFavorite.length ? (
+          <React.Fragment>
+            <h2 className={styles.SectionTitle}>Favorite Instances</h2>
+            <main className={cx(styles.siteList, styles.Favorites)}>
               {this.props.sitesFavorite.map(site => {
                 return (
                   <WebsiteCard
@@ -31,6 +29,17 @@ class Properties extends Component {
                     favorite={true}
                   />
                 )
+              })}
+            </main>
+          </React.Fragment>
+        ) : null}
+
+        {this.props.sites.length ? (
+          <React.Fragment>
+            <h2 className={styles.SectionTitle}>All Instances</h2>
+            <main className={styles.siteList} id="siteListWrapper">
+              {this.props.sitesInvited.map(site => {
+                return <WebsiteInvite key={site.ZUID} site={site} />
               })}
 
               {this.props.sitesFiltered.map(site => {
@@ -43,14 +52,14 @@ class Properties extends Component {
                 )
               })}
               <Route path="/instances/:siteZUID" component={PropertyOverview} />
-            </div>
-          ) : (
-            // No sites so create a new one
-            <div className={styles.siteList}>
-              <WebsiteCreate />
-            </div>
-          )}
-        </main>
+            </main>
+          </React.Fragment>
+        ) : (
+          // No sites so create a new one
+          <main className={styles.siteList}>
+            <WebsiteCreate />
+          </main>
+        )}
       </section>
     )
   }
