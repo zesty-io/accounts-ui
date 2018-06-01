@@ -18,6 +18,13 @@ class Blueprints extends Component {
     if (!Object.keys(this.props.blueprints).length) {
       this.props.dispatch(fetchBlueprints())
     }
+    const bp = this.props.match.params.id
+    if (Object.keys(this.props.blueprints).length && bp) {
+      if (bp === 'new') {
+        return this.setState({ selected: 'new' })
+      }
+      this.setState({ selected: this.props.blueprints[bp] })
+    }
   }
   componentWillReceiveProps(props) {
     const bp = props.match.params.id
