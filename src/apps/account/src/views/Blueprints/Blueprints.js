@@ -5,7 +5,8 @@ import { Link, withRouter } from 'react-router-dom'
 import BlueprintEdit from './components/BlueprintEdit'
 import SelectBlueprint from './components/SelectBlueprint'
 
-import { fetchBlueprints } from '../../../../properties/src/store/blueprints'
+import { fetchBlueprints, deleteBlueprint } from '../../../../properties/src/store/blueprints'
+import { zConfirm } from '../../../../../shell/store/confirm'
 
 import styles from './Blueprints.less'
 
@@ -42,6 +43,7 @@ class Blueprints extends Component {
           blueprints={this.props.userBlueprints}
           selection={this.state.selected}
           handleSelect={this.handleSelect}
+          handleDelete={this.handleDelete}
         />
         <BlueprintEdit
           userZUID={this.props.userZUID}
@@ -53,6 +55,17 @@ class Blueprints extends Component {
   }
   handleSelect = blueprint => {
     this.props.history.push(`${blueprint}`)
+  }
+  handleDelete = blueprint => {
+    const name = this.props.blueprints[blueprint].name
+    this.props.dispatch(zConfirm({
+      prompt: 'Are you sure you want to delete this blueprint?',
+      callback: response => {
+        if (response) {
+          this.props.dispatch(deleteBlueprint(blueprint, name))
+        }
+      }
+    }))
   }
 }
 

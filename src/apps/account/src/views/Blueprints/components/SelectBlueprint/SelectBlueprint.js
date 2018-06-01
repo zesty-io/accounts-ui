@@ -24,7 +24,7 @@ const SelectBlueprint = props => {
                 : null
             }
             onClick={() => props.handleSelect(bp.ID)}>
-            {bp.name}
+            <i className='fa fa-trash-o' onClick={() => props.handleDelete(bp.ID)} />{bp.name}
           </li>
         )
       })}
