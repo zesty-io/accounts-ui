@@ -9,11 +9,9 @@ import { notify } from '../../../../../shell/store/notifications'
 import cx from 'classnames'
 import styles from './WebsiteInvite.less'
 
-// import { Line } from 'react-chartjs-2'
-
 class WebsiteInvite extends Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
       submitted: false
     }
@@ -22,35 +20,48 @@ class WebsiteInvite extends Component {
   render() {
     return (
       <Card className={styles.WebsiteInvite}>
-        <CardHeader>
+        <CardHeader className={styles.CardHeader}>
           <h1 className={styles.Name}>{this.props.site.name}</h1>
         </CardHeader>
-        <CardContent>
-          <Url
-            className={styles.Preview}
-            target="_blank"
-            title={`Preview  ${this.props.site.name}`}
-            href={`https://${this.props.site.RandomHashID}.preview.zesty.io`}>
-            <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
-          </Url>
-        </CardContent>
-        <CardFooter>
-          <ButtonGroup className={styles.Actions}>
-            <Button
-              className={styles.invite}
-              onClick={this.handleAccept}
-              disabled={this.state.submitted}>
-              <i className="fa fa-check-circle-o" aria-hidden="true" />
-              Accept Invite
-            </Button>
-            <Button
-              type="cancel"
-              onClick={this.handleDecline}
-              disabled={this.state.submitted}>
-              <i className="fa fa-ban" aria-hidden="true" />
-              Decline
-            </Button>
-          </ButtonGroup>
+
+        {this.props.site.screenshotURL ? (
+          <CardContent
+            className={cx(styles.CardContent, styles.cover)}
+            style={{ backgroundImage: `url(${this.props.site.screenshotURL})` }}
+          />
+        ) : (
+          <CardContent className={cx(styles.CardContent)}>
+            <Url
+              className={styles.Preview}
+              target="_blank"
+              title={`Preview  ${this.props.site.name}`}
+              href={`https://${this.props.site.randomHashID}.preview.zesty.io`}
+            >
+              <i
+                className={cx(styles.icon, 'fa fa-globe')}
+                aria-hidden="true"
+              />
+            </Url>
+          </CardContent>
+        )}
+
+        <CardFooter className={cx(styles.CardFooter, styles.Actions)}>
+          <Button
+            className={styles.invite}
+            onClick={this.handleAccept}
+            disabled={this.state.submitted}
+          >
+            <i className="fa fa-check-circle-o" aria-hidden="true" />
+            Accept Invite
+          </Button>
+          <Button
+            type="cancel"
+            onClick={this.handleDecline}
+            disabled={this.state.submitted}
+          >
+            <i className="fa fa-ban" aria-hidden="true" />
+            Decline
+          </Button>
         </CardFooter>
       </Card>
     )
@@ -64,12 +75,12 @@ class WebsiteInvite extends Component {
           return site.ZUID === this.props.site.ZUID
         })
         // open the site in manager
-        window.open(
-          `${CONFIG.MANAGER_URL_PROTOCOL}${invitedSite[0].randomHashID}${
-            CONFIG.MANAGER_URL
-          }`,
-          '_blank'
-        )
+        // window.open(
+        //   `${CONFIG.MANAGER_URL_PROTOCOL}${invitedSite[0].randomHashID}${
+        //     CONFIG.MANAGER_URL
+        //   }`,
+        //   '_blank'
+        // )
         // open the site's overview
         return this.props.history.push(`/instances/${this.props.site.ZUID}`)
       })

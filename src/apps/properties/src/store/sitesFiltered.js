@@ -15,7 +15,7 @@ export function sitesFiltered(state = {}, action) {
   }
 }
 
-export const sortSites = (sortBy) => {
+export const sortSites = sortBy => {
   return (dispatch, getState) => {
     const sitesObj = getState().sitesFiltered
     let sites = Object.keys(sitesObj).map(site => sitesObj[site])
@@ -56,6 +56,11 @@ export const sortSites = (sortBy) => {
 
 export const filter = searchString => {
   return function(dispatch, getState) {
+    dispatch({
+      type: 'SETTING_FILTER',
+      filter: searchString
+    })
+
     let sites = getState().sites
 
     if (searchString !== '') {

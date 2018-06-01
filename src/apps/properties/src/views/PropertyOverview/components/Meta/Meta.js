@@ -69,25 +69,6 @@ export default class Meta extends Component {
               {this.props.site.randomHashID}
             </p>
           </article>
-
-          {/* <div className={styles.Meta}>
-            <header>
-              <h3>Created</h3>
-              <h3>Updated</h3>
-              <h3>Instance ID</h3>
-              <h3>Numeric ID (Legacy)</h3>
-              <h3>Hash ID (Legacy)</h3>
-            </header>
-            <main>
-              <article>
-                <span>{formatDate(this.props.site.createdAt)}</span>
-                <span>{formatDate(this.props.site.updatedAt)}</span>
-                <span>{this.props.site.ZUID}</span>
-                <span>{this.props.site.ID}</span>
-                <span>{this.props.site.randomHashID}</span>
-              </article>
-            </main>
-          </div> */}
         </CardContent>
       </Card>
     )

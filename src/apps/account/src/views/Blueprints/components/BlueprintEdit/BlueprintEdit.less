@@ -1,0 +1,42 @@
+@import '../../../../../../../shell/styles/colors.less';
+
+.blueprints {
+  display: flex;
+  margin: 2rem;
+  padding: 3rem;
+  background-color: @white;
+  flex-direction: column;
+  width: 80%;
+  height: 80%;
+  margin: 1rem auto;
+  border-radius: 10px;
+  box-shadow: 10px 10px 25px 6px rgba(0,0,0,0.35);
+
+  label {
+    display: block;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #5b667d;
+    margin: 1rem;
+  }
+
+  .descriptionWrapper {
+    display: flex;
+    width: 100%;
+    textarea {
+      font-size: 14px;
+      margin: 1rem;
+      border: solid 1px #ccc;
+      background-color: #eee;
+      color: #777;
+      width: 30vw;
+      height: 100px;
+    }
+  }
+
+  .button {
+    margin: 1rem;
+    max-width: 150px;
+  }
+}
