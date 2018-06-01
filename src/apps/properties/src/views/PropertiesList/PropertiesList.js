@@ -3,61 +3,18 @@ import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import styles from './PropertiesList.less'
 
-import PropertiesHeader from '../../components/PropertiesHeader'
-import WebsiteCard from '../../components/WebsiteCard'
-import WebsiteInvite from '../../components/WebsiteInvite'
 import WebsiteCreate from '../../components/WebsiteCreate'
 
-import PropertyOverview from '../PropertyOverview'
+import PropertiesHeader from './components/PropertiesHeader'
+import GridList from './components/GridList'
 
 class Properties extends Component {
   render() {
     return (
       <section className={styles.Websites} id="siteListWrapper">
         <PropertiesHeader />
-        <Route path="/instances/:siteZUID" component={PropertyOverview} />
 
-        {this.props.sitesInvited.length ? (
-          <React.Fragment>
-            <h2 className={styles.SectionTitle}>
-              <i className="fa fa-envelope-o" aria-hidden="true" />
-              &nbsp;Invites
-            </h2>
-            <main className={styles.siteList}>
-              {this.props.sitesInvited.map(site => {
-                return <WebsiteInvite key={site.ZUID} site={site} />
-              })}
-            </main>
-          </React.Fragment>
-        ) : null}
-
-        {!this.props.settings.filter && this.props.sitesFavorite.length ? (
-          <React.Fragment>
-            <h2 className={styles.SectionTitle}>
-              <i className="fa fa-star-o" aria-hidden="true" />
-              &nbsp;Favorites
-            </h2>
-            <main className={cx(styles.siteList, styles.Favorites)}>
-              {this.props.sitesFavorite.map(this.renderCard)}
-            </main>
-          </React.Fragment>
-        ) : null}
-
-        {this.props.sitesFiltered.length ? (
-          <React.Fragment>
-            <h2 className={styles.SectionTitle}>
-              <i className="fa fa-th" aria-hidden="true" />
-              &nbsp;All Instances
-            </h2>
-            <main className={styles.siteList}>
-              {this.props.sitesFiltered.map(this.renderCard)}
-            </main>
-          </React.Fragment>
-        ) : (
-          <main className={styles.siteList}>
-            <h2>No results</h2>
-          </main>
-        )}
+        <GridList {...this.props} />
 
         {!this.props.sites.length ? (
           // No sites so create a new one
@@ -66,16 +23,6 @@ class Properties extends Component {
           </main>
         ) : null}
       </section>
-    )
-  }
-  renderCard = site => {
-    return (
-      <WebsiteCard
-        key={site.ZUID}
-        site={site}
-        dispatch={this.props.dispatch}
-        favorite={site.favorite}
-      />
     )
   }
 }

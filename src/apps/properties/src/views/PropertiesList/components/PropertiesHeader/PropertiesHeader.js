@@ -3,7 +3,11 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './PropertiesHeader.less'
 
-import { filter, filterEcosystem, sortSites } from '../../store/sitesFiltered'
+import {
+  filter,
+  filterEcosystem,
+  sortSites
+} from '../../../../store/sitesFiltered'
 
 class PropertiesHeader extends Component {
   state = {
