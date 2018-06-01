@@ -21,7 +21,7 @@ class Properties extends Component {
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
               <i className="fa fa-envelope-o" aria-hidden="true" />
-              &nbsp;Invited Instances
+              &nbsp;Invites
             </h2>
             <main className={styles.siteList}>
               {this.props.sitesInvited.map(this.renderCard)}
@@ -33,7 +33,7 @@ class Properties extends Component {
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
               <i className="fa fa-star-o" aria-hidden="true" />
-              &nbsp;Favorite Instances
+              &nbsp;Favorites
             </h2>
             <main className={cx(styles.siteList, styles.Favorites)}>
               {this.props.sitesFavorite.map(this.renderCard)}
