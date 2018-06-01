@@ -20,8 +20,12 @@ class Blueprints extends Component {
     }
   }
   componentWillReceiveProps(props) {
-    if (Object.keys(props.blueprints).length && props.match.params.id) {
-      this.setState({ selected: props.blueprints[props.match.params.id] })
+    const bp = props.match.params.id
+    if (Object.keys(props.blueprints).length && bp) {
+      if (bp === 'new') {
+        return this.setState({ selected: 'new' })
+      }
+      this.setState({ selected: props.blueprints[bp] })
     }
   }
   render() {
@@ -42,10 +46,11 @@ class Blueprints extends Component {
     )
   }
   handleSelect = blueprint => {
-    if (blueprint === 'new') {
-      return this.setState({ selected: 'new' })
-    }
-    this.setState({ selected: this.props.blueprints[blueprint] })
+    this.props.history.push(`${blueprint}`)
+    // if (blueprint === 'new') {
+    //   return this.setState({ selected: 'new' })
+    // }
+    // this.setState({ selected: this.props.blueprints[blueprint] })
   }
 }
 
