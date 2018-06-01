@@ -16,7 +16,7 @@ class Properties extends Component {
       <section className={styles.Websites}>
         <PropertiesHeader />
 
-        {this.props.sitesFavorite.length ? (
+        {!this.props.settings.filter && this.props.sitesFavorite.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>Favorite Instances</h2>
             <main className={cx(styles.siteList, styles.Favorites)}>
@@ -78,6 +78,7 @@ export default connect((state, props) => {
     sitesFiltered: sites.filter(site => !site.inviteZUID),
     sitesInvited: sites.filter(site => site.inviteZUID),
     sitesFavorite: favorites.map(ZUID => state.sites[ZUID]),
-    dispatch: props.dispatch
+    dispatch: props.dispatch,
+    settings: state.settings
   }
 })(Properties)
