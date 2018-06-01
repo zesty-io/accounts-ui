@@ -123,14 +123,14 @@ class BlueprintEdit extends Component {
           </section>
           {this.state.blueprint.ID ? (
             <Button
-              className={styles.bottom}
+              className={styles.button}
               onClick={this.handleSubmit}
               type="submit"
               text="Save"
             />
           ) : (
             <Button
-              className={styles.bottom}
+              className={styles.button}
               onClick={this.handleCreate}
               type="submit"
               text="Create"
