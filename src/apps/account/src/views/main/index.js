@@ -4,8 +4,7 @@ import { connect } from 'react-redux'
 import { ErrorBoundary } from './err'
 
 import Account from '../Account'
-import BlueprintEdit from '../BlueprintEdit'
-import BlueprintCreate from '../BlueprintCreate'
+import Blueprints from '../Blueprints'
 
 import styles from './styles.less'
 
@@ -15,11 +14,7 @@ class Settings extends Component {
       <ErrorBoundary>
         <Switch>
           <Route path="/settings/account" component={Account} />
-          <Route
-            path="/settings/blueprints/create"
-            component={BlueprintCreate}
-          />
-          <Route path="/settings/blueprints/:id" component={BlueprintEdit} />
+          <Route path="/settings/blueprints/:id?" component={Blueprints} />
         </Switch>
       </ErrorBoundary>
     )
