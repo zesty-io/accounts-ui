@@ -48,62 +48,59 @@ class BlueprintEdit extends Component {
   render() {
     return (
       this.state.blueprint && (
-        <div>
-          <div className={styles.blueprints}>
-            <div className={styles.rowOne}>
-              <label>Blueprint Name</label>
-              <Input
-                autoComplete="off"
-                type="text"
-                size={50}
-                onChange={this.onChange}
-                value={this.state.blueprint.name || ''}
-                name="name"
-              />
-              <label>Github Repo URL</label>
-              <Input
-                autoComplete="off"
-                type="text"
-                size={50}
-                onChange={this.onChange}
-                value={this.state.blueprint.githubURL || ''}
-                name="githubURL"
-              />
-              <label>Blueprint Example Preview URL</label>
-              <Input
-                autoComplete="off"
-                type="text"
-                size={50}
-                onChange={this.onChange}
-                value={this.state.blueprint.previewURL || ''}
-                name="previewURL"
-              />
-              <label>
-                Shield Image URL (Optional. This will override shield.png in
-                your repo.)
-              </label>
-              <Input
-                autoComplete="off"
-                type="text"
-                size={50}
-                onChange={this.onChange}
-                value={this.state.blueprint.mainImage || ''}
-                name="mainImage"
-              />
-              <label>
-                Background Cover Image URL (Optional. This will override
-                shield.png in your repo.)
-              </label>
-              <Input
-                autoComplete="off"
-                size={50}
-                onChange={this.onChange}
-                value={this.state.blueprint.coverImage || ''}
-                name="coverImage"
-              />
-            </div>
-            <h3 className={styles.description}>Description</h3>
-            <div className={styles.rowTwo}>
+        <div className={styles.blueprints}>
+          <label>Blueprint Name</label>
+          <Input
+            autoComplete="off"
+            type="text"
+            size={50}
+            onChange={this.onChange}
+            value={this.state.blueprint.name || ''}
+            name="name"
+          />
+          <label>Github Repo URL</label>
+          <Input
+            autoComplete="off"
+            type="text"
+            size={50}
+            onChange={this.onChange}
+            value={this.state.blueprint.githubURL || ''}
+            name="githubURL"
+          />
+          <label>Blueprint Example Preview URL</label>
+          <Input
+            autoComplete="off"
+            type="text"
+            size={50}
+            onChange={this.onChange}
+            value={this.state.blueprint.previewURL || ''}
+            name="previewURL"
+          />
+          <label>
+            Shield Image URL (Optional. This will override shield.png in your
+            repo.)
+          </label>
+          <Input
+            autoComplete="off"
+            type="text"
+            size={50}
+            onChange={this.onChange}
+            value={this.state.blueprint.mainImage || ''}
+            name="mainImage"
+          />
+          <label>
+            Background Cover Image URL (Optional. This will override shield.png
+            in your repo.)
+          </label>
+          <Input
+            autoComplete="off"
+            size={50}
+            onChange={this.onChange}
+            value={this.state.blueprint.coverImage || ''}
+            name="coverImage"
+          />
+          <section className={styles.descriptionWrapper}>
+            <article>
               <label>Short Description</label>
               <textarea
                 autoComplete="off"
@@ -112,8 +109,8 @@ class BlueprintEdit extends Component {
                 onChange={this.onChange}
                 value={this.state.blueprint.shortDescription || ''}
               />
-            </div>
-            <div className={styles.rowTwo1}>
+            </article>
+            <article>
               <label>Description</label>
               <textarea
                 autoComplete="off"
@@ -122,23 +119,23 @@ class BlueprintEdit extends Component {
                 onChange={this.onChange}
                 value={this.state.blueprint.description || ''}
               />
-            </div>
-            {this.state.blueprint.ID ? (
-              <Button
-                className={styles.bottom3}
-                onClick={this.handleSubmit}
-                type="submit"
-                text="Save"
-              />
-            ) : (
-              <Button
-                className={styles.bottom3}
-                onClick={this.handleCreate}
-                type="submit"
-                text="Create"
-              />
-            )}
-          </div>
+            </article>
+          </section>
+          {this.state.blueprint.ID ? (
+            <Button
+              className={styles.bottom}
+              onClick={this.handleSubmit}
+              type="submit"
+              text="Save"
+            />
+          ) : (
+            <Button
+              className={styles.bottom}
+              onClick={this.handleCreate}
+              type="submit"
+              text="Create"
+            />
+          )}
         </div>
       )
     )
@@ -166,7 +163,10 @@ class BlueprintEdit extends Component {
   }
   handleCreate = evt => {
     evt.preventDefault()
-    const newBlueprint = {...this.state.blueprint, createdByUserZUID: this.state.userZUID}
+    const newBlueprint = {
+      ...this.state.blueprint,
+      createdByUserZUID: this.state.userZUID
+    }
     this.props
       .dispatch(postNewBlueprint(newBlueprint))
       .then(data => {
