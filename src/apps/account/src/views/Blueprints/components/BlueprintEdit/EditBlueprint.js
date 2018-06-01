@@ -27,7 +27,20 @@ class EditBlueprint extends Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log('static running', props)
+    console.log('props', props)
+    if (props.blueprint === 'new') {
+      return this.setState({
+        blueprint: {
+          name: '',
+          githubURL: '',
+          description: '',
+          shortDescription: '',
+          previewURL: '',
+          coverImage: '',
+          mainImage: ''
+        }
+      })
+    }
     if (props.blueprint.ID !== this.state.blueprint.ID) {
       this.setState({
         blueprint: props.blueprint
@@ -108,8 +121,11 @@ class EditBlueprint extends Component {
                 value={this.state.blueprint.description}
               />
             </div>
-            // TODO: ternary to create vs save on ID
-            <Button className={styles.bottom3} type="submit" text="Save" />
+            {this.state.blueprint.ID ? (
+              <Button className={styles.bottom3} type="submit" text="Save" />
+            ) : (
+              <Button className={styles.bottom3} type="submit" text="Create" />
+            )}
           </div>
         </form>
       )

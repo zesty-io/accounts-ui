@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom'
 import BlueprintEdit from './components/BlueprintEdit'
 import SelectBlueprint from './components/SelectBlueprint'
 
-import { postNewBlueprint } from '../../../../properties/src/store/blueprints'
+import { postNewBlueprint, fetchBlueprints } from '../../../../properties/src/store/blueprints'
 
 import styles from './Blueprints.less'
 
@@ -13,13 +13,18 @@ class Blueprints extends Component {
   state = {
     selected: ''
   }
+  componentDidMount() {
+    if(!Object.keys(this.props.blueprints).length) {
+      this.props.dispatch(fetchBlueprints())
+    }
+  }
   render() {
     return (
       <section className={styles.Blueprints}>
         <SelectBlueprint
           className={styles.List}
           blueprints={this.props.userBlueprints}
-          selection={this.state.selection}
+          selection={this.state.selected}
           handleSelect={this.handleSelect}
         />
         <BlueprintEdit
@@ -29,7 +34,9 @@ class Blueprints extends Component {
     )
   }
   handleSelect = blueprint => {
-    console.log(blueprint)
+    if(blueprint === 'new'){
+      return this.setState({ selected: 'new' })
+    }
     this.setState({ selected: this.props.blueprints[blueprint] })
   }
 }

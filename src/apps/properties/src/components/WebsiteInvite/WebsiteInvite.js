@@ -64,12 +64,12 @@ class WebsiteInvite extends Component {
           return site.ZUID === this.props.site.ZUID
         })
         // open the site in manager
-        window.open(
-          `${CONFIG.MANAGER_URL_PROTOCOL}${invitedSite[0].randomHashID}${
-            CONFIG.MANAGER_URL
-          }`,
-          '_blank'
-        )
+        // window.open(
+        //   `${CONFIG.MANAGER_URL_PROTOCOL}${invitedSite[0].randomHashID}${
+        //     CONFIG.MANAGER_URL
+        //   }`,
+        //   '_blank'
+        // )
         // open the site's overview
         return this.props.history.push(`/instances/${this.props.site.ZUID}`)
       })
