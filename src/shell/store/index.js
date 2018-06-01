@@ -5,6 +5,7 @@ import createDebounce from 'redux-debounced'
 
 import { user } from './user'
 import { auth } from './auth'
+import { settings } from './settings'
 import { notifications } from './notifications'
 // import { modal } from './modal'
 import { confirm } from './confirm'
@@ -22,6 +23,7 @@ const appReducer = combineReducers({
   user,
   teams,
   auth,
+  settings,
   // modal,
   confirm,
   notifications,
