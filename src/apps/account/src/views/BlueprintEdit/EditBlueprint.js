@@ -42,7 +42,7 @@ class EditBlueprint extends Component {
               value={this.state.blueprint.name}
               name="name"
             />
-            <label>Github Repo URL</label>
+            <label>GitHub Repo URL</label>
             <Input
               type="text"
               size={50}
@@ -71,7 +71,7 @@ class EditBlueprint extends Component {
             />
             <label>
               Background Cover Image URL (Optional. This will override
-              shield.png in your repo.)
+              cover.png in your repo.)
             </label>
             <Input
               size={50}
