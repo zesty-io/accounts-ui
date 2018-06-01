@@ -148,6 +148,7 @@ class BlueprintEdit extends Component {
     this.props
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
       .then(data => {
+        console.log('state: ', this.state.blueprint, 'data: ', data)
         this.props.dispatch(
           notify({
             type: 'success',

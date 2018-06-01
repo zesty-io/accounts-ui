@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import qs from 'qs'
 
 import BlueprintEdit from './components/BlueprintEdit'
 import SelectBlueprint from './components/SelectBlueprint'
@@ -15,7 +14,10 @@ class Blueprints extends Component {
     selected: ''
   }
   componentDidMount() {
-    console.log(qs.parse(window.location.search.substr(1)))
+    console.log(this.props.match.params)
+    if(this.props.match.params.id){
+      console.log('have id')
+    }
     // if there are no blueprints, fetch them
     if (!Object.keys(this.props.blueprints).length) {
       this.props.dispatch(fetchBlueprints())
