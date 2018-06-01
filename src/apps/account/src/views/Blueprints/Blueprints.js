@@ -54,10 +54,6 @@ class Blueprints extends Component {
   }
   handleSelect = blueprint => {
     this.props.history.push(`${blueprint}`)
-    // if (blueprint === 'new') {
-    //   return this.setState({ selected: 'new' })
-    // }
-    // this.setState({ selected: this.props.blueprints[blueprint] })
   }
 }
 
