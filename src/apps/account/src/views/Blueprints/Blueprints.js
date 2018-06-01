@@ -39,7 +39,6 @@ class Blueprints extends Component {
     return (
       <section className={styles.Blueprints}>
         <SelectBlueprint
-          className={styles.List}
           blueprints={this.props.userBlueprints}
           selection={this.state.selected}
           handleSelect={this.handleSelect}
