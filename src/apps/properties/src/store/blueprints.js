@@ -86,7 +86,7 @@ export function fetchBlueprint(id) {
   }
 }
 
-export function postNewBlueprint(name) {
+export function postNewBlueprint(body) {
   return dispatch => {
     dispatch({
       type: 'CREATING_BLUEPRINT'
@@ -94,7 +94,7 @@ export function postNewBlueprint(name) {
     return request(`${CONFIG.API_ACCOUNTS}/blueprints`, {
       method: 'POST',
       json: true,
-      body: { name }
+      body
     })
       .then(data => {
         dispatch({

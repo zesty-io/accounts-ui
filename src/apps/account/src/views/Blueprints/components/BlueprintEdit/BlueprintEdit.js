@@ -1,33 +1,28 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
 
 import { notify } from '../../../../../../../shell/store/notifications'
 import {
-  fetchBlueprints,
-  updateBlueprint
+  updateBlueprint,
+  postNewBlueprint
 } from '../../../../../../properties/src/store/blueprints'
 
-import styles from './EditBlueprint.less'
+import styles from './BlueprintEdit.less'
 
-class EditBlueprint extends Component {
-  constructor(props) {
-    super()
-    this.state = {
-      blueprint: {
-        name: '',
-        githubURL: '',
-        description: '',
-        shortDescription: '',
-        previewURL: '',
-        coverImage: '',
-        mainImage: ''
-      }
+class BlueprintEdit extends Component {
+  state = {
+    userZUID: this.props.userZUID,
+    blueprint: {
+      name: '',
+      githubURL: '',
+      description: '',
+      shortDescription: '',
+      previewURL: '',
+      coverImage: '',
+      mainImage: ''
     }
   }
 
   componentWillReceiveProps(props) {
-    console.log('props', props)
     if (props.blueprint === 'new') {
       return this.setState({
         blueprint: {
@@ -53,31 +48,34 @@ class EditBlueprint extends Component {
   render() {
     return (
       this.state.blueprint && (
-        <form id="edit-form" onSubmit={this.handleSubmit}>
+        <div>
           <div className={styles.blueprints}>
             <div className={styles.rowOne}>
               <label>Blueprint Name</label>
               <Input
+                autoComplete="off"
                 type="text"
                 size={50}
                 onChange={this.onChange}
-                value={this.state.blueprint.name}
+                value={this.state.blueprint.name || ''}
                 name="name"
               />
               <label>Github Repo URL</label>
               <Input
+                autoComplete="off"
                 type="text"
                 size={50}
                 onChange={this.onChange}
-                value={this.state.blueprint.githubURL}
+                value={this.state.blueprint.githubURL || ''}
                 name="githubURL"
               />
               <label>Blueprint Example Preview URL</label>
               <Input
+                autoComplete="off"
                 type="text"
                 size={50}
                 onChange={this.onChange}
-                value={this.state.blueprint.previewURL}
+                value={this.state.blueprint.previewURL || ''}
                 name="previewURL"
               />
               <label>
@@ -85,10 +83,11 @@ class EditBlueprint extends Component {
                 your repo.)
               </label>
               <Input
+                autoComplete="off"
                 type="text"
                 size={50}
                 onChange={this.onChange}
-                value={this.state.blueprint.mainImage}
+                value={this.state.blueprint.mainImage || ''}
                 name="mainImage"
               />
               <label>
@@ -96,9 +95,10 @@ class EditBlueprint extends Component {
                 shield.png in your repo.)
               </label>
               <Input
+                autoComplete="off"
                 size={50}
                 onChange={this.onChange}
-                value={this.state.blueprint.coverImage}
+                value={this.state.blueprint.coverImage || ''}
                 name="coverImage"
               />
             </div>
@@ -106,33 +106,44 @@ class EditBlueprint extends Component {
             <div className={styles.rowTwo}>
               <label>Short Description</label>
               <textarea
+                autoComplete="off"
                 wrap="soft"
                 name="shortDescription"
                 onChange={this.onChange}
-                value={this.state.blueprint.shortDescription}
+                value={this.state.blueprint.shortDescription || ''}
               />
             </div>
             <div className={styles.rowTwo1}>
               <label>Description</label>
               <textarea
+                autoComplete="off"
                 wrap="soft"
                 name="description"
                 onChange={this.onChange}
-                value={this.state.blueprint.description}
+                value={this.state.blueprint.description || ''}
               />
             </div>
             {this.state.blueprint.ID ? (
-              <Button className={styles.bottom3} type="submit" text="Save" />
+              <Button
+                className={styles.bottom3}
+                onClick={this.handleSubmit}
+                type="submit"
+                text="Save"
+              />
             ) : (
-              <Button className={styles.bottom3} type="submit" text="Create" />
+              <Button
+                className={styles.bottom3}
+                onClick={this.handleCreate}
+                type="submit"
+                text="Create"
+              />
             )}
           </div>
-        </form>
+        </div>
       )
     )
   }
   handleSubmit = evt => {
-    // TODO: check if we are saving or updating based on ID?
     evt.preventDefault()
     this.props
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
@@ -153,6 +164,29 @@ class EditBlueprint extends Component {
         )
       })
   }
+  handleCreate = evt => {
+    evt.preventDefault()
+    const newBlueprint = {...this.state.blueprint, createdByUserZUID: this.state.userZUID}
+    this.props
+      .dispatch(postNewBlueprint(newBlueprint))
+      .then(data => {
+        console.log(data)
+        this.props.dispatch(
+          notify({
+            type: 'success',
+            message: 'successfully created blueprint'
+          })
+        )
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: 'something went wrong creating the blueprint'
+          })
+        )
+      })
+  }
   onChange = evt => {
     return this.setState({
       blueprint: {
@@ -163,19 +197,4 @@ class EditBlueprint extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    blueprint: Object.keys(state.blueprints)
-      .map(i => {
-        if (
-          parseInt(state.blueprints[i].ID, 10) ===
-          parseInt(ownProps.match.params.id, 10)
-        ) {
-          return state.blueprints[i]
-        }
-      })
-      .filter(i => i !== undefined)[0]
-  }
-}
-
-export default EditBlueprint
+export default BlueprintEdit

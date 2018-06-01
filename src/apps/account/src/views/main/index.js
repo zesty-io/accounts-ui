@@ -14,7 +14,7 @@ class Settings extends Component {
       <ErrorBoundary>
         <Switch>
           <Route path="/settings/account" component={Account} />
-          <Route path="/settings/blueprints/:id" component={Blueprints} />
+          <Route path="/settings/blueprints/" component={Blueprints} />
         </Switch>
       </ErrorBoundary>
     )

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
+import qs from 'qs'
 
 import BlueprintEdit from './components/BlueprintEdit'
 import SelectBlueprint from './components/SelectBlueprint'
 
-import { postNewBlueprint, fetchBlueprints } from '../../../../properties/src/store/blueprints'
+import { fetchBlueprints } from '../../../../properties/src/store/blueprints'
 
 import styles from './Blueprints.less'
 
@@ -14,7 +15,9 @@ class Blueprints extends Component {
     selected: ''
   }
   componentDidMount() {
-    if(!Object.keys(this.props.blueprints).length) {
+    console.log(qs.parse(window.location.search.substr(1)))
+    // if there are no blueprints, fetch them
+    if (!Object.keys(this.props.blueprints).length) {
       this.props.dispatch(fetchBlueprints())
     }
   }
@@ -28,13 +31,15 @@ class Blueprints extends Component {
           handleSelect={this.handleSelect}
         />
         <BlueprintEdit
+          userZUID={this.props.userZUID}
+          dispatch={this.props.dispatch}
           blueprint={this.state.selected}
         />
       </section>
     )
   }
   handleSelect = blueprint => {
-    if(blueprint === 'new'){
+    if (blueprint === 'new') {
       return this.setState({ selected: 'new' })
     }
     this.setState({ selected: this.props.blueprints[blueprint] })

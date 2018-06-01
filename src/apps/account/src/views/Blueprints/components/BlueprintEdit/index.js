@@ -1,2 +1,2 @@
-import EditBlueprint from './EditBlueprint'
-export default EditBlueprint
+import BlueprintEdit from './BlueprintEdit'
+export default BlueprintEdit
