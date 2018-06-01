@@ -1,52 +1,15 @@
 @import url('../../../../../shell/styles/colors.less');
-@keyframes slideIn {
-  0% {
-    right: -80vw;
-  }
-  100% {
-    right: 0;
-  }
-}
-.PropertyOverviewWrap {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 40;
-}
 
 .PropertyOverview {
-  // animation: slideIn 300ms forwards;
   background: @appBkgColor;
-  padding: 0;
-  overflow-y: scroll;
-  height: 100vh;
-  width: 900px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 10;
-
-  .CloseOverview {
-    position: fixed;
-    top: 10px;
-    right: 20px;
-    z-index: 40;
-
-    padding: 3px;
-    background: none;
-    border: none;
-    font-size: 1.8em;
-    margin: 0;
-    color: #404c65;
-    text-shadow: 1px 1px 1px #fff;
-    i {
-      margin: 0;
-      color: #a7afbf;
-    }
-  }
+  // padding: 0;
+  // overflow-y: scroll;
+  // height: 100vh;
+  // width: 900px;
+  // position: absolute;
+  // top: 0;
+  // right: 0;
+  // z-index: 10;
 
   .PropertyOverviewHeader {
     padding: 1rem;
@@ -56,7 +19,7 @@
     position: sticky;
     top: 0;
     background: darken(@appBkgColor, 3%);
-    z-index: 30;
+    // z-index: 30;
   }
   .Cards {
     padding: 1rem;

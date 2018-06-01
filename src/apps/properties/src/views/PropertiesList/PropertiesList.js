@@ -6,6 +6,7 @@ import styles from './PropertiesList.less'
 import WebsiteCreate from '../../components/WebsiteCreate'
 
 import PropertiesHeader from './components/PropertiesHeader'
+import ColumnList from './components/ColumnList'
 import GridList from './components/GridList'
 
 class Properties extends Component {
@@ -14,7 +15,8 @@ class Properties extends Component {
       <section className={styles.Websites} id="siteListWrapper">
         <PropertiesHeader />
 
-        <GridList {...this.props} />
+        <ColumnList {...this.props} />
+        {/* <GridList {...this.props} /> */}
 
         {!this.props.sites.length ? (
           // No sites so create a new one
