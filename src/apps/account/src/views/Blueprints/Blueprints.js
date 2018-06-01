@@ -14,13 +14,14 @@ class Blueprints extends Component {
     selected: ''
   }
   componentDidMount() {
-    console.log(this.props.match.params)
-    if(this.props.match.params.id){
-      console.log('have id')
-    }
     // if there are no blueprints, fetch them
     if (!Object.keys(this.props.blueprints).length) {
       this.props.dispatch(fetchBlueprints())
+    }
+  }
+  componentWillReceiveProps(props) {
+    if (Object.keys(props.blueprints).length && props.match.params.id) {
+      this.setState({ selected: props.blueprints[props.match.params.id] })
     }
   }
   render() {
