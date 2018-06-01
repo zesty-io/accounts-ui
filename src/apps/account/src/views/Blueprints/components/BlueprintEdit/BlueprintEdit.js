@@ -54,7 +54,6 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.name || ''}
             name="name"
@@ -63,7 +62,6 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.githubURL || ''}
             name="githubURL"
@@ -72,7 +70,6 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.previewURL || ''}
             name="previewURL"
@@ -84,7 +81,6 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.mainImage || ''}
             name="mainImage"
@@ -95,7 +91,6 @@ class BlueprintEdit extends Component {
           </label>
           <Input
             autoComplete="off"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.coverImage || ''}
             name="coverImage"
