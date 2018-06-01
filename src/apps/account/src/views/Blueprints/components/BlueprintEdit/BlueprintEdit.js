@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import { notify } from '../../../../../../../shell/store/notifications'
 import {
   updateBlueprint,
-  postNewBlueprint
+  postNewBlueprint,
+  fetchBlueprints
 } from '../../../../../../properties/src/store/blueprints'
 
 import styles from './BlueprintEdit.less'
@@ -144,6 +145,7 @@ class BlueprintEdit extends Component {
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
       .then(data => {
         this.setState({ saving: false })
+        this.props.dispatch(fetchBlueprints())
         this.props.dispatch(
           notify({
             type: 'success',
