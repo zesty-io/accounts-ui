@@ -10,6 +10,7 @@ import styles from './BlueprintEdit.less'
 
 class BlueprintEdit extends Component {
   state = {
+    saving: false,
     userZUID: this.props.userZUID,
     blueprint: {
       name: '',
@@ -123,6 +124,7 @@ class BlueprintEdit extends Component {
           </section>
           {this.state.blueprint.ID ? (
             <Button
+              disabled={this.state.saving}
               className={styles.button}
               onClick={this.handleSubmit}
               type="submit"
@@ -130,6 +132,7 @@ class BlueprintEdit extends Component {
             />
           ) : (
             <Button
+              disabled={this.state.saving}
               className={styles.button}
               onClick={this.handleCreate}
               type="submit"
@@ -142,9 +145,11 @@ class BlueprintEdit extends Component {
   }
   handleSubmit = evt => {
     evt.preventDefault()
+    this.setState({ saving: true })
     this.props
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
       .then(data => {
+        this.setState({ saving: false })
         this.props.dispatch(
           notify({
             type: 'success',
@@ -153,6 +158,7 @@ class BlueprintEdit extends Component {
         )
       })
       .catch(err => {
+        this.setState({ saving: false })
         this.props.dispatch(
           notify({
             type: 'error',
@@ -163,6 +169,7 @@ class BlueprintEdit extends Component {
   }
   handleCreate = evt => {
     evt.preventDefault()
+    this.setState({ saving: true })
     const newBlueprint = {
       ...this.state.blueprint,
       createdByUserZUID: this.state.userZUID
@@ -170,7 +177,7 @@ class BlueprintEdit extends Component {
     this.props
       .dispatch(postNewBlueprint(newBlueprint))
       .then(data => {
-        console.log(data)
+        this.setState({ saving: false })
         this.props.dispatch(
           notify({
             type: 'success',
@@ -179,6 +186,7 @@ class BlueprintEdit extends Component {
         )
       })
       .catch(err => {
+        this.setState({ saving: false })
         this.props.dispatch(
           notify({
             type: 'error',
