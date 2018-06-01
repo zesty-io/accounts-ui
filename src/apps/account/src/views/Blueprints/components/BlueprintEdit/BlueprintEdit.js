@@ -136,8 +136,7 @@ class BlueprintEdit extends Component {
               className={styles.button}
               onClick={this.handleCreate}
               type="submit"
-              text="Create"
-            />
+            ><i className="fa fa-plus" /> Create</Button>
           )}
         </div>
       )
