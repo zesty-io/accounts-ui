@@ -1,13 +1,14 @@
 import React from 'react'
 import styles from './SelectBlueprint.less'
 
+const selectedStyle = { color: '#fff', textShadow: '2px 2px 2px black' }
 const SelectBlueprint = props => {
   return (
     <ul className={styles.List}>
       <li
         style={
           props.selection === 'create'
-            ? { color: '#fff', textShadow: '2px 2px 2px black' }
+            ? selectedStyle
             : null
         }
         onClick={() => props.handleSelect('create')}>
@@ -19,7 +20,7 @@ const SelectBlueprint = props => {
             key={bp.ZUID}
             style={
               props.selection && props.selection.ID === bp.ID
-                ? { color: '#fff', fontSize: '1.02rem', textShadow: '2px 2px 2px black' }
+                ? selectedStyle
                 : null
             }
             onClick={() => props.handleSelect(bp.ID)}>
