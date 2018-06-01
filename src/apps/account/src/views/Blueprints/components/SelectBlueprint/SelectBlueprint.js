@@ -14,7 +14,6 @@ const SelectBlueprint = props => {
         Create New
       </li>
       {props.blueprints.map(bp => {
-        console.log(props, bp)
         return (
           <li
             key={bp.ZUID}
