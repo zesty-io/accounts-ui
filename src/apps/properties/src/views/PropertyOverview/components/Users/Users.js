@@ -22,7 +22,7 @@ export default class Users extends Component {
   }
   render() {
     return (
-      <Card>
+      <Card className={styles.Users}>
         <CardHeader>
           <h2>
             <i className="fa fa-users" aria-hidden="true" />
@@ -30,86 +30,83 @@ export default class Users extends Component {
           </h2>
         </CardHeader>
         <CardContent>
-          <div className={styles.Users}>
-            {this.props.isAdmin ? (
-              <div className={styles.invite}>
-                <Input
-                  className={styles.email}
-                  type="email"
-                  placeholder="Email of user to invite"
-                  name="inviteeEmail"
-                  value={this.state.inviteeEmail}
-                  onChange={this.handleEmail}
-                  required
-                />
-                <Select onSelect={this.handleSelectRole}>
-                  <Option key="default" value="" text="Select Role" />
-                  {this.props.siteRoles.map(role => {
-                    return (
-                      <Option
-                        key={role.ZUID}
-                        value={role.ZUID}
-                        text={role.name}
-                      />
-                    )
-                  })}
-                </Select>
-                <Button
-                  onClick={this.handleInvite}
-                  disabled={this.state.submitted}
-                >
-                  <i className="fa fa-envelope-o" aria-hidden="true" />Send
-                  Invite
-                </Button>
-              </div>
-            ) : null}
-
-            <div className={styles.UserList}>
-              <header>
-                <h3>Name</h3>
-                <h3>Email</h3>
-                <h3>Role</h3>
-              </header>
-              <main>
-                <WithLoader
-                  condition={
-                    !this.props.loadingUsers && !this.props.loadingUsersPending
-                  }
-                  message="Loading Instance Users"
-                  height="100px"
-                  width="100%"
-                >
-                  <div>
-                    {Object.keys(this.props.users).map(ZUID => {
-                      const user = this.props.users[ZUID]
-                      if (user.pending) {
-                        return (
-                          <UserPendingRow
-                            key={ZUID}
-                            siteZUID={this.props.siteZUID}
-                            siteRoles={this.props.siteRoles}
-                            dispatch={this.props.dispatch}
-                            isAdmin={this.props.isAdmin}
-                            {...user}
-                          />
-                        )
-                      } else {
-                        return (
-                          <UserRow
-                            key={ZUID}
-                            siteZUID={this.props.siteZUID}
-                            siteRoles={this.props.siteRoles}
-                            dispatch={this.props.dispatch}
-                            isAdmin={this.props.isAdmin}
-                            {...user}
-                          />
-                        )
-                      }
-                    })}
-                  </div>
-                </WithLoader>
-              </main>
+          {this.props.isAdmin ? (
+            <div className={styles.invite}>
+              <Input
+                className={styles.email}
+                type="email"
+                placeholder="Email of user to invite"
+                name="inviteeEmail"
+                value={this.state.inviteeEmail}
+                onChange={this.handleEmail}
+                required
+              />
+              <Select onSelect={this.handleSelectRole}>
+                <Option key="default" value="" text="Select Role" />
+                {this.props.siteRoles.map(role => {
+                  return (
+                    <Option
+                      key={role.ZUID}
+                      value={role.ZUID}
+                      text={role.name}
+                    />
+                  )
+                })}
+              </Select>
+              <Button
+                onClick={this.handleInvite}
+                disabled={this.state.submitted}
+              >
+                <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
+              </Button>
             </div>
+          ) : null}
+
+          <div className={styles.UserList}>
+            <header>
+              <h3>Name</h3>
+              <h3>Email</h3>
+              <h3>Role</h3>
+            </header>
+            <main>
+              <WithLoader
+                condition={
+                  !this.props.loadingUsers && !this.props.loadingUsersPending
+                }
+                message="Loading Instance Users"
+                height="100px"
+                width="100%"
+              >
+                <div>
+                  {Object.keys(this.props.users).map(ZUID => {
+                    const user = this.props.users[ZUID]
+                    if (user.pending) {
+                      return (
+                        <UserPendingRow
+                          key={ZUID}
+                          siteZUID={this.props.siteZUID}
+                          siteRoles={this.props.siteRoles}
+                          dispatch={this.props.dispatch}
+                          isAdmin={this.props.isAdmin}
+                          {...user}
+                        />
+                      )
+                    } else {
+                      return (
+                        <UserRow
+                          key={ZUID}
+                          siteZUID={this.props.siteZUID}
+                          siteRoles={this.props.siteRoles}
+                          dispatch={this.props.dispatch}
+                          isAdmin={this.props.isAdmin}
+                          {...user}
+                        />
+                      )
+                    }
+                  })}
+                </div>
+              </WithLoader>
+            </main>
           </div>
         </CardContent>
       </Card>

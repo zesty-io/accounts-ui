@@ -41,7 +41,7 @@ class PropertyBlueprint extends Component {
                     <CardHeader>
                       <h4>{blueprint.name}</h4>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className={styles.CardContent}>
                       {blueprint.coverImage === '' ? (
                         <div className={styles.noimage} aria-hidden="true">
                           <i className="fa fa-file-code-o" aria-hidden="true" />
@@ -97,10 +97,12 @@ class PropertyBlueprint extends Component {
       })
       .catch(err => {
         this.setState({ selected: false, effect: '' })
-        this.props.dispatch(notify({
-          type: 'error',
-          message: 'There was a problem selecting the blueprint'
-        }))
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: 'There was a problem selecting the blueprint'
+          })
+        )
       })
   }
 }
