@@ -79,10 +79,9 @@ export default class CompanyAccess extends Component {
                       <span>{company.mainContactName}</span>
                       <span>{company.mainContactEmail}</span>
                       <span>
-                        <Toggle
-                          defaultChecked
-                          name={company.name}
-                          onChange={this.handleToggle}
+                        <i
+                          className="fa fa-trash-o"
+                          onClick={this.handleToggle}
                         />
                       </span>
                     </article>
