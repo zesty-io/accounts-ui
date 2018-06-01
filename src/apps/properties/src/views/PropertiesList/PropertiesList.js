@@ -24,7 +24,9 @@ class Properties extends Component {
               &nbsp;Invites
             </h2>
             <main className={styles.siteList}>
-              {this.props.sitesInvited.map(this.renderCard)}
+              {this.props.sitesInvited.map(site => {
+                return <WebsiteInvite key={site.ZUID} site={site} />
+              })}
             </main>
           </React.Fragment>
         ) : null}
