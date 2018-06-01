@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './SelectBlueprint.less'
 
-const selectedStyle = { color: '#fff', textShadow: '2px 2px 2px black' }
+const selectedStyle = { color: '#fff' }
 const SelectBlueprint = props => {
   return (
     <ul className={styles.List}>
