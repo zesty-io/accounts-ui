@@ -4,7 +4,7 @@ import styles from './SelectBlueprint.less'
 const SelectBlueprint = props => {
   return (
     <ul className={styles.List}>
-      <li onClick={() => props.handleSelect('new')}>Create New</li>
+      <li onClick={() => props.handleSelect('create')}>Create New</li>
       {props.blueprints.map(bp => {
         return (
           <li

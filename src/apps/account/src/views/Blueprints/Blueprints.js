@@ -20,8 +20,8 @@ class Blueprints extends Component {
     }
     const bp = this.props.match.params.id
     if (Object.keys(this.props.blueprints).length && bp) {
-      if (bp === 'new') {
-        return this.setState({ selected: 'new' })
+      if (bp === 'create') {
+        return this.setState({ selected: 'create' })
       }
       this.setState({ selected: this.props.blueprints[bp] })
     }
@@ -29,8 +29,8 @@ class Blueprints extends Component {
   componentWillReceiveProps(props) {
     const bp = props.match.params.id
     if (Object.keys(props.blueprints).length && bp) {
-      if (bp === 'new') {
-        return this.setState({ selected: 'new' })
+      if (bp === 'create') {
+        return this.setState({ selected: 'create' })
       }
       this.setState({ selected: props.blueprints[bp] })
     }

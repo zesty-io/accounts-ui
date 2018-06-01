@@ -23,7 +23,7 @@ class BlueprintEdit extends Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.blueprint === 'new') {
+    if (props.blueprint === 'create') {
       return this.setState({
         blueprint: {
           name: '',
