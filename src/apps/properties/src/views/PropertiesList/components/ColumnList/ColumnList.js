@@ -9,6 +9,18 @@ export default function ColumnList(props) {
   return (
     <section className={styles.ColumnList}>
       <nav className={styles.List}>
+        {props.sitesInvited.map(site => {
+          return (
+            <AppLink
+              key={site.ZUID}
+              className={styles.row}
+              to={`/instances/${site.ZUID}`}
+            >
+              {site.name}
+            </AppLink>
+          )
+        })}
+        <Divider />
         {props.sitesFiltered.map(site => {
           return (
             <AppLink
