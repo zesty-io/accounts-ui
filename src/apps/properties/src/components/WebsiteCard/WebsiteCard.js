@@ -92,7 +92,7 @@ export default props => {
               CONFIG.MANAGER_URL
             }`}
           >
-            Instance Manager&nbsp;<i
+            Open Manager&nbsp;<i
               className="fa fa-external-link-square"
               aria-hidden="true"
             />
