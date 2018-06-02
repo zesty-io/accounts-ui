@@ -5,7 +5,10 @@ import { Link, withRouter } from 'react-router-dom'
 import BlueprintEdit from './components/BlueprintEdit'
 import SelectBlueprint from './components/SelectBlueprint'
 
-import { fetchBlueprints, deleteBlueprint } from '../../../../properties/src/store/blueprints'
+import {
+  fetchBlueprints,
+  deleteBlueprint
+} from '../../../../properties/src/store/blueprints'
 import { zConfirm } from '../../../../../shell/store/confirm'
 
 import styles from './Blueprints.less'
@@ -58,14 +61,18 @@ class Blueprints extends Component {
   }
   handleDelete = blueprint => {
     const name = this.props.blueprints[blueprint].name
-    this.props.dispatch(zConfirm({
-      prompt: 'Are you sure you want to delete this blueprint?',
-      callback: response => {
-        if (response) {
-          this.props.dispatch(deleteBlueprint(blueprint, name))
+    this.props.dispatch(
+      zConfirm({
+        prompt: 'Are you sure you want to delete this blueprint?',
+        callback: response => {
+          if (response) {
+            this.props.dispatch(deleteBlueprint(blueprint, name)).then(data => {
+              this.props.dispatch(fetchBlueprints())
+            })
+          }
         }
-      }
-    }))
+      })
+    )
   }
 }
 

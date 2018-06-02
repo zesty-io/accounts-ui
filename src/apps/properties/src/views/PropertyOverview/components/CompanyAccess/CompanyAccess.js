@@ -79,10 +79,9 @@ export default class CompanyAccess extends Component {
                       <span>{company.mainContactName}</span>
                       <span>{company.mainContactEmail}</span>
                       <span>
-                        <Toggle
-                          defaultChecked
-                          name={company.name}
-                          onChange={this.handleToggle}
+                        <i
+                          className="fa fa-trash-o"
+                          onClick={() => this.handleToggle(company)}
                         />
                       </span>
                     </article>
@@ -102,12 +101,11 @@ export default class CompanyAccess extends Component {
       </Card>
     )
   }
-  handleToggle = evt => {
-    evt.preventDefault()
+  handleToggle = company => {
     this.props.dispatch(
       zConfirm({
         prompt: `are you sure you want to remove access from ${
-          evt.target.name
+          company.name
         }`,
         callback: result => {
           if (!result) {

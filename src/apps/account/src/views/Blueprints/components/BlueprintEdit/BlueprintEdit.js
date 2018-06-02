@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import { notify } from '../../../../../../../shell/store/notifications'
 import {
   updateBlueprint,
-  postNewBlueprint
+  postNewBlueprint,
+  fetchBlueprints
 } from '../../../../../../properties/src/store/blueprints'
 
 import styles from './BlueprintEdit.less'
@@ -54,7 +55,6 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.name || ''}
             name="name"
@@ -63,7 +63,6 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.githubURL || ''}
             name="githubURL"
@@ -72,7 +71,6 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.previewURL || ''}
             name="previewURL"
@@ -84,7 +82,6 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.mainImage || ''}
             name="mainImage"
@@ -95,7 +92,6 @@ class BlueprintEdit extends Component {
           </label>
           <Input
             autoComplete="off"
-            size={50}
             onChange={this.onChange}
             value={this.state.blueprint.coverImage || ''}
             name="coverImage"
@@ -127,16 +123,17 @@ class BlueprintEdit extends Component {
               disabled={this.state.saving}
               className={styles.button}
               onClick={this.handleSubmit}
-              type="submit"
-              text="Save"
-            />
+              type="submit">
+              <i className="fa fa-save" /> Save
+            </Button>
           ) : (
             <Button
               disabled={this.state.saving}
               className={styles.button}
               onClick={this.handleCreate}
-              type="submit"
-            ><i className="fa fa-plus" /> Create</Button>
+              type="submit">
+              <i className="fa fa-plus" /> Create
+            </Button>
           )}
         </div>
       )
@@ -149,6 +146,7 @@ class BlueprintEdit extends Component {
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
       .then(data => {
         this.setState({ saving: false })
+        this.props.dispatch(fetchBlueprints())
         this.props.dispatch(
           notify({
             type: 'success',
