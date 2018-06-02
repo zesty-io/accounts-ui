@@ -13,10 +13,13 @@ class Properties extends Component {
   render() {
     return (
       <section className={styles.Websites} id="siteListWrapper">
-        <PropertiesHeader />
+        <PropertiesHeader layout={this.props.layout} />
 
-        <ColumnList {...this.props} />
-        {/* <GridList {...this.props} /> */}
+        {this.props.layout === 'grid' ? (
+          <GridList {...this.props} />
+        ) : (
+          <ColumnList {...this.props} />
+        )}
 
         {!this.props.sites.length ? (
           // No sites so create a new one
@@ -37,7 +40,10 @@ export default connect((state, props) => {
     return acc
   }, [])
 
+  const layout = state.user.prefs.instance_layout || 'grid'
+
   return {
+    layout,
     sites: Object.keys(state.sites),
     sitesFiltered: filtered.filter(site => !site.inviteZUID),
     sitesInvited: filtered.filter(site => site.inviteZUID),

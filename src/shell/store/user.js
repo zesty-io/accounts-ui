@@ -43,6 +43,15 @@ export function user(state = {}, action) {
         }
       }
 
+    case 'INSTANCE_LAYOUT':
+      return {
+        ...state,
+        prefs: {
+          ...state.prefs,
+          instance_layout: action.layout
+        }
+      }
+
     default:
       return state
   }
