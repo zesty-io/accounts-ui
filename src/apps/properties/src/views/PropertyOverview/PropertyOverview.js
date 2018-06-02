@@ -34,41 +34,13 @@ class PropertyOverview extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchSiteUsers(this.props.siteZUID)).then(() => {
-      this.setState({
-        loadingUsers: false
-      })
-    })
-    this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID)).then(() => {
-      this.setState({
-        loadingUsersPending: false
-      })
-    })
-    this.props.dispatch(fetchSiteRoles(this.props.siteZUID)).then(() => {
-      this.setState({
-        loadingRoles: false
-      })
-    })
-    this.props.dispatch(fetchSiteCompanies(this.props.siteZUID)).then(() => {
-      this.setState({
-        loadingTeams: false
-      })
-    })
-    this.props
-      .dispatch(fetchBlueprint(this.props.site.blueprintID))
-      .then(() => {
-        this.setState({
-          loadingBlueprint: false
-        })
-      })
-
-    // document.addEventListener('keydown', this.close)
-    // document.addEventListener('click', this.close)
+    this.fetchSiteData(this.props)
   }
-  // componentWillUnmount() {
-  //   document.removeEventListener('click', this.close)
-  //   document.removeEventListener('keydown', this.close)
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.siteZUID !== this.props.siteZUID) {
+      this.fetchSiteData(nextProps)
+    }
+  }
   render() {
     return (
       <article className={styles.PropertyOverview}>
@@ -206,6 +178,33 @@ class PropertyOverview extends Component {
         </main>
       </article>
     )
+  }
+  fetchSiteData(props) {
+    props.dispatch(fetchSiteUsers(props.siteZUID)).then(() => {
+      this.setState({
+        loadingUsers: false
+      })
+    })
+    props.dispatch(fetchSiteUsersPending(props.siteZUID)).then(() => {
+      this.setState({
+        loadingUsersPending: false
+      })
+    })
+    props.dispatch(fetchSiteRoles(props.siteZUID)).then(() => {
+      this.setState({
+        loadingRoles: false
+      })
+    })
+    props.dispatch(fetchSiteCompanies(props.siteZUID)).then(() => {
+      this.setState({
+        loadingTeams: false
+      })
+    })
+    props.dispatch(fetchBlueprint(props.site.blueprintID)).then(() => {
+      this.setState({
+        loadingBlueprint: false
+      })
+    })
   }
 }
 
