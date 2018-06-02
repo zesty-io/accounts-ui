@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames'
-import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 import styles from './ColumnList.less'
 
@@ -53,7 +53,16 @@ export default function ColumnList(props) {
         })}
       </nav>
       <main className={styles.Overview}>
-        <Route path="/instances/:siteZUID" component={PropertyOverview} />
+        <Switch>
+          <Route path="/instances/:siteZUID" component={PropertyOverview} />
+          <Route
+            exact
+            path="/instances/"
+            render={() => {
+              return <h1>Select Instance</h1>
+            }}
+          />
+        </Switch>
       </main>
     </section>
   )
