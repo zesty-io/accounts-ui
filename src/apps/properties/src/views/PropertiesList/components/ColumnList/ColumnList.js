@@ -5,7 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import styles from './ColumnList.less'
 
 import PropertyOverview from '../../../PropertyOverview'
-import ColumnListRow from './components/ColumnListRow'
+import InstanceRow from './components/InstanceRow'
 
 export default function ColumnList(props) {
   return (
@@ -45,7 +45,7 @@ export default function ColumnList(props) {
               &nbsp;Favorites
             </h2>
             {props.sitesFavorite.map(site => (
-              <ColumnListRow key={site.ZUID} site={site} />
+              <InstanceRow key={site.ZUID} site={site} />
             ))}
           </React.Fragment>
         ) : null}
@@ -57,7 +57,7 @@ export default function ColumnList(props) {
               &nbsp;All Instances
             </h2>
             {props.sitesFiltered.map(site => (
-              <ColumnListRow key={site.ZUID} site={site} />
+              <InstanceRow key={site.ZUID} site={site} />
             ))}
           </React.Fragment>
         ) : null}

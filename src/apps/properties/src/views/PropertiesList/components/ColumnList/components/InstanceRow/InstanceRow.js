@@ -1,9 +1,9 @@
 import React from 'react'
-import styles from './ColumnListRow.less'
+import styles from './InstanceRow.less'
 
 import InstanceFavorite from '../../../../../../components/InstanceFavorite'
 
-export default function ColumnListRow(props) {
+export default function InstanceRow(props) {
   const { site } = props
   return (
     <span className={styles.row}>
