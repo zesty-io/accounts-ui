@@ -74,15 +74,7 @@ class WebsiteInvite extends Component {
         const invitedSite = data.data.filter(site => {
           return site.ZUID === this.props.site.ZUID
         })
-        // open the site in manager
-        // window.open(
-        //   `${CONFIG.MANAGER_URL_PROTOCOL}${invitedSite[0].randomHashID}${
-        //     CONFIG.MANAGER_URL
-        //   }`,
-        //   '_blank'
-        // )
-        // open the site's overview
-        return this.props.history.push(`/instances/${this.props.site.ZUID}`)
+        return this.props.history.push(`/instances/${this.props.site.ZUID}?invited=true`)
       })
       this.props.dispatch(
         notify({

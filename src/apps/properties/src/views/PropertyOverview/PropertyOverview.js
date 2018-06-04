@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
+import qs from 'qs'
 import styles from './PropertyOverview.less'
 
 import Users from './components/Users'
@@ -24,6 +25,13 @@ import { fetchBlueprint } from '../../store/blueprints'
 class PropertyOverview extends Component {
   constructor(props) {
     super(props)
+
+    // setting ref to the manager link
+    this.managerLink = null
+    this.clickManager = () => {
+      if (this.managerLink) this.managerLink.click()
+    }
+
     this.state = {
       loadingUsers: true,
       loadingRoles: true,
@@ -35,6 +43,9 @@ class PropertyOverview extends Component {
   }
   componentDidMount() {
     this.fetchSiteData(this.props)
+    if (qs.parse(window.location.search.substr(1))['invited'] === 'true') {
+      this.clickManager()
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.siteZUID !== this.props.siteZUID) {
@@ -50,26 +61,26 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.MANAGER_URL}`}
-          >
-            <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
-            Manager
+            }${CONFIG.MANAGER_URL}`}>
+            <i
+              className="fa fa-external-link"
+              aria-hidden="true"
+              ref={element => (this.managerLink = element)}
+            />&nbsp;Open Manager
           </Url>
           <Url
             className={styles.manager}
             target="_blank"
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.PREVIEW_URL}`}
-          >
+            }${CONFIG.PREVIEW_URL}`}>
             <i className="fa fa-eye" aria-hidden="true" />&nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
             <Url
               className={styles.manager}
               target="_blank"
-              href={`http://${this.props.site.domain}`}
-            >
+              href={`http://${this.props.site.domain}`}>
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
             </Url>
           ) : null}
@@ -77,8 +88,7 @@ class PropertyOverview extends Component {
         <main className={styles.Cards}>
           <WithLoader
             condition={Object.keys(this.props.users).length}
-            message="Loading Instance Permissions"
-          >
+            message="Loading Instance Permissions">
             <Route
               path="/instances/:siteZUID/launch"
               render={routeProps => {
