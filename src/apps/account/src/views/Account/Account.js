@@ -12,7 +12,7 @@ import styles from './Account.less'
 class Account extends Component {
   render() {
     return (
-      <section className={styles.settings}>
+      <section className={styles.Settings}>
         <h1 className={styles.SettingsTitle}>Manage Your Account Settings</h1>
         <div className={styles.setting}>
           <div className={styles.SettingCards}>
