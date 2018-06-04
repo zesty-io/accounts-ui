@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
-import { favoriteSite, saveProfile } from '../../../../../shell/store/user'
-
-// import { Line } from 'react-chartjs-2'
+import InstanceFavorite from '../InstanceFavorite'
 
 export default props => {
   const { site } = props
@@ -13,25 +11,11 @@ export default props => {
     <Card className={styles.WebsiteCard}>
       <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
-        {props.favorite ? (
-          <i
-            className={cx('fa fa-star', styles.favorite)}
-            aria-hidden="true"
-            onClick={() => {
-              props.dispatch(favoriteSite(site.ZUID, 'REMOVE'))
-              props.dispatch(saveProfile())
-            }}
-          />
-        ) : (
-          <i
-            className={cx('fa fa-star-o', styles.NonFavorite)}
-            aria-hidden="true"
-            onClick={() => {
-              props.dispatch(favoriteSite(site.ZUID, 'ADD'))
-              props.dispatch(saveProfile())
-            }}
-          />
-        )}
+        <InstanceFavorite
+          className={styles.favorite}
+          favorite={site.favorite}
+          ZUID={site.ZUID}
+        />
       </CardHeader>
       {site.screenshotURL ? (
         <CardContent
