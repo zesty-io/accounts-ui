@@ -69,6 +69,17 @@ export default class Meta extends Component {
               {this.props.site.randomHashID}
             </p>
           </article>
+
+          <Url
+            className={styles.manager}
+            target="_blank"
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${
+              this.props.site.randomHashID
+            }${CONFIG.MANAGER_URL}/#!/config/settings/general/`}
+          >
+            <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
+            Instance Settings
+          </Url>
         </CardContent>
       </Card>
     )
