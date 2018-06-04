@@ -47,6 +47,7 @@ class WebsiteInvite extends Component {
 
         <CardFooter className={cx(styles.CardFooter, styles.Actions)}>
           <Button
+            type="save"
             className={styles.invite}
             onClick={this.handleAccept}
             disabled={this.state.submitted}
@@ -74,7 +75,9 @@ class WebsiteInvite extends Component {
         const invitedSite = data.data.filter(site => {
           return site.ZUID === this.props.site.ZUID
         })
-        return this.props.history.push(`/instances/${this.props.site.ZUID}?invited=true`)
+        return this.props.history.push(
+          `/instances/${this.props.site.ZUID}?invited=true`
+        )
       })
       this.props.dispatch(
         notify({
