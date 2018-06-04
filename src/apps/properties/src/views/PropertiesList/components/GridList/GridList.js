@@ -105,7 +105,6 @@ export default class GridList extends Component {
     )
   }
   close = evt => {
-    console.log('close', evt.target.parentElement)
     if (evt.key === 'Escape') {
       this.props.history.push('/instances')
     }
