@@ -6,6 +6,7 @@ import styles from './ColumnList.less'
 
 import PropertyOverview from '../../../PropertyOverview'
 import InstanceRow from './components/InstanceRow'
+import InviteRow from './components/InviteRow'
 
 export default function ColumnList(props) {
   return (
@@ -18,22 +19,7 @@ export default function ColumnList(props) {
               &nbsp;Invites
             </h2>
             {props.sitesInvited.map(site => {
-              return (
-                <span key={site.ZUID} className={cx(styles.row, styles.invite)}>
-                  <AppLink
-                    className={styles.row}
-                    to={`/instances/${site.ZUID}`}
-                  >
-                    {site.name}
-                  </AppLink>
-                  <Button>
-                    <i className="fa fa-check" aria-hidden="true" />
-                  </Button>
-                  <Button type="cancel">
-                    <i className="fa fa-ban" aria-hidden="true" />
-                  </Button>
-                </span>
-              )
+              return <InviteRow key={site.ZUID} site={site} />
             })}
           </React.Fragment>
         ) : null}
