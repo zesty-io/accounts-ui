@@ -54,15 +54,15 @@ class BugReport extends Component {
             this.sendBugReport(dataObj)
           }}>
           <p>
-            We appologize that you have experienced issues with our product.<br />
+            We apologize that you have experienced issues with our product.<br />
             In order to make this product better for you please give as much
             detail as possible.
           </p>
           <label>Describe the issue</label>
           <textarea name="reportedIssue" wrap="soft" />
           <span className={styles.inline}>
-            <input type="checkbox" name="followUp" />
-            <p>Please follow up with me about this issue.</p>
+            <input type="checkbox" name="followUp" id="followup" />
+            <label for="followup">Please follow up with me about this issue.</label>
           </span>
           <Button disabled={this.state.submitted} type="submit" text="Submit" />
           <Button type="cancel" text="Cancel" onClick={this.cancel} />
