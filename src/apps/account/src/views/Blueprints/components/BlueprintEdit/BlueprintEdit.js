@@ -24,7 +24,7 @@ class BlueprintEdit extends Component {
     }
   }
 
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     if (props.blueprint === 'create') {
       return this.setState({
         blueprint: {

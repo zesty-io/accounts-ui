@@ -15,7 +15,7 @@ export default class CompanyAccess extends Component {
       role: ''
     }
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.dispatch(fetchSiteCompanies(this.props.match.params.siteZUID))
   }
   render() {

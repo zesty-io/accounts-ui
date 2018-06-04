@@ -18,7 +18,7 @@ class EditRole extends Component {
     super(props)
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.props.dispatch(fetchSiteCollections(this.props.match.params.siteZUID))
   }
 

@@ -11,7 +11,7 @@ export default class GridList extends Component {
   constructor(props) {
     super(props)
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     document.addEventListener('click', this.close)
     document.addEventListener('keydown', this.close)
   }

@@ -47,7 +47,7 @@ class PropertyOverview extends Component {
       this.clickManager()
     }
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.siteZUID !== this.props.siteZUID) {
       this.fetchSiteData(nextProps)
     }

@@ -30,7 +30,7 @@ class Blueprints extends Component {
       this.setState({ selected: this.props.blueprints[bp] })
     }
   }
-  componentWillReceiveProps(props) {
+  UNSAFE_componentWillReceiveProps(props) {
     const bp = props.match.params.id
     if (Object.keys(props.blueprints).length && bp) {
       if (bp === 'create') {
