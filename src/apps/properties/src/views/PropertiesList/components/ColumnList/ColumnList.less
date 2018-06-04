@@ -1,0 +1,42 @@
+.ColumnList {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  border-top: 1px solid #d3e1f7;
+  margin-top: 0.5rem;
+
+  .List {
+    height: 86vh;
+    overflow-y: scroll;
+    width: 30vw;
+    .row {
+      display: flex;
+      align-items: center;
+
+      border-top: 1px solid #d3e1f7;
+      a {
+        margin: 0;
+        padding: 9px;
+        border-left: 1px solid #c7d4ea;
+      }
+      a:first-child {
+        border: none;
+        flex: 1;
+      }
+    }
+    .row:first-child {
+      border: none;
+    }
+    .invite {
+      background: #3a445a;
+
+      a {
+        color: #b2c7d6;
+        text-shadow: none;
+      }
+    }
+  }
+  .Overview {
+    height: 86vh;
+    overflow-y: scroll;
+  }
+}
