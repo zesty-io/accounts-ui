@@ -33,8 +33,7 @@ export default class UserRow extends Component {
                       .map(item => {
                         return { value: item.ZUID, text: item.name }
                       })[0]
-                  }
-                >
+                  }>
                   {this.props.siteRoles.map(role => {
                     return (
                       <Option
