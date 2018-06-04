@@ -55,15 +55,28 @@
   }
 
   &.cancel {
-    background: lighten(@btnCancel, 10%);
-    text-shadow: 1px 1px 1px darken(@btnCancel, 15%);
-    border-bottom: 3px solid darken(@btnCancel, 6%);
-    border-right: 2px solid darken(@btnCancel, 6%);
+    // background: lighten(@btnCancel, 10%);
+    // text-shadow: 1px 1px 1px darken(@btnCancel, 15%);
+    // border-bottom: 3px solid darken(@btnCancel, 6%);
+    // border-right: 2px solid darken(@btnCancel, 6%);
+
+    background: none;
+    border: none;
+    text-shadow: none;
+
     &:hover {
       background: lighten(@btnCancel, 13%);
+      color: @btnDefault;
+      i {
+        color: @btnDefault;
+      }
     }
     &:active {
       background: darken(@btnCancel, 7%);
+      color: @btnDefault;
+      i {
+        color: @btnDefault;
+      }
     }
   }
 
