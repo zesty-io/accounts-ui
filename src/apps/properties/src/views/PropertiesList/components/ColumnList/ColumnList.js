@@ -55,7 +55,7 @@ export default function ColumnList(props) {
             exact
             path="/instances/"
             render={() => {
-              return <h1>Select Instance</h1>
+              return <h1 className={styles.Zesty}>Zesty.io</h1>
             }}
           />
         </Switch>
