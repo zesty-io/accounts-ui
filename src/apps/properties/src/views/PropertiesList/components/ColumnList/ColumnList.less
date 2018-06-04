@@ -1,7 +1,6 @@
 .ColumnList {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  border-top: 1px solid #d3e1f7;
   margin-top: 0.5rem;
 
   .List {
@@ -11,14 +10,18 @@
 
     .SectionTitle {
       border-bottom: 1px solid #c0cee7;
+      font-size: 1.4em;
       margin: 2rem 0 0 0;
+    }
+    .SectionTitle:first-child {
+      margin-top: 1rem;
     }
 
     .row {
       display: flex;
       align-items: center;
-
       border-top: 1px solid #d3e1f7;
+
       a {
         margin: 0;
         padding: 9px;
