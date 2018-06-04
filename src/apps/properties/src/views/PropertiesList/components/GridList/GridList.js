@@ -12,8 +12,8 @@ export default class GridList extends Component {
     super(props)
   }
   componentWillMount() {
-    document.addEventListener('keydown', this.close)
     document.addEventListener('click', this.close)
+    document.addEventListener('keydown', this.close)
   }
   componentWillUnmount() {
     document.removeEventListener('click', this.close)
@@ -21,7 +21,7 @@ export default class GridList extends Component {
   }
   render() {
     return (
-      <div className={styles.GridList}>
+      <div className={styles.GridList} id="siteListWrapper">
         <Route
           path="/instances/:siteZUID"
           render={props => {
@@ -105,6 +105,7 @@ export default class GridList extends Component {
     )
   }
   close = evt => {
+    console.log('close', evt.target.parentElement)
     if (evt.key === 'Escape') {
       this.props.history.push('/instances')
     }

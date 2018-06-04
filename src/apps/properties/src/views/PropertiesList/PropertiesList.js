@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom'
 import styles from './PropertiesList.less'
 
 import WebsiteCreate from '../../components/WebsiteCreate'
-
 import PropertiesHeader from './components/PropertiesHeader'
 import ColumnList from './components/ColumnList'
 import GridList from './components/GridList'
@@ -12,7 +11,7 @@ import GridList from './components/GridList'
 class Properties extends Component {
   render() {
     return (
-      <section className={styles.Websites} id="siteListWrapper">
+      <section className={styles.Websites}>
         <PropertiesHeader layout={this.props.layout} />
 
         {this.props.layout === 'grid' ? (
@@ -22,7 +21,6 @@ class Properties extends Component {
         )}
 
         {!this.props.sites.length ? (
-          // No sites so create a new one
           <main className={styles.siteList}>
             <WebsiteCreate />
           </main>
