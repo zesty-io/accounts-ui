@@ -32,9 +32,8 @@ export default class CompanyAccess extends Component {
             <React.Fragment>
               <p>
                 By providing a team access you can allow an external group of
-                users access to manage your instance. For example: this can
-                be used to provide an agency with access to manage your
-                website.
+                users access to manage your instance. For example: this can be
+                used to provide an agency with access to manage your website.
               </p>
               <div className={styles.addCompany}>
                 <Input
@@ -69,8 +68,7 @@ export default class CompanyAccess extends Component {
                 condition={!this.props.loadingTeams}
                 message="Loading Instance Teams"
                 height="100px"
-                width="100%"
-              >
+                width="100%">
                 {Object.keys(this.props.companies).map(ZUID => {
                   let company = this.props.companies[ZUID]
                   return (
@@ -79,10 +77,12 @@ export default class CompanyAccess extends Component {
                       <span>{company.mainContactName}</span>
                       <span>{company.mainContactEmail}</span>
                       <span>
-                        <i
-                          className="fa fa-trash-o"
-                          onClick={() => this.handleToggle(company)}
-                        />
+                        {this.props.isAdmin && (
+                          <i
+                            className="fa fa-trash-o"
+                            onClick={() => this.handleToggle(company)}
+                          />
+                        )}
                       </span>
                     </article>
                   )
@@ -104,9 +104,7 @@ export default class CompanyAccess extends Component {
   handleToggle = company => {
     this.props.dispatch(
       zConfirm({
-        prompt: `are you sure you want to remove access from ${
-          company.name
-        }`,
+        prompt: `are you sure you want to remove access from ${company.name}`,
         callback: result => {
           if (!result) {
             return
