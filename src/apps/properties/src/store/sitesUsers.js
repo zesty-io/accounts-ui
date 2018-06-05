@@ -53,7 +53,7 @@ export const fetchSiteUsers = siteZUID => {
       type: 'FETCHING_USERS'
     })
     return request(
-      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users?getRoles=true`
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/roles`
     )
       .then(users => {
         dispatch({

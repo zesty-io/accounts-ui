@@ -9,7 +9,7 @@ export function sites(state = {}, action) {
       return state
 
     case 'FETCH_SITES_SUCCESS':
-      return normalizeSites(action.sites)
+      return { ...state, ...normalizeSites(action.sites)}
 
     case 'FETCH_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
@@ -23,12 +23,50 @@ export function sites(state = {}, action) {
 }
 
 export function fetchSites() {
-  // may need to update for invite parameter here
   return dispatch => {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances?getInvited=true`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances`)
+      .then(sites => {
+        sites.data.sort((prev, next) => {
+          if (prev.name < next.name) {
+            return -1
+          }
+          if (prev.name > next.name) {
+            return 1
+          }
+          return 0
+        })
+
+        dispatch({
+          type: 'FETCH_SITES_SUCCESS',
+          sites: sites.data
+        })
+        return sites
+      })
+      .catch(err => {
+        console.table(err)
+        dispatch(
+          notify({
+            message: 'There was a problem fetching your instances',
+            type: 'error'
+          })
+        )
+        dispatch({
+          type: 'FETCH_SITES_ERROR',
+          err
+        })
+      })
+  }
+}
+
+export function fetchSitesWithInvites() {
+  return dispatch => {
+    dispatch({
+      type: 'FETCHING_SITES'
+    })
+    return request(`${CONFIG.API_ACCOUNTS}/instances/invites`)
       .then(sites => {
         sites.data.sort((prev, next) => {
           if (prev.name < next.name) {
