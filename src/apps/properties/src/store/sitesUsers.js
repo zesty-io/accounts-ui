@@ -129,43 +129,30 @@ export const updateSiteUserRole = (
     ** ```website_hash_id=090z7hxt&user_id=21474534&new_role_id=5```
     **
     ** and set the auth cookie on the request.
-    **
-    **  const ROLE_ADMIN = 1; // Admin
-    **  const ROLE_DEVELOPER = 2; // Developer
-    **  const ROLE_SEO = 3; // SEO
-    **  const ROLE_PUBLISHER = 4; // content editor/publisher
-    **  const ROLE_CONTRIBUTOR = 5; // contributor
-    **
-
     */
 
-    // this will not work for custom roles
-
-    // make a call to get the form so i can attrach the XCRF header to the request
-    // http://accounts.zesty.localdev:3002/+/leaves/account-details-tabs/access?account_id=f49f89b3&account_id=f49f89b3&tab=access
-
-    const newRole = getState().sitesRoles[siteZUID][newRoleZUID].name
-    const instanceID = getState().sites[siteZUID].randomHashID
-    const userID = getState().sitesUsers[siteZUID][userZUID].ID
-
-    const newRoleID = role => {
-      switch (role) {
-        case 'Owner':
-          return 0
-        case 'Admin':
-          return 1
-        case 'Contributor':
-          return 5
-        case 'Publisher':
-          return 4
-        case 'Developer':
-          return 2
-        case 'SEO':
-          return 3
-        default:
-          return 5
-      }
+    const roles = {
+      Owner: 0,
+      Admin: 1,
+      Developer: 2,
+      SEO: 3,
+      Publisher: 4,
+      Contributor: 5
     }
+
+    const state = getState()
+
+    const newRole = state.sitesRoles[siteZUID][newRoleZUID].name
+    const instanceID = state.sites[siteZUID].randomHashID
+    const userID = state.sitesUsers[siteZUID][userZUID].ID
+
+    const newRoleID = roles[newRole]
+
+    if (!newRoleID) {
+      throw new Error(`Invalid role: ${newRole}`)
+      return
+    }
+
     if (newRole === 'Owner') {
       return request(
         `${
@@ -190,9 +177,7 @@ export const updateSiteUserRole = (
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
         },
-        body: `website_hash_id=${instanceID}&user_id=${userID}&new_role_id=${newRoleID(
-          newRole
-        )}`
+        body: `website_hash_id=${instanceID}&user_id=${userID}&new_role_id=${newRoleID}`
       }
     )
       .then(data => {
@@ -209,18 +194,5 @@ export const updateSiteUserRole = (
         console.log(err)
         return err
       })
-
-    // temporarily use the old API so that roles apply across all apps
-    //
-    // return request(
-    //   `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
-    //   {
-    //     method: 'PUT',
-    //     json: true,
-    //     body: {
-    //       roleZUID: newRoleZUID
-    //     }
-    //   }
-    // )
   }
 }
