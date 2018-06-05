@@ -41,6 +41,7 @@
     text-shadow: 0 0 4px #000;
     color: #a7afbf;
     text-align: center;
+    transition: all 0.1s;
     line-height: 1.4em;
     &:hover,
     &:focus {
@@ -61,6 +62,7 @@
   border-radius: 3px;
   padding: 0.2rem 0.3rem;
   margin-left: 0.5rem;
+  transition: all 0.1s;
 
   .avatar {
     margin-left: 8px;
@@ -68,6 +70,9 @@
   }
 
   .UserMenu {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
     box-shadow: -2px 2px 4px #171b26;
     background: #5b667d;
     display: none;
@@ -101,6 +106,7 @@
         padding: 0.5rem 0;
         a {
           color: @zesty-white;
+          transition: all 0.1s;
           text-decoration: none;
           &:hover,
           &:focus {
