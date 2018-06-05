@@ -1,7 +1,14 @@
 import { request } from '../../util/request'
 import { notify } from '../store/notifications'
 
-export function user(state = {}, action) {
+export function user(
+  state = {
+    prefs: {
+      favorite_sites: []
+    }
+  },
+  action
+) {
   switch (action.type) {
     case 'FETCH_USER_SUCCESS':
       // console.log('Last login for User: ', action.user.lastLogin)
