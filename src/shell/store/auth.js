@@ -61,6 +61,24 @@ export function verifyAuth(unsubscribe) {
   }
 }
 
+export function login(email, password) {
+  return dispatch => {
+    return request(`${CONFIG.API_AUTH}/login`, {
+      body: { email, password }
+    }).then(json => {
+      if (!json.error) {
+        dispatch({
+          type: 'FETCH_AUTH_SUCCESS',
+          ZUID: json.meta.userZuid,
+          auth: true
+        })
+      }
+
+      return json
+    })
+  }
+}
+
 export function logout() {
   return dispatch => {
     request(`${CONFIG.API_AUTH}/logout`)

@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import qs from 'qs'
 
-import { request } from '../../../util/request'
-
 import styles from './Login.less'
+
+import { request } from '../../../util/request'
+import { login } from '../../store/auth'
 import { fetchUser } from '../../store/user'
 
 class Login extends Component {
@@ -30,18 +31,14 @@ class Login extends Component {
   }
   render() {
     return (
-      <section className={styles.Login}>
-        <div className={styles.gridWrap}>
+      <section className={styles.LoginWrap}>
+        <div className={styles.Login}>
           <header>
-            <img src="/zesty-io-logo.svg" />
+            <Url href="https://zesty.io" title="https://zesty.io">
+              <img src="/zesty-io-logo.svg" height="70px" />
+            </Url>
           </header>
-          {this.state.message ? (
-            <p className={styles.error}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                this.state.message
-              }
-            </p>
-          ) : null}
+
           <main className={styles.gridSingle}>
             <form name="login" className={styles.LoginForm}>
               <label>
@@ -55,7 +52,12 @@ class Login extends Component {
                 />
               </label>
               <label>
-                <p>Password</p>
+                <p>
+                  Password&nbsp;<small>
+                    (<AppLink to="/reset-password">Forgot?</AppLink>)
+                  </small>
+                </p>
+
                 <Input
                   className={styles.loginInput}
                   type="password"
@@ -64,58 +66,71 @@ class Login extends Component {
               </label>
               <Button
                 onClick={this.handleLogin}
-                disabled={this.state.submitted}>
-                {this.state.submitted ? 'Logging you in' : 'Log In'}
+                disabled={this.state.submitted}
+              >
+                {this.state.submitted ? (
+                  <React.Fragment>
+                    Logging You In&nbsp;
+                    <i className="fa fa-hourglass-o" aria-hidden="true" />
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    Log In&nbsp;<i
+                      className="fa fa-sign-in"
+                      aria-hidden="true"
+                    />
+                  </React.Fragment>
+                )}
               </Button>
+              {this.state.message ? (
+                <p className={styles.error}>
+                  <i
+                    className="fa fa-exclamation-triangle"
+                    aria-hidden="true"
+                  />&nbsp;{this.state.message}
+                </p>
+              ) : null}
             </form>
 
-            <AppLink to="/reset-password">Forgot Password?</AppLink>
-          </main>
-          <footer className={styles.gridSingle}>
             <div className={styles.createAccount}>
-              <h2>Create an Account</h2>
+              <h3>Welcome to Zesty.io</h3>
               <p>
-                Welcome to Zesty.io. Sign up to start creating and managing
-                content ready to be delivered securely, quickly and scalably to
-                everywhere from anywhere.<br />
+                Start creating content ready to be delivered securely, quickly
+                and reliably to everywhere from anywhere.
               </p>
-              <AppLink to="/signup">Create Account</AppLink>
-              <h3>Additional Information</h3>
+              <AppLink to="/signup">Create An Account</AppLink>
+              {/* <h3>Additional Information</h3>
               <p>
                 <Url href="https://zesty.io">https://zesty.io</Url>
               </p>
               <p>
                 <Url href="mailto:hello@zesty.io">hello@zesty.io</Url>
-              </p>
+              </p> */}
             </div>
-          </footer>
+          </main>
         </div>
       </section>
     )
   }
   handleLogin = evt => {
-    this.setState({ submitted: !this.state.submitted })
     evt.preventDefault()
-    request(`${CONFIG.API_AUTH}/login`, {
-      body: {
-        email: document.forms.login.email.value,
-        password: document.forms.login.pass.value
-      }
+
+    this.setState({
+      submitted: true
     })
+
+    this.props
+      .dispatch(
+        login(document.forms.login.email.value, document.forms.login.pass.value)
+      )
       .then(json => {
-        console.log('json from login', json)
         if (json.code === 200) {
-          this.props.dispatch({
-            type: 'FETCH_AUTH_SUCCESS',
-            ZUID: json.meta.userZuid,
-            auth: true
-          })
           window.location = '/instances'
         } else if (json.code === 202) {
-          return (window.location = '/login/2fa')
+          window.location = '/login/2fa'
         } else {
           this.setState({
-            submitted: !this.state.submitted,
+            submitted: false,
             message: 'There was a problem logging you in'
           })
           this.props.dispatch({
@@ -125,12 +140,13 @@ class Login extends Component {
         }
       })
       .catch(err => {
+        console.error(err)
         this.setState({
-          submitted: !this.state.submitted,
+          submitted: false,
           message: 'There was a problem logging you in'
         })
-        console.error('LOGIN ERR', err)
       })
   }
 }
+
 export default withRouter(connect(state => state)(Login))

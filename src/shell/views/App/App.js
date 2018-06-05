@@ -23,8 +23,9 @@ import { fetchUser } from '../../store/user'
 import { verifyAuth } from '../../store/auth'
 
 class App extends Component {
-  componentDidMount() {
-    this.props.dispatch(fetchUser(this.props.user.ZUID))
+  constructor(props) {
+    super(props)
+    this.props.dispatch(fetchUser(props.user.ZUID))
     setInterval(() => {
       this.props.dispatch(verifyAuth())
     }, 60000)

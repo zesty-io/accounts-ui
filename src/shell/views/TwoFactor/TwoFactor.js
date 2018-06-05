@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import styles from './TwoFactor.less'
 import { request } from '../../../util/request'
 
-
 // TODO poll 2FA for one touch
 class TwoFactor extends Component {
   constructor(props) {
@@ -69,7 +68,7 @@ class TwoFactor extends Component {
         if (json.code === 200) {
           this.props.dispatch({
             type: 'FETCH_AUTH_SUCCESS',
-            zuid: json.meta.userZuid,
+            ZUID: json.meta.userZuid,
             auth: true
           })
           window.location = '/instances'
@@ -98,7 +97,7 @@ class TwoFactor extends Component {
         if (json.code === 200) {
           this.props.dispatch({
             type: 'FETCH_AUTH_SUCCESS',
-            zuid: '',
+            ZUID: '',
             auth: true
           })
           return (window.location = '/instances')
