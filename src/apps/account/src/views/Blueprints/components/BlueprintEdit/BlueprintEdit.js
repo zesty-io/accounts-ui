@@ -55,6 +55,7 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             type="text"
+            style={{'width':'300px'}}
             onChange={this.onChange}
             value={this.state.blueprint.name || ''}
             name="name"
@@ -62,6 +63,7 @@ class BlueprintEdit extends Component {
           <label>Github Repo URL</label>
           <Input
             autoComplete="off"
+            style={{'width':'500px'}}
             type="text"
             onChange={this.onChange}
             value={this.state.blueprint.githubURL || ''}
@@ -70,6 +72,7 @@ class BlueprintEdit extends Component {
           <label>Blueprint Example Preview URL</label>
           <Input
             autoComplete="off"
+            style={{'width':'500px'}}
             type="text"
             onChange={this.onChange}
             value={this.state.blueprint.previewURL || ''}
@@ -81,6 +84,7 @@ class BlueprintEdit extends Component {
           </label>
           <Input
             autoComplete="off"
+            style={{'width':'500px'}}
             type="text"
             onChange={this.onChange}
             value={this.state.blueprint.mainImage || ''}
@@ -91,6 +95,7 @@ class BlueprintEdit extends Component {
             in your repo.)
           </label>
           <Input
+            style={{'width':'500px'}}
             autoComplete="off"
             onChange={this.onChange}
             value={this.state.blueprint.coverImage || ''}

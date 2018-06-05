@@ -10,8 +10,7 @@
   width: 80%;
   height: 80%;
   margin: 1rem auto;
-  border-radius: 10px;
-  box-shadow: 10px 10px 25px 6px rgba(0,0,0,0.35);
+  border-radius: 5px;
 
   label {
     display: block;
@@ -19,15 +18,16 @@
     text-transform: uppercase;
     font-weight: bold;
     color: #5b667d;
-    margin: 1rem;
+    margin-top: 1rem;
+    margin-bottom: .2rem;
   }
 
   .descriptionWrapper {
     display: flex;
+    flex-direction: column;
     width: 100%;
     textarea {
       font-size: 14px;
-      margin: 1rem;
       border: solid 1px #ccc;
       background-color: #eee;
       color: #777;
@@ -39,5 +39,6 @@
   .button {
     margin: 1rem;
     max-width: 100px;
+    align-self: flex-end;
   }
 }
