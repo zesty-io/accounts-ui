@@ -100,7 +100,7 @@ const mapStateToProps = state => {
   const userZUID = state.user.ZUID
 
   const userBlueprints = Object.keys(blueprints).reduce((acc, bp) => {
-    if (state.blueprints[bp].createdByUserZUID === userZUID) {
+    if (state.blueprints[bp].createdByUserZUID === userZUID && !state.blueprints[bp].trashed) {
       acc.push(blueprints[bp])
     }
     return acc
