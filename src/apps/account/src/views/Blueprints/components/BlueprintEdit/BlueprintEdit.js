@@ -155,7 +155,7 @@ class BlueprintEdit extends Component {
         this.props.dispatch(
           notify({
             type: 'success',
-            message: 'successfully saved changes'
+            message: 'Successfully saved changes'
           })
         )
       })
@@ -164,7 +164,7 @@ class BlueprintEdit extends Component {
         this.props.dispatch(
           notify({
             type: 'error',
-            message: 'something went wrong saving your changes'
+            message: 'Something went wrong saving your changes'
           })
         )
       })
@@ -183,7 +183,7 @@ class BlueprintEdit extends Component {
         this.props.dispatch(
           notify({
             type: 'success',
-            message: 'successfully created blueprint'
+            message: 'Successfully created blueprint'
           })
         )
       })

@@ -10,6 +10,7 @@ import {
   deleteBlueprint
 } from '../../../../properties/src/store/blueprints'
 import { zConfirm } from '../../../../../shell/store/confirm'
+import { notify } from '../../../../../shell/store/notifications'
 
 import styles from './Blueprints.less'
 
@@ -69,6 +70,15 @@ class Blueprints extends Component {
             this.props.dispatch(deleteBlueprint(blueprint, name)).then(data => {
               this.props.dispatch(fetchBlueprints())
               this.props.history.push('/settings/blueprints/create')
+              this.props.dispatch(notify({
+                type: 'success',
+                message: 'Blueprint successfully removed'
+              }))
+            }).catch(err => {
+              this.props.dispatch(notify({
+                type: 'error',
+                message: 'There was a problem deleting the blueprint'
+              }))
             })
           }
         }
