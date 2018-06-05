@@ -1,21 +1,16 @@
 import { Component } from 'react'
-import { connect } from 'react-redux'
-import { fetchBlueprints } from '../../../../../../properties/src/store/blueprints'
 
 import styles from './BlueprintList.less'
 
-class Blueprints extends Component {
-  componentDidMount() {
-    this.props.dispatch(fetchBlueprints())
-  }
+class BlueprintList extends Component {
   render() {
     return (
       <section className={styles.Blueprints}>
         <section className={styles.BlueprintList}>
           <WithLoader
-            condition={this.props.blueprints.length}
+            condition={this.props.userBlueprints.length}
             message="Loading Your Custom Blueprints">
-            {this.props.blueprints.map(blueprint => {
+            {this.props.userBlueprints.map(blueprint => {
               return (
                 <Card key={blueprint.ZUID}>
                   <CardHeader>
@@ -55,18 +50,4 @@ class Blueprints extends Component {
   }
 }
 
-export default connect(state => {
-  let blueprints = Object.keys(state.blueprints)
-    .filter(id => {
-      let blueprint = state.blueprints[id]
-      if (
-        !blueprint.trashed &&
-        blueprint.createdByUserZUID === state.user.ZUID
-      ) {
-        return true
-      }
-    })
-    .map(id => state.blueprints[id])
-
-  return { blueprints }
-})(Blueprints)
+export default BlueprintList

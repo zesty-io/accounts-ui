@@ -51,6 +51,7 @@ class Blueprints extends Component {
         />
         <BlueprintEdit
           userZUID={this.props.userZUID}
+          blueprints={this.props.userBlueprints}
           dispatch={this.props.dispatch}
           blueprint={this.state.selected}
           history={this.props.history}

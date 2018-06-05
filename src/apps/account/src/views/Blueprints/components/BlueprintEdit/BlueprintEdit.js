@@ -47,100 +47,100 @@ class BlueprintEdit extends Component {
   }
 
   render() {
-    return (
-      this.state.blueprint !== '' ? (
-        <div className={styles.blueprints}>
-          <label>Blueprint Name</label>
-          <Input
-            autoComplete="off"
-            type="text"
-            style={{'width':'300px'}}
-            onChange={this.onChange}
-            value={this.state.blueprint.name || ''}
-            name="name"
-          />
-          <label>Github Repo URL</label>
-          <Input
-            autoComplete="off"
-            style={{'width':'500px'}}
-            type="text"
-            onChange={this.onChange}
-            value={this.state.blueprint.githubURL || ''}
-            name="githubURL"
-          />
-          <label>Blueprint Example Preview URL</label>
-          <Input
-            autoComplete="off"
-            style={{'width':'500px'}}
-            type="text"
-            onChange={this.onChange}
-            value={this.state.blueprint.previewURL || ''}
-            name="previewURL"
-          />
-          <label>
-            Shield Image URL <small>Optional. This will override shield.png in your
-            repo.</small>
-          </label>
-          <Input
-            autoComplete="off"
-            style={{'width':'500px'}}
-            type="text"
-            onChange={this.onChange}
-            value={this.state.blueprint.mainImage || ''}
-            name="mainImage"
-          />
-          <label>
-            Background Cover Image URL <small>Optional. This will override shield.png
-            in your repo.</small>
-          </label>
-          <Input
-            style={{'width':'500px'}}
-            autoComplete="off"
-            onChange={this.onChange}
-            value={this.state.blueprint.coverImage || ''}
-            name="coverImage"
-          />
-          <section className={styles.descriptionWrapper}>
-            <article>
-              <label>Short Description</label>
-              <textarea
-                autoComplete="off"
-                wrap="soft"
-                name="shortDescription"
-                onChange={this.onChange}
-                value={this.state.blueprint.shortDescription || ''}
-              />
-            </article>
-            <article>
-              <label>Description</label>
-              <textarea
-                autoComplete="off"
-                wrap="soft"
-                name="description"
-                onChange={this.onChange}
-                value={this.state.blueprint.description || ''}
-              />
-            </article>
-          </section>
-          {this.state.blueprint.ID ? (
-            <Button
-              disabled={this.state.saving}
-              className={styles.button}
-              onClick={this.handleSubmit}
-              type="submit">
-              <i className="fa fa-save" /> Save
-            </Button>
-          ) : (
-            <Button
-              disabled={this.state.saving}
-              className={styles.button}
-              onClick={this.handleCreate}
-              type="submit">
-              <i className="fa fa-plus" /> Create
-            </Button>
-          )}
-        </div>
-      ) : <BlueprintList />
+    return this.state.blueprint !== '' ? (
+      <div className={styles.blueprints}>
+        <label>Blueprint Name</label>
+        <Input
+          autoComplete="off"
+          type="text"
+          style={{ width: '300px' }}
+          onChange={this.onChange}
+          value={this.state.blueprint.name || ''}
+          name="name"
+        />
+        <label>Github Repo URL</label>
+        <Input
+          autoComplete="off"
+          style={{ width: '500px' }}
+          type="text"
+          onChange={this.onChange}
+          value={this.state.blueprint.githubURL || ''}
+          name="githubURL"
+        />
+        <label>Blueprint Example Preview URL</label>
+        <Input
+          autoComplete="off"
+          style={{ width: '500px' }}
+          type="text"
+          onChange={this.onChange}
+          value={this.state.blueprint.previewURL || ''}
+          name="previewURL"
+        />
+        <label>
+          Shield Image URL{' '}
+          <small>Optional. This will override shield.png in your repo.</small>
+        </label>
+        <Input
+          autoComplete="off"
+          style={{ width: '500px' }}
+          type="text"
+          onChange={this.onChange}
+          value={this.state.blueprint.mainImage || ''}
+          name="mainImage"
+        />
+        <label>
+          Background Cover Image URL{' '}
+          <small>Optional. This will override shield.png in your repo.</small>
+        </label>
+        <Input
+          style={{ width: '500px' }}
+          autoComplete="off"
+          onChange={this.onChange}
+          value={this.state.blueprint.coverImage || ''}
+          name="coverImage"
+        />
+        <section className={styles.descriptionWrapper}>
+          <article>
+            <label>Short Description</label>
+            <textarea
+              autoComplete="off"
+              wrap="soft"
+              name="shortDescription"
+              onChange={this.onChange}
+              value={this.state.blueprint.shortDescription || ''}
+            />
+          </article>
+          <article>
+            <label>Description</label>
+            <textarea
+              autoComplete="off"
+              wrap="soft"
+              name="description"
+              onChange={this.onChange}
+              value={this.state.blueprint.description || ''}
+            />
+          </article>
+        </section>
+        {this.state.blueprint.ID ? (
+          <Button
+            disabled={this.state.saving}
+            className={styles.button}
+            onClick={this.handleSubmit}
+            type="submit">
+            <i className="fa fa-save" /> Save
+          </Button>
+        ) : (
+          <Button
+            disabled={this.state.saving}
+            className={styles.button}
+            onClick={this.handleCreate}
+            type="submit">
+            <i className="fa fa-plus" /> Create
+          </Button>
+        )}
+      </div>
+    ) : (
+      <BlueprintList userBlueprints={this.props.blueprints} />
     )
   }
   handleSubmit = evt => {
