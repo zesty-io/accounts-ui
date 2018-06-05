@@ -17,7 +17,7 @@ export function blueprints(state = {}, action) {
       }
 
     case 'FETCHING_BLUEPRINTS_SUCCESS':
-      return { ...state, ...action.blueprints }
+      return action.blueprints 
 
     case 'CREATING_BLUEPRINT':
       return state

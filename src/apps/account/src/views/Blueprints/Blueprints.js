@@ -57,7 +57,7 @@ class Blueprints extends Component {
     )
   }
   handleSelect = blueprint => {
-    this.props.history.push(`${blueprint}`)
+    this.props.history.push(`/settings/blueprints/${blueprint}`)
   }
   handleDelete = blueprint => {
     const name = this.props.blueprints[blueprint].name
@@ -68,6 +68,7 @@ class Blueprints extends Component {
           if (response) {
             this.props.dispatch(deleteBlueprint(blueprint, name)).then(data => {
               this.props.dispatch(fetchBlueprints())
+              this.props.history.push('/settings/blueprints/create')
             })
           }
         }

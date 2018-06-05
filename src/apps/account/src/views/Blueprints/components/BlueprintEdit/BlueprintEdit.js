@@ -79,8 +79,8 @@ class BlueprintEdit extends Component {
             name="previewURL"
           />
           <label>
-            Shield Image URL (Optional. This will override shield.png in your
-            repo.)
+            Shield Image URL <small>Optional. This will override shield.png in your
+            repo.</small>
           </label>
           <Input
             autoComplete="off"
@@ -91,8 +91,8 @@ class BlueprintEdit extends Component {
             name="mainImage"
           />
           <label>
-            Background Cover Image URL (Optional. This will override shield.png
-            in your repo.)
+            Background Cover Image URL <small>Optional. This will override shield.png
+            in your repo.</small>
           </label>
           <Input
             style={{'width':'500px'}}
