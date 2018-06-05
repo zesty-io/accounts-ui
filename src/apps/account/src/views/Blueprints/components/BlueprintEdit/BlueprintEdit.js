@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import BlueprintList from '../BlueprintList'
+
 import { notify } from '../../../../../../../shell/store/notifications'
 import {
   updateBlueprint,
@@ -13,15 +15,7 @@ class BlueprintEdit extends Component {
   state = {
     saving: false,
     userZUID: this.props.userZUID,
-    blueprint: {
-      name: '',
-      githubURL: '',
-      description: '',
-      shortDescription: '',
-      previewURL: '',
-      coverImage: '',
-      mainImage: ''
-    }
+    blueprint: ''
   }
 
   componentWillReceiveProps(props) {
@@ -38,6 +32,11 @@ class BlueprintEdit extends Component {
         }
       })
     }
+    if (props.blueprint === '') {
+      return this.setState({
+        blueprint: ''
+      })
+    }
     if (props.blueprint.ID !== this.state.blueprint.ID) {
       this.setState({
         blueprint: props.blueprint
@@ -49,7 +48,7 @@ class BlueprintEdit extends Component {
 
   render() {
     return (
-      this.state.blueprint && (
+      this.state.blueprint !== '' ? (
         <div className={styles.blueprints}>
           <label>Blueprint Name</label>
           <Input
@@ -141,7 +140,7 @@ class BlueprintEdit extends Component {
             </Button>
           )}
         </div>
-      )
+      ) : <BlueprintList />
     )
   }
   handleSubmit = evt => {

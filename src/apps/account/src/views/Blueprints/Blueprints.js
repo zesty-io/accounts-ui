@@ -53,6 +53,7 @@ class Blueprints extends Component {
           userZUID={this.props.userZUID}
           dispatch={this.props.dispatch}
           blueprint={this.state.selected}
+          history={this.props.history}
         />
       </section>
     )
@@ -67,19 +68,26 @@ class Blueprints extends Component {
         prompt: 'Are you sure you want to delete this blueprint?',
         callback: response => {
           if (response) {
-            this.props.dispatch(deleteBlueprint(blueprint, name)).then(data => {
-              this.props.dispatch(fetchBlueprints())
-              this.props.history.push('/settings/blueprints/create')
-              this.props.dispatch(notify({
-                type: 'success',
-                message: 'Blueprint successfully removed'
-              }))
-            }).catch(err => {
-              this.props.dispatch(notify({
-                type: 'error',
-                message: 'There was a problem deleting the blueprint'
-              }))
-            })
+            this.props
+              .dispatch(deleteBlueprint(blueprint, name))
+              .then(data => {
+                this.props.dispatch(fetchBlueprints())
+                this.props.dispatch(
+                  notify({
+                    type: 'success',
+                    message: 'Blueprint successfully removed'
+                  })
+                )
+                this.props.history.push('/settings/blueprints/')
+              })
+              .catch(err => {
+                this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message: 'There was a problem deleting the blueprint'
+                  })
+                )
+              })
           }
         }
       })
