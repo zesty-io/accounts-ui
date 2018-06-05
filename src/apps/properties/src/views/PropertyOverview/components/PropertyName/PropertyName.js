@@ -3,7 +3,7 @@ import cx from 'classnames'
 import styles from './PropertyName.less'
 
 import { notify } from '../../../../../../../shell/store/notifications'
-import { updateSite } from '../../../../store/sites'
+import { updateSite, fetchSite } from '../../../../store/sites'
 
 export default class PropertyName extends Component {
   constructor(props) {
@@ -55,10 +55,7 @@ export default class PropertyName extends Component {
         })
       )
       .then(res => {
-        this.props.dispatch({
-          type: 'FETCH_SITE_SUCCESS',
-          site: res.data
-        })
+        this.props.dispatch(fetchSite(this.props.siteZUID))
         this.props.dispatch(
           notify({
             message: 'Name Successfully Updated',
