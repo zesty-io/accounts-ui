@@ -52,9 +52,7 @@ export const fetchSiteUsers = siteZUID => {
     dispatch({
       type: 'FETCHING_USERS'
     })
-    return request(
-      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/roles`
-    )
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/roles`)
       .then(users => {
         dispatch({
           type: 'FETCH_USERS_SUCCESS',
@@ -124,7 +122,7 @@ export const updateSiteUserRole = (
     /*
     **
     ** for role updates until the API can handle ZUID roles
-    ** it looks like what we need to do is a `POST` to 
+    ** it looks like what we need to do is a `POST` to
     ** `https://stage-accounts.zesty.io/+/actions/manage-permissions/site/set-role-for-user
     ** ` (base URL varies per environment), and send it a body like:
     **
@@ -212,17 +210,17 @@ export const updateSiteUserRole = (
         return err
       })
 
-        // temporarily use the old API so that roles apply across all apps
-        //
-        // return request(
-        //   `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
-        //   {
-        //     method: 'PUT',
-        //     json: true,
-        //     body: {
-        //       roleZUID: newRoleZUID
-        //     }
-        //   }
-        // )
+    // temporarily use the old API so that roles apply across all apps
+    //
+    // return request(
+    //   `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
+    //   {
+    //     method: 'PUT',
+    //     json: true,
+    //     body: {
+    //       roleZUID: newRoleZUID
+    //     }
+    //   }
+    // )
   }
 }
