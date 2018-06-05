@@ -6,8 +6,9 @@ export class Select extends React.Component {
     super(props)
     this.state = {
       dropdownOpen: false,
-      selection:
-        props.selection || props.children[0] ? props.children[0].props : {},
+      selection: props.selection
+        ? props.selection
+        : props.children ? props.children[0].props : {},
       filter: ''
     }
   }
@@ -181,14 +182,18 @@ export class Select extends React.Component {
   Flatten react child components
    */
   flattenChildren = children => {
-    return children.reduce((acc, child) => {
-      if (Array.isArray(child)) {
-        acc = [...acc, ...child]
-      } else {
-        acc.push(child)
-      }
-      return acc
-    }, [])
+    if (Array.isArray(children)) {
+      return children.reduce((acc, child) => {
+        if (Array.isArray(child)) {
+          acc = [...acc, ...child]
+        } else {
+          acc.push(child)
+        }
+        return acc
+      }, [])
+    } else {
+      return []
+    }
   }
 
   onEsc = evt => {
