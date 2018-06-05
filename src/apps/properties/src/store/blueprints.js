@@ -17,7 +17,7 @@ export function blueprints(state = {}, action) {
       }
 
     case 'FETCHING_BLUEPRINTS_SUCCESS':
-      return { ...state, ...action.blueprints }
+      return action.blueprints 
 
     case 'CREATING_BLUEPRINT':
       return state
@@ -86,7 +86,7 @@ export function fetchBlueprint(id) {
   }
 }
 
-export function postNewBlueprint(name) {
+export function postNewBlueprint(body) {
   return dispatch => {
     dispatch({
       type: 'CREATING_BLUEPRINT'
@@ -94,7 +94,7 @@ export function postNewBlueprint(name) {
     return request(`${CONFIG.API_ACCOUNTS}/blueprints`, {
       method: 'POST',
       json: true,
-      body: { name }
+      body
     })
       .then(data => {
         dispatch({
@@ -140,6 +140,27 @@ export function updateBlueprint(ID, body) {
           err
         })
         throw err
+      })
+  }
+}
+export function deleteBlueprint(id) {
+  return dispatch => {
+    dispatch({
+      type: 'DELETE_BLUEPRINT'
+    })
+    return request(`${CONFIG.API_ACCOUNTS}/blueprints/${id}`, {
+      method: 'DELETE'
+    })
+      .then(blueprint => {
+        console.log('response from delete', blueprint)
+        return blueprint
+      })
+      .catch(err => {
+        console.table(err)
+        dispatch({
+          type: 'FETCHING_BLUEPRINTS_ERROR',
+          err
+        })
       })
   }
 }

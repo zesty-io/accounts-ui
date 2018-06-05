@@ -1,0 +1,35 @@
+.ColumnList {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  margin-top: 0.5rem;
+
+  .List {
+    height: 86vh;
+    overflow-y: scroll;
+    width: 30vw;
+
+    .SectionTitle {
+      border-bottom: 1px solid #c0cee7;
+      font-size: 1.4em;
+      margin: 2rem 0 0 0;
+    }
+    .SectionTitle:first-child {
+      margin-top: 1rem;
+    }
+  }
+  .Overview {
+    height: 86vh;
+    overflow-y: scroll;
+  }
+}
+
+.Zesty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 8em;
+  color: #dde8f9;
+  text-shadow: 1px 1px 1px #b5c3d8;
+}

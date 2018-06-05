@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
+import qs from 'qs'
 import styles from './PropertyOverview.less'
 
 import Users from './components/Users'
@@ -24,6 +25,13 @@ import { fetchBlueprint } from '../../store/blueprints'
 class PropertyOverview extends Component {
   constructor(props) {
     super(props)
+
+    // setting ref to the manager link
+    this.managerLink = null
+    this.clickManager = () => {
+      if (this.managerLink) this.managerLink.click()
+    }
+
     this.state = {
       loadingUsers: true,
       loadingRoles: true,
@@ -34,199 +42,179 @@ class PropertyOverview extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchSiteUsers(this.props.siteZUID)).then(() => {
+    this.fetchSiteData(this.props)
+    if (qs.parse(window.location.search.substr(1))['invited'] === 'true') {
+      this.clickManager()
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.siteZUID !== this.props.siteZUID) {
+      this.fetchSiteData(nextProps)
+    }
+  }
+  render() {
+    return (
+      <article className={styles.PropertyOverview}>
+        <header className={styles.PropertyOverviewHeader}>
+          <Url
+            className={styles.manager}
+            target="_blank"
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${
+              this.props.site.randomHashID
+            }${CONFIG.MANAGER_URL}`}>
+            <i
+              className="fa fa-external-link"
+              aria-hidden="true"
+              ref={element => (this.managerLink = element)}
+            />&nbsp;Open Manager
+          </Url>
+          <Url
+            className={styles.manager}
+            target="_blank"
+            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
+              this.props.site.randomHashID
+            }${CONFIG.PREVIEW_URL}`}>
+            <i className="fa fa-eye" aria-hidden="true" />&nbsp;Open Preview
+          </Url>
+          {this.props.site.domain ? (
+            <Url
+              className={styles.manager}
+              target="_blank"
+              href={`http://${this.props.site.domain}`}>
+              <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
+            </Url>
+          ) : null}
+        </header>
+        <main className={styles.Cards}>
+          <WithLoader
+            condition={Object.keys(this.props.users).length}
+            message="Loading Instance Permissions">
+            <Route
+              path="/instances/:siteZUID/launch"
+              render={routeProps => {
+                return (
+                  <LaunchWizard
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    dispatch={this.props.dispatch}
+                    site={this.props.site}
+                  />
+                )
+              }}
+            />
+
+            <Route
+              path="/instances/:siteZUID"
+              render={routeProps => {
+                return (
+                  <Meta
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    dispatch={this.props.dispatch}
+                    site={this.props.site}
+                  />
+                )
+              }}
+            />
+
+            <Route
+              path="/instances/:siteZUID"
+              render={routeProps => {
+                return (
+                  <Users
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    siteZUID={this.props.site.ZUID}
+                    dispatch={this.props.dispatch}
+                    users={this.props.users}
+                    siteRoles={this.props.siteRoles}
+                    loadingUsers={this.state.loadingUsers}
+                    loadingUsersPending={this.state.loadingUsersPending}
+                    loadingRoles={this.state.loadingRoles}
+                  />
+                )
+              }}
+            />
+
+            {/* Custom roles are on pause until legacy cuts over */}
+            {/* <Route
+              path="/instances/:siteZUID"
+              render={routeProps => {
+                return (
+                  <Roles
+                    {...routeProps}
+                    dispatch={this.props.dispatch}
+                    siteZUID={this.props.siteZUID}
+                    userZUID={this.props.userZUID}
+                    siteRoles={this.props.siteRoles}
+                    systemRoles={this.props.systemRoles}
+                  />
+                )
+              }}
+            /> */}
+
+            <Route
+              path="/instances/:siteZUID"
+              render={routeProps => {
+                return (
+                  <CompanyAccess
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    dispatch={this.props.dispatch}
+                    companies={this.props.companies}
+                    siteRoles={this.props.siteRoles}
+                    loadingTeams={this.state.loadingTeams}
+                  />
+                )
+              }}
+            />
+
+            <Route
+              path="/instances/:siteZUID"
+              render={routeProps => {
+                return (
+                  <Blueprint
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    loadingBlueprint={this.state.loadingBlueprint}
+                    siteZUID={this.props.siteZUID}
+                    blueprint={this.props.blueprint}
+                    dispatch={this.props.dispatch}
+                  />
+                )
+              }}
+            />
+          </WithLoader>
+        </main>
+      </article>
+    )
+  }
+  fetchSiteData(props) {
+    props.dispatch(fetchSiteUsers(props.siteZUID)).then(() => {
       this.setState({
         loadingUsers: false
       })
     })
-    this.props.dispatch(fetchSiteUsersPending(this.props.siteZUID)).then(() => {
+    props.dispatch(fetchSiteUsersPending(props.siteZUID)).then(() => {
       this.setState({
         loadingUsersPending: false
       })
     })
-    this.props.dispatch(fetchSiteRoles(this.props.siteZUID)).then(() => {
+    props.dispatch(fetchSiteRoles(props.siteZUID)).then(() => {
       this.setState({
         loadingRoles: false
       })
     })
-    this.props.dispatch(fetchSiteCompanies(this.props.siteZUID)).then(() => {
+    props.dispatch(fetchSiteCompanies(props.siteZUID)).then(() => {
       this.setState({
         loadingTeams: false
       })
     })
-    this.props
-      .dispatch(fetchBlueprint(this.props.site.blueprintID))
-      .then(() => {
-        this.setState({
-          loadingBlueprint: false
-        })
+    props.dispatch(fetchBlueprint(props.site.blueprintID)).then(() => {
+      this.setState({
+        loadingBlueprint: false
       })
-
-    document.addEventListener('keydown', this.close)
-    document.addEventListener('click', this.close)
-  }
-  componentWillUnmount() {
-    document.removeEventListener('click', this.close)
-    document.removeEventListener('keydown', this.close)
-  }
-  render() {
-    return (
-      <section className={styles.PropertyOverviewWrap}>
-        <article className={styles.PropertyOverview}>
-          <Button
-            className={styles.CloseOverview}
-            id="closeOverviewButton"
-            onClick={this.close}
-          >
-            <i className="fa fa-times-circle-o" aria-hidden="true" />
-          </Button>
-          <header className={styles.PropertyOverviewHeader}>
-            <Url
-              className={styles.manager}
-              target="_blank"
-              href={`${CONFIG.MANAGER_URL_PROTOCOL}${
-                this.props.site.randomHashID
-              }${CONFIG.MANAGER_URL}`}
-            >
-              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Instance
-              Manager
-            </Url>
-            <Url
-              className={styles.manager}
-              target="_blank"
-              href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
-                this.props.site.randomHashID
-              }${CONFIG.PREVIEW_URL}`}
-            >
-              <i className="fa fa-eye" aria-hidden="true" />&nbsp;Instance
-              Preview
-            </Url>
-            <Url
-              className={styles.manager}
-              target="_blank"
-              href={`http://${this.props.site.domain}`}
-            >
-              <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
-            </Url>
-          </header>
-          <main className={styles.Cards}>
-            <WithLoader
-              condition={Object.keys(this.props.users).length}
-              message="Loading Instance Permissions"
-            >
-              <Route
-                path="/instances/:siteZUID/launch"
-                render={routeProps => {
-                  return (
-                    <LaunchWizard
-                      {...routeProps}
-                      isAdmin={this.props.isAdmin}
-                      dispatch={this.props.dispatch}
-                      site={this.props.site}
-                    />
-                  )
-                }}
-              />
-
-              <Route
-                path="/instances/:siteZUID"
-                render={routeProps => {
-                  return (
-                    <Meta
-                      {...routeProps}
-                      dispatch={this.props.dispatch}
-                      site={this.props.site}
-                    />
-                  )
-                }}
-              />
-
-              <Route
-                path="/instances/:siteZUID"
-                render={routeProps => {
-                  return (
-                    <Users
-                      {...routeProps}
-                      isAdmin={this.props.isAdmin}
-                      siteZUID={this.props.site.ZUID}
-                      dispatch={this.props.dispatch}
-                      users={this.props.users}
-                      siteRoles={this.props.siteRoles}
-                      loadingUsers={this.state.loadingUsers}
-                      loadingUsersPending={this.state.loadingUsersPending}
-                      loadingRoles={this.state.loadingRoles}
-                    />
-                  )
-                }}
-              />
-
-              {/* Custom roles are on pause until legacy cuts over */}
-              {/* <Route
-                path="/instances/:siteZUID"
-                render={routeProps => {
-                  return (
-                    <Roles
-                      {...routeProps}
-                      dispatch={this.props.dispatch}
-                      siteZUID={this.props.siteZUID}
-                      userZUID={this.props.userZUID}
-                      siteRoles={this.props.siteRoles}
-                      systemRoles={this.props.systemRoles}
-                    />
-                  )
-                }}
-              /> */}
-
-              <Route
-                path="/instances/:siteZUID"
-                render={routeProps => {
-                  return (
-                    <CompanyAccess
-                      {...routeProps}
-                      isAdmin={this.props.isAdmin}
-                      dispatch={this.props.dispatch}
-                      companies={this.props.companies}
-                      siteRoles={this.props.siteRoles}
-                      loadingTeams={this.state.loadingTeams}
-                    />
-                  )
-                }}
-              />
-
-              <Route
-                path="/instances/:siteZUID"
-                render={routeProps => {
-                  return (
-                    <Blueprint
-                      {...routeProps}
-                      isAdmin={this.props.isAdmin}
-                      loadingBlueprint={this.state.loadingBlueprint}
-                      siteZUID={this.props.siteZUID}
-                      blueprint={this.props.blueprint}
-                      dispatch={this.props.dispatch}
-                    />
-                  )
-                }}
-              />
-            </WithLoader>
-          </main>
-        </article>
-      </section>
-    )
-  }
-  close = evt => {
-    if (evt.key === 'Escape') {
-      this.props.history.push('/instances')
-    }
-    if (evt.type === 'click') {
-      if (
-        evt.target.parentElement &&
-        (evt.target.parentElement.id === 'siteListWrapper' ||
-          evt.target.parentElement.id === 'closeOverviewButton')
-      ) {
-        this.props.history.push('/instances')
-      }
-    }
+    })
   }
 }
 

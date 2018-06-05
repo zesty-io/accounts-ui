@@ -26,7 +26,6 @@ class Domain extends Component {
   render() {
     return (
       <label className={styles.Domain}>
-        Domain:&nbsp;
         {this.state.submitted ? (
           <span>Saving&hellip;</span>
         ) : this.props.site.domain && !this.state.editing ? (
@@ -35,7 +34,7 @@ class Domain extends Component {
             <i className="fa fa-pencil" />
           </span>
         ) : (
-          <div className={styles.Edit}>
+          <span className={styles.Edit}>
             <Input
               value={this.state.domain}
               placeholder="Set a custom domain"
@@ -44,7 +43,7 @@ class Domain extends Component {
             <Button onClick={this.handleSave}>
               <i className="fa fa-save" aria-hidden="true" />Save
             </Button>
-          </div>
+          </span>
         )}
       </label>
     )
@@ -64,9 +63,10 @@ class Domain extends Component {
 
   handleSave = () => {
     this.setState({ submitted: true })
+    let strippedDomain = this.state.domain.toLowerCase().replace(/http:\/\/|https:\/\//g, '')
     this.props
       .dispatch(
-        updateDomain(this.props.siteZUID, this.state.domain.toLowerCase())
+        updateDomain(this.props.siteZUID, strippedDomain)
       )
       .then(domain => {
         console.log('Domain update success', domain)

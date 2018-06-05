@@ -1,0 +1,45 @@
+@import '../../../../../../../shell/styles/colors.less';
+
+.blueprints {
+  display: flex;
+  margin: 2rem;
+  padding: 3rem;
+  background-color: @zesty-white;
+  // border: 1px solid @zesty-light-blue;
+  flex-direction: column;
+  width: 90%;
+  height: auto;
+  // margin: 1rem auto;
+  border-radius: 5px;
+  overflow-y: auto;
+
+  label {
+    display: block;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #5b667d;
+    margin-top: 1rem;
+    margin-bottom: .2rem;
+  }
+
+  .descriptionWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    textarea {
+      font-size: 14px;
+      border: solid 1px #ccc;
+      background-color: #eee;
+      color: #777;
+      width: 30vw;
+      height: 100px;
+    }
+  }
+
+  .button {
+    margin: 1rem;
+    max-width: 100px;
+    align-self: flex-end;
+  }
+}

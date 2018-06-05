@@ -3,14 +3,19 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
-// import { Line } from 'react-chartjs-2'
+import InstanceFavorite from '../InstanceFavorite'
 
-const WebsiteCard = props => {
+export default props => {
   const { site } = props
   return (
     <Card className={styles.WebsiteCard}>
       <CardHeader className={styles.CardHeader}>
         <h1>{site.name}</h1>
+        <InstanceFavorite
+          className={styles.favorite}
+          favorite={site.favorite}
+          ZUID={site.ZUID}
+        />
       </CardHeader>
       {site.screenshotURL ? (
         <CardContent
@@ -71,7 +76,7 @@ const WebsiteCard = props => {
               CONFIG.MANAGER_URL
             }`}
           >
-            Instance Manager&nbsp;<i
+            Open Manager&nbsp;<i
               className="fa fa-external-link-square"
               aria-hidden="true"
             />
@@ -81,5 +86,3 @@ const WebsiteCard = props => {
     </Card>
   )
 }
-
-export default WebsiteCard

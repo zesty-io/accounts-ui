@@ -1,32 +1,31 @@
 @import '../../../../../../../shell/styles/colors.less';
 
 .Meta {
-  // p {
-  //   margin: 0 0 1rem 0;
-  // }
-  // display: grid;
-  // padding: 1rem 0 0;
-  header {
-    display: grid;
-    // grid-auto-flow: row;
-    grid-template-columns: 175px 100px 100px 1fr;
-    // justify-items: center;
-    // background-color: @zesty-white;
-    padding: 0.5rem;
-    h3 {
-      font-size: 1em;
+  margin: 0 0 1.5rem;
+  .CardHeader {
+    h2 {
+      display: flex;
+      align-items: center;
     }
   }
-  main {
-    article {
-      padding: 0.5rem;
-      display: grid;
-      // justify-items: center;
-      grid-template-columns: 175px 100px 100px 1fr;
+  .CardContent {
+    .domain {
+      margin: 1rem 0;
+      .title {
+        font-weight: bold;
+      }
     }
-
-    article:nth-child(odd) {
-      background-color: @zesty-white;
+    article {
+      display: flex;
+      flex-wrap: wrap;
+      .setting {
+        margin: 0 1rem 1rem 0;
+        min-width: 120px;
+        .title {
+          font-weight: bold;
+          display: block;
+        }
+      }
     }
   }
 }

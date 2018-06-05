@@ -1,2 +1,3 @@
+import cx from 'classnames'
 import styles from './Divider.less'
-export default () => <hr className={styles.Divider} />
+export default props => <hr className={cx(styles.Divider, props.className)} />

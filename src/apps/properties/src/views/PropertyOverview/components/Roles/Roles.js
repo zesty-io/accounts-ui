@@ -30,7 +30,7 @@ const formatDate = date => {
 export default class Roles extends Component {
   render() {
     return (
-      <Card>
+      <Card className={styles.Roles}>
         <CardHeader>
           <h2>
             <i className="fa fa-lock" aria-hidden="true" />
@@ -38,15 +38,15 @@ export default class Roles extends Component {
           </h2>
         </CardHeader>
         <CardContent>
-          <div className={styles.Roles}>
+          <div>
             <Route
               exact
               path={`/instances/:siteZUID/role/:roleZUID`}
               component={EditRole}
             />
             <p>
-              By creating custom roles you can provide fine grained controls of
-              what content specific users can access and what actions the can
+              By creating custom roles you can have fine grained control over
+              what content specific users can access and what actions they can
               take.
             </p>
             <RoleCreate
@@ -71,7 +71,8 @@ export default class Roles extends Component {
                       <span>
                         <ButtonGroup>
                           <AppLink
-                            to={`${this.props.match.url}role/${role.ZUID}`}>
+                            to={`${this.props.match.url}role/${role.ZUID}`}
+                          >
                             <i className="fa fa-pencil" aria-hidden="true" />&nbsp;Edit
                           </AppLink>
                           <Button onClick={() => this.handleRemove(role.ZUID)}>
@@ -101,7 +102,7 @@ export default class Roles extends Component {
               .then(data => {
                 this.props.dispatch(
                   notify({
-                    message: 'Role successfully removed',
+                    message: 'Role successfully deleted',
                     type: 'success'
                   })
                 )

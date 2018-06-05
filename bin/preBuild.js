@@ -21,8 +21,8 @@ if (env === 'production') {
     PREVIEW_URL: '-dev.preview.zestyio.com',
     PREVIEW_URL_PROTOCOL: 'https://',
     COOKIE_NAME: 'APP_SID',
-    EMAIL_SERVICE: 'https://email.zesty.io/send',
     COOKIE_DOMAIN: '.zesty.io',
+    EMAIL_SERVICE: 'https://email.zesty.io/send',
     LEGACY_ACCOUNTS: 'http://accounts.zesty.io'
 
   }`

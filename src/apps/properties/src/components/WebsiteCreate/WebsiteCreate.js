@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCreate.less'
 
-import { Line } from 'react-chartjs-2'
-
 class WebsiteCreate extends Component {
   render() {
     return (

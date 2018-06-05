@@ -1,0 +1,32 @@
+@import '../../../../../../../shell/styles/colors.less';
+
+.List {
+  background-color: @nav-border-color;
+  color: @zesty-light-blue;
+  list-style-type: none;
+  overflow-y: scroll;
+  height: auto;
+  li {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr 20px;
+    margin-top: 1.3rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    p {
+      align-self: center;
+    }
+    i {
+      margin: 0.5rem;
+      right: 0;
+      align-self: flex-end;
+      transition: all 0.1s;
+      &:hover,
+      &:active,
+      &:focus {
+        color: @zesty-red;
+      }
+    }
+  }
+}

@@ -26,7 +26,6 @@ export default class Blueprint extends PureComponent {
               ) : null}
             </CardHeader>
             <CardContent>
-              <h2 className={styles.name}>{this.props.blueprint.name}</h2>
               {this.props.blueprint.coverImage ? (
                 <img src={this.props.blueprint.coverImage} alt="" />
               ) : this.props.blueprint.mainImage ? (
@@ -34,12 +33,13 @@ export default class Blueprint extends PureComponent {
               ) : (
                 <p>No cover image set for this blueprint</p>
               )}
+              <h2 className={styles.name}>{this.props.blueprint.name}</h2>
               <p>{this.props.blueprint.description}</p>
 
               {this.props.blueprint.githubURL ? (
                 <Url href={this.props.blueprint.githubURL} target="_blank">
                   <i className="fa fa-github" aria-hidden="true" />
-                  View On Github
+                  View On GitHub
                 </Url>
               ) : null}
             </CardContent>

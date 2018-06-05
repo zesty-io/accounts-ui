@@ -20,18 +20,15 @@
   "contributors": [
     "Grant Glidewell <grant.glidewell@zesty.io>"
   ],
-  "license": "UNLICENSED",
+  "license": "",
   "dependencies": {
-    "chart.js": "2.7.2",
     "classnames": "2.2.5",
     "qs": "^6.5.1",
     "react": "16.2.0",
-    "react-chartjs-2": "2.7.0",
     "react-dom": "16.2.0",
     "react-redux": "5.0.7",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
-    "react-virtualized": "^9.18.5",
     "redux": "3.7.2",
     "redux-debounced": "0.4.0",
     "redux-thunk": "2.2.0"

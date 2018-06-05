@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './Websites.less'
 
-import { fetchSites } from '../../store/sites'
+import { fetchSites, fetchSitesWithInvites } from '../../store/sites'
 import { fetchSystemRoles } from '../../../../../shell/store/systemRoles'
 
 import PropertiesList from '../PropertiesList'
@@ -20,6 +20,9 @@ class Properties extends Component {
   }
   componentDidMount() {
     this.props.dispatch(fetchSites()).then(() => {
+      this.setState({ loadingSites: false })
+    })
+    this.props.dispatch(fetchSitesWithInvites()).then(() => {
       this.setState({ loadingSites: false })
     })
     this.props.dispatch(fetchSystemRoles())

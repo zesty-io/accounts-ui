@@ -6,7 +6,11 @@ export class Select extends React.Component {
     super(props)
     this.state = {
       dropdownOpen: false,
-      selection: props.selection || props.children[0].props || {},
+      selection: props.selection
+        ? props.selection
+        : Array.isArray(props.children) && props.children.length
+          ? props.children[0].props ? props.children[0].props : {}
+          : {},
       filter: ''
     }
   }
@@ -70,7 +74,7 @@ export class Select extends React.Component {
             <span className={styles.content}>{this.state.selection.text}</span>
           )}
         </span>
-        <ul className={'selections ' + styles.selections}>
+        <ul className={cx('selections', styles.selections)}>
           {this.props.children &&
           this.flattenChildren(this.props.children).length > 50 ? (
             <Search
@@ -79,7 +83,7 @@ export class Select extends React.Component {
               onKeyUp={this.handleFilterKeyUp}
             />
           ) : null}
-          <div className={styles.options}>
+          <div className={cx('options', styles.options)}>
             {this.flattenChildren(this.props.children)
               .filter(child => {
                 if (this.state.filter) {
@@ -180,14 +184,18 @@ export class Select extends React.Component {
   Flatten react child components
    */
   flattenChildren = children => {
-    return children.reduce((acc, child) => {
-      if (Array.isArray(child)) {
-        acc = [...acc, ...child]
-      } else {
-        acc.push(child)
-      }
-      return acc
-    }, [])
+    if (Array.isArray(children)) {
+      return children.reduce((acc, child) => {
+        if (Array.isArray(child)) {
+          acc = [...acc, ...child]
+        } else {
+          acc.push(child)
+        }
+        return acc
+      }, [])
+    } else {
+      return []
+    }
   }
 
   onEsc = evt => {
