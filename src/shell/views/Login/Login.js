@@ -125,9 +125,9 @@ class Login extends Component {
       )
       .then(json => {
         if (json.code === 200) {
-          window.location = '/instances'
+          this.props.history.push('/instances')
         } else if (json.code === 202) {
-          window.location = '/login/2fa'
+          this.props.history.push('/login/2fa')
         } else {
           this.setState({
             submitted: false,

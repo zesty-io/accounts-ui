@@ -66,7 +66,7 @@ export function login(email, password) {
     return request(`${CONFIG.API_AUTH}/login`, {
       body: { email, password }
     }).then(json => {
-      if (!json.error) {
+      if (!json.error && json.code === 200) {
         dispatch({
           type: 'FETCH_AUTH_SUCCESS',
           ZUID: json.meta.userZuid,
