@@ -5,6 +5,7 @@ import styles from './GridList.less'
 
 import PropertyOverview from '../../../PropertyOverview'
 import WebsiteCard from '../../../../components/WebsiteCard'
+import WebsiteCreate from '../../../../components/WebsiteCreate'
 import WebsiteInvite from '../../../../components/WebsiteInvite'
 
 export default class GridList extends Component {
@@ -76,28 +77,34 @@ export default class GridList extends Component {
           </React.Fragment>
         ) : null}
 
-        {this.props.sitesFiltered.length ? (
-          <React.Fragment>
-            <h2 className={styles.SectionTitle}>
-              <i className="fa fa-th" aria-hidden="true" />
-              &nbsp;All Instances
-            </h2>
+        {this.props.sites.length ? (
+          this.props.sitesFiltered.length ? (
+            <React.Fragment>
+              <h2 className={styles.SectionTitle}>
+                <i className="fa fa-th" aria-hidden="true" />
+                &nbsp;All Instances
+              </h2>
+              <main className={styles.siteList}>
+                {this.props.sitesFiltered.map(site => {
+                  return (
+                    <WebsiteCard
+                      key={site.ZUID}
+                      site={site}
+                      favorite={site.favorite}
+                      dispatch={this.props.dispatch}
+                    />
+                  )
+                })}
+              </main>
+            </React.Fragment>
+          ) : (
             <main className={styles.siteList}>
-              {this.props.sitesFiltered.map(site => {
-                return (
-                  <WebsiteCard
-                    key={site.ZUID}
-                    site={site}
-                    favorite={site.favorite}
-                    dispatch={this.props.dispatch}
-                  />
-                )
-              })}
+              <h2>No results</h2>
             </main>
-          </React.Fragment>
+          )
         ) : (
           <main className={styles.siteList}>
-            <h2>No results</h2>
+            <WebsiteCreate />
           </main>
         )}
       </div>

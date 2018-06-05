@@ -63,9 +63,10 @@ class Domain extends Component {
 
   handleSave = () => {
     this.setState({ submitted: true })
+    let strippedDomain = this.state.domain.toLowerCase().replace(/http:\/\/|https:\/\//g, '')
     this.props
       .dispatch(
-        updateDomain(this.props.siteZUID, this.state.domain.toLowerCase())
+        updateDomain(this.props.siteZUID, strippedDomain)
       )
       .then(domain => {
         console.log('Domain update success', domain)

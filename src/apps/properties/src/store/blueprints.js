@@ -143,14 +143,13 @@ export function updateBlueprint(ID, body) {
       })
   }
 }
-export function deleteBlueprint(id, name) {
+export function deleteBlueprint(id) {
   return dispatch => {
     dispatch({
       type: 'DELETE_BLUEPRINT'
     })
     return request(`${CONFIG.API_ACCOUNTS}/blueprints/${id}`, {
-      method: 'DELETE',
-      body: { name }
+      method: 'DELETE'
     })
       .then(blueprint => {
         console.log('response from delete', blueprint)

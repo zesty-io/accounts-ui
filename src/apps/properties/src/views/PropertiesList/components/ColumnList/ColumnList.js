@@ -5,6 +5,7 @@ import { Switch, Route } from 'react-router-dom'
 import styles from './ColumnList.less'
 
 import PropertyOverview from '../../../PropertyOverview'
+import WebsiteCreate from '../../../../components/WebsiteCreate'
 import InstanceRow from './components/InstanceRow'
 import InviteRow from './components/InviteRow'
 
@@ -36,17 +37,25 @@ export default function ColumnList(props) {
           </React.Fragment>
         ) : null}
 
-        {props.sitesFiltered.length ? (
-          <React.Fragment>
-            <h2 className={styles.SectionTitle}>
-              <i className="fa fa-th" aria-hidden="true" />
-              &nbsp;All Instances
-            </h2>
-            {props.sitesFiltered.map(site => (
-              <InstanceRow key={site.ZUID} site={site} />
-            ))}
-          </React.Fragment>
-        ) : null}
+        {props.sites.length ? (
+          props.sitesFiltered.length ? (
+            <React.Fragment>
+              <h2 className={styles.SectionTitle}>
+                <i className="fa fa-th" aria-hidden="true" />
+                &nbsp;All Instances
+              </h2>
+              {props.sitesFiltered.map(site => (
+                <InstanceRow key={site.ZUID} site={site} />
+              ))}
+            </React.Fragment>
+          ) : (
+            <h2>No Results</h2>
+          )
+        ) : (
+          <main className={styles.siteList}>
+            <WebsiteCreate />
+          </main>
+        )}
       </nav>
       <main className={styles.Overview}>
         <Switch>

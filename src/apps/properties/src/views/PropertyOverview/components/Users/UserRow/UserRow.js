@@ -24,37 +24,43 @@ export default class UserRow extends Component {
         {this.props.isAdmin ? (
           <span className={styles.action}>
             {!this.state.submitted ? (
-              <span className={styles.select}>
-                <Select
-                  onSelect={this.handleSelectRole}
-                  selection={
-                    this.props.siteRoles
-                      .filter(role => role.ZUID === this.props.role.ZUID)
-                      .map(item => {
-                        return { value: item.ZUID, text: item.name }
-                      })[0]
-                  }>
-                  {this.props.siteRoles.map(role => {
-                    return (
-                      <Option
-                        key={role.ZUID}
-                        value={role.ZUID}
-                        text={role.name}
-                      />
-                    )
-                  })}
-                </Select>
-                <i
-                  className={styles.trash + ' fa fa-trash-o'}
-                  aria-hidden="true"
-                  onClick={() =>
-                    this.removeUserFromInstance(
-                      this.props.ZUID,
-                      this.props.role.ZUID
-                    )
-                  }
-                />
-              </span>
+              this.props.role.name !== 'Owner' ? (
+                <span className={styles.select}>
+                  <Select
+                    onSelect={this.handleSelectRole}
+                    selection={
+                      this.props.siteRoles
+                        .filter(role => role.ZUID === this.props.role.ZUID)
+                        .map(item => {
+                          return { value: item.ZUID, text: item.name }
+                        })[0]
+                    }>
+                    {this.props.siteRoles.map(role => {
+                      return (
+                        <Option
+                          key={role.ZUID}
+                          value={role.ZUID}
+                          text={role.name}
+                        />
+                      )
+                    })}
+                  </Select>
+                  <i
+                    className={styles.trash + ' fa fa-trash-o'}
+                    aria-hidden="true"
+                    onClick={() =>
+                      this.removeUserFromInstance(
+                        this.props.ZUID,
+                        this.props.role.ZUID
+                      )
+                    }
+                  />
+                </span>
+              ) : (
+                <p>
+                 <i className="fa fa-fort-awesome" /> Owner
+                </p>
+              )
             ) : (
               <Loader />
             )}
