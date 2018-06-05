@@ -6,7 +6,8 @@ export class Select extends React.Component {
     super(props)
     this.state = {
       dropdownOpen: false,
-      selection: props.selection || props.children[0].props || {},
+      selection:
+        props.selection || props.children[0] ? props.children[0].props : {},
       filter: ''
     }
   }
