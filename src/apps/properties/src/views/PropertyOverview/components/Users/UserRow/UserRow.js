@@ -58,7 +58,7 @@ export default class UserRow extends Component {
                 </span>
               ) : (
                 <p>
-                  Owner <i className="fa fa-lock" />
+                 <i className="fa fa-fort-awesome" /> Owner
                 </p>
               )
             ) : (
