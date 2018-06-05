@@ -8,7 +8,9 @@ export class Select extends React.Component {
       dropdownOpen: false,
       selection: props.selection
         ? props.selection
-        : props.children ? props.children[0].props : {},
+        : Array.isArray(props.children) && props.children.length
+          ? props.children[0].props ? props.children[0].props : {}
+          : {},
       filter: ''
     }
   }
@@ -72,7 +74,7 @@ export class Select extends React.Component {
             <span className={styles.content}>{this.state.selection.text}</span>
           )}
         </span>
-        <ul className={'selections ' + styles.selections}>
+        <ul className={cx('selections', styles.selections)}>
           {this.props.children &&
           this.flattenChildren(this.props.children).length > 50 ? (
             <Search
@@ -81,7 +83,7 @@ export class Select extends React.Component {
               onKeyUp={this.handleFilterKeyUp}
             />
           ) : null}
-          <div className={styles.options}>
+          <div className={cx('options', styles.options)}>
             {this.flattenChildren(this.props.children)
               .filter(child => {
                 if (this.state.filter) {
