@@ -33,6 +33,10 @@ export default class AppHeader extends Component {
             <i className="fa fa-users" aria-hidden="true" />
             &nbsp;Teams
           </NavLink> */}
+          <NavLink to="/settings/blueprints">
+            <i className="fa fa-map" aria-hidden="true" />
+            &nbsp;Blueprints
+          </NavLink>
         </nav>
         <nav
           ref={nav => (this.userNav = nav)}
@@ -41,8 +45,7 @@ export default class AppHeader extends Component {
             styles.UserNav,
             styles[this.state.userNavOpen]
           )}
-          onClick={this.toggleUserNav}
-        >
+          onClick={this.toggleUserNav}>
           {this.props.user.firstName} {this.props.user.lastName}
           <img
             className={styles.avatar}
@@ -81,8 +84,7 @@ export default class AppHeader extends Component {
             <li
               className={styles.logout}
               title="Logout"
-              onClick={() => this.props.dispatch(logout())}
-            >
+              onClick={() => this.props.dispatch(logout())}>
               <i className="fa fa-sign-out" aria-hidden="true" />
               &nbsp;Logout
             </li>

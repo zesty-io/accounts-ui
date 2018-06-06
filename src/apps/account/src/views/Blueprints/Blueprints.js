@@ -10,6 +10,7 @@ import {
   deleteBlueprint
 } from '../../../../properties/src/store/blueprints'
 import { zConfirm } from '../../../../../shell/store/confirm'
+import { notify } from '../../../../../shell/store/notifications'
 
 import styles from './Blueprints.less'
 
@@ -50,14 +51,16 @@ class Blueprints extends Component {
         />
         <BlueprintEdit
           userZUID={this.props.userZUID}
+          blueprints={this.props.userBlueprints}
           dispatch={this.props.dispatch}
           blueprint={this.state.selected}
+          history={this.props.history}
         />
       </section>
     )
   }
   handleSelect = blueprint => {
-    this.props.history.push(`${blueprint}`)
+    this.props.history.push(`/settings/blueprints/${blueprint}`)
   }
   handleDelete = blueprint => {
     const name = this.props.blueprints[blueprint].name
@@ -66,9 +69,26 @@ class Blueprints extends Component {
         prompt: 'Are you sure you want to delete this blueprint?',
         callback: response => {
           if (response) {
-            this.props.dispatch(deleteBlueprint(blueprint, name)).then(data => {
-              this.props.dispatch(fetchBlueprints())
-            })
+            this.props
+              .dispatch(deleteBlueprint(blueprint, name))
+              .then(data => {
+                this.props.dispatch(fetchBlueprints())
+                this.props.dispatch(
+                  notify({
+                    type: 'success',
+                    message: 'Blueprint successfully removed'
+                  })
+                )
+                this.props.history.push('/settings/blueprints/')
+              })
+              .catch(err => {
+                this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message: 'There was a problem deleting the blueprint'
+                  })
+                )
+              })
           }
         }
       })
@@ -81,7 +101,7 @@ const mapStateToProps = state => {
   const userZUID = state.user.ZUID
 
   const userBlueprints = Object.keys(blueprints).reduce((acc, bp) => {
-    if (state.blueprints[bp].createdByUserZUID === userZUID) {
+    if (state.blueprints[bp].createdByUserZUID === userZUID && !state.blueprints[bp].trashed) {
       acc.push(blueprints[bp])
     }
     return acc
