@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {connect} from 'react-redux'
 
 class CreateTeam extends Component {
   render() {
@@ -9,4 +8,4 @@ class CreateTeam extends Component {
   }
 }
 
-export default connect(state => state)(CreateTeam)
+export default CreateTeam

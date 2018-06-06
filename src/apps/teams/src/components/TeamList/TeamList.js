@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 
 import styles from './TeamList.less'
 
@@ -30,4 +29,4 @@ class TeamList extends Component {
   }
 }
 
-export default connect(state => state)(TeamList)
+export default TeamList

@@ -29,10 +29,10 @@ export default class AppHeader extends Component {
             <i className="fa fa-globe" aria-hidden="true" />
             &nbsp;Instances
           </NavLink>
-          {/* <NavLink to="/teams">
+          <NavLink to="/teams">
             <i className="fa fa-users" aria-hidden="true" />
             &nbsp;Teams
-          </NavLink> */}
+          </NavLink>
           <NavLink to="/blueprints">
             <i className="fa fa-map" aria-hidden="true" />
             &nbsp;Blueprints

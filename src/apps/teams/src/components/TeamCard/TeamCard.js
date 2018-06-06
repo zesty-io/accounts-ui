@@ -5,15 +5,21 @@ class TeamCard extends Component {
   render() {
     const { team } = this.props
     return (
-      <article>
-        <header>{team.name}</header>
-        <main>
+      <Card className={styles.Card}>
+        <CardHeader>{team.name}</CardHeader>
+        <CardContent>
           {team.members.map(member => {
-            return <p key={member.ZUID}>{`${member.name}, ${member.email}`}</p>
+            return (
+              <article className={styles.CardContent}>
+                <p key={member.ZUID}>{`${member.name}, ${member.email}`}</p>
+              </article>
+            )
           })}
-        </main>
-        <footer />
-      </article>
+        </CardContent>
+        <CardFooter>
+          <Button onClick={() => console.log('click', team.ZUID)} text="Edit Team" />
+        </CardFooter>
+      </Card>
     )
   }
 }
