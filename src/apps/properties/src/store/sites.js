@@ -9,7 +9,7 @@ export function sites(state = {}, action) {
       return state
 
     case 'FETCH_SITES_SUCCESS':
-      return { ...state, ...normalizeSites(action.sites)}
+      return { ...state, ...normalizeSites(action.sites) }
 
     case 'FETCH_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
@@ -286,7 +286,7 @@ export function sendInvite(payload) {
   }
 }
 
-export const postNewSite = name => {
+export function createInstance(name) {
   return dispatch => {
     dispatch({
       type: 'CREATING_SITE'

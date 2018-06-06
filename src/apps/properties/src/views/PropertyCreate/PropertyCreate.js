@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Link, withRouter } from 'react-router-dom'
 
-import { postNewSite } from '../../store/sites'
+import { createInstance } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 
 import styles from './PropertyCreate.less'
@@ -60,7 +60,7 @@ class PropertyCreate extends Component {
     }
     this.setState({ submitted: !this.state.submitted })
     this.props
-      .dispatch(postNewSite(this.state.name))
+      .dispatch(createInstance(this.state.name))
       .then(data => {
         this.setState({ submitted: !this.state.submitted })
         this.props.history.push(`/instances/${data.data.ZUID}/blueprint`)
