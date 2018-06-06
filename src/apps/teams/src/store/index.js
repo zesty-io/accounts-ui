@@ -35,6 +35,10 @@ export const fetchTeams = userZUID => {
         {
           ZUID: 'dev-team-zuid',
           name: 'Dev Team',
+          hash: 'gyfdgwy523',
+          instances: [
+            { ZUID: '823b', role: 'Admin', name: 'website'}
+          ],
           members: [
             { name: 'emily', ZUID: 'usaerAZUID', email: 'aras@envoy.com' },
             {
@@ -52,7 +56,11 @@ export const fetchTeams = userZUID => {
         },
         {
           ZUID: 'seo-team-zuid',
+          hash: 'gyfdgwwuhyty523',
           name: 'SEO Team',
+          instances: [
+            { ZUID: '823b', role: 'Admin', name: 'property'}
+          ],
           members: [
             {
               name: 'sardfdhgdsfa',
@@ -69,7 +77,11 @@ export const fetchTeams = userZUID => {
         },
         {
           ZUID: 'content-team-zuid',
+          hash: 'gyfdgw376y523',
           name: 'Content Team',
+          instances: [
+            { ZUID: '823b', role: 'Admin', name: 'something.com'}
+          ],
           members: [
             { name: 'adam', ZUID: 'us1eraddsdfZUID', email: 'aras@envoy.com' },
             {

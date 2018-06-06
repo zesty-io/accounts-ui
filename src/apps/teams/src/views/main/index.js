@@ -17,16 +17,8 @@ class Teams extends Component {
   componentDidMount() {
     this.props.dispatch(fetchTeams(this.state.user.ZUID))
   }
-    render() {
-      return (
-        <section className={styles.Teams}>
-          <TeamList
-            teams={this.props.teams}
-          />
-          <TeamGrid
-          />
-        </section>
-      )
+  render() {
+    return <TeamGrid />
   }
 }
 

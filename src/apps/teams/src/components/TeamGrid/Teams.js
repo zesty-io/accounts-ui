@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { request } from '../../../../../util/request'
 
-
 import CreateTeam from '../../components/CreateTeam'
 import TeamList from '../../components/TeamList'
 import TeamCard from '../../components/TeamCard'
@@ -27,10 +26,19 @@ class Teams extends Component {
         <div className={styles.Team}>
           <div className={styles.TeamCard}>
             <CreateTeam />
-            {this.props.teams &&
+            {this.props.teams ? (
               Object.keys(this.props.teams).map(team => {
-                return <TeamCard className={styles.Card} team={this.props.teams[team]} key={this.props.teams[team].ZUID} />
-              })}
+                return (
+                  <TeamCard
+                    className={styles.Card}
+                    team={this.props.teams[team]}
+                    key={this.props.teams[team].ZUID}
+                  />
+                )
+              })
+            ) : (
+              <TeamCard className={styles.Card} team={this.props.teams[team]} />
+            )}
           </div>
         </div>
       </section>
