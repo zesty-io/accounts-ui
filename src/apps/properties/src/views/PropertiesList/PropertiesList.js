@@ -30,7 +30,9 @@ class Properties extends Component {
   }
 }
 export default connect((state, props) => {
-  const favorites = state.user.prefs.favorite_sites
+  const favorites = state.user.prefs.favorite_sites.filter(ZUID =>
+    Object.keys(state.sites).includes(ZUID)
+  )
   const filtered = Object.keys(state.sitesFiltered).reduce((acc, ZUID) => {
     if (!favorites.includes(ZUID)) {
       acc.push(state.sitesFiltered[ZUID])

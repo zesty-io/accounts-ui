@@ -22,9 +22,7 @@ class Properties extends Component {
     this.props.dispatch(fetchSites()).then(() => {
       this.setState({ loadingSites: false })
     })
-    this.props.dispatch(fetchSitesWithInvites()).then(() => {
-      this.setState({ loadingSites: false })
-    })
+    this.props.dispatch(fetchSitesWithInvites())
     this.props.dispatch(fetchSystemRoles())
   }
   render() {
