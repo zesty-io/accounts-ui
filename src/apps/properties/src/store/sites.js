@@ -9,7 +9,10 @@ export function sites(state = {}, action) {
       return state
 
     case 'FETCH_SITES_SUCCESS':
-      return { ...state, ...normalizeSites(action.sites)}
+      return { ...state, ...normalizeSites(action.sites) }
+
+    case 'FETCH_SITES_INVITES_SUCCESS':
+      return { ...state, ...normalizeSites(action.sites) }
 
     case 'FETCH_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
@@ -64,7 +67,7 @@ export function fetchSites() {
 export function fetchSitesWithInvites() {
   return dispatch => {
     dispatch({
-      type: 'FETCHING_SITES'
+      type: 'FETCHING_SITES_INVITES'
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances/invites`)
       .then(sites => {
@@ -79,7 +82,7 @@ export function fetchSitesWithInvites() {
         })
 
         dispatch({
-          type: 'FETCH_SITES_SUCCESS',
+          type: 'FETCH_SITES_INVITES_SUCCESS',
           sites: sites.data
         })
         return sites
@@ -93,7 +96,7 @@ export function fetchSitesWithInvites() {
           })
         )
         dispatch({
-          type: 'FETCH_SITES_ERROR',
+          type: 'FETCH_SITES_INVITES_ERROR',
           err
         })
       })
