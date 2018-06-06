@@ -6,7 +6,9 @@ class TeamCard extends Component {
     const { team } = this.props
     return (
       <Card className={styles.Card}>
-        <CardHeader><h3>{team.name}</h3>invite code: {team.hash}</CardHeader>
+        <CardHeader>
+          <h3>{team.name}</h3>invite code: {team.hash}
+        </CardHeader>
         <CardContent>
           <h1>Members</h1>
           {team.members.map(member => {
@@ -16,15 +18,15 @@ class TeamCard extends Component {
                   <i className="fa fa-user" />
                   {member.name}
                 </p>
-                {member.email}
-                <i className="fa fa-times-circle" />
+                <i className={`${styles.remove} fa fa-times-circle`} />
+                {/* {member.email} */}
               </article>
             )
           })}
           <h1>Instances</h1>
           {team.instances.map(instance => {
             return (
-              <article className={styles.CardContent}>
+              <article className={styles.Instance}>
                 <p key={instance.ZUID}>
                   <i className="fa fa-globe" />
                   {instance.name}
