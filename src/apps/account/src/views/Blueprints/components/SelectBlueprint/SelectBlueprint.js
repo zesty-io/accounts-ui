@@ -6,9 +6,9 @@ const SelectBlueprint = props => {
   return (
     <ul className={styles.List}>
       <li style={props.selection === 'create' ? selectedStyle : null}>
-        <Button onClick={() => props.handleSelect('create')}>
+        <Button className={styles.Create} onClick={() => props.handleSelect('create')}>
           {' '}
-          <i className="fa fa-plus" /> Create New
+          <i className="fa fa-plus" /> Create Blueprint
         </Button>
       </li>
       {props.blueprints.map(bp => {
