@@ -1,10 +1,16 @@
 import { request } from '../../../../util/request'
 
+const ROLES = {
+  Owner: 0,
+  Admin: 1,
+  Developer: 2,
+  SEO: 3,
+  Publisher: 4,
+  Contributor: 5
+}
+
 export function sitesUsers(state = {}, action) {
   switch (action.type) {
-    case 'FETCHING_USERS':
-      return state
-
     case 'FETCH_USERS_SUCCESS':
       return {
         ...state, // Previous sites
@@ -14,12 +20,6 @@ export function sitesUsers(state = {}, action) {
         }
       }
 
-    case 'FETCH_USERS_ERROR':
-      return state
-
-    case 'FETCHING_USERS_PENDING':
-      return state
-
     case 'DELETE_USER':
       return { ...state, [action.siteZUID]: action.users }
 
@@ -28,8 +28,6 @@ export function sitesUsers(state = {}, action) {
         ...state,
         [action.siteZUID]: { ...state[action.siteZUID], ...action.users }
       }
-    case 'FETCH_USERS_PENDING_ERROR':
-      return state
 
     case 'UPDATE_USER_ROLE':
       return {
@@ -42,6 +40,7 @@ export function sitesUsers(state = {}, action) {
           }
         }
       }
+
     default:
       return state
   }
@@ -131,22 +130,13 @@ export const updateSiteUserRole = (
     ** and set the auth cookie on the request.
     */
 
-    const roles = {
-      Owner: 0,
-      Admin: 1,
-      Developer: 2,
-      SEO: 3,
-      Publisher: 4,
-      Contributor: 5
-    }
-
     const state = getState()
 
     const newRole = state.sitesRoles[siteZUID][newRoleZUID].name
     const instanceID = state.sites[siteZUID].randomHashID
     const userID = state.sitesUsers[siteZUID][userZUID].ID
 
-    const newRoleID = roles[newRole]
+    const newRoleID = ROLES[newRole]
 
     if (!newRoleID) {
       throw new Error(`Invalid role: ${newRole}`)
