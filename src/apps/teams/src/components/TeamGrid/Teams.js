@@ -31,7 +31,6 @@ class Teams extends Component {
               Object.keys(this.props.teams).map(team => {
                 return <TeamCard className={styles.Card} team={this.props.teams[team]} key={this.props.teams[team].ZUID} />
               })}
-            {/* <TeamList /> */}
           </div>
         </div>
       </section>

@@ -4,27 +4,33 @@ import styles from './TeamList.less'
 
 class TeamList extends Component {
   render() {
-    console.log(this.props)
     return (
-      <section className={styles.TeamList}>
-        <h1>Teams</h1>
-        <ul>
-          {this.props.teams &&
-            Object.keys(this.props.teams).map((team, i) => {
-              return (
-                <li>
-                  {this.props.teams[team].name}
-                  <Button className={styles.button} text="edit" />
-                  <ul>
-                    {this.props.teams[team].members.map(member => {
-                      return<li>{member.name}</li>
-                    })}
-                  </ul>
-                </li>
-              )
-            })}
-        </ul>
-      </section>
+      <ul className={styles.List}>
+      {/* <li style={props.selection === 'create' ? selectedStyle : null}>
+        <Button className={styles.Create} onClick={() => props.handleSelect('create')}>
+          {' '}
+          <i className="fa fa-plus" /> Create Team
+        </Button>
+      </li> */}
+      {Object.keys(this.props.teams).map(team => {
+        return (
+          <li
+            key={this.props.teams[team].ZUID}
+            // style={
+            //   props.selection && props.selection.ID === team.ID
+            //     ? selectedStyle
+            //     : null
+            // }
+            onClick={() => console.log('click')}>
+            <p>{this.props.teams[team].name}</p>
+            <i
+              className={`${styles.trash} fa fa-trash-o`}
+              onClick={() => console.log('click')}
+            />
+          </li>
+        )
+      })}
+    </ul>
     )
   }
 }
