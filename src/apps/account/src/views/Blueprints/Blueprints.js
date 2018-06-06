@@ -31,14 +31,15 @@ class Blueprints extends Component {
       this.setState({ selected: this.props.blueprints[bp] })
     }
   }
-  UNSAFE_componentWillReceiveProps(props) {
+  static getDerivedStateFromProps(props, state) {
     const bp = props.match.params.id
     if (Object.keys(props.blueprints).length && bp) {
       if (bp === 'create') {
-        return this.setState({ selected: 'create' })
+        return { selected: 'create' }
       }
-      this.setState({ selected: props.blueprints[bp] })
+      return { selected: props.blueprints[bp] }
     }
+    return null
   }
   render() {
     return (
