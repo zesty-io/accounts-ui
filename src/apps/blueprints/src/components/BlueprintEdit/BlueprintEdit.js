@@ -140,7 +140,10 @@ class BlueprintEdit extends Component {
         )}
       </div>
     ) : (
-      <BlueprintList userBlueprints={this.props.blueprints} />
+      <BlueprintList
+        loadingBlueprints={this.props.loadingBlueprints}
+        userBlueprints={this.props.blueprints}
+      />
     )
   }
   handleSubmit = evt => {

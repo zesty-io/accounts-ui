@@ -16,12 +16,17 @@ import styles from './Blueprints.less'
 
 class Blueprints extends Component {
   state = {
-    selected: ''
+    selected: '',
+    loading: true
   }
   componentDidMount() {
     // if there are no blueprints, fetch them
     if (!Object.keys(this.props.userBlueprints).length) {
-      this.props.dispatch(fetchBlueprints())
+      this.props
+        .dispatch(fetchBlueprints())
+        .then(() => this.setState({ loading: false }))
+    }else{
+      this.setState({ loading: false })
     }
     const bp = this.props.match.params.id
     if (Object.keys(this.props.blueprints).length && bp) {
@@ -50,6 +55,7 @@ class Blueprints extends Component {
           handleDelete={this.handleDelete}
         />
         <BlueprintEdit
+          loadingBlueprints={this.state.loading}
           userZUID={this.props.userZUID}
           blueprints={this.props.userBlueprints}
           dispatch={this.props.dispatch}
@@ -101,12 +107,18 @@ const mapStateToProps = state => {
   const userZUID = state.user.ZUID
 
   const userBlueprints = Object.keys(blueprints).reduce((acc, bp) => {
-    if (state.blueprints[bp].createdByUserZUID === userZUID && !state.blueprints[bp].trashed) {
+    if (
+      state.blueprints[bp].createdByUserZUID === userZUID &&
+      !state.blueprints[bp].trashed
+    ) {
       acc.push(blueprints[bp])
     }
     return acc
   }, [])
 
+  // if (Object.keys(blueprints).length && !userBlueprints.length) {
+  //   userBlueprints.push({})
+  // }
   return {
     blueprints,
     userBlueprints,
