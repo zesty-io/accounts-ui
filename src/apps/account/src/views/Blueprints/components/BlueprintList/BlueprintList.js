@@ -5,11 +5,12 @@ import styles from './BlueprintList.less'
 class BlueprintList extends Component {
   render() {
     return (
-      <section className={styles.Blueprints}>
-        <section className={styles.BlueprintList}>
-          <WithLoader
-            condition={this.props.userBlueprints.length}
-            message="Loading Your Custom Blueprints">
+      <WithLoader
+        className={styles.Loading}
+        condition={this.props.userBlueprints.length}
+        message="Loading Your Custom Blueprints">
+        <section className={styles.Blueprints}>
+          <section className={styles.BlueprintList}>
             {this.props.userBlueprints.map(blueprint => {
               return (
                 <Card key={blueprint.ZUID}>
@@ -43,9 +44,9 @@ class BlueprintList extends Component {
                 </Card>
               )
             })}
-          </WithLoader>
+          </section>
         </section>
-      </section>
+      </WithLoader>
     )
   }
 }
