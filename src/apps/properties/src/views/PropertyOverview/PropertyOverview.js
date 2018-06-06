@@ -33,7 +33,6 @@ class PropertyOverview extends Component {
     }
 
     this.state = {
-      siteZUID: props.siteZUID,
       loadingUsers: true,
       loadingRoles: true,
       loadingUsersPending: true,
@@ -43,17 +42,15 @@ class PropertyOverview extends Component {
     }
   }
   componentDidMount() {
-    fetchSiteData(this.props)
+    this.fetchSiteData(this.props)
     if (qs.parse(window.location.search.substr(1))['invited'] === 'true') {
       this.clickManager()
     }
   }
-  static getDerivedStateFromProps(props, state) {
-    if (props.siteZUID !== state.siteZUID) {
-      fetchSiteData(props)
-      return { ...state, siteZUID: props.siteZUID }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.siteZUID !== this.props.siteZUID) {
+      this.fetchSiteData(nextProps)
     }
-    return null
   }
   render() {
     return (
@@ -192,34 +189,33 @@ class PropertyOverview extends Component {
       </article>
     )
   }
-}
-
-function fetchSiteData(props) {
-  props.dispatch(fetchSiteUsers(props.siteZUID)).then(() => {
-    this.setState({
-      loadingUsers: false
+  fetchSiteData(props) {
+    props.dispatch(fetchSiteUsers(props.siteZUID)).then(() => {
+      this.setState({
+        loadingUsers: false
+      })
     })
-  })
-  props.dispatch(fetchSiteUsersPending(props.siteZUID)).then(() => {
-    this.setState({
-      loadingUsersPending: false
+    props.dispatch(fetchSiteUsersPending(props.siteZUID)).then(() => {
+      this.setState({
+        loadingUsersPending: false
+      })
     })
-  })
-  props.dispatch(fetchSiteRoles(props.siteZUID)).then(() => {
-    this.setState({
-      loadingRoles: false
+    props.dispatch(fetchSiteRoles(props.siteZUID)).then(() => {
+      this.setState({
+        loadingRoles: false
+      })
     })
-  })
-  props.dispatch(fetchSiteCompanies(props.siteZUID)).then(() => {
-    this.setState({
-      loadingTeams: false
+    props.dispatch(fetchSiteCompanies(props.siteZUID)).then(() => {
+      this.setState({
+        loadingTeams: false
+      })
     })
-  })
-  props.dispatch(fetchBlueprint(props.site.blueprintID)).then(() => {
-    this.setState({
-      loadingBlueprint: false
+    props.dispatch(fetchBlueprint(props.site.blueprintID)).then(() => {
+      this.setState({
+        loadingBlueprint: false
+      })
     })
-  })
+  }
 }
 
 export default connect((state, props) => {
