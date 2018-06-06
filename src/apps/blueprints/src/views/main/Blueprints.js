@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 
-import BlueprintEdit from './components/BlueprintEdit'
-import SelectBlueprint from './components/SelectBlueprint'
+import BlueprintEdit from '../../components/BlueprintEdit'
+import SelectBlueprint from '../../components/SelectBlueprint'
 
 import {
   fetchBlueprints,
@@ -20,7 +20,7 @@ class Blueprints extends Component {
   }
   componentDidMount() {
     // if there are no blueprints, fetch them
-    if (!Object.keys(this.props.blueprints).length) {
+    if (!Object.keys(this.props.userBlueprints).length) {
       this.props.dispatch(fetchBlueprints())
     }
     const bp = this.props.match.params.id
@@ -60,7 +60,7 @@ class Blueprints extends Component {
     )
   }
   handleSelect = blueprint => {
-    this.props.history.push(`/settings/blueprints/${blueprint}`)
+    this.props.history.push(`/blueprints/${blueprint}`)
   }
   handleDelete = blueprint => {
     const name = this.props.blueprints[blueprint].name
@@ -79,7 +79,7 @@ class Blueprints extends Component {
                     message: 'Blueprint successfully removed'
                   })
                 )
-                this.props.history.push('/settings/blueprints/')
+                this.props.history.push('/blueprints/')
               })
               .catch(err => {
                 this.props.dispatch(

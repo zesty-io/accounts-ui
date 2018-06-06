@@ -33,7 +33,7 @@ export default class AppHeader extends Component {
             <i className="fa fa-users" aria-hidden="true" />
             &nbsp;Teams
           </NavLink> */}
-          <NavLink to="/settings/blueprints">
+          <NavLink to="/blueprints">
             <i className="fa fa-map" aria-hidden="true" />
             &nbsp;Blueprints
           </NavLink>

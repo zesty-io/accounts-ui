@@ -37,7 +37,7 @@ class BlueprintList extends Component {
                       <i className="fa fa-github" aria-hidden="true" />
                       View On GitHub
                     </Url>
-                    <AppLink to={`/settings/blueprints/${blueprint.ID}`}>
+                    <AppLink to={`/blueprints/${blueprint.ID}`}>
                       <i className="fa fa-pencil-square-o" aria-hidden="true" />&nbsp;Edit
                     </AppLink>
                   </CardFooter>
