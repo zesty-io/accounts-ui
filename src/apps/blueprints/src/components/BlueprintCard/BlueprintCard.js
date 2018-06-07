@@ -4,7 +4,7 @@ import styles from './BlueprintCard.less'
 const BlueprintCard = props => {
   const { blueprint } = props
   return (
-    <Card key={blueprint.ZUID}>
+    <Card className={styles.BlueprintCard}>
       <CardHeader>
         <h3>{blueprint.name}</h3>
       </CardHeader>
