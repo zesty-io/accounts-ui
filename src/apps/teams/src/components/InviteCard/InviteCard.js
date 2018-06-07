@@ -8,7 +8,6 @@ class InviteCard extends Component {
   }
   render() {
     const { team } = this.props
-    console.log(team)
     return (
       <Card className={styles.Card}>
         <CardHeader>
