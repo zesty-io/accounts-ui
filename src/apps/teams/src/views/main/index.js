@@ -8,16 +8,27 @@ import TeamGrid from '../../components/TeamGrid'
 
 import { fetchTeams } from '../../store'
 
+import styles from './teams.less'
 class Teams extends Component {
   state = {
-    user: this.props.user
+    user: this.props.user,
+    loading: true
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchTeams(this.state.user.ZUID))
+    this.props
+      .dispatch(fetchTeams(this.state.user.ZUID))
+      .then(() => this.setState({ loading: false }))
   }
   render() {
-    return <TeamGrid />
+    return (
+      <WithLoader
+        className={styles.Loading}
+        condition={!this.state.loading}
+        message="Loading Your Teams">
+        <TeamGrid />
+      </WithLoader>
+    )
   }
 }
 

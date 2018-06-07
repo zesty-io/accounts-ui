@@ -17,9 +17,7 @@ const fakeTeamData = [
     ZUID: 'dev-team-zuid',
     name: 'Dev Team',
     hash: 'gyfdgwy523',
-    instances: [
-      { ZUID: '823b', role: 'Admin', name: 'website'}
-    ],
+    instances: [{ ZUID: '823b', role: 'Admin', name: 'website' }],
     members: [
       { name: 'emily', ZUID: 'usaerAZUID', email: 'aras@envoy.com' },
       {
@@ -39,9 +37,7 @@ const fakeTeamData = [
     ZUID: 'seo-team-zuid',
     hash: 'gyfdgwwuhyty523',
     name: 'SEO Team',
-    instances: [
-      { ZUID: '823b', role: 'Admin', name: 'property'}
-    ],
+    instances: [{ ZUID: '823b', role: 'Admin', name: 'property' }],
     members: [
       {
         name: 'sardfdhgdsfa',
@@ -60,9 +56,7 @@ const fakeTeamData = [
     ZUID: 'content-team-zuid',
     hash: 'gyfdgw376y523',
     name: 'Content Team',
-    instances: [
-      { ZUID: '823b', role: 'Admin', name: 'something.com'}
-    ],
+    instances: [{ ZUID: '823b', role: 'Admin', name: 'something.com' }],
     members: [
       { name: 'adam', ZUID: 'us1eraddsdfZUID', email: 'aras@envoy.com' },
       {
@@ -102,6 +96,10 @@ export const fetchTeams = userZUID => {
       type: 'FETCH_TEAMS_SUCCESS',
       data: fakeTeamData
     })
+    const resolved = new Promise((res, rej) => {
+      setTimeout(res, 1000)
+    })
+    return resolved;
   }
 }
 
@@ -126,6 +124,4 @@ export const removeMember = (teamZUID, member) => {
   // remove individual from team
 }
 
-export const deleteTeam = team => {
-
-}
+export const deleteTeam = team => {}
