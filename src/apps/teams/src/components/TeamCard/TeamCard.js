@@ -35,33 +35,32 @@ class TeamCard extends Component {
         </CardHeader>
         <CardContent>
           <h1>Members</h1>
-          <ul>
           {team.members.map(member => {
             return (
-              <li className={styles.CardContent}>
-                <p key={member.ZUID}>
+              <article className={styles.CardContent} key={member.ZUID}>
+                <p title={member.email}>
                   <i className="fa fa-user" />
                   {member.name}
                 </p>
-                <i className={`${styles.remove} fa fa-times-circle`} />
+                <i className={`${styles.remove} fa fa-times-circle-o`} />
                 {/* {member.email} */}
-              </li>
+              </article>
             )
-          })}</ul>
+          })}
           <h1>Instances</h1>
           {team.instances.map(instance => {
             return (
-              <article className={styles.Instance}>
-                <p key={instance.ZUID}>
+              <article className={styles.Instance} key={instance.ZUID}>
+                <p>
                   <i className="fa fa-globe" />
                   {instance.name}
                 </p>
-                role: {instance.role}
+                <p>role: {instance.role}</p>
               </article>
             )
           })}
         </CardContent>
-        <CardFooter>
+        <CardFooter className={styles.CardInvite}>
           <Input type="text" />
           <Button
             onClick={() => console.log('click', team.ZUID)}

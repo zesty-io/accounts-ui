@@ -23,12 +23,13 @@ class CreateTeam extends Component {
             onChange={this.changeName}
           />
           <label>invite members by email</label>
+          <section className={styles.inviteInputs}>
           {this.state.invitees.map((email, i) => {
             return (
               <Input key={i} name={i} value={email} onChange={this.addInvite} />
             )
           })}
-          <br />
+          </section>
           <span className={styles.addMember} onClick={this.addInvitee}>
             <i className="fa fa-plus" />
             <h4>add member</h4>
