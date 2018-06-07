@@ -21,15 +21,8 @@ export const properties = {
 }
 
 export const normalizeSites = sites => {
-  const zuids = sites.map(site => site.ZUID)
-  const normalized = zuids.reduce((sites, zuid) => {
-    sites[zuid] = {}
-    return sites
+  return sites.reduce((acc, site) => {
+    acc[site.ZUID] = site
+    return acc
   }, {})
-
-  sites.forEach(site => {
-    normalized[site.ZUID] = site
-  })
-
-  return normalized
 }
