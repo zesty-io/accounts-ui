@@ -1,15 +1,18 @@
 @import url('../../../../../shell/styles/colors.less');
 
-@import url('../../../../../shell/styles/colors.less');
-
 .Card {
   margin: 1rem;
   background-color: @zesty-light-gray;
   h1 {
+    margin-bottom: 0.5rem;
     margin-top: 0.5rem;
   }
   h3 {
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+  }
+  p {
+    margin: .5rem 0;
   }
   .CardContent {
     display: grid;
@@ -17,14 +20,14 @@
     grid-template-columns: 1fr 5px;
   }
   .Instance {
-    margin: 1rem;
+    margin: 0.5rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
 
   }
   .CardInvite {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1fr 1fr;
     grid-gap: 0.2rem;
   }
 }
