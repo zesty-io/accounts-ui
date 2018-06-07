@@ -99,6 +99,7 @@ export default class Users extends Component {
                           siteRoles={this.props.siteRoles}
                           dispatch={this.props.dispatch}
                           isAdmin={this.props.isAdmin}
+                          isOwner={this.props.isOwner}
                           {...user}
                         />
                       )

@@ -56,9 +56,29 @@ export default class UserRow extends Component {
                     }
                   />
                 </span>
+              ) : this.props.isOwner ? (
+                <Select
+                  onSelect={this.handleSelectRole}
+                  selection={
+                    this.props.siteRoles
+                      .filter(role => role.ZUID === this.props.role.ZUID)
+                      .map(item => {
+                        return { value: item.ZUID, text: item.name }
+                      })[0]
+                  }>
+                  {this.props.siteRoles.map(role => {
+                    return (
+                      <Option
+                        key={role.ZUID}
+                        value={role.ZUID}
+                        text={role.name}
+                      />
+                    )
+                  })}
+                </Select>
               ) : (
                 <p>
-                 <i className="fa fa-fort-awesome" /> Owner
+                  <i className="fa fa-fort-awesome" /> Owner
                 </p>
               )
             ) : (
