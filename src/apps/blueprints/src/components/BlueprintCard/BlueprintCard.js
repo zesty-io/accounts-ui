@@ -11,8 +11,6 @@ const BlueprintCard = props => {
       <CardContent className={styles.Blueprint}>
         {blueprint.coverImage ? (
           <img
-            width="300px"
-            height="150px"
             src={blueprint.coverImage}
             alt="Blueprint is missing an image"
           />

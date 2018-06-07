@@ -47,7 +47,7 @@ class PropertyBlueprint extends Component {
                           <i className="fa fa-file-code-o" aria-hidden="true" />
                         </div>
                       ) : (
-                        <img src={blueprint.coverImage} alt="bp img broked" />
+                        <img src={blueprint.coverImage} alt="bp img not present" />
                       )}
                       <p>{blueprint.description}</p>
                     </CardContent>
