@@ -23,7 +23,8 @@ const fakeTeamData = [
       {
         name: 'sadf5hadfhara',
         ZUID: 'usesssrsZUID',
-        email: 'aras@ensdfgvoy.com'
+        email: 'aras@ensdfgvoy.com',
+        admin: true
       },
       {
         name: 'sars3dhsdfa',
@@ -56,13 +57,15 @@ const fakeTeamData = [
     ZUID: 'content-team-zuid',
     hash: 'gyfdgw376y523',
     name: 'Content Team',
+    invited: true,
     instances: [{ ZUID: '823b', role: 'Admin', name: 'something.com' }],
     members: [
       { name: 'adam', ZUID: 'us1eraddsdfZUID', email: 'aras@envoy.com' },
       {
         name: 'linda',
         ZUID: 'use1rddsssadfZUID',
-        email: 'aras@envoy.com'
+        email: 'aras@envoy.com',
+        admin: true
       },
       {
         name: 'steve',

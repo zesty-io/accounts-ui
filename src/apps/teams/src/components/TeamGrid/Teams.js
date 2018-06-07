@@ -9,6 +9,7 @@ import TeamCard from '../../components/TeamCard'
 
 import styles from './teams.less'
 import { fetchTeams } from '../../store'
+import InviteCard from '../InviteCard/'
 
 class Teams extends Component {
   state = {
@@ -20,25 +21,31 @@ class Teams extends Component {
   }
   render() {
     return (
-      // this.props.teams
       <section className={styles.Teams}>
         <h1 className={styles.TeamsTitle}>Manage Your Teams</h1>
         <div className={styles.Team}>
           <div className={styles.TeamCard}>
-            <CreateTeam />
-            {this.props.teams ? (
-              Object.keys(this.props.teams).map(team => {
-                return (
-                  <TeamCard
-                    className={styles.Card}
-                    team={this.props.teams[team]}
-                    key={this.props.teams[team].ZUID}
-                  />
+            {this.props.teams &&
+              Object.keys(this.props.teams)
+                .filter(
+                  team => this.props.teams[team].hasOwnProperty('invited')
                 )
-              })
-            ) : (
-              <TeamCard className={styles.Card} team={this.props.teams[team]} />
-            )}
+                .map(team => <InviteCard team={this.props.teams[team]} />)}
+            <CreateTeam />
+            {this.props.teams &&
+              Object.keys(this.props.teams)
+                .filter(
+                  team => !this.props.teams[team].hasOwnProperty('invited')
+                )
+                .map(team => {
+                  return (
+                    <TeamCard
+                      className={styles.Card}
+                      team={this.props.teams[team]}
+                      key={this.props.teams[team].ZUID}
+                    />
+                  )
+                })}
           </div>
         </div>
       </section>

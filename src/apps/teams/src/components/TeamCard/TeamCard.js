@@ -40,7 +40,7 @@ class TeamCard extends Component {
               <article className={styles.CardContent} key={member.ZUID}>
                 <p title={member.email}>
                   <i className="fa fa-user" />
-                  {member.name}
+                  {member.name}{member.admin ? <i className="fa fa-star" /> : null}
                 </p>
                 <i className={`${styles.remove} fa fa-times-circle-o`} onClick={() => this.removeUser(member.ZUID)}/>
                 {/* {member.email} */}
