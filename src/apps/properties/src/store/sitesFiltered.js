@@ -5,11 +5,11 @@ import { normalizeSites } from '../store'
 export function sitesFiltered(state = {}, action) {
   switch (action.type) {
     case 'FETCH_SITES_SUCCESS':
-      return normalizeSites(action.sites)
-    case 'FETCH_SITES_SUCCESS_NOSITES':
-      return {}
+      return { ...state, ...normalizeSites(action.sites) }
+
     case 'FILTER_PROPERTIES':
       return action.filtered
+
     default:
       return state
   }
