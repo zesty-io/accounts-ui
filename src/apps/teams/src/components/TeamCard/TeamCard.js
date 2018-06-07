@@ -42,7 +42,7 @@ class TeamCard extends Component {
                   <i className="fa fa-user" />
                   {member.name}
                 </p>
-                <i className={`${styles.remove} fa fa-times-circle-o`} />
+                <i className={`${styles.remove} fa fa-times-circle-o`} onClick={() => this.removeUser(member.ZUID)}/>
                 {/* {member.email} */}
               </article>
             )
@@ -62,10 +62,10 @@ class TeamCard extends Component {
         </CardContent>
         <CardFooter className={styles.CardInvite}>
           <Input type="text" />
-          <Button
-            onClick={() => console.log('click', team.ZUID)}
-            text="Invite"
-          />
+          <Button onClick={() => console.log('click', team.ZUID)}>
+            <i className="fa fa-envelope-o" />
+            Invite
+          </Button>
         </CardFooter>
       </Card>
     )
@@ -76,10 +76,14 @@ class TeamCard extends Component {
     })
   }
   handleUpdateName = () => {
-    //send state to update endpoint
+    // send name to update endpoint
   }
   handleInvite = evt => {
-    //
+    // 
+  }
+  removeUser = user => {
+    // confirm, then remove team member
+    console.log(user, this.props.team.ZUID)
   }
 }
 

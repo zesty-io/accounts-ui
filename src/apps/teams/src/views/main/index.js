@@ -6,7 +6,6 @@ import { request } from '../../../../../util/request'
 import TeamList from '../../components/TeamList'
 import TeamGrid from '../../components/TeamGrid'
 
-import styles from './teams.less'
 import { fetchTeams } from '../../store'
 
 class Teams extends Component {

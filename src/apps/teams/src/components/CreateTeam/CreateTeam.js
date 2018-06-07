@@ -24,23 +24,27 @@ class CreateTeam extends Component {
           />
           <label>invite members by email</label>
           <section className={styles.inviteInputs}>
-          {this.state.invitees.map((email, i) => {
-            return (
-              <Input key={i} name={i} value={email} onChange={this.addInvite} />
-            )
-          })}
+            {this.state.invitees.map((email, i) => {
+              return (
+                <Input
+                  key={i}
+                  name={i}
+                  value={email}
+                  onChange={this.addInvite}
+                />
+              )
+            })}
           </section>
-          <span className={styles.addMember} onClick={this.addInvitee}>
-            <i className="fa fa-plus" />
-            <h4>add member</h4>
-          </span>
+          <Button className={styles.addMember} onClick={this.addInvitee}>
+            <i className="fa fa-user" />
+            <p>Add Member</p>
+          </Button>
         </CardContent>
         <CardFooter>
-          <Button
-            disabled={this.state.submitted}
-            onClick={this.handleSubmit}
-            text="Create Team"
-          />
+          <Button disabled={this.state.submitted} onClick={this.handleSubmit}>
+            <i className="fa fa-plus" />
+            Create Team
+          </Button>
         </CardFooter>
       </Card>
     )
