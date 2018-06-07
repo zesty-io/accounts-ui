@@ -10,35 +10,41 @@ class CreateTeam extends Component {
   render() {
     return (
       <Card className={styles.Card}>
-        <CardHeader>Create Team</CardHeader>
-        <CardContent>
+        <CardHeader>
+          <h1>Create Team</h1>
           <p>
-            Add multiple employees/users to a team and gain access to an
+            Add members to a team and gain access to an
             instance together
           </p>
-          <label>name team</label>
-          <Input
-            type="text"
-            value={this.state.name}
-            onChange={this.changeName}
-          />
-          <label>invite members by email</label>
-          <section className={styles.inviteInputs}>
-            {this.state.invitees.map((email, i) => {
-              return (
-                <Input
-                  key={i}
-                  name={i}
-                  value={email}
-                  onChange={this.addInvite}
-                />
-              )
-            })}
+        </CardHeader>
+        <CardContent>
+          <section>
+            <label>Name your team:</label>
+            <Input
+              type="text"
+              value={this.state.name}
+              onChange={this.changeName}
+            />
           </section>
-          <Button className={styles.addMember} onClick={this.addInvitee}>
-            <i className="fa fa-user" />
-            <p>Add Member</p>
-          </Button>
+          <section>
+            <label>Invite team members by email address:</label>
+            <section className={styles.inviteInputs}>
+              {this.state.invitees.map((email, i) => {
+                return (
+                  <Input
+                    key={i}
+                    name={i}
+                    value={email}
+                    onChange={this.addInvite}
+                  />
+                )
+              })}
+            </section>
+            <Button className={styles.addMember} onClick={this.addInvitee}>
+              <i className="fa fa-user" />
+              <p>Add Member</p>
+            </Button>
+          </section>
         </CardContent>
         <CardFooter>
           <Button disabled={this.state.submitted} onClick={this.handleSubmit}>
