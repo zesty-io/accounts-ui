@@ -11,8 +11,7 @@ import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
   state = {
-    selected: false,
-    effect: ''
+    submitted: false
   }
   componentDidMount() {
     this.props.dispatch(fetchBlueprints())
@@ -20,8 +19,11 @@ class PropertyBlueprint extends Component {
   render() {
     return (
       <div className={styles.BlueprintView}>
-        {Object.keys(this.props.blueprints).length ? (
-          <section className={styles[this.state.effect]}>
+        <WithLoader
+          condition={this.props.blueprints.length}
+          message="Loading Available Blueprints"
+        >
+          <section>
             <header>
               <h1>Select a Blueprint</h1>
               <AppLink type="cancel" to={`/instances`}>
@@ -47,14 +49,17 @@ class PropertyBlueprint extends Component {
                           <i className="fa fa-file-code-o" aria-hidden="true" />
                         </div>
                       ) : (
-                        <img src={blueprint.coverImage} alt="bp img broked" />
+                        <img
+                          src={blueprint.coverImage}
+                          alt="Blueprint cover image"
+                        />
                       )}
                       <p>{blueprint.description}</p>
                     </CardContent>
                     <CardFooter>
                       <Button
-                        disabled={this.state.selected}
-                        onClick={() => this.handleSelect(blueprint.ID)}
+                        disabled={this.state.submitted}
+                        onClick={() => this.setInstanceBlueprint(blueprint.ID)}
                       >
                         <i className="fa fa-file-code-o" aria-hidden="true" />
                         Select Blueprint
@@ -65,38 +70,35 @@ class PropertyBlueprint extends Component {
               })}
             </main>
           </section>
-        ) : (
-          <div className={styles.Loading}>
-            <h2>Loading Blueprints</h2>
-            <Loader />
-          </div>
-        )}
+        </WithLoader>
       </div>
     )
   }
-  handleSelect = id => {
-    this.setState({ selected: true, effect: 'blurred' })
+  setInstanceBlueprint = id => {
+    this.setState({
+      submitted: true
+    })
+
     this.props
-      .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
+      .dispatch(
+        updateSite(this.props.siteZUID, {
+          blueprintID: id
+        })
+      )
       .then(data => {
-        if (qs.parse(window.location.search.substr(1)).randomHashID) {
-          window
-            .open(
-              `${CONFIG.MANAGER_URL_PROTOCOL}${
-                qs.parse(window.location.search.substr(1)).randomHashID
-              }${CONFIG.MANAGER_URL}`,
-              '_blank'
-            )
-            .focus()
-        } else {
-          // re-fetch sites before the redirect
-          this.props.dispatch(fetchSite(data.data.ZUID)).then(date => {
-            return this.props.history.push(`/instances/${data.data.ZUID}`)
-          })
-        }
+        this.props.history.push(`/instances/${this.props.siteZUID}`)
+        window.open(
+          `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${
+            CONFIG.MANAGER_URL
+          }`,
+          '_blank'
+        )
       })
       .catch(err => {
-        this.setState({ selected: false, effect: '' })
+        console.error(err)
+        this.setState({
+          submitted: false
+        })
         this.props.dispatch(
           notify({
             type: 'error',
@@ -115,8 +117,13 @@ export default withRouter(
         return acc
       }, [])
       .filter(blueprint => !blueprint.trashed)
+
+    const siteZUID = ownProps.match.params.zuid
+    const randomHashID = state.sites[siteZUID].randomHashID
+
     return {
-      siteZUID: ownProps.match.params.zuid,
+      siteZUID,
+      randomHashID,
       blueprints
     }
   })(PropertyBlueprint)
