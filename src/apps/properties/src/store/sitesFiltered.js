@@ -7,6 +7,9 @@ export function sitesFiltered(state = {}, action) {
     case 'FETCH_SITES_SUCCESS':
       return { ...state, ...normalizeSites(action.sites) }
 
+    case 'CREATE_SITE_SUCCESS':
+      return { ...state, [action.site.ZUID]: action.site }
+
     case 'FILTER_PROPERTIES':
       return action.filtered
 
