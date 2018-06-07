@@ -12,36 +12,34 @@ class InviteCard extends Component {
     return (
       <Card className={styles.Card}>
         <CardHeader>
-          <h3>Invited to Team {team.name}</h3>
+          <h3>Invited to Team: {team.name}</h3>
+          <p>you can accept or decline this invite below</p>
         </CardHeader>
         <CardContent>
-          <p>you can accept this invite or decline it below</p>
           <h1>Members</h1>
-          {team.members &&
-            team.members.map(member => {
-              return (
-                <article className={styles.CardContent} key={member.ZUID}>
-                  <p title={member.email}>
-                    <i className="fa fa-user" />
-                    {member.name}
-                    {member.admin ? <i className="fa fa-star" /> : null}
-                  </p>
-                </article>
-              )
-            })}
+          {team.members.map(member => {
+            return (
+              <article className={styles.CardContent} key={member.ZUID}>
+                <p title={member.email}>
+                  <i className="fa fa-user" />
+                  {member.name}
+                  {member.admin ? <i className="fa fa-star" /> : null}
+                </p>
+              </article>
+            )
+          })}
           <h1>Instances</h1>
-          {team.instances &&
-            team.instances.map(instance => {
-              return (
-                <article className={styles.Instance} key={instance.ZUID}>
-                  <p>
-                    <i className="fa fa-globe" />
-                    {instance.name}
-                  </p>
-                  <p>role: {instance.role}</p>
-                </article>
-              )
-            })}
+          {team.instances.map(instance => {
+            return (
+              <article className={styles.Instance} key={instance.ZUID}>
+                <p>
+                  <i className="fa fa-globe" />
+                  {instance.name}
+                </p>
+                <p>role: {instance.role}</p>
+              </article>
+            )
+          })}
         </CardContent>
         <CardFooter className={styles.CardInvite}>
           <Button onClick={() => console.log('click')}>
