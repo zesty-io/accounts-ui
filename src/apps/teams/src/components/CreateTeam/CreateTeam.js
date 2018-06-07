@@ -16,15 +16,15 @@ class CreateTeam extends Component {
           <label>invite members by email</label>
           <Input type="text" />
           <Input type="text" />
-          <Input type="text" />
-          <Input type="text" />
-          <Input type="text" />
+          <Input type="text" /><br />
+          <i className="fa fa-plus">add member</i>
+        </CardContent>
+        <CardFooter>
           <Button
             onClick={() => console.log('click', team.ZUID)}
-            text="Invite"
+            text="Create Team"
           />
-        </CardContent>
-        <CardFooter />
+        </CardFooter>
       </Card>
     )
   }
