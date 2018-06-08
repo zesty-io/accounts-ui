@@ -2,7 +2,7 @@ import { PureComponent } from 'react'
 import styles from './UserPendingRow.less'
 
 import { cancelInvite } from '../../../../../store/sites'
-import {removeSiteUser } from '../../../../../store/sitesUsers'
+import { removeSiteUser } from '../../../../../store/sitesUsers'
 
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'

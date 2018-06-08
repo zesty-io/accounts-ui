@@ -79,30 +79,27 @@ export default class UserRow extends Component {
         prompt: 'Are you sure you want to remove this user?',
         callback: result => {
           if (result) {
-            // removes user if confirmed
-            if (result) {
-              this.props
-                .dispatch(removeUser(userZUID, roleZUID))
-                .then(data => {
-                  this.props.dispatch(
-                    notify({
-                      message: 'User Removed',
-                      type: 'success'
-                    })
-                  )
-                  this.props.dispatch(
-                    removeSiteUser(userZUID, this.props.siteZUID)
-                  )
-                })
-                .catch(err => {
-                  this.props.dispatch(
-                    notify({
-                      message: 'Error Removing User',
-                      type: 'error'
-                    })
-                  )
-                })
-            }
+            this.props
+              .dispatch(removeUser(userZUID, roleZUID))
+              .then(data => {
+                this.props.dispatch(
+                  notify({
+                    message: 'User Removed',
+                    type: 'success'
+                  })
+                )
+                // this.props.dispatch(
+                //   removeSiteUser(userZUID, this.props.siteZUID)
+                // )
+              })
+              .catch(err => {
+                this.props.dispatch(
+                  notify({
+                    message: 'Error Removing User',
+                    type: 'error'
+                  })
+                )
+              })
           }
         }
       })
@@ -110,18 +107,13 @@ export default class UserRow extends Component {
   }
 
   handleSelectRole = evt => {
-    const newRole = evt.target.dataset.value
+    const roleZUID = evt.target.dataset.value
     this.setState({
       submitted: true
     })
     this.props
       .dispatch(
-        updateSiteUserRole(
-          this.props.ZUID,
-          this.props.role.ZUID,
-          newRole,
-          this.props.siteZUID
-        )
+        updateSiteUserRole(this.props.siteZUID, this.props.ZUID, roleZUID)
       )
       .then(data => {
         this.setState({ submitted: false })
