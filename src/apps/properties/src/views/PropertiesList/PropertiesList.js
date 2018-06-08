@@ -40,39 +40,45 @@ export default connect((state, props) => {
   // filter based on state.settings.filter
   const searchString =
     state.settings.filter && state.settings.filter.toLowerCase()
-  let sites = state.sites
-  let filtered = {}
+  const eco = state.settings.eco
 
-  if (searchString) {
-    // check settings ecosystem not typeof searchString
-    if (!state.settings.ecosystem) {
-      for (const zuid in sites) {
-        const site = sites[zuid]
-        const name = site.name && site.name.toString().toLowerCase()
-        if (name && name.includes(searchString)) {
-          filtered[zuid] = site
-        } else if (site.ZUID && site.ZUID.includes(searchString)) {
-          filtered[zuid] = site
-        } else if (site.domain && site.domain.includes(searchString)) {
-          filtered[zuid] = site
-        } else if (
-          site.RandomHashID &&
-          site.RandomHashID.includes(searchString)
-        ) {
-          filtered[zuid] = site
-        }
-      }
-    } else {
-      for (const zuid in sites) {
-        let site = sites[zuid]
-        if (site.ecoID && site.ecoID == searchString) {
-          filtered[zuid] = site
-        }
+  const sites = state.sites
+
+  let filtered = {}
+  let ecosystem = {}
+
+  if (eco) {
+    for (const zuid in sites) {
+      let site = sites[zuid]
+      if (site.ecoID && site.ecoID == eco) {
+        ecosystem[zuid] = site
       }
     }
-  } else {
-    // if there is no searchString return sites
-    filtered = state.sites
+    if (!searchString) {
+      filtered = ecosystem
+    }
+  }
+  if (searchString) {
+    let instances = eco ? ecosystem : sites
+    for (const zuid in instances) {
+      const site = instances[zuid]
+      const name = site.name && site.name.toString().toLowerCase()
+      if (name && name.includes(searchString)) {
+        filtered[zuid] = site
+      } else if (site.ZUID && site.ZUID.includes(searchString)) {
+        filtered[zuid] = site
+      } else if (site.domain && site.domain.includes(searchString)) {
+        filtered[zuid] = site
+      } else if (
+        site.RandomHashID &&
+        site.RandomHashID.includes(searchString)
+      ) {
+        filtered[zuid] = site
+      }
+    }
+  }
+  if (!eco && !searchString) {
+    filtered = sites
   }
 
   //remove favorites from all other instances
