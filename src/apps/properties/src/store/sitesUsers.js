@@ -1,14 +1,5 @@
 import { request } from '../../../../util/request'
 
-const ROLES = {
-  Owner: 0,
-  Admin: 1,
-  Developer: 2,
-  SEO: 3,
-  Publisher: 4,
-  Contributor: 5
-}
-
 export function sitesUsers(state = {}, action) {
   switch (action.type) {
     case 'FETCH_USERS_SUCCESS':
@@ -20,13 +11,24 @@ export function sitesUsers(state = {}, action) {
         }
       }
 
-    case 'DELETE_USER':
-      return { ...state, [action.siteZUID]: action.users }
-
     case 'FETCH_USERS_PENDING_SUCCESS':
       return {
         ...state,
         [action.siteZUID]: { ...state[action.siteZUID], ...action.users }
+      }
+
+    case 'SEND_INVITE_SUCCESS':
+      return {
+        ...state, // Previous sites
+        [action.user.entityZUID]: {
+          ...state[action.user.entityZUID], // Previous site users
+          [action.user.ZUID]: {
+            email: action.user.inviteeEmail,
+            inviteZUID: action.user.ZUID,
+            name: '',
+            pending: true
+          } // new pending site user
+        }
       }
 
     case 'UPDATE_USER_ROLE':
@@ -40,6 +42,9 @@ export function sitesUsers(state = {}, action) {
           }
         }
       }
+
+    case 'DELETE_USER':
+      return { ...state, [action.siteZUID]: action.users }
 
     default:
       return state
@@ -99,6 +104,27 @@ export const fetchSiteUsersPending = siteZUID => {
   }
 }
 
+export const removeUser = (userZUID, roleZUID) => {
+  return dispatch => {
+    dispatch({ type: 'REMOVE_USER' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
+      { method: 'DELETE' }
+    )
+      .then(data => {
+        dispatch({
+          type: 'REMOVE_USER_SUCCESS',
+          data
+        })
+        return data
+      })
+      .catch(err => {
+        console.table(err)
+        dispatch({ type: 'REMOVE_USER_ERROR' })
+      })
+  }
+}
+
 export const removeSiteUser = (userZUID, siteZUID) => {
   return (dispatch, getState) => {
     let users = getState().sitesUsers[siteZUID]
@@ -111,12 +137,37 @@ export const removeSiteUser = (userZUID, siteZUID) => {
   }
 }
 
-export const updateSiteUserRole = (
-  userZUID,
-  oldRoleZUID,
-  newRoleZUID,
-  siteZUID
-) => {
+export function LEGACY_transferOwnership(instanceHash, userID) {
+  return request(
+    `${
+      CONFIG.LEGACY_ACCOUNTS
+    }/+/actions/manage-permissions/site/transfer-ownership`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      body: `website_hash_id=${instanceHash}&user_id=${userID}`
+    }
+  )
+}
+
+export function LEGACY_updateUserRole(instanceHash, userID, roleID) {
+  return request(
+    `${
+      CONFIG.LEGACY_ACCOUNTS
+    }/+/actions/manage-permissions/site/set-role-for-user`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      body: `website_hash_id=${instanceHash}&user_id=${userID}&new_role_id=${roleID}`
+    }
+  )
+}
+
+export const updateSiteUserRole = (siteZUID, userZUID, roleZUID) => {
   return (dispatch, getState) => {
     /*
     **
@@ -132,44 +183,33 @@ export const updateSiteUserRole = (
 
     const state = getState()
 
-    const newRole = state.sitesRoles[siteZUID][newRoleZUID].name
-    const instanceID = state.sites[siteZUID].randomHashID
+    // NOTE: this will break for custom roles since the names
+    // won't match our system roles
+    const newRoleName = state.sitesRoles[siteZUID][roleZUID].name
+    const instanceHash = state.sites[siteZUID].randomHashID
     const userID = state.sitesUsers[siteZUID][userZUID].ID
+    const role = state.systemRoles.find(role => role.name === newRoleName)
 
-    const newRoleID = ROLES[newRole]
-
-    if (!newRoleID) {
-      throw new Error(`Invalid role: ${newRole}`)
+    if (!role) {
+      throw new Error(`Invalid role: ${newRoleName}`)
       return
     }
 
-    if (newRole === 'Owner') {
-      return request(
-        `${
-          CONFIG.LEGACY_ACCOUNTS
-        }/+/actions/manage-permissions/site/transfer-ownership`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-          },
-          body: `website_hash_id=${instanceID}&user_id=${userID}`
+    let req
+
+    if (newRoleName === 'Owner') {
+      req = LEGACY_transferOwnership(instanceHash, userID).then(() => {
+        // TODO do new accounts transfer as well
+      })
+    } else {
+      req = LEGACY_updateUserRole(instanceHash, userID, role.accessLevel).then(
+        () => {
+          // TODO do new accounts role update as well
         }
       )
     }
 
-    return request(
-      `${
-        CONFIG.LEGACY_ACCOUNTS
-      }/+/actions/manage-permissions/site/set-role-for-user`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        },
-        body: `website_hash_id=${instanceID}&user_id=${userID}&new_role_id=${newRoleID}`
-      }
-    )
+    return req
       .then(data => {
         console.log(data)
         dispatch({
@@ -181,7 +221,7 @@ export const updateSiteUserRole = (
         return data
       })
       .catch(err => {
-        console.log(err)
+        console.error(err)
         return err
       })
   }
