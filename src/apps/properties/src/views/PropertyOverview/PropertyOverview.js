@@ -235,14 +235,15 @@ export default connect((state, props) => {
     return acc
   }, [])
 
+  // TODO support custom roles
   // Get all non system roles for instance
-  let siteRoles = state.sitesRoles[siteZUID] || {}
-  siteRoles = Object.keys(siteRoles)
-    .reduce((acc, key) => {
-      acc.push(siteRoles[key])
-      return acc
-    }, [])
-    .filter(role => !role.systemRole)
+  // let siteRoles = state.sitesRoles[siteZUID] || {}
+  // siteRoles = Object.keys(siteRoles)
+  //   .reduce((acc, key) => {
+  //     acc.push(siteRoles[key])
+  //     return acc
+  //   }, [])
+  //   .filter(role => !role.systemRole)
 
   // Determine users permissions for instance
   let isAdmin = false
@@ -265,7 +266,7 @@ export default connect((state, props) => {
   return {
     siteZUID,
     systemRoles,
-    siteRoles,
+    siteRoles: systemRoles, // NOTE support access levels until custom roles are complete
     userZUID: state.user.ZUID,
     isAdmin,
     site: state.sites[siteZUID] || {},
