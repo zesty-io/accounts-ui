@@ -30,17 +30,6 @@ export default class Search extends React.Component {
     // a form submission if this exists inside
     // of a form element parent
     evt.preventDefault()
-    debounce(this.props.onClick(evt), 300)
+    this.props.onClick(evt)
   }
-}
-
-function debounce(fn, delay) {
-  var timer = null;
-  return function () {
-    var context = this, args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      fn.apply(context, args);
-    }, delay);
-  };
 }

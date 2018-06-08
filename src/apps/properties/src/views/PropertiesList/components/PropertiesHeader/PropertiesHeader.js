@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+import debounce from '../../../../../../../util/debounce'
+
 import styles from './PropertiesHeader.less'
 
 import {
@@ -13,7 +16,8 @@ import { saveProfile } from '../../../../../../../shell/store/user'
 class PropertiesHeader extends Component {
   state = {
     eco: false,
-    sort: 'name'
+    sort: 'name',
+    delay: null
   }
   render() {
     return (
@@ -31,8 +35,14 @@ class PropertiesHeader extends Component {
           <Search
             className={styles.Search}
             placeholder="Search by instance name or domain"
-            onClick={this.onSearch}
-            onKeyUp={this.onSearch}
+            onKeyUp={evt => {
+              evt.persist()
+              return this.onSearch(evt)
+            }}
+            onClick={evt => {
+              evt.persist()
+              return this.onSearch(evt)
+            }}
           />
 
           <ButtonGroup className={styles.Sort}>
@@ -42,8 +52,7 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'name' })
                 return this.sort('name')
-              }}
-            >
+              }}>
               <i className={`fa fa-sort-alpha-asc`} />
             </Button>
             <Button
@@ -52,8 +61,7 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'date' })
                 return this.sort('createdAt')
-              }}
-            >
+              }}>
               <i className={`fa fa-calendar-o`} />
             </Button>
           </ButtonGroup>
@@ -68,8 +76,7 @@ class PropertiesHeader extends Component {
                   layout: 'grid'
                 })
                 this.props.dispatch(saveProfile())
-              }}
-            >
+              }}>
               <i className={`fa fa-th`} />
             </Button>
             <Button
@@ -81,8 +88,7 @@ class PropertiesHeader extends Component {
                   layout: 'list'
                 })
                 this.props.dispatch(saveProfile())
-              }}
-            >
+              }}>
               <i className={`fa fa-th-list`} />
             </Button>
           </ButtonGroup>
@@ -95,13 +101,13 @@ class PropertiesHeader extends Component {
     )
   }
 
-  onSearch = evt => {
+  onSearch = debounce(evt => {
     if (this.state.eco) {
       this.props.dispatch(filterEcosystem(evt.target.value, this.state.eco))
     } else {
       this.props.dispatch(filter(evt.target.value))
     }
-  }
+  }, 300)
 
   onCreateSite = evt => {
     evt.preventDefault()
