@@ -10,6 +10,8 @@ copyFiles(root + '/public', root + '/build')
 let config = {}
 const env = process.env.NODE_ENV ? process.env.NODE_ENV.toUpperCase() : ''
 
+console.log('ENV: ', env)
+
 if (env === 'PRODUCTION') {
   config = `window.CONFIG = {
     ENV: 'production',
