@@ -4,17 +4,15 @@ import { notify } from '../../../../shell/store/notifications'
 
 export function sites(state = {}, action) {
   switch (action.type) {
-    case 'FETCHING_SITES':
-      // TODO show loading state?
-      return state
-
     case 'FETCH_SITES_SUCCESS':
       return { ...state, ...normalizeSites(action.sites) }
 
+    case 'UPDATE_SITE_SUCCESS':
     case 'FETCH_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
     case 'CREATE_SITE_SUCCESS':
+      console.log('add new site to list')
       return { ...state, [action.site.ZUID]: action.site }
 
     default:
@@ -64,7 +62,7 @@ export function fetchSites() {
 export function fetchSitesWithInvites() {
   return dispatch => {
     dispatch({
-      type: 'FETCHING_SITES'
+      type: 'FETCHING_SITE_INVITES'
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances/invites`)
       .then(sites => {
@@ -106,11 +104,13 @@ export function fetchSite(siteZUID) {
       type: 'FETCHING_SITES'
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}`)
-      .then(site => {
+      .then(res => {
         dispatch({
           type: 'FETCH_SITE_SUCCESS',
-          site: site.data
+          site: res.data
         })
+
+        return res.data
       })
       .catch(err => {
         console.table(err)
@@ -138,9 +138,12 @@ export function updateSite(siteZUID, payload) {
       json: true,
       body: payload
     })
-      .then(data => {
-        dispatch({ type: 'UPDATE_SITE_SUCCESS' })
-        return data
+      .then(res => {
+        dispatch({
+          type: 'UPDATE_SITE_SUCCESS',
+          site: res.data
+        })
+        return res.data
       })
       .catch(err => {
         dispatch({ type: 'UPDATE_SITE_FAILURE' })
@@ -150,6 +153,31 @@ export function updateSite(siteZUID, payload) {
   }
 }
 
+export function createInstance(name) {
+  return dispatch => {
+    dispatch({
+      type: 'CREATING_SITE'
+    })
+    return request(`${CONFIG.API_ACCOUNTS}/instances`, {
+      method: 'POST',
+      json: true,
+      body: { name }
+    })
+      .then(res => {
+        dispatch({
+          type: 'CREATE_SITE_SUCCESS',
+          site: res.data
+        })
+        return res.data
+      })
+      .catch(err => {
+        console.error(err)
+        return err
+      })
+  }
+}
+
+// NOTE Should these not be part of this reducer?
 export function acceptInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: 'ACCEPT_INVITE' })
@@ -218,63 +246,48 @@ export function cancelInvite(inviteZUID) {
 }
 
 export function sendInvite(payload) {
-  return dispatch => {
-    dispatch({
-      type: 'SENDING_INVITE'
-    })
-    let roleName = payload.role
-    const newRoleID = role => {
-      switch (role) {
-        case 'Owner':
-          return 0
-        case 'Admin':
-          return 1
-        case 'Contributor':
-          return 5
-        case 'Publisher':
-          return 4
-        case 'Developer':
-          return 2
-        case 'SEO':
-          return 3
-        default:
-          return 5
-      }
+  return (dispatch, getState) => {
+    const state = getState()
+
+    // NOTE once custom roles are ready we will need to select
+    // from the instances roles.
+    const role = state.systemRoles[payload.inviteeRoleZUID]
+
+    if (!role) {
+      throw new Error(`Invalid role selected: ${payload.inviteeRoleZUID}`)
+      return
     }
+
     return request(`${CONFIG.API_ACCOUNTS}/invites`, {
       method: 'POST',
       json: true,
       body: {
         inviteeEmail: payload.inviteeEmail,
         entityZUID: payload.entityZUID,
-        accessLevel: newRoleID(roleName)
+        accessLevel: role.accessLevel // NOTE support access levels until custom roles are complete
         // roleZUID: payload.roleZUID
       }
     })
-      .then(data => {
+      .then(res => {
         dispatch(
           notify({
-            HTML: `<p>
-    <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Invite sent to <i>${
-      data.data.inviteeEmail
-    }</i>
-  </p>`,
+            HTML: `<i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Invite sent to <strong>${
+              res.data.inviteeEmail
+            }</strong>`,
             type: 'success'
           })
         )
         dispatch({
           type: 'SEND_INVITE_SUCCESS',
-          data
+          user: res.data
         })
-        return data
+        return res.data
       })
       .catch(err => {
-        console.table(err)
+        console.error(err)
         dispatch(
           notify({
-            HTML: `<p>
-      <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;An error occurred sending the invite: ${err}
-    </p>`,
+            HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;An error occurred sending the invite: ${err}`,
             type: 'error'
           })
         )
@@ -282,52 +295,6 @@ export function sendInvite(payload) {
           type: 'SEND_INVITE_ERROR',
           err
         })
-      })
-  }
-}
-
-export function createInstance(name) {
-  return dispatch => {
-    dispatch({
-      type: 'CREATING_SITE'
-    })
-    return request(`${CONFIG.API_ACCOUNTS}/instances`, {
-      method: 'POST',
-      json: true,
-      body: { name }
-    })
-      .then(data => {
-        dispatch({
-          type: 'CREATE_SITE_SUCCESS',
-          site: data.data
-        })
-        return data
-      })
-      .catch(err => {
-        dispatch({
-          type: 'CREATE_SITE_ERROR',
-          err
-        })
-        console.table(err)
-        throw err
-      })
-  }
-}
-
-export const removeUser = (userZUID, roleZUID) => {
-  return dispatch => {
-    dispatch({ type: 'REMOVE_USER' })
-    return request(
-      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
-      { method: 'DELETE' }
-    )
-      .then(data => {
-        dispatch({ type: 'REMOVE_USER_SUCCESS', data })
-        return data
-      })
-      .catch(err => {
-        console.table(err)
-        dispatch({ type: 'REMOVE_USER_ERROR' })
       })
   }
 }
