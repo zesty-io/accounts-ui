@@ -20,6 +20,8 @@ export function sites(state = {}, action) {
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
+    case 'SORT_SITES':
+      return action.sites
     default:
       return state
   }
@@ -337,7 +339,7 @@ export const removeUser = (userZUID, roleZUID) => {
 
 export const sortSites = sortBy => {
   return (dispatch, getState) => {
-    const sitesObj = getState().sitesFiltered
+    const sitesObj = getState().sites
     let sites = Object.keys(sitesObj).map(site => sitesObj[site])
     if (sortBy === 'name') {
       sites.sort((prev, next) => {
@@ -361,15 +363,15 @@ export const sortSites = sortBy => {
           return -1
         }
         return 0
-        }) // TODO:
-        return dispatch({
-          type: 'FILTER_PROPERTIES',
-          filtered: sites
-        })
-      }
+      })
       return dispatch({
-        type: 'FILTER_PROPERTIES',
-        filtered: sites
-     })
+        type: 'SORT_SITES',
+        sites
+      })
+    }
+    return dispatch({
+      type: 'SORT_SITES',
+      sites
+    })
   }
 }
