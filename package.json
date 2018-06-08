@@ -12,14 +12,12 @@
     "prestart": "npm install & npm run prebuild",
     "start": "node bin/start",
     "serve": "./node_modules/.bin/serve ./build --port 6006 --single",
-    "build-prod": "export NODE_ENV=\"production\" && npm run build",
-    "build-dev": "export NODE_ENV=\"development\" && npm run build",
-    "build-stage": "export NODE_ENV=\"staging\" && npm run build"
+    "build-prod": "export NODE_ENV=\"PRODUCTION\" && npm run build",
+    "build-stage": "export NODE_ENV=\"STAGE\" && npm run build",
+    "build-dev": "export NODE_ENV=\"DEVELOPMENT\" && npm run build"
   },
   "author": "Stuart Runyan<stuart@zesty.io>",
-  "contributors": [
-    "Grant Glidewell <grant.glidewell@zesty.io>"
-  ],
+  "contributors": ["Grant Glidewell <grant.glidewell@zesty.io>"],
   "license": "",
   "dependencies": {
     "classnames": "2.2.5",

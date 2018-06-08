@@ -8,9 +8,9 @@ const root = path.resolve(__dirname, '../')
 copyFiles(root + '/public', root + '/build')
 
 let config = {}
-const env = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : ''
+const env = process.env.NODE_ENV ? process.env.NODE_ENV.toUpperCase() : ''
 
-if (env === 'production') {
+if (env === 'PRODUCTION') {
   config = `window.CONFIG = {
     ENV: 'production',
     API_ACCOUNTS: 'https://accounts.api.zesty.io/v1',
@@ -23,22 +23,19 @@ if (env === 'production') {
     COOKIE_NAME: 'APP_SID',
     COOKIE_DOMAIN: '.zesty.io'
   }`
-} else if (env === 'stage') {
-  throw new Error(
-    'zesty stage is not configured. use production or development'
-  )
-  // config = {
-  //   API_ACCOUNTS: 'https://accounts.api.stage-zesty.io/v1',
-  //   API_INSTANCE: '.api.stage-zesty.io/v1/',
-  //   API_AUTH: 'https://svc.stage-zesty.io/auth',
-  //   MANAGER_URL: '.manage.stage-zesty.io',
-  //   MANAGER_URL_PROTOCOL: 'https://',
-  //   PREVIEW_URL: '-dev.preview.stage-zesty.io',
-  //   PREVIEW_URL_PROTOCOL: 'https://',
-  //   COOKIE_NAME: 'STAGE_APP_SID',
-  //   COOKIE_DOMAIN: '.stage-zesty.io',
-  //   EMAIL_SERVICE: 'https://email.zesty.io/send'
-  // }
+} else if (env === 'STAGE') {
+  config = `window.CONFIG = {
+    API_ACCOUNTS: 'https://accounts.stage-api.zesty.io/v1',
+    API_INSTANCE: '.stage-api.zesty.io/v1/',
+    API_AUTH: 'https://stage-svc.zesty.io/auth',
+    MANAGER_URL: '.stage-manage.zesty.io',
+    MANAGER_URL_PROTOCOL: 'https://',
+    PREVIEW_URL: '-dev.stage-preview.zesty.io',
+    PREVIEW_URL_PROTOCOL: 'https://',
+    COOKIE_NAME: 'STAGE_APP_SID',
+    COOKIE_DOMAIN: '.zesty.io',
+    EMAIL_SERVICE: 'https://email.zesty.io/send'
+  }`
 } else {
   config = `window.CONFIG = {
     API_ACCOUNTS: 'http://accounts.api.zesty.localdev:3022/v1',
