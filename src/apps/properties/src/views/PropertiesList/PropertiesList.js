@@ -37,7 +37,6 @@ export default connect((state, props) => {
 
   const layout = state.user.prefs.instance_layout || 'grid'
 
-  // filter based on state.settings.filter
   const searchString =
     state.settings.filter && state.settings.filter.toLowerCase()
   const eco = state.settings.eco
