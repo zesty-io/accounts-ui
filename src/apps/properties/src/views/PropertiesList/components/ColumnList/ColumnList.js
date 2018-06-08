@@ -25,7 +25,7 @@ export default function ColumnList(props) {
           </React.Fragment>
         ) : null}
 
-        {!props.settings.filter && props.sitesFavorite.length ? (
+        {props.sitesFavorite.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
               <i className="fa fa-star-o" aria-hidden="true" />
