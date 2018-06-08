@@ -29,6 +29,7 @@ class Properties extends Component {
     )
   }
 }
+
 export default connect((state, props) => {
   const favorites = state.user.prefs.favorite_sites.filter(ZUID =>
     Object.keys(state.sites).includes(ZUID)
@@ -37,12 +38,11 @@ export default connect((state, props) => {
   const layout = state.user.prefs.instance_layout || 'grid'
 
   // filter based on state.settings.filter
-  const searchString =
-    state.settings.filter && state.settings.filter.toLowerCase()
+  const searchString = state.settings.filter && state.settings.filter.toLowerCase()
   let sites = state.sites
   let filtered = {}
+
   if (searchString) {
-    console.log('found searchString', searchString)
     if (typeof searchString !== 'number') {
       for (const zuid in sites) {
         const site = sites[zuid]
@@ -50,6 +50,8 @@ export default connect((state, props) => {
         if (name && name.includes(searchString)) {
           filtered[zuid] = site
         } else if (site.ZUID && site.ZUID.includes(searchString)) {
+          filtered[zuid] = site
+        }else if (site.domain && site.domain.includes(searchString)) {
           filtered[zuid] = site
         } else if (
           site.RandomHashID &&
@@ -67,9 +69,11 @@ export default connect((state, props) => {
       }
     }
   } else {
+    // if there is no searchString return sites
     filtered = state.sites
   }
 
+  //remove favorites from all other instances
   const removedFavorites = Object.keys(filtered).reduce((acc, ZUID) => {
     if (!favorites.includes(ZUID)) {
       acc.push(filtered[ZUID])
@@ -86,6 +90,6 @@ export default connect((state, props) => {
       return { ...filtered[ZUID], favorite: true }
     }),
     dispatch: props.dispatch,
-    settings: state.settings // find out where this goes
+    settings: state.settings
   }
 })(Properties)
