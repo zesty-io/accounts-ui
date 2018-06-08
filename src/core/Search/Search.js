@@ -3,6 +3,9 @@ import styles from './Search.less'
 import cx from 'classnames'
 
 export default class Search extends React.Component {
+  state = {
+    bounce: false
+  }
   render() {
     return (
       <div className={cx(styles.search, this.props.className)}>
@@ -27,6 +30,17 @@ export default class Search extends React.Component {
     // a form submission if this exists inside
     // of a form element parent
     evt.preventDefault()
-    this.props.onClick(evt)
+    debounce(this.props.onClick(evt), 300)
   }
+}
+
+function debounce(fn, delay) {
+  var timer = null;
+  return function () {
+    var context = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
 }
