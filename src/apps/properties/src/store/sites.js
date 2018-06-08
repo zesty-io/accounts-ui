@@ -364,14 +364,14 @@ export const sortSites = sortBy => {
         }
         return 0
       })
-      return dispatch({
-        type: 'SORT_SITES',
-        sites
-      })
     }
+
     return dispatch({
       type: 'SORT_SITES',
-      sites
+      sites: sites.reduce((acc, site) => {
+        acc[site.ZUID] = site
+        return acc
+      },{})
     })
   }
 }

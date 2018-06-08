@@ -128,14 +128,13 @@ class PropertiesHeader extends Component {
       this.setState({ eco: false })
       return this.props.dispatch({
         type: 'SETTING_FILTER',
-        filter: term,
         eco: false
       })
     }
     this.setState({ eco: evt.target.dataset.value })
     this.props.dispatch({
       type: 'SETTING_FILTER',
-      filter: Number(evt.target.dataset.value)
+      eco: Number(evt.target.dataset.value)
     })
   }
 

@@ -38,12 +38,14 @@ export default connect((state, props) => {
   const layout = state.user.prefs.instance_layout || 'grid'
 
   // filter based on state.settings.filter
-  const searchString = state.settings.filter && state.settings.filter.toLowerCase()
+  const searchString =
+    state.settings.filter && state.settings.filter.toLowerCase()
   let sites = state.sites
   let filtered = {}
 
   if (searchString) {
-    if (typeof searchString !== 'number') {
+    // check settings ecosystem not typeof searchString
+    if (!state.settings.ecosystem) {
       for (const zuid in sites) {
         const site = sites[zuid]
         const name = site.name && site.name.toString().toLowerCase()
@@ -51,7 +53,7 @@ export default connect((state, props) => {
           filtered[zuid] = site
         } else if (site.ZUID && site.ZUID.includes(searchString)) {
           filtered[zuid] = site
-        }else if (site.domain && site.domain.includes(searchString)) {
+        } else if (site.domain && site.domain.includes(searchString)) {
           filtered[zuid] = site
         } else if (
           site.RandomHashID &&
