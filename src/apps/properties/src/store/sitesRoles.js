@@ -1,51 +1,28 @@
 import { request } from '../../../../util/request'
 
-
 export function sitesRoles(state = {}, action) {
   switch (action.type) {
-    case 'FETCHING_ROLES':
-      return state
     case 'FETCH_ROLES_SUCCESS':
       return { ...state, [action.siteZUID]: action.normalizedRoles }
 
-    case 'FETCH_ROLES_ERROR':
-      return state
-    case 'ADDING_ROLE_FAILURE':
-      return state
     case 'ADDING_ROLE_SUCCESS':
       return {
         ...state,
-        [action.siteZUID]: {...state[action.siteZUID],
+        [action.siteZUID]: {
+          ...state[action.siteZUID],
           [action.role.ZUID]: action.role
         }
       }
-    case 'DELETING_ROLE':
-      return state
+
     case 'DELETING_ROLE_SUCCESS':
       return { ...state, [action.siteZUID]: action.siteRoles }
-    case 'DELETING_ROLE_FAILURE':
-      return state
-    case 'FETCHING_ROLE':
-      return state
+
     case 'FETCHING_ROLE_SUCCESS':
       return {
         ...state,
         [action.siteZUID]: { ...state[action.siteZUID], ...action.role }
       }
-    case 'FETCHING_ROLE_FAILURE':
-      return state
-    case 'UPDATING_ROLE':
-      return state
-    case 'UPDATING_ROLE_SUCCESS':
-      return state
-    case 'UPDATING_ROLE_FAILURE':
-      return state
-    case 'CREATING_ROLE':
-      return state
-    case 'CREATING_ROLE_SUCCESS':
-      return state
-    case 'CREATING_ROLE_FAILURE':
-      return state
+
     default:
       return state
   }
@@ -57,15 +34,17 @@ export const fetchSiteRoles = siteZUID => {
       type: 'FETCHING_ROLES'
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/roles`)
-      .then(roles => {
+      .then(res => {
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
           siteZUID,
-          normalizedRoles: roles.data.reduce((acc, role) => {
+          normalizedRoles: res.data.reduce((acc, role) => {
             acc[role.ZUID] = role
             return acc
           }, {})
         })
+
+        return res.data
       })
       .catch(err => {
         console.error(err)
