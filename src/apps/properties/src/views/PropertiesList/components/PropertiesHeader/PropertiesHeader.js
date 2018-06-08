@@ -104,18 +104,10 @@ class PropertiesHeader extends Component {
   }
 
   onSearch = debounce(term => {
-    if (this.state.eco) {
-      this.props.dispatch({
-        type: 'SETTING_FILTER',
-        filter: term,
-        eco
-      }) // maybe i dont want to do this
-    } else {
       this.props.dispatch({
         type: 'SETTING_FILTER',
         filter: term
       })
-    }
   }, 300)
 
   onCreateSite = evt => {
@@ -127,13 +119,13 @@ class PropertiesHeader extends Component {
     if (evt.target.dataset.value === '') {
       this.setState({ eco: false })
       return this.props.dispatch({
-        type: 'SETTING_FILTER',
+        type: 'SETTING_ECO',
         eco: false
       })
     }
     this.setState({ eco: evt.target.dataset.value })
     this.props.dispatch({
-      type: 'SETTING_FILTER',
+      type: 'SETTING_ECO',
       eco: Number(evt.target.dataset.value)
     })
   }
