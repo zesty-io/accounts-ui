@@ -30,7 +30,7 @@ if (env === 'PRODUCTION') {
     API_AUTH: 'https://stage-svc.zesty.io/auth',
     MANAGER_URL: '.stage-manage.zesty.io',
     MANAGER_URL_PROTOCOL: 'https://',
-    PREVIEW_URL: '-dev.stage-preview.zesty.io',
+    PREVIEW_URL: '-dev.stage-preview.zestyio.com',
     PREVIEW_URL_PROTOCOL: 'https://',
     COOKIE_NAME: 'STAGE_APP_SID',
     COOKIE_DOMAIN: '.zesty.io',
