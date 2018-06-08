@@ -36,12 +36,12 @@ class PropertiesHeader extends Component {
             className={styles.Search}
             placeholder="Search by instance name or domain"
             onKeyUp={evt => {
-              evt.persist()
-              return this.onSearch(evt)
+              let term = evt.target.value
+              return this.onSearch(term)
             }}
             onClick={evt => {
-              evt.persist()
-              return this.onSearch(evt)
+              let term = evt.target.value
+              return this.onSearch(term)
             }}
           />
 
@@ -101,11 +101,11 @@ class PropertiesHeader extends Component {
     )
   }
 
-  onSearch = debounce(evt => {
+  onSearch = debounce(term => {
     if (this.state.eco) {
-      this.props.dispatch(filterEcosystem(evt.target.value, this.state.eco))
+      this.props.dispatch(filterEcosystem(term, this.state.eco))
     } else {
-      this.props.dispatch(filter(evt.target.value))
+      this.props.dispatch(filter(term))
     }
   }, 300)
 
