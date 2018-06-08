@@ -21,7 +21,7 @@ class PropertiesHeader extends Component {
         <div className={styles.Actions}>
           {this.props.ecosystems.length ? (
             <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
-              <Option key="default" value="" text="All Ecosystems" />
+              <Option key="default" value="" text="All Instances" />
               {this.props.ecosystems.map(eco => {
                 return <Option key={eco.id} value={eco.id} text={eco.name} />
               })}
