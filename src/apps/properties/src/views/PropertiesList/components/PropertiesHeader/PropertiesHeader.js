@@ -6,14 +6,7 @@ import debounce from '../../../../../../../util/debounce'
 
 import styles from './PropertiesHeader.less'
 
-// import {
-//   filter,
-//   filterEcosystem,
-//   sortSites
-// } from '../../../../store/sitesFiltered'
 import { sortSites } from '../../../../store/sites'
-// sort sites will live in sites, and sort the whole site object ??
-
 import { saveProfile } from '../../../../../../../shell/store/user'
 
 class PropertiesHeader extends Component {
