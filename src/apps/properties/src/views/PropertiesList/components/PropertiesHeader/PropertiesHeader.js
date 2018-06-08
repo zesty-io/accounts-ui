@@ -6,18 +6,20 @@ import debounce from '../../../../../../../util/debounce'
 
 import styles from './PropertiesHeader.less'
 
-import {
-  filter,
-  filterEcosystem,
-  sortSites
-} from '../../../../store/sitesFiltered'
+// import {
+//   filter,
+//   filterEcosystem,
+//   sortSites
+// } from '../../../../store/sitesFiltered'
+
+// sort sites will live in sites, and sort the whole site object ??
+
 import { saveProfile } from '../../../../../../../shell/store/user'
 
 class PropertiesHeader extends Component {
   state = {
     eco: false,
-    sort: 'name',
-    delay: null
+    sort: 'name'
   }
   render() {
     return (
@@ -103,9 +105,16 @@ class PropertiesHeader extends Component {
 
   onSearch = debounce(term => {
     if (this.state.eco) {
-      this.props.dispatch(filterEcosystem(term, this.state.eco))
+      this.props.dispatch({
+        type: 'SETTING_FILTER',
+        filter: term,
+        eco
+      }) // maybe i dont want to do this
     } else {
-      this.props.dispatch(filter(term))
+      this.props.dispatch({
+        type: 'SETTING_FILTER',
+        filter: term
+      })
     }
   }, 300)
 
@@ -117,10 +126,17 @@ class PropertiesHeader extends Component {
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {
       this.setState({ eco: false })
-      return this.props.dispatch(filter(''))
+      return this.props.dispatch({
+        type: 'SETTING_FILTER',
+        filter: term,
+        eco: false
+      })
     }
     this.setState({ eco: evt.target.dataset.value })
-    this.props.dispatch(filter(Number(evt.target.dataset.value)))
+    this.props.dispatch({
+      type: 'SETTING_FILTER',
+      filter: Number(evt.target.dataset.value)
+    })
   }
 
   sort = by => {

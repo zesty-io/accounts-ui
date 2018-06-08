@@ -1,7 +1,7 @@
 import { blueprints } from './blueprints'
 import { sites } from './sites'
 import { sitesCompanies } from './sitesCompanies'
-import { sitesFiltered } from './sitesFiltered'
+// import { sitesFiltered } from './sitesFiltered'
 import { sitesStats } from './sitesStats'
 import { sitesUsers } from './sitesUsers'
 import { sitesRoles } from './sitesRoles'
@@ -10,7 +10,7 @@ import { ecosystems } from './ecosystems'
 
 export const properties = {
   sites,
-  sitesFiltered,
+  // sitesFiltered,
   sitesCompanies,
   sitesCollections,
   sitesStats,
