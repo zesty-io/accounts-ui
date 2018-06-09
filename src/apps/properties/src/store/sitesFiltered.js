@@ -10,6 +10,11 @@ export function sitesFiltered(state = {}, action) {
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
+    case 'DELETE_INVITE_SUCCESS':
+      return Object.keys(state).filter(
+        ZUID => state[ZUID].inviteZUID !== action.inviteZUID
+      )
+
     case 'FILTER_PROPERTIES':
       return action.filtered
 

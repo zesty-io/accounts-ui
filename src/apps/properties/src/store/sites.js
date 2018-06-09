@@ -12,8 +12,10 @@ export function sites(state = {}, action) {
       return { ...state, [action.site.ZUID]: action.site }
 
     case 'CREATE_SITE_SUCCESS':
-      console.log('add new site to list')
       return { ...state, [action.site.ZUID]: action.site }
+
+    case 'DELETE_INVITE_SUCCESS':
+      return state.filter(site => site.inviteZUID !== action.inviteZUID)
 
     default:
       return state
@@ -214,9 +216,13 @@ export function declineInvite(inviteZUID) {
         method: 'PUT'
       }
     )
-      .then(data => {
-        dispatch({ type: 'DELETE_INVITE_SUCCESS' })
-        return data
+      .then(res => {
+        // return dispatch(fetchSitesWithInvites())
+        dispatch({
+          type: 'DELETE_INVITE_SUCCESS',
+          inviteZUID
+        })
+        return res.data
       })
       .catch(err => {
         dispatch({ type: 'DELETE_INVITE_FAILURE' })
