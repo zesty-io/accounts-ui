@@ -47,9 +47,9 @@ class PropertyOverview extends Component {
       this.clickManager()
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.siteZUID !== this.props.siteZUID) {
-      this.fetchSiteData(nextProps)
+  componentDidUpdate(prevProps) {
+    if (this.props.siteZUID !== prevProps.siteZUID) {
+      this.fetchSiteData(this.props)
     }
   }
   render() {
