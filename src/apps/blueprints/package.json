@@ -1,7 +1,7 @@
 {
-  "name": "accounts-support",
+  "name": "accounts-blueprints",
   "version": "1.0.0",
-  "description": "Support for accounts web properties",
+  "description": "Manage your accounts blueprints",
   "main": "./src/index.js",
   "scripts": {
     "test": "../../../node_modules/.bin/jest",

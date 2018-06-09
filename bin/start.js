@@ -13,14 +13,12 @@ const appDir = root + '/src/apps'
 
 copyFiles(root + '/public', root + '/build')
 
-fs.readdirSync(src)
-  .forEach((dir) => {
-    runPkgCmd(path.join(src, dir), 'start')
-  })
+fs.readdirSync(src).forEach(dir => {
+  runPkgCmd(path.join(src, dir), 'start')
+})
 
-fs.readdirSync(appDir)
-  .forEach((app) => {
-    runPkgCmd(path.join(appDir, app), 'start')
-  })
+fs.readdirSync(appDir).forEach(app => {
+  runPkgCmd(path.join(appDir, app), 'start')
+})
 
-  buildInfo()
+buildInfo()

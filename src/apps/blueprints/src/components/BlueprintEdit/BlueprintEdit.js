@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 
 import BlueprintList from '../BlueprintList'
 
-import { notify } from '../../../../../../../shell/store/notifications'
+import { notify } from '../../../../../shell/store/notifications'
 import {
   updateBlueprint,
-  createBlueprint,
+  postNewBlueprint,
   fetchBlueprints
-} from '../../../../../../properties/src/store/blueprints'
+} from '../../../../properties/src/store/blueprints'
 
 import styles from './BlueprintEdit.less'
 
@@ -126,8 +126,7 @@ class BlueprintEdit extends Component {
             disabled={this.state.saving}
             className={styles.button}
             onClick={this.handleSubmit}
-            type="submit"
-          >
+            type="submit">
             <i className="fa fa-save" /> Save
           </Button>
         ) : (
@@ -135,14 +134,16 @@ class BlueprintEdit extends Component {
             disabled={this.state.saving}
             className={styles.button}
             onClick={this.handleCreate}
-            type="submit"
-          >
+            type="submit">
             <i className="fa fa-plus" /> Create
           </Button>
         )}
       </div>
     ) : (
-      <BlueprintList />
+      <BlueprintList
+        loadingBlueprints={this.props.loadingBlueprints}
+        userBlueprints={this.props.blueprints}
+      />
     )
   }
   handleSubmit = evt => {
@@ -178,7 +179,7 @@ class BlueprintEdit extends Component {
       createdByUserZUID: this.state.userZUID
     }
     this.props
-      .dispatch(createBlueprint(newBlueprint))
+      .dispatch(postNewBlueprint(newBlueprint))
       .then(data => {
         this.setState({ saving: false })
         this.props.dispatch(

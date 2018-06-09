@@ -5,6 +5,7 @@ import { notify } from '../../../../shell/store/notifications'
 export function sites(state = {}, action) {
   switch (action.type) {
     case 'FETCH_SITES_SUCCESS':
+    case 'FETCH_SITES_INVITES_SUCCESS':
       return { ...state, ...normalizeSites(action.sites) }
 
     case 'UPDATE_SITE_SUCCESS':
@@ -64,7 +65,7 @@ export function fetchSites() {
 export function fetchSitesWithInvites() {
   return dispatch => {
     dispatch({
-      type: 'FETCHING_SITE_INVITES'
+      type: 'FETCHING_SITES_INVITES'
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances/invites`)
       .then(sites => {
@@ -79,7 +80,7 @@ export function fetchSitesWithInvites() {
         })
 
         dispatch({
-          type: 'FETCH_SITES_SUCCESS',
+          type: 'FETCH_SITES_INVITES_SUCCESS',
           sites: sites.data
         })
         return sites
@@ -93,7 +94,7 @@ export function fetchSitesWithInvites() {
           })
         )
         dispatch({
-          type: 'FETCH_SITES_ERROR',
+          type: 'FETCH_SITES_INVITES_ERROR',
           err
         })
       })

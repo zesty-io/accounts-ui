@@ -99,7 +99,6 @@ export const filter = searchString => {
         }
       }
       dispatch({
-        meta: { debounce: { time: 250 } },
         type: 'FILTER_PROPERTIES',
         filtered
       })
@@ -146,7 +145,6 @@ export const filterEcosystem = (searchString, ecoID) => {
       }
 
       dispatch({
-        meta: { debounce: { time: 250 } },
         type: 'FILTER_PROPERTIES',
         filtered
       })

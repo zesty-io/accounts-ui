@@ -133,6 +133,7 @@ class PropertyOverview extends Component {
                   <Users
                     {...routeProps}
                     isAdmin={this.props.isAdmin}
+                    isOwner={this.props.isOwner}
                     siteZUID={this.props.site.ZUID}
                     dispatch={this.props.dispatch}
                     users={this.props.users}
@@ -247,8 +248,10 @@ export default connect((state, props) => {
 
   // Determine users permissions for instance
   let isAdmin = false
+  let isOwner = false
   if (state.user.staff) {
     isAdmin = true
+    // isOwner = true
   } else {
     if (
       state.sitesUsers[siteZUID] &&
@@ -260,6 +263,11 @@ export default connect((state, props) => {
       ) {
         isAdmin = true
       }
+      if (
+        state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner'
+      ) {
+        isOwner = true
+      }
     }
   }
 
@@ -269,6 +277,7 @@ export default connect((state, props) => {
     siteRoles: systemRoles, // NOTE support access levels until custom roles are complete
     userZUID: state.user.ZUID,
     isAdmin,
+    isOwner,
     site: state.sites[siteZUID] || {},
     users: state.sitesUsers[siteZUID] || {},
     companies: state.sitesCompanies[siteZUID] || {},

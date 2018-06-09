@@ -1,4 +1,4 @@
-@import '../../../../../../../shell/styles/colors.less';
+@import '../../../../../shell/styles/colors.less';
 
 .List {
   background-color: @nav-border-color;
@@ -6,6 +6,19 @@
   list-style-type: none;
   overflow-y: scroll;
   height: auto;
+  .Create {
+    margin-left: 1rem;
+    a {
+      color: lighten(@zesty-light-blue, 5%);
+      display: inline-block;
+      text-decoration: none;
+      padding: 0.7rem 0.8rem;
+      opacity: 1;
+    }
+    i {
+      margin-right: .5rem;
+    }
+  }
   li {
     display: grid;
     grid-auto-flow: column;
@@ -17,11 +30,12 @@
     p {
       align-self: center;
     }
-    i {
+    .trash {
       margin: 0.5rem;
       right: 0;
       align-self: flex-end;
       transition: all 0.1s;
+      color: @zesty-gray;
       &:hover,
       &:active,
       &:focus {

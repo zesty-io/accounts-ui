@@ -1,7 +1,6 @@
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import createDebounce from 'redux-debounced'
 
 import { user } from './user'
 import { auth } from './auth'
@@ -39,8 +38,8 @@ const rootReducer = (state, action) => {
 
 const middleware =
   CONFIG.ENV === 'production'
-    ? applyMiddleware(createDebounce(), thunkMiddleware)
-    : applyMiddleware(createDebounce(), thunkMiddleware, loggerMiddleware)
+    ? applyMiddleware(thunkMiddleware)
+    : applyMiddleware(thunkMiddleware, loggerMiddleware)
 
 export const store = createStore(
   rootReducer,

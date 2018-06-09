@@ -6,9 +6,9 @@ const SelectBlueprint = props => {
   return (
     <ul className={styles.List}>
       <li style={props.selection === 'create' ? selectedStyle : null}>
-        <Button onClick={() => props.handleSelect('create')}>
+        <Button className={styles.Create} onClick={() => props.handleSelect('create')}>
           {' '}
-          <i className="fa fa-plus" /> Create New
+          <i className="fa fa-plus" /> Create Blueprint
         </Button>
       </li>
       {props.blueprints.map(bp => {
@@ -23,7 +23,7 @@ const SelectBlueprint = props => {
             onClick={() => props.handleSelect(bp.ID)}>
             <p>{bp.name}</p>
             <i
-              className="fa fa-trash-o"
+              className={`${styles.trash} fa fa-trash-o`}
               onClick={() => props.handleDelete(bp.ID)}
             />
           </li>
