@@ -7,20 +7,18 @@
   },
   "main": "webpack.config.js",
   "scripts": {
-    "prebuild": "node bin/preBuild",
-    "build": "node bin/build",
-    "prestart": "npm install & npm run prebuild",
-    "start": "node bin/start",
     "serve": "./node_modules/.bin/serve ./build --port 6006 --single",
-    "build-prod": "export NODE_ENV=\"production\" && npm run build",
-    "build-dev": "export NODE_ENV=\"development\" && npm run build",
-    "build-stage": "export NODE_ENV=\"staging\" && npm run build"
+    "start": "export NODE_ENV=\"development\" && npm install & node bin/preBuild && node bin/start",
+    "build-dev": "export NODE_ENV=\"development\" && node bin/preBuild && node bin/build",
+    "build-stage": "export NODE_ENV=\"stage\" && node bin/preBuild && node bin/build",
+    "build-prod": "export NODE_ENV=\"production\" && node bin/preBuild && node bin/build"
   },
-  "author": "Stuart Runyan<stuart@zesty.io>",
+  "author": "Zesty.io<developers@zesty.io>",
   "contributors": [
-    "Grant Glidewell <grant.glidewell@zesty.io>"
+    "Grant Glidewell<grant.glidewell@zesty.io>",
+    "Stuart Runyan<stuart@zesty.io>"
   ],
-  "license": "",
+  "license": "All Rights Reserved",
   "dependencies": {
     "classnames": "2.2.5",
     "qs": "^6.5.1",
@@ -30,8 +28,8 @@
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
-    "redux-debounced": "0.4.0",
-    "redux-thunk": "2.2.0"
+    "redux-thunk": "2.2.0",
+    "js-cookie": "2.2.0"
   },
   "devDependencies": {
     "ava": "0.25.0",

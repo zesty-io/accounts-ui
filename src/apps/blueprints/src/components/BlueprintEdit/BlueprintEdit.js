@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 
 import BlueprintList from '../BlueprintList'
 
-import { notify } from '../../../../../../../shell/store/notifications'
+import { notify } from '../../../../../shell/store/notifications'
 import {
   updateBlueprint,
   postNewBlueprint,
   fetchBlueprints
-} from '../../../../../../properties/src/store/blueprints'
+} from '../../../../properties/src/store/blueprints'
 
 import styles from './BlueprintEdit.less'
 
@@ -140,7 +140,10 @@ class BlueprintEdit extends Component {
         )}
       </div>
     ) : (
-      <BlueprintList userBlueprints={this.props.blueprints} />
+      <BlueprintList
+        loadingBlueprints={this.props.loadingBlueprints}
+        userBlueprints={this.props.blueprints}
+      />
     )
   }
   handleSubmit = evt => {

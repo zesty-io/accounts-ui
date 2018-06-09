@@ -43,20 +43,31 @@ export default class Users extends Component {
               />
               <Select onSelect={this.handleSelectRole}>
                 <Option key="default" value="" text="Select Role" />
-                {this.props.siteRoles.map(role => {
-                  return (
-                    <Option
-                      key={role.ZUID}
-                      value={role.ZUID}
-                      text={role.name}
-                    />
-                  )
-                })}
+                {this.props.isOwner
+                  ? this.props.siteRoles.map(role => {
+                      return (
+                        <Option
+                          key={role.ZUID}
+                          value={role.ZUID}
+                          text={role.name}
+                        />
+                      )
+                    })
+                  : this.props.siteRoles
+                      .filter(role => role.name !== 'Owner')
+                      .map(role => {
+                        return (
+                          <Option
+                            key={role.ZUID}
+                            value={role.ZUID}
+                            text={role.name}
+                          />
+                        )
+                      })}
               </Select>
               <Button
                 onClick={this.handleInvite}
-                disabled={this.state.submitted}
-              >
+                disabled={this.state.submitted}>
                 <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
               </Button>
             </div>
@@ -75,8 +86,7 @@ export default class Users extends Component {
                 }
                 message="Loading Instance Users"
                 height="100px"
-                width="100%"
-              >
+                width="100%">
                 <div>
                   {Object.keys(this.props.users).map(ZUID => {
                     const user = this.props.users[ZUID]

@@ -5,7 +5,6 @@ import Profile from './components/Profile'
 import Email from './components/Email'
 import Password from './components/Password'
 import TwoFactor from './components/TwoFactor'
-import Blueprints from './components/Blueprints'
 
 import styles from './Account.less'
 
@@ -21,10 +20,6 @@ class Account extends Component {
             <Password />
             <TwoFactor />
           </div>
-        </div>
-
-        <div className={styles.setting}>
-          <Blueprints />
         </div>
       </section>
     )

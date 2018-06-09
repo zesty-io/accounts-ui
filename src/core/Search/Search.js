@@ -3,6 +3,9 @@ import styles from './Search.less'
 import cx from 'classnames'
 
 export default class Search extends React.Component {
+  state = {
+    bounce: false
+  }
   render() {
     return (
       <div className={cx(styles.search, this.props.className)}>
