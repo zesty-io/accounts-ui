@@ -13,6 +13,14 @@ export function addEmail(name, email) {
   }
 }
 
+export function resendVerificationEmail(email) {
+  return dispatch => {
+    return request(`${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${email}`, {
+      method: 'POST'
+    })
+  }
+}
+
 export function updatePassword(oldPassword, newPassword) {
   return (dispatch, getState) => {
     const { email, ZUID } = getState().user
@@ -20,7 +28,7 @@ export function updatePassword(oldPassword, newPassword) {
     // TODO this endpoint does not return json which breaks our
     // request handler
     return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}?updatePassword=true`, {
-      method: 'PUT',
+      method: 'POST',
       json: true,
       body: {
         password: newPassword

@@ -17,72 +17,77 @@ class Email extends Component {
   }
   render() {
     return (
-      <Card>
-        <CardHeader>
-          <h1>Email</h1>
-        </CardHeader>
-        <CardContent className={styles.Email}>
-          <p>
-            Setting up multiple emails lets you accept invitations from your
-            verified addresses.
-          </p>
-          {this.props.user.verifiedEmails.map((email, i) => {
-            return (
-              <div className={styles.Email} key={i}>
-                <i
-                  className={cx(styles.verified, 'fa fa-check-square-o')}
-                  aria-hidden="true"
-                  title="This email is verified"
-                />
-                <span>{email}</span>
-                {this.props.user.email === email ? (
-                  <strong className={styles.primary}>(Primary)</strong>
-                ) : null}
-              </div>
-            )
-          })}
-          {this.props.user.unverifiedEmails.map((email, i) => {
-            return (
-              <div className={styles.Email} key={i}>
-                <i
-                  className="fa fa-calendar-check-o"
-                  aria-hidden="true"
-                  title="This email is waiting to be verified"
-                />
-                <span>{email}</span>
-                {this.props.user.email === email ? (
-                  <strong className={styles.primary}>(Primary)</strong>
-                ) : null}
-              </div>
-            )
-          })}
-          <article className={styles.addEmail}>
-            <label>name</label>
-            <Input
-              type="text"
-              name="name"
-              placeholder="backup email"
-              onChange={this.handleChange}
-            />
-            <label>email</label>
-            <Input
-              type="text"
-              name="email"
-              placeholder="email@acme-corp.com"
-              onChange={this.handleChange}
-            />
-          </article>
-        </CardContent>
-        <CardFooter>
-          <Button
-            className={styles.button}
-            disabled={this.state.submitted}
-            onClick={this.handleAddEmail}>
-            <i className="fa fa-plus" aria-hidden="true" />
-            Add Email
-          </Button>
-        </CardFooter>
-      </Card>
+      <WithLoader
+        className={styles.Loading}
+        condition={this.prps.loadingEmails}
+        message="Loading Your Email Addresses">
+        <Card>
+          <CardHeader>
+            <h1>Email</h1>
+          </CardHeader>
+          <CardContent className={styles.Email}>
+            <p>
+              Setting up multiple emails lets you accept invitations from your
+              verified addresses.
+            </p>
+            {this.props.user.verifiedEmails.map((email, i) => {
+              return (
+                <div className={styles.Email} key={i}>
+                  <i
+                    className={cx(styles.verified, 'fa fa-check-square-o')}
+                    aria-hidden="true"
+                    title="This email is verified"
+                  />
+                  <span>{email}</span>
+                  {this.props.user.email === email ? (
+                    <strong className={styles.primary}>(Primary)</strong>
+                  ) : null}
+                </div>
+              )
+            })}
+            {this.props.user.unverifiedEmails.map((email, i) => {
+              return (
+                <div className={styles.Email} key={i}>
+                  <i
+                    className="fa fa-calendar-check-o"
+                    aria-hidden="true"
+                    title="This email is waiting to be verified"
+                  />
+                  <span>{email}</span>
+                  {this.props.user.email === email ? (
+                    <strong className={styles.primary}>(Primary)</strong>
+                  ) : null}
+                </div>
+              )
+            })}
+            <article className={styles.addEmail}>
+              <label>name</label>
+              <Input
+                type="text"
+                name="name"
+                placeholder="backup email"
+                onChange={this.handleChange}
+              />
+              <label>email</label>
+              <Input
+                type="text"
+                name="email"
+                placeholder="email@acme-corp.com"
+                onChange={this.handleChange}
+              />
+            </article>
+          </CardContent>
+          <CardFooter>
+            <Button
+              className={styles.button}
+              disabled={this.state.submitted}
+              onClick={this.handleAddEmail}>
+              <i className="fa fa-plus" aria-hidden="true" />
+              Add Email
+            </Button>
+          </CardFooter>
+        </Card>
+      </WithLoader>
     )
   }
   handleChange = evt => {
