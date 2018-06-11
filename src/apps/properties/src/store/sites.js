@@ -15,7 +15,7 @@ export function sites(state = {}, action) {
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
-    case 'DELETE_INVITE_SUCCESS':
+    case 'DECLINE_INVITE_SUCCESS':
       return Object.keys(state)
         .filter(ZUID => state[ZUID].inviteZUID !== action.inviteZUID)
         .reduce((acc, ZUID) => {
@@ -218,7 +218,7 @@ export function acceptInvite(inviteZUID) {
 
 export function declineInvite(inviteZUID) {
   return dispatch => {
-    dispatch({ type: 'DELETE_INVITE' })
+    dispatch({ type: 'DECLINE_INVITE' })
     return request(
       `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?declineInvite=true`,
       {
@@ -226,36 +226,42 @@ export function declineInvite(inviteZUID) {
       }
     )
       .then(res => {
-        // return dispatch(fetchSitesWithInvites())
         dispatch({
-          type: 'DELETE_INVITE_SUCCESS',
+          type: 'DECLINE_INVITE_SUCCESS',
           inviteZUID
         })
         return res.data
       })
       .catch(err => {
-        dispatch({ type: 'DELETE_INVITE_FAILURE' })
+        dispatch({ type: 'DECLINE_INVITE_FAILURE' })
         throw err
       })
   }
 }
 
-export function cancelInvite(inviteZUID) {
+export function cancelInvite(inviteZUID, siteZUID) {
   return dispatch => {
-    dispatch({ type: 'DELETE_INVITE' })
+    dispatch({ type: 'CANCEL_INVITE' })
     return request(
       `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?cancelInvite=true`,
       {
         method: 'PUT'
       }
     )
-      .then(data => {
-        dispatch({ type: 'DELETE_INVITE_SUCCESS', data })
-        return data
+      .then(res => {
+        dispatch({
+          type: 'CANCEL_INVITE_SUCCESS',
+          userZUID: inviteZUID, // REMOVE_USER_SUCCESS uses the same logic so make these share the same key
+          siteZUID
+        })
+        return res.data
       })
       .catch(err => {
-        dispatch({ type: 'DELETE_INVITE_FAILURE' })
-        throw err
+        console.error(err)
+        dispatch({
+          type: 'CANCEL_INVITE_FAILURE',
+          err
+        })
       })
   }
 }
@@ -310,24 +316,6 @@ export function sendInvite(payload) {
           type: 'SEND_INVITE_ERROR',
           err
         })
-      })
-  }
-}
-
-export const removeUser = (userZUID, roleZUID) => {
-  return dispatch => {
-    dispatch({ type: 'REMOVE_USER' })
-    return request(
-      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
-      { method: 'DELETE' }
-    )
-      .then(data => {
-        dispatch({ type: 'REMOVE_USER_SUCCESS', data })
-        return data
-      })
-      .catch(err => {
-        console.table(err)
-        dispatch({ type: 'REMOVE_USER_ERROR' })
       })
   }
 }

@@ -31,6 +31,20 @@ export function sitesUsers(state = {}, action) {
         }
       }
 
+    case 'REMOVE_USER_SUCCESS':
+    case 'CANCEL_INVITE_SUCCESS':
+      const siteUsers = Object.keys(state[action.siteZUID])
+        .filter(userZUID => userZUID !== action.userZUID)
+        .reduce((acc, userZUID) => {
+          acc[userZUID] = state[action.siteZUID][userZUID]
+          return acc
+        }, {})
+
+      return {
+        ...state,
+        [action.siteZUID]: { ...siteUsers }
+      }
+
     case 'UPDATE_USER_ROLE':
       return {
         ...state,
@@ -104,15 +118,28 @@ export const fetchSiteUsersPending = siteZUID => {
   }
 }
 
-export const removeSiteUser = (userZUID, siteZUID) => {
-  return (dispatch, getState) => {
-    let users = getState().sitesUsers[siteZUID]
-    delete users[userZUID]
-    return dispatch({
-      type: 'DELETE_USER',
-      users,
-      siteZUID
-    })
+export const removeUser = (siteZUID, userZUID, roleZUID) => {
+  return dispatch => {
+    dispatch({ type: 'REMOVE_USER' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
+      { method: 'DELETE' }
+    )
+      .then(res => {
+        dispatch({
+          type: 'REMOVE_USER_SUCCESS',
+          siteZUID,
+          userZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        console.error(err)
+        dispatch({
+          type: 'REMOVE_USER_ERROR',
+          err
+        })
+      })
   }
 }
 
