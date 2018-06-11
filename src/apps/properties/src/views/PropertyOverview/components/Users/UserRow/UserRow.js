@@ -23,9 +23,19 @@ export default class UserRow extends Component {
             <Loader />
           ) : this.props.isAdmin ? (
             this.props.role.name === 'Owner' ? (
-              <p>
+              <React.Fragment>
                 <i className="fa fa-fort-awesome" /> Owner
-              </p>
+                <i
+                  className={styles.trash + ' fa fa-trash-o'}
+                  aria-hidden="true"
+                  onClick={() =>
+                    this.removeUserFromInstance(
+                      this.props.ZUID,
+                      this.props.role.ZUID
+                    )
+                  }
+                />
+              </React.Fragment>
             ) : (
               <span className={styles.select}>
                 <Select
@@ -36,8 +46,7 @@ export default class UserRow extends Component {
                       .map(item => {
                         return { value: item.ZUID, text: item.name }
                       })[0]
-                  }
-                >
+                  }>
                   {this.props.siteRoles.map(role => {
                     return (
                       <Option
