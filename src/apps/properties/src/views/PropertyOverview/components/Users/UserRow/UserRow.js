@@ -1,14 +1,7 @@
 import { Component } from 'react'
 import styles from './UserRow.less'
 
-import {
-  fetchSiteUsers,
-  updateSiteUserRole,
-  // removeSiteUser
-  removeUser
-} from '../../../../../store/sitesUsers'
-// import { removeUser } from '../../../../../store/sites'
-// import { fetchSiteUsers } from '../../../../../store/sitesUsers'
+import { updateRole, removeUser } from '../../../../../store/sitesUsers'
 
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
@@ -24,43 +17,17 @@ export default class UserRow extends Component {
           {this.props.firstName} {this.props.lastName}
         </span>
         <span className={styles.email}>{this.props.email}</span>
-        {this.props.isAdmin ? (
-          <span className={styles.action}>
-            {!this.state.submitted ? (
-              this.props.role.name !== 'Owner' ? (
-                <span className={styles.select}>
-                  <Select
-                    onSelect={this.handleSelectRole}
-                    selection={
-                      this.props.siteRoles
-                        .filter(role => role.ZUID === this.props.role.ZUID)
-                        .map(item => {
-                          return { value: item.ZUID, text: item.name }
-                        })[0]
-                    }
-                  >
-                    {this.props.siteRoles.map(role => {
-                      return (
-                        <Option
-                          key={role.ZUID}
-                          value={role.ZUID}
-                          text={role.name}
-                        />
-                      )
-                    })}
-                  </Select>
-                  <i
-                    className={styles.trash + ' fa fa-trash-o'}
-                    aria-hidden="true"
-                    onClick={() =>
-                      this.removeUserFromInstance(
-                        this.props.ZUID,
-                        this.props.role.ZUID
-                      )
-                    }
-                  />
-                </span>
-              ) : this.props.isOwner ? (
+
+        <span className={styles.action}>
+          {this.state.submitted ? (
+            <Loader />
+          ) : this.props.isAdmin ? (
+            this.props.role.name === 'Owner' ? (
+              <p>
+                <i className="fa fa-fort-awesome" /> Owner
+              </p>
+            ) : (
+              <span className={styles.select}>
                 <Select
                   onSelect={this.handleSelectRole}
                   selection={
@@ -81,18 +48,26 @@ export default class UserRow extends Component {
                     )
                   })}
                 </Select>
-              ) : (
-                <p>
-                  <i className="fa fa-fort-awesome" /> Owner
-                </p>
-              )
-            ) : (
-              <Loader />
-            )}
-          </span>
-        ) : (
-          <span className={styles.action}>{this.props.role.name}</span>
-        )}
+                <i
+                  className={styles.trash + ' fa fa-trash-o'}
+                  aria-hidden="true"
+                  onClick={() =>
+                    this.removeUserFromInstance(
+                      this.props.ZUID,
+                      this.props.role.ZUID
+                    )
+                  }
+                />
+              </span>
+            )
+          ) : this.props.role.name === 'Owner' ? (
+            <React.Fragment>
+              <i className="fa fa-fort-awesome" /> {this.props.role.name}
+            </React.Fragment>
+          ) : (
+            this.props.role.name
+          )}
+        </span>
       </article>
     )
   }
@@ -127,26 +102,30 @@ export default class UserRow extends Component {
   }
 
   handleSelectRole = evt => {
-    const roleZUID = evt.target.dataset.value
     this.setState({
       submitted: true
     })
     this.props
       .dispatch(
-        updateSiteUserRole(this.props.siteZUID, this.props.ZUID, roleZUID)
+        updateRole(
+          this.props.siteZUID,
+          this.props.ZUID,
+          evt.target.dataset.value
+        )
       )
       .then(data => {
-        this.setState({ submitted: false })
+        this.setState({
+          submitted: false
+        })
         this.props.dispatch(
           notify({
             message: `${this.props.firstName}'s role has been updated`,
             type: 'success'
           })
         )
-        this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
       })
       .catch(err => {
-        console.log(err)
+        console.error(err)
         this.props.dispatch(
           notify({
             message: 'There was a problem updating the role',
