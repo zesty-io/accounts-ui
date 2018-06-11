@@ -10,6 +10,8 @@ copyFiles(root + '/public', root + '/build')
 let config = {}
 const env = process.env.NODE_ENV ? process.env.NODE_ENV.toUpperCase() : ''
 
+console.log('ENV: ', env)
+
 if (env === 'PRODUCTION') {
   config = `window.CONFIG = {
     ENV: 'production',
@@ -45,7 +47,7 @@ if (env === 'PRODUCTION') {
     MANAGER_URL_PROTOCOL: 'http://',
     PREVIEW_URL: '-dev.preview.zestyio.localdev:3020',
     PREVIEW_URL_PROTOCOL: 'http://',
-    COOKIE_NAME: 'APP_SID',
+    COOKIE_NAME: 'DEV_APP_SID',
     COOKIE_DOMAIN: '.zesty.localdev'
   }`
 }
