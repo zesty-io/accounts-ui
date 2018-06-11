@@ -4,7 +4,7 @@ export function notifications(state = [], action) {
       return [action.data, ...state]
     case 'REMOVE_NOTIFICATION':
       return state.filter(notification => {
-        return notification.epoch == action.epoch
+        return notification.epoch !== action.epoch
       })
     default:
       return state

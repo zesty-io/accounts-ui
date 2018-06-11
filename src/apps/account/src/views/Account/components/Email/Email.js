@@ -40,6 +40,21 @@ class Email extends Component {
             Setting up multiple emails lets you accept invitations from your
             verified addresses.
           </p>
+          {this.props.user.verifiedEmails.map((email, i) => {
+            return (
+              <div className={styles.Email} key={i}>
+                <i
+                  className={cx(styles.verified, 'fa fa-check-square-o')}
+                  aria-hidden="true"
+                  title="This email is verified"
+                />
+                <span>{email}</span>
+                {this.props.user.email === email ? (
+                  <strong className={styles.primary}>(Primary)</strong>
+                ) : null}
+              </div>
+            )
+          })}
           {this.state.emails &&
             this.state.emails.map((email, i) => {
               return (
@@ -56,7 +71,11 @@ class Email extends Component {
                       }
                     }}
                     aria-hidden="true"
-                    title="This email is waiting to be verified"
+                    title={
+                      email.responseReceived
+                        ? 'This email is verified'
+                        : 'Click to re-send verification email'
+                    }
                   />
                   <span>{email.address}</span>
                   {this.props.user.email === email.address ? (
