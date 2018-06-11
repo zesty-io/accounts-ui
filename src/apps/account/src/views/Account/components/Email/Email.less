@@ -2,14 +2,16 @@
 
 .Email {
   flex: 1;
-  margin: 1rem 0;
   p {
     margin: 0 0 1rem 0;
   }
   .Email {
+    p {
+      margin: 0;
+    }
+    margin: 1rem 0;
     display: grid;
     grid-template-columns: .1fr 1fr .4fr .1fr;
-    margin: 0 0 0.5rem 0;
     .delete {
       transition: all 0.1s;
       color: @zesty-gray;
