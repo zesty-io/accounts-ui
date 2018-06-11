@@ -8,6 +8,8 @@ import styles from './Notification.less'
 export default class Notification extends PureComponent {
   componentDidMount() {
     const timeout = this.props.timeout || 5000
+    // NOTE is there a memory leak with not capturing
+    // this timeout reference and cleaning up on unmount?
     setTimeout(() => {
       this.props.dispatch(remove(this.props.epoch))
     }, timeout)

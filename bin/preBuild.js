@@ -23,7 +23,10 @@ if (env === 'PRODUCTION') {
     PREVIEW_URL: '-dev.preview.zestyio.com',
     PREVIEW_URL_PROTOCOL: 'https://',
     COOKIE_NAME: 'APP_SID',
-    COOKIE_DOMAIN: '.zesty.io'
+    COOKIE_DOMAIN: '.zesty.io',
+    EMAIL_SERVICE: 'https://email.zesty.io/send',
+    LEGACY_ACCOUNTS: 'http://accounts.zesty.io'
+
   }`
 } else if (env === 'STAGE') {
   config = `window.CONFIG = {
@@ -47,6 +50,7 @@ if (env === 'PRODUCTION') {
     MANAGER_URL_PROTOCOL: 'http://',
     PREVIEW_URL: '-dev.preview.zestyio.localdev:3020',
     PREVIEW_URL_PROTOCOL: 'http://',
+    LEGACY_ACCOUNTS: 'http://accounts.zesty.localdev:3002',
     COOKIE_NAME: 'DEV_APP_SID',
     COOKIE_DOMAIN: '.zesty.localdev'
   }`
