@@ -231,42 +231,35 @@ class PropertyOverview extends Component {
 export default connect((state, props) => {
   const siteZUID = props.match.params.siteZUID
 
-  let systemRoles = Object.keys(state.systemRoles).reduce((acc, key) => {
+  const systemRoles = Object.keys(state.systemRoles).reduce((acc, key) => {
     acc.push(state.systemRoles[key])
     return acc
   }, [])
 
-  // TODO support custom roles
   // Get all non system roles for instance
-  // let siteRoles = state.sitesRoles[siteZUID] || {}
-  // siteRoles = Object.keys(siteRoles)
-  //   .reduce((acc, key) => {
-  //     acc.push(siteRoles[key])
-  //     return acc
-  //   }, [])
-  //   .filter(role => !role.systemRole)
+  let siteRoles = state.sitesRoles[siteZUID] || {}
+  siteRoles = Object.keys(siteRoles).reduce((acc, ZUID) => {
+    acc.push(siteRoles[ZUID])
+    return acc
+  }, [])
 
   // Determine users permissions for instance
   let isAdmin = false
   let isOwner = false
   if (state.user.staff) {
-    isAdmin = true
     // isOwner = true
+    isAdmin = true
   } else {
     if (
       state.sitesUsers[siteZUID] &&
       state.sitesUsers[siteZUID][state.user.ZUID]
     ) {
-      if (
-        state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner' ||
-        state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Admin'
-      ) {
+      if (state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner') {
+        isOwner = true
         isAdmin = true
       }
-      if (
-        state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner'
-      ) {
-        isOwner = true
+      if (state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Admin') {
+        isAdmin = true
       }
     }
   }
@@ -274,7 +267,7 @@ export default connect((state, props) => {
   return {
     siteZUID,
     systemRoles,
-    siteRoles: systemRoles, // NOTE support access levels until custom roles are complete
+    siteRoles,
     userZUID: state.user.ZUID,
     isAdmin,
     isOwner,
