@@ -40,22 +40,7 @@ class Email extends Component {
             Setting up multiple emails lets you accept invitations from your
             verified addresses.
           </p>
-          {/* {this.props.user.verifiedEmails.map((email, i) => {
-              return (
-                <div className={styles.Email} key={i}>
-                  <i
-                    className={cx(styles.verified, 'fa fa-check-square-o')}
-                    aria-hidden="true"
-                    title="This email is verified"
-                  />
-                  <span>{email}</span>
-                  {this.props.user.email === email ? (
-                    <strong className={styles.primary}>(Primary)</strong>
-                  ) : null}
-                </div>
-              )
-            })} */}
-          {this.state.emails.length &&
+          {this.state.emails &&
             this.state.emails.map((email, i) => {
               return (
                 <div className={styles.Email} key={i}>
@@ -63,8 +48,13 @@ class Email extends Component {
                     className={
                       email.responseReceived
                         ? cx(styles.verified, 'fa fa-check-square-o')
-                        : 'fa fa-calendar-check-o'
+                        : cx(styles.verify, 'fa fa-calendar-check-o')
                     }
+                    onClick={() => {
+                      if (!email.responseReceived) {
+                        this.sendVerifyEmail(email.address)
+                      }
+                    }}
                     aria-hidden="true"
                     title="This email is waiting to be verified"
                   />
@@ -87,6 +77,7 @@ class Email extends Component {
             <label>name</label>
             <Input
               type="text"
+              autoComplete="off"
               name="name"
               placeholder="backup email"
               onChange={this.handleChange}
@@ -94,6 +85,7 @@ class Email extends Component {
             <label>email</label>
             <Input
               type="text"
+              autoComplete="off"
               name="email"
               placeholder="email@acme-corp.com"
               onChange={this.handleChange}
@@ -122,6 +114,16 @@ class Email extends Component {
     return this.props.dispatch(deleteUserEmail(email)).then(data => {
       this.props.dispatch(fetchUserEmails())
     })
+  }
+
+  sendVerifyEmail = email => {
+    this.props.dispatch(resendVerificationEmail(email))
+    this.props.dispatch(
+      notify({
+        message: 'Verification email re-sent',
+        type: 'success'
+      })
+    )
   }
 
   handleAddEmail = evt => {
