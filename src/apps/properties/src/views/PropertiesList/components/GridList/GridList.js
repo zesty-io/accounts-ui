@@ -12,7 +12,7 @@ export default class GridList extends Component {
   constructor(props) {
     super(props)
   }
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('click', this.close)
     document.addEventListener('keydown', this.close)
   }
