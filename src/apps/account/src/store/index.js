@@ -21,6 +21,14 @@ export function resendVerificationEmail(email) {
   }
 }
 
+export function deleteUserEmail(email) {
+  return dispatch => {
+    return request(`${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${email}`, {
+      method: 'DELETE'
+    })
+  }
+}
+
 export function updatePassword(oldPassword, newPassword) {
   return (dispatch, getState) => {
     const { email, ZUID } = getState().user

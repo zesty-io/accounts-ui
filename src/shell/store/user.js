@@ -59,6 +59,12 @@ export function user(
         }
       }
 
+    case 'FETCH_USER_EMAILS_SUCCESS':
+    return {
+      ...state,
+      emails: action.emails
+    }
+
     default:
       return state
   }
@@ -173,5 +179,17 @@ export function favoriteSite(ZUID, action) {
     type: 'FAVORITE_SITE',
     ZUID,
     action
+  }
+}
+
+export function fetchUserEmails() {
+  return dispatch => {
+    return request(`${CONFIG.API_ACCOUNTS}/users/emails`)
+    .then(data => {
+      dispatch({
+        type: 'FETCH_USER_EMAILS_SUCCESS',
+        emails: data.data
+      })
+    })
   }
 }

@@ -1,8 +1,11 @@
 import { Component } from 'react'
-import { connect } from 'react-redux'
 import cx from 'classnames'
 import { notify } from '../../../../../../../shell/store/notifications'
-import { addEmail } from '../../../../store'
+import {
+  resendVerificationEmail,
+  deleteUserEmail,
+  addEmail
+} from '../../../../store'
 
 import styles from './Email.less'
 
@@ -12,25 +15,31 @@ class Email extends Component {
     this.state = {
       submitted: false,
       email: '',
-      name: ''
+      name: '',
+      emails: []
+    }
+  }
+  static getDerivedStateFromProps(props, state) {
+    if (props.emails) {
+    }
+    if (props.emails && props.emails.length !== state.emails.length) {
+      return { ...state, emails: props.emails }
+    } else {
+      return null
     }
   }
   render() {
     return (
-      <WithLoader
-        className={styles.Loading}
-        condition={this.prps.loadingEmails}
-        message="Loading Your Email Addresses">
-        <Card>
-          <CardHeader>
-            <h1>Email</h1>
-          </CardHeader>
-          <CardContent className={styles.Email}>
-            <p>
-              Setting up multiple emails lets you accept invitations from your
-              verified addresses.
-            </p>
-            {this.props.user.verifiedEmails.map((email, i) => {
+      <Card>
+        <CardHeader>
+          <h1>Email</h1>
+        </CardHeader>
+        <CardContent className={styles.Email}>
+          <p>
+            Setting up multiple emails lets you accept invitations from your
+            verified addresses.
+          </p>
+          {/* {this.props.user.verifiedEmails.map((email, i) => {
               return (
                 <div className={styles.Email} key={i}>
                   <i
@@ -44,8 +53,9 @@ class Email extends Component {
                   ) : null}
                 </div>
               )
-            })}
-            {this.props.user.unverifiedEmails.map((email, i) => {
+            })} */}
+          {this.state.emails.length &&
+            this.state.emails.map((email, i) => {
               return (
                 <div className={styles.Email} key={i}>
                   <i
@@ -53,41 +63,40 @@ class Email extends Component {
                     aria-hidden="true"
                     title="This email is waiting to be verified"
                   />
-                  <span>{email}</span>
-                  {this.props.user.email === email ? (
+                  <span>{email.address}</span>
+                  {this.props.user.email === email.address ? (
                     <strong className={styles.primary}>(Primary)</strong>
                   ) : null}
                 </div>
               )
             })}
-            <article className={styles.addEmail}>
-              <label>name</label>
-              <Input
-                type="text"
-                name="name"
-                placeholder="backup email"
-                onChange={this.handleChange}
-              />
-              <label>email</label>
-              <Input
-                type="text"
-                name="email"
-                placeholder="email@acme-corp.com"
-                onChange={this.handleChange}
-              />
-            </article>
-          </CardContent>
-          <CardFooter>
-            <Button
-              className={styles.button}
-              disabled={this.state.submitted}
-              onClick={this.handleAddEmail}>
-              <i className="fa fa-plus" aria-hidden="true" />
-              Add Email
-            </Button>
-          </CardFooter>
-        </Card>
-      </WithLoader>
+          <article className={styles.addEmail}>
+            <label>name</label>
+            <Input
+              type="text"
+              name="name"
+              placeholder="backup email"
+              onChange={this.handleChange}
+            />
+            <label>email</label>
+            <Input
+              type="text"
+              name="email"
+              placeholder="email@acme-corp.com"
+              onChange={this.handleChange}
+            />
+          </article>
+        </CardContent>
+        <CardFooter>
+          <Button
+            className={styles.button}
+            disabled={this.state.submitted}
+            onClick={this.handleAddEmail}>
+            <i className="fa fa-plus" aria-hidden="true" />
+            Add Email
+          </Button>
+        </CardFooter>
+      </Card>
     )
   }
   handleChange = evt => {
@@ -135,6 +144,4 @@ class Email extends Component {
   }
 }
 
-export default connect(state => {
-  return { user: state.user }
-})(Email)
+export default Email
