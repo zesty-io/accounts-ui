@@ -29,17 +29,24 @@ export function sitesRoles(state = {}, action) {
 }
 
 export const fetchSiteRoles = siteZUID => {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch({
       type: 'FETCHING_ROLES'
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/roles`)
       .then(res => {
+        const state = getState()
+
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
           siteZUID,
           normalizedRoles: res.data.reduce((acc, role) => {
             acc[role.ZUID] = role
+
+            if (state.systemRoles[role.systemRoleZUID]) {
+              acc[role.ZUID].systemRole = state.systemRoles[role.systemRoleZUID]
+            }
+
             return acc
           }, {})
         })

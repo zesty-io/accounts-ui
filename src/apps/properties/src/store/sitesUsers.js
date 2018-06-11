@@ -143,92 +143,32 @@ export const removeUser = (siteZUID, userZUID, roleZUID) => {
   }
 }
 
-export function LEGACY_transferOwnership(instanceHash, userID) {
-  return request(
-    `${
-      CONFIG.LEGACY_ACCOUNTS
-    }/+/actions/manage-permissions/site/transfer-ownership`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      },
-      body: `website_hash_id=${instanceHash}&user_id=${userID}`
-    }
-  )
-}
-
-export function LEGACY_updateUserRole(instanceHash, userID, roleID) {
-  return request(
-    `${
-      CONFIG.LEGACY_ACCOUNTS
-    }/+/actions/manage-permissions/site/set-role-for-user`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-      },
-      body: `website_hash_id=${instanceHash}&user_id=${userID}&new_role_id=${roleID}`
-    }
-  )
-}
-
-export const updateSiteUserRole = (siteZUID, userZUID, roleZUID) => {
+export function updateRole(siteZUID, userZUID, newRoleZUID) {
   return (dispatch, getState) => {
-    /*
-    **
-    ** for role updates until the API can handle ZUID roles
-    ** it looks like what we need to do is a `POST` to
-    ** `https://stage-accounts.zesty.io/+/actions/manage-permissions/site/set-role-for-user
-    ** ` (base URL varies per environment), and send it a body like:
-    **
-    ** ```website_hash_id=090z7hxt&user_id=21474534&new_role_id=5```
-    **
-    ** and set the auth cookie on the request.
-    */
-
     const state = getState()
+    const user = state.sitesUsers[siteZUID][userZUID]
 
-    // NOTE: this will break for custom roles since the names
-    // won't match our system roles
-    const newRoleName = state.sitesRoles[siteZUID][roleZUID].name
-    const instanceHash = state.sites[siteZUID].randomHashID
-    const userID = state.sitesUsers[siteZUID][userZUID].ID
-    const role = state.systemRoles.find(role => role.name === newRoleName)
-
-    if (!role) {
-      throw new Error(`Invalid role: ${newRoleName}`)
-      return
-    }
-
-    let req
-
-    if (newRoleName === 'Owner') {
-      req = LEGACY_transferOwnership(instanceHash, userID).then(() => {
-        // TODO do new accounts transfer as well
-      })
-    } else {
-      req = LEGACY_updateUserRole(instanceHash, userID, role.accessLevel).then(
-        () => {
-          // TODO do new accounts role update as well
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${user.role.ZUID}`,
+      {
+        method: 'PUT',
+        json: true,
+        body: {
+          roleZUID: newRoleZUID
         }
-      )
-    }
-
-    return req
-      .then(data => {
-        console.log(data)
+      }
+    )
+      .then(res => {
         dispatch({
           type: 'UPDATE_USER_ROLE',
-          userZUID,
           siteZUID,
-          role: newRole
+          userZUID,
+          role: state.sitesRoles[siteZUID][res.data.roleZUID]
         })
-        return data
+        return res.data
       })
       .catch(err => {
         console.error(err)
-        return err
       })
   }
 }

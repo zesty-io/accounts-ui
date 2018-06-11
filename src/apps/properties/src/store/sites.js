@@ -266,26 +266,19 @@ export function cancelInvite(inviteZUID, siteZUID) {
   }
 }
 
-export function sendInvite(payload) {
+export function sendInvite(siteZUID, inviteeEmail, inviteeRoleZUID) {
   return (dispatch, getState) => {
     const state = getState()
-
-    // NOTE once custom roles are ready we will need to select
-    // from the instances roles.
-    const role = state.systemRoles[payload.inviteeRoleZUID]
-
-    if (!role) {
-      throw new Error(`Invalid role selected: ${payload.inviteeRoleZUID}`)
-      return
-    }
+    const instanceRole = state.sitesRoles[siteZUID][inviteeRoleZUID]
+    const systemRole = state.systemRoles[instanceRole.systemRoleZUID]
 
     return request(`${CONFIG.API_ACCOUNTS}/invites`, {
       method: 'POST',
       json: true,
       body: {
-        inviteeEmail: payload.inviteeEmail,
-        entityZUID: payload.entityZUID,
-        accessLevel: role.accessLevel // NOTE support access levels until custom roles are complete
+        inviteeEmail: inviteeEmail,
+        entityZUID: siteZUID,
+        accessLevel: systemRole.accessLevel // NOTE support access levels until custom roles are complete
         // roleZUID: payload.roleZUID
       }
     })
