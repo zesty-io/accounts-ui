@@ -11,7 +11,8 @@ class Email extends Component {
     super()
     this.state = {
       submitted: false,
-      email: ''
+      email: '',
+      name: ''
     }
   }
   render() {
@@ -22,8 +23,8 @@ class Email extends Component {
         </CardHeader>
         <CardContent className={styles.Email}>
           <p>
-            Setting up multiple emails lets you accept all of your account
-            invitations in one place.
+            Setting up multiple emails lets you accept invitations from your
+            verified addresses.
           </p>
           {this.props.user.verifiedEmails.map((email, i) => {
             return (
@@ -55,19 +56,28 @@ class Email extends Component {
               </div>
             )
           })}
-          <Input
-            type="text"
-            placeholder="email@acme-corp.com"
-            className={styles.field}
-            onChange={this.handleChange}
-          />
+          <article className={styles.addEmail}>
+            <label>name</label>
+            <Input
+              type="text"
+              name="name"
+              placeholder="backup email"
+              onChange={this.handleChange}
+            />
+            <label>email</label>
+            <Input
+              type="text"
+              name="email"
+              placeholder="email@acme-corp.com"
+              onChange={this.handleChange}
+            />
+          </article>
         </CardContent>
         <CardFooter>
           <Button
             className={styles.button}
             disabled={this.state.submitted}
-            onClick={this.handleAddEmail}
-          >
+            onClick={this.handleAddEmail}>
             <i className="fa fa-plus" aria-hidden="true" />
             Add Email
           </Button>
@@ -77,7 +87,7 @@ class Email extends Component {
   }
   handleChange = evt => {
     this.setState({
-      email: evt.target.value
+      [evt.target.name]: evt.target.value
     })
   }
 
@@ -89,7 +99,7 @@ class Email extends Component {
         submitted: true
       })
       this.props
-        .dispatch(addEmail(this.props.user.ZUID, this.state.email))
+        .dispatch(addEmail(this.state.name, this.state.email))
         .then(() => {
           this.setState({
             submitted: false

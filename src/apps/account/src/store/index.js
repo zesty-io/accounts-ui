@@ -1,15 +1,13 @@
 import { request } from '../../../../util/request'
 
-export function addEmail(userZUID, email) {
-  return (dispatch, getState) => {
-    let state = getState()
-    state.user.unverifiedEmails.push(email)
-
-    return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
+export function addEmail(name, email) {
+  return (dispatch) => {
+    return request(`${CONFIG.API_ACCOUNTS}/users/emails`, {
       method: 'PUT',
       json: true,
       body: {
-        unverifiedEmails: state.user.unverifiedEmails.join(',')
+        name,
+        email
       }
     })
   }
