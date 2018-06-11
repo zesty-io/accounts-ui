@@ -41,19 +41,19 @@ class Email extends Component {
             verified addresses.
           </p>
           {this.props.user.verifiedEmails.map((email, i) => {
-            return (
-              <div className={styles.Email} key={i}>
-                <i
-                  className={cx(styles.verified, 'fa fa-check-square-o')}
-                  aria-hidden="true"
-                  title="This email is verified"
-                />
-                <span>{email}</span>
-                {this.props.user.email === email ? (
+            if (email === this.props.user.email) {
+              return (
+                <div className={styles.Email} key={i}>
+                  <i
+                    className={cx(styles.verified, 'fa fa-check-square-o')}
+                    aria-hidden="true"
+                    title="This email is verified"
+                  />
+                  <span>{email}</span>
                   <strong className={styles.primary}>(Primary)</strong>
-                ) : null}
-              </div>
-            )
+                </div>
+              )
+            }
           })}
           {this.state.emails &&
             this.state.emails.map((email, i) => {
@@ -63,7 +63,7 @@ class Email extends Component {
                     className={
                       email.responseReceived
                         ? cx(styles.verified, 'fa fa-check-square-o')
-                        : cx(styles.verify, 'fa fa-calendar-check-o')
+                        : cx(styles.verify, 'fa fa-chain-broken')
                     }
                     onClick={() => {
                       if (!email.responseReceived) {
@@ -98,6 +98,7 @@ class Email extends Component {
               type="text"
               autoComplete="off"
               name="name"
+              value={this.state.name}
               placeholder="backup email"
               onChange={this.handleChange}
             />
@@ -106,6 +107,7 @@ class Email extends Component {
               type="text"
               autoComplete="off"
               name="email"
+              value={this.state.email}
               placeholder="email@acme-corp.com"
               onChange={this.handleChange}
             />
@@ -155,8 +157,11 @@ class Email extends Component {
       this.props
         .dispatch(addEmail(this.state.name, this.state.email))
         .then(data => {
-          this.setState({
-            submitted: false
+          this.props.dispatch(fetchUserEmails())
+          return this.setState({
+            submitted: false,
+            name: '',
+            email: ''
           })
         })
     } else {

@@ -19,9 +19,6 @@ export function addEmail(name, address) {
           })
         )
       })
-      .then(data => {
-        dispatch(fetchUserEmails())
-      })
       .catch(err => {
         dispatch(
           notify({
@@ -58,6 +55,13 @@ export function deleteUserEmail(email) {
         notify({
           type: 'success',
           message: 'email successfully removed'
+        })
+      )
+    }).catch(err => {
+      dispatch(
+        notify({
+          type: 'error',
+          message: 'encountered a problem removing email'
         })
       )
     })

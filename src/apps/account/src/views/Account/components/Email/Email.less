@@ -11,10 +11,10 @@
     }
     margin: 1rem 0;
     display: grid;
-    grid-template-columns: .1fr 1fr .4fr .1fr;
+    grid-template-columns: 0.1fr 1fr 0.4fr 0.1fr;
     .delete {
       transition: all 0.1s;
-      color: @zesty-gray;
+      color: @zesty-light-gray;
       &:hover,
       &:active,
       &:focus {
@@ -22,6 +22,7 @@
       }
     }
     .verify {
+      color: lighten(@zesty-red, 10%);
       transition: all 0.1s;
       &:hover,
       &:active,
@@ -38,7 +39,7 @@
   }
   .addEmail {
     display: grid;
-    grid-template-columns: .3fr 3fr;
+    grid-template-columns: 0.3fr 3fr;
     grid-auto-rows: 2.5rem;
     align-items: center;
     label {
