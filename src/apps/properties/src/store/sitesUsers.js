@@ -104,27 +104,6 @@ export const fetchSiteUsersPending = siteZUID => {
   }
 }
 
-export const removeUser = (userZUID, roleZUID) => {
-  return dispatch => {
-    dispatch({ type: 'REMOVE_USER' })
-    return request(
-      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
-      { method: 'DELETE' }
-    )
-      .then(data => {
-        dispatch({
-          type: 'REMOVE_USER_SUCCESS',
-          data
-        })
-        return data
-      })
-      .catch(err => {
-        console.table(err)
-        dispatch({ type: 'REMOVE_USER_ERROR' })
-      })
-  }
-}
-
 export const removeSiteUser = (userZUID, siteZUID) => {
   return (dispatch, getState) => {
     let users = getState().sitesUsers[siteZUID]
