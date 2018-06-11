@@ -31,6 +31,7 @@ class Account extends Component {
             <div className={styles.SettingCards}>
               <Profile />
               <Email
+                dispatch={this.props.dispatch}
                 user={this.props.user}
                 emails={this.props.user.emails}
                 loadingEmails={this.state.loadingEmails}

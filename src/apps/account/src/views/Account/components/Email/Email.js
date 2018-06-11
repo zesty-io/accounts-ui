@@ -8,6 +8,7 @@ import {
 } from '../../../../store'
 
 import styles from './Email.less'
+import { fetchUserEmails } from '../../../../../../../shell/store/user'
 
 class Email extends Component {
   constructor(props) {
@@ -59,14 +60,26 @@ class Email extends Component {
               return (
                 <div className={styles.Email} key={i}>
                   <i
-                    className="fa fa-calendar-check-o"
+                    className={
+                      email.responseReceived
+                        ? cx(styles.verified, 'fa fa-check-square-o')
+                        : 'fa fa-calendar-check-o'
+                    }
                     aria-hidden="true"
                     title="This email is waiting to be verified"
                   />
                   <span>{email.address}</span>
                   {this.props.user.email === email.address ? (
                     <strong className={styles.primary}>(Primary)</strong>
-                  ) : null}
+                  ) : (
+                    <p>{email.name}</p>
+                  )}
+                  {
+                    <i
+                      className={`fa fa-close ${styles.delete}`}
+                      onClick={() => this.handleRemove(email.address)}
+                    />
+                  }
                 </div>
               )
             })}
@@ -105,6 +118,12 @@ class Email extends Component {
     })
   }
 
+  handleRemove = email => {
+    return this.props.dispatch(deleteUserEmail(email)).then(data => {
+      this.props.dispatch(fetchUserEmails())
+    })
+  }
+
   handleAddEmail = evt => {
     if (
       this.state.email.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,3}$/g)
@@ -125,10 +144,13 @@ class Email extends Component {
             })
           )
         })
+        .then(data => {
+          this.props.dispatch(fetchUserEmails())
+        })
         .catch(err => {
           this.props.dispatch(
             notify({
-              message: `Problem adding email: ${error}`,
+              message: `Problem adding email: ${err}`,
               type: 'error'
             })
           )

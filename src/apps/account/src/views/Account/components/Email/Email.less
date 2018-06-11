@@ -7,9 +7,17 @@
     margin: 0 0 1rem 0;
   }
   .Email {
+    display: grid;
+    grid-template-columns: .1fr 1fr .4fr .1fr;
     margin: 0 0 0.5rem 0;
-    i {
-      margin-right: 5px;
+    .delete {
+      transition: all 0.1s;
+      color: @zesty-gray;
+      &:hover,
+      &:active,
+      &:focus {
+        color: @zesty-red;
+      }
     }
     .verified {
       color: @zesty-green;
@@ -31,11 +39,4 @@
     width: 15rem;
     margin: 0.5rem 0 0 0;
   }
-}
-
-.Loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
 }
