@@ -16,7 +16,12 @@ export function sites(state = {}, action) {
       return { ...state, [action.site.ZUID]: action.site }
 
     case 'DELETE_INVITE_SUCCESS':
-      return state.filter(site => site.inviteZUID !== action.inviteZUID)
+      return Object.keys(state)
+        .filter(ZUID => state[ZUID].inviteZUID !== action.inviteZUID)
+        .reduce((acc, ZUID) => {
+          acc[ZUID] = state[ZUID]
+          return acc
+        }, {})
 
     case 'SORT_SITES':
       return action.sites
