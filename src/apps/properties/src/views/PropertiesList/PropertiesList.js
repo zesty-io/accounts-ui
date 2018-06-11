@@ -31,7 +31,7 @@ class Properties extends Component {
 }
 
 export default connect((state, props) => {
-  const favorites = state.user.prefs.favorite_sites.filter(ZUID =>
+  let favorites = state.user.prefs.favorite_sites.filter(ZUID =>
     Object.keys(state.sites).includes(ZUID)
   )
 
@@ -80,13 +80,21 @@ export default connect((state, props) => {
     filtered = sites
   }
 
-  //remove favorites from all other instances
-  const removedFavorites = Object.keys(filtered).reduce((acc, ZUID) => {
-    if (!favorites.includes(ZUID)) {
+  let removedFavorites
+  if (eco || searchString) {
+    removedFavorites = Object.keys(filtered).reduce((acc, ZUID) => {
       acc.push(filtered[ZUID])
-    }
-    return acc
-  }, [])
+      return acc
+    }, [])
+    favorites = []
+  } else {
+    removedFavorites = Object.keys(filtered).reduce((acc, ZUID) => {
+      if (!favorites.includes(ZUID)) {
+        acc.push(filtered[ZUID])
+      }
+      return acc
+    }, [])
+  }
 
   return {
     layout,
