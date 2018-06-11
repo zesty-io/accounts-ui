@@ -57,7 +57,7 @@ export default class GridList extends Component {
           </React.Fragment>
         ) : null}
 
-        {!this.props.settings.filter && this.props.sitesFavorite.length ? (
+        {this.props.sitesFavorite.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
               <i className="fa fa-star-o" aria-hidden="true" />

@@ -18,6 +18,9 @@ export function sites(state = {}, action) {
     case 'DELETE_INVITE_SUCCESS':
       return state.filter(site => site.inviteZUID !== action.inviteZUID)
 
+    case 'SORT_SITES':
+      return action.sites
+
     default:
       return state
   }
@@ -303,5 +306,62 @@ export function sendInvite(payload) {
           err
         })
       })
+  }
+}
+
+export const removeUser = (userZUID, roleZUID) => {
+  return dispatch => {
+    dispatch({ type: 'REMOVE_USER' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
+      { method: 'DELETE' }
+    )
+      .then(data => {
+        dispatch({ type: 'REMOVE_USER_SUCCESS', data })
+        return data
+      })
+      .catch(err => {
+        console.table(err)
+        dispatch({ type: 'REMOVE_USER_ERROR' })
+      })
+  }
+}
+
+export const sortSites = sortBy => {
+  return (dispatch, getState) => {
+    const sitesObj = getState().sites
+    let sites = Object.keys(sitesObj).map(site => sitesObj[site])
+    if (sortBy === 'name') {
+      sites.sort((prev, next) => {
+        if (prev[sortBy] < next[sortBy]) {
+          return -1
+        }
+        if (prev[sortBy] > next[sortBy]) {
+          return 1
+        }
+        return 0
+      })
+    }
+    if (sortBy === 'createdAt') {
+      sites.sort((prev, next) => {
+        const prevDate = Date.parse(prev[sortBy])
+        const nextDate = Date.parse(next[sortBy])
+        if (prevDate < nextDate) {
+          return 1
+        }
+        if (prevDate > nextDate) {
+          return -1
+        }
+        return 0
+      })
+    }
+
+    return dispatch({
+      type: 'SORT_SITES',
+      sites: sites.reduce((acc, site) => {
+        acc[site.ZUID] = site
+        return acc
+      }, {})
+    })
   }
 }
