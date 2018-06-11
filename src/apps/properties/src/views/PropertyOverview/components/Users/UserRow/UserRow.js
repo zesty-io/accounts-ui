@@ -2,10 +2,13 @@ import { Component } from 'react'
 import styles from './UserRow.less'
 
 import {
+  fetchSiteUsers,
   updateSiteUserRole,
-  removeSiteUser
+  // removeSiteUser
+  removeUser
 } from '../../../../../store/sitesUsers'
-import { removeUser } from '../../../../../store/sites'
+// import { removeUser } from '../../../../../store/sites'
+// import { fetchSiteUsers } from '../../../../../store/sitesUsers'
 
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
@@ -34,7 +37,8 @@ export default class UserRow extends Component {
                         .map(item => {
                           return { value: item.ZUID, text: item.name }
                         })[0]
-                    }>
+                    }
+                  >
                     {this.props.siteRoles.map(role => {
                       return (
                         <Option
@@ -65,7 +69,8 @@ export default class UserRow extends Component {
                       .map(item => {
                         return { value: item.ZUID, text: item.name }
                       })[0]
-                  }>
+                  }
+                >
                   {this.props.siteRoles.map(role => {
                     return (
                       <Option
@@ -97,30 +102,24 @@ export default class UserRow extends Component {
         prompt: 'Are you sure you want to remove this user?',
         callback: result => {
           if (result) {
-            // removes user if confirmed
-            if (result) {
-              this.props
-                .dispatch(removeUser(userZUID, roleZUID))
-                .then(data => {
-                  this.props.dispatch(
-                    notify({
-                      message: 'User Removed',
-                      type: 'success'
-                    })
-                  )
-                  this.props.dispatch(
-                    removeSiteUser(userZUID, this.props.siteZUID)
-                  )
-                })
-                .catch(err => {
-                  this.props.dispatch(
-                    notify({
-                      message: 'Error Removing User',
-                      type: 'error'
-                    })
-                  )
-                })
-            }
+            this.props
+              .dispatch(removeUser(this.props.siteZUID, userZUID, roleZUID))
+              .then(() => {
+                this.props.dispatch(
+                  notify({
+                    message: 'User Removed',
+                    type: 'success'
+                  })
+                )
+              })
+              .catch(err => {
+                this.props.dispatch(
+                  notify({
+                    message: 'Error Removing User',
+                    type: 'error'
+                  })
+                )
+              })
           }
         }
       })
@@ -128,18 +127,13 @@ export default class UserRow extends Component {
   }
 
   handleSelectRole = evt => {
-    const newRole = evt.target.dataset.value
+    const roleZUID = evt.target.dataset.value
     this.setState({
       submitted: true
     })
     this.props
       .dispatch(
-        updateSiteUserRole(
-          this.props.ZUID,
-          this.props.role.ZUID,
-          newRole,
-          this.props.siteZUID
-        )
+        updateSiteUserRole(this.props.siteZUID, this.props.ZUID, roleZUID)
       )
       .then(data => {
         this.setState({ submitted: false })
@@ -149,8 +143,10 @@ export default class UserRow extends Component {
             type: 'success'
           })
         )
+        this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
       })
       .catch(err => {
+        console.log(err)
         this.props.dispatch(
           notify({
             message: 'There was a problem updating the role',

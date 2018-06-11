@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import { postNewSite } from '../../store/sites'
+import { createInstance } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 
 import styles from './PropertyCreate.less'
@@ -11,9 +10,6 @@ import styles from './PropertyCreate.less'
 class PropertyCreate extends Component {
   constructor(props) {
     super(props)
-
-    console.log('props: ', props)
-
     this.state = {
       submitted: false,
       name: ''
@@ -47,40 +43,37 @@ class PropertyCreate extends Component {
     )
   }
   handleChange = evt => {
-    this.setState({ name: evt.target.value })
+    this.setState({
+      name: evt.target.value.trim()
+    })
   }
   handleClick = () => {
-    if (this.state.name === '') {
-      return this.props.dispatch(
+    if (this.state.name) {
+      this.setState({ submitted: true })
+      this.props
+        .dispatch(createInstance(this.state.name))
+        .then(site => {
+          this.setState({ submitted: false })
+          this.props.history.push(`/instances/${site.ZUID}/blueprint`)
+        })
+        .catch(err => {
+          this.setState({ submitted: false })
+          this.props.dispatch(
+            notify({
+              message: `Failed creating instance`,
+              type: 'error'
+            })
+          )
+        })
+    } else {
+      this.props.dispatch(
         notify({
           message: 'You must enter a name for your instance',
           type: 'error'
         })
       )
     }
-    this.setState({ submitted: !this.state.submitted })
-    this.props
-      .dispatch(postNewSite(this.state.name))
-      .then(data => {
-        this.setState({ submitted: !this.state.submitted })
-        this.props.history.push(`/instances/${data.data.ZUID}/blueprint`)
-      })
-      .catch(err => {
-        this.setState({ submitted: !this.state.submitted })
-        this.props.dispatch(
-          notify({
-            message: `Problem creating site: ${err}`,
-            type: 'error'
-          })
-        )
-      })
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    ...state.createSite
-  }
-}
-
-export default withRouter(connect(mapStateToProps)(PropertyCreate))
+export default connect()(PropertyCreate)

@@ -68,11 +68,9 @@ class Profile extends Component {
       .then(data => {
         this.props.dispatch(
           notify({
-            HTML: `<p>
-        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name updated to
-        ${this.props.profile.firstName}
-        ${this.props.profile.lastName}
-      </p>`,
+            HTML: `<i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Name updated to ${
+              this.props.profile.firstName
+            } ${this.props.profile.lastName}`,
             type: 'success'
           })
         )
@@ -81,9 +79,7 @@ class Profile extends Component {
       .catch(err => {
         this.props.dispatch(
           notify({
-            HTML: `<p>
-        <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Error saving data ${err}
-      </p>`,
+            HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Error saving data ${err}`,
             type: 'error'
           })
         )

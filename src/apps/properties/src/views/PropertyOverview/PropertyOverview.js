@@ -61,7 +61,8 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.MANAGER_URL}`}>
+            }${CONFIG.MANAGER_URL}`}
+          >
             <i
               className="fa fa-external-link"
               aria-hidden="true"
@@ -73,22 +74,30 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.PREVIEW_URL}`}>
+            }${CONFIG.PREVIEW_URL}`}
+          >
             <i className="fa fa-eye" aria-hidden="true" />&nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
             <Url
               className={styles.manager}
               target="_blank"
-              href={`http://${this.props.site.domain}`}>
+              href={`http://${this.props.site.domain}`}
+            >
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
             </Url>
           ) : null}
         </header>
         <main className={styles.Cards}>
           <WithLoader
-            condition={Object.keys(this.props.users).length}
-            message="Loading Instance Permissions">
+            condition={
+              !this.state.loadingRoles &&
+              !this.state.loadingTeams &&
+              !this.state.loadingUsers &&
+              !this.state.loadingBlueprint
+            }
+            message="Loading Instance Permissions"
+          >
             <Route
               path="/instances/:siteZUID/launch"
               render={routeProps => {
@@ -227,14 +236,15 @@ export default connect((state, props) => {
     return acc
   }, [])
 
+  // TODO support custom roles
   // Get all non system roles for instance
-  let siteRoles = state.sitesRoles[siteZUID] || {}
-  siteRoles = Object.keys(siteRoles)
-    .reduce((acc, key) => {
-      acc.push(siteRoles[key])
-      return acc
-    }, [])
-    .filter(role => !role.systemRole)
+  // let siteRoles = state.sitesRoles[siteZUID] || {}
+  // siteRoles = Object.keys(siteRoles)
+  //   .reduce((acc, key) => {
+  //     acc.push(siteRoles[key])
+  //     return acc
+  //   }, [])
+  //   .filter(role => !role.systemRole)
 
   // Determine users permissions for instance
   let isAdmin = false
@@ -264,7 +274,7 @@ export default connect((state, props) => {
   return {
     siteZUID,
     systemRoles,
-    siteRoles,
+    siteRoles: systemRoles, // NOTE support access levels until custom roles are complete
     userZUID: state.user.ZUID,
     isAdmin,
     isOwner,

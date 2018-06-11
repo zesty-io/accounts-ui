@@ -2,8 +2,6 @@ import { PureComponent } from 'react'
 import styles from './UserPendingRow.less'
 
 import { cancelInvite } from '../../../../../store/sites'
-import {removeSiteUser } from '../../../../../store/sitesUsers'
-
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
 
@@ -34,16 +32,9 @@ export default class UserPendingRow extends PureComponent {
         prompt: 'Are you sure you want to revoke this users invite?',
         callback: result => {
           if (result) {
-            // removes invite if confirmed
             this.props
-              .dispatch(cancelInvite(inviteZUID))
-              .then(data => {
-                this.props.dispatch(
-                  removeSiteUser(inviteZUID, this.props.siteZUID)
-                )
-                return data
-              })
-              .then(data => {
+              .dispatch(cancelInvite(inviteZUID, this.props.siteZUID))
+              .then(() => {
                 this.props.dispatch(
                   notify({
                     message: 'User Invite Cancelled',

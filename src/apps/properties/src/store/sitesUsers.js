@@ -2,9 +2,6 @@ import { request } from '../../../../util/request'
 
 export function sitesUsers(state = {}, action) {
   switch (action.type) {
-    case 'FETCHING_USERS':
-      return state
-
     case 'FETCH_USERS_SUCCESS':
       return {
         ...state, // Previous sites
@@ -14,22 +11,39 @@ export function sitesUsers(state = {}, action) {
         }
       }
 
-    case 'FETCH_USERS_ERROR':
-      return state
-
-    case 'FETCHING_USERS_PENDING':
-      return state
-
-    case 'DELETE_USER':
-      return { ...state, [action.siteZUID]: action.users }
-
     case 'FETCH_USERS_PENDING_SUCCESS':
       return {
         ...state,
         [action.siteZUID]: { ...state[action.siteZUID], ...action.users }
       }
-    case 'FETCH_USERS_PENDING_ERROR':
-      return state
+
+    case 'SEND_INVITE_SUCCESS':
+      return {
+        ...state, // Previous sites
+        [action.user.entityZUID]: {
+          ...state[action.user.entityZUID], // Previous site users
+          [action.user.ZUID]: {
+            email: action.user.inviteeEmail,
+            inviteZUID: action.user.ZUID,
+            name: '',
+            pending: true
+          } // new pending site user
+        }
+      }
+
+    case 'REMOVE_USER_SUCCESS':
+    case 'CANCEL_INVITE_SUCCESS':
+      const siteUsers = Object.keys(state[action.siteZUID])
+        .filter(userZUID => userZUID !== action.userZUID)
+        .reduce((acc, userZUID) => {
+          acc[userZUID] = state[action.siteZUID][userZUID]
+          return acc
+        }, {})
+
+      return {
+        ...state,
+        [action.siteZUID]: { ...siteUsers }
+      }
 
     case 'UPDATE_USER_ROLE':
       return {
@@ -42,6 +56,10 @@ export function sitesUsers(state = {}, action) {
           }
         }
       }
+
+    case 'DELETE_USER':
+      return { ...state, [action.siteZUID]: action.users }
+
     default:
       return state
   }
@@ -52,9 +70,7 @@ export const fetchSiteUsers = siteZUID => {
     dispatch({
       type: 'FETCHING_USERS'
     })
-    return request(
-      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/roles`
-    )
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/roles`)
       .then(users => {
         dispatch({
           type: 'FETCH_USERS_SUCCESS',
@@ -102,28 +118,67 @@ export const fetchSiteUsersPending = siteZUID => {
   }
 }
 
-export const removeSiteUser = (userZUID, siteZUID) => {
-  return (dispatch, getState) => {
-    let users = getState().sitesUsers[siteZUID]
-    delete users[userZUID]
-    return dispatch({
-      type: 'DELETE_USER',
-      users,
-      siteZUID
-    })
+export const removeUser = (siteZUID, userZUID, roleZUID) => {
+  return dispatch => {
+    dispatch({ type: 'REMOVE_USER' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
+      { method: 'DELETE' }
+    )
+      .then(res => {
+        dispatch({
+          type: 'REMOVE_USER_SUCCESS',
+          siteZUID,
+          userZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        console.error(err)
+        dispatch({
+          type: 'REMOVE_USER_ERROR',
+          err
+        })
+      })
   }
 }
 
-export const updateSiteUserRole = (
-  userZUID,
-  oldRoleZUID,
-  newRoleZUID,
-  siteZUID
-) => {
+export function LEGACY_transferOwnership(instanceHash, userID) {
+  return request(
+    `${
+      CONFIG.LEGACY_ACCOUNTS
+    }/+/actions/manage-permissions/site/transfer-ownership`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      body: `website_hash_id=${instanceHash}&user_id=${userID}`
+    }
+  )
+}
+
+export function LEGACY_updateUserRole(instanceHash, userID, roleID) {
+  return request(
+    `${
+      CONFIG.LEGACY_ACCOUNTS
+    }/+/actions/manage-permissions/site/set-role-for-user`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+      },
+      body: `website_hash_id=${instanceHash}&user_id=${userID}&new_role_id=${roleID}`
+    }
+  )
+}
+
+export const updateSiteUserRole = (siteZUID, userZUID, roleZUID) => {
   return (dispatch, getState) => {
     /*
     **
-    ** for role updates in the meantime, it looks like what we need to do is a `POST` to 
+    ** for role updates until the API can handle ZUID roles
+    ** it looks like what we need to do is a `POST` to
     ** `https://stage-accounts.zesty.io/+/actions/manage-permissions/site/set-role-for-user
     ** ` (base URL varies per environment), and send it a body like:
     **
@@ -131,18 +186,38 @@ export const updateSiteUserRole = (
     **
     ** and set the auth cookie on the request.
     */
-    const newRole = getState().sitesRoles[siteZUID][newRoleZUID]
-    return request(
-      `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${oldRoleZUID}`,
-      {
-        method: 'PUT',
-        json: true,
-        body: {
-          roleZUID: newRoleZUID
+
+    const state = getState()
+
+    // NOTE: this will break for custom roles since the names
+    // won't match our system roles
+    const newRoleName = state.sitesRoles[siteZUID][roleZUID].name
+    const instanceHash = state.sites[siteZUID].randomHashID
+    const userID = state.sitesUsers[siteZUID][userZUID].ID
+    const role = state.systemRoles.find(role => role.name === newRoleName)
+
+    if (!role) {
+      throw new Error(`Invalid role: ${newRoleName}`)
+      return
+    }
+
+    let req
+
+    if (newRoleName === 'Owner') {
+      req = LEGACY_transferOwnership(instanceHash, userID).then(() => {
+        // TODO do new accounts transfer as well
+      })
+    } else {
+      req = LEGACY_updateUserRole(instanceHash, userID, role.accessLevel).then(
+        () => {
+          // TODO do new accounts role update as well
         }
-      }
-    )
+      )
+    }
+
+    return req
       .then(data => {
+        console.log(data)
         dispatch({
           type: 'UPDATE_USER_ROLE',
           userZUID,
@@ -152,8 +227,8 @@ export const updateSiteUserRole = (
         return data
       })
       .catch(err => {
-        console.log(err)
-        return er
+        console.error(err)
+        return err
       })
   }
 }
