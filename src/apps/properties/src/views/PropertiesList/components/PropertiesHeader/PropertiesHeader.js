@@ -6,18 +6,13 @@ import debounce from '../../../../../../../util/debounce'
 
 import styles from './PropertiesHeader.less'
 
-import {
-  filter,
-  filterEcosystem,
-  sortSites
-} from '../../../../store/sitesFiltered'
+import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
 
 class PropertiesHeader extends Component {
   state = {
     eco: false,
-    sort: 'name',
-    delay: null
+    sort: 'name'
   }
   render() {
     return (
@@ -102,11 +97,10 @@ class PropertiesHeader extends Component {
   }
 
   onSearch = debounce(term => {
-    if (this.state.eco) {
-      this.props.dispatch(filterEcosystem(term, this.state.eco))
-    } else {
-      this.props.dispatch(filter(term))
-    }
+      this.props.dispatch({
+        type: 'SETTING_FILTER',
+        filter: term
+      })
   }, 300)
 
   onCreateSite = evt => {
@@ -117,10 +111,16 @@ class PropertiesHeader extends Component {
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {
       this.setState({ eco: false })
-      return this.props.dispatch(filter(''))
+      return this.props.dispatch({
+        type: 'SETTING_ECO',
+        eco: false
+      })
     }
     this.setState({ eco: evt.target.dataset.value })
-    this.props.dispatch(filter(Number(evt.target.dataset.value)))
+    this.props.dispatch({
+      type: 'SETTING_ECO',
+      eco: Number(evt.target.dataset.value)
+    })
   }
 
   sort = by => {
