@@ -19,7 +19,7 @@ class BlueprintEdit extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.blueprint === 'create') {
+    if (props.blueprint === 'create' && !state.blueprint.hasOwnProperty('name')) {
       return {
         blueprint: {
           name: '',
