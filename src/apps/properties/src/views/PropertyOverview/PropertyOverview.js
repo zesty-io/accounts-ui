@@ -47,9 +47,9 @@ class PropertyOverview extends Component {
       this.clickManager()
     }
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.siteZUID !== this.props.siteZUID) {
-      this.fetchSiteData(nextProps)
+  componentDidUpdate(prevProps) {
+    if (this.props.siteZUID !== prevProps.siteZUID) {
+      this.fetchSiteData(this.props)
     }
   }
   render() {
@@ -61,7 +61,8 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.MANAGER_URL}`}>
+            }${CONFIG.MANAGER_URL}`}
+          >
             <i
               className="fa fa-external-link"
               aria-hidden="true"
@@ -73,22 +74,30 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.PREVIEW_URL}`}>
+            }${CONFIG.PREVIEW_URL}`}
+          >
             <i className="fa fa-eye" aria-hidden="true" />&nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
             <Url
               className={styles.manager}
               target="_blank"
-              href={`http://${this.props.site.domain}`}>
+              href={`http://${this.props.site.domain}`}
+            >
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
             </Url>
           ) : null}
         </header>
         <main className={styles.Cards}>
           <WithLoader
-            condition={Object.keys(this.props.users).length}
-            message="Loading Instance Permissions">
+            condition={
+              !this.state.loadingRoles &&
+              !this.state.loadingTeams &&
+              !this.state.loadingUsers &&
+              !this.state.loadingBlueprint
+            }
+            message="Loading Instance Permissions"
+          >
             <Route
               path="/instances/:siteZUID/launch"
               render={routeProps => {
@@ -124,6 +133,7 @@ class PropertyOverview extends Component {
                   <Users
                     {...routeProps}
                     isAdmin={this.props.isAdmin}
+                    isOwner={this.props.isOwner}
                     siteZUID={this.props.site.ZUID}
                     dispatch={this.props.dispatch}
                     users={this.props.users}
@@ -221,7 +231,7 @@ class PropertyOverview extends Component {
 export default connect((state, props) => {
   const siteZUID = props.match.params.siteZUID
 
-  let systemRoles = Object.keys(state.systemRoles).reduce((acc, key) => {
+  const systemRoles = Object.keys(state.systemRoles).reduce((acc, key) => {
     acc.push(state.systemRoles[key])
     return acc
   }, [])
@@ -229,25 +239,28 @@ export default connect((state, props) => {
   // Get all non system roles for instance
   let siteRoles = state.sitesRoles[siteZUID] || {}
   siteRoles = Object.keys(siteRoles)
-    .reduce((acc, key) => {
-      acc.push(siteRoles[key])
+    .filter(ZUID => siteRoles[ZUID].systemRoleZUID !== '31-908bbbd2b6-n5t9hs')
+    .reduce((acc, ZUID) => {
+      acc.push(siteRoles[ZUID])
       return acc
     }, [])
-    .filter(role => !role.systemRole)
 
   // Determine users permissions for instance
   let isAdmin = false
+  let isOwner = false
   if (state.user.staff) {
+    // isOwner = true
     isAdmin = true
   } else {
     if (
       state.sitesUsers[siteZUID] &&
       state.sitesUsers[siteZUID][state.user.ZUID]
     ) {
-      if (
-        state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner' ||
-        state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Admin'
-      ) {
+      if (state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner') {
+        isOwner = true
+        isAdmin = true
+      }
+      if (state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Admin') {
         isAdmin = true
       }
     }
@@ -259,6 +272,7 @@ export default connect((state, props) => {
     siteRoles,
     userZUID: state.user.ZUID,
     isAdmin,
+    isOwner,
     site: state.sites[siteZUID] || {},
     users: state.sitesUsers[siteZUID] || {},
     companies: state.sitesCompanies[siteZUID] || {},

@@ -23,7 +23,7 @@ class Profile extends Component {
         </CardHeader>
         <CardContent className={styles.Profile}>
           <div className={styles.gravatar}>
-            <h3>Gravatar</h3>
+            <h4>Gravatar</h4>
             <img
               className={styles.avatar}
               src={`https://www.gravatar.com/avatar/${
@@ -31,7 +31,7 @@ class Profile extends Component {
               }?d=mm&s=80`}
             />
           </div>
-          <h3>Name</h3>
+          <h4>User Name</h4>
           <Input
             type="text"
             value={this.props.profile.firstName}
@@ -68,11 +68,9 @@ class Profile extends Component {
       .then(data => {
         this.props.dispatch(
           notify({
-            HTML: `<p>
-        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name updated to
-        ${this.props.profile.firstName}
-        ${this.props.profile.lastName}
-      </p>`,
+            HTML: `<i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Name updated to ${
+              this.props.profile.firstName
+            } ${this.props.profile.lastName}`,
             type: 'success'
           })
         )
@@ -81,9 +79,7 @@ class Profile extends Component {
       .catch(err => {
         this.props.dispatch(
           notify({
-            HTML: `<p>
-        <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Error saving data ${err}
-      </p>`,
+            HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Error saving data ${err}`,
             type: 'error'
           })
         )

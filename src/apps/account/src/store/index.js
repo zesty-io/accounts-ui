@@ -1,16 +1,69 @@
 import { request } from '../../../../util/request'
+import { notify } from '../../../../shell/store/notifications'
 
-export function addEmail(userZUID, email) {
-  return (dispatch, getState) => {
-    let state = getState()
-    state.user.unverifiedEmails.push(email)
-
-    return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
-      method: 'PUT',
+export function addEmail(name, address) {
+  return dispatch => {
+    return request(`${CONFIG.API_ACCOUNTS}/users/emails`, {
+      method: 'POST',
       json: true,
       body: {
-        unverifiedEmails: state.user.unverifiedEmails.join(',')
+        name,
+        address
       }
+    })
+      .then(() => {
+        dispatch(
+          notify({
+            message: 'Email added',
+            type: 'success'
+          })
+        )
+      })
+      .catch(err => {
+        dispatch(
+          notify({
+            message: `Problem adding email: ${err}`,
+            type: 'error'
+          })
+        )
+      })
+  }
+}
+
+export function resendVerificationEmail(email) {
+  return dispatch => {
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${encodeURI(
+        email
+      )}`,
+      {
+        method: 'POST'
+      }
+    )
+  }
+}
+
+export function deleteUserEmail(email) {
+  return dispatch => {
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/emails?address=${encodeURI(email)}`,
+      {
+        method: 'DELETE'
+      }
+    ).then(data => {
+      dispatch(
+        notify({
+          type: 'success',
+          message: 'email successfully removed'
+        })
+      )
+    }).catch(err => {
+      dispatch(
+        notify({
+          type: 'error',
+          message: 'encountered a problem removing email'
+        })
+      )
     })
   }
 }
@@ -22,7 +75,7 @@ export function updatePassword(oldPassword, newPassword) {
     // TODO this endpoint does not return json which breaks our
     // request handler
     return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}?updatePassword=true`, {
-      method: 'PUT',
+      method: 'POST',
       json: true,
       body: {
         password: newPassword

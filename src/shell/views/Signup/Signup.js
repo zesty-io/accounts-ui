@@ -173,28 +173,8 @@ class Signup extends Component {
         // this is in place of a code === 201,
         // server only returns an error, no code
         if (!json.error) {
-          // Log user in after signing up
-          this.props
-            .dispatch(login(this.state.email, this.state.pass))
-            .then(json => {
-              if (!json.error) {
-                this.props.history.push('/')
-              } else {
-                // if the user was created but login failed
-                // send them to the login view
-                this.setState({
-                  mesage: 'There was a problem logging you in'
-                })
-                this.props.history.push('/login')
-              }
-            })
-            .catch(err => {
-              console.error(err)
-              notify({
-                message: 'There was a problem logging in',
-                type: 'error'
-              })
-            })
+          // Force confirm email before logging in
+          this.props.history.push('/verify-email')
         } else {
           this.setState({
             submitted: false,

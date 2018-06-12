@@ -1,0 +1,39 @@
+@import '../../styles/colors.less';
+
+.VerifyEmail {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .Expired {
+    color: @zesty-red;
+    margin: 0 0 0.2rem 0;
+  }
+
+  .VerifyEmailForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    max-height: 40rem;
+    text-align: center;
+    .error {
+      color: @zesty-red;
+      i {
+        margin-right: 0.3rem;
+      }
+    }
+    .success {
+      color: @zesty-green;
+    }
+    .ResendAction {
+      display: flex;
+      margin: 0.5rem 0;
+      .input {
+        flex: 1;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

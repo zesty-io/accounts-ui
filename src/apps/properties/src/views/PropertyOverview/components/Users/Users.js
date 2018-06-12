@@ -17,7 +17,7 @@ export default class Users extends Component {
     this.state = {
       submitted: false,
       inviteeEmail: '',
-      inviteeRole: ''
+      inviteeRoleZUID: ''
     }
   }
   render() {
@@ -43,15 +43,27 @@ export default class Users extends Component {
               />
               <Select onSelect={this.handleSelectRole}>
                 <Option key="default" value="" text="Select Role" />
-                {this.props.siteRoles.map(role => {
-                  return (
-                    <Option
-                      key={role.ZUID}
-                      value={role.ZUID}
-                      text={role.name}
-                    />
-                  )
-                })}
+                {this.props.isOwner
+                  ? this.props.siteRoles.map(role => {
+                      return (
+                        <Option
+                          key={role.ZUID}
+                          value={role.ZUID}
+                          text={role.name}
+                        />
+                      )
+                    })
+                  : this.props.siteRoles
+                      .filter(role => role.name !== 'Owner')
+                      .map(role => {
+                        return (
+                          <Option
+                            key={role.ZUID}
+                            value={role.ZUID}
+                            text={role.name}
+                          />
+                        )
+                      })}
               </Select>
               <Button
                 onClick={this.handleInvite}
@@ -119,43 +131,33 @@ export default class Users extends Component {
   }
   handleSelectRole = evt => {
     this.setState({
-      inviteeRole: evt.target.innerText
+      inviteeRoleZUID: evt.target.dataset.value
     })
   }
   handleInvite = evt => {
+    // NOTE do we need to improve this validity check?
     if (this.state.inviteeEmail.includes('@')) {
-      // needs mo betta validity check here
       this.setState({
-        submitted: !this.state.submitted
+        submitted: true
       })
       this.props
         .dispatch(
-          sendInvite({
-            inviteeEmail: this.state.inviteeEmail,
-            entityZUID: this.props.siteZUID,
-            role: this.state.inviteeRole
-          })
+          sendInvite(
+            this.props.siteZUID,
+            this.state.inviteeEmail,
+            this.state.inviteeRoleZUID
+          )
         )
         .then(() => {
-          // this.setState({
-          //   submitted: false,
-          //   inviteeEmail: ''
-          // })
-          this.props
-            .dispatch(fetchSiteUsersPending(this.props.siteZUID))
-            .then(() => {
-              this.setState({
-                submitted: false,
-                inviteeEmail: ''
-              })
-            })
+          this.setState({
+            submitted: false,
+            inviteeEmail: ''
+          })
         })
     } else {
       this.props.dispatch(
         notify({
-          HTML: `<p>
-          <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Please provide a valid Email address
-        </p>`,
+          HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Please provide a valid Email address`,
           type: 'error'
         })
       )

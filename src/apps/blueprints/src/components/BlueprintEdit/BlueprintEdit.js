@@ -18,9 +18,9 @@ class BlueprintEdit extends Component {
     blueprint: ''
   }
 
-  componentWillReceiveProps(props) {
-    if (props.blueprint === 'create') {
-      return this.setState({
+  static getDerivedStateFromProps(props, state) {
+    if (props.blueprint === 'create' && !state.blueprint.hasOwnProperty('name')) {
+      return {
         blueprint: {
           name: '',
           githubURL: '',
@@ -30,17 +30,17 @@ class BlueprintEdit extends Component {
           coverImage: '',
           mainImage: ''
         }
-      })
+      }
     }
     if (props.blueprint === '') {
-      return this.setState({
+      return {
         blueprint: ''
-      })
+      }
     }
-    if (props.blueprint.ID !== this.state.blueprint.ID) {
-      this.setState({
+    if (props.blueprint.ID !== state.blueprint.ID) {
+      return {
         blueprint: props.blueprint
-      })
+      }
     } else {
       return null
     }

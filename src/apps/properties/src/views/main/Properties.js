@@ -15,21 +15,26 @@ class Properties extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loadingSites: true
+      loadingSites: true,
+      loadingInvitedSites: true
     }
   }
   componentDidMount() {
     this.props.dispatch(fetchSites()).then(() => {
       this.setState({ loadingSites: false })
     })
-    this.props.dispatch(fetchSitesWithInvites())
+    this.props.dispatch(fetchSitesWithInvites()).then(() => {
+      this.setState({ loadingInvitedSites: false })
+    })
     this.props.dispatch(fetchSystemRoles())
   }
   render() {
     return (
       <section className={styles.Websites}>
         <WithLoader
-          condition={!this.state.loadingSites}
+          condition={
+            !this.state.loadingSites && !this.state.loadingInvitedSites
+          }
           message="Loading Your Instances"
         >
           <Switch>

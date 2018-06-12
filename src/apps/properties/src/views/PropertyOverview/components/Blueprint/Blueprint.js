@@ -18,8 +18,7 @@ export default class Blueprint extends PureComponent {
                 <Button
                   className={styles.Button}
                   type="cancel"
-                  onClick={this.handleChangeBlueprint}
-                >
+                  onClick={this.handleChangeBlueprint}>
                   <i className="fa fa-file-code-o" aria-hidden="true" />
                   &nbsp;Change Blueprint
                 </Button>
@@ -54,7 +53,9 @@ export default class Blueprint extends PureComponent {
     evt.preventDefault()
     this.props.dispatch(
       zConfirm({
-        prompt: 'Are you sure you want to change the blueprint?',
+        prompt:
+          `Are you sure you want to change the blueprint?
+          changing a blueprint will delete all of you content, code, and schema.`,
         callback: response => {
           if (response) {
             this.props.history.push(`${this.props.match.url}/blueprint`)

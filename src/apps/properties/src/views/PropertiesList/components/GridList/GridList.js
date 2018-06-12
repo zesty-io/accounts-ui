@@ -12,7 +12,7 @@ export default class GridList extends Component {
   constructor(props) {
     super(props)
   }
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('click', this.close)
     document.addEventListener('keydown', this.close)
   }
@@ -57,7 +57,7 @@ export default class GridList extends Component {
           </React.Fragment>
         ) : null}
 
-        {!this.props.settings.filter && this.props.sitesFavorite.length ? (
+        {this.props.sitesFavorite.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
               <i className="fa fa-star-o" aria-hidden="true" />

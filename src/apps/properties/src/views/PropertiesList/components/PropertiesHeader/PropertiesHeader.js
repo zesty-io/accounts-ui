@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+import debounce from '../../../../../../../util/debounce'
+
 import styles from './PropertiesHeader.less'
 
-import {
-  filter,
-  filterEcosystem,
-  sortSites
-} from '../../../../store/sitesFiltered'
+import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
 
 class PropertiesHeader extends Component {
@@ -21,7 +20,7 @@ class PropertiesHeader extends Component {
         <div className={styles.Actions}>
           {this.props.ecosystems.length ? (
             <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
-              <Option key="default" value="" text="Select Ecosystem" />
+              <Option key="default" value="" text="All Instances" />
               {this.props.ecosystems.map(eco => {
                 return <Option key={eco.id} value={eco.id} text={eco.name} />
               })}
@@ -31,8 +30,14 @@ class PropertiesHeader extends Component {
           <Search
             className={styles.Search}
             placeholder="Search by instance name or domain"
-            onClick={this.onSearch}
-            onKeyUp={this.onSearch}
+            onKeyUp={evt => {
+              let term = evt.target.value
+              return this.onSearch(term)
+            }}
+            onClick={evt => {
+              let term = evt.target.value
+              return this.onSearch(term)
+            }}
           />
 
           <ButtonGroup className={styles.Sort}>
@@ -42,8 +47,7 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'name' })
                 return this.sort('name')
-              }}
-            >
+              }}>
               <i className={`fa fa-sort-alpha-asc`} />
             </Button>
             <Button
@@ -52,8 +56,7 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'date' })
                 return this.sort('createdAt')
-              }}
-            >
+              }}>
               <i className={`fa fa-calendar-o`} />
             </Button>
           </ButtonGroup>
@@ -68,8 +71,7 @@ class PropertiesHeader extends Component {
                   layout: 'grid'
                 })
                 this.props.dispatch(saveProfile())
-              }}
-            >
+              }}>
               <i className={`fa fa-th`} />
             </Button>
             <Button
@@ -81,8 +83,7 @@ class PropertiesHeader extends Component {
                   layout: 'list'
                 })
                 this.props.dispatch(saveProfile())
-              }}
-            >
+              }}>
               <i className={`fa fa-th-list`} />
             </Button>
           </ButtonGroup>
@@ -95,13 +96,12 @@ class PropertiesHeader extends Component {
     )
   }
 
-  onSearch = evt => {
-    if (this.state.eco) {
-      this.props.dispatch(filterEcosystem(evt.target.value, this.state.eco))
-    } else {
-      this.props.dispatch(filter(evt.target.value))
-    }
-  }
+  onSearch = debounce(term => {
+      this.props.dispatch({
+        type: 'SETTING_FILTER',
+        filter: term
+      })
+  }, 300)
 
   onCreateSite = evt => {
     evt.preventDefault()
@@ -111,10 +111,16 @@ class PropertiesHeader extends Component {
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {
       this.setState({ eco: false })
-      return this.props.dispatch(filter(''))
+      return this.props.dispatch({
+        type: 'SETTING_ECO',
+        eco: false
+      })
     }
     this.setState({ eco: evt.target.dataset.value })
-    this.props.dispatch(filter(Number(evt.target.dataset.value)))
+    this.props.dispatch({
+      type: 'SETTING_ECO',
+      eco: Number(evt.target.dataset.value)
+    })
   }
 
   sort = by => {

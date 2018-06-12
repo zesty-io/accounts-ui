@@ -2,14 +2,35 @@
 
 .Email {
   flex: 1;
-  margin: 1rem 0;
   p {
     margin: 0 0 1rem 0;
   }
   .Email {
-    margin: 0 0 0.5rem 0;
-    i {
-      margin-right: 5px;
+    margin: 1rem 0;
+    display: grid;
+    grid-template-columns: 0.1fr 1fr 0.4fr 0.1fr;
+
+    p {
+      margin: 0;
+    }
+
+    .delete {
+      transition: all 0.1s;
+      color: @zesty-light-gray;
+      &:hover,
+      &:active,
+      &:focus {
+        color: @zesty-red;
+      }
+    }
+    .verify {
+      color: lighten(@zesty-red, 10%);
+      transition: all 0.1s;
+      &:hover,
+      &:active,
+      &:focus {
+        color: @zesty-green;
+      }
     }
     .verified {
       color: @zesty-green;
@@ -18,9 +39,17 @@
       margin-left: 5px;
     }
   }
-
+  .addEmail {
+    display: grid;
+    grid-template-columns: 0.3fr 3fr;
+    grid-auto-rows: 2.5rem;
+    align-items: center;
+    label {
+      margin-right: 1rem;
+    }
+  }
   input {
-    min-width: 20rem;
+    width: 15rem;
     margin: 0.5rem 0 0 0;
   }
 }
