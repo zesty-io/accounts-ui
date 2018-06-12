@@ -10,7 +10,7 @@ export default class UserPendingRow extends PureComponent {
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>
-          <em>Invited User</em>
+          <em>Pending User</em>
         </span>
         <span className={styles.email}>{this.props.email}</span>
         {this.props.isAdmin ? (
