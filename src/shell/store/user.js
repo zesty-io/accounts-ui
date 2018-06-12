@@ -75,7 +75,7 @@ export function fetchUser(ZUID) {
     dispatch({
       type: 'FETCHING_USER'
     })
-    request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}`)
+    return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}`)
       .then(user => {
         if (user.data) {
           // Parse user data response
