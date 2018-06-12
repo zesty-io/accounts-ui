@@ -40,18 +40,7 @@ export function request(url, opts = {}) {
   opts.method = opts.method || 'GET'
 
   return fetch(url, opts)
-    .then(res => {
-      // handle non JSON response
-      if (!res.json) {
-        if (res.status < 400) {
-          return { ok: true, code: res.code }
-        } else {
-          return { error: true, code: res.code }
-        }
-      } else {
-        return res.json()
-      }
-    })
+    .then(res => res.json())
     .then(json => {
       if (opts.callback) {
         opts.callback(json)
