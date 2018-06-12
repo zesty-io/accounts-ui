@@ -23,7 +23,7 @@ class Profile extends Component {
         </CardHeader>
         <CardContent className={styles.Profile}>
           <div className={styles.gravatar}>
-            <h3>Gravatar</h3>
+            <h4>Gravatar</h4>
             <img
               className={styles.avatar}
               src={`https://www.gravatar.com/avatar/${
@@ -31,7 +31,7 @@ class Profile extends Component {
               }?d=mm&s=80`}
             />
           </div>
-          <h3>Name</h3>
+          <h4>User Name</h4>
           <Input
             type="text"
             value={this.props.profile.firstName}

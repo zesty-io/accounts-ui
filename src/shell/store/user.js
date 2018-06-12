@@ -60,10 +60,10 @@ export function user(
       }
 
     case 'FETCH_USER_EMAILS_SUCCESS':
-    return {
-      ...state,
-      emails: action.emails
-    }
+      return {
+        ...state,
+        emails: action.emails
+      }
 
     default:
       return state
@@ -108,6 +108,7 @@ export function fetchUser(ZUID) {
 
 export function update2fa(add, payload) {
   if (add) {
+    // TODO fix. there should not be a NOOP here
     // start process of adding 2fa
     // payload will have user info
     // have to get authy user ID from somehwere
@@ -184,8 +185,7 @@ export function favoriteSite(ZUID, action) {
 
 export function fetchUserEmails() {
   return dispatch => {
-    return request(`${CONFIG.API_ACCOUNTS}/users/emails`)
-    .then(data => {
+    return request(`${CONFIG.API_ACCOUNTS}/users/emails`).then(data => {
       dispatch({
         type: 'FETCH_USER_EMAILS_SUCCESS',
         emails: data.data

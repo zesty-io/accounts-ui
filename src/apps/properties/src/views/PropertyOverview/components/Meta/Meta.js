@@ -46,30 +46,35 @@ export default class Meta extends Component {
           <article>
             <p className={styles.setting}>
               <span className={styles.title}>Created On:</span>{' '}
-              {formatDate(this.props.site.createdAt)}
+              <span className={styles.NonEditable}>
+                {formatDate(this.props.site.createdAt)}
+              </span>
             </p>
             <p className={styles.setting}>
               <span className={styles.title}>Updated On:</span>{' '}
-              {formatDate(this.props.site.updatedAt)}
+              <span className={styles.NonEditable}>
+                {formatDate(this.props.site.updatedAt)}
+              </span>
             </p>
             <p className={styles.setting}>
               <span className={styles.title}>Instance ZUID:</span>{' '}
-              {this.props.site.ZUID}
+              <span className={styles.NonEditable}>{this.props.site.ZUID}</span>
             </p>
             <p className={styles.setting}>
               <span className={styles.title}>
                 Numeric ID <small>(Legacy)</small>:
               </span>
-              {this.props.site.ID}
+              <span className={styles.NonEditable}>{this.props.site.ID}</span>
             </p>
             <p className={styles.setting}>
               <span className={styles.title}>
                 Hash ID <small>(Legacy)</small>:
               </span>
-              {this.props.site.randomHashID}
+              <span className={styles.NonEditable}>
+                {this.props.site.randomHashID}
+              </span>
             </p>
           </article>
-
           <Url
             className={styles.manager}
             target="_blank"
