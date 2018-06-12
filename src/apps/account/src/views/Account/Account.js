@@ -16,7 +16,9 @@ class Account extends Component {
   }
   componentDidMount() {
     this.props.dispatch(fetchUserEmails()).then(data => {
-      this.setState({ loadingEmails: false })
+      this.setState({
+        loadingEmails: false
+      })
     })
   }
   render() {
@@ -27,7 +29,8 @@ class Account extends Component {
           <WithLoader
             className={styles.Loading}
             condition={!this.state.loadingEmails}
-            message="Loading Your Account Data">
+            message="Loading Your Account Data"
+          >
             <div className={styles.SettingCards}>
               <Profile />
               <Email
