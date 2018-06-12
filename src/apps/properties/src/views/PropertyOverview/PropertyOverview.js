@@ -238,10 +238,12 @@ export default connect((state, props) => {
 
   // Get all non system roles for instance
   let siteRoles = state.sitesRoles[siteZUID] || {}
-  siteRoles = Object.keys(siteRoles).reduce((acc, ZUID) => {
-    acc.push(siteRoles[ZUID])
-    return acc
-  }, [])
+  siteRoles = Object.keys(siteRoles)
+    .filter(ZUID => siteRoles[ZUID].systemRoleZUID !== '31-908bbbd2b6-n5t9hs')
+    .reduce((acc, ZUID) => {
+      acc.push(siteRoles[ZUID])
+      return acc
+    }, [])
 
   // Determine users permissions for instance
   let isAdmin = false
