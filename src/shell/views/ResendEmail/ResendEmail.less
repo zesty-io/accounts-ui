@@ -6,6 +6,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .Expired {
+    color: @zesty-red;
+    margin: 0 0 0.2rem 0;
+  }
+
   .VerifyEmailForm {
     display: flex;
     flex-direction: column;
@@ -14,24 +20,19 @@
     text-align: center;
     .error {
       color: @zesty-red;
-      margin: 10px 0;
       i {
         margin-right: 0.3rem;
       }
     }
     .success {
       color: @zesty-green;
-      margin: 10px 0;
     }
-    .form {
-      display: grid;
-      margin: 1rem;
-      grid-template-columns: 1fr .5fr;
+    .ResendAction {
+      display: flex;
+      margin: 0.5rem 0;
       .input {
-        width: 15rem;
-      }
-      .button {
-        width: 12rem;
+        flex: 1;
+        margin-right: 0.5rem;
       }
     }
   }

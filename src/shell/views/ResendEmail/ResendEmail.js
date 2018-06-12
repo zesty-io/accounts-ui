@@ -1,36 +1,27 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import { request } from '../../../util/request'
 
 import styles from './ResendEmail.less'
 
-class ResendEmail extends Component {
+export default class ResendEmail extends Component {
   state = {
     email: '',
     submitted: false,
-    error: null,
-    success: null
+    error: '',
+    success: ''
   }
   render() {
     return (
       <section className={styles.VerifyEmail}>
         <form name="VerifyEmail" className={styles.VerifyEmailForm}>
-          <h1>Send another Verification email-</h1>
+          <h1>Re-Send Email Verification</h1>
           <p>
-            Once your email has been verified you can log in and begin using
+            Your email is required to be verified before you can begin using
             Zesty.io
           </p>
-          {this.state.error ? (
-            <h3 className={styles.error}>
-              <i className="fa fa-exclamation-triangle" />
-              {this.state.error}
-            </h3>
-          ) : null}
-          {this.state.success ? (
-            <h3 className={styles.success}>{this.state.success}</h3>
-          ) : null}
-          <section className={styles.form}>
+          <section className={styles.ResendAction}>
             <Input
               name="email"
               placeholder="email@acme.com"
@@ -41,10 +32,32 @@ class ResendEmail extends Component {
             <Button
               onClick={this.handleClick}
               className={styles.button}
-              disabled={this.state.submitted}>
+              disabled={this.state.submitted}
+            >
               Re-Send Verification
             </Button>
           </section>
+
+          {this.state.error ? (
+            <em className={styles.error}>
+              <i className="fa fa-exclamation-triangle" />
+              {this.state.error}
+            </em>
+          ) : null}
+          {this.state.success ? (
+            <em className={styles.success}>{this.state.success}</em>
+          ) : null}
+
+          <Route
+            path="/resend-email/expired"
+            render={() => {
+              return (
+                <em className={styles.Expired}>
+                  Your email verification has expired, please re-send.
+                </em>
+              )
+            }}
+          />
         </form>
       </section>
     )
@@ -54,11 +67,11 @@ class ResendEmail extends Component {
   }
   handleClick = evt => {
     evt.preventDefault()
-    console.log(this.state.email)
-    if (
-      this.state.email.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,3}$/g)
-    ) {
-      this.setState({ submitted: !this.state.submitted })
+    if (this.state.email.includes('@')) {
+      this.setState({
+        submitted: true,
+        error: ''
+      })
       request(
         `${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${
           this.state.email
@@ -66,28 +79,30 @@ class ResendEmail extends Component {
         {
           method: 'POST'
         }
-      ).then(data => {
-        this.setState({ submitted: !this.state.submitted })
-        if (!data.error) {
-          //notify and go back to login
+      )
+        .then(data => {
+          if (!data.error) {
+            this.setState({
+              submitted: false,
+              success: 'A verification link has been re-sent!'
+            })
+          } else {
+            this.setState({
+              submitted: false,
+              error:
+                'There was a problem sending a verification link to the email address you provided'
+            })
+          }
+        })
+        .catch(err => {
           this.setState({
-            success: 'A verification email has been re-sent!'
+            submitted: false
           })
-          setTimeout(() => this.props.history.push(`/login`), 3000)
-        } else {
-          //display an error to the user
-          this.setState({
-            error:
-              'There was a problem re-sending verification to the email you provided'
-          })
-        }
-      })
+        })
     } else {
       this.setState({
-        error: 'you must provide a valid email address'
+        error: 'You must provide a valid email address'
       })
     }
   }
 }
-
-export default withRouter(ResendEmail)
