@@ -16,8 +16,11 @@ class ResendEmail extends Component {
     return (
       <section className={styles.VerifyEmail}>
         <form name="VerifyEmail" className={styles.VerifyEmailForm}>
-          <h2 />
-          <p>Input the email address you signed up with</p>
+          <h1>Send another Verification email-</h1>
+          <p>
+            Once your email has been verified you can log in and begin using
+            Zesty.io
+          </p>
           {this.state.error ? (
             <h3 className={styles.error}>
               <i className="fa fa-exclamation-triangle" />
@@ -27,14 +30,21 @@ class ResendEmail extends Component {
           {this.state.success ? (
             <h3 className={styles.success}>{this.state.success}</h3>
           ) : null}
-          <Input
-            name="email"
-            onChange={this.handleChange}
-            value={this.state.email}
-          />
-          <Button onClick={this.handleClick} disabled={this.state.submitted}>
-            Re-Send Verification
-          </Button>
+          <section className={styles.form}>
+            <Input
+              name="email"
+              placeholder="email@acme.com"
+              onChange={this.handleChange}
+              value={this.state.email}
+              className={styles.input}
+            />
+            <Button
+              onClick={this.handleClick}
+              className={styles.button}
+              disabled={this.state.submitted}>
+              Re-Send Verification
+            </Button>
+          </section>
         </form>
       </section>
     )

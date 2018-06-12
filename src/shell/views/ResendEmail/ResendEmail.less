@@ -12,21 +12,27 @@
     max-width: 60rem;
     max-height: 40rem;
     text-align: center;
-    .input {
-      width: 200px;
-      height: 30px;
-      margin: 2px 0;
-    }
     .error {
-      color:@zesty-red;
-      margin:10px 0;
+      color: @zesty-red;
+      margin: 10px 0;
       i {
-        margin-right: .3rem;
+        margin-right: 0.3rem;
       }
     }
     .success {
-      color:@zesty-green;
-      margin:10px 0;
+      color: @zesty-green;
+      margin: 10px 0;
+    }
+    .form {
+      display: grid;
+      margin: 1rem;
+      grid-template-columns: 1fr .5fr;
+      .input {
+        width: 15rem;
+      }
+      .button {
+        width: 12rem;
+      }
     }
   }
 }
