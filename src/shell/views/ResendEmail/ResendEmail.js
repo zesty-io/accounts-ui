@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
 import { request } from '../../../util/request'
 
 import styles from './ResendEmail.less'
 
-export default class ResendEmail extends Component {
+class ResendEmail extends Component {
   state = {
     email: '',
     submitted: false,
@@ -31,7 +32,9 @@ export default class ResendEmail extends Component {
             onChange={this.handleChange}
             value={this.state.email}
           />
-          <Button onClick={this.handleClick} disabled={this.state.submitted}>
+          <Button
+            onClick={this.handleClick}
+            disabled={this.state.submitted}>
             Re-Send Verification
           </Button>
         </form>
@@ -43,14 +46,15 @@ export default class ResendEmail extends Component {
   }
   handleClick = evt => {
     evt.preventDefault()
+    console.log(this.state.email)
     if (
       this.state.email.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,3}$/g)
     ) {
       this.setState({ submitted: !this.state.submitted })
       request(
-        `${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${encodeURI(
+        `${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${
           this.state.email
-        )}`,
+        }`,
         {
           method: 'POST'
         }
@@ -62,6 +66,7 @@ export default class ResendEmail extends Component {
           this.setState({
             success: 'A verification email has been re-sent!'
           })
+          this.props.history.push(`/login`)
         } else {
           //display an error to the user
           this.setState({
@@ -77,3 +82,5 @@ export default class ResendEmail extends Component {
     }
   }
 }
+
+export default withRouter(ResendEmail)

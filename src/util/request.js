@@ -41,19 +41,26 @@ export function request(url, opts = {}) {
 
   return fetch(url, opts)
     .then(res => {
-      return res.json()
+      // handle non JSON response
+      if (!res.json) {
+        if (res.status < 400) {
+          return { ok: true, code: res.code }
+        } else {
+          return { error: true, code: res.code }
+        }
+      } else {
+        return res.json()
+      }
     })
     .then(json => {
       if (opts.callback) {
         opts.callback(json)
       }
-
       if (json.code > 400 || json.error) {
         // TODO trigger global app notification
         console.table(json.code || json.error)
         throw json.code || json.error
       }
-
       return json
     })
     .catch(err => {
