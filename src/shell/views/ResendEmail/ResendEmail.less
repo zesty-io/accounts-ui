@@ -1,0 +1,32 @@
+@import '../../styles/colors.less';
+
+.VerifyEmail {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .VerifyEmailForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 60rem;
+    max-height: 40rem;
+    text-align: center;
+    .input {
+      width: 200px;
+      height: 30px;
+      margin: 2px 0;
+    }
+    .error {
+      color:@zesty-red;
+      margin:10px 0;
+      i {
+        margin-right: .3rem;
+      }
+    }
+    .success {
+      color:@zesty-green;
+      margin:10px 0;
+    }
+  }
+}

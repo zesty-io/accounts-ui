@@ -9,13 +9,13 @@ import Signup from '../Signup'
 import ResetPasswordStart from '../ResetPasswordStart'
 import ResetPasswordEnd from '../ResetPasswordEnd'
 import VerifyEmail from '../VerifyEmail'
+import ResendEmail from '../ResendEmail'
 
 import NotFound from '../../../shell/components/NotFound'
 
 import AppHeader from '../../components/AppHeader'
 import AppError from '../../components/AppError'
 import Notify from '../../components/Notify'
-// import Modal from '../../components/Modal'
 import Confirm from '../../components/Confirm'
 
 import styles from './App.less'
@@ -38,8 +38,7 @@ class App extends Component {
           <section className={cx('AppMain', styles.AppMain)}>
             <WithLoader
               condition={this.props.user.email}
-              message="Finding Your Account"
-            >
+              message="Finding Your Account">
               <Switch>
                 <Route path="/instances" component={Properties} />
                 <Route path="/settings" component={Settings} />
@@ -80,6 +79,7 @@ class Shell extends Component {
               />
               <Route path="/reset-password" component={ResetPasswordStart} />
               <Route path="/verify-email" component={VerifyEmail} />
+              <Route path="/resend-email" component={ResendEmail} />
               <Redirect from="/" to="/login" />
             </Switch>
           </React.Fragment>
