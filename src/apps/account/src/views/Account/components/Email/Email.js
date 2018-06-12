@@ -21,8 +21,6 @@ class Email extends Component {
     }
   }
   static getDerivedStateFromProps(props, state) {
-    if (props.emails) {
-    }
     if (props.emails && props.emails.length !== state.emails.length) {
       return { ...state, emails: props.emails }
     } else {
@@ -117,7 +115,8 @@ class Email extends Component {
           <Button
             className={styles.button}
             disabled={this.state.submitted}
-            onClick={this.handleAddEmail}>
+            onClick={this.handleAddEmail}
+          >
             <i className="fa fa-plus" aria-hidden="true" />
             Add Email
           </Button>
