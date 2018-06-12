@@ -24,7 +24,8 @@ export default class UserRow extends Component {
           ) : this.props.isAdmin ? (
             this.props.role.name === 'Owner' ? (
               <React.Fragment>
-                <i className="fa fa-fort-awesome" /> Owner
+                <i className="fa fa-fort-awesome" />
+                <span className={styles.Owner}>Owner</span>
                 <i
                   className={styles.trash + ' fa fa-trash-o'}
                   aria-hidden="true"
@@ -46,7 +47,8 @@ export default class UserRow extends Component {
                       .map(item => {
                         return { value: item.ZUID, text: item.name }
                       })[0]
-                  }>
+                  }
+                >
                   {this.props.siteRoles.map(role => {
                     return (
                       <Option
@@ -71,7 +73,7 @@ export default class UserRow extends Component {
             )
           ) : this.props.role.name === 'Owner' ? (
             <React.Fragment>
-              <i className="fa fa-fort-awesome" /> {this.props.role.name}
+              <i className="fa fa-fort-awesome" />&nbsp;{this.props.role.name}
             </React.Fragment>
           ) : (
             this.props.role.name
