@@ -32,9 +32,7 @@ class ResendEmail extends Component {
             onChange={this.handleChange}
             value={this.state.email}
           />
-          <Button
-            onClick={this.handleClick}
-            disabled={this.state.submitted}>
+          <Button onClick={this.handleClick} disabled={this.state.submitted}>
             Re-Send Verification
           </Button>
         </form>
@@ -60,13 +58,12 @@ class ResendEmail extends Component {
         }
       ).then(data => {
         this.setState({ submitted: !this.state.submitted })
-        console.log(data)
         if (!data.error) {
           //notify and go back to login
           this.setState({
             success: 'A verification email has been re-sent!'
           })
-          this.props.history.push(`/login`)
+          setTimeout(() => this.props.history.push(`/login`), 3000)
         } else {
           //display an error to the user
           this.setState({
