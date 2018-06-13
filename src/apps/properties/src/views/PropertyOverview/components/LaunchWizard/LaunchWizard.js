@@ -10,14 +10,17 @@ export default class LaunchWizard extends Component {
         <CardHeader className={styles.CardHeader}>
           <h2>
             <i className="fa fa-rocket" aria-hidden="true" />
-            &nbsp;Sending Your Instance Live!
+            &nbsp;Send Your Instance Live!
           </h2>
         </CardHeader>
         <CardContent>
           <p className={styles.instructions}>
-            By sending your project live it will have a domain which allows
-            public internet access. This can be done in 3 steps. View our{' '}
-            <Url href="https://developer.zesty.io/docs/satellite-sites/launching-a-satellite-site/">
+            By sending your instance live it will have a domain which allows
+            public internet access. This can be done in 2 steps. View our{' '}
+            <Url
+              href="https://developer.zesty.io/docs/satellite-sites/launching-a-satellite-site/"
+              target="_blank"
+            >
               documentation
             </Url>{' '}
             for more detail.
@@ -56,13 +59,13 @@ export default class LaunchWizard extends Component {
                 </p>
               </div>
             </li>
-            <li className={styles.confirm}>
+            {/* <li className={styles.confirm}>
               Confirm your instance is live
               <Button type="save">
                 <i className="fa fa-check" aria-hidden="true" />
                 Check DNS
               </Button>
-            </li>
+            </li> */}
           </ol>
         </CardContent>
       </Card>
