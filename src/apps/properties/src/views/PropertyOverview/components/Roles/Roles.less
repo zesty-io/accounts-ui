@@ -1,0 +1,87 @@
+@import '../../../../../../../shell/styles/colors.less';
+
+.Roles {
+  margin: 0 0 1.5rem;
+
+  p {
+    margin: 0 0 1rem 0;
+  }
+
+  .currentRoles {
+    display: grid;
+    padding: 1rem 0 0;
+    header {
+      display: grid;
+      grid-auto-flow: row;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      padding: 0 0.5rem 0.5rem;
+      h3 {
+        font-size: 1em;
+      }
+    }
+    main {
+      display: grid;
+      grid-template-rows: auto;
+      padding-bottom: 2%;
+      article {
+        padding: 0.5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        &:nth-child(odd) {
+          background-color: @zesty-white;
+        }
+      }
+    }
+  }
+}
+
+// .formGrid {
+//   display: grid;
+//   margin-bottom: 1rem;
+//   grid-template-columns: 1fr 1fr 1fr 1fr;
+//   grid-template-rows: auto;
+//   justify-content: space-between;
+//
+//   input {
+//     // margin-left: 0.44rem;
+//     // height: 50px;
+//   }
+//   button {
+//     margin-top: 1.05rem;
+//     margin-right: 0.2rem;
+//     height: 50px;
+//   }
+// }
+
+// .modalWrapper {
+//   margin: 20px;
+//   .selectCollection {
+//     display: grid;
+//     header {
+//       display: grid;
+//       grid-auto-flow: row;
+//       grid-template-columns: 1fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr;
+//     }
+//     main {
+//       display: grid;
+//       grid-template-rows: auto;
+//       article {
+//         display: grid;
+//         grid-auto-flow: row;
+//         grid-template-columns: 1fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr;
+//         &:nth-child(odd) {
+//           background-color: @zesty-white;
+//         }
+//       }
+//     }
+//   }
+//   .buttons {
+//     display: grid;
+//     grid-template-rows: auto;
+//     grid-template-columns: 3fr 0.5fr 0.5fr;
+//     justify-items: end;
+//     button {
+//       max-width: 150px;
+//     }
+//   }
+// }

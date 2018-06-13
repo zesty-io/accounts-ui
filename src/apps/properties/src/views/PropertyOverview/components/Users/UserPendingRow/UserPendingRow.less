@@ -1,0 +1,19 @@
+@import '../../../../../../../../shell/styles/colors.less';
+
+.UserRow {
+  padding: 0.5rem;
+  align-items: center;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  &:nth-child(odd) {
+    background-color: @zesty-white;
+  }
+  span:last-child {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    max-height: 50px;
+  }
+}

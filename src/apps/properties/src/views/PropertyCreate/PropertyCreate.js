@@ -1,26 +1,25 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Link, withRouter } from "react-router-dom";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { postNewSite } from "../../store/sites";
-import { notify } from "../../../../../shell/store/notifications";
+import { createInstance } from '../../store/sites'
+import { notify } from '../../../../../shell/store/notifications'
 
-import styles from "./PropertyCreate.less";
+import styles from './PropertyCreate.less'
 
 class PropertyCreate extends Component {
   constructor(props) {
-    super();
+    super(props)
     this.state = {
       submitted: false,
-      name: ""
-    };
+      name: ''
+    }
   }
   render() {
     return (
       <section className={styles.PropertyCreate}>
         <div className={styles.nameNew}>
-          <h1>Name your new web property</h1>
+          <h1>Name your new instance</h1>
           <Input
             type="text"
             name="propertyName"
@@ -31,43 +30,50 @@ class PropertyCreate extends Component {
             <Button onClick={this.handleClick} disabled={this.state.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
               {this.state.submitted
-                ? "Creating Your Property"
-                : "Create New Property"}
+                ? 'Creating Your Instance'
+                : 'Create New Instance'}
             </Button>
-            <Link to="/properties">
+            <Link to="/instances">
               <i className="fa fa-ban" aria-hidden="true" />
               &nbsp;Cancel
             </Link>
           </div>
         </div>
       </section>
-    );
+    )
   }
   handleChange = evt => {
-    this.setState({ name: evt.target.value });
-  };
+    this.setState({
+      name: evt.target.value.trim()
+    })
+  }
   handleClick = () => {
-    this.setState({ submitted: !this.state.submitted });
-    this.props
-      .dispatch(postNewSite(this.state.name))
-      .then(data => {
-        this.setState({ submitted: !this.state.submitted });
-        this.props.history.push(`/properties/${data.data.ZUID}/blueprint`);
-      })
-      .catch(err => {
-        this.setState({ submitted: !this.state.submitted });
-        this.props.dispatch(
-          notify({
-            message: `Problem creating site: ${err}`,
-            type: "error"
-          })
-        );
-      });
-  };
+    if (this.state.name) {
+      this.setState({ submitted: true })
+      this.props
+        .dispatch(createInstance(this.state.name))
+        .then(site => {
+          this.setState({ submitted: false })
+          this.props.history.push(`/instances/${site.ZUID}/blueprint`)
+        })
+        .catch(err => {
+          this.setState({ submitted: false })
+          this.props.dispatch(
+            notify({
+              message: `Failed creating instance`,
+              type: 'error'
+            })
+          )
+        })
+    } else {
+      this.props.dispatch(
+        notify({
+          message: 'You must enter a name for your instance',
+          type: 'error'
+        })
+      )
+    }
+  }
 }
 
-const mapStateToProps = state => {
-  return { ...state.createSite };
-};
-
-export default withRouter(connect(mapStateToProps)(PropertyCreate));
+export default connect()(PropertyCreate)

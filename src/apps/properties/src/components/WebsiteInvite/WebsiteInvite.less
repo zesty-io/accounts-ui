@@ -1,59 +1,65 @@
 @import url('../../../../../shell/styles/colors.less');
-.WebsiteInvite {
-  background: @zesty-light-grey;
-  margin: 1.5rem;
-  max-width: 60rem;
-  word-break: break-word;
-  display: flex;
-  flex-direction: column;
-  display: grid;
-  grid-template-rows: 1fr 2fr 0fr;
 
-  a:visited,
-  a {
-    color: #497edf;
-    margin: 0;
-  }
-  header {
-    padding: 1rem;
-    border-bottom: 1px solid #9ba4b5;
-    min-height: 45px;
-    .name {
+.WebsiteInvite {
+  background: #3a445a;
+  border: 0;
+  display: grid;
+  grid-template-rows: 1fr 3fr 50px;
+  padding: 0;
+  box-shadow: 0 0 5px #d6e1f3;
+  width: 350px;
+
+  .CardHeader {
+    border-bottom: 1px solid #5c708a;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    .Name {
+      color: @zesty-white;
       font-size: 1.1em;
-      .icon {
-        margin-right: 5px;
-      }
     }
   }
-  main {
-    border-bottom: 1px solid #9ba4b5;
-    padding: 1rem;
-    flex: 1;
-    // a {
-    //   margin: 0;
-    // }
-    // .globe {
-    //   font-size: 10rem;
-    //   color: #f3f3f7;
-    //   text-align: center;
-    //   width: 100%;
-    // }
-    .preview {
+
+  .cover {
+    background-size: cover;
+    box-shadow: inset 0px -20px 100px #171b26;
+  }
+
+  .CardContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
+    height: 190px;
+    color: #b2c7d6;
+
+    img {
+      max-width: 100%;
+    }
+
+    .Preview {
       display: flex;
       align-items: center;
       font-size: 10rem;
       justify-content: center;
-      // color: #cacad4;
-      color: #f3f3f7;
+      color: #b2c7d6;
+
       &:hover {
         color: @zesty-orange;
       }
     }
   }
-  footer {
-    padding: 1rem;
+
+  .CardFooter {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #5c708a;
+    padding: 0.5rem;
+
     .invite {
       flex: 2;
+      margin-right: 0.5rem;
     }
   }
 }

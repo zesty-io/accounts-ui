@@ -1,50 +1,34 @@
-import { Component } from "React";
-import { connect } from "react-redux";
-import { Link, withRouter } from "react-router-dom";
+import { Component } from 'React'
+import { connect } from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
 
-import styles from "./PropertyBlueprint.less";
+import styles from './PropertyBlueprint.less'
 
-import qs from "qs";
-import config from "../../../../../shell/config";
-import { updateSite, fetchSite } from "../../store/sites";
-import { fetchBlueprints } from "../../store/blueprints";
+import qs from 'qs'
+import { updateSite, fetchSite, updateSiteBlueprint } from '../../store/sites'
+import { notify } from '../../../../../shell/store/notifications'
+import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
-  componentWillMount() {
-    this.props.dispatch(fetchBlueprints());
+  state = {
+    submitted: false
   }
-  handleSelect = id => {
-    this.props
-      .dispatch(updateSite(this.props.siteZUID, { blueprintID: id }))
-      .then(data => {
-        if (qs.parse(window.location.search.substr(1)).randomHashID) {
-          window
-            .open(
-              `${config.MANAGER_URL_PROTOCOL}${
-                qs.parse(window.location.search.substr(1)).randomHashID
-              }${config.MANAGER_URL}`,
-              "_blank"
-            )
-            .focus();
-        } else {
-          // re-fetch sites before the redirect
-          this.props.dispatch(fetchSite(data.data.ZUID)).then(date => {
-            return this.props.history.push(`/properties/${data.data.ZUID}`);
-          });
-        }
-      });
-  };
+  componentDidMount() {
+    this.props.dispatch(fetchBlueprints())
+  }
   render() {
     return (
-      <div>
-        {Object.keys(this.props.blueprints).length ? (
-          <section className={styles.BlueprintView}>
+      <div className={styles.BlueprintView}>
+        <WithLoader
+          condition={this.props.blueprints.length}
+          message="Loading Available Blueprints"
+        >
+          <section>
             <header>
               <h1>Select a Blueprint</h1>
-              <a href="/properties">
+              <AppLink type="cancel" to={`/instances`}>
                 <i className="fa fa-ban" aria-hidden="true" />&nbsp;Cancel
-                {/* <Button name="cancel" text="cancel" /> */}
-              </a>
+              </AppLink>
             </header>
             <p className={styles.description}>
               Blueprints are the starting point of your new website. They can
@@ -53,51 +37,94 @@ class PropertyBlueprint extends Component {
               configured for Zesty.io.
             </p>
             <main className={styles.Blueprints}>
-              {Object.keys(this.props.blueprints)
-                .filter(i => {
-                  if (!this.props.blueprints[i].trashed) {
-                    return i;
-                  }
-                })
-                .map(i => {
-                  let blueprint = this.props.blueprints[i];
-                  return (
-                    <article className={styles.Blueprint} key={i}>
-                      <header>
-                        <h1 className={styles.name}>{blueprint.name}</h1>
-                      </header>
-                      <main>
-                        <img src={blueprint.coverImage} alt="bp img" />
-                        <p>{blueprint.description}</p>
-                      </main>
-                      <footer>
-                        <Button onClick={() => this.handleSelect(blueprint.ID)}>
-                          <i className="fa fa-columns" aria-hidden="true" />
-                          Select Blueprint
-                        </Button>
-                      </footer>
-                    </article>
-                  );
-                })}
+              {this.props.blueprints.map(blueprint => {
+                return (
+                  <Card key={blueprint.ID} className={styles.Blueprint}>
+                    <CardHeader>
+                      <h4>{blueprint.name}</h4>
+                    </CardHeader>
+                    <CardContent className={styles.CardContent}>
+                      {blueprint.coverImage === '' ? (
+                        <div className={styles.noimage} aria-hidden="true">
+                          <i className="fa fa-file-code-o" aria-hidden="true" />
+                        </div>
+                      ) : (
+                        <img
+                          src={blueprint.coverImage}
+                          alt="Blueprint cover image"
+                        />
+                      )}
+                      <p>{blueprint.description}</p>
+                    </CardContent>
+                    <CardFooter>
+                      <Button
+                        disabled={this.state.submitted}
+                        onClick={() => this.setInstanceBlueprint(blueprint.ID)}
+                      >
+                        <i className="fa fa-file-code-o" aria-hidden="true" />
+                        Select Blueprint
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                )
+              })}
             </main>
           </section>
-        ) : (
-          <div className={styles.Loading}>
-            <h2>Loading Blueprints</h2>
-            <Loader />
-          </div>
-        )}
+        </WithLoader>
       </div>
-    );
+    )
+  }
+  setInstanceBlueprint = id => {
+    this.setState({
+      submitted: true
+    })
+
+    this.props
+      .dispatch(
+        updateSiteBlueprint(this.props.siteZUID, {
+          blueprintID: id
+        })
+      )
+      .then(data => {
+        this.props.history.push(`/instances/${this.props.siteZUID}`)
+        window.open(
+          `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${
+            CONFIG.MANAGER_URL
+          }`,
+          '_blank'
+        )
+      })
+      .catch(err => {
+        console.error(err)
+        this.setState({
+          submitted: false
+        })
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: 'There was a problem selecting the blueprint'
+          })
+        )
+      })
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    siteZUID: ownProps.match.params.zuid,
-    blueprints: state.blueprints,
-    user: state.user
-  };
-};
+export default withRouter(
+  connect((state, ownProps) => {
+    const blueprints = Object.keys(state.blueprints)
+      .reduce((acc, key) => {
+        acc.push(state.blueprints[key])
+        return acc
+      }, [])
+      .filter(blueprint => !blueprint.trashed)
 
-export default withRouter(connect(mapStateToProps)(PropertyBlueprint));
+    const siteZUID = ownProps.match.params.zuid
+    const randomHashID = state.sites[siteZUID].randomHashID
+
+    return {
+      siteZUID,
+      randomHashID,
+      blueprints
+    }
+  })(PropertyBlueprint)
+)

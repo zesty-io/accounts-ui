@@ -7,32 +7,29 @@
   },
   "main": "webpack.config.js",
   "scripts": {
-    "build": "node bin/build",
-    "prestart": "npm install",
-    "start": "node bin/start & npm run serve",
     "serve": "./node_modules/.bin/serve ./build --port 6006 --single",
-    "prod": "export NODE_ENV=\"production\" && node bin/build",
-    "dev": "export NODE_ENV=\"development\" && node bin/build",
-    "stage": "export NODE_ENV=\"staging\" && node bin/build"
+    "start": "export NODE_ENV=\"development\" && npm install & node bin/preBuild && node bin/start",
+    "build-dev": "export NODE_ENV=\"development\" && node bin/preBuild && node bin/build",
+    "build-stage": "export NODE_ENV=\"stage\" && node bin/preBuild && node bin/build",
+    "build-prod": "export NODE_ENV=\"production\" && node bin/preBuild && node bin/build"
   },
-  "author": "Stuart Runyan<stuart@zesty.io>",
+  "author": "Zesty.io<developers@zesty.io>",
   "contributors": [
-    "Grant Glidewell <grant.glidewell@zesty.io>"
+    "Grant Glidewell<grant.glidewell@zesty.io>",
+    "Stuart Runyan<stuart@zesty.io>"
   ],
-  "license": "UNLICENSED",
+  "license": "All Rights Reserved",
   "dependencies": {
-    "chart.js": "2.7.2",
     "classnames": "2.2.5",
     "qs": "^6.5.1",
-    "react": "16.2.0",
-    "react-chartjs-2": "2.7.0",
-    "react-dom": "16.2.0",
+    "react": "^16.4.0",
+    "react-dom": "16.4.0",
     "react-redux": "5.0.7",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
-    "redux-debounced": "0.4.0",
-    "redux-thunk": "2.2.0"
+    "redux-thunk": "2.2.0",
+    "js-cookie": "2.2.0"
   },
   "devDependencies": {
     "ava": "0.25.0",

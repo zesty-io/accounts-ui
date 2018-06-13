@@ -1,0 +1,38 @@
+.PropertyName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  // margin-bottom: 0.5rem;
+
+  .Name {
+    cursor: pointer;
+    // font-size: 1.6em;
+    .Edit {
+      display: none;
+      padding: 0.5rem;
+    }
+    &:hover {
+      .Edit {
+        display: inline;
+      }
+    }
+  }
+
+  .EditName {
+    display: flex;
+    align-items: center;
+    input {
+      line-height: 1.8em;
+      margin-right: 0.5rem;
+      width: 300px;
+    }
+    button {
+      font-size: 0.6em;
+      padding: 0.3rem 0.6rem;
+    }
+
+    // i {
+    //   font-size: 1.4em;
+    // }
+  }
+}

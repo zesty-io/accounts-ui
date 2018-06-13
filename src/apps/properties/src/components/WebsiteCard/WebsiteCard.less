@@ -1,67 +1,84 @@
 @import url('../../../../../shell/styles/colors.less');
+
 .WebsiteCard {
-  background: lighten(#f2f4fb, 2.5%);
-  margin: 1.5rem;
-  max-width: 60rem;
-  word-break: break-word;
-
-  display: flex;
-  flex-direction: column;
-
   display: grid;
-  grid-template-rows: 1fr 2fr 0fr;
+  grid-template-rows: 1fr 3fr 35px;
+  padding: 0;
+  box-shadow: 0 0 5px #d6e1f3;
+  // width: 350px;
 
-  a:visited,
-  a {
-    color: #497edf;
-    margin: 0;
-    text-decoration: none;
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0 0 10px #8398bd;
   }
-  header {
+
+  .CardHeader {
+    padding: 0 1rem;
     display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    background: lighten(#f2f4fb, 2%);
-    border-bottom: 1px solid #f2f4fb;
+    align-items: center;
+    position: relative;
+
+    .favorite {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
 
     h1 {
       font-size: 1.2em;
+      word-break: break-word;
     }
     a {
       font-size: 0.9rem;
+      margin: 0;
+    }
+    i {
+      justify-self: flex-end;
     }
   }
-  main {
-    border-bottom: 1px solid #f2f4fb;
-    padding: 1rem;
+
+  .cover {
+    background-size: cover;
+    box-shadow: inset 0px -20px 100px #171b26;
+  }
+
+  .CardContent {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    width: 100%;
+    height: 190px;
+    color: #b2c7d6;
 
-    .preview {
-      display: flex;
-      align-items: center;
-      font-size: 10rem;
-      justify-content: center;
-      color: #cacad4;
-      &:hover {
-        color: @zesty-orange;
-      }
+    img {
+      max-width: 100%;
     }
   }
-  footer {
-    display: flex;
+  .Offline {
     flex-direction: column;
-    padding: 1rem;
+    .icon {
+      font-size: 7em;
+    }
+  }
 
+  .CardFooter {
+    padding: 0;
     .controls {
-      flex: 1;
-      display: flex;
       display: grid;
-      grid-template-columns: 1fr 20px;
-      .manager {
-        color: @zesty-orange;
-        text-shadow: 1px 1px 0 @white;
+      grid-template-columns: 35px 35px 35px 1fr;
+
+      a {
+        border-right: 1px solid @zesty-field-blue;
+        padding: 9px;
+        margin: 0;
+        text-align: center;
+      }
+      a:last-child {
+        border: none;
+        text-align: right;
+        padding: 4px 9px;
       }
     }
   }

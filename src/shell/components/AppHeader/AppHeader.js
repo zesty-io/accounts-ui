@@ -12,21 +12,51 @@ export default class AppHeader extends Component {
       userNavOpen: ''
     }
   }
+
+  componentDidMount() {
+    document.addEventListener('click', this.closeUserNav)
+  }
+  componentWillUnmountMount() {
+    document.removeEventListener('click', this.closeUserNav)
+  }
+
   render() {
     return (
       <header className={styles.AppHeader}>
         <img className={styles.logo} src="/zesty-z-logo.svg" />
         <nav className={styles.GlobalNav}>
-          <NavLink to="/properties">Web Properties</NavLink>
+          <NavLink to="/instances">
+            <i className="fa fa-globe" aria-hidden="true" />
+            &nbsp;Instances
+          </NavLink>
+          {/* <NavLink to="/teams">
+            <i className="fa fa-users" aria-hidden="true" />
+            &nbsp;Teams
+          </NavLink> */}
+          {this.props.user.prefs.devOptions === 1 && (
+            <NavLink to="/blueprints">
+              <i className="fa fa-map" aria-hidden="true" />
+              &nbsp;Blueprints
+            </NavLink>
+          )}
         </nav>
-        {/* <nav className={styles.HelpNav}>
-          <a href="https://developer.zesty.io" target="_blank">
-            <i className={cx(styles.icon, "fa fa-question-circle")} aria-hidden="true"></i>
-          </a>
-        </nav> */}
+        <nav className={styles.LegacyLink}>
+          <Url
+            href={CONFIG.LEGACY_ACCOUNTS}
+            title="Return to the legacy accounts application"
+          >
+            <i className="fa fa-info-circle" aria-hidden="true" />&nbsp;Legacy
+            Accounts
+          </Url>
+        </nav>
         <nav
-          className={cx(styles.UserNav, styles[this.state.userNavOpen])}
-          onClick={this.showUserNav}
+          ref={nav => (this.userNav = nav)}
+          className={cx(
+            'UserNav',
+            styles.UserNav,
+            styles[this.state.userNavOpen]
+          )}
+          onClick={this.toggleUserNav}
         >
           {this.props.user.firstName} {this.props.user.lastName}
           <img
@@ -35,7 +65,7 @@ export default class AppHeader extends Component {
               this.props.user.emailHash
             }?d=mm&s=30`}
           />
-          <ul className={styles.UserMenu}>
+          <ul className={styles.UserMenu} id="userNavDropdown">
             <li className={styles.user}>
               <span className={styles.name}>
                 {this.props.user.firstName} {this.props.user.lastName}
@@ -47,19 +77,18 @@ export default class AppHeader extends Component {
 
             <li>
               <NavLink to="/settings/account">
-                <i className="fa fa-cog" aria-hidden="true" />
-                &nbsp;My Account
+                <i className="fa fa-cog" aria-hidden="true" /> My Account
               </NavLink>
             </li>
 
             <li>
-              <a href="https://developer.zesty.io" target="_blank">
+              <NavLink to="/support">
                 <i
                   className={cx(styles.icon, 'fa fa-question-circle')}
                   aria-hidden="true"
                 />{' '}
                 Support
-              </a>
+              </NavLink>
             </li>
 
             <hr />
@@ -77,9 +106,21 @@ export default class AppHeader extends Component {
       </header>
     )
   }
-  showUserNav = evt => {
+
+  toggleUserNav = evt => {
     this.setState({
       userNavOpen: this.state.userNavOpen === 'show' ? '' : 'show'
     })
+  }
+
+  closeUserNav = evt => {
+    if (this.state.userNavOpen) {
+      const parent = evt.target.closest('.UserNav')
+      if (!parent || parent !== this.userNav) {
+        this.setState({
+          userNavOpen: ''
+        })
+      }
+    }
   }
 }

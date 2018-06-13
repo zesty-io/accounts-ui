@@ -1,0 +1,33 @@
+@import '../../../../../../../../shell/styles/colors.less';
+
+.UserRow {
+  padding: 0.5rem;
+  align-items: center;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  &:nth-child(odd) {
+    background-color: @zesty-white;
+  }
+  p {
+    font-size: 1.1em;
+  }
+  span:last-child {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    max-height: 50px;
+    .select {
+      flex: 3;
+    }
+    .trash {
+      margin: 0.4rem;
+      color: @zesty-light-grey;
+      cursor: pointer;
+    }
+  }
+  .Owner {
+    flex: 1;
+  }
+}

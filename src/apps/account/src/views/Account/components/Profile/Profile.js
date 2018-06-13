@@ -15,48 +15,15 @@ class Profile extends Component {
       submitted: false
     }
   }
-  handleClick = evt => {
-    evt.preventDefault()
-    this.setState({ submitted: !this.state.submitted })
-    this.props
-      .dispatch(saveProfile())
-      .then(data => {
-        this.props.dispatch(
-          notify({
-            HTML: `<p>
-        <i class="fa fa-check-square-o" aria-hidden="true" />&nbsp;Name updated to 
-        ${this.props.profile.firstName}
-        ${this.props.profile.lastName}
-      </p>`,
-            type: 'success'
-          })
-        )
-        this.setState({ submitted: !this.state.submitted })
-      })
-      .catch(err => {
-        this.props.dispatch(
-          notify({
-            HTML: `<p>
-        <i class="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;Error saving data ${err}
-      </p>`,
-            type: 'error'
-          })
-        )
-        this.setState({ submitted: !this.state.submitted })
-      })
-  }
-  handleChange = evt => {
-    this.props.dispatch(updateProfile({ [evt.target.name]: evt.target.value }))
-  }
   render() {
     return (
-      <article className={styles.Profile}>
-        <header>
-          <h2>Your Profile</h2>
-        </header>
-        <main>
+      <Card>
+        <CardHeader>
+          <h1>Your Profile</h1>
+        </CardHeader>
+        <CardContent className={styles.Profile}>
           <div className={styles.gravatar}>
-            <h3>Gravatar</h3>
+            <h4>Gravatar</h4>
             <img
               className={styles.avatar}
               src={`https://www.gravatar.com/avatar/${
@@ -64,8 +31,7 @@ class Profile extends Component {
               }?d=mm&s=80`}
             />
           </div>
-
-          <h3>Name</h3>
+          <h4>User Name</h4>
           <Input
             type="text"
             value={this.props.profile.firstName}
@@ -80,8 +46,8 @@ class Profile extends Component {
             placeholder="Enter your last name"
             name="lastName"
           />
-        </main>
-        <footer>
+        </CardContent>
+        <CardFooter>
           <Button
             onClick={this.handleClick}
             className={styles.ProfileSave}
@@ -90,12 +56,44 @@ class Profile extends Component {
             <i className="fa fa-floppy-o" aria-hidden="true" />
             Set Name
           </Button>
-        </footer>
-      </article>
+        </CardFooter>
+      </Card>
     )
+  }
+  handleClick = evt => {
+    evt.preventDefault()
+    this.setState({ submitted: !this.state.submitted })
+    this.props
+      .dispatch(saveProfile())
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            HTML: `<i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Name updated to ${
+              this.props.profile.firstName
+            } ${this.props.profile.lastName}`,
+            type: 'success'
+          })
+        )
+        this.setState({ submitted: !this.state.submitted })
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Error saving data ${err}`,
+            type: 'error'
+          })
+        )
+        this.setState({ submitted: !this.state.submitted })
+      })
+  }
+  handleChange = evt => {
+    this.props.dispatch(updateProfile({ [evt.target.name]: evt.target.value }))
   }
 }
 
 export default connect(state => {
-  return { profile: state.user, userZUID: state.user.ZUID }
+  return {
+    profile: state.user,
+    userZUID: state.user.ZUID
+  }
 })(Profile)

@@ -1,0 +1,30 @@
+@import '../../../../../shell/styles/colors.less';
+
+.Blueprints {
+  .BlueprintList {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fill, 400px);
+    grid-auto-rows: 20rem;
+    margin: 1rem 0 0 0;
+    article {
+      width: 20rem;
+      p {
+        margin: 1rem 0;
+      }
+    }
+    .BlueprintAction {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+
+.Loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}

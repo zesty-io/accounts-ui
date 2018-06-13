@@ -15,78 +15,89 @@ class TwoFactorOptions extends Component {
       authyPhoneNumber: ''
     }
   }
-  handleChange = evt => {
-    this.setState({ [evt.target.name]: evt.target.value })
-  }
-  handleEnable = evt => {
-    evt.preventDefault()
-    // do the thing that sets up 2fa
-    this.props.dispatch(update2fa(true, this.state))
-  }
-  handleDisable = evt => {
-    evt.preventDefault()
-    this.props.dispatch(
-      zConfirm({
-        prompt: 'Are you sure you want to disable two-factor auth?',
-        callback: response => {
-          if (response) {
-            // do the thing that removes 2fa
-            this.props.dispatch(update2fa(false))
-          }
-        }
-      })
-    )
-  }
   render() {
     return (
-      <article className={styles.TwoFactor}>
-        <header>
-          <h2>Two Factor Authentication</h2>
-        </header>
-        <main>
+      <Card>
+        <CardHeader>
+          <h1>Two-Factor Authentication</h1>
+        </CardHeader>
+        <CardContent className={styles.TwoFactor}>
           {this.props.authyEnabled ? (
-            <div>
+            <React.Fragment>
               <p>
                 Two-factor authentication currently set up for this account.
               </p>
               <p>number used {this.props.authyPhoneNumber}</p>
-              <Button text="Disable Two-factor" onClick={this.handleDisable} />
-            </div>
+            </React.Fragment>
           ) : (
-            <div>
+            <React.Fragment>
+              <p>
+                <Url
+                  className={styles.InfoLink}
+                  target="_blank"
+                  href="https://authy.com/what-is-2fa/"
+                >
+                  What is Authy 2 Factor Authentication?
+                </Url>
+              </p>
+
               <p>
                 Two-factor authentication is not currently set up for this
                 account. Put in the phone number you want to use for
                 authentication below.
               </p>
-              <label>Phone Number</label>
-              <Input
-                type="text"
-                size="5"
-                placeholder="+1"
-                name="authyPhoneCountyCode"
-                value={this.state.authyPhoneCountyCode}
-                onChange={this.handleChange}
-              />
-              <Input
-                type="text"
-                placeholder="123-456-7890"
-                name="authyPhoneNumber"
-                required
-                value={this.state.authyPhoneNumber}
-                onChange={this.handleChange}
-              />
-            </div>
+
+              <label className={styles.PhoneNumber}>
+                <span className={styles.PhoneNumberLabel}>Phone Number</span>
+                <Input
+                  type="text"
+                  size="5"
+                  placeholder="+1"
+                  name="authyPhoneCountyCode"
+                  value={this.state.authyPhoneCountyCode}
+                  onChange={this.handleChange}
+                />&nbsp;
+                <Input
+                  type="text"
+                  placeholder="123-456-7890"
+                  name="authyPhoneNumber"
+                  required
+                  value={this.state.authyPhoneNumber}
+                  onChange={this.handleChange}
+                />
+              </label>
+            </React.Fragment>
           )}
-        </main>
-        <footer>
+        </CardContent>
+        <CardFooter>
           {this.props.authyEnabled ? (
-            <Button text="Disable Two-factor" onClick={this.handleDisable} />
+            <Button onClick={this.handleDisable}>Disable Two-factor</Button>
           ) : (
-            <Button text="Enable Two-factor" onClick={this.handleEnable} />
+            <Button onClick={this.handleEnable}>
+              <i className="fa fa-shield" aria-hidden="true" />
+              Enable Two-factor
+            </Button>
           )}
-        </footer>
-      </article>
+        </CardFooter>
+      </Card>
+    )
+  }
+  handleChange = evt => {
+    this.setState({ [evt.target.name]: evt.target.value })
+  }
+  handleEnable = evt => {
+    this.props.dispatch(update2fa(true, this.state))
+  }
+  handleDisable = evt => {
+    this.props.dispatch(
+      zConfirm({
+        prompt: 'Are you sure you want to disable two-factor authentication?',
+        callback: response => {
+          if (response) {
+            this.props.dispatch(update2fa(false))
+          }
+        }
+      })
     )
   }
 }

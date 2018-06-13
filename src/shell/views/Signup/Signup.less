@@ -3,59 +3,44 @@
 .Signup {
   height: 100vh;
   width: 100vw;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  align-items: center;
+  justify-content: center;
 
   .SignupForm {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    max-width: 60rem;
+    max-width: 25rem;
     max-height: 40rem;
+    padding: 1rem;
 
     img {
-      height: 100px;
-      margin-bottom: 1rem;
+      margin-bottom: 2rem;
     }
     .error {
       color: @zesty-red;
-      border-radius: 3px;
       margin: 1rem 0;
-      padding: 1rem;
-      background: @zesty-white-blue;
     }
     p {
       margin-bottom: 5px;
       text-align: left;
     }
     button {
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center;
-      min-height: 50px;
-      font-size: 1.5em;
+      justify-content: center;
+    }
+    label {
+      cursor: pointer;
+      display: block;
+      font-weight: bold;
+      margin-bottom: 20px;
     }
     .input {
-      margin-bottom: 20px;
       width: 100%;
+    }
+    .checkbox {
+      margin: 5px;
     }
     a {
       margin: 0;
       text-shadow: none;
     }
   }
-}
-.checkbox {
-  margin: 5px;
 }

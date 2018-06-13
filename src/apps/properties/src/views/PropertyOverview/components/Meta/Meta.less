@@ -1,0 +1,40 @@
+@import '../../../../../../../shell/styles/colors.less';
+
+.Meta {
+  margin: 0 0 1.5rem;
+  .CardHeader {
+    h2 {
+      display: flex;
+      align-items: center;
+    }
+  }
+  .CardContent {
+    .domain {
+      margin: 1rem 0;
+      .title {
+        font-weight: bold;
+      }
+      button {
+        font-size: 0.9em;
+      }
+    }
+    article {
+      display: flex;
+      flex-wrap: wrap;
+      .setting {
+        margin: 0 1rem 1rem 0;
+        min-width: 120px;
+        .title {
+          font-weight: bold;
+          display: block;
+        }
+        .NonEditable {
+          color: #8c96ab;
+        }
+      }
+    }
+    .manager {
+      margin: 0;
+    }
+  }
+}

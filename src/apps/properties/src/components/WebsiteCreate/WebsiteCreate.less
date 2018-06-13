@@ -9,32 +9,17 @@
   flex-direction: column;
 
   display: grid;
-  grid-template-rows: 1fr 2fr 0fr;
+  grid-template-rows: 0fr 2fr 0fr;
 
-  // a:visited,
-  // a {
-  //   color: #497edf;
-  //   margin: 0;
-  // }
   header {
     padding: 1rem;
     background: lighten(#f2f4fb, 2%);
     border-bottom: 1px solid #f2f4fb;
     .name {
       font-size: 1.1em;
-      // .icon {
-      //   margin-right: 5px;
-      // }
     }
   }
-  // main {
-  //   padding: 1rem;
-  //   padding-bottom: 0;
-  //   flex: 1;
-  //   a {
-  //     margin: 0;
-  //   }
-  // }
+
   main {
     border-bottom: 1px solid #f2f4fb;
     padding: 1rem;
@@ -43,11 +28,9 @@
       font-size: 1.4rem;
       margin-bottom: 0.5rem;
     }
-    p {
+    p:first-child {
+      margin: 0 0 1rem 0;
     }
-    // a {
-    //   margin: 0;
-    // }
   }
   footer {
     padding: 1rem;

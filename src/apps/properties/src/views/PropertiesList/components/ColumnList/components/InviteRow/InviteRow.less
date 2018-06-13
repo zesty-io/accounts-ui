@@ -1,0 +1,43 @@
+@import '../../../../../../../../../shell/styles/colors.less';
+
+.Invite {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #d3e1f7;
+  // background: #3a445a;
+  background: @zesty-tab-color;
+
+  .action {
+    margin: 0;
+    padding: 9px;
+    // background: none;
+    // border: none;
+    // border-left: 1px solid #c7d4ea;
+
+    color: @zesty-white;
+    text-shadow: none;
+
+    i {
+      // color: lighten(@zesty-tab-blue, 20%);
+      margin: 0;
+      text-shadow: none;
+    }
+  }
+  .action:first-child {
+    border: none;
+    flex: 1;
+  }
+  .action:hover,
+  .action:active,
+  .action:focus {
+    i {
+      color: @zesty-blue;
+    }
+  }
+}
+.row:first-child {
+  border: none;
+}
+.row:last-child {
+  margin-bottom: 3rem;
+}

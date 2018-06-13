@@ -1,7 +1,9 @@
 @import '../../../../../shell/styles/colors.less';
 
-.settings {
+.Settings {
+  height: 86vh;
   padding: 2rem;
+  overflow-y: scroll;
 
   .SettingsTitle {
     font-size: 1.8rem;
@@ -12,26 +14,24 @@
     margin: 0 0 2rem 0;
 
     .SettingCards {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      justify-content: space-around;
       grid-gap: 1.3rem;
-      @media (max-width: 1485px) {
+      grid-template-columns: 0fr 1fr 1fr 1fr;
+
+      @media (max-width: 1750px) {
         grid-template-columns: 1fr 1fr;
         grid-gap: 1.6rem;
       }
+      @media (max-width: 850px) {
+        grid-template-columns: 1fr;
+      }
       article {
         justify-self: center;
-        max-height: 350px;
-        max-width: 350px;
-        @media (max-width: 1485px) {
-          grid-template-columns: 1fr 1fr;
-          max-width: 450px;
-        }
+        width: 400px;
       }
-      // article:last-child {
-      //   margin: 0;
-      // }
     }
     h1 {
       font-size: 1.4rem;

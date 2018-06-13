@@ -5,7 +5,10 @@ import cx from 'classnames'
 
 export default function AppLink(props) {
   return (
-    <Link {...props} className={cx(styles.AppLink, props.className)}>
+    <Link
+      {...props}
+      className={cx(styles.AppLink, props.className, styles[props.type])}
+    >
       {props.text}
       {props.children}
     </Link>

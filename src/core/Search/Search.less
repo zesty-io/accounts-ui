@@ -21,5 +21,15 @@
     font-size: 1.3rem;
     font-weight: 100;
     padding: 0 0 0 0.5em;
+    &:hover,
+    &:active,
+    &:focus {
+      background: @white;
+      outline: none;
+    }
+    &:placeholder-shown {
+      color: lighten(@zesty-light-grey, 10%);
+      font-weight: 100;
+    }
   }
 }

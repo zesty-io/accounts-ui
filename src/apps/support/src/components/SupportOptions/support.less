@@ -1,0 +1,38 @@
+@import '../../../../../shell/styles/colors.less';
+
+.Support {
+  height: 94vh;
+  overflow-y: scroll;
+
+  header {
+    font-size: 1.8rem;
+    padding: 3rem 3rem 0;
+  }
+  main {
+    padding: 0 2rem 2rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem;
+      height: 150px;
+      width: 200px;
+      border-radius: 3px;
+      background-color: @zesty-light-gray;
+      color: @zesty-gray;
+      text-decoration: none;
+
+      &:hover {
+        background-color: @zesty-light-blue;
+      }
+
+      span {
+        margin-top: 6px;
+      }
+    }
+  }
+}

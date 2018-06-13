@@ -1,0 +1,33 @@
+@import url('../../../../../shell/styles/colors.less');
+
+.PropertyOverview {
+  .PropertyOverviewHeader {
+    padding: 1rem;
+    box-shadow: 0px 0px 2px #a7b8d6;
+    margin-bottom: 0.5rem;
+    position: sticky;
+    top: 0;
+    background: darken(@appBkgColor, 3%);
+    z-index: 10;
+  }
+  .Cards {
+    padding: 1rem;
+  }
+}
+.Loading {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100vw;
+}
+
+@media (max-width: 780px) {
+  .PropertyOverview {
+    width: 100vw;
+    main {
+      padding: 0;
+    }
+  }
+}

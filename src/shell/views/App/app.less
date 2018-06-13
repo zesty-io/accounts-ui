@@ -1,15 +1,15 @@
-@import "../../styles/colors.less";
+@import '../../styles/colors.less';
 
 .AppShell {
-  background-color: @appBkgColor;
+  background-color: @zesty-white;
   color: #5b667d;
-  font-family: "GibsonRegular", Arial, sans-serif;
+  font-family: 'GibsonRegular', Arial, sans-serif;
   font-size: 1em;
 }
 
 .AppMain {
-  height: 95vh;
-  overflow-y: scroll;
+  height: 94vh;
+  overflow: hidden;
   .loaderWrap {
     height: 100%;
     display: flex;
@@ -17,4 +17,28 @@
     justify-content: center;
     align-items: center;
   }
+}
+
+::-webkit-scrollbar {
+  background-color: #c0cee7;
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-button {
+  background-color: #c0cee7;
+}
+::-webkit-scrollbar-track {
+  background-color: #c0cee7;
+}
+::-webkit-scrollbar-track-piece {
+  background-color: #c0cee7;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #5b667d;
+}
+::-webkit-scrollbar-corner {
+  background-color: #c0cee7;
+}
+::-webkit-resizer {
+  background-color: #c0cee7;
 }

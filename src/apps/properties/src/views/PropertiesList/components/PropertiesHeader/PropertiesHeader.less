@@ -1,0 +1,83 @@
+@import url('../../../../../../../shell/styles/colors.less');
+
+.PropertiesHeader {
+  background: @zesty-white;
+  height: 8vh;
+  display: flex;
+  align-items: center;
+
+  box-shadow: 0px 0px 2px #a7b8d6;
+  padding: 0 1rem;
+  z-index: 20;
+  position: relative;
+
+  @media (max-width: 600px) {
+    .Websites {
+      padding: 0 0.5rem;
+    }
+  }
+
+  .Actions {
+    display: flex;
+    margin: 0 2rem 0 0;
+    flex: 1;
+
+    .Ecosystem {
+      line-height: 2.8rem;
+      font-size: 1rem;
+      width: 250px;
+      flex: inherit;
+      margin: 0 1rem 0 0;
+    }
+    .Search {
+      flex: 4;
+      margin: 0 1rem 0 0;
+    }
+    .Layout {
+      margin-left: 1rem;
+      align-items: inherit;
+      button {
+        margin: 0;
+        line-height: 3.2rem;
+        i {
+          margin: 0;
+        }
+      }
+    }
+    .Sort {
+      align-items: inherit;
+      button {
+        margin: 0;
+        line-height: 3.2rem;
+        i {
+          margin: 0;
+        }
+      }
+    }
+    .Create {
+      margin-left: 1rem;
+      margin-right: 1rem;
+      a {
+        color: lighten(@zesty-light-blue, 5%);
+        display: inline-block;
+        text-decoration: none;
+        padding: 0.7rem 0.8rem;
+        opacity: 1;
+      }
+    }
+    .ButtonGroup {
+      .button {
+        margin: 0;
+      }
+    }
+  }
+  @media (max-width: 600px) {
+    .Actions {
+      flex-direction: column;
+      .Search {
+        flex: none;
+        margin: 0 0 0.5rem;
+      }
+    }
+  }
+}

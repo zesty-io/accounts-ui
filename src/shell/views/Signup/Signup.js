@@ -4,8 +4,9 @@ import { withRouter } from 'react-router-dom'
 import qs from 'qs'
 
 import styles from './Signup.less'
+
 import { request } from '../../../util/request'
-import config from '../../../shell/config'
+import { login } from '../../store/auth'
 
 class Signup extends Component {
   constructor(props) {
@@ -35,32 +36,27 @@ class Signup extends Component {
       })
     }
   }
-  handleChange = evt => {
-    return this.setState({ [evt.target.name]: evt.target.value })
-  }
   render() {
     return (
       <section className={styles.Signup}>
         <form
           name="signup"
           className={styles.SignupForm}
-          onSubmit={this.handleSignup}>
-          <img src="/zesty-io-logo.svg" />
-          {this.state.message ? (
-            <p className={styles.error}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                this.state.message
-              }
-            </p>
-          ) : null}
+          onSubmit={this.handleSignup}
+        >
+          <Url href="https://zesty.io" title="https://zesty.io">
+            <img src="/zesty-io-logo.svg" height="70px" />
+          </Url>
+
           <label>
             <p>Email Address</p>
             <Input
+              required
+              autoFocus
               className={styles.input}
               type="email"
-              placeholder="e.g. hello@zesty.io"
-              required
               name="email"
+              placeholder="e.g. hello@zesty.io"
               value={this.state.email}
               onChange={this.handleChange}
             />
@@ -68,11 +64,11 @@ class Signup extends Component {
           <label>
             <p>First Name</p>
             <Input
+              required
               className={styles.input}
               type="text"
-              placeholder="Zesty"
-              required
               name="firstName"
+              placeholder="Zesty"
               value={this.state.firstName}
               onChange={this.handleChange}
             />
@@ -80,10 +76,9 @@ class Signup extends Component {
           <label>
             <p>Last Name</p>
             <Input
+              required
               className={styles.input}
               type="text"
-              placeholder=""
-              required
               name="lastName"
               value={this.state.lastName}
               onChange={this.handleChange}
@@ -91,46 +86,80 @@ class Signup extends Component {
           </label>
           <label>
             <p>Password</p>
-            <h5>Minimum 8 characters with at least</h5>
-            <h5> one number, uppercase and lowercase letter.</h5>
+            <small>
+              Minimum 8 characters with at least one number, uppercase and
+              lowercase letter.
+            </small>
             <Input
+              required
               className={styles.input}
               type="password"
-              required
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
               name="pass"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
               value={this.state.pass}
               onChange={this.handleChange}
             />
           </label>
           <label>
-            <h5>I have read and agree to the</h5>
-            <a
-              href="https://www.zesty.io/en-us/about/end-user-license-agreement/"
-              target="_blank">
-              End User License Agreement
-            </a>
             <Input
-              type="checkbox"
               required
               className={styles.checkbox}
+              type="checkbox"
               name="eula"
               checked={this.state.eula}
               onChange={this.handleChange}
             />
+            <span>
+              I have read and agree to the{' '}
+              <Url
+                href="https://www.zesty.io/en-us/about/end-user-license-agreement/"
+                target="_blank"
+              >
+                End User License Agreement
+              </Url>
+            </span>
           </label>
           <Button type="submit" disabled={this.state.submitted}>
-            Create An Account
+            {this.state.submitted ? (
+              <React.Fragment>
+                <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Creating
+                Your Account
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <i className="fa fa-plus" aria-hidden="true" />
+                &nbsp;Create Your Account
+              </React.Fragment>
+            )}
           </Button>
-          <AppLink to="/login">Already have an account?</AppLink>
+          <small>
+            <AppLink to="/login">Already have an account?</AppLink>
+          </small>
+
+          {this.state.message ? (
+            <p className={styles.error}>
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
+                this.state.message
+              }
+            </p>
+          ) : null}
         </form>
       </section>
     )
   }
+  handleChange = evt => {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
   handleSignup = evt => {
     evt.preventDefault()
-    this.setState({ submitted: true })
-    request(`${config.API_ACCOUNTS}/users`, {
+
+    this.setState({
+      submitted: true
+    })
+
+    request(`${CONFIG.API_ACCOUNTS}/users`, {
       method: 'POST',
       json: true,
       body: {
@@ -141,52 +170,26 @@ class Signup extends Component {
       }
     })
       .then(json => {
+        // this is in place of a code === 201,
+        // server only returns an error, no code
         if (!json.error) {
-          //this is in place of a code === 201, server only returns an error, no code
-          // Log user in after signing up
-          this.props.dispatch({
-            type: 'FETCH_USER_SUCCESS',
-            user: json.data
-          })
-          request(`${config.API_AUTH}/login`, {
-            body: {
-              email: this.state.email,
-              password: this.state.pass
-            }
-          })
-            .then(json => {
-              if (!json.error) {
-                // in place of 200 code
-                this.props.dispatch({
-                  type: 'FETCH_AUTH_SUCCESS',
-                  zuid: json.meta.userZuid,
-                  auth: true
-                })
-              } else {
-                // if the user was created but login failed
-                // send them to the login view
-                this.setState({ mesage: 'There was a problem logging you in' })
-                this.props.history.push('/login')
-              }
-            })
-            .catch(err => {
-              notify({
-                message: 'There was a problem logging in',
-                type: 'error'
-              })
-              console.table(err)
-            })
+          // Force confirm email before logging in
+          this.props.history.push('/verify-email')
         } else {
           this.setState({
+            submitted: false,
             message: json.data.error
           })
         }
       })
       .catch(err => {
-        this.setState({ message: 'There was a problem creating your account' })
-        console.table(err)
+        console.error(err)
+        this.setState({
+          submitted: false,
+          message: 'There was a problem creating your account'
+        })
       })
   }
 }
 
-export default withRouter(connect(state => state)(Signup))
+export default withRouter(connect()(Signup))

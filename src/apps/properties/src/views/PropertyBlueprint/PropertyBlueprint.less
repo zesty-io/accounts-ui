@@ -1,6 +1,8 @@
 @import '../../../../../shell/styles/colors.less';
 
 .BlueprintView {
+  overflow-y: scroll;
+  height: 100%;
   padding: 2rem;
   header {
     display: flex;
@@ -27,44 +29,23 @@
 .Blueprints {
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
-  margin-top: 2rem;
-}
+  grid-gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
 
-.Blueprint {
-  background: @white;
-
-  header {
-    background: @zesty-white;
-    .name {
-      font-size: 1.1em;
-      margin-left: 1rem;
+  .Blueprint {
+    .CardContent {
+      margin: 1rem 0;
+      img {
+        margin: 0 0 0.5rem;
+        width: 100%;
+      }
+      .noimage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 1.5em;
+        font-size: 5rem;
+      }
     }
   }
-  main {
-    padding: 1rem;
-    padding-bottom: 0;
-
-    img {
-      width: 100%;
-      padding: 0 0 1rem;
-      // max-width: 30%;
-      // padding: 0 1rem 1rem 0;
-      // float: left;
-    }
-  }
-  footer {
-    clear: both;
-    padding: 1rem;
-  }
-}
-
-.Loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  height: 100%;
-  width: 100vw;
 }

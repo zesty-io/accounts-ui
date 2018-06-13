@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 export function sitesStats(state = {}, action) {
   switch (action.type) {

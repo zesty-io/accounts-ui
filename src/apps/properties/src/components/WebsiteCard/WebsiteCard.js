@@ -1,67 +1,93 @@
-import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
-import config from '../../../../../shell/config'
+import InstanceFavorite from '../InstanceFavorite'
 
-import { Line } from 'react-chartjs-2'
+export default props => {
+  const { site } = props
+  return (
+    <Card className={styles.WebsiteCard}>
+      <CardHeader className={styles.CardHeader}>
+        <h1>{site.name}</h1>
+        <InstanceFavorite
+          className={styles.favorite}
+          favorite={site.favorite}
+          ZUID={site.ZUID}
+        />
+      </CardHeader>
+      {site.domain ? (
+        site.screenshotURL ? (
+          <CardContent
+            className={cx(styles.CardContent, styles.cover)}
+            style={{ backgroundImage: `url(${site.screenshotURL})` }}
+          />
+        ) : (
+          <CardContent className={cx(styles.CardContent, styles.cover)} />
+        )
+      ) : (
+        <CardContent className={cx(styles.CardContent, styles.Offline)}>
+          <i
+            className={cx(styles.icon, 'fa fa-picture-o')}
+            aria-hidden="true"
+          />
 
-class WebsiteCard extends PureComponent {
-  render() {
-    return (
-      <article className={styles.WebsiteCard}>
-        <header>
-          <h1>{this.props.site.name}</h1>
-          {this.props.site.domain ? (
-            <Url target="_blank" href={`http://${this.props.site.domain}`}>
-              <i className="fa fa-globe" aria-hidden="true" />&nbsp;{
-                this.props.site.domain
-              }
+          <AppLink to={`/instances/${site.ZUID}/launch`}>
+            <Button type="save">
+              <i className="fa fa-rocket" aria-hidden="true" />Launch Instance
+            </Button>
+          </AppLink>
+        </CardContent>
+      )}
+
+      <CardFooter className={styles.CardFooter}>
+        <ButtonGroup className={styles.controls}>
+          <AppLink to={`/instances/${site.ZUID}`}>
+            <i
+              className={'fa fa-cog'}
+              aria-hidden="true"
+              title="Edit instance settings"
+            />
+          </AppLink>
+
+          <Url
+            target="_blank"
+            title={`Preview instance: ${site.name}`}
+            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
+              CONFIG.PREVIEW_URL
+            }`}
+          >
+            <i className={'fa fa-eye'} aria-hidden="true" />
+          </Url>
+
+          {site.domain ? (
+            <Url
+              href={`http://${site.domain}`}
+              target="_blank"
+              title="View live domain"
+            >
+              <i className="fa fa-globe" aria-hidden="true" />
             </Url>
           ) : (
-            <Link to={`/properties/${this.props.site.ZUID}`}>
-              <i className="fa fa-plus" aria-hidden="true" />
-              &nbsp;Set Domain
-            </Link>
+            <span />
           )}
-        </header>
-        <main className={styles.WebsiteManage}>
-          <Url
-            className={styles.preview}
-            target="_blank"
-            title={`Preview  ${this.props.site.name}`}
-            href={`${config.PREVIEW_URL_PROTOCOL}${
-              this.props.site.randomHashID
-            }${config.PREVIEW_URL}`}
-          >
-            <i className={cx(styles.icon, 'fa fa-globe')} aria-hidden="true" />
-          </Url>
-        </main>
-        <footer>
-          <ButtonGroup className={styles.controls}>
-            <Url
-              className={styles.manager}
-              target="_blank"
-              href={`${config.MANAGER_URL_PROTOCOL}${
-                this.props.site.randomHashID
-              }${config.MANAGER_URL}`}
-            >
-              <i className="fa fa-external-link" aria-hidden="true" /> Site
-              Manager
-            </Url>
-            <Link to={`/properties/${this.props.site.ZUID}`}>
-              <i
-                className={cx(styles.settings, 'fa fa-cog')}
-                aria-hidden="true"
-              />
-            </Link>
-          </ButtonGroup>
-        </footer>
-      </article>
-    )
-  }
-}
 
-export default connect(state => state)(WebsiteCard)
+          <Url
+            className={styles.manager}
+            target="_blank"
+            title="Load instance manager"
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
+              CONFIG.MANAGER_URL
+            }`}
+          >
+            Open Manager&nbsp;<i
+              className="fa fa-external-link-square"
+              aria-hidden="true"
+            />
+          </Url>
+        </ButtonGroup>
+      </CardFooter>
+    </Card>
+  )
+}

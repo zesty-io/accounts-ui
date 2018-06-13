@@ -3,50 +3,50 @@ import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './Websites.less'
 
-import { fetchSites } from '../../store/sites'
+import { fetchSites, fetchSitesWithInvites } from '../../store/sites'
+import { fetchSystemRoles } from '../../../../../shell/store/systemRoles'
 
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
-import PropertyCreateFirst from '../PropertyCreateFirst'
-// import PropertyAcceptInvite from "../PropertyAcceptInvite";
 import PropertyBlueprint from '../PropertyBlueprint'
+import PropertyOverview from '../PropertyOverview'
 
 class Properties extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loadingSites: true,
+      loadingInvitedSites: true
+    }
+  }
   componentDidMount() {
-    // **
-    // For now this is not how we want to address invite acceptance
-    //**
-    // if (this.props.user && this.props.user.invited) {
-    //   //for invited users they are prompted to accept their invite
-    //   this.props.dispatch({
-    //     type: "NEW_MODAL",
-    //     component: PropertyAcceptInvite
-    //   });
-    // }
-    this.props.dispatch(fetchSites()).then(data => {
-      if (!data.data.length) {
-        if (this.props.user && this.props.user.lastLogin === null) {
-          //for first time users without invites they are prompted to create a site
-          this.props.dispatch({
-            type: 'NEW_MODAL',
-            component: PropertyCreateFirst
-          })
-        }
-      }
+    this.props.dispatch(fetchSites()).then(() => {
+      this.setState({ loadingSites: false })
     })
+    this.props.dispatch(fetchSitesWithInvites()).then(() => {
+      this.setState({ loadingInvitedSites: false })
+    })
+    this.props.dispatch(fetchSystemRoles())
   }
   render() {
     return (
       <section className={styles.Websites}>
-        <Switch>
-          <Route
-            exact
-            path="/properties/:zuid/blueprint"
-            component={PropertyBlueprint}
-          />
-          <Route exact path="/properties/create" component={PropertyCreate} />
-          <Route path="/properties" component={PropertiesList} />
-        </Switch>
+        <WithLoader
+          condition={
+            !this.state.loadingSites && !this.state.loadingInvitedSites
+          }
+          message="Loading Your Instances"
+        >
+          <Switch>
+            <Route
+              exact
+              path="/instances/:zuid/blueprint"
+              component={PropertyBlueprint}
+            />
+            <Route exact path="/instances/create" component={PropertyCreate} />
+            <Route path="/instances" component={PropertiesList} />
+          </Switch>
+        </WithLoader>
       </section>
     )
   }

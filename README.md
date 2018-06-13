@@ -6,7 +6,7 @@ This also aligns us with eventually making this a PWA.
 
 ## Running Locally
 
-This app requires the Zesty.io platform(`zesty-io/zesty-dev`) to be running and available in order to load data, handle authentication, etc. The app itself can be ran locally with the command:
+This app requires the Zesty.io platform(`zesty-io/zesty-dev`) to be running and available in order to load data, handle authentication, etc. The app itself can be run locally with the command:
 
     npm start
 
@@ -21,9 +21,16 @@ This will do the following tasks:
 
 ### Building
 
-It's very important when deploying to production a "production" webpack build is done. This will add large optimizations to the bundle size and runtime code. In order to make a production build run:
+It's very important when deploying to production a "production" webpack build is done. This will add large optimizations to the bundle size and runtime code.
 
     npm run build
+
+Build environments-
+
+    npm run build-dev
+    npm run build-stage
+    npm run build-prod
+
 
 ### Deploying
 

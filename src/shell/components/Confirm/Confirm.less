@@ -2,23 +2,26 @@
 
 .confirmWrapper {
   position: fixed;
-  z-index: 2;
+  z-index: 110;
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
   .Confirm {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    position: fixed;
-    top: 0;
-    height: 15vh;
-    width: 40vw;
+    max-width: 30rem;
+    // position: fixed;
+    // top: 0;
+    // height: 15vh;
+    // width: 40vw;
     background-color: @zesty-white;
-    -webkit-box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
-    -moz-box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
-    box-shadow: 10px 10px 25px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 4px 4px 0px 0 rgb(5, 6, 9, 0.5);
     h1 {
       padding: 1rem;
       font-size: 1.3rem;

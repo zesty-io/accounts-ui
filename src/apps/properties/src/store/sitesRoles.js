@@ -1,65 +1,57 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
 
 export function sitesRoles(state = {}, action) {
   switch (action.type) {
-    case 'FETCHING_ROLES':
-      return state
     case 'FETCH_ROLES_SUCCESS':
-      return { ...state, [action.siteZuid]: action.normalizedRoles }
+      return { ...state, [action.siteZUID]: action.normalizedRoles }
 
-    case 'FETCH_ROLES_ERROR':
-      return state
-    case 'ADDING_ROLE_FAILURE':
-      return state
-    case 'DELETING_ROLE':
-      return state
+    case 'ADDING_ROLE_SUCCESS':
+      return {
+        ...state,
+        [action.siteZUID]: {
+          ...state[action.siteZUID],
+          [action.role.ZUID]: action.role
+        }
+      }
+
     case 'DELETING_ROLE_SUCCESS':
-      return state
-    case 'DELETING_ROLE_FAILURE':
-      return state
-    case 'FETCHING_ROLE':
-      return state
+      return { ...state, [action.siteZUID]: action.siteRoles }
+
     case 'FETCHING_ROLE_SUCCESS':
       return {
         ...state,
         [action.siteZUID]: { ...state[action.siteZUID], ...action.role }
       }
-    case 'FETCHING_ROLE_FAILURE':
-      return state
-    case 'UPDATING_ROLE':
-      return state
-    case 'UPDATING_ROLE_SUCCESS':
-      return state
-    case 'UPDATING_ROLE_FAILURE':
-      return state
-    case 'CREATING_ROLE':
-      return state
-    case 'CREATING_ROLE_SUCCESS':
-      return state
-    case 'CREATING_ROLE_FAILURE':
-      return state
+
     default:
       return state
   }
 }
 
-export const fetchSiteRoles = siteZuid => {
-  return dispatch => {
+export const fetchSiteRoles = siteZUID => {
+  return (dispatch, getState) => {
     dispatch({
       type: 'FETCHING_ROLES'
     })
-    request(`${config.API_ACCOUNTS}/instances/${siteZuid}/roles`)
-      .then(roles => {
-        let normalizedRoles = {}
-        roles.data.forEach(role => {
-          return (normalizedRoles[role.ZUID] = role)
-        })
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/roles`)
+      .then(res => {
+        const state = getState()
+
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
-          siteZuid,
-          normalizedRoles
+          siteZUID,
+          normalizedRoles: res.data.reduce((acc, role) => {
+            acc[role.ZUID] = role
+
+            if (state.systemRoles[role.systemRoleZUID]) {
+              acc[role.ZUID].systemRole = state.systemRoles[role.systemRoleZUID]
+            }
+
+            return acc
+          }, {})
         })
+
+        return res.data
       })
       .catch(err => {
         console.error(err)
@@ -74,7 +66,7 @@ export const fetchSiteRoles = siteZuid => {
 export const getRole = (roleZUID, siteZUID) => {
   return dispatch => {
     dispatch({ type: 'FETCHING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`)
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}`)
       .then(data => {
         let normalizedGranularRoles = {}
         data.data.granularRoles &&
@@ -105,7 +97,7 @@ export const getRole = (roleZUID, siteZUID) => {
 export const createRole = (siteZUID, body) => {
   return dispatch => {
     dispatch({ type: 'ADDING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles`, {
+    return request(`${CONFIG.API_ACCOUNTS}/roles`, {
       method: 'POST',
       json: true,
       body: {
@@ -116,7 +108,11 @@ export const createRole = (siteZUID, body) => {
       }
     })
       .then(data => {
-        dispatch({ type: 'ADDING_ROLE_SUCCESS', role: data.data })
+        dispatch({
+          type: 'ADDING_ROLE_SUCCESS',
+          siteZUID,
+          role: data.data
+        })
         return data.data
       })
       .catch(err => {
@@ -127,14 +123,17 @@ export const createRole = (siteZUID, body) => {
   }
 }
 
-export const removeRole = roleZUID => {
-  return dispatch => {
+export const removeRole = (roleZUID, siteZUID) => {
+  return (dispatch, getState) => {
+    //create an object with the role deleted
+    const siteRoles = getState().sitesRoles[siteZUID]
+    delete siteRoles[roleZUID]
     dispatch({ type: 'DELETING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}`, {
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}`, {
       method: 'DELETE'
     })
       .then(data => {
-        dispatch({ type: 'DELETING_ROLE_SUCCESS' })
+        dispatch({ type: 'DELETING_ROLE_SUCCESS', roleZUID, siteRoles })
         return data
       })
       .catch(err => {
@@ -148,7 +147,7 @@ export const removeRole = roleZUID => {
 export const updateGranularRole = (resourceZUID, role, roleZUID) => {
   return dispatch => {
     dispatch({ type: 'UPDATING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
       method: 'PUT',
       json: true,
       body: [{ resourceZUID, ...role }]
@@ -168,7 +167,7 @@ export const updateGranularRole = (resourceZUID, role, roleZUID) => {
 export const createGranularRole = (resourceZUID, granularRole, roleZUID) => {
   return dispatch => {
     dispatch({ type: 'CREATING_ROLE' })
-    return request(`${config.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}/granulars`, {
       method: 'POST',
       json: true,
       body: { resourceZUID, ...granularRole }

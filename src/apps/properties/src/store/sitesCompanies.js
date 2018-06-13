@@ -1,5 +1,5 @@
 import { request } from '../../../../util/request'
-import config from '../../../../shell/config'
+
 
 export function sitesCompanies(state = {}, action) {
   switch (action.type) {
@@ -19,7 +19,7 @@ export const fetchSiteCompanies = siteZuid => {
     dispatch({
       type: 'FETCHING_COMPANIES'
     })
-    request(`${config.API_ACCOUNTS}/instances/${siteZuid}/companies`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZuid}/companies`)
       .then(companies => {
         dispatch({
           type: 'FETCH_COMPANIES_SUCCESS',
