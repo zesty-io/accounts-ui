@@ -5,6 +5,7 @@ import styles from './AppHeader.less'
 
 import { logout } from '../../store/auth'
 import { zConfirm } from '../../store/confirm'
+import { saveProfile } from '../../store/user'
 
 export default class AppHeader extends Component {
   constructor(props) {
@@ -16,28 +17,6 @@ export default class AppHeader extends Component {
 
   componentDidMount() {
     document.addEventListener('click', this.closeUserNav)
-    if (!this.props.user.prefs.hasSelectedDev) {
-      this.props.dispatch(
-        zConfirm({
-          prompt: 'Are you interested in using developer features?',
-          callback: response => {
-            if (response) {
-              this.props.dispatch({
-                type: 'DEV_PREFS',
-                payload: 1
-              })
-              this.props.dispatch(saveProfile())
-            } else {
-              this.props.dispatch({
-                type: 'DEV_PREFS',
-                payload: 0
-              })
-              this.props.dispatch(saveProfile())
-            }
-          }
-        })
-      )
-    }
   }
   componentWillUnmountMount() {
     document.removeEventListener('click', this.closeUserNav)
