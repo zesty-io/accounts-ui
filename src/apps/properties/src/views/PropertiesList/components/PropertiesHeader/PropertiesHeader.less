@@ -2,15 +2,20 @@
 
 .PropertiesHeader {
   background: @zesty-white;
-  // padding: 1rem 0 0.5rem;
-  // position: sticky;
-  // top: 0;
-  // z-index: 20;
-
-  padding: 0;
   height: 8vh;
   display: flex;
   align-items: center;
+
+  box-shadow: 0px 0px 2px #a7b8d6;
+  padding: 0 1rem;
+  z-index: 20;
+  position: relative;
+
+  @media (max-width: 600px) {
+    .Websites {
+      padding: 0 0.5rem;
+    }
+  }
 
   .Actions {
     display: flex;
