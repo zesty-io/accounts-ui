@@ -164,6 +164,31 @@ export function updateSite(siteZUID, payload) {
   }
 }
 
+export function updateSiteBlueprint(siteZUID, payload) {
+  return dispatch => {
+    dispatch({
+      type: 'UPDATING_SITE'
+    })
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}?action=updateBlueprint`, {
+      method: 'PUT',
+      json: true,
+      body: payload
+    })
+      .then(res => {
+        dispatch({
+          type: 'UPDATE_SITE_SUCCESS',
+          site: res.data
+        })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'UPDATE_SITE_FAILURE' })
+        console.table(err)
+        throw err
+      })
+  }
+}
+
 export function createInstance(name) {
   return dispatch => {
     dispatch({

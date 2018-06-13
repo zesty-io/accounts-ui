@@ -112,6 +112,9 @@ export function update2fa(add, payload) {
     // start process of adding 2fa
     // payload will have user info
     // have to get authy user ID from somehwere
+    return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}?action=enableAuthy`, {
+      method: 'PUT'
+    }).then(data => data)
   } else {
     // call db to remove 2fa and do whatever cleanup is also required
     // PUT update user     "authyEnabled": "false"
