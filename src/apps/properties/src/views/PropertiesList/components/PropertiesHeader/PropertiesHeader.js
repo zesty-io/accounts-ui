@@ -23,13 +23,13 @@ class PropertiesHeader extends Component {
           callback: response => {
             if (response) {
               this.props.dispatch({
-                type: 'INSTANCE_LAYOUT',
+                type: 'DEV_PREFS',
                 payload: 1
               })
               this.props.dispatch(saveProfile())
             } else {
               this.props.dispatch({
-                type: 'INSTANCE_LAYOUT',
+                type: 'DEV_PREFS',
                 payload: 0
               })
               this.props.dispatch(saveProfile())
