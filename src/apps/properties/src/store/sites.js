@@ -218,7 +218,7 @@ export function acceptInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: 'ACCEPT_INVITE' })
     return request(
-      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?acceptInvite=true`,
+      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?action=accept`,
       {
         method: 'PUT'
       }
@@ -245,7 +245,7 @@ export function declineInvite(inviteZUID) {
   return dispatch => {
     dispatch({ type: 'DECLINE_INVITE' })
     return request(
-      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?declineInvite=true`,
+      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?action=decline`,
       {
         method: 'PUT'
       }
@@ -268,7 +268,7 @@ export function cancelInvite(inviteZUID, siteZUID) {
   return dispatch => {
     dispatch({ type: 'CANCEL_INVITE' })
     return request(
-      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?cancelInvite=true`,
+      `${CONFIG.API_ACCOUNTS}/invites/${inviteZUID}?action=cancel`,
       {
         method: 'PUT'
       }

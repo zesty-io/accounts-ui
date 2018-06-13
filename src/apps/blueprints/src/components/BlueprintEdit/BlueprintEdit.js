@@ -19,7 +19,10 @@ class BlueprintEdit extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.blueprint === 'create' && !state.blueprint.hasOwnProperty('name')) {
+    if (
+      props.blueprint === 'create' &&
+      !state.blueprint.hasOwnProperty('name')
+    ) {
       return {
         blueprint: {
           name: '',
@@ -47,7 +50,7 @@ class BlueprintEdit extends Component {
   }
 
   render() {
-    return this.state.blueprint !== '' ? (
+    return (
       <div className={styles.blueprints}>
         <label>Blueprint Name</label>
         <Input
@@ -139,11 +142,6 @@ class BlueprintEdit extends Component {
           </Button>
         )}
       </div>
-    ) : (
-      <BlueprintList
-        loadingBlueprints={this.props.loadingBlueprints}
-        userBlueprints={this.props.blueprints}
-      />
     )
   }
   handleSubmit = evt => {
