@@ -7,7 +7,7 @@ import BlueprintList from '../../components/BlueprintList'
 
 import {
   fetchBlueprints,
-  deleteBlueprint,
+  deleteBlueprint
 } from '../../../../properties/src/store/blueprints'
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
@@ -16,16 +16,17 @@ import styles from './Blueprints.less'
 class Blueprints extends Component {
   state = {
     selected: '',
-    loading: true
+    loadingBlueprints: true,
+    userBlueprints: {}
   }
   componentDidMount() {
     // if there are no blueprints, fetch them
     if (!Object.keys(this.props.userBlueprints).length) {
       this.props
         .dispatch(fetchBlueprints())
-        .then(() => this.setState({ loading: false }))
+        .then(() => this.setState({ loadingBlueprints: false }))
     } else {
-      this.setState({ loading: false })
+      this.setState({ loadingBlueprints: false })
     }
     const bp = this.props.match.params.id
     if (Object.keys(this.props.blueprints).length && bp) {
@@ -34,52 +35,68 @@ class Blueprints extends Component {
       }
       this.setState({ selected: this.props.blueprints[bp] })
     }
+    this.setState({ userBlueprints: this.props.userBlueprints })
   }
+
   static getDerivedStateFromProps(props, state) {
     const bp = props.match.params.id
     if (Object.keys(props.blueprints).length && bp) {
       if (bp === 'create') {
         return { selected: 'create' }
       }
-      return { selected: props.blueprints[bp] }
+      return { ...state, selected: props.blueprints[bp] }
     }
-    return null
+    if (
+      Object.keys(props.userBlueprints).length !==
+      Object.keys(state.userBlueprints).length
+    ) {
+      console.log('lengths differ')
+      return { ...state, userBlueprints: props.userBlueprints }
+    }
+    else {
+      return null
+    }
   }
   render() {
     return (
-      <section className={styles.Blueprints}>
-        <h1 className={styles.BlueprintsTitle}>Manage Your Custom Blueprints</h1>
-        <Switch>
-          <Route
-            exact
-            path="/blueprints"
-            render={() => {
-              return (
-                <BlueprintList
-                  loadingBlueprints={this.state.loading}
-                  handleDelete={this.handleDelete}
-                  userBlueprints={this.props.userBlueprints}
-                />
-              )
-            }}
-          />
-          <Route
-            path="/blueprints/:id"
-            render={() => {
-              return (
-                <BlueprintEdit
-                  loadingBlueprints={this.state.loading}
-                  userZUID={this.props.userZUID}
-                  blueprints={this.props.userBlueprints}
-                  dispatch={this.props.dispatch}
-                  blueprint={this.state.selected}
-                  history={this.props.history}
-                />
-              )
-            }}
-          />
-        </Switch>
-      </section>
+      <WithLoader
+        className={styles.Loading}
+        condition={!this.state.loadingBlueprints}
+        message="Loading Your Custom Blueprints">
+        <section className={styles.Blueprints}>
+          <h1 className={styles.BlueprintsTitle}>
+            Manage Your Custom Blueprints
+          </h1>
+          <Switch>
+            <Route
+              exact
+              path="/blueprints"
+              render={() => {
+                return (
+                  <BlueprintList
+                    handleDelete={this.handleDelete}
+                    userBlueprints={this.state.userBlueprints}
+                  />
+                )
+              }}
+            />
+            <Route
+              path="/blueprints/:id"
+              render={() => {
+                return (
+                  <BlueprintEdit
+                    userZUID={this.props.userZUID}
+                    blueprints={this.state.userBlueprints}
+                    dispatch={this.props.dispatch}
+                    blueprint={this.state.selected}
+                    history={this.props.history}
+                  />
+                )
+              }}
+            />
+          </Switch>
+        </section>
+      </WithLoader>
     )
   }
   handleSelect = blueprint => {
@@ -133,9 +150,6 @@ const mapStateToProps = state => {
     return acc
   }, [])
 
-  // if (Object.keys(blueprints).length && !userBlueprints.length) {
-  //   userBlueprints.push({})
-  // }
   return {
     blueprints,
     userBlueprints,

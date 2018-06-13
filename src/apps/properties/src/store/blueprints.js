@@ -133,7 +133,6 @@ export function deleteBlueprint(id) {
       method: 'DELETE'
     })
       .then(blueprint => {
-        console.log('response from delete', blueprint)
         return blueprint
       })
       .catch(err => {
