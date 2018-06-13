@@ -5,7 +5,7 @@ import { Link, withRouter } from 'react-router-dom'
 import styles from './PropertyBlueprint.less'
 
 import qs from 'qs'
-import { updateSite, fetchSite } from '../../store/sites'
+import { updateSite, fetchSite, updateSiteBlueprint } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 import { fetchBlueprints } from '../../store/blueprints'
 

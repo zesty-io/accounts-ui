@@ -35,7 +35,8 @@ class TwoFactorOptions extends Component {
                 <Url
                   className={styles.InfoLink}
                   target="_blank"
-                  href="https://authy.com/what-is-2fa/">
+                  href="https://authy.com/what-is-2fa/"
+                >
                   What is Authy 2 Factor Authentication?
                 </Url>
               </p>
