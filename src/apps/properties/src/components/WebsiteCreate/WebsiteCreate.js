@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import cx from 'classnames'
 import styles from './WebsiteCreate.less'
 
 class WebsiteCreate extends Component {
@@ -27,7 +26,9 @@ class WebsiteCreate extends Component {
           <Link to="/instances/create" className={styles.Button}>
             <Button type="save">
               <i className="fa fa-plus" aria-hidden="true" />
-              Create Your First Instance
+              {Object.keys(this.props.sites).length
+                ? 'Create An Instance'
+                : 'Create Your First Instance'}
             </Button>
           </Link>
         </footer>

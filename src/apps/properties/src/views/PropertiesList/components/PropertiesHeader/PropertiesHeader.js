@@ -88,9 +88,9 @@ class PropertiesHeader extends Component {
             </Button>
           </ButtonGroup>
 
-          <Button className={styles.Create} onClick={this.onCreateSite}>
-            <i className="fa fa-plus" />Create Instance
-          </Button>
+          {/*  <Button className={styles.Create} onClick={this.onCreateSite}>
+             <i className="fa fa-plus" />Create Instance
+           </Button> */}
         </div>
       </header>
     )

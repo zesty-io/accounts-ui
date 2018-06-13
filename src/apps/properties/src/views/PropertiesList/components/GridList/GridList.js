@@ -32,8 +32,7 @@ export default class GridList extends Component {
                   <Button
                     className={styles.CloseOverview}
                     id="closeOverviewButton"
-                    onClick={this.close}
-                  >
+                    onClick={this.close}>
                     <i className="fa fa-times-circle-o" aria-hidden="true" />
                   </Button>
                   <PropertyOverview {...props} />
@@ -85,6 +84,7 @@ export default class GridList extends Component {
                 &nbsp;All Instances
               </h2>
               <main className={styles.siteList}>
+                <WebsiteCreate />
                 {this.props.sitesFiltered.map(site => {
                   return (
                     <WebsiteCard

@@ -19,12 +19,6 @@ class Properties extends Component {
         ) : (
           <ColumnList {...this.props} />
         )}
-
-        {!this.props.sites.length ? (
-          <main className={styles.siteList}>
-            <WebsiteCreate />
-          </main>
-        ) : null}
       </section>
     )
   }
