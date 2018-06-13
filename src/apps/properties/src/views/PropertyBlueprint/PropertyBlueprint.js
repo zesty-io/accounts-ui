@@ -81,7 +81,7 @@ class PropertyBlueprint extends Component {
 
     this.props
       .dispatch(
-        updateSite(this.props.siteZUID, {
+        updateSiteBlueprint(this.props.siteZUID, {
           blueprintID: id
         })
       )
