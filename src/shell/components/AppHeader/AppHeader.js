@@ -42,7 +42,7 @@ export default class AppHeader extends Component {
         </nav>
         <nav className={styles.LegacyLink}>
           <Url
-            href="https://accounts.zesty.io"
+            href={CONFIG.LEGACY_ACCOUNTS}
             title="Return to the legacy accounts application"
           >
             <i className="fa fa-info-circle" aria-hidden="true" />&nbsp;Legacy
