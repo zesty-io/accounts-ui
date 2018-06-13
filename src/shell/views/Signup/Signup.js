@@ -51,11 +51,12 @@ class Signup extends Component {
           <label>
             <p>Email Address</p>
             <Input
+              required
+              autoFocus
               className={styles.input}
               type="email"
-              placeholder="e.g. hello@zesty.io"
-              required
               name="email"
+              placeholder="e.g. hello@zesty.io"
               value={this.state.email}
               onChange={this.handleChange}
             />
@@ -63,11 +64,11 @@ class Signup extends Component {
           <label>
             <p>First Name</p>
             <Input
+              required
               className={styles.input}
               type="text"
-              placeholder="Zesty"
-              required
               name="firstName"
+              placeholder="Zesty"
               value={this.state.firstName}
               onChange={this.handleChange}
             />
@@ -75,10 +76,9 @@ class Signup extends Component {
           <label>
             <p>Last Name</p>
             <Input
+              required
               className={styles.input}
               type="text"
-              placeholder=""
-              required
               name="lastName"
               value={this.state.lastName}
               onChange={this.handleChange}
@@ -91,20 +91,20 @@ class Signup extends Component {
               lowercase letter.
             </small>
             <Input
+              required
               className={styles.input}
               type="password"
-              required
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
               name="pass"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
               value={this.state.pass}
               onChange={this.handleChange}
             />
           </label>
           <label>
             <Input
-              type="checkbox"
               required
               className={styles.checkbox}
+              type="checkbox"
               name="eula"
               checked={this.state.eula}
               onChange={this.handleChange}

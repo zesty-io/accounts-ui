@@ -7,16 +7,32 @@ export default class VerifyEmail extends Component {
   render() {
     return (
       <section className={styles.VerifyEmail}>
-          <h1>Check your email!</h1>
-          <p>A verification email has been sent to the address you provided.</p>
+        <main className={styles.aligner}>
+          <h1>
+            Check your email&nbsp;<i
+              className="fa fa-envelope-o"
+              aria-hidden="true"
+            />
+          </h1>
           <p>
-            Once your email has been verified you can log in and begin using
-            Zesty.io
+            We have sent a verification email to the email address you signed up
+            with. This is done for account security to ensure you are the owner
+            of the email address. Once you have verified your email return here
+            to begin using Zesty.io
           </p>
           <small>
-            (if you do not receive a verification email, check your spam folder.
-            you can also <AppLink to="/resend-email">re-send the email</AppLink>)
+            If you do not receive a verification email, make sure to check your
+            spam folder. You can also{' '}
+            <AppLink to="/resend-email">re-send the email</AppLink>
           </small>
+
+          <AppLink className={styles.Continue} to="/instances">
+            Continue to Zesty.io&nbsp;<i
+              className="fa fa-arrow-right"
+              aria-hidden="true"
+            />
+          </AppLink>
+        </main>
       </section>
     )
   }

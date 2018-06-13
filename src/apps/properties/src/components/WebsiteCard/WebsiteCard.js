@@ -17,11 +17,15 @@ export default props => {
           ZUID={site.ZUID}
         />
       </CardHeader>
-      {site.screenshotURL ? (
-        <CardContent
-          className={cx(styles.CardContent, styles.cover)}
-          style={{ backgroundImage: `url(${site.screenshotURL})` }}
-        />
+      {site.domain ? (
+        site.screenshotURL ? (
+          <CardContent
+            className={cx(styles.CardContent, styles.cover)}
+            style={{ backgroundImage: `url(${site.screenshotURL})` }}
+          />
+        ) : (
+          <CardContent className={cx(styles.CardContent, styles.cover)} />
+        )
       ) : (
         <CardContent className={cx(styles.CardContent, styles.Offline)}>
           <i
@@ -36,6 +40,7 @@ export default props => {
           </AppLink>
         </CardContent>
       )}
+
       <CardFooter className={styles.CardFooter}>
         <ButtonGroup className={styles.controls}>
           <AppLink to={`/instances/${site.ZUID}`}>
