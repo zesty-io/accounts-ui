@@ -44,6 +44,7 @@ class Login extends Component {
               <label>
                 <p>Email Address</p>
                 <Input
+                  tabIndex="1"
                   className={styles.loginInput}
                   type="text"
                   placeholder="e.g. hello@zesty.io"
@@ -54,17 +55,21 @@ class Login extends Component {
               <label>
                 <p>
                   Password&nbsp;<small>
-                    (<AppLink to="/reset-password">Forgot?</AppLink>)
+                    (<AppLink to="/reset-password" tabIndex="4">
+                      Forgot?
+                    </AppLink>)
                   </small>
                 </p>
 
                 <Input
+                  tabIndex="2"
                   className={styles.loginInput}
                   type="password"
                   name="pass"
                 />
               </label>
               <Button
+                tabIndex="3"
                 onClick={this.handleLogin}
                 disabled={this.state.submitted}
               >
@@ -98,7 +103,9 @@ class Login extends Component {
                 Start creating content ready to be delivered securely, quickly
                 and reliably to everywhere from anywhere.
               </p>
-              <AppLink to="/signup">Create An Account</AppLink>
+              <AppLink to="/signup" tabIndex="5">
+                Create An Account
+              </AppLink>
               {/* <h3>Additional Information</h3>
               <p>
                 <Url href="https://zesty.io">https://zesty.io</Url>
