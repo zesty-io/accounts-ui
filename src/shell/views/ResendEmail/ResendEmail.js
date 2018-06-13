@@ -74,9 +74,11 @@ export default class ResendEmail extends Component {
         error: ''
       })
       request(
-        `${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${
+        `${
+          CONFIG.API_ACCOUNTS
+        }/users/emails/verifications?address=${encodeURIComponent(
           this.state.email
-        }`,
+        )}`,
         {
           method: 'POST'
         }
