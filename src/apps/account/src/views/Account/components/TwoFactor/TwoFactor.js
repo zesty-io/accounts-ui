@@ -35,8 +35,7 @@ class TwoFactorOptions extends Component {
                 <Url
                   className={styles.InfoLink}
                   target="_blank"
-                  href="https://authy.com/what-is-2fa/"
-                >
+                  href="https://authy.com/what-is-2fa/">
                   What is Authy 2 Factor Authentication?
                 </Url>
               </p>
@@ -53,6 +52,7 @@ class TwoFactorOptions extends Component {
                   type="text"
                   size="5"
                   placeholder="+1"
+                  autoComplete="off"
                   name="authyPhoneCountyCode"
                   value={this.state.authyPhoneCountyCode}
                   onChange={this.handleChange}
@@ -60,6 +60,7 @@ class TwoFactorOptions extends Component {
                 <Input
                   type="text"
                   placeholder="123-456-7890"
+                  autoComplete="off"
                   name="authyPhoneNumber"
                   required
                   value={this.state.authyPhoneNumber}
