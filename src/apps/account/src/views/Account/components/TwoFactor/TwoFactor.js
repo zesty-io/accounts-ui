@@ -52,7 +52,6 @@ class TwoFactorOptions extends Component {
                   type="text"
                   size="5"
                   placeholder="+1"
-                  autoComplete="off"
                   name="authyPhoneCountyCode"
                   value={this.state.authyPhoneCountyCode}
                   onChange={this.handleChange}
@@ -60,7 +59,6 @@ class TwoFactorOptions extends Component {
                 <Input
                   type="text"
                   placeholder="123-456-7890"
-                  autoComplete="off"
                   name="authyPhoneNumber"
                   required
                   value={this.state.authyPhoneNumber}
