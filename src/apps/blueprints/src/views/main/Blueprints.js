@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 
 import BlueprintEdit from '../../components/BlueprintEdit'
+import BlueprintList from '../../components/BlueprintList'
 import SelectBlueprint from '../../components/SelectBlueprint'
 
 import {
@@ -13,7 +14,6 @@ import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
 
 import styles from './Blueprints.less'
-
 class Blueprints extends Component {
   state = {
     selected: '',
@@ -25,7 +25,7 @@ class Blueprints extends Component {
       this.props
         .dispatch(fetchBlueprints())
         .then(() => this.setState({ loading: false }))
-    }else{
+    } else {
       this.setState({ loading: false })
     }
     const bp = this.props.match.params.id
@@ -51,18 +51,38 @@ class Blueprints extends Component {
       <section className={styles.Blueprints}>
         <SelectBlueprint
           blueprints={this.props.userBlueprints}
-          selection={this.state.selected}
-          handleSelect={this.handleSelect}
           handleDelete={this.handleDelete}
+          handleSelect={this.handleSelect}
         />
-        <BlueprintEdit
-          loadingBlueprints={this.state.loading}
-          userZUID={this.props.userZUID}
-          blueprints={this.props.userBlueprints}
-          dispatch={this.props.dispatch}
-          blueprint={this.state.selected}
-          history={this.props.history}
-        />
+        <Switch>
+          <Route
+            exact
+            path="/blueprints"
+            render={() => {
+              return (
+                <BlueprintList
+                  loadingBlueprints={this.state.loading}
+                  userBlueprints={this.props.userBlueprints}
+                />
+              )
+            }}
+          />
+          <Route
+            path="/blueprints/:id"
+            render={() => {
+              return (
+                <BlueprintEdit
+                  loadingBlueprints={this.state.loading}
+                  userZUID={this.props.userZUID}
+                  blueprints={this.props.userBlueprints}
+                  dispatch={this.props.dispatch}
+                  blueprint={this.state.selected}
+                  history={this.props.history}
+                />
+              )
+            }}
+          />
+        </Switch>
       </section>
     )
   }

@@ -12,7 +12,6 @@ class BlueprintList extends Component {
         message="Loading Your Custom Blueprints">
         <section className={styles.Blueprints}>
           <section className={styles.BlueprintList}>
-            {this.props.userBlueprints.length ? null : (
               <Card className={styles.Create}>
                 <CardHeader>
                   <h1>Custom Blueprints</h1>
@@ -32,7 +31,6 @@ class BlueprintList extends Component {
                   </AppLink>
                 </CardFooter>
               </Card>
-            )}
             {this.props.userBlueprints.map(blueprint => (
               <BlueprintCard key={blueprint.ZUID} blueprint={blueprint} />
             ))}
