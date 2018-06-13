@@ -23,8 +23,7 @@ class TwoFactor extends Component {
           <Url
             href="https://zesty.io"
             title="https://zesty.io"
-            className={styles.logo}
-          >
+            className={styles.logo}>
             <img src="/zesty-io-logo.svg" height="70px" />
           </Url>
 
@@ -37,7 +36,13 @@ class TwoFactor extends Component {
               </Url>
               on your mobile device.
             </small>
-            <Input type="text" name="token" className={styles.input} />
+
+            <Input
+              type="text"
+              autoComplete="off"
+              name="token"
+              className={styles.input}
+            />
           </label>
           <ButtonGroup className={styles.controls}>
             <Button onClick={this.handle2FA}>
