@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import debounce from '../../../../../../../util/debounce'
@@ -97,10 +97,10 @@ class PropertiesHeader extends Component {
   }
 
   onSearch = debounce(term => {
-      this.props.dispatch({
-        type: 'SETTING_FILTER',
-        filter: term
-      })
+    this.props.dispatch({
+      type: 'SETTING_FILTER',
+      filter: term
+    })
   }, 300)
 
   onCreateSite = evt => {
