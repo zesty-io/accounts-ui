@@ -96,7 +96,7 @@ class PropertyOverview extends Component {
               !this.state.loadingUsers &&
               !this.state.loadingBlueprint
             }
-            message="Loading Instance Permissions"
+            message="Checking Instance Permissions"
           >
             <Route
               path="/instances/:siteZUID/launch"
