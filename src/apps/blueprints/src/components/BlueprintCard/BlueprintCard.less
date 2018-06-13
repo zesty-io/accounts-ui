@@ -3,9 +3,22 @@
   .BlueprintAction {
     display: flex;
     justify-content: space-between;
+    align-content: center;
+    .trash {
+      margin: 0.5rem;
+      right: 0;
+      align-self: flex-end;
+      transition: all 0.1s;
+      color: lighten(@zesty-gray, 40%);
+      &:hover,
+      &:active,
+      &:focus {
+        color: @zesty-red;
+      }
+    }
   }
   img {
-    margin: 0 0 0.5rem;
+    max-height: 107px;
     width: 100%;
   }
 }
