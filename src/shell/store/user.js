@@ -58,6 +58,15 @@ export function user(
           instance_layout: action.layout
         }
       }
+    case 'DEV_PREFS':
+      return {
+        ...state,
+        prefs: {
+          ...state.prefs,
+          hasSelectedDev: 1,
+          devOptions: action.payload
+        }
+      }
 
     case 'FETCH_USER_EMAILS_SUCCESS':
       return {

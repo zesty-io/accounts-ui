@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import { zConfirm } from '../../../../../../../shell/store/confirm'
 import debounce from '../../../../../../../util/debounce'
 
 import styles from './PropertiesHeader.less'
@@ -13,6 +14,30 @@ class PropertiesHeader extends Component {
   state = {
     eco: false,
     sort: 'name'
+  }
+  componentDidMount() {
+    if (!this.props.user.prefs.hasSelectedDev) {
+      this.props.dispatch(
+        zConfirm({
+          prompt: 'Are you interested in using developer features?',
+          callback: response => {
+            if (response) {
+              this.props.dispatch({
+                type: 'INSTANCE_LAYOUT',
+                payload: 1
+              })
+              this.props.dispatch(saveProfile())
+            } else {
+              this.props.dispatch({
+                type: 'INSTANCE_LAYOUT',
+                payload: 0
+              })
+              this.props.dispatch(saveProfile())
+            }
+          }
+        })
+      )
+    }
   }
   render() {
     return (
@@ -97,10 +122,10 @@ class PropertiesHeader extends Component {
   }
 
   onSearch = debounce(term => {
-      this.props.dispatch({
-        type: 'SETTING_FILTER',
-        filter: term
-      })
+    this.props.dispatch({
+      type: 'SETTING_FILTER',
+      filter: term
+    })
   }, 300)
 
   onCreateSite = evt => {
