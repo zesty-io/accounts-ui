@@ -4,11 +4,10 @@ import { Switch, Route, withRouter } from 'react-router-dom'
 
 import BlueprintEdit from '../../components/BlueprintEdit'
 import BlueprintList from '../../components/BlueprintList'
-import SelectBlueprint from '../../components/SelectBlueprint'
 
 import {
   fetchBlueprints,
-  deleteBlueprint
+  deleteBlueprint,
 } from '../../../../properties/src/store/blueprints'
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
@@ -49,11 +48,7 @@ class Blueprints extends Component {
   render() {
     return (
       <section className={styles.Blueprints}>
-        <SelectBlueprint
-          blueprints={this.props.userBlueprints}
-          handleDelete={this.handleDelete}
-          handleSelect={this.handleSelect}
-        />
+        <h1 className={styles.BlueprintsTitle}>Manage Your Custom Blueprints</h1>
         <Switch>
           <Route
             exact
@@ -62,6 +57,7 @@ class Blueprints extends Component {
               return (
                 <BlueprintList
                   loadingBlueprints={this.state.loading}
+                  handleDelete={this.handleDelete}
                   userBlueprints={this.props.userBlueprints}
                 />
               )

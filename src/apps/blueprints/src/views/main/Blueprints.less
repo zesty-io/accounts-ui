@@ -1,8 +1,13 @@
 @import '../../../../../shell/styles/colors.less';
 
 .Blueprints {
-  display: grid;
-  height: 94vh;
-  bottom: 0;
-  grid-template-columns: minmax(235px, 1fr) 5fr;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  overflow-y: scroll;
+  height: 86vh;
+  .BlueprintsTitle {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+  }
 }

@@ -5,12 +5,7 @@ const selectedStyle = { color: '#fff' }
 const SelectBlueprint = props => {
   return (
     <ul className={styles.List}>
-      <li style={props.selection === 'create' ? selectedStyle : null}>
-        <Button className={styles.Create} onClick={() => props.handleSelect('create')}>
-          {' '}
-          <i className="fa fa-plus" /> Create Blueprint
-        </Button>
-      </li>
+    <h1>Custom Blueprints</h1>
       {props.blueprints.map(bp => {
         return (
           <li
