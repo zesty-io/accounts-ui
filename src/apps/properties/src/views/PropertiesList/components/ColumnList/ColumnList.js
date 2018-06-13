@@ -13,6 +13,12 @@ export default function ColumnList(props) {
   return (
     <section className={styles.ColumnList}>
       <nav className={styles.List}>
+        <AppLink to="/instances/create">
+          <Button className={styles.Create} type="save">
+            <i className="fa fa-plus" />Create New Instance
+          </Button>
+        </AppLink>
+
         {props.sitesInvited.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>

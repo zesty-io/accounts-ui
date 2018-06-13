@@ -32,7 +32,8 @@ export default class GridList extends Component {
                   <Button
                     className={styles.CloseOverview}
                     id="closeOverviewButton"
-                    onClick={this.close}>
+                    onClick={this.close}
+                  >
                     <i className="fa fa-times-circle-o" aria-hidden="true" />
                   </Button>
                   <PropertyOverview {...props} />
@@ -76,38 +77,32 @@ export default class GridList extends Component {
           </React.Fragment>
         ) : null}
 
-        {this.props.sites.length ? (
-          this.props.sitesFiltered.length ? (
-            <React.Fragment>
-              <h2 className={styles.SectionTitle}>
-                <i className="fa fa-th" aria-hidden="true" />
-                &nbsp;All Instances
-              </h2>
-              <main className={styles.siteList}>
-                {this.props.sitesFiltered.map(site => {
-                  return (
-                    <WebsiteCard
-                      key={site.ZUID}
-                      site={site}
-                      favorite={site.favorite}
-                      dispatch={this.props.dispatch}
-                    />
-                  )
-                })}
-              </main>
-            </React.Fragment>
-          ) : (
-            this.props.searchString && (
-              <main className={styles.siteList}>
-                <h2>No results</h2>
-              </main>
-            )
-          )
-        ) : (
+        {this.props.sitesFiltered.length ? (
+          <React.Fragment>
+            <h2 className={styles.SectionTitle}>
+              <i className="fa fa-th" aria-hidden="true" />
+              &nbsp;All Instances
+            </h2>
+
+            <main className={styles.siteList}>
+              <WebsiteCreate first={this.props.sites.length === 0} />
+              {this.props.sitesFiltered.map(site => {
+                return (
+                  <WebsiteCard
+                    key={site.ZUID}
+                    site={site}
+                    favorite={site.favorite}
+                    dispatch={this.props.dispatch}
+                  />
+                )
+              })}
+            </main>
+          </React.Fragment>
+        ) : this.props.searchString ? (
           <main className={styles.siteList}>
-            <WebsiteCreate />
+            <h2>No results</h2>
           </main>
-        )}
+        ) : null}
       </div>
     )
   }
