@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import { zConfirm } from '../../../../../../../shell/store/confirm'
 import debounce from '../../../../../../../util/debounce'
 
 import styles from './PropertiesHeader.less'
@@ -14,30 +13,6 @@ class PropertiesHeader extends Component {
   state = {
     eco: false,
     sort: 'name'
-  }
-  componentDidMount() {
-    if (!this.props.user.prefs.hasSelectedDev) {
-      this.props.dispatch(
-        zConfirm({
-          prompt: 'Are you interested in using developer features?',
-          callback: response => {
-            if (response) {
-              this.props.dispatch({
-                type: 'DEV_PREFS',
-                payload: 1
-              })
-              this.props.dispatch(saveProfile())
-            } else {
-              this.props.dispatch({
-                type: 'DEV_PREFS',
-                payload: 0
-              })
-              this.props.dispatch(saveProfile())
-            }
-          }
-        })
-      )
-    }
   }
   render() {
     return (
