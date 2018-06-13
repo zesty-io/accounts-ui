@@ -4,8 +4,6 @@ import cx from 'classnames'
 import styles from './AppHeader.less'
 
 import { logout } from '../../store/auth'
-import { zConfirm } from '../../store/confirm'
-import { saveProfile } from '../../store/user'
 
 export default class AppHeader extends Component {
   constructor(props) {
