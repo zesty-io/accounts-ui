@@ -105,6 +105,7 @@ export default connect((state, props) => {
       return { ...filtered[ZUID], favorite: true }
     }),
     dispatch: props.dispatch,
-    settings: state.settings
+    settings: state.settings,
+    searchString
   }
 })(Properties)

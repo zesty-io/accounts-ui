@@ -32,8 +32,7 @@ export default class GridList extends Component {
                   <Button
                     className={styles.CloseOverview}
                     id="closeOverviewButton"
-                    onClick={this.close}
-                  >
+                    onClick={this.close}>
                     <i className="fa fa-times-circle-o" aria-hidden="true" />
                   </Button>
                   <PropertyOverview {...props} />
@@ -98,9 +97,11 @@ export default class GridList extends Component {
               </main>
             </React.Fragment>
           ) : (
-            <main className={styles.siteList}>
-              <h2>No results</h2>
-            </main>
+            this.props.searchString && (
+              <main className={styles.siteList}>
+                <h2>No results</h2>
+              </main>
+            )
           )
         ) : (
           <main className={styles.siteList}>
