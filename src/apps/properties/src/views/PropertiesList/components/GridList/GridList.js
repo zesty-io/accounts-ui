@@ -68,6 +68,7 @@ export default class GridList extends Component {
                 return (
                   <WebsiteCard
                     key={site.ZUID}
+                    favorite={site.favorite}
                     site={site}
                     dispatch={this.props.dispatch}
                   />
