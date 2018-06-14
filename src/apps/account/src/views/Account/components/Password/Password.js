@@ -25,8 +25,8 @@ class Password extends Component {
         </CardHeader>
         <CardContent className={styles.Password}>
           <p>
-            Minimum eight characters, at least one uppercase letter, one
-            lowercase letter and one number
+            Requirements are a minimum of 8 characters with at least one number,
+            uppercase and lowercase letter.
           </p>
           <Input
             name="oldPassword"
@@ -58,7 +58,7 @@ class Password extends Component {
         <CardFooter>
           <Button onClick={this.handleClick}>
             <i className="fa fa-floppy-o" aria-hidden="true" />
-            Set Password
+            Change Password
           </Button>
         </CardFooter>
       </Card>

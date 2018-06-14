@@ -22,8 +22,10 @@ export default class TwoFactorOptions extends Component {
         <CardContent className={styles.TwoFactor}>
           {this.props.user.authyEnabled ? (
             <React.Fragment>
-              <p>Two-factor authentication is enabled on your account.</p>
-              <p>Registered phone number:</p>
+              <p>
+                Two-factor authentication is enabled on your account. Currently
+                registered phone number:
+              </p>
               <p className={styles.RegisteredNumber}>
                 +{this.props.user.authyPhoneCountryCode}-{
                   this.props.user.authyPhoneNumber

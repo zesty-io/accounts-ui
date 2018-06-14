@@ -4,6 +4,9 @@
   height: 86vh;
   padding: 2rem;
   overflow-y: scroll;
+  @media (max-width: 850px) {
+    padding: 1rem;
+  }
 
   .SettingsTitle {
     font-size: 1.8rem;
@@ -30,7 +33,8 @@
       }
       article {
         justify-self: center;
-        width: 400px;
+        max-width: 400px;
+        min-width: 20rem;
       }
     }
     h1 {

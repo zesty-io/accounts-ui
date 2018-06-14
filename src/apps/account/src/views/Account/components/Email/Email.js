@@ -91,7 +91,7 @@ class Email extends Component {
               )
             })}
           <article className={styles.addEmail}>
-            <label>name</label>
+            <label>Name: </label>
             <Input
               type="text"
               autoComplete="off"
@@ -100,7 +100,7 @@ class Email extends Component {
               placeholder="backup email"
               onChange={this.handleChange}
             />
-            <label>email</label>
+            <label>Email: </label>
             <Input
               type="text"
               autoComplete="off"
@@ -118,7 +118,7 @@ class Email extends Component {
             onClick={this.handleAddEmail}
           >
             <i className="fa fa-plus" aria-hidden="true" />
-            Add Email
+            Add Email Address
           </Button>
         </CardFooter>
       </Card>
