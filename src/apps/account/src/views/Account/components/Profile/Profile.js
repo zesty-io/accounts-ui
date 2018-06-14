@@ -54,7 +54,7 @@ class Profile extends Component {
             disabled={this.state.submitted}
           >
             <i className="fa fa-floppy-o" aria-hidden="true" />
-            Set Name
+            Update User Name
           </Button>
         </CardFooter>
       </Card>
