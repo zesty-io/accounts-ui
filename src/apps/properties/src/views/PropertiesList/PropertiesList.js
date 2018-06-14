@@ -83,6 +83,7 @@ export default connect((state, props) => {
   let removedFavorites
   if (eco || searchString) {
     removedFavorites = Object.keys(filtered).reduce((acc, ZUID) => {
+      filtered[ZUID].favorite = state.user.prefs.favorite_sites.includes(ZUID)
       acc.push(filtered[ZUID])
       return acc
     }, [])
