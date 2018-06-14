@@ -40,7 +40,10 @@ class Account extends Component {
                 loadingEmails={this.state.loadingEmails}
               />
               <Password />
-              <TwoFactor />
+              <TwoFactor
+                dispatch={this.props.dispatch}
+                user={this.props.user}
+              />
             </div>
           </WithLoader>
         </div>

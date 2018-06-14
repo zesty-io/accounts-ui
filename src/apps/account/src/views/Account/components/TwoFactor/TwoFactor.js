@@ -1,17 +1,15 @@
-import { Component } from 'React'
-import { connect } from 'react-redux'
-
-import Toggle from '../../../../../../../core/toggle/Toggle'
+import React, { Component } from 'React'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { update2fa } from '../../../../../../../shell/store/user'
 
 import styles from './TwoFactor.less'
 
-class TwoFactorOptions extends Component {
+export default class TwoFactorOptions extends Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
-      authyPhoneCountyCode: '',
+      submitted: false,
+      authyPhoneCountryCode: '',
       authyPhoneNumber: ''
     }
   }
@@ -19,15 +17,18 @@ class TwoFactorOptions extends Component {
     return (
       <Card>
         <CardHeader>
-          <h1>Two-Factor Authentication</h1>
+          <h1>Two-Factor Authentication (2FA)</h1>
         </CardHeader>
         <CardContent className={styles.TwoFactor}>
-          {this.props.authyEnabled ? (
+          {this.props.user.authyEnabled ? (
             <React.Fragment>
-              <p>
-                Two-factor authentication currently set up for this account.
+              <p>Two-factor authentication is enabled on your account.</p>
+              <p>Registered phone number:</p>
+              <p className={styles.RegisteredNumber}>
+                +{this.props.user.authyPhoneCountryCode}-{
+                  this.props.user.authyPhoneNumber
+                }
               </p>
-              <p>number used {this.props.authyPhoneNumber}</p>
             </React.Fragment>
           ) : (
             <React.Fragment>
@@ -40,42 +41,71 @@ class TwoFactorOptions extends Component {
                   What is Authy 2 Factor Authentication?
                 </Url>
               </p>
-
               <p>
-                Two-factor authentication is not currently set up for this
-                account. Put in the phone number you want to use for
-                authentication below.
+                Two-factor authentication is not currently enabled for this
+                account. Provide your primary phone number for authentication
+                below.
               </p>
-
-              <label className={styles.PhoneNumber}>
-                <span className={styles.PhoneNumberLabel}>Phone Number</span>
-                <Input
-                  type="text"
-                  size="5"
-                  placeholder="+1"
-                  name="authyPhoneCountyCode"
-                  value={this.state.authyPhoneCountyCode}
-                  onChange={this.handleChange}
-                />&nbsp;
-                <Input
-                  type="text"
-                  placeholder="123-456-7890"
-                  name="authyPhoneNumber"
-                  required
-                  value={this.state.authyPhoneNumber}
-                  onChange={this.handleChange}
-                />
-              </label>
+              <form id="TwoFactor">
+                <label className={styles.PhoneNumber}>
+                  <span className={styles.PhoneNumberLabel}>Phone Number</span>
+                  <Input
+                    required
+                    type="text"
+                    size="5"
+                    placeholder="+1"
+                    name="authyPhoneCountryCode"
+                    value={this.state.authyPhoneCountryCode}
+                    onChange={this.handleChange}
+                  />&nbsp;
+                  <Input
+                    required
+                    type="tel"
+                    placeholder="123-456-7890"
+                    name="authyPhoneNumber"
+                    value={this.state.authyPhoneNumber}
+                    onChange={this.handleChange}
+                  />
+                </label>
+              </form>
             </React.Fragment>
           )}
         </CardContent>
         <CardFooter>
-          {this.props.authyEnabled ? (
-            <Button onClick={this.handleDisable}>Disable Two-factor</Button>
+          {this.props.user.authyEnabled ? (
+            <Button
+              onClick={this.handleDisable}
+              disabled={this.state.submitted}
+            >
+              {this.state.submitted ? (
+                <React.Fragment>
+                  <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Disabling
+                  Authy 2FA
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <i className="fa fa-shield" aria-hidden="true" />&nbsp;Disable
+                  Authy 2FA
+                </React.Fragment>
+              )}
+            </Button>
           ) : (
-            <Button onClick={this.handleEnable}>
-              <i className="fa fa-shield" aria-hidden="true" />
-              Enable Two-factor
+            <Button
+              form="TwoFactor"
+              onClick={this.handleEnable}
+              disabled={this.state.submitted}
+            >
+              {this.state.submitted ? (
+                <React.Fragment>
+                  <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Enabling
+                  Authy 2FA
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <i className="fa fa-shield" aria-hidden="true" />&nbsp;Enable
+                  Authy 2FA
+                </React.Fragment>
+              )}
             </Button>
           )}
         </CardFooter>
@@ -86,20 +116,54 @@ class TwoFactorOptions extends Component {
     this.setState({ [evt.target.name]: evt.target.value })
   }
   handleEnable = evt => {
-    this.props.dispatch(update2fa(true, this.state))
+    evt.preventDefault()
+
+    if (!this.state.authyPhoneNumber || !this.state.authyPhoneNumber) {
+      return
+    }
+
+    this.setState({
+      submitted: true
+    })
+    this.props
+      .dispatch(update2fa(this.props.user.ZUID, true, this.state))
+      .then(() => {
+        this.setState({
+          submitted: false
+        })
+      })
+      .catch(err => {
+        console.error(err)
+        this.setState({
+          submitted: false
+        })
+      })
   }
-  handleDisable = evt => {
+  handleDisable = () => {
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to disable two-factor authentication?',
-        callback: response => {
-          if (response) {
-            this.props.dispatch(update2fa(false))
+        callback: confirmed => {
+          if (confirmed) {
+            this.setState({
+              submitted: true
+            })
+            this.props
+              .dispatch(update2fa(this.props.user.ZUID, false))
+              .then(() => {
+                this.setState({
+                  submitted: false
+                })
+              })
+              .catch(err => {
+                console.error(err)
+                this.setState({
+                  submitted: false
+                })
+              })
           }
         }
       })
     )
   }
 }
-
-export default connect(state => state.user)(TwoFactorOptions)

@@ -73,6 +73,10 @@ export function user(
         emails: action.emails
       }
 
+    case 'ENABLE_2FA_SUCCESS':
+    case 'DISABLE_2FA_SUCCESS':
+      return { ...state, ...action.data }
+
     default:
       return state
   }
@@ -114,42 +118,40 @@ export function fetchUser(ZUID) {
   }
 }
 
-export function update2fa(add, payload) {
-  if (add) {
-    // TODO fix. there should not be a NOOP here
-    // start process of adding 2fa
-    // payload will have user info
-    // have to get authy user ID from somehwere
-    return request(
-      `${CONFIG.API_ACCOUNTS}/users/${userZUID}?action=enableAuthy`,
-      {
-        method: 'PUT'
-      }
-    ).then(data => data)
-  } else {
-    // call db to remove 2fa and do whatever cleanup is also required
-    // PUT update user     "authyEnabled": "false"
-    return (dispatch, getState) => {
-      dispatch({
-        type: 'SAVING_PROFILE'
+export function update2fa(userZUID, enable, payload) {
+  return dispatch => {
+    if (enable) {
+      return request(
+        `${CONFIG.API_ACCOUNTS}/users/${userZUID}?action=enableAuthy`,
+        {
+          method: 'PUT',
+          json: true,
+          body: payload
+        }
+      ).then(() => {
+        dispatch({
+          type: 'ENABLE_2FA_SUCCESS',
+          data: {
+            ...payload,
+            authyEnabled: true
+          }
+        })
       })
-      const userZUID = getState().user.ZUID
+    } else {
       return request(`${CONFIG.API_ACCOUNTS}/users/${userZUID}`, {
         method: 'PUT',
         json: true,
         body: {
           authyEnabled: false
         }
+      }).then(() => {
+        dispatch({
+          type: 'DISABLE_2FA_SUCCESS',
+          data: {
+            authyEnabled: false
+          }
+        })
       })
-        .then(data => {
-          dispatch({ type: 'SAVING_PROFILE_SUCCESS' })
-          return data
-        })
-        .catch(err => {
-          console.table(err)
-          dispatch({ type: 'SAVING_PROFILE_ERROR' })
-          throw err
-        })
     }
   }
 }
