@@ -163,7 +163,7 @@ export function updateProfile(payload) {
   }
 }
 
-export function saveProfile() {
+export function saveProfile(payload) {
   return (dispatch, getState) => {
     dispatch({
       type: 'SAVING_PROFILE'
@@ -176,12 +176,13 @@ export function saveProfile() {
       body: {
         firstName: user.firstName,
         lastName: user.lastName,
-        prefs: JSON.stringify(user.prefs)
+        prefs: JSON.stringify(user.prefs),
+        ...payload
       }
     })
-      .then(data => {
+      .then(res => {
         dispatch({ type: 'SAVING_PROFILE_SUCCESS' })
-        return data
+        return res.data
       })
       .catch(err => {
         console.table(err)
