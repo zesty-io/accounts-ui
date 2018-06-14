@@ -54,7 +54,7 @@ export default function ColumnList(props) {
             ))}
           </React.Fragment>
         ) : props.searchString ? (
-          <h2>No results</h2>
+          <h2 className={styles.NoResults}>No results</h2>
         ) : null}
       </nav>
       <main className={styles.Overview}>

@@ -25,13 +25,6 @@ import { fetchBlueprint } from '../../store/blueprints'
 class PropertyOverview extends Component {
   constructor(props) {
     super(props)
-
-    // setting ref to the manager link
-    this.managerLink = null
-    this.clickManager = () => {
-      if (this.managerLink) this.managerLink.click()
-    }
-
     this.state = {
       loadingUsers: true,
       loadingRoles: true,
@@ -43,9 +36,6 @@ class PropertyOverview extends Component {
   }
   componentDidMount() {
     this.fetchSiteData(this.props)
-    if (qs.parse(window.location.search.substr(1))['invited'] === 'true') {
-      this.clickManager()
-    }
   }
   componentDidUpdate(prevProps) {
     if (this.props.siteZUID !== prevProps.siteZUID) {
@@ -63,11 +53,8 @@ class PropertyOverview extends Component {
               this.props.site.randomHashID
             }${CONFIG.MANAGER_URL}`}
           >
-            <i
-              className="fa fa-external-link"
-              aria-hidden="true"
-              ref={element => (this.managerLink = element)}
-            />&nbsp;Open Manager
+            <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
+            Manager
           </Url>
           <Url
             className={styles.manager}
@@ -200,6 +187,14 @@ class PropertyOverview extends Component {
     )
   }
   fetchSiteData(props) {
+    this.setState({
+      loadingUsers: true,
+      loadingRoles: true,
+      loadingUsersPending: true,
+      loadingTeams: true,
+      loadingCollections: true,
+      loadingBlueprint: true
+    })
     props.dispatch(fetchSiteUsers(props.siteZUID)).then(() => {
       this.setState({
         loadingUsers: false
