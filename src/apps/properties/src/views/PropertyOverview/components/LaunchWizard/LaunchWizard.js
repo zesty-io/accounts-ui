@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import styles from './LaunchWizard.less'
 
-import { checkDNS } from '../../../../store/sitesDomain'
+import { checkDNS } from '../../../../store/sites'
 
 import Domain from '../Domain'
 import { notify } from '../../../../../../../shell/store/notifications'
