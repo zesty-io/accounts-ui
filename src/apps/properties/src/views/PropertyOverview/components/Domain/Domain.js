@@ -32,8 +32,7 @@ export default class Domain extends Component {
               this.setState({
                 editing: true
               })
-            }}
-          >
+            }}>
             {this.props.domain}
             <i className="fa fa-pencil" />
           </span>
@@ -67,16 +66,20 @@ export default class Domain extends Component {
     this.props
       .dispatch(updateDomain(this.props.siteZUID, strippedDomain))
       .then(domain => {
-        this.setState({
-          domain,
-          submitted: false,
-          editing: false
-        })
-        this.props.dispatch(
-          notify({
-            message: `Your domain has been set to ${domain}`,
-            type: 'success'
-          })
+        return this.setState(
+          {
+            domain,
+            submitted: false,
+            editing: false
+          },
+          () => {
+            this.props.dispatch(
+              notify({
+                message: `Your domain has been set to ${domain}`,
+                type: 'success'
+              })
+            )
+          }
         )
       })
       .catch(data => {
