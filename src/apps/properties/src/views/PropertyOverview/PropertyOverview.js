@@ -200,6 +200,14 @@ class PropertyOverview extends Component {
     )
   }
   fetchSiteData(props) {
+    this.setState({
+      loadingUsers: true,
+      loadingRoles: true,
+      loadingUsersPending: true,
+      loadingTeams: true,
+      loadingCollections: true,
+      loadingBlueprint: true
+    })
     props.dispatch(fetchSiteUsers(props.siteZUID)).then(() => {
       this.setState({
         loadingUsers: false
