@@ -31,28 +31,28 @@ class App extends Component {
     }, 60000)
   }
   componentDidMount() {
-    if (!this.props.user.prefs.hasSelectedDev) {
-      this.props.dispatch(
-        zConfirm({
-          prompt: 'Are you interested in using developer features?',
-          callback: response => {
-            if (response) {
-              this.props.dispatch({
-                type: 'DEV_PREFS',
-                payload: 1
-              })
-              this.props.dispatch(saveProfile())
-            } else {
-              this.props.dispatch({
-                type: 'DEV_PREFS',
-                payload: 0
-              })
-              this.props.dispatch(saveProfile())
-            }
-          }
-        })
-      )
-    }
+    // if (!this.props.user.prefs.hasSelectedDev) {
+    //   this.props.dispatch(
+    //     zConfirm({
+    //       prompt: 'Are you interested in using developer features?',
+    //       callback: response => {
+    //         if (response) {
+    //           this.props.dispatch({
+    //             type: 'DEV_PREFS',
+    //             payload: 1
+    //           })
+    //           this.props.dispatch(saveProfile())
+    //         } else {
+    //           this.props.dispatch({
+    //             type: 'DEV_PREFS',
+    //             payload: 0
+    //           })
+    //           this.props.dispatch(saveProfile())
+    //         }
+    //       }
+    //     })
+    //   )
+    // }
   }
   render() {
     return (
