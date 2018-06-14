@@ -5,7 +5,7 @@ import BlueprintList from '../BlueprintList'
 import { notify } from '../../../../../shell/store/notifications'
 import {
   updateBlueprint,
-  postNewBlueprint,
+  createBlueprint,
   fetchBlueprints
 } from '../../../../properties/src/store/blueprints'
 
@@ -19,7 +19,10 @@ class BlueprintEdit extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (props.blueprint === 'create' && !state.blueprint.hasOwnProperty('name')) {
+    if (
+      props.blueprint === 'create' &&
+      !state.blueprint.hasOwnProperty('name')
+    ) {
       return {
         blueprint: {
           name: '',
@@ -47,8 +50,8 @@ class BlueprintEdit extends Component {
   }
 
   render() {
-    return this.state.blueprint !== '' ? (
-      <div className={styles.blueprints}>
+    return (
+      <div className={styles.BlueprintEdit}>
         <label>Blueprint Name</label>
         <Input
           autoComplete="off"
@@ -121,29 +124,48 @@ class BlueprintEdit extends Component {
             />
           </article>
         </section>
-        {this.state.blueprint.ID ? (
-          <Button
-            disabled={this.state.saving}
-            className={styles.button}
-            onClick={this.handleSubmit}
-            type="submit">
-            <i className="fa fa-save" /> Save
-          </Button>
-        ) : (
-          <Button
-            disabled={this.state.saving}
-            className={styles.button}
-            onClick={this.handleCreate}
-            type="submit">
-            <i className="fa fa-plus" /> Create
-          </Button>
-        )}
+        <section className={styles.Actions}>
+          {this.state.blueprint.ID ? (
+            <React.Fragment>
+              <Button
+                disabled={this.state.saving}
+                className={styles.button}
+                onClick={() => {
+                  this.props.history.push('/blueprints')
+                }}
+                type="cancel">
+                <i className="fa fa-ban" /> Cancel
+              </Button>
+              <Button
+                disabled={this.state.saving}
+                className={styles.button}
+                onClick={this.handleSubmit}
+                type="submit">
+                <i className="fa fa-save" /> Save
+              </Button>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Button
+                disabled={this.state.saving}
+                className={styles.button}
+                onClick={() => {
+                  this.props.history.push('/blueprints')
+                }}
+                type="cancel">
+                <i className="fa fa-ban" /> Cancel
+              </Button>
+              <Button
+                disabled={this.state.saving}
+                className={styles.button}
+                onClick={this.handleCreate}
+                type="submit">
+                <i className="fa fa-plus" /> Create
+              </Button>
+            </React.Fragment>
+          )}
+        </section>
       </div>
-    ) : (
-      <BlueprintList
-        loadingBlueprints={this.props.loadingBlueprints}
-        userBlueprints={this.props.blueprints}
-      />
     )
   }
   handleSubmit = evt => {
@@ -179,7 +201,7 @@ class BlueprintEdit extends Component {
       createdByUserZUID: this.state.userZUID
     }
     this.props
-      .dispatch(postNewBlueprint(newBlueprint))
+      .dispatch(createBlueprint(newBlueprint))
       .then(data => {
         this.setState({ saving: false })
         this.props.dispatch(
@@ -188,6 +210,7 @@ class BlueprintEdit extends Component {
             message: 'Successfully created blueprint'
           })
         )
+        this.props.history.push('/blueprints')
       })
       .catch(err => {
         this.setState({ saving: false })

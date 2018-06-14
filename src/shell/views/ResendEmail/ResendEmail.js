@@ -17,9 +17,9 @@ export default class ResendEmail extends Component {
       <section className={styles.VerifyEmail}>
         <form name="VerifyEmail" className={styles.VerifyEmailForm}>
           <h1>Re-Send Email Verification</h1>
-          <p>
-            Your email is required to be verified before you can begin using
-            Zesty.io
+          <p className={styles.message}>
+            Don't forget to check your spam folder for you verification email,
+            sometimes they get lost there.
           </p>
           <section className={styles.ResendAction}>
             <Input
@@ -34,7 +34,8 @@ export default class ResendEmail extends Component {
               className={styles.button}
               disabled={this.state.submitted}
             >
-              Re-Send Verification
+              <i className="fa fa-envelope-o" aria-hidden="true" />Send
+              Verification
             </Button>
           </section>
 
@@ -73,9 +74,11 @@ export default class ResendEmail extends Component {
         error: ''
       })
       request(
-        `${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${
+        `${
+          CONFIG.API_ACCOUNTS
+        }/users/emails/verifications?address=${encodeURIComponent(
           this.state.email
-        }`,
+        )}`,
         {
           method: 'POST'
         }

@@ -1,17 +1,13 @@
 @import '../../../../../shell/styles/colors.less';
 
-.blueprints {
+.BlueprintEdit {
   display: flex;
   margin: 2rem;
   padding: 3rem;
   background-color: @zesty-white;
-  // border: 1px solid @zesty-light-blue;
   flex-direction: column;
-  width: 90%;
-  height: auto;
-  // margin: 1rem auto;
   border-radius: 5px;
-  overflow-y: auto;
+  height:86vh;
 
   label {
     display: block;
@@ -20,7 +16,7 @@
     font-weight: bold;
     color: #5b667d;
     margin-top: 1rem;
-    margin-bottom: .2rem;
+    margin-bottom: 0.2rem;
   }
 
   .descriptionWrapper {
@@ -37,9 +33,13 @@
     }
   }
 
-  .button {
-    margin: 1rem;
-    max-width: 100px;
+  .Actions {
+    display: flex;
     align-self: flex-end;
+    .button {
+      margin: 1rem;
+      max-width: 100px;
+      height: 40px;
+    }
   }
 }

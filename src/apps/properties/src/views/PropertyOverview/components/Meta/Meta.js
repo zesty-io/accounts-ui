@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropertyName from '../PropertyName'
 import Domain from '../Domain'
 
@@ -13,7 +13,7 @@ const formatDate = date => {
     1}-${newDate.getDate()}-${newDate.getFullYear()}`
 }
 
-export default class Meta extends Component {
+export default class Meta extends PureComponent {
   render() {
     return (
       <Card className={styles.Meta}>
@@ -32,8 +32,8 @@ export default class Meta extends Component {
             <span className={styles.title}>Domain:&nbsp;</span>
             {this.props.isAdmin ? (
               <Domain
+                domain={this.props.site.domain}
                 siteZUID={this.props.site.ZUID}
-                site={this.props.site}
                 dispatch={this.props.dispatch}
               />
             ) : this.props.site.domain ? (

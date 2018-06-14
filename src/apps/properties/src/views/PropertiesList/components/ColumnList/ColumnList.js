@@ -13,6 +13,12 @@ export default function ColumnList(props) {
   return (
     <section className={styles.ColumnList}>
       <nav className={styles.List}>
+        <AppLink to="/instances/create">
+          <Button className={styles.Create} type="save">
+            <i className="fa fa-plus" />Create New Instance
+          </Button>
+        </AppLink>
+
         {props.sitesInvited.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
@@ -37,25 +43,19 @@ export default function ColumnList(props) {
           </React.Fragment>
         ) : null}
 
-        {props.sites.length ? (
-          props.sitesFiltered.length ? (
-            <React.Fragment>
-              <h2 className={styles.SectionTitle}>
-                <i className="fa fa-th" aria-hidden="true" />
-                &nbsp;All Instances
-              </h2>
-              {props.sitesFiltered.map(site => (
-                <InstanceRow key={site.ZUID} site={site} />
-              ))}
-            </React.Fragment>
-          ) : (
-            <h2>No Results</h2>
-          )
-        ) : (
-          <main className={styles.siteList}>
-            <WebsiteCreate />
-          </main>
-        )}
+        {props.sitesFiltered.length ? (
+          <React.Fragment>
+            <h2 className={styles.SectionTitle}>
+              <i className="fa fa-th" aria-hidden="true" />
+              &nbsp;All Instances
+            </h2>
+            {props.sitesFiltered.map(site => (
+              <InstanceRow key={site.ZUID} site={site} />
+            ))}
+          </React.Fragment>
+        ) : props.searchString ? (
+          <h2 className={styles.NoResults}>No results</h2>
+        ) : null}
       </nav>
       <main className={styles.Overview}>
         <Switch>

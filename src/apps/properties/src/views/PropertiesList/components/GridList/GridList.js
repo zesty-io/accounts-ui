@@ -77,36 +77,32 @@ export default class GridList extends Component {
           </React.Fragment>
         ) : null}
 
-        {this.props.sites.length ? (
-          this.props.sitesFiltered.length ? (
-            <React.Fragment>
-              <h2 className={styles.SectionTitle}>
-                <i className="fa fa-th" aria-hidden="true" />
-                &nbsp;All Instances
-              </h2>
-              <main className={styles.siteList}>
-                {this.props.sitesFiltered.map(site => {
-                  return (
-                    <WebsiteCard
-                      key={site.ZUID}
-                      site={site}
-                      favorite={site.favorite}
-                      dispatch={this.props.dispatch}
-                    />
-                  )
-                })}
-              </main>
-            </React.Fragment>
-          ) : (
-            <main className={styles.siteList}>
-              <h2>No results</h2>
-            </main>
-          )
-        ) : (
+        <React.Fragment>
+          <h2 className={styles.SectionTitle}>
+            <i className="fa fa-th" aria-hidden="true" />
+            &nbsp;All Instances
+          </h2>
+
           <main className={styles.siteList}>
-            <WebsiteCreate />
+            {!this.props.searchString && (
+              <WebsiteCreate first={this.props.sites.length === 0} />
+            )}
+
+            {this.props.sitesFiltered.length ? (
+              this.props.sitesFiltered.map(site => {
+                return (
+                  <WebsiteCard
+                    key={site.ZUID}
+                    site={site}
+                    dispatch={this.props.dispatch}
+                  />
+                )
+              })
+            ) : this.props.searchString ? (
+              <h2>No results</h2>
+            ) : null}
           </main>
-        )}
+        </React.Fragment>
       </div>
     )
   }

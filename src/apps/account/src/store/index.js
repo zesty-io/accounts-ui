@@ -74,7 +74,7 @@ export function updatePassword(oldPassword, newPassword) {
 
     // TODO this endpoint does not return json which breaks our
     // request handler
-    return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}?updatePassword=true`, {
+    return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}?action=updatePassword`, {
       method: 'POST',
       json: true,
       body: {

@@ -1,21 +1,26 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { PureComponent } from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCreate.less'
 
-class WebsiteCreate extends Component {
+export default class WebsiteCreate extends PureComponent {
   render() {
     return (
       <article className={styles.WebsiteCreate}>
         <header>
-          <h1 className={styles.name}>Welcome to Zesty.io</h1>
+          <h1 className={styles.name}>
+            {this.props.first
+              ? 'Welcome to Zesty.io'
+              : 'Create Zesty.io Instance'}
+          </h1>
         </header>
         <main className={styles.WebsiteManage}>
-          <p>
-            Get started by creating your first Zesty web instance in a few easy
-            steps.
-          </p>
+          {this.props.first ? (
+            <p>
+              Get started by creating your first Zesty web instance in a few
+              easy steps.
+            </p>
+          ) : null}
           <p>
             <em>
               Instances are a way for you to categorize content by a domain.
@@ -27,7 +32,9 @@ class WebsiteCreate extends Component {
           <Link to="/instances/create" className={styles.Button}>
             <Button type="save">
               <i className="fa fa-plus" aria-hidden="true" />
-              Create Your First Instance
+              {this.props.first
+                ? 'Create Your First Instance'
+                : 'Create New Instance'}
             </Button>
           </Link>
         </footer>
@@ -35,5 +42,3 @@ class WebsiteCreate extends Component {
     )
   }
 }
-
-export default connect(state => state)(WebsiteCreate)

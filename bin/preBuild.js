@@ -25,7 +25,7 @@ if (env === 'PRODUCTION') {
     COOKIE_NAME: 'APP_SID',
     COOKIE_DOMAIN: '.zesty.io',
     EMAIL_SERVICE: 'https://email.zesty.io/send',
-    LEGACY_ACCOUNTS: 'http://accounts.zesty.io'
+    LEGACY_ACCOUNTS: 'https://accounts.zesty.io'
 
   }`
 } else if (env === 'STAGE') {
@@ -39,7 +39,8 @@ if (env === 'PRODUCTION') {
     PREVIEW_URL_PROTOCOL: 'https://',
     COOKIE_NAME: 'STAGE_APP_SID',
     COOKIE_DOMAIN: '.zesty.io',
-    EMAIL_SERVICE: 'https://email.zesty.io/send'
+    EMAIL_SERVICE: 'https://email.zesty.io/send',
+    LEGACY_ACCOUNTS: 'https://stage-accounts.zesty.io'
   }`
 } else {
   config = `window.CONFIG = {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import debounce from '../../../../../../../util/debounce'
@@ -47,7 +47,8 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'name' })
                 return this.sort('name')
-              }}>
+              }}
+            >
               <i className={`fa fa-sort-alpha-asc`} />
             </Button>
             <Button
@@ -56,7 +57,8 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'date' })
                 return this.sort('createdAt')
-              }}>
+              }}
+            >
               <i className={`fa fa-calendar-o`} />
             </Button>
           </ButtonGroup>
@@ -71,7 +73,8 @@ class PropertiesHeader extends Component {
                   layout: 'grid'
                 })
                 this.props.dispatch(saveProfile())
-              }}>
+              }}
+            >
               <i className={`fa fa-th`} />
             </Button>
             <Button
@@ -83,30 +86,22 @@ class PropertiesHeader extends Component {
                   layout: 'list'
                 })
                 this.props.dispatch(saveProfile())
-              }}>
+              }}
+            >
               <i className={`fa fa-th-list`} />
             </Button>
           </ButtonGroup>
-
-          <Button className={styles.Create} onClick={this.onCreateSite}>
-            <i className="fa fa-plus" />Create Instance
-          </Button>
         </div>
       </header>
     )
   }
 
   onSearch = debounce(term => {
-      this.props.dispatch({
-        type: 'SETTING_FILTER',
-        filter: term
-      })
+    this.props.dispatch({
+      type: 'SETTING_FILTER',
+      filter: term
+    })
   }, 300)
-
-  onCreateSite = evt => {
-    evt.preventDefault()
-    this.props.history.push('/instances/create')
-  }
 
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {

@@ -1,12 +1,19 @@
 .ColumnList {
   display: grid;
   grid-template-columns: 1fr 4fr;
-  margin-top: 0.5rem;
+  // margin-top: 0.5rem;
+  padding: 0 1rem;
+  @media (max-width: 600px) {
+    .Websites {
+      padding: 0 0.5rem;
+    }
+  }
 
   .List {
     height: 86vh;
     overflow-y: scroll;
     width: 30vw;
+    padding: 1.5rem 0;
 
     .SectionTitle {
       border-bottom: 1px solid #c0cee7;
@@ -15,6 +22,10 @@
     }
     .SectionTitle:first-child {
       margin-top: 1rem;
+    }
+    .NoResults {
+      text-align: center;
+      margin: 3rem 0;
     }
   }
   .Overview {
