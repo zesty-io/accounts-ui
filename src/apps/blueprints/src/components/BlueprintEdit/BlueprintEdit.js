@@ -133,14 +133,16 @@ class BlueprintEdit extends Component {
                 onClick={() => {
                   this.props.history.push('/blueprints')
                 }}
-                type="cancel">
+                type="cancel"
+              >
                 <i className="fa fa-ban" /> Cancel
               </Button>
               <Button
                 disabled={this.state.saving}
                 className={styles.button}
                 onClick={this.handleSubmit}
-                type="submit">
+                type="submit"
+              >
                 <i className="fa fa-save" /> Save
               </Button>
             </React.Fragment>
@@ -152,14 +154,16 @@ class BlueprintEdit extends Component {
                 onClick={() => {
                   this.props.history.push('/blueprints')
                 }}
-                type="cancel">
+                type="cancel"
+              >
                 <i className="fa fa-ban" /> Cancel
               </Button>
               <Button
                 disabled={this.state.saving}
                 className={styles.button}
                 onClick={this.handleCreate}
-                type="submit">
+                type="submit"
+              >
                 <i className="fa fa-plus" /> Create
               </Button>
             </React.Fragment>
