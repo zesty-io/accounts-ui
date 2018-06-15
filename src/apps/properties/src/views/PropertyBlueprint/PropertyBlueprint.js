@@ -9,14 +9,10 @@ import { fetchBlueprints } from '../../store/blueprints'
 
 class PropertyBlueprint extends Component {
   state = {
-    submitted: false,
-    isNew: true
+    submitted: false
   }
   componentDidMount() {
     this.props.dispatch(fetchBlueprints())
-    if (this.props.siteBlueprint) {
-      this.setState({ isNew: false })
-    }
   }
   render() {
     return (
@@ -86,7 +82,7 @@ class PropertyBlueprint extends Component {
         })
       )
       .then(data => {
-        if (this.state.isNew) {
+        if (this.props.siteBlueprint) {
           window.open(
             `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${
               CONFIG.MANAGER_URL
