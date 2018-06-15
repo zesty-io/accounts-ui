@@ -82,7 +82,7 @@ class PropertyBlueprint extends Component {
         })
       )
       .then(data => {
-        if (this.props.siteBlueprint) {
+        if (!this.props.siteBlueprint) {
           window.open(
             `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${
               CONFIG.MANAGER_URL
