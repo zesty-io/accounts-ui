@@ -52,8 +52,7 @@ class Blueprints extends Component {
     ) {
       console.log('lengths differ')
       return { ...state, userBlueprints: props.userBlueprints }
-    }
-    else {
+    } else {
       return null
     }
   }
@@ -62,7 +61,8 @@ class Blueprints extends Component {
       <WithLoader
         className={styles.Loading}
         condition={!this.state.loadingBlueprints}
-        message="Loading Your Custom Blueprints">
+        message="Loading Your Custom Blueprints"
+      >
         <section className={styles.Blueprints}>
           <h1 className={styles.BlueprintsTitle}>
             Manage Your Custom Blueprints
@@ -112,7 +112,6 @@ class Blueprints extends Component {
             this.props
               .dispatch(deleteBlueprint(blueprint, name))
               .then(data => {
-                this.props.dispatch(fetchBlueprints())
                 this.props.dispatch(
                   notify({
                     type: 'success',

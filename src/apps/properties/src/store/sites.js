@@ -8,10 +8,8 @@ export function sites(state = {}, action) {
     case 'FETCH_SITES_INVITES_SUCCESS':
       return { ...state, ...normalizeSites(action.sites) }
 
-    case 'UPDATE_SITE_SUCCESS':
     case 'FETCH_SITE_SUCCESS':
-      return { ...state, [action.site.ZUID]: action.site }
-
+    case 'UPDATE_SITE_SUCCESS':
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
@@ -25,11 +23,13 @@ export function sites(state = {}, action) {
 
     case 'SORT_SITES':
       return action.sites
-
-    case 'UPDATE_SITE_DOMAIN':
+    case 'UPDATE_SITE_BLUEPRINT_SUCCESS':
       return {
         ...state,
-        [action.siteZUID]: { ...state[action.siteZUID], domain: action.domain }
+        [action.siteZUID]: {
+          ...state[action.siteZUID],
+          blueprint: action.blueprintID
+        }
       }
     default:
       return state
@@ -184,8 +184,9 @@ export function updateSiteBlueprint(siteZUID, payload) {
     )
       .then(res => {
         dispatch({
-          type: 'UPDATE_SITE_SUCCESS',
-          site: res.data
+          type: 'UPDATE_SITE_BLUEPRINT_SUCCESS',
+          siteZUID,
+          blueprintID: payload.blueprintID
         })
         return res.data
       })
