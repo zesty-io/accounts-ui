@@ -1,9 +1,18 @@
 import { Component } from 'react'
 import styles from './LaunchWizard.less'
 
+import { checkDNS } from '../../../../store/sites'
+
 import Domain from '../Domain'
+import { notify } from '../../../../../../../shell/store/notifications'
 
 export default class LaunchWizard extends Component {
+  state = {
+    aRecord: '',
+    cName: '',
+    isVerified: false,
+    submitted: false
+  }
   render() {
     return (
       <Card className={styles.LaunchWizard}>
@@ -19,8 +28,7 @@ export default class LaunchWizard extends Component {
             public internet access. This can be done in 2 steps. View our{' '}
             <Url
               href="https://developer.zesty.io/docs/satellite-sites/launching-a-satellite-site/"
-              target="_blank"
-            >
+              target="_blank">
               documentation
             </Url>{' '}
             for more detail.
@@ -32,6 +40,7 @@ export default class LaunchWizard extends Component {
                 <Domain
                   siteZUID={this.props.site.ZUID}
                   site={this.props.site}
+                  domain={this.props.site.domain}
                   dispatch={this.props.dispatch}
                 />
               ) : (
@@ -52,23 +61,75 @@ export default class LaunchWizard extends Component {
               provider
               <div className={styles.settings}>
                 <p>
-                  CNAME: <code>sites2.zesty.zone</code>
+                  CNAME:{' '}
+                  <Input
+                    name="cName"
+                    onChange={this.handleChange}
+                    value={this.state.cName}
+                  />
                 </p>
                 <p>
-                  A Record: <code>130.211.21.25</code>
+                  A Record:{' '}
+                  <Input
+                    name="aRecord"
+                    onChange={this.handleChange}
+                    value={this.state.aRecord}
+                  />
                 </p>
               </div>
             </li>
-            {/* <li className={styles.confirm}>
+            <li className={styles.confirm}>
               Confirm your instance is live
-              <Button type="save">
-                <i className="fa fa-check" aria-hidden="true" />
+              <Button
+                type="save"
+                onClick={this.handleCheckDNS}
+                disabled={this.state.submitted}>
+                {this.state.isVerified ? (
+                  <i className="fa fa-check" aria-hidden="true" />
+                ) : (
+                  <i className="fa fa-question" aria-hidden="true" />
+                )}
                 Check DNS
               </Button>
-            </li> */}
+            </li>
           </ol>
         </CardContent>
       </Card>
     )
+  }
+  handleChange = evt => {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
+  handleCheckDNS = () => {
+    this.setState({ submitted: true })
+    this.props
+      .dispatch(
+        checkDNS({
+          aRecord: this.state.aRecord,
+          cName: this.state.cName,
+          domain: this.props.site.domain
+        })
+      )
+      .then(data => {
+        if (data.verified) {
+          this.props.dispatch(
+            notify({
+              type: 'success',
+              message: 'Your DNS successfully verified'
+            })
+          )
+          this.setState({ isVerified: true, submitted: false })
+        } else {
+          this.props.dispatch(
+            notify({
+              type: 'error',
+              message: 'Your DNS could not be verified'
+            })
+          )
+          this.setState({ isVerified: false, submitted: false })
+        }
+      })
   }
 }

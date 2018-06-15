@@ -3,7 +3,7 @@ import { request } from '../../../../util/request'
 export function blueprints(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_BLUEPRINTS_SUCCESS':
-      return { ...state, ...action.blueprints }
+      return action.blueprints
 
     case 'CREATE_BLUEPRINT_SUCCESS':
       return {
