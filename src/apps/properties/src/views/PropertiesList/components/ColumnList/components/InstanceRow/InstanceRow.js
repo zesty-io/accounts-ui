@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames'
 import styles from './InstanceRow.less'
 
 import InstanceFavorite from '../../../../../../components/InstanceFavorite'
@@ -7,15 +8,19 @@ export default function InstanceRow(props) {
   const { site } = props
   return (
     <span className={styles.row}>
-      <AppLink className={styles.action} to={`/instances/${site.ZUID}`}>
-        {site.name}
-      </AppLink>
       <InstanceFavorite
         title="Add instance to favorites"
         className={styles.action}
         favorite={site.favorite}
         ZUID={site.ZUID}
       />
+      <AppLink
+        className={cx(styles.action, styles.overview)}
+        to={`/instances/${site.ZUID}`}
+      >
+        {site.name}
+      </AppLink>
+
       <Url
         className={styles.action}
         target="_blank"
