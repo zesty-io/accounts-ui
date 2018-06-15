@@ -23,6 +23,12 @@ export function sites(state = {}, action) {
 
     case 'SORT_SITES':
       return action.sites
+
+    case 'UPDATE_SITE_DOMAIN':
+      return {
+        ...state,
+        [action.siteZUID]: { ...state[action.siteZUID], domain: action.domain }
+      }
     case 'UPDATE_SITE_BLUEPRINT_SUCCESS':
       return {
         ...state,
