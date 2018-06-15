@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import cx from 'classnames'
 import { connect } from 'react-redux'
 
 import styles from './Confirm.less'
@@ -9,17 +10,25 @@ const Confirm = props => {
   return (
     (props.isOpen && (
       <section className={styles.confirmWrapper}>
-        <section className={styles[props.kind || 'Confirm']}>
+        <section className={cx(styles.Confirm, styles[props.kind])}>
           <h1>{props.prompt}</h1>
           <footer>
             <ButtonGroup className={styles.buttons}>
               <Button
+                type={props.kind}
                 onClick={() => {
                   props.callback(true)
                   props.dispatch({ type: REMOVE_CONFIRM })
                 }}
-                text="Yes"
-              />
+              >
+                {props.kind === 'warn' && (
+                  <i
+                    className="fa fa-exclamation-triangle"
+                    aria-hidden="true"
+                  />
+                )}
+                Yes
+              </Button>
               <Button
                 onClick={() => {
                   props.callback(false)
