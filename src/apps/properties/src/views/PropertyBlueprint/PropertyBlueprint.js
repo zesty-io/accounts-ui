@@ -62,10 +62,12 @@ class PropertyBlueprint extends Component {
                         <i className="fa fa-file-code-o" aria-hidden="true" />
                         Select Blueprint
                       </Button>
+                      {blueprint.previewURL && (
                         <Url href={blueprint.previewURL} target="_blank">
                           <i className="fa fa-eye" aria-hidden="true" />
                           &nbsp;Preview
                         </Url>
+                      )}
                     </CardFooter>
                   </Card>
                 )
