@@ -51,121 +51,125 @@ class BlueprintEdit extends Component {
 
   render() {
     return (
-      <div className={styles.BlueprintEdit}>
-        <label>Blueprint Name</label>
-        <Input
-          autoComplete="off"
-          type="text"
-          style={{ width: '300px' }}
-          onChange={this.onChange}
-          value={this.state.blueprint.name || ''}
-          name="name"
-        />
-        <label>Github Repo URL</label>
-        <Input
-          autoComplete="off"
-          style={{ width: '500px' }}
-          type="text"
-          onChange={this.onChange}
-          value={this.state.blueprint.githubURL || ''}
-          name="githubURL"
-        />
-        <label>Blueprint Example Preview URL</label>
-        <Input
-          autoComplete="off"
-          style={{ width: '500px' }}
-          type="text"
-          onChange={this.onChange}
-          value={this.state.blueprint.previewURL || ''}
-          name="previewURL"
-        />
+      <form id="Blueprint" className={styles.BlueprintEdit}>
         <label>
-          Shield Image URL{' '}
-          <small>Optional. This will override shield.png in your repo.</small>
+          Blueprint Name
+          <Input
+            autoComplete="off"
+            type="text"
+            onChange={this.onChange}
+            placeholder="ACME Co. Micro Site"
+            value={this.state.blueprint.name || ''}
+            name="name"
+          />
         </label>
-        <Input
-          autoComplete="off"
-          style={{ width: '500px' }}
-          type="text"
-          onChange={this.onChange}
-          value={this.state.blueprint.mainImage || ''}
-          name="mainImage"
-        />
+
+        <label>
+          Github Repo URL
+          <em>
+            Looking for a Blueprint? Try starting with one of our{' '}
+            <Url href="https://github.com/zesty-io?q=plate" target="_blank">
+              Zesty.io blueprints
+            </Url>.
+          </em>
+          <Input
+            required
+            autoComplete="off"
+            type="text"
+            onChange={this.onChange}
+            placeholder="https://github.com/zesty-io/plate-material-ui"
+            value={this.state.blueprint.githubURL || ''}
+            name="githubURL"
+          />
+        </label>
+
+        <label>
+          Blueprint Example Preview URL<Input
+            autoComplete="off"
+            type="text"
+            onChange={this.onChange}
+            value={this.state.blueprint.previewURL || ''}
+            name="previewURL"
+          />
+        </label>
+
+        <label>
+          Shield Image URL
+          <em>Optional. This will override shield.png in your repo.</em>
+          <Input
+            autoComplete="off"
+            type="text"
+            onChange={this.onChange}
+            value={this.state.blueprint.mainImage || ''}
+            name="mainImage"
+          />
+        </label>
+
         <label>
           Background Cover Image URL{' '}
-          <small>Optional. This will override shield.png in your repo.</small>
+          <em>Optional. This will override shield.png in your repo.</em>
+          <Input
+            autoComplete="off"
+            onChange={this.onChange}
+            value={this.state.blueprint.coverImage || ''}
+            name="coverImage"
+          />
         </label>
-        <Input
-          style={{ width: '500px' }}
-          autoComplete="off"
-          onChange={this.onChange}
-          value={this.state.blueprint.coverImage || ''}
-          name="coverImage"
-        />
-        <section className={styles.descriptionWrapper}>
-          <article>
-            <label>Short Description</label>
-            <textarea
-              autoComplete="off"
-              wrap="soft"
-              name="shortDescription"
-              onChange={this.onChange}
-              value={this.state.blueprint.shortDescription || ''}
-            />
-          </article>
-          <article>
-            <label>Description</label>
-            <textarea
-              autoComplete="off"
-              wrap="soft"
-              name="description"
-              onChange={this.onChange}
-              value={this.state.blueprint.description || ''}
-            />
-          </article>
-        </section>
-        <section className={styles.Actions}>
+
+        <label className={styles.ShortDescription}>
+          Short Description
+          <textarea
+            autoComplete="off"
+            wrap="soft"
+            name="shortDescription"
+            onChange={this.onChange}
+            value={this.state.blueprint.shortDescription || ''}
+          />
+        </label>
+
+        <label>
+          Description<textarea
+            autoComplete="off"
+            wrap="soft"
+            name="description"
+            onChange={this.onChange}
+            value={this.state.blueprint.description || ''}
+          />
+        </label>
+
+        <ButtonGroup className={styles.Actions}>
           {this.state.blueprint.ID ? (
-            <React.Fragment>
-              <Button
-                disabled={this.state.saving}
-                className={styles.button}
-                onClick={() => {
-                  this.props.history.push('/blueprints')
-                }}
-                type="cancel">
-                <i className="fa fa-ban" /> Cancel
-              </Button>
-              <Button
-                disabled={this.state.saving}
-                className={styles.button}
-                onClick={this.handleSubmit}
-                type="submit">
-                <i className="fa fa-save" /> Save
-              </Button>
-            </React.Fragment>
+            <Button
+              disabled={this.state.saving}
+              className={styles.button}
+              onClick={this.handleSubmit}
+              form="Blueprint"
+              type="submit"
+            >
+              <i className="fa fa-save" /> Save Blueprint
+            </Button>
           ) : (
-            <React.Fragment>
-              <Button
-                disabled={this.state.saving}
-                className={styles.button}
-                onClick={() => {
-                  this.props.history.push('/blueprints')
-                }}
-                type="cancel">
-                <i className="fa fa-ban" /> Cancel
-              </Button>
-              <Button
-                disabled={this.state.saving}
-                className={styles.button}
-                onClick={this.handleCreate}
-                type="submit">
-                <i className="fa fa-plus" /> Create
-              </Button>
-            </React.Fragment>
+            <Button
+              disabled={this.state.saving}
+              className={styles.button}
+              onClick={this.handleCreate}
+              form="Blueprint"
+              type="submit"
+            >
+              <i className="fa fa-plus" /> Create New Blueprint
+            </Button>
           )}
-        </section>
-      </div>
+          <Button
+            disabled={this.state.saving}
+            className={styles.button}
+            onClick={() => {
+              this.props.history.push('/blueprints')
+            }}
+          >
+            <i className="fa fa-ban" /> Cancel
+          </Button>
+        </ButtonGroup>
+      </form>
     )
   }
   handleSubmit = evt => {
@@ -175,13 +179,14 @@ class BlueprintEdit extends Component {
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
       .then(data => {
         this.setState({ saving: false })
-        this.props.dispatch(fetchBlueprints())
-        this.props.dispatch(
-          notify({
-            type: 'success',
-            message: 'Successfully saved changes'
-          })
-        )
+        this.props.dispatch(fetchBlueprints()).then(() => {
+          this.props.dispatch(
+            notify({
+              type: 'success',
+              message: 'Successfully saved changes'
+            })
+          )
+        })
       })
       .catch(err => {
         this.setState({ saving: false })
@@ -196,12 +201,13 @@ class BlueprintEdit extends Component {
   handleCreate = evt => {
     evt.preventDefault()
     this.setState({ saving: true })
-    const newBlueprint = {
-      ...this.state.blueprint,
-      createdByUserZUID: this.state.userZUID
-    }
-    this.props
-      .dispatch(createBlueprint(newBlueprint))
+    const newBlueprint = this.props
+      .dispatch(
+        createBlueprint({
+          ...this.state.blueprint,
+          createdByUserZUID: this.state.userZUID
+        })
+      )
       .then(data => {
         this.setState({ saving: false })
         this.props.dispatch(
