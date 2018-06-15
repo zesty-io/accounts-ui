@@ -8,10 +8,7 @@ export function sites(state = {}, action) {
     case 'FETCH_SITES_INVITES_SUCCESS':
       return { ...state, ...normalizeSites(action.sites) }
 
-    case 'UPDATE_SITE_SUCCESS':
     case 'FETCH_SITE_SUCCESS':
-      return { ...state, [action.site.ZUID]: action.site }
-
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
@@ -26,6 +23,7 @@ export function sites(state = {}, action) {
     case 'SORT_SITES':
       return action.sites
 
+    case 'UPDATE_SITE_SUCCESS':
     default:
       return state
   }
@@ -150,6 +148,7 @@ export function updateSite(siteZUID, payload) {
       body: payload
     })
       .then(res => {
+        console.log(res.data)
         dispatch({
           type: 'UPDATE_SITE_SUCCESS',
           site: res.data
@@ -169,16 +168,19 @@ export function updateSiteBlueprint(siteZUID, payload) {
     dispatch({
       type: 'UPDATING_SITE'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}?action=updateBlueprint`, {
-      method: 'PUT',
-      json: true,
-      body: payload
-    })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}?action=updateBlueprint`,
+      {
+        method: 'PUT',
+        json: true,
+        body: payload
+      }
+    )
       .then(res => {
         dispatch({
-          type: 'UPDATE_SITE_SUCCESS',
-          site: res.data
+          type: 'UPDATE_SITE_SUCCESS'
         })
+        dispatch(fetchSite(siteZUID))
         return res.data
       })
       .catch(err => {
