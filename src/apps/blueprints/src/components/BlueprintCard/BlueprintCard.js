@@ -21,22 +21,23 @@ const BlueprintCard = props => {
       </CardContent>
       <CardFooter className={styles.CardFooter}>
         <ButtonGroup className={styles.controls}>
-          <Url
-            target="_blank"
-            title={`Preview blueprint: ${blueprint.name}`}
-            href={blueprint.previewURL}
-          >
-            <i className={'fa fa-eye'} aria-hidden="true" />
+          <Url onClick={() => props.handleDelete(blueprint.ID)}>
+            <i className={`${styles.trash} fa fa-trash-o`} />
           </Url>
           <Url href={blueprint.githubURL} target="_blank">
             <i className="fa fa-github" aria-hidden="true" />
           </Url>
-          <Url>
-            <i
-              className={`${styles.trash} fa fa-trash-o`}
-              onClick={() => props.handleDelete(blueprint.ID)}
-            />
-          </Url>
+          {blueprint.previewURL ? (
+            <Url
+              target="_blank"
+              title={`Preview blueprint: ${blueprint.name}`}
+              href={blueprint.previewURL}
+            >
+              <i className={'fa fa-eye'} aria-hidden="true" />
+            </Url>
+          ) : (
+            <span />
+          )}
 
           <AppLink to={`/blueprints/${blueprint.ID}`}>
             <i className="fa fa-pencil-square-o" aria-hidden="true" />&nbsp;Edit
