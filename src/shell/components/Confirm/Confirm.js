@@ -9,7 +9,7 @@ const Confirm = props => {
   return (
     (props.isOpen && (
       <section className={styles.confirmWrapper}>
-        <section className={styles.Confirm}>
+        <section className={styles[props.kind || 'Confirm']}>
           <h1>{props.prompt}</h1>
           <footer>
             <ButtonGroup className={styles.buttons}>

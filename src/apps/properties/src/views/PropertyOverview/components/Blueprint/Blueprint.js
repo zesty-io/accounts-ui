@@ -53,9 +53,10 @@ export default class Blueprint extends PureComponent {
     evt.preventDefault()
     this.props.dispatch(
       zConfirm({
+        kind: 'Warn',
         prompt:
           `Are you sure you want to change the blueprint?
-          changing a blueprint will delete all of you content, code, and schema.`,
+          This will DELETE all of your content, code, and schema.`,
         callback: response => {
           if (response) {
             this.props.history.push(`${this.props.match.url}/blueprint`)
