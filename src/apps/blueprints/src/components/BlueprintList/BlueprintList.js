@@ -1,9 +1,8 @@
 import React from 'react'
-
-import styles from './BlueprintList.less'
 import BlueprintCard from '../BlueprintCard'
+import styles from './BlueprintList.less'
 
-const BlueprintList = props => {
+export default function BlueprintList(props) {
   return (
     <section className={styles.Blueprints}>
       <section className={styles.BlueprintList}>
@@ -11,6 +10,7 @@ const BlueprintList = props => {
           <CardHeader className={styles.CardHeader}>
             <h3>Create Blueprint</h3>
           </CardHeader>
+          <CardContent className={styles.CardContent}>
             <p>
               In this area you can manage your own custom Blueprints. Learn how
               to create and maintain your own Blueprints using GitHub through
@@ -18,11 +18,14 @@ const BlueprintList = props => {
               a co-worker or friend. You may use other public Blueprints by
               forking their repositories, and copying the GitHub repository url.
             </p>
+          </CardContent>
           <CardFooter className={styles.CardFooter}>
-            <AppLink to="/blueprints/create">
-              <i className="fa fa-plus" aria-hidden="true" />
-              &nbsp;Create Blueprint
-            </AppLink>
+            <ButtonGroup className={styles.controls}>
+              <AppLink to="/blueprints/create">
+                <i className="fa fa-plus" aria-hidden="true" />
+                &nbsp;Create Blueprint
+              </AppLink>
+            </ButtonGroup>
           </CardFooter>
         </Card>
         {props.userBlueprints.map(blueprint => (
@@ -36,5 +39,3 @@ const BlueprintList = props => {
     </section>
   )
 }
-
-export default BlueprintList
