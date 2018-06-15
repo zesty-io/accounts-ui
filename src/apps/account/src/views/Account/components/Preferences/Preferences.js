@@ -8,7 +8,7 @@ class Preferences extends Component {
   render() {
     return (
       <Card className={styles.Preferences}>
-        <CardHeader>
+        <CardHeader className={styles.CardHeader}>
           <h1>Preferences</h1>
         </CardHeader>
         <CardContent className={styles.CardContent}>
