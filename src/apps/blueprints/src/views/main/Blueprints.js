@@ -112,7 +112,6 @@ class Blueprints extends Component {
             this.props
               .dispatch(deleteBlueprint(blueprint, name))
               .then(data => {
-                this.props.dispatch(fetchBlueprints())
                 this.props.dispatch(
                   notify({
                     type: 'success',

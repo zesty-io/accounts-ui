@@ -3,8 +3,17 @@ import { request } from '../../../../util/request'
 export function blueprints(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_BLUEPRINTS_SUCCESS':
-      return action.blueprints
+      return { ...state, ...action.blueprints }
 
+    case 'DELETE_BLUEPRINT_SUCCESS':
+      // remove deleted blueprint from state and return that state
+      let blueprints = Object.keys(state).reduce((acc, blueprint) => {
+        if (state[blueprint].ID !== action.id) {
+          acc[blueprint] = state[blueprint]
+        }
+        return acc
+      }, {})
+      return blueprints
     case 'CREATE_BLUEPRINT_SUCCESS':
       return {
         ...state,
@@ -133,6 +142,10 @@ export function deleteBlueprint(id) {
       method: 'DELETE'
     })
       .then(blueprint => {
+        dispatch({
+          type: 'DELETE_BLUEPRINT_SUCCESS',
+          id
+        })
         return blueprint
       })
       .catch(err => {
