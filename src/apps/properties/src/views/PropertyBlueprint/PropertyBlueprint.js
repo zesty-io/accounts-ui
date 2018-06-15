@@ -1,11 +1,9 @@
 import { Component } from 'React'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
 
 import styles from './PropertyBlueprint.less'
 
-import qs from 'qs'
-import { updateSite, fetchSite, updateSiteBlueprint } from '../../store/sites'
+import { updateSiteBlueprint } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 import { fetchBlueprints } from '../../store/blueprints'
 
@@ -90,13 +88,15 @@ class PropertyBlueprint extends Component {
         })
       )
       .then(data => {
+        if (!this.props.siteBlueprint) {
+          window.open(
+            `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${
+              CONFIG.MANAGER_URL
+            }`,
+            '_blank'
+          )
+        }
         this.props.history.push(`/instances/${this.props.siteZUID}`)
-        window.open(
-          `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${
-            CONFIG.MANAGER_URL
-          }`,
-          '_blank'
-        )
       })
       .catch(err => {
         console.error(err)
@@ -113,22 +113,22 @@ class PropertyBlueprint extends Component {
   }
 }
 
-export default withRouter(
-  connect((state, ownProps) => {
-    const blueprints = Object.keys(state.blueprints)
-      .reduce((acc, key) => {
-        acc.push(state.blueprints[key])
-        return acc
-      }, [])
-      .filter(blueprint => !blueprint.trashed)
+export default connect((state, ownProps) => {
+  const blueprints = Object.keys(state.blueprints)
+    .reduce((acc, key) => {
+      acc.push(state.blueprints[key])
+      return acc
+    }, [])
+    .filter(blueprint => !blueprint.trashed)
 
-    const siteZUID = ownProps.match.params.zuid
-    const randomHashID = state.sites[siteZUID].randomHashID
+  const siteZUID = ownProps.match.params.zuid
+  const randomHashID = state.sites[siteZUID].randomHashID
+  const siteBlueprint = state.sites[siteZUID].blueprintID
 
-    return {
-      siteZUID,
-      randomHashID,
-      blueprints
-    }
-  })(PropertyBlueprint)
-)
+  return {
+    siteZUID,
+    randomHashID,
+    siteBlueprint,
+    blueprints
+  }
+})(PropertyBlueprint)
