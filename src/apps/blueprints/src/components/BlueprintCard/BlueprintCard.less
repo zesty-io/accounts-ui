@@ -14,11 +14,9 @@
     padding: 1rem;
   }
   .CardContent {
+    margin: 0;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
 
     img {
       max-width: 100%;
@@ -27,7 +25,15 @@
       margin: 1rem;
     }
     .noimage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       color: #b2c7d6;
+      i {
+        margin: 0 0 0.3rem;
+      }
     }
   }
   .CardFooter {

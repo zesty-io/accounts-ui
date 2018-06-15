@@ -10,10 +10,11 @@ const BlueprintCard = props => {
       </CardHeader>
       <CardContent className={styles.CardContent}>
         {blueprint.coverImage ? (
-          <img src={blueprint.coverImage} alt="Blueprint is missing an image" />
+          <img src={blueprint.coverImage} alt="Broken cover image" />
         ) : (
           <div className={styles.noimage} aria-hidden="true">
-            <i className="fa fa-file-code-o" aria-hidden="true" />
+            <i className="fa fa-file-code-o fa-3x" aria-hidden="true" />
+            <span>Missing cover image</span>
           </div>
         )}
         <p>{blueprint.shortDescription}</p>
@@ -23,7 +24,8 @@ const BlueprintCard = props => {
           <Url
             target="_blank"
             title={`Preview blueprint: ${blueprint.name}`}
-            href={blueprint.previewURL}>
+            href={blueprint.previewURL}
+          >
             <i className={'fa fa-eye'} aria-hidden="true" />
           </Url>
           <Url href={blueprint.githubURL} target="_blank">

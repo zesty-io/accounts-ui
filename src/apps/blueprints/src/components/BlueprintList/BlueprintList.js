@@ -8,16 +8,31 @@ export default function BlueprintList(props) {
       <section className={styles.BlueprintList}>
         <Card className={styles.Create}>
           <CardHeader className={styles.CardHeader}>
-            <h3>Create Blueprint</h3>
+            <h3>Blueprints</h3>
           </CardHeader>
           <CardContent className={styles.CardContent}>
             <p>
-              In this area you can manage your own custom Blueprints. Learn how
-              to create and maintain your own Blueprints using GitHub through
-              this. You may share Blueprints by passing your GitHub repo url to
-              a co-worker or friend. You may use other public Blueprints by
-              forking their repositories, and copying the GitHub repository url.
+              Blueprints are the instructions for how to build an instance. By
+              creating a blueprint you can have a consistent schema and code
+              starting point for every new instances you create.
             </p>
+
+            <h4>Getting Started</h4>
+            <ul>
+              <li>
+                <Url
+                  href="https://developer.zesty.io/docs/templating/plate-xml/"
+                  target="_blank"
+                >
+                  Learn how blueprints work
+                </Url>
+              </li>
+              <li>
+                <Url href="https://github.com/zesty-io?q=plate" target="_blank">
+                  Fork an existing Zesty.io blueprint
+                </Url>
+              </li>
+            </ul>
           </CardContent>
           <CardFooter className={styles.CardFooter}>
             <ButtonGroup className={styles.controls}>

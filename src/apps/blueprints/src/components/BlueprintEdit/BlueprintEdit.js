@@ -52,6 +52,11 @@ class BlueprintEdit extends Component {
   render() {
     return (
       <form id="Blueprint" className={styles.BlueprintEdit}>
+        <AppLink to="/blueprints">
+          <i className="fa fa-long-arrow-left" aria-hidden="true" />&nbsp;Back
+          to overview
+        </AppLink>
+
         <label>
           Blueprint Name
           <Input
@@ -84,12 +89,13 @@ class BlueprintEdit extends Component {
         </label>
 
         <label>
-          Blueprint Example Preview URL<Input
+          Cover Image URL
+          <em>Primary. This will override cover.png in your repo.</em>
+          <Input
             autoComplete="off"
-            type="text"
             onChange={this.onChange}
-            value={this.state.blueprint.previewURL || ''}
-            name="previewURL"
+            value={this.state.blueprint.coverImage || ''}
+            name="coverImage"
           />
         </label>
 
@@ -106,13 +112,18 @@ class BlueprintEdit extends Component {
         </label>
 
         <label>
-          Background Cover Image URL{' '}
-          <em>Optional. This will override shield.png in your repo.</em>
+          Blueprint Example Preview URL
+          <em>
+            Optional. By providing a Zesty.io instance which has implemented
+            your blueprint you can allow users you share blueprints with to
+            preview them before selecting during instance creation.
+          </em>
           <Input
             autoComplete="off"
+            type="text"
             onChange={this.onChange}
-            value={this.state.blueprint.coverImage || ''}
-            name="coverImage"
+            value={this.state.blueprint.previewURL || ''}
+            name="previewURL"
           />
         </label>
 
