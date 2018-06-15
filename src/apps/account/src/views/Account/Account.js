@@ -7,6 +7,7 @@ import Profile from './components/Profile'
 import Email from './components/Email'
 import Password from './components/Password'
 import TwoFactor from './components/TwoFactor'
+import Preferences from './components/Preferences'
 
 import styles from './Account.less'
 
@@ -29,8 +30,7 @@ class Account extends Component {
           <WithLoader
             className={styles.Loading}
             condition={!this.state.loadingEmails}
-            message="Loading Your Account Data"
-          >
+            message="Loading Your Account Data">
             <div className={styles.SettingCards}>
               <Profile />
               <Email
@@ -43,6 +43,10 @@ class Account extends Component {
               <TwoFactor
                 dispatch={this.props.dispatch}
                 user={this.props.user}
+              />
+              <Preferences
+                user={this.props.user}
+                dispatch={this.props.dispatch}
               />
             </div>
           </WithLoader>
