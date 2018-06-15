@@ -155,7 +155,6 @@ export function updateSite(siteZUID, payload) {
       body: payload
     })
       .then(res => {
-        console.log(res.data)
         dispatch({
           type: 'UPDATE_SITE_SUCCESS',
           site: res.data
