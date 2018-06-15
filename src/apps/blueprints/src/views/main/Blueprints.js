@@ -76,6 +76,7 @@ class Blueprints extends Component {
                   <BlueprintList
                     handleDelete={this.handleDelete}
                     userBlueprints={this.state.userBlueprints}
+                    history={this.props.history}
                   />
                 )
               }}

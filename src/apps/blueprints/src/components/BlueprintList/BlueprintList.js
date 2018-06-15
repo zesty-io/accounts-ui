@@ -11,18 +11,23 @@ const BlueprintList = props => {
           <CardHeader className={styles.CardHeader}>
             <h3>Create Blueprint</h3>
           </CardHeader>
-            <p>
-              In this area you can manage your own custom Blueprints. Learn how
-              to create and maintain your own Blueprints using GitHub through
-              this. You may share Blueprints by passing your GitHub repo url to
-              a co-worker or friend. You may use other public Blueprints by
-              forking their repositories, and copying the GitHub repository url.
-            </p>
+          <p>
+            In this area you can manage your own custom Blueprints. Learn how to
+            create and maintain your own Blueprints using GitHub through this.
+            You may share Blueprints by passing your GitHub repo url to a
+            co-worker or friend. You may use other public Blueprints by forking
+            their repositories, and copying the GitHub repository url.
+          </p>
           <CardFooter className={styles.CardFooter}>
-            <AppLink to="/blueprints/create">
+            <Button
+              type="save"
+              to="/blueprints/create"
+              onClick={() => {
+                this.props.history.push('/blueprints/create')
+              }}>
               <i className="fa fa-plus" aria-hidden="true" />
               &nbsp;Create Blueprint
-            </AppLink>
+            </Button>
           </CardFooter>
         </Card>
         {props.userBlueprints.map(blueprint => (
