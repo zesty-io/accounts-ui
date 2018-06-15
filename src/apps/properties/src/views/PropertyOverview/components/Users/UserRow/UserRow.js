@@ -26,16 +26,18 @@ export default class UserRow extends Component {
               <React.Fragment>
                 <i className="fa fa-fort-awesome" />
                 <span className={styles.Owner}>Owner</span>
-                <i
-                  className={styles.trash + ' fa fa-trash-o'}
-                  aria-hidden="true"
-                  onClick={() =>
-                    this.removeUserFromInstance(
-                      this.props.ZUID,
-                      this.props.role.ZUID
-                    )
-                  }
-                />
+                {this.props.isOwner && (
+                  <i
+                    className={styles.trash + ' fa fa-trash-o'}
+                    aria-hidden="true"
+                    onClick={() =>
+                      this.removeUserFromInstance(
+                        this.props.ZUID,
+                        this.props.role.ZUID
+                      )
+                    }
+                  />
+                )}
               </React.Fragment>
             ) : (
               <span className={styles.select}>
@@ -47,8 +49,7 @@ export default class UserRow extends Component {
                       .map(item => {
                         return { value: item.ZUID, text: item.name }
                       })[0]
-                  }
-                >
+                  }>
                   {this.props.siteRoles.map(role => {
                     return (
                       <Option
