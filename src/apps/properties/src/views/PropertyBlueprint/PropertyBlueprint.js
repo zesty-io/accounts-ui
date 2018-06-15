@@ -21,8 +21,7 @@ class PropertyBlueprint extends Component {
       <div className={styles.BlueprintView}>
         <WithLoader
           condition={this.props.blueprints.length}
-          message="Loading Available Blueprints"
-        >
+          message="Loading Available Blueprints">
           <section>
             <header>
               <h1>Select a Blueprint</h1>
@@ -56,14 +55,19 @@ class PropertyBlueprint extends Component {
                       )}
                       <p>{blueprint.description}</p>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className={styles.CardFooter}>
                       <Button
                         disabled={this.state.submitted}
-                        onClick={() => this.setInstanceBlueprint(blueprint.ID)}
-                      >
+                        onClick={() => this.setInstanceBlueprint(blueprint.ID)}>
                         <i className="fa fa-file-code-o" aria-hidden="true" />
                         Select Blueprint
                       </Button>
+                      {blueprint.previewURL && (
+                        <Url href={blueprint.previewURL} target="_blank">
+                          <i className="fa fa-eye" aria-hidden="true" />
+                          &nbsp;Preview
+                        </Url>
+                      )}
                     </CardFooter>
                   </Card>
                 )
