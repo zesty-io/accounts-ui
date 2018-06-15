@@ -9,6 +9,7 @@ export function sites(state = {}, action) {
       return { ...state, ...normalizeSites(action.sites) }
 
     case 'FETCH_SITE_SUCCESS':
+    case 'UPDATE_SITE_SUCCESS':
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
@@ -22,8 +23,14 @@ export function sites(state = {}, action) {
 
     case 'SORT_SITES':
       return action.sites
-
-    case 'UPDATE_SITE_SUCCESS':
+    case 'UPDATE_SITE_BLUEPRINT_SUCCESS':
+      return {
+        ...state,
+        [action.siteZUID]: {
+          ...state[action.siteZUID],
+          blueprint: action.blueprintID
+        }
+      }
     default:
       return state
   }
@@ -178,9 +185,10 @@ export function updateSiteBlueprint(siteZUID, payload) {
     )
       .then(res => {
         dispatch({
-          type: 'UPDATE_SITE_SUCCESS'
+          type: 'UPDATE_SITE_BLUEPRINT_SUCCESS',
+          siteZUID,
+          blueprintID: payload.blueprintID
         })
-        dispatch(fetchSite(siteZUID))
         return res.data
       })
       .catch(err => {
