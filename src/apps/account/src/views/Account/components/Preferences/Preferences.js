@@ -17,7 +17,19 @@ class Preferences extends Component {
           </p>
           <article className={styles.PrefItem}>
             Manage Blueprints
-            <Toggle name="blueprints" onChange={this.handleChange} checked={this.props.user.prefs.devOptions}/>
+            <Toggle
+              name="blueprints"
+              onChange={this.handleChange}
+              checked={this.props.user.prefs.devOptions}
+            />
+          </article>
+          <article className={styles.PrefItem}>
+            Instance Grid View
+            <Toggle
+              name="instances"
+              onChange={this.handleChange}
+              checked={this.props.user.prefs.instance_layout === 'grid'}
+            />
           </article>
         </CardContent>
         <CardFooter />
@@ -25,13 +37,24 @@ class Preferences extends Component {
     )
   }
   handleChange = evt => {
-    this.props.dispatch({
-      type: 'DEV_PREFS',
-      payload: evt.target.checked ? 1 : 0
-    })
-    this.props.dispatch(
-      saveProfile()
-    )
+    if (evt.target.name === 'blueprints') {
+      this.props.dispatch({
+        type: 'DEV_PREFS',
+        payload: evt.target.checked ? 1 : 0
+      })
+    }
+    if (evt.target.name === 'instances') {
+      this.props.user.prefs.instance_layout === 'grid'
+        ? this.props.dispatch({
+            type: 'INSTANCE_LAYOUT',
+            layout: 'list'
+          })
+        : this.props.dispatch({
+            type: 'INSTANCE_LAYOUT',
+            layout: 'grid'
+          })
+    }
+    this.props.dispatch(saveProfile())
   }
 }
 
