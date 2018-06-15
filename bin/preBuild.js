@@ -25,7 +25,9 @@ if (env === 'PRODUCTION') {
     COOKIE_NAME: 'APP_SID',
     COOKIE_DOMAIN: '.zesty.io',
     EMAIL_SERVICE: 'https://email.zesty.io/send',
-    LEGACY_ACCOUNTS: 'https://accounts.zesty.io'
+    LEGACY_ACCOUNTS: 'https://accounts.zesty.io',
+    C_NAME: 'sites2.zesty.zone',
+    A_RECORD: '130.211.21.25'
 
   }`
 } else if (env === 'STAGE') {
@@ -40,7 +42,9 @@ if (env === 'PRODUCTION') {
     COOKIE_NAME: 'STAGE_APP_SID',
     COOKIE_DOMAIN: '.zesty.io',
     EMAIL_SERVICE: 'https://email.zesty.io/send',
-    LEGACY_ACCOUNTS: 'https://stage-accounts.zesty.io'
+    LEGACY_ACCOUNTS: 'https://stage-accounts.zesty.io',
+    C_NAME: 'sites2.zesty.zone',
+    A_RECORD: '130.211.21.25'
   }`
 } else {
   config = `window.CONFIG = {
@@ -53,7 +57,9 @@ if (env === 'PRODUCTION') {
     PREVIEW_URL_PROTOCOL: 'http://',
     LEGACY_ACCOUNTS: 'http://accounts.zesty.localdev:3002',
     COOKIE_NAME: 'DEV_APP_SID',
-    COOKIE_DOMAIN: '.zesty.localdev'
+    COOKIE_DOMAIN: '.zesty.localdev',
+    C_NAME: 'sites2.zesty.zone',
+    A_RECORD: '130.211.21.25'
   }`
 }
 

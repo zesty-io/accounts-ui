@@ -8,8 +8,6 @@ import { notify } from '../../../../../../../shell/store/notifications'
 
 export default class LaunchWizard extends Component {
   state = {
-    aRecord: '',
-    cName: '',
     isVerified: false,
     submitted: false
   }
@@ -61,20 +59,10 @@ export default class LaunchWizard extends Component {
               provider
               <div className={styles.settings}>
                 <p>
-                  CNAME:{' '}
-                  <Input
-                    name="cName"
-                    onChange={this.handleChange}
-                    value={this.state.cName}
-                  />
+                  CNAME: <code>{CONFIG.C_NAME}</code>
                 </p>
                 <p>
-                  A Record:{' '}
-                  <Input
-                    name="aRecord"
-                    onChange={this.handleChange}
-                    value={this.state.aRecord}
-                  />
+                  A Record: <code>{CONFIG.A_RECORD}</code>
                 </p>
               </div>
             </li>
@@ -97,18 +85,13 @@ export default class LaunchWizard extends Component {
       </Card>
     )
   }
-  handleChange = evt => {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    })
-  }
   handleCheckDNS = () => {
     this.setState({ submitted: true })
     this.props
       .dispatch(
         checkDNS({
-          aRecord: this.state.aRecord,
-          cName: this.state.cName,
+          aRecord: CONFIG.A_RECORD,
+          cName: CONFIG.C_NAME,
           domain: this.props.site.domain
         })
       )
