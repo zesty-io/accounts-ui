@@ -1,17 +1,18 @@
-@import "../../../../../../shell/styles/colors.less";
+@import '../../../../../../../shell/styles/colors.less';
 
-
-.prefs {
-  margin: 2rem;
-  ol {
-    background-color: white;
+.Preferences {
+  display: flex;
+  flex-direction: column;
+  min-height: 15rem;
+  margin: 1rem 0;
+  .CardHeader {
+    margin-bottom: 1rem;
   }
-  li {
-    padding: .5rem;
-    list-style-type: none;
-  }
-  li:nth-child(odd) {
-    background-color: @zesty-field-blue;
+  .CardContent {
+    .PrefItem {
+      display: flex;
+      margin: 1rem;
+      justify-content: space-between;
+    }
   }
 }
-

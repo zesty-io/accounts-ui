@@ -23,8 +23,13 @@
     }
     .trash {
       margin: 0.4rem;
-      color: @zesty-light-grey;
-      cursor: pointer;
+      transition: all 0.1s;
+      color: lighten(@zesty-gray, 40%);
+      &:hover,
+      &:active,
+      &:focus {
+        color: @zesty-red;
+      }
     }
   }
   .Owner {

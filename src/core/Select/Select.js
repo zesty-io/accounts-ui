@@ -1,3 +1,4 @@
+import React from 'react'
 import styles from './Select.less'
 import cx from 'classnames'
 
@@ -9,7 +10,9 @@ export class Select extends React.Component {
       selection: props.selection
         ? props.selection
         : Array.isArray(props.children) && props.children.length
-          ? props.children[0].props ? props.children[0].props : {}
+          ? props.children[0].props
+            ? props.children[0].props
+            : {}
           : {},
       filter: ''
     }
@@ -76,7 +79,7 @@ export class Select extends React.Component {
         </span>
         <ul className={cx('selections', styles.selections)}>
           {this.props.children &&
-          this.flattenChildren(this.props.children).length > 50 ? (
+          React.Children.toArray(this.props.children).length > 50 ? (
             <Search
               className="filter"
               placeholder="Enter a term to filter this list"
@@ -84,7 +87,7 @@ export class Select extends React.Component {
             />
           ) : null}
           <div className={cx('options', styles.options)}>
-            {this.flattenChildren(this.props.children)
+            {React.Children.toArray(this.props.children)
               .filter(child => {
                 if (this.state.filter) {
                   return (
@@ -165,7 +168,7 @@ export class Select extends React.Component {
       this.props.onSelect(evt)
     }
 
-    const selected = this.flattenChildren(this.props.children).find(child => {
+    const selected = React.Children.toArray(this.props.children).find(child => {
       return child.props.value == evt.currentTarget.dataset.value
     })
 
@@ -178,24 +181,6 @@ export class Select extends React.Component {
     this.setState({
       filter: evt.target.value.trim().toLowerCase()
     })
-  }
-
-  /*
-  Flatten react child components
-   */
-  flattenChildren = children => {
-    if (Array.isArray(children)) {
-      return children.reduce((acc, child) => {
-        if (Array.isArray(child)) {
-          acc = [...acc, ...child]
-        } else {
-          acc.push(child)
-        }
-        return acc
-      }, [])
-    } else {
-      return []
-    }
   }
 
   onEsc = evt => {

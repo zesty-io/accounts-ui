@@ -1,49 +1,61 @@
-import react, { Component } from "react";
-import { connect } from "react-redux";
+import react, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import styles from "./Preferences.less";
+import styles from './Preferences.less'
+import { saveProfile } from '../../../../../../../shell/store/user'
 
 class Preferences extends Component {
   render() {
-    let Stats, Permissions, UserAccess, CompanyAccess, Blueprint
-    const fakeUserPrefs = [
-      {
-        title: "Monthly Usage",
-        className: "fa fa-line-chart",
-        Component: Stats
-      },
-      {
-        title: "Permissions",
-        className: "fa fa-lock",
-        Component: Permissions
-      },
-      {
-        title: "User Access",
-        className: "fa fa-users",
-        Component: UserAccess
-      },
-      {
-        title: "Company Access",
-        className: "fa fa-building",
-        Component: CompanyAccess
-      },
-      {
-        title: "Blueprint",
-        className: "fa fa-file-code-o",
-        Component: Blueprint
-      }
-    ];
     return (
-      <article className={styles.prefs}>
-        <p>Here you can change the order in which Website Overview items are displayed</p>
-        <ol>
-          {fakeUserPrefs.map((item, i) => {
-            return <li key={i}>{item.title}</li>;
-          })}
-        </ol>
-      </article>
-    );
+      <Card className={styles.Preferences}>
+        <CardHeader className={styles.CardHeader}>
+          <h1>Preferences</h1>
+        </CardHeader>
+        <CardContent className={styles.CardContent}>
+          <p>
+            Account views can be customized by selecting from the options below
+          </p>
+          <article className={styles.PrefItem}>
+            Manage Blueprints
+            <Toggle
+              name="blueprints"
+              onChange={this.handleChange}
+              checked={this.props.user.prefs.devOptions}
+            />
+          </article>
+          <article className={styles.PrefItem}>
+            Instance Grid View
+            <Toggle
+              name="instances"
+              onChange={this.handleChange}
+              checked={this.props.user.prefs.instance_layout === 'grid'}
+            />
+          </article>
+        </CardContent>
+        <CardFooter />
+      </Card>
+    )
+  }
+  handleChange = evt => {
+    if (evt.target.name === 'blueprints') {
+      this.props.dispatch({
+        type: 'DEV_PREFS',
+        payload: evt.target.checked ? 1 : 0
+      })
+    }
+    if (evt.target.name === 'instances') {
+      this.props.user.prefs.instance_layout === 'grid'
+        ? this.props.dispatch({
+            type: 'INSTANCE_LAYOUT',
+            layout: 'list'
+          })
+        : this.props.dispatch({
+            type: 'INSTANCE_LAYOUT',
+            layout: 'grid'
+          })
+    }
+    this.props.dispatch(saveProfile())
   }
 }
 
-export default connect(state => state)(Preferences);
+export default connect(state => state)(Preferences)

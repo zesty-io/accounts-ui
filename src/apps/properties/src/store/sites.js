@@ -8,10 +8,8 @@ export function sites(state = {}, action) {
     case 'FETCH_SITES_INVITES_SUCCESS':
       return { ...state, ...normalizeSites(action.sites) }
 
-    case 'UPDATE_SITE_SUCCESS':
     case 'FETCH_SITE_SUCCESS':
-      return { ...state, [action.site.ZUID]: action.site }
-
+    case 'UPDATE_SITE_SUCCESS':
     case 'CREATE_SITE_SUCCESS':
       return { ...state, [action.site.ZUID]: action.site }
 
@@ -26,6 +24,19 @@ export function sites(state = {}, action) {
     case 'SORT_SITES':
       return action.sites
 
+    case 'UPDATE_SITE_DOMAIN':
+      return {
+        ...state,
+        [action.siteZUID]: { ...state[action.siteZUID], domain: action.domain }
+      }
+    case 'UPDATE_SITE_BLUEPRINT_SUCCESS':
+      return {
+        ...state,
+        [action.siteZUID]: {
+          ...state[action.siteZUID],
+          blueprint: action.blueprintID
+        }
+      }
     default:
       return state
   }
@@ -169,15 +180,19 @@ export function updateSiteBlueprint(siteZUID, payload) {
     dispatch({
       type: 'UPDATING_SITE'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}?action=updateBlueprint`, {
-      method: 'PUT',
-      json: true,
-      body: payload
-    })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}?action=updateBlueprint`,
+      {
+        method: 'PUT',
+        json: true,
+        body: payload
+      }
+    )
       .then(res => {
         dispatch({
-          type: 'UPDATE_SITE_SUCCESS',
-          site: res.data
+          type: 'UPDATE_SITE_BLUEPRINT_SUCCESS',
+          siteZUID,
+          blueprintID: payload.blueprintID
         })
         return res.data
       })
@@ -373,6 +388,38 @@ export const sortSites = sortBy => {
         acc[site.ZUID] = site
         return acc
       }, {})
+    })
+  }
+}
+
+export function updateDomain(siteZUID, domain) {
+  return dispatch => {
+    return request(
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}?action=updateDomain`,
+      {
+        method: 'PUT',
+        json: true,
+        body: { domain }
+      }
+    ).then(res => {
+      dispatch({
+        type: 'UPDATE_SITE_DOMAIN',
+        domain,
+        siteZUID
+      })
+      return res.data.domain
+    })
+  }
+}
+
+export function checkDNS(dnsObject) {
+  return dispatch => {
+    return request(`${CONFIG.API_ACCOUNTS}/instances/dns`, {
+      method: 'POST',
+      json: true,
+      body: dnsObject
+    }).then(res => {
+      return res.data
     })
   }
 }

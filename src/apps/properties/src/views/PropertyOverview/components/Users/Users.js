@@ -43,27 +43,17 @@ export default class Users extends Component {
               />
               <Select onSelect={this.handleSelectRole}>
                 <Option key="default" value="" text="Select Role" />
-                {this.props.isOwner
-                  ? this.props.siteRoles.map(role => {
-                      return (
-                        <Option
-                          key={role.ZUID}
-                          value={role.ZUID}
-                          text={role.name}
-                        />
-                      )
-                    })
-                  : this.props.siteRoles
-                      .filter(role => role.name !== 'Owner')
-                      .map(role => {
-                        return (
-                          <Option
-                            key={role.ZUID}
-                            value={role.ZUID}
-                            text={role.name}
-                          />
-                        )
-                      })}
+                {this.props.siteRoles
+                  .filter(role => role.name !== 'Owner')
+                  .map(role => {
+                    return (
+                      <Option
+                        key={role.ZUID}
+                        value={role.ZUID}
+                        text={role.name}
+                      />
+                    )
+                  })}
               </Select>
               <Button
                 onClick={this.handleInvite}
@@ -111,6 +101,7 @@ export default class Users extends Component {
                           siteRoles={this.props.siteRoles}
                           dispatch={this.props.dispatch}
                           isAdmin={this.props.isAdmin}
+                          isOwner={this.props.isOwner}
                           {...user}
                         />
                       )

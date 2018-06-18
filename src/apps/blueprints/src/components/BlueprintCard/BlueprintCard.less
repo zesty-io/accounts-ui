@@ -1,13 +1,60 @@
 @import '../../../../../shell/styles/colors.less';
 .BlueprintCard {
-  .BlueprintAction {
+  display: grid;
+  grid-template-rows: 50px 3fr 35px;
+  padding: 0;
+  box-shadow: 0 0 5px #d6e1f3;
+
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0 0 10px #8398bd;
+  }
+  .CardHeader {
+    padding: 1rem;
+  }
+  .CardContent {
+    margin: 0;
     display: flex;
-    justify-content: space-between;
-    align-content: center;
+    flex-direction: column;
+
+    img {
+      max-width: 100%;
+    }
+    p {
+      margin: 1rem;
+    }
+    .noimage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #b2c7d6;
+      i {
+        margin: 0 0 0.3rem;
+      }
+    }
+  }
+  .CardFooter {
+    padding: 0;
+    .controls {
+      display: grid;
+      grid-template-columns: 35px 35px 35px 1fr;
+
+      a {
+        border-right: 1px solid @zesty-field-blue;
+        padding: 9px;
+        margin: 0;
+        text-align: center;
+      }
+      a:last-child {
+        border: none;
+        text-align: right;
+        padding: 4px 9px;
+      }
+    }
     .trash {
-      margin: 0.5rem;
-      right: 0;
-      align-self: flex-end;
       transition: all 0.1s;
       color: lighten(@zesty-gray, 40%);
       &:hover,
@@ -16,9 +63,5 @@
         color: @zesty-red;
       }
     }
-  }
-  img {
-    max-height: 107px;
-    width: 100%;
   }
 }
