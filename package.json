@@ -22,15 +22,17 @@
   "license": "All Rights Reserved",
   "dependencies": {
     "classnames": "2.2.5",
+    "js-cookie": "2.2.0",
     "qs": "6.5.1",
+    "raven-js": "^3.26.2",
     "react": "16.4.0",
     "react-dom": "16.4.0",
+    "react-raven": "^1.2.3",
     "react-redux": "5.0.7",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
-    "redux-thunk": "2.2.0",
-    "js-cookie": "2.2.0"
+    "redux-thunk": "2.2.0"
   },
   "devDependencies": {
     "ava": "0.25.0",
