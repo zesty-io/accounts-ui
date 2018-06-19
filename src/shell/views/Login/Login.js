@@ -1,32 +1,30 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
-import qs from 'qs'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import qs from "qs";
 
-import styles from './Login.less'
+import styles from "./Login.less";
 
-import { request } from '../../../util/request'
-import { login } from '../../store/auth'
-import { fetchUser } from '../../store/user'
+import { login } from "../../store/auth";
 
 class Login extends Component {
   constructor(props) {
-    super()
+    super();
     this.state = {
       submitted: false,
-      message: ''
-    }
+      message: ""
+    };
   }
   componentDidMount() {
-    const invite = qs.parse(window.location.search.substr(1))
+    const invite = qs.parse(window.location.search.substr(1));
     if (invite.invited) {
       this.props.dispatch({
-        type: 'USER_INVITED',
+        type: "USER_INVITED",
         invite: {
           email: invite.email,
           invited: invite.invited
         }
-      })
+      });
     }
   }
   render() {
@@ -117,14 +115,14 @@ class Login extends Component {
           </main>
         </div>
       </section>
-    )
+    );
   }
   handleLogin = evt => {
-    evt.preventDefault()
+    evt.preventDefault();
 
     this.setState({
       submitted: true
-    })
+    });
 
     this.props
       .dispatch(
@@ -132,28 +130,33 @@ class Login extends Component {
       )
       .then(json => {
         if (json.code === 200) {
-          this.props.history.push('/instances')
+          //handle redirect if present in url
+          const queryParams = qs.parse(window.location.search.substr(1));
+          if (queryParams.redirect) {
+            window.open(queryParams.redirect);
+          }
+          this.props.history.push("/instances");
         } else if (json.code === 202) {
-          this.props.history.push('/login/2fa')
+          this.props.history.push("/login/2fa");
         } else {
           this.setState({
             submitted: false,
-            message: 'There was a problem logging you in'
-          })
+            message: "There was a problem logging you in"
+          });
           this.props.dispatch({
-            type: 'FETCH_AUTH_ERROR',
+            type: "FETCH_AUTH_ERROR",
             auth: false
-          })
+          });
         }
       })
       .catch(err => {
-        console.error(err)
+        console.error(err);
         this.setState({
           submitted: false,
-          message: 'There was a problem logging you in'
-        })
-      })
-  }
+          message: "There was a problem logging you in"
+        });
+      });
+  };
 }
 
-export default withRouter(connect(state => state)(Login))
+export default withRouter(connect(state => state)(Login));
