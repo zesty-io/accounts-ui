@@ -8,7 +8,6 @@ import styles from './Login.less'
 import { request } from '../../../util/request'
 import { login } from '../../store/auth'
 import { fetchUser } from '../../store/user'
-
 class Login extends Component {
   constructor(props) {
     super()
@@ -71,8 +70,7 @@ class Login extends Component {
               <Button
                 tabIndex="3"
                 onClick={this.handleLogin}
-                disabled={this.state.submitted}
-              >
+                disabled={this.state.submitted}>
                 {this.state.submitted ? (
                   <React.Fragment>
                     Logging You In&nbsp;
@@ -148,10 +146,17 @@ class Login extends Component {
       })
       .catch(err => {
         console.error(err)
-        this.setState({
-          submitted: false,
-          message: 'There was a problem logging you in'
-        })
+        if (err === 403) {
+          this.setState({
+            submitted: false,
+            message: 'Too many failed login attempts'
+          })
+        } else {
+          this.setState({
+            submitted: false,
+            message: 'There was a problem logging you in'
+          })
+        }
       })
   }
 }
