@@ -52,5 +52,11 @@
     "style-loader": "0.20.3",
     "webpack": "3.8.1"
   },
+  "prettier": {
+    "jsxBracketSameLine": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "semi": false
+  },
   "false": {}
 }
