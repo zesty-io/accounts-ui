@@ -133,7 +133,11 @@ class Login extends Component {
           //handle redirect if present in url
           const queryParams = qs.parse(window.location.search.substr(1))
           if (queryParams.redirect) {
-            window.open(queryParams.redirect)
+            const parts = queryParams.redirect.split('.')
+            const checkDomain = [parts[2], parts[3]]
+              .join('.')
+              .startsWith('zesty.io')
+            if (checkDomain) window.open(queryParams.redirect)
           }
           this.props.history.push('/instances')
         } else if (json.code === 202) {
