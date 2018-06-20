@@ -16,7 +16,6 @@ module.exports = buildConfig = env => {
     LEGACY_ACCOUNTS: 'https://accounts.zesty.io',
     C_NAME: 'sites2.zesty.zone',
     A_RECORD: '130.211.21.25'
-
   }`
   } else if (env === 'STAGE') {
     config = `window.CONFIG = {
