@@ -122,8 +122,6 @@ module.exports = buildIndex = (env, handler) => {
     <script src="/bundle.vendors.js"></script>
     <script src="/bundle.core.js"></script>
 
-    ${handler}
-    
     <!-- load sub apps -->
     <script src="/bundle.properties-app.js"></script>
     <script src="/bundle.settings-app.js"></script>
