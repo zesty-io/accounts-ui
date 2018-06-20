@@ -134,8 +134,8 @@ class Login extends Component {
           const queryParams = qs.parse(window.location.search.substr(1))
           if (queryParams.redirect) {
             const parts = queryParams.redirect.split('.')
-            const checkDomain = [parts[2], parts[3]]
-              .join('.')
+            const checkDomain = parts[2]
+              .concat('.', parts[3])
               .startsWith('zesty.io')
             if (checkDomain) window.open(queryParams.redirect)
           }
