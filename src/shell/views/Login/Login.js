@@ -11,6 +11,7 @@ class Login extends Component {
   constructor(props) {
     super()
     this.state = {
+      error: false,
       submitted: false,
       message: ''
     }
@@ -85,11 +86,21 @@ class Login extends Component {
                 )}
               </Button>
               {this.state.message ? (
-                <p className={styles.error}>
-                  <i
-                    className="fa fa-exclamation-triangle"
-                    aria-hidden="true"
-                  />&nbsp;{this.state.message}
+                <p
+                  className={cx(
+                    styles.message,
+                    this.state.error ? styles.error : styles.success
+                  )}>
+                  {this.state.error ? (
+                    <i
+                      className="fa fa-exclamation-triangle"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <i className="fa fa-check-circle-o" aria-hidden="true" />
+                  )}
+                  &nbsp;
+                  {this.state.message}
                 </p>
               ) : null}
             </form>
@@ -130,20 +141,31 @@ class Login extends Component {
       )
       .then(json => {
         if (json.code === 200) {
-          //handle redirect if present in url
+          // handle workflow redirect
           const queryParams = qs.parse(window.location.search.substr(1))
           if (queryParams.redirect) {
-            const parts = queryParams.redirect.split('.')
-            const checkDomain = parts[2]
-              .concat('.', parts[3])
-              .startsWith('zesty.io')
-            if (checkDomain) window.open(queryParams.redirect)
+            if (queryParams.redirect.split('.')[2].indexOf('zesty') !== -1) {
+              this.setState({
+                error: false,
+                submitted: false,
+                message: 'Redirecting'
+              })
+              window.location = queryParams.redirect
+            } else {
+              this.setState({
+                error: true,
+                submitted: false,
+                message: 'The redirect provided is not allowed. Check your URL.'
+              })
+            }
+          } else {
+            this.props.history.push('/instances')
           }
-          this.props.history.push('/instances')
         } else if (json.code === 202) {
           this.props.history.push('/login/2fa')
         } else {
           this.setState({
+            error: true,
             submitted: false,
             message: 'There was a problem logging you in'
           })
@@ -157,11 +179,13 @@ class Login extends Component {
         console.error(err)
         if (err === 403) {
           this.setState({
+            error: true,
             submitted: false,
             message: 'Too many failed login attempts'
           })
         } else {
           this.setState({
+            error: true,
             submitted: false,
             message: 'There was a problem logging you in'
           })
