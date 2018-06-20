@@ -32,7 +32,7 @@ class App extends Component {
   }
   componentDidMount() {
     // If errors occur Raven will send user data
-    // Raven.setUserContext({...this.props.user})
+    Raven.setUserContext({ ...this.props.user })
 
     if (!this.props.user.prefs.hasSelectedDev) {
       this.props.dispatch(
