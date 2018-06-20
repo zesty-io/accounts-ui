@@ -15,8 +15,7 @@ module.exports = buildConfig = env => {
     EMAIL_SERVICE: 'https://email.zesty.io/send',
     LEGACY_ACCOUNTS: 'https://accounts.zesty.io',
     C_NAME: 'sites2.zesty.zone',
-    A_RECORD: '130.211.21.25',
-    BUGSNAG: '7e50d87ea61932f9e3141420402f4eed'
+    A_RECORD: '130.211.21.25'
   }`
   } else if (env === 'STAGE') {
     config = `window.CONFIG = {
@@ -32,8 +31,7 @@ module.exports = buildConfig = env => {
     EMAIL_SERVICE: 'https://email.zesty.io/send',
     LEGACY_ACCOUNTS: 'https://stage-accounts.zesty.io',
     C_NAME: 'sites2.zesty.zone',
-    A_RECORD: '130.211.21.25',
-    BUGSNAG: '7e50d87ea61932f9e3141420402f4eed'
+    A_RECORD: '130.211.21.25'
   }`
   } else {
     config = `window.CONFIG = {
@@ -48,8 +46,7 @@ module.exports = buildConfig = env => {
     COOKIE_NAME: 'DEV_APP_SID',
     COOKIE_DOMAIN: '.zesty.localdev',
     C_NAME: 'sites2.zesty.zone',
-    A_RECORD: '130.211.21.25',
-    BUGSNAG: '7e50d87ea61932f9e3141420402f4eed'
+    A_RECORD: '130.211.21.25'
   }`
   }
   return config
