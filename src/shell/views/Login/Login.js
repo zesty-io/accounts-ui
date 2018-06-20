@@ -153,7 +153,7 @@ class Login extends Component {
                 submitted: false,
                 message: 'Redirecting'
               })
-              window.location = queryParams.redirect
+              window.location = queryParams.redirect + window.location.hash
             } else {
               this.setState({
                 error: true,
