@@ -144,7 +144,10 @@ class Login extends Component {
           // handle workflow redirect
           const queryParams = qs.parse(window.location.search.substr(1))
           if (queryParams.redirect) {
-            if (queryParams.redirect.split('.')[2].indexOf('zesty') !== -1) {
+            if (
+              queryParams.redirect.split('.')[2] === 'zesty' ||
+              queryParams.redirect.split('.')[2] === 'zestyio'
+            ) {
               this.setState({
                 error: false,
                 submitted: false,
