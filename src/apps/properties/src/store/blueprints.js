@@ -3,6 +3,8 @@ import { request } from '../../../../util/request'
 export function blueprints(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_BLUEPRINTS_SUCCESS':
+      return action.blueprints
+    case 'FETCHING_BLUEPRINT_SUCCESS':
       return { ...state, ...action.blueprints }
 
     case 'DELETE_BLUEPRINT_SUCCESS':
@@ -59,7 +61,7 @@ export function fetchBlueprint(id) {
     return request(`${CONFIG.API_ACCOUNTS}/blueprints/${id}`)
       .then(res => {
         dispatch({
-          type: 'FETCHING_BLUEPRINTS_SUCCESS',
+          type: 'FETCHING_BLUEPRINT_SUCCESS',
           blueprints: {
             [res.data.ID]: res.data
           }
