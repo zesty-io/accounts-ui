@@ -126,7 +126,13 @@ module.exports = buildIndex = build => {
         }).install()
       </script>
       <script src="//d2wy8f7a9ursnm.cloudfront.net/v4/bugsnag.min.js"></script>
-      <script>window.bugsnagClient = bugsnag('7e50d87ea61932f9e3141420402f4eed')</script>
+      <script>
+        window.bugsnagClient = bugsnag({
+          apiKey: '7e50d87ea61932f9e3141420402f4eed',
+          appVersion: '${build.data.gitCommit}',
+          releaseStage: '${build.data.environment}'
+        })
+      </script>
 
       <script src="/config.js"></script>
       <script src="/bundle.vendors.js"></script>
