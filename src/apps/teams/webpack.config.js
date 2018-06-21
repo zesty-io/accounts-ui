@@ -1,9 +1,10 @@
 'use strict'
 
+const build = require('../../../build/buildinfo.json')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const extractLess = new ExtractTextPlugin({
-  filename: '../../../build/bundle.teams-app.css'
+  filename: `../../../build/bundle.${build.data.gitCommit}.teams-app.css`
 })
 
 module.exports = {
@@ -20,7 +21,7 @@ module.exports = {
     'redux-thunk': 'ReduxThunk'
   },
   output: {
-    filename: '../../../build/bundle.teams-app.js'
+    filename: `../../../build/bundle.${build.data.gitCommit}.teams-app.js`
   },
   resolve: {
     modules: ['node_modules', 'src'],

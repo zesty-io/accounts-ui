@@ -1,9 +1,10 @@
 'use strict'
 
+const build = require('../../build/buildinfo.json')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const extractLess = new ExtractTextPlugin({
-  filename: '../../build/bundle.core.css'
+  filename: `../../build/bundle.${build.data.gitCommit}.core.css`
 })
 
 module.exports = {
@@ -13,7 +14,7 @@ module.exports = {
     react: 'React'
   },
   output: {
-    filename: '../../build/bundle.core.js'
+    filename: `../../build/bundle.${build.data.gitCommit}.core.js`
   },
   plugins: [extractLess],
   module: {

@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 
+const webpack = require('webpack')
 const fs = require('fs')
 const path = require('path')
 
@@ -89,13 +90,27 @@ module.exports = buildIndex = build => {
       </style>
       <link rel="icon" type="image/png" href="/favicon.png" />
 
-      <link href="/bundle.core.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.shell.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.properties-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.settings-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.blueprints-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.support-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.teams-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${
+        build.data.gitCommit
+      }.core.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${
+        build.data.gitCommit
+      }.shell.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${
+        build.data.gitCommit
+      }.properties-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${
+        build.data.gitCommit
+      }.settings-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${
+        build.data.gitCommit
+      }.blueprints-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${
+        build.data.gitCommit
+      }.support-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${
+        build.data.gitCommit
+      }.teams-app.css" type="text/css" rel="stylesheet" />
 
       <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     </head>
@@ -134,17 +149,17 @@ module.exports = buildIndex = build => {
         })
       </script>
 
-      <script src="/config.js"></script>
-      <script src="/bundle.vendors.js"></script>
-      <script src="/bundle.core.js"></script>
+      <script src="/config.${build.data.gitCommit}.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.vendors.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.core.js"></script>
 
       <!-- load sub apps -->
-      <script src="/bundle.properties-app.js"></script>
-      <script src="/bundle.settings-app.js"></script>
-      <script src="/bundle.blueprints-app.js"></script>
-      <script src="/bundle.support-app.js"></script>
-      <script src="/bundle.teams-app.js"></script>
-      <script src="/bundle.shell.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.properties-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.settings-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.blueprints-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.support-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.teams-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.shell.js"></script>
 
     </body>
   </html>

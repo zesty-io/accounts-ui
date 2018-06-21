@@ -1,11 +1,12 @@
 'use strict'
 
+const build = require('../../build/buildinfo.json')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const env = new webpack.EnvironmentPlugin(['NODE_ENV'])
 const extractLess = new ExtractTextPlugin({
-  filename: '../../build/bundle.shell.css'
+  filename: `../../build/bundle.${build.data.gitCommit}.shell.css`
 })
 
 module.exports = {
@@ -21,7 +22,7 @@ module.exports = {
     'redux-thunk': 'ReduxThunk'
   },
   output: {
-    filename: '../../build/bundle.shell.js'
+    filename: `../../build/bundle.${build.data.gitCommit}.shell.js`
   },
   resolve: {
     modules: ['node_modules', 'src'],
