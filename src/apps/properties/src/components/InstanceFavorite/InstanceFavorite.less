@@ -2,9 +2,12 @@
 .Favorite {
   cursor: pointer;
   color: lighten(@zesty-tab-blue, 20%);
-  &:hover,
-  &:active,
-  &:focus {
+  &:focus,
+  &:hover {
     color: @zesty-orange;
+  }
+  &:active {
+    transition: all 0.2s;
+    transform: rotate(90deg);
   }
 }
