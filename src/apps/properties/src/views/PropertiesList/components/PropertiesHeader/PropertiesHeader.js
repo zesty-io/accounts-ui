@@ -30,12 +30,8 @@ class PropertiesHeader extends Component {
           <Search
             className={styles.Search}
             placeholder="Search by instance name or domain"
-            onSubmit={term => {
-              return this.onSearch(term)
-            }}
-            onKeyUp={term => {
-              return this.onSearch(term)
-            }}
+            onSubmit={this.onSearch}
+            onKeyUp={this.onSearch}
           />
 
           <ButtonGroup className={styles.Sort}>
