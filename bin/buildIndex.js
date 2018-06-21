@@ -89,17 +89,13 @@ module.exports = buildIndex = env => {
       </style>
       <link rel="icon" type="image/png" href="/favicon.png" />
 
-      ${
-        env === 'PRODUCTION'
-          ? `<link href="/bundle.core.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.core.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.shell.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.properties-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.settings-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.blueprints-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.support-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.teams-app.css" type="text/css" rel="stylesheet" />`
-          : `<!-- css bundles only used in production env -->`
-      }
+      <link href="/bundle.teams-app.css" type="text/css" rel="stylesheet" />
 
       <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     </head>

@@ -49,8 +49,6 @@
     "pretty-quick": "1.6.0",
     "redux-logger": "3.0.6",
     "serve": "6.5.2",
-    "standard": "11.0.0",
-    "style-loader": "0.20.3",
     "webpack": "3.8.1"
   },
   "prettier": {
