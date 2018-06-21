@@ -119,7 +119,9 @@ export default connect((state, ownProps) => {
       acc.push(state.blueprints[key])
       return acc
     }, [])
-    .filter(blueprint => !blueprint.trashed)
+    .filter(blueprint => {
+      return !blueprint.trashed && (blueprint.createdByUserZUID === null || blueprint.createdByUserZUID === state.user.ZUID)
+    })
 
   const siteZUID = ownProps.match.params.zuid
   const randomHashID = state.sites[siteZUID].randomHashID
