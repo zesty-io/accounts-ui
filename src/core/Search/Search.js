@@ -4,7 +4,7 @@ import cx from 'classnames'
 
 export default class Search extends React.Component {
   state = {
-    bounce: false
+    term: ''
   }
   render() {
     return (
@@ -19,6 +19,8 @@ export default class Search extends React.Component {
           type="text"
           className={styles.searchField}
           placeholder={this.props.placeholder}
+          value={this.state.term}
+          onChange={evt => this.setState({ term: evt.target.value })}
           onFocus={this.props.onFocus}
           onKeyUp={this.props.onKeyUp}
         />
@@ -30,6 +32,9 @@ export default class Search extends React.Component {
     // a form submission if this exists inside
     // of a form element parent
     evt.preventDefault()
+    if (!evt.target.value) {
+      evt.target.value = this.state.term
+    }
     this.props.onClick(evt)
   }
 }
