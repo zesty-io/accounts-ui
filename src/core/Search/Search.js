@@ -3,16 +3,22 @@ import styles from './Search.less'
 import cx from 'classnames'
 
 export default function Search(props) {
-  function handleFilter(evt) {
+  function handleSubmit(evt) {
     evt.preventDefault()
-    // returns the target value of the input
-    evt.target.value = evt.target.term.value
-    props.onClick(evt)
+    // return the target value of the input
+    let value = evt.target.term.value
+    props.onSubmit(value)
+  }
+  function handleKeyUp(evt) {
+    evt.preventDefault()
+    // return the target value of the input
+    let value = evt.target.value
+    props.onKeyUp(value)
   }
   return (
     <form
       className={cx(styles.search, props.className)}
-      onSubmit={handleFilter}>
+      onSubmit={handleSubmit}>
       <Button className={styles.searchBtn} type="submit">
         <i
           className={cx(styles.searchIcon, 'fa fa-search')}
@@ -26,7 +32,7 @@ export default function Search(props) {
         className={styles.searchField}
         placeholder={props.placeholder}
         onFocus={props.onFocus}
-        onKeyUp={props.onKeyUp}
+        onKeyUp={handleKeyUp}
       />
     </form>
   )

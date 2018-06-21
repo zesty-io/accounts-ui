@@ -30,12 +30,10 @@ class PropertiesHeader extends Component {
           <Search
             className={styles.Search}
             placeholder="Search by instance name or domain"
-            onKeyUp={evt => {
-              let term = evt.target.value
+            onSubmit={term => {
               return this.onSearch(term)
             }}
-            onClick={evt => {
-              let term = evt.target.value
+            onKeyUp={term => {
               return this.onSearch(term)
             }}
           />
@@ -47,8 +45,7 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'name' })
                 return this.sort('name')
-              }}
-            >
+              }}>
               <i className={`fa fa-sort-alpha-asc`} />
             </Button>
             <Button
@@ -57,8 +54,7 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'date' })
                 return this.sort('createdAt')
-              }}
-            >
+              }}>
               <i className={`fa fa-calendar-o`} />
             </Button>
           </ButtonGroup>
@@ -73,8 +69,7 @@ class PropertiesHeader extends Component {
                   layout: 'grid'
                 })
                 this.props.dispatch(saveProfile())
-              }}
-            >
+              }}>
               <i className={`fa fa-th`} />
             </Button>
             <Button
@@ -86,8 +81,7 @@ class PropertiesHeader extends Component {
                   layout: 'list'
                 })
                 this.props.dispatch(saveProfile())
-              }}
-            >
+              }}>
               <i className={`fa fa-th-list`} />
             </Button>
           </ButtonGroup>
