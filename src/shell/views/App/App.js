@@ -108,11 +108,13 @@ class LoadUser extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchUser(this.props.userZUID)).then(() =>
+    this.props.dispatch(fetchUser(this.props.userZUID)).then(user => {
+      Raven.setUserContext(user)
+      bugsnagClient.user = user
       this.setState({
         loadingUser: false
       })
-    )
+    })
   }
   render() {
     if (this.props.auth) {

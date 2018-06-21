@@ -4,24 +4,26 @@
 const fs = require('fs')
 const path = require('path')
 const copyFiles = require('./copyFiles')
-const runPkgCmd = require('./runPkgCmd')
+const runCmd = require('./runCmd')
 const buildInfo = require('./buildInfo')
+const buildIndex = require('./buildIndex')
+const buildConfig = require('./buildConfig')
 
+const env = process.env.NODE_ENV.toLowerCase() || 'development'
 const root = path.resolve(__dirname, '../')
-const src = root + '/src'
-const appDir = root + '/src/apps'
+const src = root + '/src/'
+const apps = root + '/src/apps/'
+;(async function build() {
+  copyFiles(root + '/public', root + '/build')
+  const build = await buildInfo(env)
+  buildConfig(env)
+  buildIndex(build)
 
-copyFiles(root + '/public', root + '/build')
+  fs.readdirSync(src).forEach(dir => {
+    runCmd(path.join(src, dir), `build-${env}`)
+  })
 
-fs.readdirSync(src).forEach(dir => {
-  runPkgCmd(path.join(src, dir), `build-${process.env.NODE_ENV.toLowerCase()}`)
-})
-
-fs.readdirSync(appDir).forEach(app => {
-  runPkgCmd(
-    path.join(appDir, app),
-    `build-${process.env.NODE_ENV.toLowerCase()}`
-  )
-})
-
-buildInfo()
+  fs.readdirSync(apps).forEach(app => {
+    runCmd(path.join(apps, app), `build-${env}`)
+  })
+})()

@@ -5,7 +5,7 @@ const package = require('../package.json')
 const root = path.resolve(__dirname, '../')
 const execSync = require('child_process').execSync
 
-module.exports = async function buildInfo() {
+module.exports = async function buildInfo(env) {
   //create a buildInfo file
   const version = package.version
   const buildEngineer = await execSync('whoami')
@@ -26,7 +26,7 @@ module.exports = async function buildInfo() {
     _meta: {},
     data: {
       version: version,
-      environment: process.env.NODE_ENV || 'env not set',
+      environment: env || 'env not set',
       gitCommit: gitCommit,
       gitBranch: gitBranch,
       buildEngineer: buildEngineer,
@@ -37,4 +37,6 @@ module.exports = async function buildInfo() {
   }
 
   fs.writeFileSync(`${root}/build/buildinfo.json`, JSON.stringify(h))
+
+  return h
 }
