@@ -3,7 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = buildIndex = env => {
+module.exports = buildIndex = build => {
   const html = `
   <html>
     <head>
@@ -121,8 +121,8 @@ module.exports = buildIndex = env => {
       crossorigin=anonymous></script>
       <script>
         Raven.config('https://12c3a25b9d4c4442aa93f22dcf39c26a@sentry.io/1229171', {
-          release: '0-0-0',
-          environment: '${env}',
+          release: '${build.data.gitCommit}',
+          environment: '${build.data.environment}',
         }).install()
       </script>
       <script src="//d2wy8f7a9ursnm.cloudfront.net/v4/bugsnag.min.js"></script>

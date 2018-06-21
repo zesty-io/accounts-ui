@@ -4,9 +4,9 @@ const fs = require('fs')
 const path = require('path')
 
 module.exports = buildConfig = env => {
-  let config = ''
+  let config = {}
   if (env === 'PRODUCTION') {
-    config = `window.CONFIG = {
+    config = {
       ENV: 'production',
       API_ACCOUNTS: 'https://accounts.api.zesty.io/v1',
       API_INSTANCE: '.api.zesty.io/v1/',
@@ -21,9 +21,9 @@ module.exports = buildConfig = env => {
       LEGACY_ACCOUNTS: 'https://accounts.zesty.io',
       C_NAME: 'sites2.zesty.zone',
       A_RECORD: '130.211.21.25'
-    }`
+    }
   } else if (env === 'STAGE') {
-    config = `window.CONFIG = {
+    config = {
       API_ACCOUNTS: 'https://accounts.stage-api.zesty.io/v1',
       API_INSTANCE: '.stage-api.zesty.io/v1/',
       API_AUTH: 'https://stage-svc.zesty.io/auth',
@@ -37,9 +37,9 @@ module.exports = buildConfig = env => {
       LEGACY_ACCOUNTS: 'https://stage-accounts.zesty.io',
       C_NAME: 'sites2.zesty.zone',
       A_RECORD: '130.211.21.25'
-    }`
+    }
   } else {
-    config = `window.CONFIG = {
+    config = {
       API_ACCOUNTS: 'http://accounts.api.zesty.localdev:3022/v1',
       API_INSTANCE: '.api.zesty.localdev:3023/v1/',
       API_AUTH: 'http://svc.zesty.localdev:3011/auth',
@@ -52,10 +52,13 @@ module.exports = buildConfig = env => {
       COOKIE_DOMAIN: '.zesty.localdev',
       C_NAME: 'sites2.zesty.zone',
       A_RECORD: '130.211.21.25'
-    }`
+    }
   }
 
-  fs.writeFileSync(path.resolve(process.cwd(), 'build/config.js'), config)
+  fs.writeFileSync(
+    path.resolve(process.cwd(), 'build/config.js'),
+    `window.CONFIG = ${JSON.stringify(config)}`
+  )
 
   return config
 }

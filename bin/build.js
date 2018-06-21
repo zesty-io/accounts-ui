@@ -13,16 +13,17 @@ const env = process.env.NODE_ENV.toLowerCase() || 'development'
 const root = path.resolve(__dirname, '../')
 const src = root + '/src/'
 const apps = root + '/src/apps/'
+;(async function build() {
+  copyFiles(root + '/public', root + '/build')
+  const build = await buildInfo(env)
+  buildConfig(env)
+  buildIndex(build)
 
-copyFiles(root + '/public', root + '/build')
-buildInfo()
-buildConfig(env)
-buildIndex(env)
+  fs.readdirSync(src).forEach(dir => {
+    runCmd(path.join(src, dir), `build-${env}`)
+  })
 
-fs.readdirSync(src).forEach(dir => {
-  runCmd(path.join(src, dir), `build-${env}`)
-})
-
-fs.readdirSync(apps).forEach(app => {
-  runCmd(path.join(apps, app), `build-${env}`)
-})
+  fs.readdirSync(apps).forEach(app => {
+    runCmd(path.join(apps, app), `build-${env}`)
+  })
+})()

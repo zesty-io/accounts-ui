@@ -104,6 +104,8 @@ export function fetchUser(ZUID) {
             type: 'FETCH_USER_SUCCESS',
             user: user.data
           })
+
+          return user.data
         } else {
           throw new Error('API returned missing user data')
         }
