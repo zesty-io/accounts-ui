@@ -5,7 +5,7 @@ const path = require('path')
 
 module.exports = buildConfig = env => {
   let config = {}
-  if (env === 'PRODUCTION') {
+  if (env.toUpperCase() === 'PRODUCTION') {
     config = {
       ENV: 'production',
       API_ACCOUNTS: 'https://accounts.api.zesty.io/v1',
@@ -22,7 +22,7 @@ module.exports = buildConfig = env => {
       C_NAME: 'sites2.zesty.zone',
       A_RECORD: '130.211.21.25'
     }
-  } else if (env === 'STAGE') {
+  } else if (env.toUpperCase() === 'STAGE') {
     config = {
       API_ACCOUNTS: 'https://accounts.stage-api.zesty.io/v1',
       API_INSTANCE: '.stage-api.zesty.io/v1/',
