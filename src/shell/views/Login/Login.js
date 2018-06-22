@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import qs from 'qs'
 
 import styles from './Login.less'
 
-import { request } from '../../../util/request'
 import { login } from '../../store/auth'
-import { fetchUser } from '../../store/user'
 
 class Login extends Component {
   constructor(props) {
     super()
     this.state = {
+      error: false,
       submitted: false,
       message: ''
     }
@@ -71,8 +70,7 @@ class Login extends Component {
               <Button
                 tabIndex="3"
                 onClick={this.handleLogin}
-                disabled={this.state.submitted}
-              >
+                disabled={this.state.submitted}>
                 {this.state.submitted ? (
                   <React.Fragment>
                     Logging You In&nbsp;
@@ -88,11 +86,21 @@ class Login extends Component {
                 )}
               </Button>
               {this.state.message ? (
-                <p className={styles.error}>
-                  <i
-                    className="fa fa-exclamation-triangle"
-                    aria-hidden="true"
-                  />&nbsp;{this.state.message}
+                <p
+                  className={cx(
+                    styles.message,
+                    this.state.error ? styles.error : styles.success
+                  )}>
+                  {this.state.error ? (
+                    <i
+                      className="fa fa-exclamation-triangle"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <i className="fa fa-check-circle-o" aria-hidden="true" />
+                  )}
+                  &nbsp;
+                  {this.state.message}
                 </p>
               ) : null}
             </form>
@@ -119,6 +127,7 @@ class Login extends Component {
       </section>
     )
   }
+
   handleLogin = evt => {
     evt.preventDefault()
 
@@ -132,11 +141,34 @@ class Login extends Component {
       )
       .then(json => {
         if (json.code === 200) {
-          this.props.history.push('/instances')
+          // handle workflow redirect
+          const queryParams = qs.parse(window.location.search.substr(1))
+          if (queryParams.redirect) {
+            if (
+              queryParams.redirect.split('.')[2] === 'zesty' ||
+              queryParams.redirect.split('.')[2] === 'zestyio'
+            ) {
+              this.setState({
+                error: false,
+                submitted: false,
+                message: 'Redirecting'
+              })
+              window.location = queryParams.redirect + window.location.hash
+            } else {
+              this.setState({
+                error: true,
+                submitted: false,
+                message: 'The redirect provided is not allowed. Check your URL.'
+              })
+            }
+          } else {
+            this.props.history.push('/instances')
+          }
         } else if (json.code === 202) {
           this.props.history.push('/login/2fa')
         } else {
           this.setState({
+            error: true,
             submitted: false,
             message: 'There was a problem logging you in'
           })
@@ -148,10 +180,19 @@ class Login extends Component {
       })
       .catch(err => {
         console.error(err)
-        this.setState({
-          submitted: false,
-          message: 'There was a problem logging you in'
-        })
+        if (err === 403) {
+          this.setState({
+            error: true,
+            submitted: false,
+            message: 'Too many failed login attempts'
+          })
+        } else {
+          this.setState({
+            error: true,
+            submitted: false,
+            message: 'There was a problem logging you in'
+          })
+        }
       })
   }
 }

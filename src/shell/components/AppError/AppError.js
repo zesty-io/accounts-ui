@@ -11,14 +11,14 @@ export default class AppError extends Component {
   }
 
   componentDidCatch(error, info) {
-    console.log('Caught Error', error, info)
-
     // Display fallback UI
     this.setState({
       err: error,
       hasError: true
     })
-    // You can also log the error to an error reporting service
+    // log the error to error reporting services
+    Raven.captureException(error)
+    bugsnagClient.notify(error)
     console.table(error)
   }
 
@@ -36,8 +36,7 @@ export default class AppError extends Component {
               href={`mailto:support@zesty.io?subject=Accounts App Crash&body=REPLACE WITH EXTRA INFORMATION ---- ${
                 this.state.err
               }`}
-              target="_blank"
-            >
+              target="_blank">
               Report to support@zesty.io
             </Url>
           </h3>
