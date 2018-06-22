@@ -108,6 +108,21 @@ class LoadUser extends Component {
     this.props.dispatch(fetchUser(this.props.userZUID)).then(user => {
       Raven.setUserContext(user)
       bugsnagClient.user = user
+      if (CONFIG.ENV === 'production') {
+        pendo.initialize({
+          visitor: {
+            id: user.ZUID, // Required if user is logged in
+            email: user.email // Optional
+          },
+
+          account: {
+            id: user.ZUID, // Highly recommended
+            name: `${user.firstName} ${user.lastName}`, // Optional
+            appConfig: CONFIG
+          }
+        })
+      }
+
       this.setState({
         loadingUser: false
       })
