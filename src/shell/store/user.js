@@ -66,6 +66,14 @@ export function user(
           devOptions: action.payload
         }
       }
+    case 'TEAM_PREFS':
+      return {
+        ...state,
+        prefs: {
+          ...state.prefs,
+          teamOptions: action.payload
+        }
+      }
 
     case 'FETCH_USER_EMAILS_SUCCESS':
       return {
