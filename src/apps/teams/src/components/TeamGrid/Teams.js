@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { request } from '../../../../../util/request'
 
 import CreateTeam from '../../components/CreateTeam'
-import TeamList from '../../components/TeamList'
 import TeamCard from '../../components/TeamCard'
 
 import styles from './teams.less'
@@ -25,13 +24,16 @@ class Teams extends Component {
         <h1 className={styles.TeamsTitle}>Manage Your Teams</h1>
         <div className={styles.Team}>
           <div className={styles.TeamCard}>
+            {/* invited teams first */}
             {this.props.teams &&
               Object.keys(this.props.teams)
-                .filter(
-                  team => this.props.teams[team].hasOwnProperty('invited')
+                .filter(team =>
+                  this.props.teams[team].hasOwnProperty('invited')
                 )
                 .map(team => <InviteCard team={this.props.teams[team]} />)}
+            {/* creation card */}
             <CreateTeam />
+            {/* regular teams */}
             {this.props.teams &&
               Object.keys(this.props.teams)
                 .filter(
@@ -52,5 +54,12 @@ class Teams extends Component {
     )
   }
 }
+const mapStateToProps = state => {
+  // separate invited, admin and non-admin teams
+  const adminTeams = {} // teams that a user is an admin for
+  const lockedTeams = {} // teams the user is only a member of
+  const invitedTeams = {} // teams a suer has not accepted an invite to
+  return state
+}
 
-export default connect(state => state)(Teams)
+export default connect(mapStateToProps)(Teams)
