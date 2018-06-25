@@ -28,7 +28,7 @@ class TeamCard extends Component {
               this.state.teamName
             )}{' '}
             <i
-              className="fa fa-pencil"
+              className={this.state.editing ? 'fa fa-save' : 'fa fa-pencil'}
               onClick={() => this.setState({ editing: !this.state.editing })}
             />
           </h3>invite code: {team.hash}
@@ -40,9 +40,13 @@ class TeamCard extends Component {
               <article className={styles.CardContent} key={member.ZUID}>
                 <p title={member.email}>
                   <i className="fa fa-user" />
-                  {member.name}{member.admin ? <i className="fa fa-star" /> : null}
+                  {member.name}
+                  {member.admin ? <i className="fa fa-star" /> : null}
                 </p>
-                <i className={`${styles.remove} fa fa-times-circle-o`} onClick={() => this.removeUser(member.ZUID)}/>
+                <i
+                  className={`${styles.remove} fa fa-times-circle-o`}
+                  onClick={() => this.removeUser(member.ZUID)}
+                />
                 {/* {member.email} */}
               </article>
             )
@@ -79,7 +83,7 @@ class TeamCard extends Component {
     // send name to update endpoint
   }
   handleInvite = evt => {
-    // 
+    //
   }
   removeUser = user => {
     // confirm, then remove team member

@@ -100,9 +100,9 @@ export const fetchTeams = userZUID => {
       data: fakeTeamData
     })
     const resolved = new Promise((res, rej) => {
-      setTimeout(res, 1000)
+      setTimeout(res, 500)
     })
-    return resolved;
+    return resolved
   }
 }
 
