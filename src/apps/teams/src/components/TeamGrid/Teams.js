@@ -15,9 +15,6 @@ class Teams extends Component {
     user: this.props.user
   }
 
-  componentDidMount() {
-    this.props.dispatch(fetchTeams(this.state.user.ZUID))
-  }
   render() {
     return (
       <section className={styles.Teams}>
@@ -30,7 +27,9 @@ class Teams extends Component {
                 .filter(team =>
                   this.props.teams[team].hasOwnProperty('invited')
                 )
-                .map(team => <InviteCard team={this.props.teams[team]} />)}
+                .map((team, i) => (
+                  <InviteCard team={this.props.teams[team]} key={i} />
+                ))}
             {/* creation card */}
             <CreateTeam />
             {/* regular teams */}
