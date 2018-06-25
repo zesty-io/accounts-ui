@@ -8,7 +8,8 @@ class TeamCard extends Component {
   }
   componentDidMount() {
     this.setState({
-      teamName: this.props.team.name
+      teamName: this.props.team.name,
+      isAdmin: this.props.isAdmin
     })
   }
   render() {
