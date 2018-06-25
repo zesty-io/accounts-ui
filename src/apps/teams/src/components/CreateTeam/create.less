@@ -1,8 +1,13 @@
 @import url('../../../../../shell/styles/colors.less');
 
 .Card {
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0 0 10px #8398bd;
+  }
   section {
-    margin: .5rem 0;
+    margin: 0.5rem 0;
   }
   label {
     display: block;
@@ -17,6 +22,6 @@
     max-width: 15rem;
   }
   .addMember {
-    margin:.5rem;
+    margin: 0.5rem;
   }
 }
