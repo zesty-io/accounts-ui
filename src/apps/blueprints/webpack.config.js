@@ -1,27 +1,27 @@
 'use strict'
 
+const build = require('../../../build/buildinfo.json')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const extractLess = new ExtractTextPlugin({
-  filename: '../../../build/bundle.blueprints-app.css',
-  disable: process.env.NODE_ENV === 'development'
+  filename: `../../../build/bundle.${build.data.gitCommit}.blueprints-app.css`
 })
 
 module.exports = {
   entry: './src/index.js',
   devtool: 'cheap-module-source-map',
   externals: {
-    'classnames': 'cx',
-    'react': 'React',
+    classnames: 'cx',
+    react: 'React',
     'react-dom': 'ReactDOM',
     'react-redux': 'ReactRedux',
     'react-router': 'ReactRouter',
     'react-router-dom': 'ReactRouterDOM',
-    'redux': 'Redux',
+    redux: 'Redux',
     'redux-thunk': 'ReduxThunk'
   },
   output: {
-    filename: '../../../build/bundle.blueprints-app.js'
+    filename: `../../../build/bundle.${build.data.gitCommit}.blueprints-app.js`
   },
   resolve: {
     modules: ['node_modules', 'src'],
@@ -33,16 +33,18 @@ module.exports = {
       {
         test: /\.less$/,
         use: extractLess.extract({
-          use: [{
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: '[local]--[hash:base64:5]'
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                localIdentName: '[local]--[hash:base64:5]'
+              }
+            },
+            {
+              loader: 'less-loader'
             }
-          }, {
-            loader: 'less-loader'
-          }],
-          fallback: 'style-loader'
+          ]
         })
       },
       {

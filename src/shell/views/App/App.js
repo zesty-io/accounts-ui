@@ -66,7 +66,7 @@ class App extends Component {
     return (
       <section className={styles.AppShell}>
         <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
-        <AppError>
+        <AppError user={this.props.user}>
           <section className={cx('AppMain', styles.AppMain)}>
             <Switch>
               <Route path="/instances" component={Properties} />
@@ -105,19 +105,20 @@ class LoadUser extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchUser(this.props.userZUID)).then(() =>
+    this.props.dispatch(fetchUser(this.props.userZUID)).then(user => {
+      Raven.setUserContext(user)
+      bugsnagClient.user = user
       this.setState({
         loadingUser: false
       })
-    )
+    })
   }
   render() {
     if (this.props.auth) {
       return (
         <WithLoader
           condition={!this.state.loadingUser}
-          message="Finding Your Account"
-        >
+          message="Finding Your Account">
           {this.props.children}
         </WithLoader>
       )
@@ -143,14 +144,12 @@ class Shell extends Component {
           <LoadUser
             auth={this.props.auth.valid}
             userZUID={this.props.user.ZUID}
-            dispatch={this.props.dispatch}
-          >
+            dispatch={this.props.dispatch}>
             <VerifyUser
               verifiedEmails={
                 this.props.user.verifiedEmails &&
                 this.props.user.verifiedEmails.length
-              }
-            >
+              }>
               <App user={this.props.user} dispatch={this.props.dispatch} />
             </VerifyUser>
           </LoadUser>

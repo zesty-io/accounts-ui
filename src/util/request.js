@@ -55,6 +55,8 @@ export function request(url, opts = {}) {
     .catch(err => {
       // TODO global app notification on total request failure
       console.table(err)
+      Raven.captureException(err)
+      bugsnagClient.notify(err)
       throw err
       return err
     })
