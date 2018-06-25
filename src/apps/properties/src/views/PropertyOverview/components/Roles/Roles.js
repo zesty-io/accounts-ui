@@ -71,8 +71,7 @@ export default class Roles extends Component {
                       <span>
                         <ButtonGroup>
                           <AppLink
-                            to={`${this.props.match.url}role/${role.ZUID}`}
-                          >
+                            to={`${this.props.match.url}/role/${role.ZUID}`}>
                             <i className="fa fa-pencil" aria-hidden="true" />&nbsp;Edit
                           </AppLink>
                           <Button onClick={() => this.handleRemove(role.ZUID)}>

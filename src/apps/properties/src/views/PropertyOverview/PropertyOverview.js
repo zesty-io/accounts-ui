@@ -51,8 +51,7 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.MANAGER_URL}`}
-          >
+            }${CONFIG.MANAGER_URL}`}>
             <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
             Manager
           </Url>
@@ -61,16 +60,14 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.PREVIEW_URL}`}
-          >
+            }${CONFIG.PREVIEW_URL}`}>
             <i className="fa fa-eye" aria-hidden="true" />&nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
             <Url
               className={styles.manager}
               target="_blank"
-              href={`http://${this.props.site.domain}`}
-            >
+              href={`http://${this.props.site.domain}`}>
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
             </Url>
           ) : null}
@@ -83,8 +80,7 @@ class PropertyOverview extends Component {
               !this.state.loadingUsers &&
               !this.state.loadingBlueprint
             }
-            message="Checking Instance Permissions"
-          >
+            message="Checking Instance Permissions">
             <Route
               path="/instances/:siteZUID/launch"
               render={routeProps => {
@@ -134,7 +130,7 @@ class PropertyOverview extends Component {
             />
 
             {/* Custom roles are on pause until legacy cuts over */}
-            {/* <Route
+            <Route
               path="/instances/:siteZUID"
               render={routeProps => {
                 return (
@@ -148,7 +144,7 @@ class PropertyOverview extends Component {
                   />
                 )
               }}
-            /> */}
+            />
 
             <Route
               path="/instances/:siteZUID"
