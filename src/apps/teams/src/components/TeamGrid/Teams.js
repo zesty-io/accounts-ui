@@ -31,7 +31,7 @@ class Teams extends Component {
                   <InviteCard team={this.props.teams[team]} key={i} />
                 ))}
             {/* creation card */}
-            <CreateTeam />
+            <CreateTeam dispatch={this.props.dispatch} />
             {/* regular teams */}
             {this.props.teams &&
               Object.keys(this.props.teams)

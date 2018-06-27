@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import { createTeam } from '../../store'
+
 import styles from './create.less'
 class CreateTeam extends Component {
   state = {
@@ -12,10 +14,7 @@ class CreateTeam extends Component {
       <Card className={styles.Card}>
         <CardHeader>
           <h1>Create Team</h1>
-          <p>
-            Add members to a team and gain access to an
-            instance together
-          </p>
+          <p>Add members to a team and gain access to an instance together</p>
         </CardHeader>
         <CardContent>
           <section>
@@ -35,7 +34,7 @@ class CreateTeam extends Component {
                     key={i}
                     name={i}
                     value={email}
-                    onChange={this.addInvite}
+                    onChange={this.addInviteField}
                   />
                 )
               })}
@@ -60,7 +59,7 @@ class CreateTeam extends Component {
     invitees.push('')
     this.setState({ invitees })
   }
-  addInvite = evt => {
+  addInviteField = evt => {
     const invitees = this.state.invitees
     invitees.splice(Number(evt.target.name), 1, evt.target.value)
     this.setState({ invitees })
@@ -68,7 +67,9 @@ class CreateTeam extends Component {
   changeName = evt => {
     this.setState({ name: evt.target.value })
   }
-  handleSubmit = evt => {}
+  handleSubmit = evt => {
+    this.props.dispatch(createTeam(this.state.name)).then(console.log)
+  }
 }
 
 export default CreateTeam
