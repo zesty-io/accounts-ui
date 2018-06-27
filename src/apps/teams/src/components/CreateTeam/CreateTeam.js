@@ -14,7 +14,6 @@ class CreateTeam extends Component {
       <Card className={styles.Card}>
         <CardHeader>
           <h1>Create Team</h1>
-          <p>Add members to a team and gain access to an instance together</p>
         </CardHeader>
         <CardContent>
           <section>
@@ -26,8 +25,17 @@ class CreateTeam extends Component {
             />
           </section>
           <section>
+            <p>Add members to a team and gain access to an instance together</p>
+            <p>
+              Teams can be invited to a role on an instance by using the invite
+              code
+            </p>
+            <p>
+              Once the invitation is accepted by the team admin, all users in
+              the team ahve access to the instance
+            </p>
             <label>Invite team members by email address:</label>
-            <section className={styles.inviteInputs}>
+            <article className={styles.inviteInputs}>
               {this.state.invitees.map((email, i) => {
                 return (
                   <Input
@@ -38,7 +46,7 @@ class CreateTeam extends Component {
                   />
                 )
               })}
-            </section>
+            </article>
             <Button className={styles.addMember} onClick={this.addInvitee}>
               <i className="fa fa-user" />
               <p>Add Member</p>
@@ -68,7 +76,9 @@ class CreateTeam extends Component {
     this.setState({ name: evt.target.value })
   }
   handleSubmit = evt => {
-    this.props.dispatch(createTeam(this.state.name)).then(console.log)
+    this.props.dispatch(createTeam(this.state.name)).then(data => {
+      this.props.dispatch({ type: 'CREATE_TEAM_SUCCESS', data })
+    })
   }
 }
 
