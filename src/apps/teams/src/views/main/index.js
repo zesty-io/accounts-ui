@@ -5,7 +5,7 @@ import { request } from '../../../../../util/request'
 
 import TeamGrid from '../../components/TeamGrid'
 
-import { fetchTeams } from '../../store'
+import { fetchTeams, getUserTeamInvites } from '../../store'
 
 import styles from './teams.less'
 class Teams extends Component {
@@ -15,9 +15,10 @@ class Teams extends Component {
   }
 
   componentDidMount() {
-    this.props
-      .dispatch(fetchTeams())
-      .then(() => this.setState({ loading: false }))
+    Promise.all([
+      this.props.dispatch(getUserTeamInvites()),
+      this.props.dispatch(fetchTeams())
+    ]).then(() => this.setState({ loading: false }))
   }
   render() {
     return (

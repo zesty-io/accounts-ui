@@ -25,7 +25,7 @@ class Teams extends Component {
             {this.props.teams &&
               Object.keys(this.props.teams)
                 .filter(team =>
-                  this.props.teams[team].hasOwnProperty('invited')
+                  this.props.teams[team].hasOwnProperty('inviteeUserZUID')
                 )
                 .map((team, i) => (
                   <InviteCard team={this.props.teams[team]} key={i} />
@@ -36,7 +36,8 @@ class Teams extends Component {
             {this.props.teams &&
               Object.keys(this.props.teams)
                 .filter(
-                  team => !this.props.teams[team].hasOwnProperty('invited')
+                  team =>
+                    !this.props.teams[team].hasOwnProperty('inviteeUserZUID')
                 )
                 .map(team => {
                   return (
@@ -59,10 +60,13 @@ class Teams extends Component {
 }
 const mapStateToProps = state => {
   // separate invited, admin and non-admin teams
-  const adminTeams = {} // teams that a user is an admin for
-  const lockedTeams = {} // teams the user is only a member of
-  const invitedTeams = {} // teams a suer has not accepted an invite to
-  return state
+  // const adminTeams = {} // teams that a user is an admin for
+  // const lockedTeams = {} // teams the user is only a member of
+  // const invitedTeams = {} // teams a suer has not accepted an invite to
+  // const teams = Object.keys(state.teams).reduce((acc,team) => {
+  //   if(Object.hasOwn(state.teams[team]))
+  // },{})
+  return { user: state.user, teams: state.teams }
 }
 
 export default connect(mapStateToProps)(Teams)

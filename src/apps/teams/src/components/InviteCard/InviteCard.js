@@ -11,11 +11,13 @@ class InviteCard extends Component {
     return (
       <Card className={styles.Card}>
         <CardHeader>
-          <h3>Invited to Team: {team.name}</h3>
+          <h3>Invited to Team: {team.ZUID}</h3>
           <p>you can accept or decline this invite below</p>
         </CardHeader>
         <CardContent>
-          <h1>Members</h1>
+          <h1>Invited By</h1>
+          {team.invitedByUserZUID}
+          {/* <h1>Members</h1>
           {team.members.map(member => {
             return (
               <article className={styles.CardContent} key={member.ZUID}>
@@ -38,7 +40,7 @@ class InviteCard extends Component {
                 <p>role: {instance.role}</p>
               </article>
             )
-          })}
+          })} */}
         </CardContent>
         <CardFooter className={styles.CardInvite}>
           <Button onClick={() => console.log('click')}>

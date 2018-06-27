@@ -186,7 +186,7 @@ export const getUserTeamInvites = () => {
         return res.data
       })
       .catch(err => {
-        dispatch({ type: 'FETCHING_TEAMS_FAILURE', err })
+        dispatch({ type: 'FETCHING_INVITED_TEAMS_FAILURE', err })
         console.table(err)
         return err
       })
