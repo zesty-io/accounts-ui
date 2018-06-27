@@ -105,10 +105,6 @@ export const updateTeam = (teamZUID, Name) => {
   }
 }
 
-export const inviteGroup = (teamZUID, groupArray) => {
-  // takes an array and sends them to a group invite endpoint
-}
-
 export const inviteMember = (teamZUID, inviteeEmail) => {
   // individual invite endpoint
   return dispatch => {
@@ -187,6 +183,47 @@ export const getUserTeamInvites = () => {
       })
       .catch(err => {
         dispatch({ type: 'FETCHING_INVITED_TEAMS_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const handleTeamInvite = (inviteZUID, action) => {
+  return dispatch => {
+    dispatch({ type: 'RESPONDING_TO_INVITE' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/teams/invites/${inviteZUID}?action=${action}`
+    )
+      .then(res => {
+        dispatch({ type: 'RESPONDING_TO_INVITE_SUCCESS' })
+        if (action === 'decline' || 'cancel') {
+          // remove the teamZUID from state
+          dispatch(
+            notify({
+              type: 'success',
+              message: 'Invite is deleted'
+            })
+          )
+        } else {
+          // add team ZUID to state
+          dispatch(
+            notify({
+              type: 'success',
+              message: 'Invite accepted'
+            })
+          )
+        }
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'RESPONDING_TO_INVITE_FAILURE', err })
+        dispatch(
+          notify({
+            type: 'error',
+            message: 'Invite error'
+          })
+        )
         console.table(err)
         return err
       })

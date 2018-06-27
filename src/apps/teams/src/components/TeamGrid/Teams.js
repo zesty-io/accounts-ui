@@ -28,7 +28,11 @@ class Teams extends Component {
                   this.props.teams[team].hasOwnProperty('inviteeUserZUID')
                 )
                 .map((team, i) => (
-                  <InviteCard team={this.props.teams[team]} key={i} />
+                  <InviteCard
+                    team={this.props.teams[team]}
+                    dispatch={this.props.dispatch}
+                    key={i}
+                  />
                 ))}
             {/* creation card */}
             <CreateTeam dispatch={this.props.dispatch} />

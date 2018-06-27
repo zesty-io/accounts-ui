@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { handleTeamInvite } from '../../store'
 
 import styles from './invite.less'
 
@@ -17,43 +18,29 @@ class InviteCard extends Component {
         <CardContent>
           <h1>Invited By</h1>
           {team.invitedByUserZUID}
-          {/* <h1>Members</h1>
-          {team.members.map(member => {
-            return (
-              <article className={styles.CardContent} key={member.ZUID}>
-                <p title={member.email}>
-                  <i className="fa fa-user" />
-                  {member.name}
-                  {member.admin ? <i className="fa fa-star" /> : null}
-                </p>
-              </article>
-            )
-          })}
-          <h1>Instances</h1>
-          {team.instances.map(instance => {
-            return (
-              <article className={styles.Instance} key={instance.ZUID}>
-                <p>
-                  <i className="fa fa-globe" />
-                  {instance.name}
-                </p>
-                <p>role: {instance.role}</p>
-              </article>
-            )
-          })} */}
         </CardContent>
         <CardFooter className={styles.CardInvite}>
-          <Button onClick={() => console.log('click')}>
+          <Button onClick={this.handleAccept}>
             <i className="fa fa-check" />
             Accept Invite
           </Button>
-          <Button onClick={() => console.log('click')} type="cancel">
+          <Button onClick={this.handleDecline} type="cancel">
             <i className="fa fa-close" />
             Decline Invite
           </Button>
         </CardFooter>
       </Card>
     )
+  }
+  handleAccept = () => {
+    this.props
+      .dispatch(handleTeamInvite(this.props.team.ZUID, 'accept'))
+      .then(console.log)
+  }
+  handleDecline = () => {
+    this.props
+      .dispatch(handleTeamInvite(this.props.team.ZUID, 'decline'))
+      .then(console.log)
   }
 }
 

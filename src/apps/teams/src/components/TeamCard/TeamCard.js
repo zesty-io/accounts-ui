@@ -21,7 +21,7 @@ class TeamCard extends Component {
     return (
       <Card className={styles.Card}>
         <CardHeader className={styles.CardHeader}>
-          <h3>
+          <h1>
             {this.state.editing ? (
               <React.Fragment>
                 <Input
@@ -45,7 +45,7 @@ class TeamCard extends Component {
                 onClick={() => this.setState({ editing: !this.state.editing })}
               />
             )}
-          </h3>invite code: {team.ZUID}
+          </h1>invite code: {team.ZUID}
           <i
             className={`fa fa-trash ${styles.trash}`}
             onClick={this.handleDeleteTeam}
