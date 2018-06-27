@@ -193,7 +193,10 @@ export const handleTeamInvite = (inviteZUID, action) => {
   return dispatch => {
     dispatch({ type: 'RESPONDING_TO_INVITE' })
     return request(
-      `${CONFIG.API_ACCOUNTS}/teams/invites/${inviteZUID}?action=${action}`
+      `${CONFIG.API_ACCOUNTS}/teams/invites/${inviteZUID}?action=${action}`,
+      {
+        method: 'PUT'
+      }
     )
       .then(res => {
         dispatch({ type: 'RESPONDING_TO_INVITE_SUCCESS' })

@@ -46,10 +46,12 @@ class TeamCard extends Component {
               />
             )}
           </h1>invite code: {team.ZUID}
-          <i
-            className={`fa fa-trash ${styles.trash}`}
-            onClick={this.handleDeleteTeam}
-          />
+          {this.state.isAdmin && (
+            <i
+              className={`fa fa-trash ${styles.trash}`}
+              onClick={this.handleDeleteTeam}
+            />
+          )}
         </CardHeader>
         <CardContent>
           <h1>Members</h1>
