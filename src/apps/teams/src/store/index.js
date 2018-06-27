@@ -14,7 +14,6 @@ export function teams(state = {}, action) {
     case 'DELETING_TEAM_SUCCESS':
       const removed = state
       delete removed[action.data.ZUID]
-      console.log(action)
       return removed
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
@@ -54,7 +53,13 @@ export const createTeam = Name => {
       }
     })
       .then(res => {
-        dispatch({ type: 'CREATING_TEAM_SUCCESS', data: res.data })
+        dispatch({ type: 'CREATE_TEAM_SUCCESS', data: res.data })
+        dispatch(
+          notify({
+            type: 'success',
+            message: 'Created team successfully'
+          })
+        )
         return res.data
       })
       .catch(err => {

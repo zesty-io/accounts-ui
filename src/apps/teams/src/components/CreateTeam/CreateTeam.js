@@ -25,16 +25,14 @@ class CreateTeam extends Component {
             />
           </section>
           <section>
-            <p>Add members to a team and gain access to an instance together</p>
-            <p>
+            <h4>
               Teams can be invited to a role on an instance by using the invite
-              code
-            </p>
-            <p>
-              Once the invitation is accepted by the team admin, all users in
-              the team ahve access to the instance
-            </p>
-            <label>Invite team members by email address:</label>
+              code Once the invitation is accepted by the team admin, all users
+              in the team have access to the instance
+            </h4>
+            <p>Learn More:</p>
+            <a href="#">link to docs</a>
+            {/* <label>Invite team members by email address:</label>
             <article className={styles.inviteInputs}>
               {this.state.invitees.map((email, i) => {
                 return (
@@ -50,7 +48,7 @@ class CreateTeam extends Component {
             <Button className={styles.addMember} onClick={this.addInvitee}>
               <i className="fa fa-user" />
               <p>Add Member</p>
-            </Button>
+            </Button> */}
           </section>
         </CardContent>
         <CardFooter>
@@ -62,23 +60,21 @@ class CreateTeam extends Component {
       </Card>
     )
   }
-  addInvitee = () => {
-    const invitees = this.state.invitees
-    invitees.push('')
-    this.setState({ invitees })
-  }
-  addInviteField = evt => {
-    const invitees = this.state.invitees
-    invitees.splice(Number(evt.target.name), 1, evt.target.value)
-    this.setState({ invitees })
-  }
+  // addInvitee = () => {
+  //   const invitees = this.state.invitees
+  //   invitees.push('')
+  //   this.setState({ invitees })
+  // }
+  // addInviteField = evt => {
+  //   const invitees = this.state.invitees
+  //   invitees.splice(Number(evt.target.name), 1, evt.target.value)
+  //   this.setState({ invitees })
+  // }
   changeName = evt => {
     this.setState({ name: evt.target.value })
   }
   handleSubmit = evt => {
-    this.props.dispatch(createTeam(this.state.name)).then(data => {
-      this.props.dispatch({ type: 'CREATE_TEAM_SUCCESS', data })
-    })
+    this.props.dispatch(createTeam(this.state.name))
   }
 }
 

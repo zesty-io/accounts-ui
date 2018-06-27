@@ -15,6 +15,27 @@
   &:active {
     box-shadow: 0 0 10px #8398bd;
   }
+  .CardHeader {
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    .trash {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      transition: all 0.1s;
+      color: lighten(@zesty-gray, 40%);
+      &:hover,
+      &:active,
+      &:focus {
+        color: @zesty-red;
+      }
+    }
+  }
+
   .CardContent {
     display: grid;
     margin: 0.5rem;

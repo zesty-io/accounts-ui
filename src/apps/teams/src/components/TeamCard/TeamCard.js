@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { updateTeam, inviteMember, deleteTeam } from '../../store'
-import styles from './TeamCard.less'
-
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
+
+import styles from './TeamCard.less'
 
 class TeamCard extends Component {
   state = {
@@ -20,7 +20,7 @@ class TeamCard extends Component {
     const { team } = this.props
     return (
       <Card className={styles.Card}>
-        <CardHeader>
+        <CardHeader className={styles.CardHeader}>
           <h3>
             {this.state.editing ? (
               <React.Fragment>
@@ -44,7 +44,10 @@ class TeamCard extends Component {
               />
             )}
           </h3>invite code: {team.ZUID}
-          <i className="fa fa-trash" onClick={this.handleDeleteTeam} />
+          <i
+            className={`fa fa-trash ${styles.trash}`}
+            onClick={this.handleDeleteTeam}
+          />
         </CardHeader>
         <CardContent>
           <h1>Members</h1>
