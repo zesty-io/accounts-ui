@@ -21,6 +21,14 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    .Edit {
+      padding: 0.2rem;
+      transition: all 0.1s;
+      color: lighten(@zesty-gray, 20%);
+      &:hover {
+        color: @zesty-gray;
+      }
+    }
 
     .trash {
       position: absolute;

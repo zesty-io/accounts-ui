@@ -171,69 +171,24 @@ export const deleteTeam = (teamZUID, Name) => {
   }
 }
 
-// // FAKE DATA USED FOR MOCKUP
-// const fakeTeamData = [
-//   {
-//     ZUID: 'dev-team-zuid',
-//     name: 'Dev Team',
-//     hash: 'gyfdgwy523',
-//     instances: [{ ZUID: '823b', role: 'Admin', name: 'website' }],
-//     members: [
-//       { name: 'emily', ZUID: 'usaerAZUID', email: 'aras@envoy.com' },
-//       {
-//         name: 'sadf5hadfhara',
-//         ZUID: 'usesssrsZUID',
-//         email: 'aras@ensdfgvoy.com',
-//         admin: true
-//       },
-//       {
-//         name: 'sars3dhsdfa',
-//         ZUID: 'ss',
-//         email: 'aras@envsdfgoy.com'
-//       },
-//       { name: 'don', ZUID: 'useasraAdSZUID', email: 'e@mail.com' }
-//     ]
-//   },
-//   {
-//     ZUID: 'seo-team-zuid',
-//     hash: 'gyfdgwwuhyty523',
-//     name: 'SEO Team',
-//     instances: [{ ZUID: '823b', role: 'Admin', name: 'property' }],
-//     members: [
-//       {
-//         name: 'sardfdhgdsfa',
-//         ZUID: 'usssserZUsdsdhsdfhID',
-//         email: 'aras@envoy.com'
-//       },
-//       {
-//         name: 'sa54455dd4ra',
-//         ZUID: 'udserZ1asdfUID',
-//         email: 'aras@envoy.com'
-//       },
-//       { name: 'charles', ZUID: 'userZ1UsddfhID', email: 'e@mail.com' }
-//     ]
-//   },
-//   {
-//     ZUID: 'content-team-zuid',
-//     hash: 'gyfdgw376y523',
-//     name: 'Content Team',
-//     invited: true,
-//     instances: [{ ZUID: '823b', role: 'Admin', name: 'something.com' }],
-//     members: [
-//       { name: 'adam', ZUID: 'us1eraddsdfZUID', email: 'aras@envoy.com' },
-//       {
-//         name: 'linda',
-//         ZUID: 'use1rddsssadfZUID',
-//         email: 'aras@envoy.com',
-//         admin: true
-//       },
-//       {
-//         name: 'steve',
-//         ZUID: 'us1erassdfZasdfUID',
-//         email: 'aras@envoy.com'
-//       },
-//       { name: 'dave', ZUID: 'userZUsdfhsdID', email: 'aras@envoy.com' },
-//       { name: 'brett', ZUID: 'userdsaZUID1', email: 'e@mail.com' }
-//     ]
-//   }
-// ]
+export const getTeamsPendingInvites = teamZUID => {}
+
+export const getTeamsInstances = teamZUID => {}
+
+export const getTeamsMembers = teamZUID => {}
+
+export const getUserTeamInvites = () => {
+  return dispatch => {
+    dispatch({ type: 'FETCHING_INVITED_TEAMS' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/invites`)
+      .then(res => {
+        dispatch({ type: 'FETCH_TEAMS_SUCCESS', data: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCHING_TEAMS_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}

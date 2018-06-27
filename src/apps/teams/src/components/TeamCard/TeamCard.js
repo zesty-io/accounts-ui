@@ -38,7 +38,9 @@ class TeamCard extends Component {
             {this.state.isAdmin && (
               <i
                 className={
-                  this.state.editing ? 'fa fa-times-circle-o' : 'fa fa-pencil'
+                  this.state.editing
+                    ? `fa fa-times-circle-o ${styles.Edit}`
+                    : `fa fa-pencil ${styles.Edit}`
                 }
                 onClick={() => this.setState({ editing: !this.state.editing })}
               />
