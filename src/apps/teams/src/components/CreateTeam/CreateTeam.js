@@ -37,7 +37,10 @@ class CreateTeam extends Component {
           </section>
         </CardContent>
         <CardFooter>
-          <Button disabled={this.state.submitted} onClick={this.handleSubmit}>
+          <Button
+            type="save"
+            disabled={this.state.submitted}
+            onClick={this.handleSubmit}>
             <i className="fa fa-plus" />
             Create Team
           </Button>

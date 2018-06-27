@@ -13,7 +13,8 @@ class TeamCard extends Component {
   componentDidMount() {
     this.setState({
       teamName: this.props.team.name,
-      isAdmin: this.props.isAdmin
+      inviteeEmail: '',
+      submitted: false
     })
   }
   render() {
@@ -35,7 +36,7 @@ class TeamCard extends Component {
             ) : (
               this.state.teamName
             )}{' '}
-            {this.state.isAdmin && (
+            {this.props.isAdmin && (
               <i
                 className={
                   this.state.editing
@@ -46,7 +47,7 @@ class TeamCard extends Component {
               />
             )}
           </h1>invite code: {team.ZUID}
-          {this.state.isAdmin && (
+          {this.props.isAdmin && (
             <i
               className={`fa fa-trash ${styles.trash}`}
               onClick={this.handleDeleteTeam}
@@ -86,14 +87,24 @@ class TeamCard extends Component {
               )
             })}
         </CardContent>
-        <CardFooter>
-          <form onSubmit={this.handleInvite} className={styles.CardInvite}>
-            <Input type="text" name="inviteeEmail" autoComplete="off" />
-            <Button type="submit">
-              <i className="fa fa-envelope-o" />
-              Invite
-            </Button>
-          </form>
+        <CardFooter className={styles.CardInvite}>
+          {this.props.isAdmin && (
+            <React.Fragment>
+              <Input
+                type="text"
+                value={this.state.inviteeEmail}
+                onChange={this.handleChange}
+                name="inviteeEmail"
+                autoComplete="off"
+              />
+              <Button
+                disabled={this.state.submitted}
+                onClick={this.handleInvite}>
+                <i className="fa fa-envelope-o" />
+                Invite
+              </Button>
+            </React.Fragment>
+          )}
         </CardFooter>
       </Card>
     )
@@ -111,11 +122,9 @@ class TeamCard extends Component {
       })
   }
   handleInvite = evt => {
-    evt.preventDefault()
-    console.log('data:', this.props.team.ZUID, evt.target.inviteeEmail.value)
-    this.props.dispatch(
-      inviteMember(this.props.team.ZUID, evt.target.inviteeEmail.value)
-    )
+    this.props
+      .dispatch(inviteMember(this.props.team.ZUID, this.state.inviteeEmail))
+      .then(() => this.setState({ inviteeEmail: '' }))
   }
   handleDeleteTeam = evt => {
     this.props.dispatch(
