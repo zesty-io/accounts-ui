@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-
+import { updateTeam } from '../../store'
 import styles from './TeamCard.less'
+import { notify } from '../../../../../shell/store/notifications'
 class TeamCard extends Component {
   state = {
     teamName: '',
@@ -19,24 +20,30 @@ class TeamCard extends Component {
         <CardHeader>
           <h3>
             {this.state.editing ? (
-              <Input
-                value={this.state.teamName}
-                onChange={this.handleChange}
-                name="teamName"
-                type="text"
-              />
+              <React.Fragment>
+                <Input
+                  value={this.state.teamName}
+                  onChange={this.handleChange}
+                  name="teamName"
+                  type="text"
+                />
+                <i className="fa fa-save" onClick={this.handleUpdateName} />
+              </React.Fragment>
             ) : (
               this.state.teamName
             )}{' '}
             <i
-              className={this.state.editing ? 'fa fa-save' : 'fa fa-pencil'}
+              className={
+                this.state.editing ? 'fa fa-times-circle-o' : 'fa fa-pencil'
+              }
               onClick={() => this.setState({ editing: !this.state.editing })}
             />
           </h3>invite code: {team.hash}
         </CardHeader>
         <CardContent>
           <h1>Members</h1>
-          {team.members.map(member => {
+          {/* {Maybe do a with loader?} */}
+          {/* {team.members.map(member => {
             return (
               <article className={styles.CardContent} key={member.ZUID}>
                 <p title={member.email}>
@@ -48,12 +55,11 @@ class TeamCard extends Component {
                   className={`${styles.remove} fa fa-times-circle-o`}
                   onClick={() => this.removeUser(member.ZUID)}
                 />
-                {/* {member.email} */}
               </article>
             )
-          })}
+          })} */}
           <h1>Instances</h1>
-          {team.instances.map(instance => {
+          {/* {team.instances.map(instance => {
             return (
               <article className={styles.Instance} key={instance.ZUID}>
                 <p>
@@ -63,7 +69,7 @@ class TeamCard extends Component {
                 <p>role: {instance.role}</p>
               </article>
             )
-          })}
+          })} */}
         </CardContent>
         <CardFooter className={styles.CardInvite}>
           <Input type="text" />
@@ -82,6 +88,17 @@ class TeamCard extends Component {
   }
   handleUpdateName = () => {
     // send name to update endpoint
+    this.props
+      .dispatch(updateTeam(this.props.team.ZUID, this.state.teamName))
+      .then(data => {
+        this.props.dispatch(
+          notify({
+            type: 'success',
+            message: 'Updated team name successfully'
+          })
+        )
+        this.setState({ editing: false })
+      })
   }
   handleInvite = evt => {
     //

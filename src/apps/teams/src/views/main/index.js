@@ -16,7 +16,7 @@ class Teams extends Component {
 
   componentDidMount() {
     this.props
-      .dispatch(fetchTeams(this.state.user.ZUID))
+      .dispatch(fetchTeams())
       .then(() => this.setState({ loading: false }))
   }
   render() {

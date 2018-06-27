@@ -19,7 +19,7 @@ export const fetchTeams = userZUID => {
     dispatch({ type: 'FETCHING_TEAMS' })
     return request(`${CONFIG.API_ACCOUNTS}/teams`)
       .then(res => {
-        dispatch({ type: 'FETCHING_TEAMS_SUCCESS', data: res.data })
+        dispatch({ type: 'FETCH_TEAMS_SUCCESS', data: res.data })
         return res.data
       })
       .catch(err => {
@@ -28,17 +28,6 @@ export const fetchTeams = userZUID => {
         return err
       })
   }
-  // mock fetch for mocking purposes
-  // return dispatch => {
-  //   dispatch({
-  //     type: 'FETCH_TEAMS_SUCCESS',
-  //     data: fakeTeamData
-  //   })
-  //   const resolved = new Promise((res, rej) => {
-  //     setTimeout(res, 500)
-  //   })
-  //   return resolved
-  // }
 }
 
 export const createTeam = Name => {
@@ -65,8 +54,27 @@ export const createTeam = Name => {
   }
 }
 
-export const updateTeam = (teamZUID, name) => {
+export const updateTeam = (teamZUID, Name) => {
   // request to PUT with payload { Name: name }
+  return dispatch => {
+    dispatch({ type: 'UPDATING_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`, {
+      method: 'PUT',
+      json: true,
+      body: {
+        Name
+      }
+    })
+      .then(res => {
+        dispatch({ type: 'UPDATING_TEAM_SUCCESS', data: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'UPDATING_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
 }
 
 export const inviteGroup = (teamZUID, groupArray) => {

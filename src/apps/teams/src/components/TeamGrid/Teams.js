@@ -16,6 +16,7 @@ class Teams extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <section className={styles.Teams}>
         <h1 className={styles.TeamsTitle}>Manage Your Teams</h1>
@@ -31,7 +32,7 @@ class Teams extends Component {
                   <InviteCard team={this.props.teams[team]} key={i} />
                 ))}
             {/* creation card */}
-            <CreateTeam dispatch={this.props.dispatch} />
+            <CreateTeam />
             {/* regular teams */}
             {this.props.teams &&
               Object.keys(this.props.teams)
@@ -41,6 +42,7 @@ class Teams extends Component {
                 .map(team => {
                   return (
                     <TeamCard
+                      dispatch={this.props.dispatch}
                       className={styles.Card}
                       team={this.props.teams[team]}
                       key={this.props.teams[team].ZUID}
