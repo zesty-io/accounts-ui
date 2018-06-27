@@ -91,10 +91,12 @@ class TeamCard extends Component {
           {this.props.isAdmin && (
             <React.Fragment>
               <Input
-                type="text"
+                type="email"
+                required
                 value={this.state.inviteeEmail}
                 onChange={this.handleChange}
                 name="inviteeEmail"
+                placeholder="new@teammember.com"
                 autoComplete="off"
               />
               <Button
