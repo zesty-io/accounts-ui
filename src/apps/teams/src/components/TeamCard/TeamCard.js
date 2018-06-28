@@ -5,7 +5,8 @@ import {
   deleteTeam,
   getTeamMembers,
   getTeamInstances,
-  getTeamPendingInvites
+  getTeamPendingInvites,
+  handleTeamInvite
 } from '../../store'
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
@@ -26,8 +27,8 @@ class TeamCard extends Component {
     })
     // TODO: an individual loading state for each
     Promise.all([
-      this.props.dispatch(getTeamMembers(this.props.team.ZUID))
-      // this.props.dispatch(getTeamInstances(this.props.team.ZUID)),
+      this.props.dispatch(getTeamMembers(this.props.team.ZUID)),
+      this.props.dispatch(getTeamInstances(this.props.team.ZUID))
     ]).then(() => {
       this.props.dispatch(getTeamPendingInvites(this.props.team.ZUID))
       this.setState({ loaded: true })
@@ -113,7 +114,7 @@ class TeamCard extends Component {
           <WithLoader
             condition={this.state.loaded}
             message="Loading team instances">
-            {team.instances
+            {team.instances && team.instances.length
               ? team.instances.map(instance => {
                   return (
                     <article className={styles.Instance} key={instance.ZUID}>
@@ -198,8 +199,13 @@ class TeamCard extends Component {
     console.log(user, this.props.team.ZUID)
   }
   cancelInvite = user => {
-    // confirm, then cancel invite
-    console.log(user, this.props.team.ZUID)
+    this.props.dispatch(handleTeamInvite(user, 'cancel')).then(data => {
+      this.props.dispatch({
+        type: 'REMOVE_TEAM_MEMBER',
+        userZUID: user,
+        teamZUID: this.props.team.ZUID
+      })
+    })
   }
 }
 

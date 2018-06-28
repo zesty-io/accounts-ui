@@ -31,6 +31,25 @@ export function teams(state = {}, action) {
           members: [...state[action.teamZUID].members, ...action.data]
         }
       }
+    case 'FETCH_INSTANCES_TEAM_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          instances: [...action.data]
+        }
+      }
+    case 'REMOVE_TEAM_MEMBER':
+      // ahve teamZUID and userZUID. remove member
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: state[action.teamZUID].members.filter(
+            member => member.ZUID !== action.userZUID
+          )
+        }
+      }
       return state
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
@@ -204,7 +223,25 @@ export const getTeamPendingInvites = teamZUID => {
   }
 }
 
-export const getTeamInstances = teamZUID => {}
+export const getTeamInstances = teamZUID => {
+  return dispatch => {
+    dispatch({ type: 'FETCH_INSTANCES_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/instances`)
+      .then(res => {
+        dispatch({
+          type: 'FETCH_INSTANCES_TEAM_SUCCESS',
+          data: res.data,
+          teamZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCH_INSTANCES_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
 
 export const getTeamMembers = teamZUID => {
   return dispatch => {
@@ -258,7 +295,7 @@ export const handleTeamInvite = (inviteZUID, action) => {
           dispatch(
             notify({
               type: 'success',
-              message: 'Invite is deleted'
+              message: 'Invite has been removed'
             })
           )
         } else {
