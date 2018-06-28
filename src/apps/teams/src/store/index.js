@@ -40,7 +40,6 @@ export function teams(state = {}, action) {
         }
       }
     case 'REMOVE_TEAM_MEMBER':
-      // ahve teamZUID and userZUID. remove member
       return {
         ...state,
         [action.teamZUID]: {
@@ -50,7 +49,6 @@ export function teams(state = {}, action) {
           )
         }
       }
-      return state
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
     default:

@@ -16,14 +16,14 @@ import styles from './TeamCard.less'
 class TeamCard extends Component {
   state = {
     teamName: '',
+    inviteeEmail: '',
     editing: false,
-    loaded: false
+    loaded: false,
+    submitted: false
   }
   componentDidMount() {
     this.setState({
-      teamName: this.props.team.name,
-      inviteeEmail: '',
-      submitted: false
+      teamName: this.props.team.name
     })
     // TODO: an individual loading state for each
     Promise.all([
@@ -166,9 +166,10 @@ class TeamCard extends Component {
       })
   }
   handleInvite = evt => {
+    this.setState({ submitted: true })
     this.props
       .dispatch(inviteMember(this.props.team.ZUID, this.state.inviteeEmail))
-      .then(() => this.setState({ inviteeEmail: '' }))
+      .then(() => this.setState({ inviteeEmail: '', submitted: false }))
   }
   handleDeleteTeam = evt => {
     this.props.dispatch(

@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { request } from '../../../../../util/request'
-
 import CreateTeam from '../../components/CreateTeam'
 import TeamCard from '../../components/TeamCard'
 
 import styles from './teams.less'
-import { fetchTeams } from '../../store'
 import InviteCard from '../InviteCard/'
 
 class Teams extends Component {
