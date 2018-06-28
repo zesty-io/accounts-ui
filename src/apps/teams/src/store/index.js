@@ -81,16 +81,20 @@ export function teams(state = {}, action) {
         }
       }
     case 'INVITING_TEAM_MEMBER_SUCCESS':
-    // return {
-    //   ...state,
-    //   [action.teamZUID]: {
-    //     ...state[action.teamZUID],
-    //     members: [
-    //       ...state[action.teamZUID].members,
-    //       { invitedByUserZUID: '', ZUID: '', inviteeEmail: action.inviteeEmail }
-    //     ]
-    //   }
-    // }
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: [
+            ...state[action.teamZUID].members,
+            {
+              invitedByUserZUID: 'newUser',
+              ZUID: 'new',
+              inviteeEmail: action.inviteeEmail
+            }
+          ]
+        }
+      }
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
     default:
@@ -211,13 +215,12 @@ export const inviteMember = (teamZUID, inviteeEmail) => {
     })
       .then(res => {
         // this needs to add the member to the team
-        // dispatch({
-        //   type: 'INVITING_TEAM_MEMBER_SUCCESS',
-        //   data: res.data,
-        //   inviteeEmail,
-        //   teamZUID
-        // })
-        dispatch(getTeamPendingInvites(teamZUID))
+        dispatch({
+          type: 'INVITING_TEAM_MEMBER_SUCCESS',
+          data: res.data,
+          inviteeEmail,
+          teamZUID
+        })
         dispatch(
           notify({
             type: 'success',
