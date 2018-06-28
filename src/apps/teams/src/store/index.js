@@ -18,8 +18,8 @@ export function teams(state = {}, action) {
           acc[action.data[team].ZUID] = action.data[team]
           return acc
         }, {})
-      // sort by creation date
       return { ...state, ...teams }
+
     case 'FETCH_TEAM_SUCCESS':
       // put the team in the correct place
       const stateTeams = state
@@ -39,13 +39,16 @@ export function teams(state = {}, action) {
           return acc
         }, {})
       return { ...sortedTeams }
+
     case 'ACCEPT_TEAM_INVITE_SUCCESS':
     case 'CREATE_TEAM_SUCCESS':
       return { ...state, [action.data.ZUID]: action.data }
+
     case 'REMOVE_TEAM_FROM_STATE':
       const removed = state
       delete removed[action.data.ZUID]
       return { ...removed }
+
     case 'FETCH_MEMBERS_TEAM_SUCCESS':
       return {
         ...state,
@@ -54,6 +57,7 @@ export function teams(state = {}, action) {
           members: [...action.data]
         }
       }
+
     case 'FETCH_MEMBERS_PENDING_TEAM_SUCCESS':
       return {
         ...state,
@@ -62,6 +66,7 @@ export function teams(state = {}, action) {
           members: [...state[action.teamZUID].members, ...action.data]
         }
       }
+
     case 'FETCH_INSTANCES_TEAM_SUCCESS':
       return {
         ...state,
@@ -70,6 +75,7 @@ export function teams(state = {}, action) {
           instances: [...action.data]
         }
       }
+
     case 'REMOVE_TEAM_MEMBER':
       return {
         ...state,
@@ -80,6 +86,7 @@ export function teams(state = {}, action) {
           )
         }
       }
+
     case 'INVITING_TEAM_MEMBER_SUCCESS':
       return {
         ...state,

@@ -83,7 +83,7 @@ export default class CompanyAccess extends Component {
                         {this.props.isAdmin && (
                           <i
                             className="fa fa-trash-o"
-                            onClick={() => this.handleRemove(team.ZUID)}
+                            onClick={() => this.handleRemove(team)}
                           />
                         )}
                       </span>
@@ -104,18 +104,16 @@ export default class CompanyAccess extends Component {
       </Card>
     )
   }
-  handleRemove = teamZUID => {
+  handleRemove = team => {
     this.props.dispatch(
       zConfirm({
-        prompt: `are you sure you want to remove access from ${
-          this.props.teams[teamZUID].name
-        }`,
+        prompt: `are you sure you want to remove access from ${team.name}`,
         callback: result => {
           if (!result) {
             return
           }
           this.props.dispatch(
-            removeTeamFromInstance(teamZUID, this.props.siteZUID)
+            removeTeamFromInstance(team.ZUID, this.props.siteZUID)
           )
         }
       })

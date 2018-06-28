@@ -37,7 +37,7 @@ export const fetchSiteTeams = siteZuid => {
 export const addTeamToInstance = (siteZUID, teamZUID, roleZUID) => {
   return dispatch => {
     dispatch({ type: 'ADDING_TEAM_TO_INSTANCE' })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZuid}/teams`, {
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/teams`, {
       method: 'POST',
       json: true,
       body: {
@@ -60,7 +60,7 @@ export const removeTeamFromInstance = (siteZUID, teamZUID) => {
   return dispatch => {
     dispatch({ type: 'REMOVING_TEAM_FROM_INSTANCE' })
     return request(
-      `${CONFIG.API_ACCOUNTS}/instances/${siteZuid}/teams/${teamZUID}`,
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/teams/${teamZUID}`,
       {
         method: 'DELETE'
       }

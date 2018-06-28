@@ -115,12 +115,14 @@ class TeamCard extends Component {
                               }
                             />
                           ) : (
-                            <i
-                              className={`fa fa-star-o ${styles.NotAdmin}`}
-                              onClick={() =>
-                                this.handleAdminChange(member.ZUID, true)
-                              }
-                            />
+                            this.props.isAdmin && (
+                              <i
+                                className={`fa fa-star-o ${styles.NotAdmin}`}
+                                onClick={() =>
+                                  this.handleAdminChange(member.ZUID, true)
+                                }
+                              />
+                            )
                           )}
                         </p>
                         {this.props.isAdmin && (
@@ -184,7 +186,7 @@ class TeamCard extends Component {
                 value={this.state.inviteeEmail}
                 onChange={this.handleChange}
                 name="inviteeEmail"
-                placeholder="new@teammember.com"
+                placeholder="new@team-member.com"
                 autoComplete="off"
               />
             </React.Fragment>
