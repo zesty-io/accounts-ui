@@ -15,6 +15,23 @@ export function teams(state = {}, action) {
       const removed = state
       delete removed[action.data.ZUID]
       return removed
+    case 'FETCH_MEMBERS_TEAM_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: [...action.data]
+        }
+      }
+    case 'FETCH_MEMBERS_PENDING_TEAM_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: [...state[action.teamZUID].members, ...action.data]
+        }
+      }
+      return state
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
     default:
@@ -167,11 +184,47 @@ export const deleteTeam = (teamZUID, Name) => {
   }
 }
 
-export const getTeamsPendingInvites = teamZUID => {}
+export const getTeamPendingInvites = teamZUID => {
+  return dispatch => {
+    dispatch({ type: 'FETCH_MEMBERS_PENDING_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/pending`)
+      .then(res => {
+        dispatch({
+          type: 'FETCH_MEMBERS_PENDING_TEAM_SUCCESS',
+          data: res.data,
+          teamZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCH_MEMBERS_PENDING_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
 
-export const getTeamsInstances = teamZUID => {}
+export const getTeamInstances = teamZUID => {}
 
-export const getTeamsMembers = teamZUID => {}
+export const getTeamMembers = teamZUID => {
+  return dispatch => {
+    dispatch({ type: 'FETCH_MEMBERS_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users`)
+      .then(res => {
+        dispatch({
+          type: 'FETCH_MEMBERS_TEAM_SUCCESS',
+          data: res.data,
+          teamZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCH_MEMBERS_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
 
 export const getUserTeamInvites = () => {
   return dispatch => {

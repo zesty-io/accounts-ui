@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { updateTeam, inviteMember, deleteTeam } from '../../store'
+import {
+  updateTeam,
+  inviteMember,
+  deleteTeam,
+  getTeamMembers,
+  getTeamInstances,
+  getTeamPendingInvites
+} from '../../store'
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
 
@@ -8,13 +15,22 @@ import styles from './TeamCard.less'
 class TeamCard extends Component {
   state = {
     teamName: '',
-    editing: false
+    editing: false,
+    loaded: false
   }
   componentDidMount() {
     this.setState({
       teamName: this.props.team.name,
       inviteeEmail: '',
       submitted: false
+    })
+    // TODO: an individual loading state for each
+    Promise.all([
+      this.props.dispatch(getTeamMembers(this.props.team.ZUID))
+      // this.props.dispatch(getTeamInstances(this.props.team.ZUID)),
+    ]).then(() => {
+      this.props.dispatch(getTeamPendingInvites(this.props.team.ZUID))
+      this.setState({ loaded: true })
     })
   }
   render() {
@@ -55,43 +71,68 @@ class TeamCard extends Component {
           )}
         </CardHeader>
         <CardContent>
-          <h1>Members</h1>
-          {/* {Maybe do a with loader?} */}
-          {team.members &&
-            team.members.map(member => {
-              return (
-                <article className={styles.CardContent} key={member.ZUID}>
-                  <p title={member.email}>
-                    <i className="fa fa-user" />
-                    {member.name}
-                    {member.admin ? <i className="fa fa-star" /> : null}
-                  </p>
-                  <i
-                    className={`${styles.remove} fa fa-times-circle-o`}
-                    onClick={() => this.removeUser(member.ZUID)}
-                  />
-                </article>
-              )
-            })}
-          <h1>Instances</h1>
-          {team.instances &&
-            team.instances.map(instance => {
-              return (
-                <article className={styles.Instance} key={instance.ZUID}>
-                  <p>
-                    <i className="fa fa-globe" />
-                    {instance.name}
-                  </p>
-                  <p>role: {instance.role}</p>
-                </article>
-              )
-            })}
+          <h3>Members</h3>
+          <WithLoader
+            condition={this.state.loaded}
+            message="Loading team members">
+            {/* {Maybe do a with loader?} */}
+            {team.members
+              ? team.members.map(member => {
+                  if (!member.invitedByUserZUID) {
+                    return (
+                      <article className={styles.CardContent} key={member.ZUID}>
+                        <p title={member.email}>
+                          <i className="fa fa-user" />
+                          {member.firstName} {member.lastName}
+                          {member.admin ? <i className="fa fa-star" /> : null}
+                        </p>
+                        <i
+                          className={`${styles.remove} fa fa-times-circle-o`}
+                          onClick={() => this.removeUser(member.ZUID)}
+                        />
+                      </article>
+                    )
+                  } else {
+                    return (
+                      <article className={styles.CardContent} key={member.ZUID}>
+                        <p title={member.inviteeEmail}>
+                          <i className="fa fa-clock-o" />
+                          {member.inviteeEmail} <i>(pending)</i>
+                        </p>
+                        <i
+                          className={`${styles.remove} fa fa-times-circle-o`}
+                          onClick={() => this.cancelInvite(member.ZUID)}
+                        />
+                      </article>
+                    )
+                  }
+                })
+              : 'no members for this team'}
+          </WithLoader>
+          <h3>Instances</h3>
+          <WithLoader
+            condition={this.state.loaded}
+            message="Loading team instances">
+            {team.instances
+              ? team.instances.map(instance => {
+                  return (
+                    <article className={styles.Instance} key={instance.ZUID}>
+                      <p>
+                        <i className="fa fa-globe" />
+                        {instance.name}
+                      </p>
+                      <p>role: {instance.role}</p>
+                    </article>
+                  )
+                })
+              : 'No Instances for this team'}
+          </WithLoader>
         </CardContent>
         <CardFooter className={styles.CardInvite}>
           {this.props.isAdmin && (
             <React.Fragment>
               <Input
-                type="email"
+                type="text"
                 required
                 value={this.state.inviteeEmail}
                 onChange={this.handleChange}
@@ -154,6 +195,10 @@ class TeamCard extends Component {
   }
   removeUser = user => {
     // confirm, then remove team member
+    console.log(user, this.props.team.ZUID)
+  }
+  cancelInvite = user => {
+    // confirm, then cancel invite
     console.log(user, this.props.team.ZUID)
   }
 }
