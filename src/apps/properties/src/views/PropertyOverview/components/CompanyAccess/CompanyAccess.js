@@ -113,7 +113,7 @@ export default class CompanyAccess extends Component {
             return
           }
           this.props.dispatch(
-            removeTeamFromInstance(team.ZUID, this.props.siteZUID)
+            removeTeamFromInstance(this.props.siteZUID, team.ZUID)
           )
         }
       })
