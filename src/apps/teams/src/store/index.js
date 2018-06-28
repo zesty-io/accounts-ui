@@ -8,6 +8,7 @@ export function teams(state = {}, action) {
         acc[action.data[team].ZUID] = action.data[team]
         return acc
       }, {})
+      // sort by creation date
       return { ...state, ...teams }
     case 'CREATE_TEAM_SUCCESS':
       return { ...state, [action.data.ZUID]: action.data }
@@ -49,6 +50,17 @@ export function teams(state = {}, action) {
           )
         }
       }
+    case 'INVITING_TEAM_MEMBER_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: [
+            ...state[action.teamZUID].members,
+            { invitedByUserZUID: state.user.ZUID, inviteeEmail }
+          ]
+        }
+      }
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
     default:
@@ -74,16 +86,15 @@ export const fetchTeams = userZUID => {
   }
 }
 
-export const createTeam = Name => {
-  // request to POST with payload { Name: name }
-  // should return teamZUID and add code
+export const createTeam = (Name, Description) => {
   return dispatch => {
     dispatch({ type: 'CREATING_TEAM' })
     return request(`${CONFIG.API_ACCOUNTS}/teams`, {
       method: 'POST',
       json: true,
       body: {
-        Name
+        Name,
+        Description
       }
     })
       .then(res => {
@@ -104,7 +115,7 @@ export const createTeam = Name => {
   }
 }
 
-export const updateTeam = (teamZUID, Name) => {
+export const updateTeam = (teamZUID, Name, Description) => {
   // request to PUT with payload { Name: name }
   return dispatch => {
     dispatch({ type: 'UPDATING_TEAM' })
@@ -112,7 +123,8 @@ export const updateTeam = (teamZUID, Name) => {
       method: 'PUT',
       json: true,
       body: {
-        Name
+        Name,
+        Description
       }
     })
       .then(res => {
@@ -152,7 +164,13 @@ export const inviteMember = (teamZUID, inviteeEmail) => {
       }
     })
       .then(res => {
-        dispatch({ type: 'INVITING_TEAM_MEMBER_SUCCESS', data: res.data })
+        // this needs to add the member to the team
+        dispatch({
+          type: 'INVITING_TEAM_MEMBER_SUCCESS',
+          data: res.data,
+          inviteeEmail,
+          teamZUID
+        })
         dispatch(
           notify({
             type: 'success',
@@ -175,8 +193,25 @@ export const inviteMember = (teamZUID, inviteeEmail) => {
   }
 }
 
-export const removeMember = (teamZUID, member) => {
-  // remove individual from team
+export const removeMember = (teamZUID, userZUID) => {
+  return dispatch => {
+    dispatch({ type: 'DELETING_TEAM_USER' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/${userZUID}`,
+      {
+        method: 'DELETE'
+      }
+    )
+      .then(res => {
+        dispatch({ type: 'DELETING_TEAM_USER_SUCCESS', data: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'DELETING_TEAM_USER_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
 }
 
 export const deleteTeam = (teamZUID, Name) => {

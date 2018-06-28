@@ -18,7 +18,9 @@ class Teams extends Component {
         <h1 className={styles.TeamsTitle}>Manage Your Teams</h1>
         <div className={styles.Team}>
           <div className={styles.TeamCard}>
-            {/* invited teams first */}
+            {/* creation card */}
+            <CreateTeam dispatch={this.props.dispatch} />
+            {/* invited teams */}
             {this.props.teams &&
               Object.keys(this.props.teams)
                 .filter(team =>
@@ -31,8 +33,6 @@ class Teams extends Component {
                     key={i}
                   />
                 ))}
-            {/* creation card */}
-            <CreateTeam dispatch={this.props.dispatch} />
             {/* regular teams */}
             {this.props.teams &&
               Object.keys(this.props.teams)

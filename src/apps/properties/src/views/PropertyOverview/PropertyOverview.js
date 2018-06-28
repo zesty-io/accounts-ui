@@ -154,9 +154,10 @@ class PropertyOverview extends Component {
                     {...routeProps}
                     isAdmin={this.props.isAdmin}
                     dispatch={this.props.dispatch}
-                    companies={this.props.companies}
+                    teams={this.props.teams}
                     siteRoles={this.props.siteRoles}
                     loadingTeams={this.state.loadingTeams}
+                    siteZUID={this.props.siteZUID}
                   />
                 )
               }}
@@ -266,7 +267,7 @@ export default connect((state, props) => {
     isOwner,
     site: state.sites[siteZUID] || {},
     users: state.sitesUsers[siteZUID] || {},
-    companies: state.sitesTeams[siteZUID] || {},
+    teams: state.sitesTeams[siteZUID] || {},
     blueprint: state.sites[siteZUID]
       ? state.blueprints[state.sites[siteZUID].blueprintID] || {}
       : {}

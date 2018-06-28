@@ -6,7 +6,7 @@ import styles from './create.less'
 class CreateTeam extends Component {
   state = {
     name: '',
-    invitees: ['', '', ''],
+    description: '',
     submitted: false
   }
   render() {
@@ -17,14 +17,6 @@ class CreateTeam extends Component {
         </CardHeader>
         <CardContent className={styles.CardContent}>
           <section>
-            <label>Name your team:</label>
-            <Input
-              type="text"
-              value={this.state.name}
-              onChange={this.changeName}
-            />
-          </section>
-          <section>
             <h4>
               Teams can be invited to a role on an instance by using the invite
               code Once the invitation is accepted by the team admin, all users
@@ -34,6 +26,24 @@ class CreateTeam extends Component {
             <a href="#">link to docs</a>
             <br />
             <a href="#">link to walk through</a>
+          </section>
+          <section>
+            <label>Name your team:</label>
+            <Input
+              type="text"
+              name="name"
+              autoComplete="off"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
+            <label>Describe your team:</label>
+            <textarea
+              rows="4"
+              cols="50"
+              name="description"
+              value={this.state.description}
+              onChange={this.handleChange}
+            />
           </section>
         </CardContent>
         <CardFooter>
@@ -58,13 +68,15 @@ class CreateTeam extends Component {
   //   invitees.splice(Number(evt.target.name), 1, evt.target.value)
   //   this.setState({ invitees })
   // }
-  changeName = evt => {
-    this.setState({ name: evt.target.value })
+  handleChange = evt => {
+    this.setState({ [evt.target.name]: evt.target.value })
   }
   handleSubmit = evt => {
-    this.props.dispatch(createTeam(this.state.name)).then(() => {
-      this.setState({ name: '' })
-    })
+    this.props
+      .dispatch(createTeam(this.state.name, this.state.description))
+      .then(() => {
+        this.setState({ name: '', description: '' })
+      })
   }
 }
 

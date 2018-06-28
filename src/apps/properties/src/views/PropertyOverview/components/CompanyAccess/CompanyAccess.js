@@ -3,7 +3,11 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
-import { fetchSiteTeams } from '../../../../store/sitesTeams'
+import {
+  fetchSiteTeams,
+  addTeamToInstance,
+  removeTeamFromInstance
+} from '../../../../store/sitesTeams'
 
 import styles from './CompanyAccess.less'
 
@@ -36,10 +40,7 @@ export default class CompanyAccess extends Component {
                 used to provide an agency with access to manage your website.
               </p>
               <div className={styles.addCompany}>
-                <Input
-                  placeholder="Enter team ID"
-                  onChange={this.handleTream}
-                />
+                <Input placeholder="Enter team ID" onChange={this.handleTeam} />
                 <Select onSelect={this.handleRole}>
                   <Option key="default" value="" text="Select Role" />
                   {this.props.siteRoles.map(role => {
@@ -52,7 +53,9 @@ export default class CompanyAccess extends Component {
                     )
                   })}
                 </Select>
-                <Button name="companyAccessSubmit">Grant Access</Button>
+                <Button name="companyAccessSubmit" onClick={this.handleAddTeam}>
+                  Grant Access
+                </Button>
               </div>
             </React.Fragment>
           ) : null}
@@ -69,18 +72,18 @@ export default class CompanyAccess extends Component {
                 message="Loading Instance Teams"
                 height="100px"
                 width="100%">
-                {Object.keys(this.props.companies).map(ZUID => {
-                  let company = this.props.companies[ZUID]
+                {Object.keys(this.props.teams).map(ZUID => {
+                  let team = this.props.teams[ZUID]
                   return (
                     <article key={ZUID}>
-                      <span>{company.name}</span>
-                      <span>{company.mainContactName}</span>
-                      <span>{company.mainContactEmail}</span>
+                      <span>{team.name}</span>
+                      <span>{team.mainContactName}</span>
+                      <span>{team.mainContactEmail}</span>
                       <span>
                         {this.props.isAdmin && (
                           <i
                             className="fa fa-trash-o"
-                            onClick={() => this.handleToggle(company)}
+                            onClick={() => this.handleRemove(team.ZUID)}
                           />
                         )}
                       </span>
@@ -88,7 +91,7 @@ export default class CompanyAccess extends Component {
                   )
                 })}
 
-                {!Object.keys(this.props.companies).length &&
+                {!Object.keys(this.props.teams).length &&
                 !this.props.loadingTeams ? (
                   <article>
                     <em>No team access added for this instance.</em>
@@ -101,15 +104,19 @@ export default class CompanyAccess extends Component {
       </Card>
     )
   }
-  handleToggle = company => {
+  handleRemove = teamZUID => {
     this.props.dispatch(
       zConfirm({
-        prompt: `are you sure you want to remove access from ${company.name}`,
+        prompt: `are you sure you want to remove access from ${
+          this.props.teams[teamZUID].name
+        }`,
         callback: result => {
           if (!result) {
             return
           }
-          // make a call to remove the company
+          this.props.dispatch(
+            removeTeamFromInstance(teamZUID, this.props.siteZUID)
+          )
         }
       })
     )
@@ -123,5 +130,12 @@ export default class CompanyAccess extends Component {
     this.setState({
       role: evt.target.dataset.value
     })
+  }
+  handleAddTeam = () => {
+    this.props
+      .dispatch(
+        addTeamToInstance(this.props.siteZUID, this.state.team, this.state.role)
+      )
+      .then(console.log)
   }
 }

@@ -25,11 +25,11 @@
       padding: 0.2rem;
       transition: all 0.1s;
       color: lighten(@zesty-gray, 20%);
+      font-size: 0.7em;
       &:hover {
         color: @zesty-gray;
       }
     }
-
     .trash {
       position: absolute;
       top: 8px;
@@ -40,6 +40,13 @@
       &:active,
       &:focus {
         color: @zesty-red;
+      }
+    }
+    .InviteCode {
+      display: flex;
+      align-items: baseline;
+      h3 {
+        margin-right: 0.3rem;
       }
     }
   }
@@ -70,7 +77,7 @@
   }
   .CardInvite {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1.5fr 3fr;
     grid-gap: 0.2rem;
   }
 }

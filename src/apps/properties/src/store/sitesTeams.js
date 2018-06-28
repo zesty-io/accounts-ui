@@ -3,7 +3,7 @@ import { request } from '../../../../util/request'
 export function sitesTeams(state = {}, action) {
   switch (action.type) {
     case 'FETCH_INSTANCE_TEAMS_SUCCESS':
-      return { ...state, [action.siteZuid]: action.Teams }
+      return { ...state, [action.siteZuid]: action.teams }
     case 'FETCH_INSTANCE_TEAMS_ERROR':
       return state
     default:
@@ -17,10 +17,10 @@ export const fetchSiteTeams = siteZuid => {
       type: 'FETCHING_INSTANCE_TEAMS'
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZuid}/teams`)
-      .then(data => {
+      .then(teams => {
         dispatch({
           type: 'FETCH_INSTANCE_TEAMS_SUCCESS',
-          Teams: data.data,
+          teams: teams.data,
           siteZuid
         })
       })
@@ -31,5 +31,47 @@ export const fetchSiteTeams = siteZuid => {
           err
         })
       })
+  }
+}
+
+export const addTeamToInstance = (siteZUID, teamZUID, roleZUID) => {
+  return dispatch => {
+    dispatch({ type: 'ADDING_TEAM_TO_INSTANCE' })
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZuid}/teams`, {
+      method: 'POST',
+      json: true,
+      body: {
+        teamZUID,
+        roleZUID
+      }
+    })
+      .then(data => {
+        dispatch({
+          type: 'ADDING_TEAM_TO_INSTANCE_SUCCESS',
+          team: data.data
+        })
+        return data.data
+      })
+      .catch(err => console.error(err))
+  }
+}
+
+export const removeTeamFromInstance = (siteZUID, teamZUID) => {
+  return dispatch => {
+    dispatch({ type: 'REMOVING_TEAM_FROM_INSTANCE' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZuid}/teams/${teamZUID}`,
+      {
+        method: 'DELETE'
+      }
+    )
+      .then(data => {
+        dispatch({
+          type: 'REMOVING_TEAM_FROM_INSTANCE_SUCCESS',
+          team: data.data
+        })
+        return data.data
+      })
+      .catch(err => console.error(err))
   }
 }
