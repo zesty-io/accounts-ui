@@ -16,7 +16,7 @@ import LaunchWizard from './components/LaunchWizard'
 
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
-import { fetchSiteCompanies } from '../../store/sitesCompanies'
+import { fetchSiteTeams } from '../../store/sitesTeams'
 import { fetchBlueprint } from '../../store/blueprints'
 // import { fetchSite } from '../../store/sites'
 // import { updateSite } from '../../store/sites'
@@ -51,8 +51,7 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.MANAGER_URL}`}
-          >
+            }${CONFIG.MANAGER_URL}`}>
             <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
             Manager
           </Url>
@@ -61,16 +60,14 @@ class PropertyOverview extends Component {
             target="_blank"
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.PREVIEW_URL}`}
-          >
+            }${CONFIG.PREVIEW_URL}`}>
             <i className="fa fa-eye" aria-hidden="true" />&nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
             <Url
               className={styles.manager}
               target="_blank"
-              href={`http://${this.props.site.domain}`}
-            >
+              href={`http://${this.props.site.domain}`}>
               <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
             </Url>
           ) : null}
@@ -83,8 +80,7 @@ class PropertyOverview extends Component {
               !this.state.loadingUsers &&
               !this.state.loadingBlueprint
             }
-            message="Checking Instance Permissions"
-          >
+            message="Checking Instance Permissions">
             <Route
               path="/instances/:siteZUID/launch"
               render={routeProps => {
@@ -210,7 +206,7 @@ class PropertyOverview extends Component {
         loadingRoles: false
       })
     })
-    props.dispatch(fetchSiteCompanies(props.siteZUID)).then(() => {
+    props.dispatch(fetchSiteTeams(props.siteZUID)).then(() => {
       this.setState({
         loadingTeams: false
       })
@@ -270,7 +266,7 @@ export default connect((state, props) => {
     isOwner,
     site: state.sites[siteZUID] || {},
     users: state.sitesUsers[siteZUID] || {},
-    companies: state.sitesCompanies[siteZUID] || {},
+    companies: state.sitesTeams[siteZUID] || {},
     blueprint: state.sites[siteZUID]
       ? state.blueprints[state.sites[siteZUID].blueprintID] || {}
       : {}

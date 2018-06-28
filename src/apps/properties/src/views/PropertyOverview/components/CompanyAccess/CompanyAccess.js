@@ -3,7 +3,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
-import { fetchSiteCompanies } from '../../../../store/sitesCompanies'
+import { fetchSiteTeams } from '../../../../store/sitesTeams'
 
 import styles from './CompanyAccess.less'
 
@@ -16,7 +16,7 @@ export default class CompanyAccess extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchSiteCompanies(this.props.match.params.siteZUID))
+    this.props.dispatch(fetchSiteTeams(this.props.match.params.siteZUID))
   }
   render() {
     return (
