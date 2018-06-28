@@ -60,13 +60,6 @@ class Teams extends Component {
   }
 }
 const mapStateToProps = state => {
-  // separate invited, admin and non-admin teams
-  // const adminTeams = {} // teams that a user is an admin for
-  // const lockedTeams = {} // teams the user is only a member of
-  // const invitedTeams = {} // teams a suer has not accepted an invite to
-  // const teams = Object.keys(state.teams).reduce((acc,team) => {
-  //   if(Object.hasOwn(state.teams[team]))
-  // },{})
   return { user: state.user, teams: state.teams }
 }
 

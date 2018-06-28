@@ -63,10 +63,29 @@
       color: @zesty-light-gray;
       align-self: flex-end;
       justify-self: flex-end;
+      transition: all 0.2s;
       &:hover,
       &:focus,
       &:active {
         color: @zesty-red;
+      }
+    }
+    .Admin {
+      color: lighten(@zesty-tab-blue, 20%);
+      transition: all 0.2s;
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: lighten(@zesty-light-gray, 50%);
+      }
+    }
+    .NotAdmin {
+      color: lighten(@zesty-light-gray, 10%);
+      &:hover,
+      &:focus,
+      &:active {
+        color: @zesty-orange;
       }
     }
   }

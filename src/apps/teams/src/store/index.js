@@ -4,18 +4,48 @@ import { notify } from '../../../../shell/store/notifications'
 export function teams(state = {}, action) {
   switch (action.type) {
     case 'FETCH_TEAMS_SUCCESS':
-      const teams = Object.keys(action.data).reduce((acc, team) => {
-        acc[action.data[team].ZUID] = action.data[team]
-        return acc
-      }, {})
+      const teams = Object.keys(action.data)
+        .sort((prev, next) => {
+          if (action.data[prev].createdAt < action.data[next].createdAt) {
+            return -1
+          }
+          if (action.data[prev].createdAt > action.data[next].createdAt) {
+            return 1
+          }
+          return 0
+        })
+        .reduce((acc, team) => {
+          acc[action.data[team].ZUID] = action.data[team]
+          return acc
+        }, {})
       // sort by creation date
       return { ...state, ...teams }
+    case 'FETCH_TEAM_SUCCESS':
+      // put the team in the correct place
+      const stateTeams = state
+      stateTeams[action.ZUID] = action.team
+      const sortedTeams = Object.keys(stateTeams)
+        .sort((prev, next) => {
+          if (stateTeams[prev].createdAt < stateTeams[next].createdAt) {
+            return -1
+          }
+          if (stateTeams[prev].createdAt > stateTeams[next].createdAt) {
+            return 1
+          }
+          return 0
+        })
+        .reduce((acc, team) => {
+          acc[stateTeams[team].ZUID] = stateTeams[team]
+          return acc
+        }, {})
+      return { ...sortedTeams }
+    case 'ACCEPT_TEAM_INVITE_SUCCESS':
     case 'CREATE_TEAM_SUCCESS':
       return { ...state, [action.data.ZUID]: action.data }
-    case 'DELETING_TEAM_SUCCESS':
+    case 'REMOVE_TEAM_FROM_STATE':
       const removed = state
       delete removed[action.data.ZUID]
-      return removed
+      return { ...removed }
     case 'FETCH_MEMBERS_TEAM_SUCCESS':
       return {
         ...state,
@@ -51,16 +81,16 @@ export function teams(state = {}, action) {
         }
       }
     case 'INVITING_TEAM_MEMBER_SUCCESS':
-      return {
-        ...state,
-        [action.teamZUID]: {
-          ...state[action.teamZUID],
-          members: [
-            ...state[action.teamZUID].members,
-            { invitedByUserZUID: state.user.ZUID, inviteeEmail }
-          ]
-        }
-      }
+    // return {
+    //   ...state,
+    //   [action.teamZUID]: {
+    //     ...state[action.teamZUID],
+    //     members: [
+    //       ...state[action.teamZUID].members,
+    //       { invitedByUserZUID: '', ZUID: '', inviteeEmail: action.inviteeEmail }
+    //     ]
+    //   }
+    // }
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
     default:
@@ -80,6 +110,22 @@ export const fetchTeams = userZUID => {
       })
       .catch(err => {
         dispatch({ type: 'FETCHING_TEAMS_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const fetchTeam = teamZUID => {
+  return dispatch => {
+    dispatch({ type: 'FETCHING_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`)
+      .then(res => {
+        dispatch({ type: 'FETCH_TEAM_SUCCESS', data: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCHING_TEAM_FAILURE', err })
         console.table(err)
         return err
       })
@@ -165,12 +211,13 @@ export const inviteMember = (teamZUID, inviteeEmail) => {
     })
       .then(res => {
         // this needs to add the member to the team
-        dispatch({
-          type: 'INVITING_TEAM_MEMBER_SUCCESS',
-          data: res.data,
-          inviteeEmail,
-          teamZUID
-        })
+        // dispatch({
+        //   type: 'INVITING_TEAM_MEMBER_SUCCESS',
+        //   data: res.data,
+        //   inviteeEmail,
+        //   teamZUID
+        // })
+        dispatch(getTeamPendingInvites(teamZUID))
         dispatch(
           notify({
             type: 'success',
@@ -203,7 +250,7 @@ export const removeMember = (teamZUID, userZUID) => {
       }
     )
       .then(res => {
-        dispatch({ type: 'DELETING_TEAM_USER_SUCCESS', data: res.data })
+        dispatch({ type: 'REMOVE_TEAM_FROM_STATE', data: res.data })
         return res.data
       })
       .catch(err => {
@@ -225,7 +272,7 @@ export const deleteTeam = (teamZUID, Name) => {
       }
     })
       .then(res => {
-        dispatch({ type: 'DELETING_TEAM_SUCCESS', data: res.data })
+        dispatch({ type: 'REMOVE_TEAM_FROM_STATE', data: { ZUID: teamZUID } })
         return res.data
       })
       .catch(err => {
@@ -312,6 +359,23 @@ export const getUserTeamInvites = () => {
   }
 }
 
+export const modifyUser = (teamZUID, userZUID, admin) => {
+  return dispatch => {
+    dispatch({ type: 'MODIFYING_USER' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/${userZUID}`,
+      {
+        method: 'PUT',
+        json: true,
+        body: { admin }
+      }
+    ).then(data => {
+      dispatch({ type: 'MODIFYING_USER_SUCCESS', data, teamZUID, userZUID })
+      return data.data
+    })
+  }
+}
+
 export const handleTeamInvite = (inviteZUID, action) => {
   return dispatch => {
     dispatch({ type: 'RESPONDING_TO_INVITE' })
@@ -323,8 +387,12 @@ export const handleTeamInvite = (inviteZUID, action) => {
     )
       .then(res => {
         dispatch({ type: 'RESPONDING_TO_INVITE_SUCCESS' })
-        if (action === 'decline' || 'cancel') {
+        if (action === ('decline' || 'cancel')) {
           // remove the teamZUID from state
+          dispatch({
+            type: 'REMOVE_TEAM_FROM_STATE',
+            data: { ZUID: inviteZUID }
+          })
           dispatch(
             notify({
               type: 'success',
@@ -332,7 +400,11 @@ export const handleTeamInvite = (inviteZUID, action) => {
             })
           )
         } else {
-          // add team ZUID to state
+          dispatch({
+            type: 'REMOVE_TEAM_FROM_STATE',
+            data: { ZUID: inviteZUID }
+          })
+          // TODO: add team to state (awaiting new invite object)
           dispatch(
             notify({
               type: 'success',

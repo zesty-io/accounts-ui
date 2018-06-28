@@ -7,7 +7,8 @@ import {
   getTeamInstances,
   getTeamPendingInvites,
   handleTeamInvite,
-  removeMember
+  removeMember,
+  modifyUser
 } from '../../store'
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
@@ -105,7 +106,22 @@ class TeamCard extends Component {
                         <p title={member.email}>
                           <i className="fa fa-user" />
                           {member.firstName} {member.lastName}
-                          {member.admin ? <i className="fa fa-star" /> : null}
+                          {member.admin ? (
+                            <i
+                              className={`fa fa-star ${this.props.isAdmin &&
+                                styles.Admin}`}
+                              onClick={() =>
+                                this.handleAdminChange(member.ZUID, false)
+                              }
+                            />
+                          ) : (
+                            <i
+                              className={`fa fa-star-o ${styles.NotAdmin}`}
+                              onClick={() =>
+                                this.handleAdminChange(member.ZUID, true)
+                              }
+                            />
+                          )}
                         </p>
                         {this.props.isAdmin && (
                           <i
@@ -199,7 +215,9 @@ class TeamCard extends Component {
     this.setState({ submitted: true })
     this.props
       .dispatch(inviteMember(this.props.team.ZUID, this.state.inviteeEmail))
-      .then(() => this.setState({ inviteeEmail: '', submitted: false }))
+      .then(() => {
+        this.setState({ inviteeEmail: '', submitted: false })
+      })
   }
   handleDeleteTeam = evt => {
     this.props.dispatch(
@@ -225,6 +243,40 @@ class TeamCard extends Component {
       })
     )
   }
+  handleAdminChange = (userZUID, admin) => {
+    this.props.isAdmin &&
+      this.props.dispatch(
+        zConfirm({
+          prompt: admin
+            ? 'Are you sure you want to make this user an Admin?'
+            : 'Are you sure you want to remove this users admin status?',
+          callback: confirmed => {
+            if (confirmed) {
+              this.props
+                .dispatch(modifyUser(this.props.team.ZUID, userZUID, admin))
+                .then(data => {
+                  this.props.dispatch(
+                    notify({
+                      type: 'success',
+                      message: admin
+                        ? 'Successfully made user admin'
+                        : 'Successfully removed admin privileges'
+                    })
+                  )
+                })
+                .catch(() => {
+                  this.props.dispatch(
+                    notify({
+                      type: 'error',
+                      message: 'Unable to update admin'
+                    })
+                  )
+                })
+            }
+          }
+        })
+      )
+  }
   removeUser = userZUID => {
     //TODO: add confirmation
     // confirm, then remove team member
@@ -233,15 +285,15 @@ class TeamCard extends Component {
         prompt: 'Are you sure you want to remove this user?',
         callback: confirmed => {
           if (confirmed) {
-            this.props.dispatch(
-              notify({
-                type: 'success',
-                message: 'User successfully removed'
-              })
-            )
             this.props
               .dispatch(removeMember(this.props.team.ZUID, userZUID))
               .then(data => {
+                this.props.dispatch(
+                  notify({
+                    type: 'success',
+                    message: 'User successfully removed'
+                  })
+                )
                 this.props.dispatch({
                   type: 'REMOVE_TEAM_MEMBER',
                   userZUID,

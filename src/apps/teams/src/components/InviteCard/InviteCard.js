@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { handleTeamInvite } from '../../store'
+import { handleTeamInvite, fetchTeam } from '../../store'
 
 import styles from './invite.less'
 
@@ -35,7 +35,9 @@ class InviteCard extends Component {
   handleAccept = () => {
     this.props
       .dispatch(handleTeamInvite(this.props.team.ZUID, 'accept'))
-      .then(console.log)
+      .then(() => {
+        this.props.dispatch(fetchTeam(this.props.team.teamZUID))
+      })
   }
   handleDecline = () => {
     this.props
