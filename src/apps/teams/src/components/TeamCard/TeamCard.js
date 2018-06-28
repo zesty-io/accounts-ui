@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+// import { Link } from 'react-router-dom'
+
 import {
   updateTeam,
   inviteMember,
@@ -10,6 +12,7 @@ import {
   removeMember,
   modifyUser
 } from '../../store'
+
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
 
@@ -160,11 +163,10 @@ class TeamCard extends Component {
               ? team.instances.map(instance => {
                   return (
                     <article className={styles.Instance} key={instance.ZUID}>
-                      <p>
+                      <AppLink to={`/instances/${instance.ZUID}`}>
                         <i className="fa fa-globe" />
                         {instance.name}
-                      </p>
-                      <p>role: {instance.role}</p>
+                      </AppLink>
                     </article>
                   )
                 })
