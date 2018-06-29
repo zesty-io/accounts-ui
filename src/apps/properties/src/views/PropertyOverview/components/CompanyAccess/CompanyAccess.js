@@ -11,6 +11,7 @@ import {
 
 import styles from './CompanyAccess.less'
 import { notify } from '../../../../../../../shell/store/notifications'
+import { fetchSiteUsers } from '../../../../store/sitesUsers'
 
 export default class CompanyAccess extends Component {
   constructor(props) {
@@ -146,7 +147,9 @@ export default class CompanyAccess extends Component {
             message: 'Team successfully added'
           })
         )
-        this.props.dispatch(fetchSiteTeams(this.props.match.params.siteZUID))
+        this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
+        // TODO: re-fetch users
+        this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
       })
       .catch(() => {
         this.setState({ submitted: false })

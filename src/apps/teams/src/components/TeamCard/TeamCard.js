@@ -219,6 +219,10 @@ class TeamCard extends Component {
                 placeholder="new@team-member.com"
                 autoComplete="off"
               />
+              <section className={styles.admin}>
+                <Toggle />
+                <small>Admin</small>
+              </section>
             </form>
           )}
         </CardFooter>
