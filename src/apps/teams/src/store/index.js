@@ -71,6 +71,16 @@ export function teams(state = {}, action) {
           ]
         }
       }
+    case 'MODIFYING_USER_SUCCESS':
+      // toggle user's admin rights
+      const toggledUser = state[action.teamZUID]
+      toggledUser.members.forEach(user => {
+        if (user.ZUID === action.userZUID) {
+          user.admin = !user.admin
+        }
+      })
+      return { ...state, [action.teamZUID]: { ...toggledUser } }
+
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
     case 'ACCEPT_TEAM_INVITE_SUCCESS':
@@ -405,7 +415,6 @@ export const handleTeamInvite = (inviteZUID, teamZUID, action) => {
             type: 'REMOVE_TEAM_FROM_STATE',
             data: { ZUID: teamZUID }
           })
-          // TODO: add team to state (awaiting new invite object)
           dispatch(
             notify({
               type: 'success',
