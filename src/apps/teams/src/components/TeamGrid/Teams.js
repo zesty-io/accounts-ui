@@ -46,10 +46,7 @@ class Teams extends Component {
                       dispatch={this.props.dispatch}
                       team={this.props.teams[team]}
                       key={this.props.teams[team].ZUID}
-                      isAdmin={
-                        this.props.teams[team].createdByUserZUID ===
-                        this.props.user.ZUID
-                      }
+                      userZUID={this.props.user.ZUID}
                     />
                   )
                 })}

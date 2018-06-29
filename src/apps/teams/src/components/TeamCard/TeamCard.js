@@ -37,7 +37,12 @@ class TeamCard extends Component {
       this.props.dispatch(getTeamInstances(this.props.team.ZUID))
     ]).then(() => {
       this.props.dispatch(getTeamPendingInvites(this.props.team.ZUID))
-      this.setState({ loaded: true })
+      const isAdmin = Boolean(
+        this.props.team.members.find(user => {
+          return user.ZUID === this.props.userZUID && user.admin
+        })
+      )
+      this.setState({ loaded: true, isAdmin })
     })
   }
   render() {
@@ -59,7 +64,7 @@ class TeamCard extends Component {
             ) : (
               team.name
             )}{' '}
-            {this.props.isAdmin && (
+            {this.state.isAdmin && (
               <i
                 className={
                   this.state.editing
@@ -114,7 +119,7 @@ class TeamCard extends Component {
             </section>
             <small>use this code for an invitation to an instance</small>
           </React.Fragment>
-          {this.props.isAdmin && (
+          {this.state.isAdmin && (
             <i
               className={`fa fa-trash ${styles.trash}`}
               onClick={this.handleDeleteTeam}
@@ -136,14 +141,14 @@ class TeamCard extends Component {
                           {member.firstName} {member.lastName}
                           {member.admin ? (
                             <i
-                              className={`fa fa-star ${this.props.isAdmin &&
+                              className={`fa fa-star ${this.state.isAdmin &&
                                 styles.Admin}`}
                               onClick={() =>
                                 this.handleAdminChange(member.ZUID, false)
                               }
                             />
                           ) : (
-                            this.props.isAdmin && (
+                            this.state.isAdmin && (
                               <i
                                 className={`fa fa-star-o ${styles.NotAdmin}`}
                                 onClick={() =>
@@ -153,7 +158,7 @@ class TeamCard extends Component {
                             )
                           )}
                         </p>
-                        {this.props.isAdmin && (
+                        {this.state.isAdmin && (
                           <i
                             className={`${styles.remove} fa fa-times-circle-o`}
                             onClick={() => this.removeUser(member.ZUID)}
@@ -168,7 +173,7 @@ class TeamCard extends Component {
                           <i className="fa fa-clock-o" />
                           {member.inviteeEmail} <i>(pending)</i>
                         </p>
-                        {this.props.isAdmin && (
+                        {this.state.isAdmin && (
                           <i
                             className={`${styles.remove} fa fa-times-circle-o`}
                             onClick={() => this.cancelInvite(member.ZUID)}
@@ -199,7 +204,7 @@ class TeamCard extends Component {
           </WithLoader>
         </CardContent>
         <CardFooter>
-          {this.props.isAdmin && (
+          {this.state.isAdmin && (
             <form className={styles.CardInvite} onSubmit={this.handleInvite}>
               <Button disabled={this.state.submitted} type="submit">
                 <i className="fa fa-envelope-o" />
@@ -271,7 +276,7 @@ class TeamCard extends Component {
           if (confirmed) {
             this.props
               .dispatch(deleteTeam(this.props.team.ZUID))
-              .then(() => {
+              .then(data => {
                 this.props.dispatch(
                   notify({
                     type: 'success',
@@ -280,7 +285,12 @@ class TeamCard extends Component {
                 )
               })
               .catch(err => {
-                console.error(err)
+                this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message: 'Error deleting team'
+                  })
+                )
               })
           }
         }
@@ -288,7 +298,7 @@ class TeamCard extends Component {
     )
   }
   handleAdminChange = (userZUID, admin) => {
-    this.props.isAdmin &&
+    this.state.isAdmin &&
       this.props.dispatch(
         zConfirm({
           prompt: admin
