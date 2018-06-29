@@ -10,13 +10,15 @@ import {
 } from '../../../../store/sitesTeams'
 
 import styles from './CompanyAccess.less'
+import { notify } from '../../../../../../../shell/store/notifications'
 
 export default class CompanyAccess extends Component {
   constructor(props) {
     super(props)
     this.state = {
       team: '',
-      role: ''
+      role: '',
+      submitted: false
     }
   }
   componentDidMount() {
@@ -53,7 +55,10 @@ export default class CompanyAccess extends Component {
                     )
                   })}
                 </Select>
-                <Button name="companyAccessSubmit" onClick={this.handleAddTeam}>
+                <Button
+                  name="companyAccessSubmit"
+                  onClick={this.handleAddTeam}
+                  disabled={this.state.submitted}>
                   Grant Access
                 </Button>
               </div>
@@ -62,8 +67,7 @@ export default class CompanyAccess extends Component {
           <div className={styles.companyTable}>
             <header>
               <h3>Team</h3>
-              <h3>Contact</h3>
-              <h3>Email</h3>
+              <h3>Description</h3>
               <h3>Access</h3>
             </header>
             <main>
@@ -77,8 +81,7 @@ export default class CompanyAccess extends Component {
                   return (
                     <article key={ZUID}>
                       <span>{team.name}</span>
-                      <span>{team.mainContactName}</span>
-                      <span>{team.mainContactEmail}</span>
+                      <span>{team.description}</span>
                       <span>
                         {this.props.isAdmin && (
                           <i
@@ -130,10 +133,29 @@ export default class CompanyAccess extends Component {
     })
   }
   handleAddTeam = () => {
+    this.setState({ submitted: true })
     this.props
       .dispatch(
         addTeamToInstance(this.props.siteZUID, this.state.team, this.state.role)
       )
-      .then(console.log)
+      .then(data => {
+        this.setState({ team: '', role: '', submitted: false })
+        this.props.dispatch(
+          notify({
+            type: 'success',
+            message: 'Team successfully added'
+          })
+        )
+        this.props.dispatch(fetchSiteTeams(this.props.match.params.siteZUID))
+      })
+      .catch(() => {
+        this.setState({ submitted: false })
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: 'Team failed to add'
+          })
+        )
+      })
   }
 }
