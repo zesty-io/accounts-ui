@@ -308,8 +308,6 @@ class TeamCard extends Component {
       )
   }
   removeUser = userZUID => {
-    //TODO: add confirmation
-    // confirm, then remove team member
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to remove this user?',

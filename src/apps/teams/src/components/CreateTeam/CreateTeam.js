@@ -27,7 +27,7 @@ class CreateTeam extends Component {
             <br />
             <a href="#">link to walk through</a>
           </section>
-          <section>
+          <section className={styles.Inputs}>
             <label>Name your team:</label>
             <Input
               type="text"
