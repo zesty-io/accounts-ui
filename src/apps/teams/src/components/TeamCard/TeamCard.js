@@ -226,6 +226,22 @@ class TeamCard extends Component {
     })
   }
   handleUpdateName = () => {
+    if (this.state.name.length > 50) {
+      return this.props.dispatch(
+        notify({
+          type: 'error',
+          message: 'Team name must be less than 50 characters'
+        })
+      )
+    }
+    if (this.state.description.length > 100) {
+      return this.props.dispatch(
+        notify({
+          type: 'error',
+          message: 'Team description must be less than 100 characters'
+        })
+      )
+    }
     this.props
       .dispatch(
         updateTeam(
