@@ -114,7 +114,6 @@ export default class CompanyAccess extends Component {
     )
   }
   handleRemove = team => {
-    // TODO: fetch user for team to display in warning
     this.setState({ removing: true })
     this.props.dispatch(getTeamMembers(team.ZUID)).then(data => {
       const teamMembers = data.reduce((acc, user) => {
@@ -124,9 +123,8 @@ export default class CompanyAccess extends Component {
       this.props.dispatch(
         zConfirm({
           kind: 'warn',
-          prompt: `are you sure you want to remove access from ${
-            team.name
-          }, ${teamMembers.join(', ')} will be removed from the instance.`,
+          prompt: `are you sure you want to remove access from ${team.name}?
+           ${teamMembers.join(', ')} will be removed from the instance.`,
           callback: result => {
             if (!result) {
               return

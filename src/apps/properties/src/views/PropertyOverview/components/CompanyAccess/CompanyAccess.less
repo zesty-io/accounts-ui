@@ -36,10 +36,12 @@
     main {
       display: grid;
       grid-template-rows: auto;
+      align-items: baseline;
       article {
+        min-height: 1.5rem;
         i {
           font-size: 1.1rem;
-          margin: 0.4rem;
+          // margin: 0.4rem;
           color: @zesty-light-grey;
           cursor: pointer;
         }
@@ -58,7 +60,7 @@
           }
         }
         .hidden {
-          display: none;
+          color: @zesty-white;
         }
       }
     }
