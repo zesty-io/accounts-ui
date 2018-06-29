@@ -199,12 +199,10 @@ class TeamCard extends Component {
               : 'No Instances for this team'}
           </WithLoader>
         </CardContent>
-        <CardFooter className={styles.CardInvite}>
+        <CardFooter>
           {this.props.isAdmin && (
-            <React.Fragment>
-              <Button
-                disabled={this.state.submitted}
-                onClick={this.handleInvite}>
+            <form className={styles.CardInvite} onSubmit={this.handleInvite}>
+              <Button disabled={this.state.submitted} type="submit">
                 <i className="fa fa-envelope-o" />
                 Invite
               </Button>
@@ -217,7 +215,7 @@ class TeamCard extends Component {
                 placeholder="new@team-member.com"
                 autoComplete="off"
               />
-            </React.Fragment>
+            </form>
           )}
         </CardFooter>
       </Card>
@@ -242,6 +240,7 @@ class TeamCard extends Component {
       })
   }
   handleInvite = evt => {
+    evt.preventDefault()
     this.setState({ submitted: true })
     this.props
       .dispatch(inviteMember(this.props.team.ZUID, this.state.inviteeEmail))
