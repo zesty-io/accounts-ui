@@ -4,13 +4,14 @@ import { notify } from '../../../../shell/store/notifications'
 export function teams(state = {}, action) {
   switch (action.type) {
     case 'FETCH_TEAMS_SUCCESS':
+      // sorting teams
       const teams = Object.keys(action.data)
         .sort((prev, next) => {
           if (action.data[prev].createdAt < action.data[next].createdAt) {
-            return -1
+            return 1
           }
           if (action.data[prev].createdAt > action.data[next].createdAt) {
-            return 1
+            return -1
           }
           return 0
         })
@@ -21,16 +22,16 @@ export function teams(state = {}, action) {
       return { ...state, ...teams }
 
     case 'FETCH_TEAM_SUCCESS':
-      // put the team in the correct place
+      // put the new team in the correct place
       const stateTeams = state
       stateTeams[action.ZUID] = action.team
       const sortedTeams = Object.keys(stateTeams)
         .sort((prev, next) => {
           if (stateTeams[prev].createdAt < stateTeams[next].createdAt) {
-            return -1
+            return 1
           }
           if (stateTeams[prev].createdAt > stateTeams[next].createdAt) {
-            return 1
+            return -1
           }
           return 0
         })
@@ -39,10 +40,6 @@ export function teams(state = {}, action) {
           return acc
         }, {})
       return { ...sortedTeams }
-
-    case 'ACCEPT_TEAM_INVITE_SUCCESS':
-    case 'CREATE_TEAM_SUCCESS':
-      return { ...state, [action.data.ZUID]: action.data }
 
     case 'REMOVE_TEAM_FROM_STATE':
       const removed = state
@@ -104,12 +101,34 @@ export function teams(state = {}, action) {
       }
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
+    case 'ACCEPT_TEAM_INVITE_SUCCESS':
+    case 'CREATE_TEAM_SUCCESS':
     default:
       return state
   }
 }
 
-// // CRUD teams here
+// sort teams
+// const sortTeams = (state = {}, team) => {
+//   stateTeams[action.ZUID] = action.team
+//   const sortedTeams = Object.keys(stateTeams)
+//     .sort((prev, next) => {
+//       if (stateTeams[prev].createdAt < stateTeams[next].createdAt) {
+//         return 1
+//       }
+//       if (stateTeams[prev].createdAt > stateTeams[next].createdAt) {
+//         return -1
+//       }
+//       return 0
+//     })
+//     .reduce((acc, team) => {
+//       acc[stateTeams[team].ZUID] = stateTeams[team]
+//       return acc
+//     }, {})
+//   return { ...sortedTeams }
+// }
+
+// CRUD teams here
 
 export const fetchTeams = userZUID => {
   return dispatch => {
@@ -155,7 +174,7 @@ export const createTeam = (name, description) => {
       }
     })
       .then(res => {
-        dispatch({ type: 'CREATE_TEAM_SUCCESS', data: res.data })
+        dispatch({ type: 'FETCH_TEAM_SUCCESS', team: res.data })
         dispatch(
           notify({
             type: 'success',
