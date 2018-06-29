@@ -85,7 +85,33 @@ class TeamCard extends Component {
           <React.Fragment>
             <section className={styles.InviteCode}>
               <h3>invite code: </h3>
-              {team.ZUID} <i className="fa fa-copy" />
+              {team.ZUID}{' '}
+              <i
+                className={`fa fa-copy ${styles.copy}`}
+                onClick={e => {
+                  const input = document.createElement('input')
+                  document.body.appendChild(input)
+                  input.value = team.ZUID
+                  input.focus()
+                  input.select()
+                  const result = document.execCommand('copy')
+                  input.remove()
+                  if (result === 'unsuccessful') {
+                    return this.props.dispatch(
+                      notify({
+                        type: 'error',
+                        message: 'failed to copy'
+                      })
+                    )
+                  }
+                  this.props.dispatch(
+                    notify({
+                      type: 'success',
+                      message: 'Copied to clipboard'
+                    })
+                  )
+                }}
+              />
             </section>
             <small>use this code for an invitation to an instance</small>
           </React.Fragment>
