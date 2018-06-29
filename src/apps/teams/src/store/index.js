@@ -207,7 +207,7 @@ export const updateTeam = (teamZUID, Name, Description) => {
   }
 }
 
-export const inviteMember = (teamZUID, inviteeEmail) => {
+export const inviteMember = (teamZUID, inviteeEmail, admin) => {
   // individual invite endpoint
   return dispatch => {
     dispatch({ type: 'INVITING_TEAM_MEMBER' })
@@ -216,7 +216,8 @@ export const inviteMember = (teamZUID, inviteeEmail) => {
       json: true,
       body: {
         teamZUID,
-        inviteeEmail
+        inviteeEmail,
+        admin
       }
     })
       .then(res => {

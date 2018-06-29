@@ -22,6 +22,7 @@ class TeamCard extends Component {
     name: '',
     description: '',
     inviteeEmail: '',
+    admin: false,
     editing: false,
     loaded: false,
     submitted: false
@@ -220,7 +221,7 @@ class TeamCard extends Component {
                 autoComplete="off"
               />
               <section className={styles.admin}>
-                <Toggle />
+                <Toggle name="admin" onChange={this.handleChange} />
                 <small>Admin</small>
               </section>
             </form>
@@ -230,6 +231,9 @@ class TeamCard extends Component {
     )
   }
   handleChange = evt => {
+    if (evt.target.name === 'admin') {
+      return this.setState({ admin: evt.target.checked ? true : false })
+    }
     this.setState({
       [evt.target.name]: evt.target.value
     })
@@ -267,7 +271,13 @@ class TeamCard extends Component {
     evt.preventDefault()
     this.setState({ submitted: true })
     this.props
-      .dispatch(inviteMember(this.props.team.ZUID, this.state.inviteeEmail))
+      .dispatch(
+        inviteMember(
+          this.props.team.ZUID,
+          this.state.inviteeEmail,
+          this.state.admin
+        )
+      )
       .then(() => {
         this.setState({ inviteeEmail: '', submitted: false })
       })

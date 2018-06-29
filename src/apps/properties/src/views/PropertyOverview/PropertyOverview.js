@@ -248,11 +248,12 @@ export default connect((state, props) => {
       state.sitesUsers[siteZUID] &&
       state.sitesUsers[siteZUID][state.user.ZUID]
     ) {
-      if (state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Owner') {
+      if (state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole.super) {
         isOwner = true
         isAdmin = true
-      }
-      if (state.sitesUsers[siteZUID][state.user.ZUID].role.name === 'Admin') {
+      } else if (
+        state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole.grant
+      ) {
         isAdmin = true
       }
     }
