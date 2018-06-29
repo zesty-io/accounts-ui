@@ -12,12 +12,12 @@ class InviteCard extends Component {
     return (
       <Card className={styles.Card}>
         <CardHeader>
-          <h3>Invited to Team: {team.name}</h3>
+          <h2>Invited to Team: {team.name}</h2>
           <p>you can accept or decline this invite below</p>
         </CardHeader>
         <CardContent>
-          <h1>Team description</h1>
-          {team.description}
+          <h2>Team description</h2>
+          <p>{team.description}</p>
         </CardContent>
         <CardFooter className={styles.CardInvite}>
           <Button onClick={this.handleAccept}>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
 
 import {
   updateTeam,
@@ -46,7 +45,7 @@ class TeamCard extends Component {
     return (
       <Card className={styles.Card}>
         <CardHeader className={styles.CardHeader}>
-          <h1>
+          <h2>
             {this.state.editing ? (
               <React.Fragment>
                 <Input
@@ -70,7 +69,7 @@ class TeamCard extends Component {
                 onClick={() => this.setState({ editing: !this.state.editing })}
               />
             )}
-          </h1>
+          </h2>
           {this.state.editing ? (
             <textarea
               rows="4"
