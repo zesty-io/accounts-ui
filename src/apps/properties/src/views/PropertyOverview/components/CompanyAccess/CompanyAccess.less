@@ -49,6 +49,17 @@
         &:nth-child(odd) {
           background-color: @zesty-white;
         }
+        .trash {
+          transition: all 0.1s;
+          color: lighten(@zesty-gray, 40%);
+          &:hover,
+          &:focus {
+            color: @zesty-red;
+          }
+          &:active {
+            color: white;
+          }
+        }
       }
     }
   }

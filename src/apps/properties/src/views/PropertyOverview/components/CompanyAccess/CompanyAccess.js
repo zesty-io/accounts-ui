@@ -8,6 +8,7 @@ import {
   addTeamToInstance,
   removeTeamFromInstance
 } from '../../../../store/sitesTeams'
+import { getTeamMembers } from '../../../../../../teams/src/store'
 
 import styles from './CompanyAccess.less'
 import { notify } from '../../../../../../../shell/store/notifications'
@@ -88,7 +89,7 @@ export default class CompanyAccess extends Component {
                       <span>
                         {this.props.isAdmin && (
                           <i
-                            className="fa fa-trash-o"
+                            className={`fa fa-trash-o ${styles.trash}`}
                             onClick={() => this.handleRemove(team)}
                           />
                         )}
@@ -111,19 +112,29 @@ export default class CompanyAccess extends Component {
     )
   }
   handleRemove = team => {
-    this.props.dispatch(
-      zConfirm({
-        prompt: `are you sure you want to remove access from ${team.name}`,
-        callback: result => {
-          if (!result) {
-            return
+    // TODO: fetch user for team to display in warning
+    this.props.dispatch(getTeamMembers(team.ZUID)).then(data => {
+      const teamMembers = data.reduce((acc, user) => {
+        acc.push(`${user.firstName} ${user.lastName}`)
+        return acc
+      }, [])
+      this.props.dispatch(
+        zConfirm({
+          kind: 'warn',
+          prompt: `are you sure you want to remove access from ${
+            team.name
+          }, ${teamMembers.join(', ')} will be removed from the instance.`,
+          callback: result => {
+            if (!result) {
+              return
+            }
+            this.props.dispatch(
+              removeTeamFromInstance(this.props.siteZUID, team.ZUID)
+            )
           }
-          this.props.dispatch(
-            removeTeamFromInstance(this.props.siteZUID, team.ZUID)
-          )
-        }
-      })
-    )
+        })
+      )
+    })
   }
   handleTeam = evt => {
     this.setState({
@@ -150,7 +161,6 @@ export default class CompanyAccess extends Component {
           })
         )
         this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
-        // TODO: re-fetch users
         this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
       })
       .catch(() => {
