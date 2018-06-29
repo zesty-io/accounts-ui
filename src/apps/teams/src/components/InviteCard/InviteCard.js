@@ -34,14 +34,26 @@ class InviteCard extends Component {
   }
   handleAccept = () => {
     this.props
-      .dispatch(handleTeamInvite(this.props.team.teamInviteZUID, 'accept'))
+      .dispatch(
+        handleTeamInvite(
+          this.props.team.teamInviteZUID,
+          this.props.team.ZUID,
+          'accept'
+        )
+      )
       .then(() => {
-        this.props.dispatch(fetchTeam(this.props.team.teamZUID))
+        this.props.dispatch(fetchTeam(this.props.team.ZUID))
       })
   }
   handleDecline = () => {
     this.props
-      .dispatch(handleTeamInvite(this.props.team.teamInviteZUID, 'decline'))
+      .dispatch(
+        handleTeamInvite(
+          this.props.team.teamInviteZUID,
+          this.props.team.ZUID,
+          'decline'
+        )
+      )
       .then(console.log)
   }
 }

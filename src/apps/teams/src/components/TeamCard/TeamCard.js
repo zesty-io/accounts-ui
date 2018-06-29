@@ -339,13 +339,15 @@ class TeamCard extends Component {
         prompt: 'Are you sure you want to cancel this invite?',
         callback: confirmed => {
           if (confirmed) {
-            this.props.dispatch(handleTeamInvite(user, 'cancel')).then(data => {
-              this.props.dispatch({
-                type: 'REMOVE_TEAM_MEMBER',
-                userZUID: user,
-                teamZUID: this.props.team.ZUID
+            this.props
+              .dispatch(handleTeamInvite(user, this.props.team.ZUID, 'cancel'))
+              .then(data => {
+                this.props.dispatch({
+                  type: 'REMOVE_TEAM_MEMBER',
+                  userZUID: user,
+                  teamZUID: this.props.team.ZUID
+                })
               })
-            })
           }
         }
       })

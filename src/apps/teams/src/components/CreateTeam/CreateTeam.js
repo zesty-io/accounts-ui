@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { createTeam } from '../../store'
 
 import styles from './create.less'
+import { notify } from '../../../../../shell/store/notifications'
 class CreateTeam extends Component {
   state = {
     name: '',
@@ -72,6 +73,22 @@ class CreateTeam extends Component {
     this.setState({ [evt.target.name]: evt.target.value })
   }
   handleSubmit = evt => {
+    if (this.state.name.length > 50) {
+      return this.props.dispatch(
+        notify({
+          type: 'error',
+          message: 'Team name must be less than 50 characters'
+        })
+      )
+    }
+    if (this.state.description.length > 100) {
+      return this.props.dispatch(
+        notify({
+          type: 'error',
+          message: 'Team description must be less than 100 characters'
+        })
+      )
+    }
     this.props
       .dispatch(createTeam(this.state.name, this.state.description))
       .then(() => {

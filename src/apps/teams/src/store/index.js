@@ -132,7 +132,7 @@ export const fetchTeam = teamZUID => {
     dispatch({ type: 'FETCHING_TEAM' })
     return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`)
       .then(res => {
-        dispatch({ type: 'FETCH_TEAM_SUCCESS', data: res.data })
+        dispatch({ type: 'FETCH_TEAM_SUCCESS', team: res.data })
         return res.data
       })
       .catch(err => {
@@ -143,15 +143,15 @@ export const fetchTeam = teamZUID => {
   }
 }
 
-export const createTeam = (Name, Description) => {
+export const createTeam = (name, description) => {
   return dispatch => {
     dispatch({ type: 'CREATING_TEAM' })
     return request(`${CONFIG.API_ACCOUNTS}/teams`, {
       method: 'POST',
       json: true,
       body: {
-        Name,
-        Description
+        name,
+        description
       }
     })
       .then(res => {
@@ -386,7 +386,7 @@ export const modifyUser = (teamZUID, userZUID, admin) => {
   }
 }
 
-export const handleTeamInvite = (inviteZUID, action) => {
+export const handleTeamInvite = (inviteZUID, teamZUID, action) => {
   return dispatch => {
     dispatch({ type: 'RESPONDING_TO_INVITE' })
     return request(
@@ -397,12 +397,14 @@ export const handleTeamInvite = (inviteZUID, action) => {
     )
       .then(res => {
         dispatch({ type: 'RESPONDING_TO_INVITE_SUCCESS' })
-        if (action === ('decline' || 'cancel')) {
-          // remove the teamZUID from state
-          dispatch({
-            type: 'REMOVE_TEAM_FROM_STATE',
-            data: { ZUID: inviteZUID }
-          })
+        if (action === 'decline' || action === 'cancel') {
+          // remove the teamZUID from state if declining invite
+          if (action === 'decline') {
+            dispatch({
+              type: 'REMOVE_TEAM_FROM_STATE',
+              data: { ZUID: teamZUID }
+            })
+          }
           dispatch(
             notify({
               type: 'success',
@@ -412,7 +414,7 @@ export const handleTeamInvite = (inviteZUID, action) => {
         } else {
           dispatch({
             type: 'REMOVE_TEAM_FROM_STATE',
-            data: { ZUID: inviteZUID }
+            data: { ZUID: teamZUID }
           })
           // TODO: add team to state (awaiting new invite object)
           dispatch(
