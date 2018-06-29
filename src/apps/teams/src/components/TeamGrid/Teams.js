@@ -24,7 +24,7 @@ class Teams extends Component {
             {this.props.teams &&
               Object.keys(this.props.teams)
                 .filter(team =>
-                  this.props.teams[team].hasOwnProperty('inviteeUserZUID')
+                  this.props.teams[team].hasOwnProperty('teamInviteZUID')
                 )
                 .map((team, i) => (
                   <InviteCard
@@ -38,7 +38,7 @@ class Teams extends Component {
               Object.keys(this.props.teams)
                 .filter(
                   team =>
-                    !this.props.teams[team].hasOwnProperty('inviteeUserZUID')
+                    !this.props.teams[team].hasOwnProperty('teamInviteZUID')
                 )
                 .map(team => {
                   return (
