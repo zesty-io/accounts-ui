@@ -12,12 +12,12 @@ class InviteCard extends Component {
     return (
       <Card className={styles.Card}>
         <CardHeader>
-          <h3>Invited to Team: {team.ZUID}</h3>
+          <h3>Invited to Team: {team.name}</h3>
           <p>you can accept or decline this invite below</p>
         </CardHeader>
         <CardContent>
-          <h1>Invited By</h1>
-          {team.invitedByUserZUID}
+          <h1>Team description</h1>
+          {team.description}
         </CardContent>
         <CardFooter className={styles.CardInvite}>
           <Button onClick={this.handleAccept}>
@@ -34,14 +34,14 @@ class InviteCard extends Component {
   }
   handleAccept = () => {
     this.props
-      .dispatch(handleTeamInvite(this.props.team.ZUID, 'accept'))
+      .dispatch(handleTeamInvite(this.props.team.teamInviteZUID, 'accept'))
       .then(() => {
         this.props.dispatch(fetchTeam(this.props.team.teamZUID))
       })
   }
   handleDecline = () => {
     this.props
-      .dispatch(handleTeamInvite(this.props.team.ZUID, 'decline'))
+      .dispatch(handleTeamInvite(this.props.team.teamInviteZUID, 'decline'))
       .then(console.log)
   }
 }
