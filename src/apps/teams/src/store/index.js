@@ -5,41 +5,13 @@ export function teams(state = {}, action) {
   switch (action.type) {
     case 'FETCH_TEAMS_SUCCESS':
       // sorting teams
-      const teams = Object.keys(action.data)
-        .sort((prev, next) => {
-          if (action.data[prev].createdAt < action.data[next].createdAt) {
-            return 1
-          }
-          if (action.data[prev].createdAt > action.data[next].createdAt) {
-            return -1
-          }
-          return 0
-        })
-        .reduce((acc, team) => {
-          acc[action.data[team].ZUID] = action.data[team]
-          return acc
-        }, {})
-      return { ...state, ...teams }
+      return { ...state, ...sortTeams(action.data) }
 
     case 'FETCH_TEAM_SUCCESS':
       // put the new team in the correct place
       const stateTeams = state
       stateTeams[action.ZUID] = action.team
-      const sortedTeams = Object.keys(stateTeams)
-        .sort((prev, next) => {
-          if (stateTeams[prev].createdAt < stateTeams[next].createdAt) {
-            return 1
-          }
-          if (stateTeams[prev].createdAt > stateTeams[next].createdAt) {
-            return -1
-          }
-          return 0
-        })
-        .reduce((acc, team) => {
-          acc[stateTeams[team].ZUID] = stateTeams[team]
-          return acc
-        }, {})
-      return { ...sortedTeams }
+      return { ...sortTeams(stateTeams) }
 
     case 'REMOVE_TEAM_FROM_STATE':
       const removed = state
@@ -109,24 +81,22 @@ export function teams(state = {}, action) {
 }
 
 // sort teams
-// const sortTeams = (state = {}, team) => {
-//   stateTeams[action.ZUID] = action.team
-//   const sortedTeams = Object.keys(stateTeams)
-//     .sort((prev, next) => {
-//       if (stateTeams[prev].createdAt < stateTeams[next].createdAt) {
-//         return 1
-//       }
-//       if (stateTeams[prev].createdAt > stateTeams[next].createdAt) {
-//         return -1
-//       }
-//       return 0
-//     })
-//     .reduce((acc, team) => {
-//       acc[stateTeams[team].ZUID] = stateTeams[team]
-//       return acc
-//     }, {})
-//   return { ...sortedTeams }
-// }
+const sortTeams = teams => {
+  return Object.keys(teams)
+    .sort((prev, next) => {
+      if (teams[prev].createdAt < teams[next].createdAt) {
+        return 1
+      }
+      if (teams[prev].createdAt > teams[next].createdAt) {
+        return -1
+      }
+      return 0
+    })
+    .reduce((acc, team) => {
+      acc[teams[team].ZUID] = teams[team]
+      return acc
+    }, {})
+}
 
 // CRUD teams here
 
