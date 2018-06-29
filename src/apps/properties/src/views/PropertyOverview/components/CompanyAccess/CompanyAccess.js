@@ -89,7 +89,9 @@ export default class CompanyAccess extends Component {
                       <span>
                         {this.props.isAdmin && (
                           <i
-                            className={`fa fa-trash-o ${styles.trash}`}
+                            className={`fa fa-trash-o ${
+                              this.state.removing ? styles.hidden : styles.trash
+                            }`}
                             onClick={() => this.handleRemove(team)}
                           />
                         )}
@@ -113,6 +115,7 @@ export default class CompanyAccess extends Component {
   }
   handleRemove = team => {
     // TODO: fetch user for team to display in warning
+    this.setState({ removing: true })
     this.props.dispatch(getTeamMembers(team.ZUID)).then(data => {
       const teamMembers = data.reduce((acc, user) => {
         acc.push(`${user.firstName} ${user.lastName}`)
@@ -134,6 +137,7 @@ export default class CompanyAccess extends Component {
           }
         })
       )
+      this.setState({ removing: false })
     })
   }
   handleTeam = evt => {
