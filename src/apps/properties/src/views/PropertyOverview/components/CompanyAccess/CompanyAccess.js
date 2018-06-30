@@ -129,9 +129,11 @@ export default class CompanyAccess extends Component {
             if (!result) {
               return
             }
-            this.props.dispatch(
-              removeTeamFromInstance(this.props.siteZUID, team.ZUID)
-            )
+            this.props
+              .dispatch(removeTeamFromInstance(this.props.siteZUID, team.ZUID))
+              .then(() => {
+                // clear team and users from instance
+              })
           }
         })
       )

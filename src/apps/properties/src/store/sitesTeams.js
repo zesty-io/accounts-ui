@@ -3,25 +3,30 @@ import { request } from '../../../../util/request'
 export function sitesTeams(state = {}, action) {
   switch (action.type) {
     case 'FETCH_INSTANCE_TEAMS_SUCCESS':
-      return { ...state, [action.siteZuid]: action.teams }
+      return { ...state, [action.siteZUID]: action.teams }
+    case 'REMOVING_TEAM_FROM_INSTANCE_SUCCESS':
+      let siteTeam = state
+      siteTeam[action.siteZUID] = state[action.siteZUID].filter(
+        team => team.ZUID !== action.teamZUID
+      )
+      return { ...siteTeam }
     case 'FETCH_INSTANCE_TEAMS_ERROR':
-      return state
     default:
       return state
   }
 }
 
-export const fetchSiteTeams = siteZuid => {
+export const fetchSiteTeams = siteZUID => {
   return dispatch => {
     dispatch({
       type: 'FETCHING_INSTANCE_TEAMS'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZuid}/teams`)
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/teams`)
       .then(teams => {
         dispatch({
           type: 'FETCH_INSTANCE_TEAMS_SUCCESS',
           teams: teams.data,
-          siteZuid
+          siteZUID
         })
       })
       .catch(err => {
@@ -68,7 +73,9 @@ export const removeTeamFromInstance = (siteZUID, teamZUID) => {
       .then(data => {
         dispatch({
           type: 'REMOVING_TEAM_FROM_INSTANCE_SUCCESS',
-          team: data.data
+          team: data.data,
+          siteZUID,
+          teamZUID
         })
         return data.data
       })
