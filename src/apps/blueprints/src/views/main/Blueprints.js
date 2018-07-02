@@ -50,7 +50,6 @@ class Blueprints extends Component {
       Object.keys(props.userBlueprints).length !==
       Object.keys(state.userBlueprints).length
     ) {
-      console.log('lengths differ')
       return { ...state, userBlueprints: props.userBlueprints }
     } else {
       return null
@@ -61,8 +60,7 @@ class Blueprints extends Component {
       <WithLoader
         className={styles.Loading}
         condition={!this.state.loadingBlueprints}
-        message="Loading Your Custom Blueprints"
-      >
+        message="Loading Your Custom Blueprints">
         <section className={styles.Blueprints}>
           <h1 className={styles.BlueprintsTitle}>
             Manage Your Custom Blueprints
