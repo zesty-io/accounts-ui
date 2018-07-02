@@ -31,9 +31,6 @@ class App extends Component {
     }, 60000)
   }
   componentDidMount() {
-    // If errors occur Raven will send user data
-    Raven.setUserContext({ ...this.props.user })
-
     if (!this.props.user.prefs.hasSelectedDev) {
       this.props.dispatch(
         zConfirm({
@@ -108,11 +105,13 @@ class LoadUser extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchUser(this.props.userZUID)).then(() =>
+    this.props.dispatch(fetchUser(this.props.userZUID)).then(user => {
+      Raven.setUserContext(user)
+      bugsnagClient.user = user
       this.setState({
         loadingUser: false
       })
-    )
+    })
   }
   render() {
     if (this.props.auth) {
