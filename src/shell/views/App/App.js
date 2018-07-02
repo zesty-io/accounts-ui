@@ -65,7 +65,7 @@ class App extends Component {
   render() {
     return (
       <section className={styles.AppShell}>
-        <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
+        <AppHeader />
         <AppError user={this.props.user}>
           <section className={cx('AppMain', styles.AppMain)}>
             <Switch>
