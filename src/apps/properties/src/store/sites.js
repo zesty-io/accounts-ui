@@ -325,9 +325,7 @@ export function sendInvite(siteZUID, inviteeEmail, inviteeRoleZUID) {
       .then(res => {
         dispatch(
           notify({
-            HTML: `<i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Invite sent to <strong>${
-              res.data.inviteeEmail
-            }</strong>`,
+            message: `Invite sent to ${res.data.inviteeEmail}`,
             type: 'success'
           })
         )
@@ -341,7 +339,7 @@ export function sendInvite(siteZUID, inviteeEmail, inviteeRoleZUID) {
         console.error(err)
         dispatch(
           notify({
-            HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;An error occurred sending the invite: ${err}`,
+            message: `Error occurred sending the invite`,
             type: 'error'
           })
         )
