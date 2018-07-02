@@ -18,7 +18,7 @@ module.exports = buildConfig = build => {
       COOKIE_NAME: 'APP_SID',
       COOKIE_DOMAIN: '.zesty.io',
       EMAIL_SERVICE: 'https://email.zesty.io/send',
-      LEGACY_ACCOUNTS: 'https://accounts.zesty.io',
+      LEGACY_ACCOUNTS: 'https://accounts-legacy.zesty.io',
       C_NAME: 'sites2.zesty.zone',
       A_RECORD: '130.211.21.25'
     }
