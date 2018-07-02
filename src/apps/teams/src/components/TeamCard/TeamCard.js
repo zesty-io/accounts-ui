@@ -89,8 +89,8 @@ class TeamCard extends Component {
           )}
           <React.Fragment>
             <section className={styles.InviteCode}>
-              <h3>invite code: </h3>
-              {team.ZUID}{' '}
+              <h4>invite code: </h4>
+              <span className={styles.ZUID}>{team.ZUID} </span>
               <i
                 className={`fa fa-copy ${styles.copy}`}
                 onClick={e => {
