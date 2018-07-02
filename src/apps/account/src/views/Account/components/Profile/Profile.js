@@ -51,8 +51,7 @@ class Profile extends Component {
           <Button
             onClick={this.handleClick}
             className={styles.ProfileSave}
-            disabled={this.state.submitted}
-          >
+            disabled={this.state.submitted}>
             <i className="fa fa-floppy-o" aria-hidden="true" />
             Update User Name
           </Button>
@@ -68,9 +67,9 @@ class Profile extends Component {
       .then(data => {
         this.props.dispatch(
           notify({
-            HTML: `<i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;Name updated to ${
-              this.props.profile.firstName
-            } ${this.props.profile.lastName}`,
+            message: `Name updated to ${this.props.profile.firstName} ${
+              this.props.profile.lastName
+            }`,
             type: 'success'
           })
         )
@@ -79,7 +78,7 @@ class Profile extends Component {
       .catch(err => {
         this.props.dispatch(
           notify({
-            HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Error saving data ${err}`,
+            message: `Error saving user profile data`,
             type: 'error'
           })
         )

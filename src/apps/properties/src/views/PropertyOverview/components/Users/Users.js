@@ -57,8 +57,7 @@ export default class Users extends Component {
               </Select>
               <Button
                 onClick={this.handleInvite}
-                disabled={this.state.submitted}
-              >
+                disabled={this.state.submitted}>
                 <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
               </Button>
             </div>
@@ -77,8 +76,7 @@ export default class Users extends Component {
                 }
                 message="Loading Instance Users"
                 height="100px"
-                width="100%"
-              >
+                width="100%">
                 <div>
                   {Object.keys(this.props.users).map(ZUID => {
                     const user = this.props.users[ZUID]
@@ -148,7 +146,7 @@ export default class Users extends Component {
     } else {
       this.props.dispatch(
         notify({
-          HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Please provide a valid Email address`,
+          message: `Please provide a valid Email address`,
           type: 'error'
         })
       )
