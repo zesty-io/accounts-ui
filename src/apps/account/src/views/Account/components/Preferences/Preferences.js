@@ -23,14 +23,14 @@ class Preferences extends Component {
               checked={this.props.user.prefs.devOptions}
             />
           </article>
-          <article className={styles.PrefItem}>
+          {/* <article className={styles.PrefItem}>
             Manage Teams
             <Toggle
               name="teams"
               onChange={this.handleChange}
               checked={this.props.user.prefs.teamOptions}
             />
-          </article>
+          </article> */}
           <article className={styles.PrefItem}>
             Instance Grid View
             <Toggle
