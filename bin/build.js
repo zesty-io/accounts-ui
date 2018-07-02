@@ -16,7 +16,7 @@ const apps = root + '/src/apps/'
 ;(async function build() {
   copyFiles(root + '/public', root + '/build')
   const build = await buildInfo(env)
-  buildConfig(env)
+  buildConfig(build)
   buildIndex(build)
 
   fs.readdirSync(src).forEach(dir => {

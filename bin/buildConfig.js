@@ -3,9 +3,9 @@
 const fs = require('fs')
 const path = require('path')
 
-module.exports = buildConfig = env => {
+module.exports = buildConfig = build => {
   let config = {}
-  if (env.toUpperCase() === 'PRODUCTION') {
+  if (build.data.environment.toUpperCase() === 'PRODUCTION') {
     config = {
       ENV: 'production',
       API_ACCOUNTS: 'https://accounts.api.zesty.io/v1',
@@ -22,7 +22,7 @@ module.exports = buildConfig = env => {
       C_NAME: 'sites2.zesty.zone',
       A_RECORD: '130.211.21.25'
     }
-  } else if (env.toUpperCase() === 'STAGE') {
+  } else if (build.data.environment.toUpperCase() === 'STAGE') {
     config = {
       API_ACCOUNTS: 'https://accounts.stage-api.zesty.io/v1',
       API_INSTANCE: '.stage-api.zesty.io/v1/',
@@ -56,7 +56,7 @@ module.exports = buildConfig = env => {
   }
 
   fs.writeFileSync(
-    path.resolve(process.cwd(), 'build/config.js'),
+    path.resolve(process.cwd(), `build/config.${build.data.gitCommit}.js`),
     `window.CONFIG = ${JSON.stringify(config)}`
   )
 

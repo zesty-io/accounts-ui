@@ -31,9 +31,6 @@ class App extends Component {
     }, 60000)
   }
   componentDidMount() {
-    // If errors occur Raven will send user data
-    Raven.setUserContext({ ...this.props.user })
-
     if (!this.props.user.prefs.hasSelectedDev) {
       this.props.dispatch(
         zConfirm({
