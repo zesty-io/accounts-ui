@@ -32,8 +32,7 @@ export default class Domain extends Component {
               this.setState({
                 editing: true
               })
-            }}
-          >
+            }}>
             {this.props.domain}
             <i className="fa fa-pencil" />
           </span>
@@ -74,7 +73,7 @@ export default class Domain extends Component {
         })
         this.props.dispatch(
           notify({
-            message: `Your domain has been set to ${domain}`,
+            message: `Your domain has been set to ${strippedDomain}`,
             type: 'success'
           })
         )
