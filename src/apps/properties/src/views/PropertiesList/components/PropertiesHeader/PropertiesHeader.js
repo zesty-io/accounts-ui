@@ -10,9 +10,18 @@ import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
 
 class PropertiesHeader extends Component {
-  state = {
-    eco: false,
-    sort: 'name'
+  constructor(props) {
+    super(props)
+    this.state = {
+      eco: false,
+      sort: 'name'
+    }
+    this.searchRef = React.createRef()
+  }
+  componentDidMount() {
+    this.props.settings && this.props.settings.filter
+      ? (this.searchRef.current.searchTerm.current.value = this.props.settings.filter)
+      : null
   }
   render() {
     return (
@@ -28,6 +37,7 @@ class PropertiesHeader extends Component {
           ) : null}
 
           <Search
+            ref={this.searchRef}
             className={styles.Search}
             placeholder="Search by instance name or domain"
             onSubmit={this.onSearch}
