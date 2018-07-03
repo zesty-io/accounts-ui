@@ -28,11 +28,41 @@ class PropertiesHeader extends Component {
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
           {this.props.ecosystems.length ? (
-            <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
-              <Option key="default" value="" text="All Instances" />
+            // SELECTION MAP FROM USER ROW
+            // selection={
+            //     this.props.siteRoles
+            //     .filter(role => role.ZUID === this.props.role.ZUID)
+            //     .map(item => {
+            //       return { value: item.ZUID, text: item.name }
+            //     })[0]
+            // }>
+            // {this.props.siteRoles.map(role => {
+            //   return (
+            //     <Option
+            //       key={role.ZUID}
+            //       value={role.ZUID}
+            //       text={role.name}
+            //     />
+            //   )
+            // })}
+            <Select
+              className={styles.Ecosystem}
+              onSelect={this.filterByEco}
+              selection={
+                this.props.settings.eco
+                  ? this.props.ecosystems
+                      .filter(eco => {
+                        eco.id === this.props.settings.eco
+                      })
+                      .map(eco => {
+                        return { value: eco.id, text: eco.name }
+                      })[0]
+                  : { value: '', text: 'All Instances' }
+              }>
               {this.props.ecosystems.map(eco => {
                 return <Option key={eco.id} value={eco.id} text={eco.name} />
               })}
+              <Option key="default" value={''} text={'All Instances'} />
             </Select>
           ) : null}
 
