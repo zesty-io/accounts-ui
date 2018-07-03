@@ -42,9 +42,11 @@ export const fetchSiteRoles = siteZUID => {
           siteZUID,
           normalizedRoles: res.data.reduce((acc, role) => {
             acc[role.ZUID] = role
-
             if (state.systemRoles[role.systemRoleZUID]) {
-              acc[role.ZUID].systemRole = state.systemRoles[role.systemRoleZUID]
+              acc[role.ZUID].systemRole = {
+                ...role.systemRole,
+                ...state.systemRoles[role.systemRoleZUID]
+              }
             }
 
             return acc

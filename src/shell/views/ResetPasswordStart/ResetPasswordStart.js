@@ -16,8 +16,8 @@ export default class ResetPasswordStart extends Component {
       <section className={styles.ResetPasswordStart}>
         <form
           name="ResetPasswordStart"
-          className={styles.ResetPasswordStartForm}
-        >
+          onSubmit={this.handleSignup}
+          className={styles.ResetPasswordStartForm}>
           <img src="/zesty-io-logo.svg" />
 
           <label>
@@ -32,7 +32,7 @@ export default class ResetPasswordStart extends Component {
               placeholder="Enter your account email"
             />
           </label>
-          <Button onClick={this.handleSignup}>
+          <Button type="submit">
             <i className="fa fa-envelope-o" aria-hidden="true" />
             Send Password Reset Email
           </Button>
@@ -51,4 +51,13 @@ export default class ResetPasswordStart extends Component {
       </section>
     )
   }
+  //Request URL: https://svc.zesty.io/auth/password-reset-request?email=ggcadc%40gmail.com
+  handleSignup = evt => {
+    evt.preventDefault()
+    return console.log(evt.target.email.value)
+    return request(
+      `https://svc.zesty.io/auth/password-reset-request?email=${evt.target}`
+    )
+  }
 }
+// https://accounts.zesty.io/reset-password?email=ggcadc@gmail.com&code=264f9f7dfec70e8c48e334383545df4d89fb433c

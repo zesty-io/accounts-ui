@@ -53,11 +53,12 @@ class Login extends Component {
               </label>
               <label>
                 <p>
-                  Password&nbsp;<small>
+                  Password
+                  {/* &nbsp;<small>
                     (<AppLink to="/reset-password" tabIndex="4">
                       Forgot?
                     </AppLink>)
-                  </small>
+                  </small> */}
                 </p>
 
                 <Input
@@ -109,7 +110,7 @@ class Login extends Component {
               <h3>Welcome to Zesty.io</h3>
               <p>
                 Start creating content ready to be delivered securely, quickly
-                and reliably to everywhere from anywhere.
+                and reliably. Anywhere, anytime.
               </p>
               <AppLink to="/signup" tabIndex="5">
                 Create An Account

@@ -65,7 +65,7 @@ class App extends Component {
   render() {
     return (
       <section className={styles.AppShell}>
-        <AppHeader user={this.props.user} dispatch={this.props.dispatch} />
+        <AppHeader />
         <AppError user={this.props.user}>
           <section className={cx('AppMain', styles.AppMain)}>
             <Switch>
@@ -76,6 +76,7 @@ class App extends Component {
               <Route path="/teams" component={Teams} />
               <Redirect exact from="/" to="/instances" />
               <Redirect exact from="/login" to="/instances" />
+              <Redirect from="/z/*" to="/instances" />
               <Route component={NotFound} />
             </Switch>
           </section>
