@@ -27,7 +27,7 @@
       display: grid;
       justify-items: start;
       grid-auto-flow: row;
-      grid-template-columns: 1fr 1fr 1fr 0.5fr;
+      grid-template-columns: 1fr 2fr 0.5fr;
       padding: 0 0.5rem 0.5rem;
       h3 {
         font-size: 1em;
@@ -36,18 +36,31 @@
     main {
       display: grid;
       grid-template-rows: auto;
+      align-items: baseline;
       article {
+        min-height: 1.5rem;
         i {
           font-size: 1.1rem;
-          margin: 0.4rem;
+          // margin: 0.4rem;
           color: @zesty-light-grey;
           cursor: pointer;
         }
         display: grid;
         padding: 0.5rem;
-        grid-template-columns: 1fr 1fr 1fr 0.5fr;
+        grid-template-columns: 1fr 2fr 0.5fr;
         &:nth-child(odd) {
           background-color: @zesty-white;
+        }
+        .trash {
+          transition: all 0.1s;
+          color: lighten(@zesty-gray, 40%);
+          &:hover,
+          &:focus {
+            color: @zesty-red;
+          }
+        }
+        .hidden {
+          color: @zesty-white;
         }
       }
     }

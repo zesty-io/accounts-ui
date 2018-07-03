@@ -1,89 +1,440 @@
 import { request } from '../../../../util/request'
-
+import { notify } from '../../../../shell/store/notifications'
 
 export function teams(state = {}, action) {
   switch (action.type) {
     case 'FETCH_TEAMS_SUCCESS':
-      return { ...state, ...action.data }
+      // sorting teams
+      return { ...state, ...sortTeams(action.data) }
+
+    case 'FETCH_TEAM_SUCCESS':
+      // put the new team in the correct place
+      const stateTeams = state
+      stateTeams[action.ZUID] = action.team
+      return { ...sortTeams(stateTeams) }
+
+    case 'REMOVE_TEAM_FROM_STATE':
+      const removed = state
+      delete removed[action.data.ZUID]
+      return { ...removed }
+
+    case 'FETCH_MEMBERS_TEAM_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: [...action.data]
+        }
+      }
+
+    case 'FETCH_MEMBERS_PENDING_TEAM_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: [...state[action.teamZUID].members, ...action.data]
+        }
+      }
+
+    case 'FETCH_INSTANCES_TEAM_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          instances: [...action.data]
+        }
+      }
+
+    case 'REMOVE_TEAM_MEMBER':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: state[action.teamZUID].members.filter(
+            member => member.ZUID !== action.userZUID
+          )
+        }
+      }
+
+    case 'INVITING_TEAM_MEMBER_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: [
+            ...state[action.teamZUID].members,
+            {
+              invitedByUserZUID: 'newUser',
+              ZUID: 'new',
+              inviteeEmail: action.inviteeEmail
+            }
+          ]
+        }
+      }
+    case 'MODIFYING_USER_SUCCESS':
+      // toggle user's admin rights
+      const toggledUser = state[action.teamZUID]
+      toggledUser.members.forEach(user => {
+        if (user.ZUID === action.userZUID) {
+          user.admin = !user.admin
+        }
+      })
+      return { ...state, [action.teamZUID]: { ...toggledUser } }
+
     case 'FETCHING_TEAMS_FAILURE':
     case 'FETCHING_TEAMS':
+    case 'ACCEPT_TEAM_INVITE_SUCCESS':
+    case 'CREATE_TEAM_SUCCESS':
     default:
       return state
   }
 }
 
+// sort teams
+const sortTeams = teams => {
+  return Object.keys(teams)
+    .sort((prev, next) => {
+      if (teams[prev].createdAt < teams[next].createdAt) {
+        return 1
+      }
+      if (teams[prev].createdAt > teams[next].createdAt) {
+        return -1
+      }
+      return 0
+    })
+    .reduce((acc, team) => {
+      acc[teams[team].ZUID] = teams[team]
+      return acc
+    }, {})
+}
+
 // CRUD teams here
 
 export const fetchTeams = userZUID => {
-  //TODO: endpoint for teams
-  // return dispatch => {
-  //   dispatch({ type: 'FETCHING_TEAMS' })
-  //   return request(`${CONFIG.API_ACCOUNTS}/teams/${userZUID}`)
-  //     .then(res => {
-  //       dispatch({ type: 'FETCHING_TEAMS_SUCCESS', data: res.data })
-  //       return res.data
-  //     })
-  //     .catch(err => {
-  //       dispatch({ type: 'FETCHING_TEAMS_FAILURE', err })
-  //       console.table(err)
-  //       return err
-  //     })
-  // }
   return dispatch => {
-    dispatch({
-      type: 'FETCH_TEAMS_SUCCESS',
-      data: [
-        {
-          ZUID: 'dev-team-zuid',
-          name: 'Dev Team',
-          members: [
-            { name: 'emily', ZUID: 'userAZUID', email: 'aras@envoy.com' },
-            {
-              name: 'sadfhadfhara',
-              ZUID: 'userZUID',
-              email: 'aras@ensdfgvoy.com'
-            },
-            {
-              name: 'sarsdhsdfa',
-              ZUID: 'userZUIdsfgD',
-              email: 'aras@envsdfgoy.com'
-            },
-            { name: 'don', ZUID: 'useraASZUID', email: 'e@mail.com' }
-          ]
-        },
-        {
-          ZUID: 'seo-team-zuid',
-          name: 'SEO Team',
-          members: [
-            {
-              name: 'sardfhgdsfa',
-              ZUID: 'userZUsdhsdfhID',
-              email: 'aras@envoy.com'
-            },
-            {
-              name: 'sa544554ra',
-              ZUID: 'userZasdfUID',
-              email: 'aras@envoy.com'
-            },
-            { name: 'charles', ZUID: 'userZUsdfhID', email: 'e@mail.com' }
-          ]
-        },
-        {
-          ZUID: 'content-team-zuid',
-          name: 'Content Team',
-          members: [
-            { name: 'adam', ZUID: 'userasdfZUID', email: 'aras@envoy.com' },
-            { name: 'linda', ZUID: 'usersadfZUID', email: 'aras@envoy.com' },
-            {
-              name: 'steve',
-              ZUID: 'userasdfZasdfUID',
-              email: 'aras@envoy.com'
-            },
-            { name: 'dave', ZUID: 'userZUsdfhsdID', email: 'aras@envoy.com' },
-            { name: 'brett', ZUID: 'userdsaZUID', email: 'e@mail.com' }
-          ]
-        }
-      ]
+    dispatch({ type: 'FETCHING_TEAMS' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams`)
+      .then(res => {
+        dispatch({ type: 'FETCH_TEAMS_SUCCESS', data: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCHING_TEAMS_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const fetchTeam = teamZUID => {
+  return dispatch => {
+    dispatch({ type: 'FETCHING_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`)
+      .then(res => {
+        dispatch({ type: 'FETCH_TEAM_SUCCESS', team: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCHING_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const createTeam = (name, description) => {
+  return dispatch => {
+    dispatch({ type: 'CREATING_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams`, {
+      method: 'POST',
+      json: true,
+      body: {
+        name,
+        description
+      }
     })
+      .then(res => {
+        dispatch({ type: 'FETCH_TEAM_SUCCESS', team: res.data })
+        dispatch(
+          notify({
+            type: 'success',
+            message: 'Created team successfully'
+          })
+        )
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'CREATING_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const updateTeam = (teamZUID, Name, Description) => {
+  // request to PUT with payload { Name: name }
+  return dispatch => {
+    dispatch({ type: 'UPDATING_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`, {
+      method: 'PUT',
+      json: true,
+      body: {
+        Name,
+        Description
+      }
+    })
+      .then(res => {
+        dispatch({ type: 'UPDATING_TEAM_SUCCESS', data: res.data })
+        dispatch(
+          notify({
+            type: 'success',
+            message: 'Updated team name successfully'
+          })
+        )
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'UPDATING_TEAM_FAILURE', err })
+        dispatch(
+          notify({
+            type: 'error',
+            message: `Update error, no update was made`
+          })
+        )
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const inviteMember = (teamZUID, inviteeEmail, admin) => {
+  // individual invite endpoint
+  return dispatch => {
+    dispatch({ type: 'INVITING_TEAM_MEMBER' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/invites`, {
+      method: 'POST',
+      json: true,
+      body: {
+        teamZUID,
+        inviteeEmail,
+        admin
+      }
+    })
+      .then(res => {
+        // this needs to add the member to the team
+        dispatch({
+          type: 'INVITING_TEAM_MEMBER_SUCCESS',
+          data: res.data,
+          inviteeEmail,
+          teamZUID
+        })
+        dispatch(
+          notify({
+            type: 'success',
+            message: `Invite sent`
+          })
+        )
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'INVITING_TEAM_MEMBER_FAILURE', err })
+        dispatch(
+          notify({
+            type: 'error',
+            message: `Invite error, no invite was sent`
+          })
+        )
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const removeMember = (teamZUID, userZUID) => {
+  return dispatch => {
+    dispatch({ type: 'DELETING_TEAM_USER' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/${userZUID}`,
+      {
+        method: 'DELETE'
+      }
+    )
+      .then(res => {
+        dispatch({ type: 'REMOVE_TEAM_FROM_STATE', data: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'DELETING_TEAM_USER_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const deleteTeam = (teamZUID, Name) => {
+  return dispatch => {
+    dispatch({ type: 'DELETING_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`, {
+      method: 'DELETE',
+      json: true,
+      body: {
+        Name
+      }
+    })
+      .then(res => {
+        dispatch({ type: 'REMOVE_TEAM_FROM_STATE', data: { ZUID: teamZUID } })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'DELETING_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const getTeamPendingInvites = teamZUID => {
+  return dispatch => {
+    dispatch({ type: 'FETCH_MEMBERS_PENDING_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/pending`)
+      .then(res => {
+        dispatch({
+          type: 'FETCH_MEMBERS_PENDING_TEAM_SUCCESS',
+          data: res.data,
+          teamZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCH_MEMBERS_PENDING_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const getTeamInstances = teamZUID => {
+  return dispatch => {
+    dispatch({ type: 'FETCH_INSTANCES_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/instances`)
+      .then(res => {
+        dispatch({
+          type: 'FETCH_INSTANCES_TEAM_SUCCESS',
+          data: res.data,
+          teamZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCH_INSTANCES_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const getTeamMembers = teamZUID => {
+  return dispatch => {
+    dispatch({ type: 'FETCH_MEMBERS_TEAM' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users`)
+      .then(res => {
+        dispatch({
+          type: 'FETCH_MEMBERS_TEAM_SUCCESS',
+          data: res.data,
+          teamZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCH_MEMBERS_TEAM_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const getUserTeamInvites = () => {
+  return dispatch => {
+    dispatch({ type: 'FETCHING_INVITED_TEAMS' })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/invites`)
+      .then(res => {
+        dispatch({ type: 'FETCH_TEAMS_SUCCESS', data: res.data })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'FETCHING_INVITED_TEAMS_FAILURE', err })
+        console.table(err)
+        return err
+      })
+  }
+}
+
+export const modifyUser = (teamZUID, userZUID, admin) => {
+  return dispatch => {
+    dispatch({ type: 'MODIFYING_USER' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/${userZUID}`,
+      {
+        method: 'PUT',
+        json: true,
+        body: { admin }
+      }
+    ).then(data => {
+      dispatch({ type: 'MODIFYING_USER_SUCCESS', data, teamZUID, userZUID })
+      return data.data
+    })
+  }
+}
+
+export const handleTeamInvite = (inviteZUID, teamZUID, action) => {
+  return dispatch => {
+    dispatch({ type: 'RESPONDING_TO_INVITE' })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/teams/invites/${inviteZUID}?action=${action}`,
+      {
+        method: 'PUT'
+      }
+    )
+      .then(res => {
+        dispatch({ type: 'RESPONDING_TO_INVITE_SUCCESS' })
+        if (action === 'decline' || action === 'cancel') {
+          // remove the teamZUID from state if declining invite
+          if (action === 'decline') {
+            dispatch({
+              type: 'REMOVE_TEAM_FROM_STATE',
+              data: { ZUID: teamZUID }
+            })
+          }
+          dispatch(
+            notify({
+              type: 'success',
+              message: 'Invite has been removed'
+            })
+          )
+        } else {
+          dispatch({
+            type: 'REMOVE_TEAM_FROM_STATE',
+            data: { ZUID: teamZUID }
+          })
+          dispatch(
+            notify({
+              type: 'success',
+              message: 'Invite accepted'
+            })
+          )
+        }
+        return res.data
+      })
+      .catch(err => {
+        dispatch({ type: 'RESPONDING_TO_INVITE_FAILURE', err })
+        dispatch(
+          notify({
+            type: 'error',
+            message: 'Invite error'
+          })
+        )
+        console.table(err)
+        return err
+      })
   }
 }

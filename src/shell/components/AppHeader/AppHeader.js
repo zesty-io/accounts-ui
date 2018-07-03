@@ -1,11 +1,14 @@
 import { Component } from 'react'
+import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './AppHeader.less'
 
 import { logout } from '../../store/auth'
+import { fetchSitesWithInvites } from '../../../apps/properties/src/store/sites'
+import { getUserTeamInvites } from '../../../apps/teams/src/store'
 
-export default class AppHeader extends Component {
+class AppHeader extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -15,6 +18,8 @@ export default class AppHeader extends Component {
 
   componentDidMount() {
     document.addEventListener('click', this.closeUserNav)
+    this.props.dispatch(fetchSitesWithInvites())
+    this.props.dispatch(getUserTeamInvites())
   }
   componentWillUnmountMount() {
     document.removeEventListener('click', this.closeUserNav)
@@ -27,12 +32,23 @@ export default class AppHeader extends Component {
         <nav className={styles.GlobalNav}>
           <NavLink to="/instances">
             <i className="fa fa-globe" aria-hidden="true" />
-            &nbsp;Instances
+            &nbsp;Instances{this.props.userHasSiteInvites ? (
+              <span>
+                &nbsp;<i className={`fa fa-circle ${styles.red}`} />
+              </span>
+            ) : null}
           </NavLink>
-          {/* <NavLink to="/teams">
-            <i className="fa fa-users" aria-hidden="true" />
-            &nbsp;Teams
-          </NavLink> */}
+          {this.props.user.prefs.teamOptions === 1 && (
+            <NavLink to="/teams">
+              <i className="fa fa-users" aria-hidden="true" />
+              &nbsp;Teams
+              {this.props.userHasTeamInvites ? (
+                <span>
+                  &nbsp;<i className={`fa fa-circle ${styles.red}`} />
+                </span>
+              ) : null}
+            </NavLink>
+          )}
           {this.props.user.prefs.devOptions === 1 && (
             <NavLink to="/blueprints">
               <i className="fa fa-map" aria-hidden="true" />
@@ -43,8 +59,7 @@ export default class AppHeader extends Component {
         <nav className={styles.LegacyLink}>
           <Url
             href={CONFIG.LEGACY_ACCOUNTS}
-            title="Return to the legacy accounts application"
-          >
+            title="Return to the legacy accounts application">
             <i className="fa fa-info-circle" aria-hidden="true" />&nbsp;Legacy
             Accounts
           </Url>
@@ -56,8 +71,7 @@ export default class AppHeader extends Component {
             styles.UserNav,
             styles[this.state.userNavOpen]
           )}
-          onClick={this.toggleUserNav}
-        >
+          onClick={this.toggleUserNav}>
           {this.props.user.firstName} {this.props.user.lastName}
           <img
             className={styles.avatar}
@@ -96,8 +110,7 @@ export default class AppHeader extends Component {
             <li
               className={styles.logout}
               title="Logout"
-              onClick={() => this.props.dispatch(logout())}
-            >
+              onClick={() => this.props.dispatch(logout())}>
               <i className="fa fa-sign-out" aria-hidden="true" />
               &nbsp;Logout
             </li>
@@ -124,3 +137,24 @@ export default class AppHeader extends Component {
     }
   }
 }
+const mapStateToProps = state => {
+  const teamArray = Object.keys(state.teams).reduce((acc, team) => {
+    acc.push(state.teams[team])
+    return acc
+  }, [])
+  const siteArray = Object.keys(state.sites).reduce((acc, site) => {
+    acc.push(state.sites[site])
+    return acc
+  }, [])
+  const user = state.user
+
+  const userHasSiteInvites = Boolean(
+    siteArray.filter(site => site.inviteZUID).length
+  )
+  const userHasTeamInvites = Boolean(
+    teamArray.filter(team => team.teamInviteZUID).length
+  )
+  return { user, userHasSiteInvites, userHasTeamInvites }
+}
+
+export default connect(mapStateToProps)(AppHeader)

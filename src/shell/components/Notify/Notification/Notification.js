@@ -15,41 +15,21 @@ export default class Notification extends PureComponent {
     }, timeout)
   }
   render() {
-    // HTML takes priority over plain mesage rendering
-    if (this.props.HTML) {
-      // TODO: real sanitizing or remove html rendering
-      if (this.props.HTML.toLowerCase().includes('<script>')) {
-        return (
-          <p className={(styles.Notification, styles.Animate)}>
-            nope! didnt say the magic word
-          </p>
-        )
-      }
-      return (
-        <article
-          onClick={() => this.props.dispatch(remove(this.props.epoch))}
-          key={this.props.epoch}
-          className={cx(
-            styles[this.props.type],
-            styles.Notification,
-            styles.Animate
-          )}
-        >
-          <p dangerouslySetInnerHTML={{ __html: this.props.HTML }} />
-        </article>
-      )
-    }
     return (
       <article
-        onClick={() => this.props.dispatch(remove(this.props.epoch))}
         key={this.props.epoch}
         className={cx(
           styles[this.props.type],
           styles.Notification,
           styles.Animate
-        )}
-      >
-        <p>{this.props.message}</p>
+        )}>
+        <span className={styles.Content}>
+          <p className={styles.Message}>{this.props.message}</p>
+          <i
+            className={`fa fa-times circle ${styles.Close}`}
+            onClick={() => this.props.dispatch(remove(this.props.epoch))}
+          />
+        </span>
       </article>
     )
   }
