@@ -1,22 +1,20 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 
 import styles from './ResetPasswordStart.less'
 import { request } from '../../../util/request'
 
 export default class ResetPasswordStart extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      message: ''
-    }
+  state = {
+    error: false,
+    message: '',
+    submitted: false
   }
   render() {
     return (
       <section className={styles.ResetPasswordStart}>
         <form
           name="ResetPasswordStart"
-          onSubmit={this.handleSignup}
+          onSubmit={this.handleReset}
           className={styles.ResetPasswordStartForm}>
           <img src="/zesty-io-logo.svg" />
 
@@ -32,32 +30,59 @@ export default class ResetPasswordStart extends Component {
               placeholder="Enter your account email"
             />
           </label>
-          <Button type="submit">
+          <Button type="submit" disabled={this.state.submitted}>
             <i className="fa fa-envelope-o" aria-hidden="true" />
-            Send Password Reset Email
+            {this.state.submitted
+              ? 'Sending Reset Request'
+              : 'Send Password Reset Email'}
           </Button>
           <small>
             <AppLink to="/login">Return to Login?</AppLink>
           </small>
 
           {this.state.message ? (
-            <p className={styles.error}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                this.state.message
-              }
-            </p>
+            this.state.error ? (
+              <p className={styles.error}>
+                <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
+                  this.state.message
+                }
+              </p>
+            ) : (
+              <p>
+                <i className="fa fa-info-circle" aria-hidden="true" />&nbsp;{
+                  this.state.message
+                }
+              </p>
+            )
           ) : null}
         </form>
       </section>
     )
   }
   //Request URL: https://svc.zesty.io/auth/password-reset-request?email=ggcadc%40gmail.com
-  handleSignup = evt => {
+  handleReset = evt => {
     evt.preventDefault()
+    this.setState({ submitted: true })
     return console.log(evt.target.email.value)
     return request(
-      `https://svc.zesty.io/auth/password-reset-request?email=${evt.target}`
+      `${CONFIG.API_ACCOUNTS}/users/password-reset-request?email=${
+        evt.target.email.value
+      }`
     )
+      .then(data => {
+        //redirect to /reset-password-confirm ? there will not be a token
+        this.setState({
+          message:
+            'Check your email and follow the provided link to complete the reset process'
+        })
+      })
+      .catch(err => {
+        // set message to an error
+        this.setState({
+          error: true,
+          message: 'There was a problem requesting a reset for your password'
+        })
+      })
+      .finally(() => this.setState({ submitted: true }))
   }
 }
-// https://accounts.zesty.io/reset-password?email=ggcadc@gmail.com&code=264f9f7dfec70e8c48e334383545df4d89fb433c

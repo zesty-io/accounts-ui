@@ -53,12 +53,11 @@ class Login extends Component {
               </label>
               <label>
                 <p>
-                  Password
-                  {/* &nbsp;<small>
+                  Password &nbsp;<small>
                     (<AppLink to="/reset-password" tabIndex="4">
                       Forgot?
                     </AppLink>)
-                  </small> */}
+                  </small>
                 </p>
 
                 <Input

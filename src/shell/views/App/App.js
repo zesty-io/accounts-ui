@@ -137,7 +137,10 @@ class Shell extends Component {
           <Route path="/login/2fa" component={TwoFactor} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
-          <Route path="/reset-password-confirm" component={ResetPasswordEnd} />
+          <Route
+            path="/reset-password-confirm/:token?"
+            component={ResetPasswordEnd}
+          />
           <Route path="/reset-password" component={ResetPasswordStart} />
           <Route path="/verify-email" component={VerifyEmail} />
           <Route path="/resend-email" component={ResendEmail} />
