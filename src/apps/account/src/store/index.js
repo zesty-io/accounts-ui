@@ -33,9 +33,9 @@ export function addEmail(name, address) {
 export function resendVerificationEmail(email) {
   return dispatch => {
     return request(
-      `${CONFIG.API_ACCOUNTS}/users/emails/verifications?address=${encodeURI(
-        email
-      )}`,
+      `${
+        CONFIG.API_ACCOUNTS
+      }/users/emails/verifications?address=${encodeURIComponent(email)}`,
       {
         method: 'POST'
       }
@@ -46,25 +46,29 @@ export function resendVerificationEmail(email) {
 export function deleteUserEmail(email) {
   return dispatch => {
     return request(
-      `${CONFIG.API_ACCOUNTS}/users/emails?address=${encodeURI(email)}`,
+      `${CONFIG.API_ACCOUNTS}/users/emails?address=${encodeURIComponent(
+        email
+      )}`,
       {
         method: 'DELETE'
       }
-    ).then(data => {
-      dispatch(
-        notify({
-          type: 'success',
-          message: 'email successfully removed'
-        })
-      )
-    }).catch(err => {
-      dispatch(
-        notify({
-          type: 'error',
-          message: 'encountered a problem removing email'
-        })
-      )
-    })
+    )
+      .then(data => {
+        dispatch(
+          notify({
+            type: 'success',
+            message: 'email successfully removed'
+          })
+        )
+      })
+      .catch(err => {
+        dispatch(
+          notify({
+            type: 'error',
+            message: 'encountered a problem removing email'
+          })
+        )
+      })
   }
 }
 
@@ -74,13 +78,16 @@ export function updatePassword(oldPassword, newPassword) {
 
     // TODO this endpoint does not return json which breaks our
     // request handler
-    return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}?action=updatePassword`, {
-      method: 'POST',
-      json: true,
-      body: {
-        password: newPassword
+    return request(
+      `${CONFIG.API_ACCOUNTS}/users/${ZUID}?action=updatePassword`,
+      {
+        method: 'POST',
+        json: true,
+        body: {
+          password: newPassword
+        }
       }
-    })
+    )
 
     // TODO should we log user out after password reset?
 
