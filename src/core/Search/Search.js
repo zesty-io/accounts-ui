@@ -3,10 +3,6 @@ import styles from './Search.less'
 import cx from 'classnames'
 
 export default class Search extends Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.searchTerm = React.createRef()
-  // }
   render() {
     return (
       <form

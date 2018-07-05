@@ -35,10 +35,12 @@ export function ecosystems(state = {}, action) {
         }
         return acc
       }, [])
-      ecosystems.unshift({
-        id: '',
-        name: 'All Instances'
-      })
+      if (ecosystems.length) {
+        ecosystems.unshift({
+          id: '',
+          name: 'All Instances'
+        })
+      }
       return ecosystems
       break
     default:
