@@ -27,6 +27,10 @@ class Login extends Component {
         }
       })
     }
+    // if a user has a valid session send them through to instances
+    if (this.props.auth.valid) {
+      this.props.history.push('/instances')
+    }
   }
   render() {
     return (
