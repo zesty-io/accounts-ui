@@ -1,5 +1,3 @@
-import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants'
-
 export function request(url, opts = {}) {
   if (!url) {
     throw new Error('A URL is required to make a request')
