@@ -3,10 +3,10 @@ import styles from './Search.less'
 import cx from 'classnames'
 
 export default class Search extends Component {
-  constructor(props) {
-    super(props)
-    this.searchTerm = React.createRef()
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this.searchTerm = React.createRef()
+  // }
   render() {
     return (
       <form
@@ -22,11 +22,11 @@ export default class Search extends Component {
           type="text"
           name="term"
           autoComplete="off"
-          ref={this.searchTerm}
+          value={this.props.searchTerm}
           className={styles.searchField}
           placeholder={this.props.placeholder}
           onFocus={this.props.onFocus}
-          onKeyUp={this.handleKeyUp}
+          onChange={this.handleKeyUp}
         />
       </form>
     )

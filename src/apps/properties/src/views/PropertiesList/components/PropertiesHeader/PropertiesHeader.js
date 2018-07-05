@@ -14,15 +14,15 @@ class PropertiesHeader extends Component {
     super(props)
     this.state = {
       eco: false,
-      sort: 'name'
+      sort: 'name',
+      searchTerm: ''
     }
-    this.searchRef = React.createRef()
   }
   componentDidMount() {
     // fill in the search input with the query if one exists
     this.props.settings &&
       this.props.settings.filter &&
-      (this.searchRef.current.searchTerm.current.value = this.props.settings.filter)
+      this.setState({ searchTerm: this.props.settings.filter })
     // set the ecosystem state to the store's value
     this.props.settings &&
       this.props.settings.eco &&
@@ -52,8 +52,8 @@ class PropertiesHeader extends Component {
           ) : null}
 
           <Search
-            ref={this.searchRef}
             className={styles.Search}
+            searchTerm={this.state.searchTerm}
             placeholder="Search by instance name or domain"
             onSubmit={this.onSearch}
             onKeyUp={this.onSearch}
@@ -111,12 +111,17 @@ class PropertiesHeader extends Component {
     )
   }
 
-  onSearch = debounce(term => {
-    this.props.dispatch({
-      type: 'SETTING_FILTER',
-      filter: term
-    })
-  }, 300)
+  onSearch = term => {
+    this.setState(
+      { searchTerm: term },
+      debounce(() => {
+        this.props.dispatch({
+          type: 'SETTING_FILTER',
+          filter: this.state.searchTerm
+        })
+      }, 300)
+    )
+  }
 
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {
