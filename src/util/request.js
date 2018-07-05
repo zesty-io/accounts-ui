@@ -1,3 +1,5 @@
+import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants'
+
 export function request(url, opts = {}) {
   if (!url) {
     throw new Error('A URL is required to make a request')
@@ -53,8 +55,12 @@ export function request(url, opts = {}) {
     })
     .catch(err => {
       // TODO global app notification on total request failure
-      // Raven.captureException(err)
-      // bugsnagClient.notify(err)
+      Raven.captureException(err)
+      bugsnagClient.notify(err, {
+        beforeSend: function(report) {
+          if (report.message === 'Invalid user') report.ignore
+        }
+      })
       console.error('error in request', err)
       throw err
     })
