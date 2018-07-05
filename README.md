@@ -27,7 +27,7 @@ It's very important when deploying to production a "production" webpack build is
 
 Build environments-
 
-    npm run build-dev
+    npm run build-development
     npm run build-stage
     npm run build-prod
 
