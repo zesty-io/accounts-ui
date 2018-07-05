@@ -89,9 +89,7 @@ export const getRole = (roleZUID, siteZUID) => {
         return data.data
       })
       .catch(err => {
-        dispatch({ type: 'FETCHING_ROLE_FAILURE' })
-        console.table(err)
-        throw err
+        return dispatch({ type: 'FETCHING_ROLE_FAILURE' })
       })
   }
 }
@@ -118,9 +116,7 @@ export const createRole = (siteZUID, body) => {
         return data.data
       })
       .catch(err => {
-        console.table(err)
-        dispatch({ type: 'ADDING_ROLE_FAILURE' })
-        throw err
+        return dispatch({ type: 'ADDING_ROLE_FAILURE' })
       })
   }
 }
@@ -139,9 +135,7 @@ export const removeRole = (roleZUID, siteZUID) => {
         return data
       })
       .catch(err => {
-        console.table(err)
-        dispatch({ type: 'DELETING_ROLE_FAILURE' })
-        throw err
+        return dispatch({ type: 'DELETING_ROLE_FAILURE' })
       })
   }
 }
@@ -159,9 +153,7 @@ export const updateGranularRole = (resourceZUID, role, roleZUID) => {
         return data
       })
       .catch(err => {
-        console.table(err)
-        dispatch({ type: 'UPDATING_ROLE_FAILURE', err })
-        throw err
+        return dispatch({ type: 'UPDATING_ROLE_FAILURE', err })
       })
   }
 }
@@ -179,9 +171,7 @@ export const createGranularRole = (resourceZUID, granularRole, roleZUID) => {
         return data
       })
       .catch(err => {
-        console.table(err)
-        dispatch({ type: 'CREATING_ROLE_FAILURE', err })
-        throw err
+        return dispatch({ type: 'CREATING_ROLE_FAILURE', err })
       })
   }
 }

@@ -119,8 +119,7 @@ export function fetchUser(ZUID) {
         }
       })
       .catch(err => {
-        console.table(err)
-        dispatch({
+        return dispatch({
           type: 'FETCH_USER_ERROR',
           err
         })
@@ -195,9 +194,7 @@ export function saveProfile(payload) {
         return res.data
       })
       .catch(err => {
-        console.table(err)
-        dispatch({ type: 'SAVING_PROFILE_ERROR' })
-        throw err
+        return dispatch({ type: 'SAVING_PROFILE_ERROR' })
       })
   }
 }

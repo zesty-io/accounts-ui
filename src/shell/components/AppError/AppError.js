@@ -19,7 +19,7 @@ export default class AppError extends Component {
     // log the error to error reporting services
     Raven.captureException(error)
     bugsnagClient.notify(error)
-    console.table(error)
+    console.error(error)
   }
 
   render() {
