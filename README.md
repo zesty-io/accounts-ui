@@ -29,7 +29,7 @@ Build environments-
 
     npm run build-development
     npm run build-stage
-    npm run build-prod
+    npm run build-production
 
 
 ### Deploying
