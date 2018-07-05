@@ -3,6 +3,15 @@ import styles from './Search.less'
 import cx from 'classnames'
 
 export default class Search extends Component {
+  state = {
+    searchTerm: ''
+  }
+  componentDidMount() {
+    // lets the user override the initial value in the search box
+    if (this.props.override) {
+      this.setState({ searchTerm: this.props.override })
+    }
+  }
   render() {
     return (
       <form
@@ -18,7 +27,7 @@ export default class Search extends Component {
           type="text"
           name="term"
           autoComplete="off"
-          value={this.props.searchTerm}
+          value={this.state.searchTerm}
           className={styles.searchField}
           placeholder={this.props.placeholder}
           onFocus={this.props.onFocus}
@@ -29,14 +38,13 @@ export default class Search extends Component {
   }
   handleSubmit = evt => {
     evt.preventDefault()
-    // return the target value of the input
-    let value = evt.target.term.value
-    this.props.onSubmit(value)
+    this.props.onSubmit(this.state.searchTerm)
   }
   handleKeyUp = evt => {
     evt.preventDefault()
     // return the target value of the input
-    let value = evt.target.value
-    this.props.onKeyUp(value)
+    this.setState({ searchTerm: evt.target.value }, () =>
+      this.props.onKeyUp(this.state.searchTerm)
+    )
   }
 }

@@ -14,15 +14,10 @@ class PropertiesHeader extends Component {
     super(props)
     this.state = {
       eco: false,
-      sort: 'name',
-      searchTerm: ''
+      sort: 'name'
     }
   }
   componentDidMount() {
-    // fill in the search input with the query if one exists
-    this.props.settings &&
-      this.props.settings.filter &&
-      this.setState({ searchTerm: this.props.settings.filter })
     // set the ecosystem state to the store's value
     this.props.settings &&
       this.props.settings.eco &&
@@ -53,7 +48,7 @@ class PropertiesHeader extends Component {
 
           <Search
             className={styles.Search}
-            searchTerm={this.state.searchTerm}
+            override={this.props.settings && this.props.settings.filter}
             placeholder="Search by instance name or domain"
             onSubmit={this.onSearch}
             onKeyUp={this.onSearch}
