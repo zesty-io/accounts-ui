@@ -35,7 +35,10 @@ export function ecosystems(state = {}, action) {
         }
         return acc
       }, [])
-
+      ecosystems.unshift({
+        id: '',
+        name: 'All Instances'
+      })
       return ecosystems
       break
     default:
