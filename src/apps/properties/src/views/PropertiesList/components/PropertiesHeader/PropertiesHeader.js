@@ -123,7 +123,7 @@ class PropertiesHeader extends Component {
       this.setState({ eco: false })
       return this.props.dispatch({
         type: 'SETTING_ECO',
-        eco: false
+        eco: ''
       })
     }
     this.setState({ eco: evt.target.dataset.value })
