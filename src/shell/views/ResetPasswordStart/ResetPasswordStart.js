@@ -64,7 +64,7 @@ export default class ResetPasswordStart extends Component {
     evt.preventDefault()
     const address = evt.target.email.value
     this.setState({ submitted: true })
-    return request(`${CONFIG.API_ACCOUNTS}/users/password/resets`, {
+    return request(`${CONFIG.API_ACCOUNTS}/users/passwords/resets`, {
       method: 'POST',
       json: true,
       body: {

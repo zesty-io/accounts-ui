@@ -64,6 +64,8 @@ class ResetPasswordEnd extends Component {
       })
     }
     return request(`${CONFIG.API_AUTH}/password-reset`, {
+      method: 'POST',
+      json: true,
       body: {
         code: this.state.token,
         email: this.state.address,
@@ -72,14 +74,23 @@ class ResetPasswordEnd extends Component {
     })
       .then(data => {
         // send the user back to login once their password has been updated
-        this.props.history.push('/login')
+        if (data.code === 200) {
+          return this.props.history.push('/login')
+        } else {
+          this.setState({
+            message: `There was a problem with your password reset confirmation: ${
+              data.message
+            }`,
+            submitted: false
+          })
+        }
       })
       .catch(err => {
         this.setState({
-          message: `There was a problem with your password reset confirmation: ${err}`
+          message: `There was a problem with your password reset confirmation: ${err}`,
+          submitted: false
         })
       })
-      .finally(() => this.setState({ submitted: false }))
   }
 }
 
