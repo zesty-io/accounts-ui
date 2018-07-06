@@ -45,19 +45,21 @@ export function request(url, opts = {}) {
       if (opts.callback) {
         opts.callback(json)
       }
-      if (json.code > 400 || json.error) {
-        // TODO trigger global app notification
-        console.table(json.code || json.error)
-        throw json.code || json.error
-      }
+      // if (json.code > 400 || json.error) {
+      //   // TODO trigger global app notification
+      //   console.error(json)
+      // }
       return json
     })
     .catch(err => {
       // TODO global app notification on total request failure
-      console.table(err)
       Raven.captureException(err)
-      bugsnagClient.notify(err)
+      bugsnagClient.notify(err, {
+        beforeSend: function(report) {
+          if (report.message === 'Invalid user') report.ignore
+        }
+      })
+      console.error('error in request', err)
       throw err
-      return err
     })
 }

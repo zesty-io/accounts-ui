@@ -66,7 +66,6 @@ export function fetchSites() {
         return sites
       })
       .catch(err => {
-        console.table(err)
         dispatch(
           notify({
             message: 'There was a problem fetching your instances',
@@ -105,7 +104,6 @@ export function fetchSitesWithInvites() {
         return sites
       })
       .catch(err => {
-        console.table(err)
         dispatch(
           notify({
             message: 'There was a problem fetching your instances',
@@ -135,7 +133,6 @@ export function fetchSite(siteZUID) {
         return res.data
       })
       .catch(err => {
-        console.table(err)
         dispatch(
           notify({
             message: 'There was a problem fetching sites',
@@ -169,7 +166,6 @@ export function updateSite(siteZUID, payload) {
       })
       .catch(err => {
         dispatch({ type: 'UPDATE_SITE_FAILURE' })
-        console.table(err)
         throw err
       })
   }
@@ -198,7 +194,6 @@ export function updateSiteBlueprint(siteZUID, payload) {
       })
       .catch(err => {
         dispatch({ type: 'UPDATE_SITE_FAILURE' })
-        console.table(err)
         throw err
       })
   }
@@ -244,14 +239,12 @@ export function acceptInvite(inviteZUID) {
       })
       .catch(err => {
         dispatch({ type: 'ACCEPT_INVITE_FAILURE' })
-        dispatch(
+        return dispatch(
           notify({
             message: `There was an error accepting the invite`,
             type: 'error'
           })
         )
-        console.table(err)
-        throw err
       })
   }
 }
