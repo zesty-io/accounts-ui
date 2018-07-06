@@ -213,10 +213,7 @@ class PropertyOverview extends Component {
       })
     })
     // validity check blueprint ID before fetching
-    if (
-      typeof props.site.blueprintID === 'number' &&
-      props.site.blueprintID !== 0
-    ) {
+    if (parseInt(props.site.blueprintID)) {
       props.dispatch(fetchBlueprint(props.site.blueprintID)).then(() => {
         this.setState({
           loadingBlueprint: false
