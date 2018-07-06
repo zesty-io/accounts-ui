@@ -212,11 +212,16 @@ class PropertyOverview extends Component {
         loadingTeams: false
       })
     })
-    props.dispatch(fetchBlueprint(props.site.blueprintID)).then(() => {
-      this.setState({
-        loadingBlueprint: false
+    // validity check blueprint ID before fetching
+    if (parseInt(props.site.blueprintID)) {
+      props.dispatch(fetchBlueprint(props.site.blueprintID)).then(() => {
+        this.setState({
+          loadingBlueprint: false
+        })
       })
-    })
+    } else {
+      this.setState({ loadingBlueprint: false })
+    }
   }
 }
 
