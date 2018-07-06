@@ -10,34 +10,48 @@ import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
 
 class PropertiesHeader extends Component {
-  state = {
-    eco: false,
-    sort: 'name'
+  constructor(props) {
+    super(props)
+    this.state = {
+      eco: false,
+      sort: 'name'
+    }
+  }
+  componentDidMount() {
+    // set the ecosystem state to the store's value
+    this.props.settings &&
+      this.props.settings.eco &&
+      this.setState({ eco: this.props.settings.eco })
   }
   render() {
     return (
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
           {this.props.ecosystems.length ? (
-            <Select className={styles.Ecosystem} onSelect={this.filterByEco}>
-              <Option key="default" value="" text="All Instances" />
-              {this.props.ecosystems.map(eco => {
-                return <Option key={eco.id} value={eco.id} text={eco.name} />
-              })}
+            <Select
+              className={styles.Ecosystem}
+              onSelect={this.filterByEco}
+              selection={
+                this.props.ecosystems
+                  .filter(eco => eco.id == this.state.eco)
+                  .map(eco => {
+                    return { value: eco.id, text: eco.name }
+                  })[0]
+              }>
+              {this.props.ecosystems
+                .filter(eco => eco.id !== this.state.eco)
+                .map(eco => {
+                  return <Option key={eco.id} value={eco.id} text={eco.name} />
+                })}
             </Select>
           ) : null}
 
           <Search
             className={styles.Search}
+            override={this.props.settings && this.props.settings.filter}
             placeholder="Search by instance name or domain"
-            onKeyUp={evt => {
-              let term = evt.target.value
-              return this.onSearch(term)
-            }}
-            onClick={evt => {
-              let term = evt.target.value
-              return this.onSearch(term)
-            }}
+            onSubmit={this.onSearch}
+            onKeyUp={this.onSearch}
           />
 
           <ButtonGroup className={styles.Sort}>
@@ -47,8 +61,7 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'name' })
                 return this.sort('name')
-              }}
-            >
+              }}>
               <i className={`fa fa-sort-alpha-asc`} />
             </Button>
             <Button
@@ -57,8 +70,7 @@ class PropertiesHeader extends Component {
               onClick={() => {
                 this.setState({ sort: 'date' })
                 return this.sort('createdAt')
-              }}
-            >
+              }}>
               <i className={`fa fa-calendar-o`} />
             </Button>
           </ButtonGroup>
@@ -73,8 +85,7 @@ class PropertiesHeader extends Component {
                   layout: 'grid'
                 })
                 this.props.dispatch(saveProfile())
-              }}
-            >
+              }}>
               <i className={`fa fa-th`} />
             </Button>
             <Button
@@ -86,8 +97,7 @@ class PropertiesHeader extends Component {
                   layout: 'list'
                 })
                 this.props.dispatch(saveProfile())
-              }}
-            >
+              }}>
               <i className={`fa fa-th-list`} />
             </Button>
           </ButtonGroup>
@@ -96,19 +106,24 @@ class PropertiesHeader extends Component {
     )
   }
 
-  onSearch = debounce(term => {
-    this.props.dispatch({
-      type: 'SETTING_FILTER',
-      filter: term
-    })
-  }, 300)
+  onSearch = term => {
+    this.setState(
+      { searchTerm: term },
+      debounce(() => {
+        this.props.dispatch({
+          type: 'SETTING_FILTER',
+          filter: this.state.searchTerm
+        })
+      }, 300)
+    )
+  }
 
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {
       this.setState({ eco: false })
       return this.props.dispatch({
         type: 'SETTING_ECO',
-        eco: false
+        eco: ''
       })
     }
     this.setState({ eco: evt.target.dataset.value })

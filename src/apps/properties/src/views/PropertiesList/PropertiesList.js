@@ -37,6 +37,7 @@ export default connect((state, props) => {
 
   const layout = state.user.prefs.instance_layout || 'grid'
 
+  // set the search string end ecosystem from the settings object
   const searchString =
     state.settings.filter && state.settings.filter.toLowerCase()
   const eco = state.settings.eco
@@ -45,7 +46,7 @@ export default connect((state, props) => {
 
   let filtered = {}
   let ecosystem = {}
-
+  // filter by ecosystem if eco is present
   if (eco) {
     for (const zuid in sites) {
       let site = sites[zuid]
@@ -53,10 +54,12 @@ export default connect((state, props) => {
         ecosystem[zuid] = site
       }
     }
+    // we are done filtering if there is no searchString
     if (!searchString) {
       filtered = ecosystem
     }
   }
+  // filter sites if searchString is present
   if (searchString) {
     let instances = eco ? ecosystem : sites
     for (const zuid in instances) {
@@ -76,6 +79,7 @@ export default connect((state, props) => {
       }
     }
   }
+  // return all sites if no filters are set
   if (!eco && !searchString) {
     filtered = sites
   }
