@@ -27,6 +27,10 @@ class Login extends Component {
         }
       })
     }
+    // if a user has a valid session send them through to instances
+    if (this.props.auth.valid) {
+      this.props.history.push('/instances')
+    }
   }
   render() {
     return (
@@ -109,7 +113,7 @@ class Login extends Component {
               <h3>Welcome to Zesty.io</h3>
               <p>
                 Start creating content ready to be delivered securely, quickly
-                and reliably to everywhere from anywhere.
+                and reliably. Anywhere, anytime.
               </p>
               <AppLink to="/signup" tabIndex="5">
                 Create An Account

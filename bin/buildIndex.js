@@ -138,6 +138,7 @@ module.exports = buildIndex = build => {
         Raven.config('https://12c3a25b9d4c4442aa93f22dcf39c26a@sentry.io/1229171', {
           release: '${build.data.gitCommit}',
           environment: '${build.data.environment}',
+          ignoreErrors: [/^Invalid user$/g]
         }).install()
       </script>
       <script src="//d2wy8f7a9ursnm.cloudfront.net/v4/bugsnag.min.js"></script>
