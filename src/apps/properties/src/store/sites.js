@@ -34,7 +34,7 @@ export function sites(state = {}, action) {
         ...state,
         [action.siteZUID]: {
           ...state[action.siteZUID],
-          blueprint: action.blueprintID
+          blueprintID: action.blueprintID
         }
       }
     default:
