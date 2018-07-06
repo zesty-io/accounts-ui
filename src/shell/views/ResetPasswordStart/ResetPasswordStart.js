@@ -63,14 +63,12 @@ export default class ResetPasswordStart extends Component {
   handleReset = evt => {
     evt.preventDefault()
     this.setState({ submitted: true })
-    return console.log(evt.target.email.value)
     return request(
-      `${CONFIG.API_ACCOUNTS}/users/password-reset-request?email=${
+      `${CONFIG.API_ACCOUNTS}/users/password/reset?email=${
         evt.target.email.value
       }`
     )
       .then(data => {
-        //redirect to /reset-password-confirm ? there will not be a token
         this.setState({
           message:
             'Check your email and follow the provided link to complete the reset process'

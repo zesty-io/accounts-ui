@@ -9,12 +9,14 @@ class ResetPasswordEnd extends Component {
   state = {
     message: '',
     token: '',
+    address: '',
     submitted: false
   }
   componentDidMount() {
     // take the token from the url and store it in state
     const qParams = qs.parse(window.location.search.substr(1))
     qParams.token && this.setState({ token: qParams.token })
+    qParams.address && this.setState({ address: qParams.address })
   }
   render() {
     return (
@@ -52,23 +54,22 @@ class ResetPasswordEnd extends Component {
     )
   }
   handleCompleteReset = evt => {
+    const password = evt.target.pass.value
     evt.preventDefault()
     this.setState({ submitted: true })
-    console.log(evt.target.pass.value, evt.target.passConfirm.vale)
     if (evt.target.pass.value !== evt.target.passConfirm.value) {
       return this.setState({
         message: 'Your passwords do not match',
         submitted: false
       })
     }
-    return request(`${CONFIG.API_ACCOUNTS}/users/password-reset-request`, {
-      method: 'POST',
-      json: true,
+    return request(`${CONFIG.API_AUTH}/password-reset`, {
       body: {
-        token: this.state.token,
-        password: evt.target.pass.value
+        code: this.state.token,
+        email: this.state.address,
+        password
       }
-    }) // use the form values and token from state
+    })
       .then(data => {
         // send the user back to login once their password has been updated
         this.props.history.push('/login')
