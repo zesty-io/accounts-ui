@@ -76,7 +76,7 @@ class ResetPasswordEnd extends Component {
       })
       .catch(err => {
         this.setState({
-          message: 'There was a problem with your password reset confirmation'
+          message: `There was a problem with your password reset confirmation: ${err}`
         })
       })
       .finally(() => this.setState({ submitted: false }))
