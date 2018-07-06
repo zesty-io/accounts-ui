@@ -41,8 +41,12 @@ const middleware =
     ? applyMiddleware(thunkMiddleware)
     : applyMiddleware(thunkMiddleware, loggerMiddleware)
 
-export const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  middleware
-)
+export const store =
+  CONFIG.ENV === 'production'
+    ? createStore(rootReducer, middleware)
+    : createStore(
+        rootReducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__(),
+        middleware
+      )
