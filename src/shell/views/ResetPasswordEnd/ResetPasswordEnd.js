@@ -13,7 +13,7 @@ class ResetPasswordEnd extends Component {
     submitted: false
   }
   componentDidMount() {
-    // take the token from the url and store it in state
+    // take the token and email address from the url and store it in state
     const qParams = qs.parse(window.location.search.substr(1))
     qParams.token && this.setState({ token: qParams.token })
     qParams.address && this.setState({ address: qParams.address })

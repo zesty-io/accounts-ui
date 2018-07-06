@@ -59,28 +59,30 @@ export default class ResetPasswordStart extends Component {
       </section>
     )
   }
-  //Request URL: https://svc.zesty.io/auth/password-reset-request?email=ggcadc%40gmail.com
+
   handleReset = evt => {
     evt.preventDefault()
+    const address = evt.target.email.value
     this.setState({ submitted: true })
-    return request(
-      `${CONFIG.API_ACCOUNTS}/users/password/reset?email=${
-        evt.target.email.value
-      }`
-    )
-      .then(data => {
+    return request(`${CONFIG.API_ACCOUNTS}/users/password/resets`, {
+      method: 'POST',
+      json: true,
+      body: {
+        address
+      }
+    })
+      .then(() => {
         this.setState({
           message:
             'Check your email and follow the provided link to complete the reset process'
         })
       })
-      .catch(err => {
-        // set message to an error
+      .catch(() => {
         this.setState({
           error: true,
-          message: 'There was a problem requesting a reset for your password'
+          message: 'There was a problem requesting a password reset'
         })
       })
-      .finally(() => this.setState({ submitted: true }))
+      .finally(() => this.setState({ submitted: false }))
   }
 }

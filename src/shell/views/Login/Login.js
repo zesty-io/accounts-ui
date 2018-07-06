@@ -118,13 +118,13 @@ class Login extends Component {
               <AppLink to="/signup" tabIndex="5">
                 Create An Account
               </AppLink>
-              {/* <h3>Additional Information</h3>
+              <h3>Additional Information</h3>
               <p>
                 <Url href="https://zesty.io">https://zesty.io</Url>
               </p>
               <p>
                 <Url href="mailto:hello@zesty.io">hello@zesty.io</Url>
-              </p> */}
+              </p>
             </div>
           </main>
         </div>
