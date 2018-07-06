@@ -39,7 +39,7 @@ export function request(url, opts = {}) {
   opts.credentials = opts.credentials || 'include'
   opts.method = opts.method || 'GET'
 
-  return fetch(url, opts)
+  return fetch(encodeURI(url), opts)
     .then(res => res.json())
     .then(json => {
       if (opts.callback) {
