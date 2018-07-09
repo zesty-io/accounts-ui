@@ -130,38 +130,6 @@ module.exports = buildIndex = build => {
           </div>
         </div>
       </main>
-
-      <!-- Bug Reporting -->
-      <script src=https://cdn.ravenjs.com/3.24.0/raven.min.js
-      crossorigin=anonymous></script>
-      <script>
-        Raven.config('https://12c3a25b9d4c4442aa93f22dcf39c26a@sentry.io/1229171', {
-          release: '${build.data.gitCommit}',
-          environment: '${build.data.environment}',
-          ignoreErrors: [/^Invalid user$/g]
-        }).install()
-      </script>
-      <script src="//d2wy8f7a9ursnm.cloudfront.net/v4/bugsnag.min.js"></script>
-      <script>
-        window.bugsnagClient = bugsnag({
-          apiKey: '7e50d87ea61932f9e3141420402f4eed',
-          appVersion: '${build.data.gitCommit}',
-          releaseStage: '${build.data.environment}'
-        })
-      </script>
-
-      <script src="/config.${build.data.gitCommit}.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.vendors.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.core.js"></script>
-
-      <!-- load sub apps -->
-      <script src="/bundle.${build.data.gitCommit}.properties-app.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.settings-app.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.blueprints-app.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.support-app.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.teams-app.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.shell.js"></script>
-
       <!-- Object.assign polyfill -->
       <script>
       if (typeof Object.assign != 'function') {
@@ -194,6 +162,39 @@ module.exports = buildIndex = build => {
         });
       }
       </script>
+
+      <!-- Bug Reporting -->
+      <script src=https://cdn.ravenjs.com/3.24.0/raven.min.js
+      crossorigin=anonymous></script>
+      <script>
+        Raven.config('https://12c3a25b9d4c4442aa93f22dcf39c26a@sentry.io/1229171', {
+          release: '${build.data.gitCommit}',
+          environment: '${build.data.environment}',
+          ignoreErrors: [/^Invalid user$/g]
+        }).install()
+      </script>
+      <script src="//d2wy8f7a9ursnm.cloudfront.net/v4/bugsnag.min.js"></script>
+      <script>
+        window.bugsnagClient = bugsnag({
+          apiKey: '7e50d87ea61932f9e3141420402f4eed',
+          appVersion: '${build.data.gitCommit}',
+          releaseStage: '${build.data.environment}'
+        })
+      </script>
+
+      <script src="/config.${build.data.gitCommit}.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.vendors.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.core.js"></script>
+
+      <!-- load sub apps -->
+      <script src="/bundle.${build.data.gitCommit}.properties-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.settings-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.blueprints-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.support-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.teams-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.shell.js"></script>
+
+
     </body>
   </html>
   `
