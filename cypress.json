@@ -14,9 +14,9 @@
     "COOKIE_DOMAIN": ".zesty.localdev",
     "C_NAME": "sites2.zesty.zone",
     "A_RECORD": "130.211.21.25",
-    "badEmail": "userDoesNot@exist.com",
-    "badPassword": "asdASD123",
-    "goodEmail": "testUser@zesty.io",
-    "goodPassword": ""
+    "invalidEmail": "userDoesNot@exist.com",
+    "invalidPassword": "asdASD123",
+    "validEmail": "testUser@zesty.io",
+    "validPassword": ""
   }
 }

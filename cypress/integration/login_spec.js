@@ -1,12 +1,12 @@
 describe('User gets failed login message', function() {
-  it('Logs in with bad credentials', function() {
+  it('Log in fails with bad credentials', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
     cy.get('#root > section > div > main > form > label:nth-child(1) > input')
-      .type(Cypress.env('badEmail'))
-      .should('have.value', Cypress.env('badEmail'))
+      .type(Cypress.env('invalidEmail'))
+      .should('have.value', Cypress.env('invalidEmail'))
     cy.get('#root > section > div > main > form > label:nth-child(2) > input')
-      .type(Cypress.env('badPassword'))
-      .should('have.value', Cypress.env('badPassword'))
+      .type(Cypress.env('invalidPassword'))
+      .should('have.value', Cypress.env('invalidPassword'))
     cy.get('button').click()
     cy.get('#root > section > div > main > form > p').should(
       'contain',
@@ -19,14 +19,14 @@ describe('User is able to login', function() {
   it('Logs in with good credentials', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
     cy.get('#root > section > div > main > form > label:nth-child(1) > input')
-      .type(Cypress.env('goodEmail'))
-      .should('have.value', Cypress.env('goodEmail'))
+      .type(Cypress.env('validEmail'))
+      .should('have.value', Cypress.env('validEmail'))
     cy.get('#root > section > div > main > form > label:nth-child(2) > input')
-      .type(Cypress.env('goodPassword'))
-      .should('have.value', Cypress.env('goodPassword'))
+      .type(Cypress.env('validPassword'))
+      .should('have.value', Cypress.env('validPassword'))
     cy.get('#root > section > div > main > form > button').click()
     // assert that the app loads
-    cy.get('#root > section > header > nav.UserNav.UserNav--IMX-X').should(
+    cy.get('#root > section > header > nav.UserNav').should(
       'contain',
       'Glidewell'
     )
