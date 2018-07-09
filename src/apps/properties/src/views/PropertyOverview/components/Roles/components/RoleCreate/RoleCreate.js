@@ -105,7 +105,6 @@ class RoleCreate extends Component {
           this.setState({ submitted: !this.state.submitted, name: '' })
         })
         .catch(err => {
-          console.table(err)
           this.setState({
             submitted: !this.state.submitted,
             name: ''

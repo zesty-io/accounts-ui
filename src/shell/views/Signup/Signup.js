@@ -42,8 +42,7 @@ class Signup extends Component {
         <form
           name="signup"
           className={styles.SignupForm}
-          onSubmit={this.handleSignup}
-        >
+          onSubmit={this.handleSignup}>
           <Url href="https://zesty.io" title="https://zesty.io">
             <img src="/zesty-io-logo.svg" height="70px" />
           </Url>
@@ -113,8 +112,7 @@ class Signup extends Component {
               I have read and agree to the{' '}
               <Url
                 href="https://www.zesty.io/en-us/about/end-user-license-agreement/"
-                target="_blank"
-              >
+                target="_blank">
                 End User License Agreement
               </Url>
             </span>
@@ -173,8 +171,14 @@ class Signup extends Component {
         // this is in place of a code === 201,
         // server only returns an error, no code
         if (!json.error) {
-          // Force confirm email before logging in
-          this.props.history.push('/verify-email')
+          // log the new user in to get a valid session
+          // send the user to the confirm email page
+          // once validated user will automatically get into the app
+          this.props
+            .dispatch(login(this.state.email, this.state.pass))
+            .then(() => {
+              this.props.history.push('/verify-email')
+            })
         } else {
           this.setState({
             submitted: false,
