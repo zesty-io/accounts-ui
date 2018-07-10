@@ -74,7 +74,7 @@ export function updatePassword(oldPassword, newPassword) {
     return request(
       `${CONFIG.API_ACCOUNTS}/users/${ZUID}?action=updatePassword`,
       {
-        method: 'POST',
+        method: 'PUT',
         json: true,
         body: {
           password: newPassword
