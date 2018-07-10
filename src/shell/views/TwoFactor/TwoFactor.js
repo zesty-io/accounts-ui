@@ -93,8 +93,7 @@ class TwoFactor extends Component {
         }
       })
       .catch(err => {
-        console.table(err)
-        throw err
+        console.error(err)
       })
   }
   // Poll Auth service for OneTouch
