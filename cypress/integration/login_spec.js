@@ -26,10 +26,7 @@ describe('User is able to login', function() {
       .should('have.value', Cypress.env('validPassword'))
     cy.get('#root > section > div > main > form > button').click()
     // assert that the app loads
-    cy.get('#root > section > header > nav.UserNav').should(
-      'contain',
-      'Glidewell'
-    )
+    cy.get('#root > section > header > nav.UserNav').should('contain', 'test')
   })
 })
 
