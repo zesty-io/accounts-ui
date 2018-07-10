@@ -17,7 +17,7 @@ import { notify } from '../../../../../shell/store/notifications'
 
 import styles from './TeamCard.less'
 
-class TeamCard extends Component {
+export default class TeamCard extends Component {
   state = {
     name: '',
     description: '',
@@ -392,5 +392,3 @@ class TeamCard extends Component {
     )
   }
 }
-
-export default TeamCard

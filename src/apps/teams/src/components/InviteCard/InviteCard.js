@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { handleTeamInvite, fetchTeam } from '../../store'
 
-import styles from './invite.less'
+import styles from './InviteCard.less'
 
 class InviteCard extends Component {
   state = {

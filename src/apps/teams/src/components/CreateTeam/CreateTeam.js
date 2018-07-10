@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 
 import { createTeam } from '../../store'
+import { notify } from '../../../../../shell/store/notifications'
 
 import styles from './CreateTeam.less'
-import { notify } from '../../../../../shell/store/notifications'
-class CreateTeam extends Component {
+
+export default class CreateTeam extends Component {
   state = {
     name: '',
     description: '',
@@ -105,5 +106,3 @@ class CreateTeam extends Component {
       })
   }
 }
-
-export default CreateTeam
