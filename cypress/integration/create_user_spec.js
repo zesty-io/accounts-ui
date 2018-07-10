@@ -1,4 +1,4 @@
-describe('User can create account', function() {
+describe('User Creation Flow', function() {
   it('Creates a user', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
     cy.get('#root > section > div > main > div > a').click()

@@ -1,4 +1,4 @@
-describe('User gets failed login message', function() {
+describe('User Login Failure', function() {
   it('Log in fails with bad credentials', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
     cy.get('#root > section > div > main > form > label:nth-child(1) > input')
@@ -15,7 +15,7 @@ describe('User gets failed login message', function() {
   })
 })
 
-describe('User is able to login', function() {
+describe('User Login Flow', function() {
   it('Logs in with good credentials', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
     cy.get('#root > section > div > main > form > label:nth-child(1) > input')

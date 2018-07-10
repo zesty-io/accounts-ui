@@ -1,4 +1,4 @@
-describe('User can perform instance actions', () => {
+describe('Instance Flow', () => {
   const timeStamp = Date.now()
   it('Cannot create an instance with no name', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))

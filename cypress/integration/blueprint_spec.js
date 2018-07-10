@@ -1,4 +1,4 @@
-describe('User is able to login', () => {
+describe('Blueprint Flow', () => {
   const timeStamp = Date.now()
   it('Can Create a blueprint', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
@@ -36,7 +36,6 @@ describe('User is able to login', () => {
       .children('a')
       .last()
       .click()
-    cy.pause()
     cy.get('#Blueprint > label:nth-child(2) > input').type(`Edited`)
     cy.get('#Blueprint > label:nth-child(3) > input').type('Edited')
     cy.get('#Blueprint > label:nth-child(4) > input').type('Edited')
