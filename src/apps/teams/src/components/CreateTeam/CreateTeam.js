@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { createTeam } from '../../store'
 
-import styles from './create.less'
+import styles from './CreateTeam.less'
 import { notify } from '../../../../../shell/store/notifications'
 class CreateTeam extends Component {
   state = {
@@ -18,18 +18,27 @@ class CreateTeam extends Component {
         </CardHeader>
         <CardContent className={styles.CardContent}>
           <section>
-            <h4>
+            <p>
+              Teams allow providing a group of users access to an instance. By
+              creating a team you can invite other Zesty.io users to your team
+              by their email. Once you have built your team you can share your
+              team ID with instance owners to let them give your team access.
+            </p>
+
+            <Url href="#">Learn How Teams Work</Url>
+
+            {/* <p>
               Teams can be invited to a role on an instance by using the invite
               code Once the invitation is accepted by the team admin, all users
               in the team have access to the instance
-            </h4>
-            <p>Learn More:</p>
+            </p> */}
+            {/* <p>Learn More:</p>
             <a href="#">link to docs</a>
             <br />
-            <a href="#">link to walk through</a>
+            <a href="#">link to walk through</a> */}
           </section>
           <section className={styles.Inputs}>
-            <label>Name your team:</label>
+            <label>Team Name:</label>
             <Input
               type="text"
               name="name"
@@ -37,7 +46,7 @@ class CreateTeam extends Component {
               value={this.state.name}
               onChange={this.handleChange}
             />
-            <label>Describe your team:</label>
+            <label>Description of your team:</label>
             <textarea
               rows="4"
               cols="50"
