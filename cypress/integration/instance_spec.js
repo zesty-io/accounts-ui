@@ -1,14 +1,7 @@
 describe('User can perform instance actions', () => {
   const timeStamp = Date.now()
   it('Cannot create an instance with no name', () => {
-    cy.visit(Cypress.env('ACCOUNTS_UI'))
-    cy.get(
-      '#root > section > div > main > form > label:nth-child(1) > input'
-    ).type(Cypress.env('validEmail'))
-    cy.get(
-      '#root > section > div > main > form > label:nth-child(2) > input'
-    ).type(Cypress.env('validPassword'))
-    cy.get('#root > section > div > main > form > button').click()
+    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
     cy.get('#siteListWrapper > main > article > footer > a > button').click()
     cy.get(
       '#root > section > section > section > section > div > div > button'
@@ -20,14 +13,7 @@ describe('User can perform instance actions', () => {
   })
 
   it('Can create an instance', () => {
-    cy.visit(Cypress.env('ACCOUNTS_UI'))
-    cy.get(
-      '#root > section > div > main > form > label:nth-child(1) > input'
-    ).type(Cypress.env('validEmail'))
-    cy.get(
-      '#root > section > div > main > form > label:nth-child(2) > input'
-    ).type(Cypress.env('validPassword'))
-    cy.get('#root > section > div > main > form > button').click()
+    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
     cy.get('#siteListWrapper > main > article > footer > a > button').click()
     cy.get('#root > section > section > section > section > div > input').type(
       `TEST INSTANCE ${timeStamp}`
