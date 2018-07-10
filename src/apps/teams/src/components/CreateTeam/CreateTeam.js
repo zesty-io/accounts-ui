@@ -15,7 +15,7 @@ export default class CreateTeam extends Component {
     return (
       <Card className={styles.CreateTeam}>
         <CardHeader>
-          <h1>Create Team</h1>
+          <h3>Create Team</h3>
         </CardHeader>
         <CardContent className={styles.CardContent}>
           <section>

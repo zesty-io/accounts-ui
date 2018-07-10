@@ -20,8 +20,8 @@ import styles from './TeamCard.less'
 
 export default class TeamCard extends Component {
   state = {
-    name: '',
-    description: '',
+    // name: '',
+    // description: '',
     inviteeEmail: '',
     admin: false,
     editing: false,
@@ -29,10 +29,10 @@ export default class TeamCard extends Component {
     submitted: false
   }
   componentDidMount() {
-    this.setState({
-      name: this.props.team.name,
-      description: this.props.team.description
-    })
+    // this.setState({
+    //   name: this.props.team.name,
+    //   description: this.props.team.description
+    // })
     // TODO: an individual loading state for each
     Promise.all([
       this.props.dispatch(getTeamMembers(this.props.team.ZUID)),
@@ -44,7 +44,10 @@ export default class TeamCard extends Component {
           return user.ZUID === this.props.userZUID && user.admin
         })
       )
-      this.setState({ loaded: true, isAdmin })
+      this.setState({
+        loaded: true,
+        isAdmin
+      })
     })
   }
   render() {
@@ -52,88 +55,68 @@ export default class TeamCard extends Component {
     return (
       <Card className={styles.TeamCard}>
         <CardHeader className={styles.CardHeader}>
-          <h3>
-            {this.state.editing ? (
-              <React.Fragment>
-                <Input
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  name="name"
-                  type="text"
-                />
-                <i className="fa fa-save" onClick={this.handleUpdateName} />
-              </React.Fragment>
-            ) : (
-              team.name
-            )}{' '}
-            {this.state.isAdmin && (
+          <section className={styles.InviteCode}>
+            <h4>
+              ID:&nbsp;
+              <span className={styles.ZUID}>{team.ZUID}</span>
               <i
-                className={
-                  this.state.editing
-                    ? `fa fa-times-circle-o ${styles.Edit}`
-                    : `fa fa-pencil ${styles.Edit}`
-                }
-                onClick={() => this.setState({ editing: !this.state.editing })}
-              />
-            )}
-          </h3>
-
-          <React.Fragment>
-            <section className={styles.InviteCode}>
-              <h4>
-                ID:&nbsp;
-                <span className={styles.ZUID}>{team.ZUID}</span>
-                <i
-                  className={`fa fa-copy ${styles.copy}`}
-                  onClick={e => {
-                    const input = document.createElement('input')
-                    document.body.appendChild(input)
-                    input.value = team.ZUID
-                    input.focus()
-                    input.select()
-                    const result = document.execCommand('copy')
-                    input.remove()
-                    if (result === 'unsuccessful') {
-                      return this.props.dispatch(
-                        notify({
-                          type: 'error',
-                          message: 'failed to copy'
-                        })
-                      )
-                    }
-                    this.props.dispatch(
+                className={`fa fa-copy ${styles.copy}`}
+                onClick={e => {
+                  const input = document.createElement('input')
+                  document.body.appendChild(input)
+                  input.value = team.ZUID
+                  input.focus()
+                  input.select()
+                  const result = document.execCommand('copy')
+                  input.remove()
+                  if (result === 'unsuccessful') {
+                    return this.props.dispatch(
                       notify({
-                        type: 'success',
-                        message: 'Copied to clipboard'
+                        type: 'error',
+                        message: 'failed to copy'
                       })
                     )
-                  }}
-                />
-              </h4>
-            </section>
-            {/* <small>use this code for an invitation to an instance</small> */}
-          </React.Fragment>
-
-          {this.state.editing ? (
-            <textarea
-              rows="4"
-              cols="50"
-              name="description"
-              value={this.state.description}
-              onChange={this.handleChange}
-            />
-          ) : (
-            <p>{this.state.description}</p>
-          )}
-
-          {this.state.isAdmin && (
-            <i
-              className={`fa fa-trash ${styles.trash}`}
-              onClick={this.handleDeleteTeam}
-            />
-          )}
+                  }
+                  this.props.dispatch(
+                    notify({
+                      type: 'success',
+                      message: 'Copied to clipboard'
+                    })
+                  )
+                }}
+              />
+            </h4>
+          </section>
         </CardHeader>
         <CardContent className={styles.CardContent}>
+          <section className={styles.Settings}>
+            {this.state.isAdmin && (
+              <i
+                className={cx(
+                  styles.Edit,
+                  this.state.editing ? 'fa fa-ban' : 'fa fa-cog'
+                )}
+                title="Edit team settings"
+                onClick={this.handleEdit}
+              />
+            )}
+            {this.state.editing ? (
+              <form className={styles.Editing}>
+                <label>
+                  Team Name: <Input />
+                </label>
+                <label>
+                  Team Description: <textarea />
+                </label>
+              </form>
+            ) : (
+              <React.Fragment>
+                <h3>{this.props.team.name}</h3>
+                <p>{this.props.team.description}</p>
+              </React.Fragment>
+            )}
+          </section>
+
           <section className={styles.Members}>
             <h3>Members</h3>
             <WithLoader
@@ -226,12 +209,21 @@ export default class TeamCard extends Component {
   }
   handleChange = evt => {
     if (evt.target.name === 'admin') {
-      return this.setState({ admin: evt.target.checked ? true : false })
+      return this.setState({
+        admin: evt.target.checked ? true : false
+      })
     }
     this.setState({
       [evt.target.name]: evt.target.value
     })
   }
+
+  handleEdit = () => {
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
+
   handleUpdateName = () => {
     if (this.state.name.length > 50) {
       return this.props.dispatch(
@@ -273,7 +265,10 @@ export default class TeamCard extends Component {
         )
       )
       .then(() => {
-        this.setState({ inviteeEmail: '', submitted: false })
+        this.setState({
+          inviteeEmail: '',
+          submitted: false
+        })
       })
   }
   handleDeleteTeam = evt => {

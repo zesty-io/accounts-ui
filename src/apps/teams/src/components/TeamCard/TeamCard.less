@@ -1,22 +1,9 @@
 @import url('../../../../../shell/styles/colors.less');
 
 .TeamCard {
-  // margin: 1rem;
-
   display: grid;
-  grid-template-rows: 1fr 3fr 40px;
+  grid-template-rows: 40px 3fr 40px;
   max-height: 535px;
-
-  // h2 {
-  //   margin-bottom: 0.5rem;
-  //   margin-top: 0.5rem;
-  //   max-width: 100%;
-  //   word-wrap: break-word;
-  // }
-  // h3 {
-  //   margin-top: 0.5rem;
-  //   margin-bottom: 0.5rem;
-  // }
 
   &:hover,
   &:focus,
@@ -26,31 +13,32 @@
 
   .CardHeader {
     position: relative;
-    p {
-      max-width: 100%;
-      word-wrap: break-word;
-    }
-    .Edit {
-      padding: 0.2rem;
-      transition: all 0.1s;
-      color: lighten(@zesty-gray, 20%);
-      font-size: 0.7em;
-      &:hover {
-        color: @zesty-gray;
-      }
-    }
-    .trash {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      transition: all 0.1s;
-      color: lighten(@zesty-gray, 40%);
-      &:hover,
-      &:active,
-      &:focus {
-        color: @zesty-red;
-      }
-    }
+
+    // p {
+    //   max-width: 100%;
+    //   word-wrap: break-word;
+    // }
+    // .Edit {
+    //   padding: 0.2rem;
+    //   transition: all 0.1s;
+    //   color: lighten(@zesty-gray, 20%);
+    //   font-size: 0.7em;
+    //   &:hover {
+    //     color: @zesty-gray;
+    //   }
+    // }
+    // .trash {
+    //   position: absolute;
+    //   top: 8px;
+    //   right: 8px;
+    //   transition: all 0.1s;
+    //   color: lighten(@zesty-gray, 40%);
+    //   &:hover,
+    //   &:active,
+    //   &:focus {
+    //     color: @zesty-red;
+    //   }
+    // }
     .InviteCode {
       display: flex;
       align-items: baseline;
@@ -83,8 +71,35 @@
 
     // max-height: 430px;
     overflow-y: scroll;
+    position: relative;
+
+    .Settings {
+      .Edit {
+        color: lighten(@zesty-gray, 20%);
+        cursor: pointer;
+        position: absolute;
+        top: 3px;
+        right: 9px;
+        &:hover {
+          color: @zesty-gray;
+        }
+      }
+
+      .Editing {
+        input,
+        textarea {
+          display: block;
+          width: 100%;
+          margin: 0 0 1rem 0;
+        }
+        textarea {
+          height: 75px;
+        }
+      }
+    }
 
     .Members {
+      margin: 1rem 0;
       .Member {
         display: flex;
         margin: 0.5rem 0.5rem 0.5rem 0;
@@ -149,7 +164,7 @@
 
   .CardInvite {
     display: grid;
-    grid-template-columns: 1.2fr 3fr 0.6fr;
+    grid-template-columns: 1.2fr 3fr;
     grid-gap: 0.2rem;
     // .admin {
     //   display: flex;
