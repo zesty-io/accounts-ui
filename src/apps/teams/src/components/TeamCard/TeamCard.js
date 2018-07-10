@@ -76,20 +76,10 @@ export default class TeamCard extends Component {
               />
             )}
           </h2>
-          {this.state.editing ? (
-            <textarea
-              rows="4"
-              cols="50"
-              name="description"
-              value={this.state.description}
-              onChange={this.handleChange}
-            />
-          ) : (
-            <p>{this.state.description}</p>
-          )}
+
           <React.Fragment>
             <section className={styles.InviteCode}>
-              <h4>invite code: </h4>
+              <h4>Team ID: </h4>
               <span className={styles.ZUID}>{team.ZUID} </span>
               <i
                 className={`fa fa-copy ${styles.copy}`}
@@ -118,8 +108,21 @@ export default class TeamCard extends Component {
                 }}
               />
             </section>
-            <small>use this code for an invitation to an instance</small>
+            {/* <small>use this code for an invitation to an instance</small> */}
           </React.Fragment>
+
+          {this.state.editing ? (
+            <textarea
+              rows="4"
+              cols="50"
+              name="description"
+              value={this.state.description}
+              onChange={this.handleChange}
+            />
+          ) : (
+            <p>{this.state.description}</p>
+          )}
+
           {this.state.isAdmin && (
             <i
               className={`fa fa-trash ${styles.trash}`}
@@ -220,10 +223,10 @@ export default class TeamCard extends Component {
                 placeholder="new@team-member.com"
                 autoComplete="off"
               />
-              <section className={styles.admin}>
+              {/* <section className={styles.admin}>
                 <Toggle name="admin" onChange={this.handleChange} />
                 <small>Admin</small>
-              </section>
+              </section> */}
             </form>
           )}
         </CardFooter>

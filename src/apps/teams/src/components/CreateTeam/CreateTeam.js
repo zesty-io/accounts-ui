@@ -13,8 +13,8 @@ export default class CreateTeam extends Component {
   }
   render() {
     return (
-      <Card className={styles.Card}>
-        <CardHeader className={styles.CardHeader}>
+      <Card className={styles.CreateTeam}>
+        <CardHeader>
           <h1>Create Team</h1>
         </CardHeader>
         <CardContent className={styles.CardContent}>
@@ -23,10 +23,9 @@ export default class CreateTeam extends Component {
               Teams allow providing a group of users access to an instance. By
               creating a team you can invite other Zesty.io users to your team
               by their email. Once you have built your team you can share your
-              team ID with instance owners to let them give your team access.
+              team ID with instance owners so they can provide your team access.{' '}
+              <Url href="#">Learn How Teams Work</Url>
             </p>
-
-            <Url href="#">Learn How Teams Work</Url>
 
             {/* <p>
               Teams can be invited to a role on an instance by using the invite
@@ -38,23 +37,28 @@ export default class CreateTeam extends Component {
             <br />
             <a href="#">link to walk through</a> */}
           </section>
-          <section className={styles.Inputs}>
-            <label>Team Name:</label>
-            <Input
-              type="text"
-              name="name"
-              autoComplete="off"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-            <label>Description of your team:</label>
-            <textarea
-              rows="4"
-              cols="50"
-              name="description"
-              value={this.state.description}
-              onChange={this.handleChange}
-            />
+          <section className={styles.Team}>
+            <label>
+              <span>Team name:</span>
+              <Input
+                type="text"
+                name="name"
+                autoComplete="off"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+            </label>
+
+            <label>
+              <span>Description of your team:</span>
+              <textarea
+                rows="4"
+                cols="50"
+                name="description"
+                value={this.state.description}
+                onChange={this.handleChange}
+              />
+            </label>
           </section>
         </CardContent>
         <CardFooter>

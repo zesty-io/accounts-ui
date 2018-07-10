@@ -1,39 +1,32 @@
 @import url('../../../../../shell/styles/colors.less');
 
-.Card {
-  &:hover,
-  &:focus,
-  &:active {
-    box-shadow: 0 0 10px #8398bd;
-  }
-  .CardHeader {
-    margin: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-  }
-  section {
-    margin: 0.5rem 0;
-  }
-  label {
-    display: block;
-  }
-  margin: 1rem;
+.CreateTeam {
+  // &:hover,
+  // &:focus,
+  // &:active {
+  //   box-shadow: 0 0 10px #8398bd;
+  // }
+
   .CardContent {
-    margin: 0.5rem;
-    h4 {
-      margin: 1rem 0;
+    padding: 1rem 0;
+    .Team {
+      margin: 2rem 0 0 0;
+
+      span {
+        font-weight: bold;
+      }
+
+      input,
+      textarea {
+        display: block;
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+      textarea {
+        height: 175px;
+        font-size: 1rem;
+        padding: 0.2rem;
+      }
     }
-  }
-  .Inputs {
-    display: flex;
-    flex-direction: column;
-    label {
-      margin: 0.2rem 0;
-    }
-  }
-  .addMember {
-    margin: 0.5rem;
   }
 }
