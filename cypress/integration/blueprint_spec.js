@@ -39,8 +39,6 @@ describe('User is able to login', () => {
     cy.get('#root > section > div > main > form > button').click()
     cy.get('#blueprintsNavLink').click()
 
-    // find the blueprint with the timestamp and delete it
-    // cy.pause()
     cy.get(
       '#root > section > section.AppMain.AppMain > section > section > section'
     )
