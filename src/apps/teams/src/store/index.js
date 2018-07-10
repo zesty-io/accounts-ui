@@ -231,7 +231,7 @@ export const inviteMember = (teamZUID, inviteeEmail, admin) => {
         dispatch(
           notify({
             type: 'success',
-            message: `Invite sent`
+            message: `Team invitation sent`
           })
         )
         return res.data

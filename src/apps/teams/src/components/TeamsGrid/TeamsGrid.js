@@ -19,46 +19,46 @@ export default connect(state => {
     }
     render() {
       return (
-        <section className={styles.Teams}>
+        <section className={styles.TeamsView}>
           <h1 className={styles.TeamsTitle}>
             <i className="fa fa-users" aria-hidden="true" />&nbsp; Manage Your
             Teams
           </h1>
-          <div className={styles.Team}>
-            <div className={styles.TeamCard}>
-              {/* creation card */}
-              <CreateTeam dispatch={this.props.dispatch} />
-              {/* invited teams */}
-              {this.props.teams &&
-                Object.keys(this.props.teams)
-                  .filter(team =>
-                    this.props.teams[team].hasOwnProperty('teamInviteZUID')
-                  )
-                  .map((team, i) => (
-                    <InviteCard
-                      team={this.props.teams[team]}
+          <div className={styles.TeamsGrid}>
+            {/* creation card */}
+            <CreateTeam dispatch={this.props.dispatch} />
+
+            {/* invited teams */}
+            {this.props.teams &&
+              Object.keys(this.props.teams)
+                .filter(team =>
+                  this.props.teams[team].hasOwnProperty('teamInviteZUID')
+                )
+                .map((team, i) => (
+                  <InviteCard
+                    team={this.props.teams[team]}
+                    dispatch={this.props.dispatch}
+                    key={i}
+                  />
+                ))}
+
+            {/* regular teams */}
+            {this.props.teams &&
+              Object.keys(this.props.teams)
+                .filter(
+                  team =>
+                    !this.props.teams[team].hasOwnProperty('teamInviteZUID')
+                )
+                .map(team => {
+                  return (
+                    <TeamCard
                       dispatch={this.props.dispatch}
-                      key={i}
+                      team={this.props.teams[team]}
+                      key={this.props.teams[team].ZUID}
+                      userZUID={this.props.user.ZUID}
                     />
-                  ))}
-              {/* regular teams */}
-              {this.props.teams &&
-                Object.keys(this.props.teams)
-                  .filter(
-                    team =>
-                      !this.props.teams[team].hasOwnProperty('teamInviteZUID')
                   )
-                  .map(team => {
-                    return (
-                      <TeamCard
-                        dispatch={this.props.dispatch}
-                        team={this.props.teams[team]}
-                        key={this.props.teams[team].ZUID}
-                        userZUID={this.props.user.ZUID}
-                      />
-                    )
-                  })}
-            </div>
+                })}
           </div>
         </section>
       )

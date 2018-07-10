@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import cx from 'classnames'
 
 import {
   updateTeam,
@@ -49,9 +50,9 @@ export default class TeamCard extends Component {
   render() {
     const { team } = this.props
     return (
-      <Card className={styles.Card}>
+      <Card className={styles.TeamCard}>
         <CardHeader className={styles.CardHeader}>
-          <h2>
+          <h3>
             {this.state.editing ? (
               <React.Fragment>
                 <Input
@@ -75,38 +76,40 @@ export default class TeamCard extends Component {
                 onClick={() => this.setState({ editing: !this.state.editing })}
               />
             )}
-          </h2>
+          </h3>
 
           <React.Fragment>
             <section className={styles.InviteCode}>
-              <h4>Team ID: </h4>
-              <span className={styles.ZUID}>{team.ZUID} </span>
-              <i
-                className={`fa fa-copy ${styles.copy}`}
-                onClick={e => {
-                  const input = document.createElement('input')
-                  document.body.appendChild(input)
-                  input.value = team.ZUID
-                  input.focus()
-                  input.select()
-                  const result = document.execCommand('copy')
-                  input.remove()
-                  if (result === 'unsuccessful') {
-                    return this.props.dispatch(
+              <h4>
+                ID:&nbsp;
+                <span className={styles.ZUID}>{team.ZUID}</span>
+                <i
+                  className={`fa fa-copy ${styles.copy}`}
+                  onClick={e => {
+                    const input = document.createElement('input')
+                    document.body.appendChild(input)
+                    input.value = team.ZUID
+                    input.focus()
+                    input.select()
+                    const result = document.execCommand('copy')
+                    input.remove()
+                    if (result === 'unsuccessful') {
+                      return this.props.dispatch(
+                        notify({
+                          type: 'error',
+                          message: 'failed to copy'
+                        })
+                      )
+                    }
+                    this.props.dispatch(
                       notify({
-                        type: 'error',
-                        message: 'failed to copy'
+                        type: 'success',
+                        message: 'Copied to clipboard'
                       })
                     )
-                  }
-                  this.props.dispatch(
-                    notify({
-                      type: 'success',
-                      message: 'Copied to clipboard'
-                    })
-                  )
-                }}
-              />
+                  }}
+                />
+              </h4>
             </section>
             {/* <small>use this code for an invitation to an instance</small> */}
           </React.Fragment>
@@ -130,82 +133,70 @@ export default class TeamCard extends Component {
             />
           )}
         </CardHeader>
-        <CardContent>
-          <h3>Members</h3>
-          <WithLoader
-            condition={this.state.loaded}
-            message="Loading team members">
-            {team.members
-              ? team.members.map(member => {
-                  if (!member.invitedByUserZUID) {
+        <CardContent className={styles.CardContent}>
+          <section className={styles.Members}>
+            <h3>Members</h3>
+            <WithLoader
+              condition={this.state.loaded}
+              message="Loading team members">
+              {team.members
+                ? team.members.map(member => {
+                    console.log(member)
                     return (
-                      <article className={styles.CardContent} key={member.ZUID}>
-                        <p title={member.email}>
-                          <i className="fa fa-user" />
-                          {member.firstName} {member.lastName}
-                          {member.admin ? (
-                            <i
-                              className={`fa fa-star ${this.state.isAdmin &&
-                                styles.Admin}`}
-                              onClick={() =>
-                                this.handleAdminChange(member.ZUID, false)
-                              }
-                            />
-                          ) : (
-                            this.state.isAdmin && (
-                              <i
-                                className={`fa fa-star-o ${styles.NotAdmin}`}
-                                onClick={() =>
-                                  this.handleAdminChange(member.ZUID, true)
-                                }
-                              />
-                            )
-                          )}
-                        </p>
-                        {this.state.isAdmin && (
+                      <article className={styles.Member} key={member.ZUID}>
+                        {member.admin ? (
                           <i
-                            className={`${styles.remove} fa fa-times-circle-o`}
+                            className="fa fa-lock"
+                            aria-hidden="true"
+                            title="Team owner"
+                          />
+                        ) : member.invitedByUserZUID ? (
+                          <i className="fa fa-clock-o" />
+                        ) : (
+                          <i className="fa fa-user" />
+                        )}
+
+                        <span className={styles.Name}>
+                          {member.invitedByUserZUID
+                            ? member.inviteeEmail
+                            : `${member.firstName} ${member.lastName}`}
+                        </span>
+
+                        {!member.admin && this.state.isAdmin ? (
+                          <i
+                            className={cx(
+                              styles.Remove,
+                              'fa fa-times-circle-o'
+                            )}
                             onClick={() => this.removeUser(member.ZUID)}
                           />
-                        )}
+                        ) : null}
                       </article>
                     )
-                  } else {
+                  })
+                : 'no members for this team'}
+            </WithLoader>
+          </section>
+
+          <section className={styles.Instances}>
+            <h3>Instances</h3>
+            <WithLoader
+              condition={this.state.loaded}
+              message="Loading team instances">
+              {team.instances && team.instances.length
+                ? team.instances.map(instance => {
                     return (
-                      <article className={styles.CardContent} key={member.ZUID}>
-                        <p title={member.inviteeEmail}>
-                          <i className="fa fa-clock-o" />
-                          {member.inviteeEmail} <i>(pending)</i>
-                        </p>
-                        {this.state.isAdmin && (
-                          <i
-                            className={`${styles.remove} fa fa-times-circle-o`}
-                            onClick={() => this.cancelInvite(member.ZUID)}
-                          />
-                        )}
+                      <article className={styles.Instance} key={instance.ZUID}>
+                        <AppLink to={`/instances/${instance.ZUID}`}>
+                          <i className="fa fa-globe" />
+                          {instance.name}
+                        </AppLink>
                       </article>
                     )
-                  }
-                })
-              : 'no members for this team'}
-          </WithLoader>
-          <h3>Instances</h3>
-          <WithLoader
-            condition={this.state.loaded}
-            message="Loading team instances">
-            {team.instances && team.instances.length
-              ? team.instances.map(instance => {
-                  return (
-                    <article className={styles.Instance} key={instance.ZUID}>
-                      <AppLink to={`/instances/${instance.ZUID}`}>
-                        <i className="fa fa-globe" />
-                        {instance.name}
-                      </AppLink>
-                    </article>
-                  )
-                })
-              : 'No Instances for this team'}
-          </WithLoader>
+                  })
+                : 'No Instances for this team'}
+            </WithLoader>
+          </section>
         </CardContent>
         <CardFooter>
           {this.state.isAdmin && (
@@ -314,40 +305,40 @@ export default class TeamCard extends Component {
       })
     )
   }
-  handleAdminChange = (userZUID, admin) => {
-    this.state.isAdmin &&
-      this.props.dispatch(
-        zConfirm({
-          prompt: admin
-            ? 'Are you sure you want to make this user an Admin?'
-            : 'Are you sure you want to remove this users admin status?',
-          callback: confirmed => {
-            if (confirmed) {
-              this.props
-                .dispatch(modifyUser(this.props.team.ZUID, userZUID, admin))
-                .then(data => {
-                  this.props.dispatch(
-                    notify({
-                      type: 'success',
-                      message: admin
-                        ? 'Successfully made user admin'
-                        : 'Successfully removed admin privileges'
-                    })
-                  )
-                })
-                .catch(() => {
-                  this.props.dispatch(
-                    notify({
-                      type: 'error',
-                      message: 'Unable to update admin'
-                    })
-                  )
-                })
-            }
-          }
-        })
-      )
-  }
+  // handleAdminChange = (userZUID, admin) => {
+  //   this.state.isAdmin &&
+  //     this.props.dispatch(
+  //       zConfirm({
+  //         prompt: admin
+  //           ? 'Are you sure you want to make this user an Admin?'
+  //           : 'Are you sure you want to remove this users admin status?',
+  //         callback: confirmed => {
+  //           if (confirmed) {
+  //             this.props
+  //               .dispatch(modifyUser(this.props.team.ZUID, userZUID, admin))
+  //               .then(data => {
+  //                 this.props.dispatch(
+  //                   notify({
+  //                     type: 'success',
+  //                     message: admin
+  //                       ? 'Successfully made user admin'
+  //                       : 'Successfully removed admin privileges'
+  //                   })
+  //                 )
+  //               })
+  //               .catch(() => {
+  //                 this.props.dispatch(
+  //                   notify({
+  //                     type: 'error',
+  //                     message: 'Unable to update admin'
+  //                   })
+  //                 )
+  //               })
+  //           }
+  //         }
+  //       })
+  //     )
+  // }
   removeUser = userZUID => {
     this.props.dispatch(
       zConfirm({

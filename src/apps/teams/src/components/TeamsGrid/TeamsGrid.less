@@ -1,23 +1,22 @@
 @import '../../../../../shell/styles/colors.less';
 
-.Teams {
+.TeamsView {
   padding: 2rem;
   height: 86vh;
   overflow-y: scroll;
+
   .TeamsTitle {
     font-size: 1.8rem;
     margin: 0 0 1rem 0;
   }
 
-  .Team {
-    .TeamCard {
-      display: grid;
-      grid-gap: 2rem;
-      grid-template-columns: repeat(auto-fill, 400px);
-      grid-auto-rows: minmax(35rem, auto);
-    }
-    h1 {
-      font-size: 1.4rem;
-    }
+  .TeamsGrid {
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fill, 400px);
+    grid-auto-rows: minmax(35rem, auto);
+    // h1 {
+    //   font-size: 1.4rem;
+    // }
   }
 }

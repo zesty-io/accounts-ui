@@ -1,18 +1,22 @@
 @import url('../../../../../shell/styles/colors.less');
 
-.Card {
+.TeamCard {
   // margin: 1rem;
 
-  h2 {
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
-    max-width: 100%;
-    word-wrap: break-word;
-  }
-  h3 {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
+  display: grid;
+  grid-template-rows: 1fr 3fr 40px;
+  max-height: 535px;
+
+  // h2 {
+  //   margin-bottom: 0.5rem;
+  //   margin-top: 0.5rem;
+  //   max-width: 100%;
+  //   word-wrap: break-word;
+  // }
+  // h3 {
+  //   margin-top: 0.5rem;
+  //   margin-bottom: 0.5rem;
+  // }
 
   &:hover,
   &:focus,
@@ -21,10 +25,6 @@
   }
 
   .CardHeader {
-    // padding: 0 1rem;
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
     position: relative;
     p {
       max-width: 100%;
@@ -76,50 +76,77 @@
   }
 
   .CardContent {
-    display: grid;
-    // margin: 0.5rem;
-    grid-template-columns: 1fr 5px;
+    // display: grid;
+    // grid-template-columns: 1fr 5px;
 
-    i {
-      margin-right: 0.3rem;
-    }
-    .remove {
-      display: block;
-      color: @zesty-light-gray;
-      align-self: flex-end;
-      justify-self: flex-end;
-      transition: all 0.2s;
-      &:hover,
-      &:focus,
-      &:active {
-        color: @zesty-red;
-      }
-    }
-    .Admin {
-      color: lighten(@zesty-tab-blue, 20%);
-      transition: all 0.2s;
+    margin: 1rem 0;
 
-      &:hover,
-      &:focus,
-      &:active {
-        color: lighten(@zesty-light-gray, 50%);
+    // max-height: 430px;
+    overflow-y: scroll;
+
+    .Members {
+      .Member {
+        display: flex;
+        margin: 0.5rem 0.5rem 0.5rem 0;
+
+        .Name {
+          flex: 1;
+          padding: 0 0.5rem;
+        }
+        .Remove {
+          cursor: pointer;
+          &:hover,
+          &:focus,
+          &:active {
+            color: @zesty-red;
+          }
+        }
+
+        // i {
+        //   margin-right: 0.3rem;
+        // }
+        // .remove {
+        //   display: block;
+        //   color: @zesty-light-gray;
+        //   align-self: flex-end;
+        //   justify-self: flex-end;
+        //   transition: all 0.2s;
+        //   &:hover,
+        //   &:focus,
+        //   &:active {
+        //     color: @zesty-red;
+        //   }
+        // }
+        // .Admin {
+        //   color: lighten(@zesty-tab-blue, 20%);
+        //   transition: all 0.2s;
+        //
+        //   &:hover,
+        //   &:focus,
+        //   &:active {
+        //     color: lighten(@zesty-light-gray, 50%);
+        //   }
+        // }
+        // .NotAdmin {
+        //   color: lighten(@zesty-light-gray, 10%);
+        //   &:hover,
+        //   &:focus,
+        //   &:active {
+        //     color: @zesty-orange;
+        //   }
+        // }
       }
     }
-    .NotAdmin {
-      color: lighten(@zesty-light-gray, 10%);
-      &:hover,
-      &:focus,
-      &:active {
-        color: @zesty-orange;
-      }
+    .Instances {
+      // .Instance {
+      //   display: flex;
+      //   i {
+      //     margin-right: 0.3rem;
+      //   }
+      // }
     }
   }
-  .Instance {
-    display: flex;
-    i {
-      margin-right: 0.3rem;
-    }
-  }
+
   .CardInvite {
     display: grid;
     grid-template-columns: 1.2fr 3fr 0.6fr;
