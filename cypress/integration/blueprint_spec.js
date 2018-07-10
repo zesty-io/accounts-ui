@@ -2,15 +2,13 @@ describe('User is able to login', () => {
   const timeStamp = Date.now()
   it('Can create a blueprint', () => {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
-    cy.get('#root > section > div > main > form > label:nth-child(1) > input')
-      .type(Cypress.env('validEmail'))
-      .should('have.value', Cypress.env('validEmail'))
-    cy.get('#root > section > div > main > form > label:nth-child(2) > input')
-      .type(Cypress.env('validPassword'))
-      .should('have.value', Cypress.env('validPassword'))
+    cy.get(
+      '#root > section > div > main > form > label:nth-child(1) > input'
+    ).type(Cypress.env('validEmail'))
+    cy.get(
+      '#root > section > div > main > form > label:nth-child(2) > input'
+    ).type(Cypress.env('validPassword'))
     cy.get('#root > section > div > main > form > button').click()
-    // assert that the app loads
-    cy.get('#root > section > header > nav.UserNav').should('contain', 'test')
     cy.get('#blueprintsNavLink').click()
     cy.get('#createBlueprint').click()
 
@@ -28,6 +26,33 @@ describe('User is able to login', () => {
       'Long description'
     )
     cy.get('#Blueprint > div > button:nth-child(1)').click()
+  })
+
+  it('Can Delete a blueprint', () => {
+    cy.visit(Cypress.env('ACCOUNTS_UI'))
+    cy.get(
+      '#root > section > div > main > form > label:nth-child(1) > input'
+    ).type(Cypress.env('validEmail'))
+    cy.get(
+      '#root > section > div > main > form > label:nth-child(2) > input'
+    ).type(Cypress.env('validPassword'))
+    cy.get('#root > section > div > main > form > button').click()
+    cy.get('#blueprintsNavLink').click()
+
+    // find the blueprint with the timestamp and delete it
+    // cy.pause()
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > section > section'
+    )
+      .find('article')
+      .contains(timeStamp)
+      .parent()
+      .siblings('footer')
+      .children('div')
+      .children('a')
+      .first()
+      .click()
+    cy.get('#confirmTrue').click()
   })
 
   // it('can edit a blueprint')
