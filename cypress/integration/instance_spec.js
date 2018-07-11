@@ -66,7 +66,6 @@ describe('Instance Flow', () => {
       .children('a')
       .first()
       .click()
-    // edit domain things
     cy.get('#editDomainInput')
       .click({ force: true })
       .type('domain-test.zesty.site', { force: true })
@@ -86,7 +85,6 @@ describe('Instance Flow', () => {
       .children('a')
       .first()
       .click()
-    // invite the user
 
     cy.get('#inviteUserInput')
       .click({ force: true })
@@ -102,21 +100,22 @@ describe('Instance Flow', () => {
     cy.get('#notificationMessage').should('contain', 'testInvite@zesty.io')
   })
 
-  // // cancels an invite
-  // it('Cancels an invite', () => {
-  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-  //   cy.wait(2000)
-  //   cy.get('#siteListWrapper > main')
-  //     .find('article')
-  //     .contains(timeStamp)
-  //     .parent()
-  //     .siblings('footer')
-  //     .children('div')
-  //     .children('a')
-  //     .first()
-  //     .click()
-  //   // cancel the invite
-  // })
+  it('Cancels an invite', () => {
+    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.wait(2000)
+    cy.get('#siteListWrapper > main')
+      .find('article')
+      .contains(timeStamp)
+      .parent()
+      .siblings('footer')
+      .children('div')
+      .children('a')
+      .first()
+      .click()
+    cy.get('#revoke-button').click({ force: true })
+    cy.get('#confirmTrue').click()
+    cy.get('#notificationMessage').should('contain', 'Cancelled')
+  })
 
   // // invites a team
   // it('Invites a team', () => {

@@ -16,7 +16,9 @@ export default class UserPendingRow extends PureComponent {
         {this.props.isAdmin ? (
           <span className={styles.action}>
             {this.props.pending ? (
-              <Button onClick={() => this.confirm(this.props.inviteZUID)}>
+              <Button
+                onClick={() => this.confirm(this.props.inviteZUID)}
+                id={`revoke-button`}>
                 <i className="fa fa-trash-o" aria-hidden="true" />Revoke Invite
               </Button>
             ) : null}
