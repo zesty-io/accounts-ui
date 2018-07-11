@@ -1,17 +1,17 @@
 describe('Instance Flow', () => {
   const timeStamp = Date.now()
 
-  // it('Fails to create an instance with no name', () => {
-  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-  //   cy.get('#siteListWrapper > main > article > footer > a > button').click()
-  //   cy.get(
-  //     '#root > section > section > section > section > div > div > button'
-  //   ).click()
-  //   cy.get('#root > section > section > article > span > p').should(
-  //     'contain',
-  //     'You must enter a name'
-  //   )
-  // })
+  it('Fails to create an instance with no name', () => {
+    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.get('#siteListWrapper > main > article > footer > a > button').click()
+    cy.get(
+      '#root > section > section > section > section > div > div > button'
+    ).click()
+    cy.get('#root > section > section > article > span > p').should(
+      'contain',
+      'You must enter a name'
+    )
+  })
 
   it('Creates an instance', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
@@ -52,11 +52,81 @@ describe('Instance Flow', () => {
     cy.get('#notificationMessage').should('contain', 'Successfully')
   })
 
+  // it('Adds a domain', () => {
+  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+  //   cy.wait(2000)
+  //   cy.get('#siteListWrapper > main')
+  //     .find('article')
+  //     .contains(timeStamp)
+  //     .parent()
+  //     .siblings('footer')
+  //     .children('div')
+  //     .children('a')
+  //     .first()
+  //     .click()
+  //   // edit domain things
+  // })
+
+  // invites a user
+  // it('Invites a User', () => {
+  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+  //   cy.wait(2000)
+  //   cy.get('#siteListWrapper > main')
+  //     .find('article')
+  //     .contains(timeStamp)
+  //     .parent()
+  //     .siblings('footer')
+  //     .children('div')
+  //     .children('a')
+  //     .first()
+  //     .click()
+  //   // invite the user
+  // })
+
+  // // cancels an invite
+  // it('Cancels an invite', () => {
+  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+  //   cy.wait(2000)
+  //   cy.get('#siteListWrapper > main')
+  //     .find('article')
+  //     .contains(timeStamp)
+  //     .parent()
+  //     .siblings('footer')
+  //     .children('div')
+  //     .children('a')
+  //     .first()
+  //     .click()
+  //   // cancel the invite
+  // })
+
+  // // invites a team
+  // it('Invites a team', () => {
+  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+  //   cy.wait(2000)
+  //   cy.get('#siteListWrapper > main')
+  //     .find('article')
+  //     .contains(timeStamp)
+  //     .parent()
+  //     .siblings('footer')
+  //     .children('div')
+  //     .children('a')
+  //     .first()
+  //     .click()
+  //   // invite the team
+  // })
+
   // it('Updates an instance blueprint', () => {
   //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-  //   cy.get('#siteListWrapper > section > div > article > main').should(
-  //     'contain',
-  //     timeStamp
-  //   )
+  // cy.wait(2000)
+  // cy.get('#siteListWrapper > main')
+  //   .find('article')
+  //   .contains(timeStamp)
+  //   .parent()
+  //   .siblings('footer')
+  //   .children('div')
+  //   .children('a')
+  //   .first()
+  //   .click()
+
   // })
 })
