@@ -10,7 +10,10 @@ import { notifications } from './notifications'
 import { confirm } from './confirm'
 import { systemRoles } from './systemRoles'
 import { properties } from '../../apps/properties/src/store'
-import { teams } from '../../apps/teams/src/store'
+
+// Teams
+import { teams } from '../../apps/teams/src/store/teams'
+import { teamInvites } from '../../apps/teams/src/store/teamInvites'
 
 const loggerMiddleware = createLogger({
   collapsed: true,
@@ -21,6 +24,7 @@ const appReducer = combineReducers({
   ...properties,
   user,
   teams,
+  teamInvites,
   auth,
   settings,
   // modal,

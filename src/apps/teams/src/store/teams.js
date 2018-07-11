@@ -81,10 +81,11 @@ export function teams(state = {}, action) {
       })
       return { ...state, [action.teamZUID]: { ...toggledUser } }
 
-    case 'FETCHING_TEAMS_FAILURE':
-    case 'FETCHING_TEAMS':
-    case 'ACCEPT_TEAM_INVITE_SUCCESS':
-    case 'CREATE_TEAM_SUCCESS':
+    // case 'FETCHING_TEAMS_FAILURE':
+    // case 'FETCHING_TEAMS':
+    // case 'ACCEPT_TEAM_INVITE_SUCCESS':
+    // case 'CREATE_TEAM_SUCCESS':
+
     default:
       return state
   }
@@ -115,7 +116,10 @@ export const fetchTeams = userZUID => {
     dispatch({ type: 'FETCHING_TEAMS' })
     return request(`${CONFIG.API_ACCOUNTS}/teams`)
       .then(res => {
-        dispatch({ type: 'FETCH_TEAMS_SUCCESS', data: res.data })
+        dispatch({
+          type: 'FETCH_TEAMS_SUCCESS',
+          data: res.data
+        })
         return res.data
       })
       .catch(err => {
@@ -131,7 +135,10 @@ export const fetchTeam = teamZUID => {
     dispatch({ type: 'FETCHING_TEAM' })
     return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`)
       .then(res => {
-        dispatch({ type: 'FETCH_TEAM_SUCCESS', team: res.data })
+        dispatch({
+          type: 'FETCH_TEAM_SUCCESS',
+          team: res.data
+        })
         return res.data
       })
       .catch(err => {
@@ -293,7 +300,7 @@ export const deleteTeam = (teamZUID, Name) => {
   }
 }
 
-export const getTeamPendingInvites = teamZUID => {
+export function getTeamPendingInvites(teamZUID) {
   return dispatch => {
     dispatch({ type: 'FETCH_MEMBERS_PENDING_TEAM' })
     return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/pending`)
@@ -353,22 +360,6 @@ export const getTeamMembers = teamZUID => {
   }
 }
 
-export const getUserTeamInvites = () => {
-  return dispatch => {
-    dispatch({ type: 'FETCHING_INVITED_TEAMS' })
-    return request(`${CONFIG.API_ACCOUNTS}/teams/invites`)
-      .then(res => {
-        dispatch({ type: 'FETCH_TEAMS_SUCCESS', data: res.data })
-        return res.data
-      })
-      .catch(err => {
-        dispatch({ type: 'FETCHING_INVITED_TEAMS_FAILURE', err })
-        console.table(err)
-        return err
-      })
-  }
-}
-
 export const modifyUser = (teamZUID, userZUID, admin) => {
   return dispatch => {
     dispatch({ type: 'MODIFYING_USER' })
@@ -386,55 +377,55 @@ export const modifyUser = (teamZUID, userZUID, admin) => {
   }
 }
 
-export const handleTeamInvite = (inviteZUID, teamZUID, action) => {
-  return dispatch => {
-    dispatch({ type: 'RESPONDING_TO_INVITE' })
-    return request(
-      `${CONFIG.API_ACCOUNTS}/teams/invites/${inviteZUID}?action=${action}`,
-      {
-        method: 'PUT'
-      }
-    )
-      .then(res => {
-        dispatch({ type: 'RESPONDING_TO_INVITE_SUCCESS' })
-        if (action === 'decline' || action === 'cancel') {
-          // remove the teamZUID from state if declining invite
-          if (action === 'decline') {
-            dispatch({
-              type: 'REMOVE_TEAM_FROM_STATE',
-              data: { ZUID: teamZUID }
-            })
-          }
-          dispatch(
-            notify({
-              type: 'success',
-              message: 'Invite has been removed'
-            })
-          )
-        } else {
-          dispatch({
-            type: 'REMOVE_TEAM_FROM_STATE',
-            data: { ZUID: teamZUID }
-          })
-          dispatch(
-            notify({
-              type: 'success',
-              message: 'Invite accepted'
-            })
-          )
-        }
-        return res.data
-      })
-      .catch(err => {
-        dispatch({ type: 'RESPONDING_TO_INVITE_FAILURE', err })
-        dispatch(
-          notify({
-            type: 'error',
-            message: 'Invite error'
-          })
-        )
-        console.table(err)
-        return err
-      })
-  }
-}
+// export const handleTeamInvite = (inviteZUID, teamZUID, action) => {
+//   return dispatch => {
+//     dispatch({ type: 'RESPONDING_TO_INVITE' })
+//     return request(
+//       `${CONFIG.API_ACCOUNTS}/teams/invites/${inviteZUID}?action=${action}`,
+//       {
+//         method: 'PUT'
+//       }
+//     )
+//       .then(res => {
+//         dispatch({ type: 'RESPONDING_TO_INVITE_SUCCESS' })
+//         if (action === 'decline' || action === 'cancel') {
+//           // remove the teamZUID from state if declining invite
+//           if (action === 'decline') {
+//             dispatch({
+//               type: 'REMOVE_TEAM_FROM_STATE',
+//               data: { ZUID: teamZUID }
+//             })
+//           }
+//           dispatch(
+//             notify({
+//               type: 'success',
+//               message: 'Invite has been removed'
+//             })
+//           )
+//         } else {
+//           dispatch({
+//             type: 'REMOVE_TEAM_FROM_STATE',
+//             data: { ZUID: teamZUID }
+//           })
+//           dispatch(
+//             notify({
+//               type: 'success',
+//               message: 'Invite accepted'
+//             })
+//           )
+//         }
+//         return res.data
+//       })
+//       .catch(err => {
+//         dispatch({ type: 'RESPONDING_TO_INVITE_FAILURE', err })
+//         dispatch(
+//           notify({
+//             type: 'error',
+//             message: 'Invite error'
+//           })
+//         )
+//         console.table(err)
+//         return err
+//       })
+//   }
+// }

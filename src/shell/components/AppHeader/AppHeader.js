@@ -5,8 +5,8 @@ import cx from 'classnames'
 import styles from './AppHeader.less'
 
 import { logout } from '../../store/auth'
-import { fetchSitesWithInvites } from '../../../apps/properties/src/store/sites'
-import { getUserTeamInvites } from '../../../apps/teams/src/store'
+// import { fetchSitesWithInvites } from '../../../apps/properties/src/store/sites'
+// import { getUserTeamInvites } from '../../../apps/teams/src/store'
 
 class AppHeader extends Component {
   constructor(props) {
@@ -18,8 +18,8 @@ class AppHeader extends Component {
 
   componentDidMount() {
     document.addEventListener('click', this.closeUserNav)
-    this.props.dispatch(fetchSitesWithInvites())
-    this.props.dispatch(getUserTeamInvites())
+    // this.props.dispatch(fetchSitesWithInvites())
+    // this.props.dispatch(getUserTeamInvites())
   }
   componentWillUnmountMount() {
     document.removeEventListener('click', this.closeUserNav)

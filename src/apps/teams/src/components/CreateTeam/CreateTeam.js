@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { createTeam } from '../../store'
+import { createTeam } from '../../store/teams'
 import { notify } from '../../../../../shell/store/notifications'
 
 import styles from './CreateTeam.less'

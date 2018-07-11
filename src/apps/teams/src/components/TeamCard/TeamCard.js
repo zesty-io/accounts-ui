@@ -11,7 +11,7 @@ import {
   handleTeamInvite,
   removeMember,
   modifyUser
-} from '../../store'
+} from '../../store/teams'
 
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
@@ -20,8 +20,6 @@ import styles from './TeamCard.less'
 
 export default class TeamCard extends Component {
   state = {
-    // name: '',
-    // description: '',
     inviteeEmail: '',
     admin: false,
     editing: false,
@@ -29,14 +27,10 @@ export default class TeamCard extends Component {
     submitted: false
   }
   componentDidMount() {
-    // this.setState({
-    //   name: this.props.team.name,
-    //   description: this.props.team.description
-    // })
     // TODO: an individual loading state for each
     Promise.all([
-      this.props.dispatch(getTeamMembers(this.props.team.ZUID)),
-      this.props.dispatch(getTeamInstances(this.props.team.ZUID))
+      this.props.dispatch(getTeamMembers(this.props.team.ZUID))
+      // this.props.dispatch(getTeamInstances(this.props.team.ZUID))
     ]).then(() => {
       this.props.dispatch(getTeamPendingInvites(this.props.team.ZUID))
       const isAdmin = Boolean(
@@ -55,38 +49,36 @@ export default class TeamCard extends Component {
     return (
       <Card className={styles.TeamCard}>
         <CardHeader className={styles.CardHeader}>
-          <section className={styles.InviteCode}>
-            <h4>
-              ID:&nbsp;
-              <span className={styles.ZUID}>{team.ZUID}</span>
-              <i
-                className={`fa fa-copy ${styles.copy}`}
-                onClick={e => {
-                  const input = document.createElement('input')
-                  document.body.appendChild(input)
-                  input.value = team.ZUID
-                  input.focus()
-                  input.select()
-                  const result = document.execCommand('copy')
-                  input.remove()
-                  if (result === 'unsuccessful') {
-                    return this.props.dispatch(
-                      notify({
-                        type: 'error',
-                        message: 'failed to copy'
-                      })
-                    )
-                  }
-                  this.props.dispatch(
-                    notify({
-                      type: 'success',
-                      message: 'Copied to clipboard'
-                    })
-                  )
-                }}
-              />
-            </h4>
-          </section>
+          <Button
+            title="Click to copy team ID"
+            className={styles.Copy}
+            onClick={e => {
+              const input = document.createElement('input')
+              document.body.appendChild(input)
+              input.value = team.ZUID
+              input.focus()
+              input.select()
+              const result = document.execCommand('copy')
+              input.remove()
+              if (result === 'unsuccessful') {
+                return this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message: 'Failed to copy the team ID to your clipboard'
+                  })
+                )
+              }
+              this.props.dispatch(
+                notify({
+                  type: 'success',
+                  message: `Copied team ID ${team.ZUID} to your clipboard`
+                })
+              )
+            }}>
+            <i className={cx(styles.copy, 'fa fa-clipboard')} />
+            Copy ID
+          </Button>
+          <span className={styles.ZUID}>{team.ZUID}</span>
         </CardHeader>
         <CardContent className={styles.CardContent}>
           <section className={styles.Settings}>
@@ -101,14 +93,40 @@ export default class TeamCard extends Component {
               />
             )}
             {this.state.editing ? (
-              <form className={styles.Editing}>
+              <div className={styles.Editing}>
                 <label>
-                  Team Name: <Input />
+                  Team Name:{' '}
+                  <Input
+                    type="text"
+                    placeholder="New team name"
+                    onChange={this.handleChange}
+                    name="name"
+                  />
                 </label>
                 <label>
-                  Team Description: <textarea />
+                  Team Description:
+                  <textarea
+                    placeholder="New team description"
+                    onChange={this.handleChange}
+                    name="description"
+                  />
                 </label>
-              </form>
+                <ButtonGroup>
+                  <Button
+                    className={styles.Save}
+                    type="save"
+                    onClick={this.handleUpdateTeam}>
+                    <i className="fa fa-floppy-o" aria-hidden="true" />
+                    Update Team
+                  </Button>
+                  <Button
+                    className={styles.Delete}
+                    type="warn"
+                    onClick={this.handleDeleteTeam}>
+                    <i className="fa fa-trash-o" aria-hidden="true" />
+                  </Button>
+                </ButtonGroup>
+              </div>
             ) : (
               <React.Fragment>
                 <h3>{this.props.team.name}</h3>
@@ -124,7 +142,6 @@ export default class TeamCard extends Component {
               message="Loading team members">
               {team.members
                 ? team.members.map(member => {
-                    console.log(member)
                     return (
                       <article className={styles.Member} key={member.ZUID}>
                         {member.admin ? (
@@ -142,7 +159,7 @@ export default class TeamCard extends Component {
                         <span className={styles.Name}>
                           {member.invitedByUserZUID
                             ? member.inviteeEmail
-                            : `${member.firstName} ${member.lastName}`}
+                            : member.email}
                         </span>
 
                         {!member.admin && this.state.isAdmin ? (
@@ -157,7 +174,7 @@ export default class TeamCard extends Component {
                       </article>
                     )
                   })
-                : 'no members for this team'}
+                : 'No members for this team'}
             </WithLoader>
           </section>
 
@@ -177,7 +194,7 @@ export default class TeamCard extends Component {
                       </article>
                     )
                   })
-                : 'No Instances for this team'}
+                : 'No instances for this team'}
             </WithLoader>
           </section>
         </CardContent>
@@ -189,30 +206,22 @@ export default class TeamCard extends Component {
                 Invite
               </Button>
               <Input
-                type="text"
                 required
-                value={this.state.inviteeEmail}
-                onChange={this.handleChange}
+                type="text"
                 name="inviteeEmail"
-                placeholder="new@team-member.com"
+                placeholder="team-member@acme.com"
                 autoComplete="off"
+                value={this.state.inviteeEmail}
+                onChange={this.handleInviteEmail}
               />
-              {/* <section className={styles.admin}>
-                <Toggle name="admin" onChange={this.handleChange} />
-                <small>Admin</small>
-              </section> */}
             </form>
           )}
         </CardFooter>
       </Card>
     )
   }
+
   handleChange = evt => {
-    if (evt.target.name === 'admin') {
-      return this.setState({
-        admin: evt.target.checked ? true : false
-      })
-    }
     this.setState({
       [evt.target.name]: evt.target.value
     })
@@ -224,7 +233,13 @@ export default class TeamCard extends Component {
     })
   }
 
-  handleUpdateName = () => {
+  handleInviteEmail = evt => {
+    this.setState({
+      inviteeEmail: evt.target.value
+    })
+  }
+
+  handleUpdateTeam = () => {
     if (this.state.name.length > 50) {
       return this.props.dispatch(
         notify({
@@ -250,7 +265,15 @@ export default class TeamCard extends Component {
         )
       )
       .then(() => {
-        this.setState({ editing: false })
+        this.setState({
+          editing: false
+        })
+      })
+      .catch(err => {
+        console.error(err)
+        this.setState({
+          editing: false
+        })
       })
   }
   handleInvite = evt => {
@@ -272,6 +295,7 @@ export default class TeamCard extends Component {
       })
   }
   handleDeleteTeam = evt => {
+    evt.preventDefault()
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to delete this team?',
@@ -283,7 +307,7 @@ export default class TeamCard extends Component {
                 this.props.dispatch(
                   notify({
                     type: 'success',
-                    message: 'Team deleted'
+                    message: `Deleted team ${this.props.team.ZUID}`
                   })
                 )
               })

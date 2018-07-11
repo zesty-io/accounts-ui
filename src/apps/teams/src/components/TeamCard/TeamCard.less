@@ -2,8 +2,8 @@
 
 .TeamCard {
   display: grid;
-  grid-template-rows: 40px 3fr 40px;
-  max-height: 535px;
+  grid-template-rows: 30px 3fr 50px;
+  max-height: 470px;
 
   &:hover,
   &:focus,
@@ -12,64 +12,49 @@
   }
 
   .CardHeader {
-    position: relative;
+    // position: relative;
+    display: flex;
+    align-items: center;
 
-    // p {
-    //   max-width: 100%;
-    //   word-wrap: break-word;
-    // }
-    // .Edit {
-    //   padding: 0.2rem;
-    //   transition: all 0.1s;
-    //   color: lighten(@zesty-gray, 20%);
-    //   font-size: 0.7em;
-    //   &:hover {
-    //     color: @zesty-gray;
-    //   }
-    // }
-    // .trash {
-    //   position: absolute;
-    //   top: 8px;
-    //   right: 8px;
-    //   transition: all 0.1s;
-    //   color: lighten(@zesty-gray, 40%);
-    //   &:hover,
-    //   &:active,
-    //   &:focus {
-    //     color: @zesty-red;
-    //   }
-    // }
-    .InviteCode {
-      display: flex;
-      align-items: baseline;
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-      width: 100%;
-      .ZUID {
-        padding: 0.2rem;
-        border-radius: 5px;
-        background-color: lighten(@zesty-tab-blue, 5%);
-        color: @zesty-white;
-      }
-      .copy {
-        margin-left: 0.2rem;
-        transition: all 0.2s;
-        &:hover,
-        &:active,
-        &:focus {
-          font-size: 1.1rem;
-        }
-      }
+    .Copy {
+      font-size: 0.7em;
+      padding: 0.4rem 0.5rem;
+      margin-right: 0.5rem;
     }
+
+    .ZUID {
+      // padding: 0.2rem;
+      // border-radius: 5px;
+      // background-color: lighten(@zesty-tab-blue, 5%);
+      // color: @zesty-white;
+
+      font-weight: bold;
+    }
+
+    // .InviteCode {
+    //   display: flex;
+    //   align-items: baseline;
+    //   width: 100%;
+    //   .ZUID {
+    //     padding: 0.2rem;
+    //     border-radius: 5px;
+    //     background-color: lighten(@zesty-tab-blue, 5%);
+    //     color: @zesty-white;
+    //   }
+    //   .copy {
+    //     margin-left: 0.2rem;
+    //     // transition: all 0.2s;
+    //     // &:hover,
+    //     // &:active,
+    //     // &:focus {
+    //     //   font-size: 1.1rem;
+    //     // }
+    //   }
+    // }
   }
 
   .CardContent {
-    // display: grid;
-    // grid-template-columns: 1fr 5px;
-
     margin: 1rem 0;
-
-    // max-height: 430px;
     overflow-y: scroll;
     position: relative;
 
@@ -86,6 +71,12 @@
       }
 
       .Editing {
+        width: 93%;
+        background: @zesty-teal;
+        padding: 0.5rem;
+        color: #fff;
+        border-radius: 3px;
+
         input,
         textarea {
           display: block;
@@ -94,6 +85,15 @@
         }
         textarea {
           height: 75px;
+        }
+        .Save {
+          flex: 2;
+        }
+        .Delete {
+          flex: 0;
+          i {
+            margin: 0;
+          }
         }
       }
     }
