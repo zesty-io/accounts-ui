@@ -40,6 +40,7 @@ export default class Domain extends Component {
           <span className={styles.Edit}>
             <Input
               value={this.state.domain}
+              id="editDomainInput"
               placeholder="Set a custom domain"
               onChange={evt => {
                 this.setState({
@@ -47,7 +48,7 @@ export default class Domain extends Component {
                 })
               }}
             />
-            <Button onClick={this.handleSave}>
+            <Button onClick={this.handleSave} id="editDomainSave">
               <i className="fa fa-save" aria-hidden="true" />Save
             </Button>
           </span>

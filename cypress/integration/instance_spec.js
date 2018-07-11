@@ -15,6 +15,8 @@ describe('Instance Flow', () => {
 
   it('Creates an instance', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.wait(2000)
+
     cy.get('#siteListWrapper > main > article > footer > a > button').click()
     cy.get('#root > section > section > section > section > div > input').type(
       `TEST INSTANCE ${timeStamp}`
@@ -52,36 +54,53 @@ describe('Instance Flow', () => {
     cy.get('#notificationMessage').should('contain', 'Successfully')
   })
 
-  // it('Adds a domain', () => {
-  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-  //   cy.wait(2000)
-  //   cy.get('#siteListWrapper > main')
-  //     .find('article')
-  //     .contains(timeStamp)
-  //     .parent()
-  //     .siblings('footer')
-  //     .children('div')
-  //     .children('a')
-  //     .first()
-  //     .click()
-  //   // edit domain things
-  // })
+  it('Adds a domain', () => {
+    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.wait(2000)
+    cy.get('#siteListWrapper > main')
+      .find('article')
+      .contains(timeStamp)
+      .parent()
+      .siblings('footer')
+      .children('div')
+      .children('a')
+      .first()
+      .click()
+    // edit domain things
+    cy.get('#editDomainInput')
+      .click({ force: true })
+      .type('domain-test.zesty.site', { force: true })
+    cy.get('#editDomainSave').click({ force: true })
+    cy.get('#notificationMessage').should('contain', 'domain-test.zesty.site')
+  })
 
-  // invites a user
-  // it('Invites a User', () => {
-  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-  //   cy.wait(2000)
-  //   cy.get('#siteListWrapper > main')
-  //     .find('article')
-  //     .contains(timeStamp)
-  //     .parent()
-  //     .siblings('footer')
-  //     .children('div')
-  //     .children('a')
-  //     .first()
-  //     .click()
-  //   // invite the user
-  // })
+  it('Invites a User', () => {
+    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.wait(2000)
+    cy.get('#siteListWrapper > main')
+      .find('article')
+      .contains(timeStamp)
+      .parent()
+      .siblings('footer')
+      .children('div')
+      .children('a')
+      .first()
+      .click()
+    // invite the user
+
+    cy.get('#inviteUserInput')
+      .click({ force: true })
+      .type('testInvite@zesty.io', { force: true })
+    cy.get('.selector')
+      .first()
+      .click({ force: true })
+      .find('li')
+      .contains('Developer')
+      .click({ force: true })
+    cy.get('#inviteUserSend').click({ force: true })
+    cy.wait(2000)
+    cy.get('#notificationMessage').should('contain', 'testInvite@zesty.io')
+  })
 
   // // cancels an invite
   // it('Cancels an invite', () => {
