@@ -68,9 +68,12 @@ describe('Instance Flow', () => {
       .click()
     cy.get('#editDomainInput')
       .click({ force: true })
-      .type('domain-test.zesty.site', { force: true })
+      .type(`domain-test${timeStamp}.zesty.site`, { force: true })
     cy.get('#editDomainSave').click({ force: true })
-    cy.get('#notificationMessage').should('contain', 'domain-test.zesty.site')
+    cy.get('#notificationMessage').should(
+      'contain',
+      `domain-test${timeStamp}.zesty.site`
+    )
   })
 
   it('Invites a User', () => {
@@ -115,6 +118,27 @@ describe('Instance Flow', () => {
     cy.get('#revoke-button').click({ force: true })
     cy.get('#confirmTrue').click()
     cy.get('#notificationMessage').should('contain', 'Cancelled')
+  })
+
+  it('Updates an instance blueprint', () => {
+    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.wait(2000)
+    cy.get('#siteListWrapper > main')
+      .find('article')
+      .contains(timeStamp)
+      .parent()
+      .siblings('footer')
+      .children('div')
+      .children('a')
+      .first()
+      .click()
+    cy.get('#changeBlueprint').click({ force: true })
+    cy.get('#confirmTrue').click()
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(4) > footer > button'
+    ).click()
+    cy.wait(2000)
+    cy.get('#blueprintName').should('contain', 'BS3')
   })
 
   // // invites a team
