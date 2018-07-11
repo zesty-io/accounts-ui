@@ -15,27 +15,23 @@ export default class CreateTeam extends Component {
     return (
       <Card className={styles.CreateTeam}>
         <CardHeader>
-          <h3>Create Team</h3>
+          <h3>Teams</h3>
         </CardHeader>
         <CardContent className={styles.CardContent}>
           <section>
             <p>
-              Teams allow providing a group of users access to an instance. By
-              creating a team you can invite other Zesty.io users to your team
-              by their email. Once you have built your team you can share your
-              team ID with instance owners so they can provide your team access.{' '}
-              <Url href="#">Learn How Teams Work</Url>
+              Teams are a great way to manage multiple users who need to access
+              an instance.
             </p>
 
-            {/* <p>
-              Teams can be invited to a role on an instance by using the invite
-              code Once the invitation is accepted by the team admin, all users
-              in the team have access to the instance
-            </p> */}
-            {/* <p>Learn More:</p>
-            <a href="#">link to docs</a>
-            <br />
-            <a href="#">link to walk through</a> */}
+            <p>
+              Once you have created a team you can share your team ID with an
+              instance owner to let them select a role and invite your team to
+              their instance. This will allow you to manage who has access to an
+              instance without needing the instance owner or admin.
+            </p>
+
+            {/* <Url href="#">Learn How Teams Work</Url> */}
           </section>
           <section className={styles.Team}>
             <label>
