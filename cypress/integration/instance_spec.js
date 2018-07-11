@@ -44,17 +44,12 @@ describe('Instance Flow', () => {
       .children('a')
       .first()
       .click()
-    cy.pause()
-    cy.get('#siteListWrapper > section > div > article > main')
-      .children()
-      .first()
-      .children()
-      .focus()
-      .click()
-      .type(`New Name ${timeStamp}`)
-    cy.get(
-      '#siteListWrapper > section > div > article > main > article.Card.Meta > header > h2 > label > div > button:nth-child(2)'
-    )
+    cy.get('#editInstanceNameSpan').click({ force: true })
+    cy.get('#editInstanceNameInput')
+      .click({ force: true })
+      .type(' changed', { force: true })
+    cy.get('#editInstanceNameSave').click({ force: true })
+    cy.get('#notificationMessage').should('contain', 'Successfully')
   })
 
   // it('Updates an instance blueprint', () => {
