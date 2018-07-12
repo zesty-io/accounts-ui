@@ -14,8 +14,8 @@
     "build-development": "export NODE_ENV=\"development\" && node bin/build",
     "build-stage": "export NODE_ENV=\"stage\" && node bin/build",
     "build-production": "export NODE_ENV=\"production\" && node bin/build",
-    "test": "cypress open",
-    "test:run": "cypress run --browser chrome"
+    "test:dev": "cypress open",
+    "test": "cypress run --browser chrome"
   },
   "author": "Zesty.io<developers@zesty.io>",
   "contributors": [
