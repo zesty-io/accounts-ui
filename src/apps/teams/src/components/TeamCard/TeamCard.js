@@ -2,16 +2,13 @@ import React, { Component } from 'react'
 import cx from 'classnames'
 
 import {
-  updateTeam,
-  inviteMember,
-  deleteTeam,
-  getTeamMembers,
-  getTeamInstances,
-  getTeamPendingInvites,
-  handleTeamInvite,
-  removeMember,
-  modifyUser
-} from '../../store/teams'
+  fetchTeamMembers,
+  fetchTeamMemberInvites,
+  inviteTeamMember,
+  removeTeamMember
+} from '../../store/teamMembers'
+import { updateTeam, deleteTeam, fetchTeamInstances } from '../../store/teams'
+import { declineTeamInvite, cancelTeamInvite } from '../../store/teamInvites'
 
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
@@ -20,6 +17,8 @@ import styles from './TeamCard.less'
 
 export default class TeamCard extends Component {
   state = {
+    name: '',
+    description: '',
     inviteeEmail: '',
     admin: false,
     editing: false,
@@ -27,15 +26,14 @@ export default class TeamCard extends Component {
     submitted: false
   }
   componentDidMount() {
-    // TODO: an individual loading state for each
     Promise.all([
-      this.props.dispatch(getTeamMembers(this.props.team.ZUID))
-      // this.props.dispatch(getTeamInstances(this.props.team.ZUID))
+      this.props.dispatch(fetchTeamMembers(this.props.team.ZUID)),
+      this.props.dispatch(fetchTeamMemberInvites(this.props.team.ZUID))
+      // this.props.dispatch(fetchTeamInstances(this.props.team.ZUID))
     ]).then(() => {
-      this.props.dispatch(getTeamPendingInvites(this.props.team.ZUID))
       const isAdmin = Boolean(
-        this.props.team.members.find(user => {
-          return user.ZUID === this.props.userZUID && user.admin
+        this.props.members.filter(member => member).find(member => {
+          return member.ZUID === this.props.userZUID && member.admin
         })
       )
       this.setState({
@@ -98,7 +96,7 @@ export default class TeamCard extends Component {
                   Team Name:{' '}
                   <Input
                     type="text"
-                    placeholder="New team name"
+                    placeholder={this.props.team.name}
                     onChange={this.handleChange}
                     name="name"
                   />
@@ -106,7 +104,7 @@ export default class TeamCard extends Component {
                 <label>
                   Team Description:
                   <textarea
-                    placeholder="New team description"
+                    placeholder={this.props.team.description}
                     onChange={this.handleChange}
                     name="description"
                   />
@@ -136,49 +134,83 @@ export default class TeamCard extends Component {
           </section>
 
           <section className={styles.Members}>
-            <h3>Members</h3>
+            <h3>Owners</h3>
             <WithLoader
               condition={this.state.loaded}
-              message="Loading team members">
-              {team.members
-                ? team.members.map(member => {
-                    return (
-                      <article className={styles.Member} key={member.ZUID}>
-                        {member.admin ? (
+              message="Loading team owners">
+              {this.props.members.length
+                ? this.props.members
+                    .filter(member => member)
+                    .filter(member => member.admin)
+                    .map((member, i) => {
+                      return (
+                        <article className={styles.Member} key={i}>
                           <i
                             className="fa fa-lock"
                             aria-hidden="true"
                             title="Team owner"
                           />
-                        ) : member.invitedByUserZUID ? (
-                          <i className="fa fa-clock-o" />
-                        ) : (
-                          <i className="fa fa-user" />
-                        )}
+                          <span className={styles.Name}>{member.email}</span>
+                        </article>
+                      )
+                    })
+                : 'Team is missing an owner'}
+            </WithLoader>
+          </section>
 
-                        <span className={styles.Name}>
-                          {member.invitedByUserZUID
-                            ? member.inviteeEmail
-                            : member.email}
-                        </span>
+          <section className={styles.Members}>
+            <h3>Members</h3>
+            <WithLoader
+              condition={this.state.loaded}
+              message="Loading team members">
+              {this.props.members.length
+                ? this.props.members
+                    .filter(member => member)
+                    .filter(member => !member.admin)
+                    .map((member, i) => {
+                      return (
+                        <article className={styles.Member} key={i}>
+                          {member.invitedByUserZUID ? (
+                            <i className="fa fa-clock-o" />
+                          ) : (
+                            <i className="fa fa-user" />
+                          )}
 
-                        {!member.admin && this.state.isAdmin ? (
-                          <i
-                            className={cx(
-                              styles.Remove,
-                              'fa fa-times-circle-o'
-                            )}
-                            onClick={() => this.removeUser(member.ZUID)}
-                          />
-                        ) : null}
-                      </article>
-                    )
-                  })
+                          <span className={styles.Name}>
+                            {member.invitedByUserZUID
+                              ? member.inviteeEmail
+                              : member.email}
+                          </span>
+
+                          {this.state.isAdmin ? (
+                            <i
+                              className={cx(
+                                styles.Remove,
+                                'fa fa-times-circle-o'
+                              )}
+                              onClick={() => {
+                                if (member.inviteeEmail) {
+                                  this.handleCancelInvite(
+                                    this.props.team.ZUID,
+                                    member.ZUID
+                                  )
+                                } else {
+                                  this.handleRemoveMember(
+                                    this.props.team.ZUID,
+                                    member.ZUID
+                                  )
+                                }
+                              }}
+                            />
+                          ) : null}
+                        </article>
+                      )
+                    })
                 : 'No members for this team'}
             </WithLoader>
           </section>
 
-          <section className={styles.Instances}>
+          {/* <section className={styles.Instances}>
             <h3>Instances</h3>
             <WithLoader
               condition={this.state.loaded}
@@ -196,7 +228,7 @@ export default class TeamCard extends Component {
                   })
                 : 'No instances for this team'}
             </WithLoader>
-          </section>
+          </section> */}
         </CardContent>
         <CardFooter>
           {this.state.isAdmin && (
@@ -239,7 +271,8 @@ export default class TeamCard extends Component {
     })
   }
 
-  handleUpdateTeam = () => {
+  handleUpdateTeam = evt => {
+    evt.preventDefault()
     if (this.state.name.length > 50) {
       return this.props.dispatch(
         notify({
@@ -258,47 +291,78 @@ export default class TeamCard extends Component {
     }
     this.props
       .dispatch(
-        updateTeam(
-          this.props.team.ZUID,
-          this.state.name,
-          this.state.description
-        )
+        updateTeam(this.props.team.ZUID, {
+          name: this.state.name || this.props.team.name,
+          description: this.state.description || this.props.team.description
+        })
       )
       .then(() => {
+        this.props.dispatch(
+          notify({
+            type: 'success',
+            message: `Updated team ${this.props.team.name}`
+          })
+        )
         this.setState({
           editing: false
         })
       })
       .catch(err => {
         console.error(err)
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: `Error updating ${this.props.team.name}`
+          })
+        )
         this.setState({
           editing: false
         })
       })
   }
+
   handleInvite = evt => {
     evt.preventDefault()
     this.setState({ submitted: true })
     this.props
       .dispatch(
-        inviteMember(
+        inviteTeamMember(
           this.props.team.ZUID,
           this.state.inviteeEmail,
           this.state.admin
         )
       )
       .then(() => {
+        this.props.dispatch(
+          notify({
+            type: 'success',
+            message: `Team invitation sent`
+          })
+        )
         this.setState({
           inviteeEmail: '',
           submitted: false
         })
       })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: `Invite error, no invite was sent`
+          })
+        )
+        this.setState({
+          submitted: false
+        })
+      })
   }
+
   handleDeleteTeam = evt => {
     evt.preventDefault()
     this.props.dispatch(
       zConfirm({
-        prompt: 'Are you sure you want to delete this team?',
+        kind: 'warn',
+        prompt: `Are you sure you want to delete ${this.props.team.name}?`,
         callback: confirmed => {
           if (confirmed) {
             this.props
@@ -307,7 +371,7 @@ export default class TeamCard extends Component {
                 this.props.dispatch(
                   notify({
                     type: 'success',
-                    message: `Deleted team ${this.props.team.ZUID}`
+                    message: `Deleted team ${this.props.team.name}`
                   })
                 )
               })
@@ -315,7 +379,7 @@ export default class TeamCard extends Component {
                 this.props.dispatch(
                   notify({
                     type: 'error',
-                    message: 'Error deleting team'
+                    message: `Error deleting team ${this.props.team.name}`
                   })
                 )
               })
@@ -324,48 +388,15 @@ export default class TeamCard extends Component {
       })
     )
   }
-  // handleAdminChange = (userZUID, admin) => {
-  //   this.state.isAdmin &&
-  //     this.props.dispatch(
-  //       zConfirm({
-  //         prompt: admin
-  //           ? 'Are you sure you want to make this user an Admin?'
-  //           : 'Are you sure you want to remove this users admin status?',
-  //         callback: confirmed => {
-  //           if (confirmed) {
-  //             this.props
-  //               .dispatch(modifyUser(this.props.team.ZUID, userZUID, admin))
-  //               .then(data => {
-  //                 this.props.dispatch(
-  //                   notify({
-  //                     type: 'success',
-  //                     message: admin
-  //                       ? 'Successfully made user admin'
-  //                       : 'Successfully removed admin privileges'
-  //                   })
-  //                 )
-  //               })
-  //               .catch(() => {
-  //                 this.props.dispatch(
-  //                   notify({
-  //                     type: 'error',
-  //                     message: 'Unable to update admin'
-  //                   })
-  //                 )
-  //               })
-  //           }
-  //         }
-  //       })
-  //     )
-  // }
-  removeUser = userZUID => {
+
+  handleRemoveMember = (teamZUID, userZUID) => {
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to remove this user?',
         callback: confirmed => {
           if (confirmed) {
             this.props
-              .dispatch(removeMember(this.props.team.ZUID, userZUID))
+              .dispatch(removeTeamMember(teamZUID, userZUID))
               .then(data => {
                 this.props.dispatch(
                   notify({
@@ -373,31 +404,45 @@ export default class TeamCard extends Component {
                     message: 'User successfully removed'
                   })
                 )
-                this.props.dispatch({
-                  type: 'REMOVE_TEAM_MEMBER',
-                  userZUID,
-                  teamZUID: this.props.team.ZUID
-                })
+              })
+              .catch(err => {
+                this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message: 'An error occured removing this user'
+                  })
+                )
               })
           }
         }
       })
     )
   }
-  cancelInvite = user => {
+
+  handleCancelInvite = (teamZUID, inviteZUID) => {
     this.props.dispatch(
       zConfirm({
         prompt: 'Are you sure you want to cancel this invite?',
         callback: confirmed => {
           if (confirmed) {
             this.props
-              .dispatch(handleTeamInvite(user, this.props.team.ZUID, 'cancel'))
-              .then(data => {
-                this.props.dispatch({
-                  type: 'REMOVE_TEAM_MEMBER',
-                  userZUID: user,
-                  teamZUID: this.props.team.ZUID
-                })
+              .dispatch(cancelTeamInvite(teamZUID, inviteZUID, 'cancel'))
+              .then(() => {
+                this.props.dispatch(
+                  notify({
+                    type: 'success',
+                    message: 'Users team invitation successfully canceled'
+                  })
+                )
+              })
+              .catch(err => {
+                this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message:
+                      'An error occured canceling this users team invitation'
+                  })
+                )
               })
           }
         }

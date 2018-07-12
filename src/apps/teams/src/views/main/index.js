@@ -11,6 +11,7 @@ export default connect(state => {
   return {
     teams: state.teams,
     teamInvites: state.teamInvites,
+    teamMembers: state.teamMembers,
     user: state.user
   }
 })(
@@ -41,12 +42,7 @@ export default connect(state => {
           className={styles.Loading}
           condition={!this.state.loading}
           message="Loading Your Teams">
-          <TeamsGrid
-            dispatch={this.props.dispatch}
-            teams={this.props.teams}
-            teamInvites={this.props.teamInvites}
-            user={this.props.user}
-          />
+          <TeamsGrid {...this.props} />
         </WithLoader>
       )
     }

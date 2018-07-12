@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { connect } from 'react-redux'
 
 import CreateTeam from '../../components/CreateTeam'
 import TeamCard from '../../components/TeamCard'
@@ -20,26 +19,26 @@ export default class TeamsGrid extends Component {
           <CreateTeam dispatch={this.props.dispatch} />
 
           {/* invited teams */}
-          {Object.keys(this.props.teamInvites).map(teamZUID => (
+          {Object.keys(this.props.teamInvites).map(inviteZUID => (
             <InviteCard
-              key={teamZUID}
+              key={inviteZUID}
               dispatch={this.props.dispatch}
-              team={this.props.teamInvites[teamZUID]}
+              invite={this.props.teamInvites[inviteZUID]}
             />
           ))}
 
           {/* regular teams */}
-          {this.props.teams &&
-            Object.keys(this.props.teams).map(teamZUID => {
-              return (
-                <TeamCard
-                  key={teamZUID}
-                  dispatch={this.props.dispatch}
-                  team={this.props.teams[teamZUID]}
-                  userZUID={this.props.user.ZUID}
-                />
-              )
-            })}
+          {Object.keys(this.props.teams).map(teamZUID => (
+            <TeamCard
+              key={teamZUID}
+              dispatch={this.props.dispatch}
+              team={this.props.teams[teamZUID]}
+              members={this.props.teams[teamZUID].members.map(
+                memberZUID => this.props.teamMembers[memberZUID]
+              )}
+              userZUID={this.props.user.ZUID}
+            />
+          ))}
         </div>
       </section>
     )
