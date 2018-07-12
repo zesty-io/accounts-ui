@@ -19,6 +19,7 @@ describe('Blueprint Flow', () => {
       'Long description'
     )
     cy.get('#Blueprint > div > button:nth-child(1)').click()
+    cy.get('#notificationMessage').should('contain', 'Successfully created')
   })
 
   it('Can Edit a blueprint', () => {
@@ -44,6 +45,7 @@ describe('Blueprint Flow', () => {
     cy.get('#Blueprint > label:nth-child(7) > textarea').type('Edited')
     cy.get('#Blueprint > label:nth-child(8) > textarea').type('Edited')
     cy.get('#Blueprint > div > button:nth-child(1)').click()
+    cy.get('#notificationMessage').should('contain', 'Successfully saved')
   })
 
   it('Can Delete a blueprint', () => {
@@ -62,5 +64,9 @@ describe('Blueprint Flow', () => {
       .first()
       .click()
     cy.get('#confirmTrue').click()
+    cy.get('#notificationMessage').should(
+      'contain',
+      'Blueprint successfully removed'
+    )
   })
 })
