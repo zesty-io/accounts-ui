@@ -49,15 +49,13 @@ export default class CompanyAccess extends Component {
                 <Select onSelect={this.handleRole}>
                   <Option key="default" value="" text="Select Role" />
                   {this.props.siteRoles.map(role => {
-                    if (!role.systemRole.super) {
-                      return (
-                        <Option
-                          key={role.ZUID}
-                          value={role.ZUID}
-                          text={role.name}
-                        />
-                      )
-                    }
+                    return (
+                      <Option
+                        key={role.ZUID}
+                        value={role.ZUID}
+                        text={role.name}
+                      />
+                    )
                   })}
                 </Select>
                 <Button
