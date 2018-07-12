@@ -2,6 +2,8 @@ import { request } from '../../../../util/request'
 
 export function teamMembers(state = {}, action) {
   switch (action.type) {
+    // Team members and team member invites are
+    // treated the same
     case 'INVITE_TEAM_MEMBER_SUCCESS':
     case 'FETCH_TEAM_MEMBERS_SUCCESS':
     case 'FETCH_TEAM_MEMBER_INVITES_SUCCESS':

@@ -69,16 +69,6 @@ export default class CreateTeam extends Component {
       </Card>
     )
   }
-  // addInvitee = () => {
-  //   const invitees = this.state.invitees
-  //   invitees.push('')
-  //   this.setState({ invitees })
-  // }
-  // addInviteField = evt => {
-  //   const invitees = this.state.invitees
-  //   invitees.splice(Number(evt.target.name), 1, evt.target.value)
-  //   this.setState({ invitees })
-  // }
   handleChange = evt => {
     this.setState({ [evt.target.name]: evt.target.value })
   }
