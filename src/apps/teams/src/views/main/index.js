@@ -1,35 +1,50 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { request } from '../../../../../util/request'
-
-import TeamGrid from '../../components/TeamGrid'
-
-import { fetchTeams, getUserTeamInvites } from '../../store'
+import { fetchTeams } from '../../store/teams'
+import { fetchTeamInvites } from '../../store/teamInvites'
+import TeamsGrid from '../../components/TeamsGrid'
 
 import styles from './teams.less'
-class Teams extends Component {
-  state = {
-    user: this.props.user,
-    loading: true
-  }
 
-  componentDidMount() {
-    Promise.all([
-      this.props.dispatch(getUserTeamInvites()),
-      this.props.dispatch(fetchTeams())
-    ]).then(() => this.setState({ loading: false }))
+export default connect(state => {
+  return {
+    teams: state.teams,
+    teamInvites: state.teamInvites,
+    teamMembers: state.teamMembers,
+    user: state.user
   }
-  render() {
-    return (
-      <WithLoader
-        className={styles.Loading}
-        condition={!this.state.loading}
-        message="Loading Your Teams">
-        <TeamGrid />
-      </WithLoader>
-    )
+})(
+  class Teams extends Component {
+    state = {
+      loading: true
+    }
+    componentDidMount() {
+      Promise.all([
+        this.props.dispatch(fetchTeamInvites()),
+        this.props.dispatch(fetchTeams())
+      ])
+        .then(() => {
+          this.setState({
+            loading: false
+          })
+        })
+        .catch(err => {
+          console.error(err)
+          this.setState({
+            loading: false
+          })
+        })
+    }
+    render() {
+      return (
+        <WithLoader
+          className={styles.Loading}
+          condition={!this.state.loading}
+          message="Loading Your Teams">
+          <TeamsGrid {...this.props} />
+        </WithLoader>
+      )
+    }
   }
-}
-
-export default connect(state => state)(Teams)
+)

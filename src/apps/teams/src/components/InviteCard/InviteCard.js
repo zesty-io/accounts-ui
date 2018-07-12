@@ -1,61 +1,41 @@
-import React, { Component } from 'react'
-import { handleTeamInvite, fetchTeam } from '../../store'
+import React, { PureComponent } from 'react'
+import { acceptTeamInvite, declineTeamInvite } from '../../store/teamInvites'
 
-import styles from './invite.less'
+import styles from './InviteCard.less'
 
-class InviteCard extends Component {
-  state = {
-    clicked: false
-  }
+export default class InviteCard extends PureComponent {
   render() {
-    const { team } = this.props
     return (
-      <Card className={styles.Card}>
+      <Card className={styles.TeamInvite}>
         <CardHeader>
-          <h2>Invited to Team: {team.name}</h2>
-          <p>you can accept or decline this invite below</p>
+          <h3>Invited to Team: {this.props.invite.name}</h3>
         </CardHeader>
-        <CardContent>
-          <h2>Team description</h2>
-          <p>{team.description}</p>
+        <CardContent className={styles.CardContent}>
+          <h3>Team description</h3>
+          <p>{this.props.invite.description}</p>
+          <p>Accept or decline this invite below</p>
         </CardContent>
-        <CardFooter className={styles.CardInvite}>
-          <Button onClick={this.handleAccept}>
-            <i className="fa fa-check" />
-            Accept Invite
-          </Button>
-          <Button onClick={this.handleDecline} type="cancel">
-            <i className="fa fa-close" />
-            Decline Invite
-          </Button>
+        <CardFooter className={styles.CardFooter}>
+          <ButtonGroup>
+            <Button onClick={this.handleAccept}>
+              <i className="fa fa-check" />
+              Accept Invite
+            </Button>
+            <Button onClick={this.handleDecline} type="cancel">
+              <i className="fa fa-close" />
+              Decline
+            </Button>
+          </ButtonGroup>
         </CardFooter>
       </Card>
     )
   }
   handleAccept = () => {
-    this.props
-      .dispatch(
-        handleTeamInvite(
-          this.props.team.teamInviteZUID,
-          this.props.team.ZUID,
-          'accept'
-        )
-      )
-      .then(() => {
-        this.props.dispatch(fetchTeam(this.props.team.ZUID))
-      })
+    this.props.dispatch(
+      acceptTeamInvite(this.props.invite.ZUID, this.props.invite.teamZUID)
+    )
   }
   handleDecline = () => {
-    this.props
-      .dispatch(
-        handleTeamInvite(
-          this.props.team.teamInviteZUID,
-          this.props.team.ZUID,
-          'decline'
-        )
-      )
-      .then(console.log)
+    this.props.dispatch(declineTeamInvite(this.props.invite.ZUID))
   }
 }
-
-export default InviteCard

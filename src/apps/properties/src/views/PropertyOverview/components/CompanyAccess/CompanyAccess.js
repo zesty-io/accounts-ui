@@ -8,7 +8,8 @@ import {
   addTeamToInstance,
   removeTeamFromInstance
 } from '../../../../store/sitesTeams'
-import { getTeamMembers } from '../../../../../../teams/src/store'
+
+import { getTeamMembers } from '../../../../../../teams/src/store/teams'
 
 import styles from './CompanyAccess.less'
 import { notify } from '../../../../../../../shell/store/notifications'
