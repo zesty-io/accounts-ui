@@ -9,7 +9,9 @@ describe('User Settings Flow', () => {
     cy.get('#userNavDropdown > li:nth-child(3) > a').click()
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(1) > main > input:nth-child(3)'
-    ).type('name')
+    )
+      .clear()
+      .type('name')
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(1) > footer > button'
     ).click()
@@ -31,6 +33,7 @@ describe('User Settings Flow', () => {
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(2) > footer > button'
     ).click()
+    cy.wait(4000)
     cy.get('#notificationMessage').should('contain', 'Email added')
   })
 
@@ -60,7 +63,36 @@ describe('User Settings Flow', () => {
       force: true
     })
     cy.get('#userNavDropdown > li:nth-child(3) > a').click()
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(2)'
+    ).type(Cypress.env('validPassword'))
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(3)'
+    ).type('newValidPass12')
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(4)'
+    ).type('newValidPass12')
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > footer > button'
+    ).click()
+    cy.wait(2000)
+    cy.get('#notificationMessage').should('contain', 'Password was updated')
+    // set password back
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(2)'
+    ).type('newValidPass12')
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(3)'
+    ).type(Cypress.env('validPassword'))
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(4)'
+    ).type(Cypress.env('validPassword'))
+    cy.get(
+      '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > footer > button'
+    ).click()
+    cy.wait(2000)
+    cy.get('#notificationMessage').should('contain', 'Password was updated')
   })
-})
 
-// 2fa?
+  // 2fa?
+})
