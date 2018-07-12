@@ -15,12 +15,12 @@ const Confirm = props => {
           <footer>
             <ButtonGroup className={styles.buttons}>
               <Button
+                id="confirmTrue"
                 type={props.kind}
                 onClick={() => {
                   props.callback(true)
                   props.dispatch({ type: REMOVE_CONFIRM })
-                }}
-              >
+                }}>
                 {props.kind === 'warn' && (
                   <i
                     className="fa fa-exclamation-triangle"
@@ -30,6 +30,7 @@ const Confirm = props => {
                 Yes
               </Button>
               <Button
+                id="confirmFalse"
                 onClick={() => {
                   props.callback(false)
                   props.dispatch({ type: REMOVE_CONFIRM })

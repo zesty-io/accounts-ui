@@ -30,7 +30,7 @@ class AppHeader extends Component {
       <header className={styles.AppHeader}>
         <img className={styles.logo} src="/zesty-z-logo.svg" />
         <nav className={styles.GlobalNav}>
-          <NavLink to="/instances">
+          <NavLink to="/instances" id="instancesNavLink">
             <i className="fa fa-globe" aria-hidden="true" />
             &nbsp;Instances{this.props.userHasSiteInvites ? (
               <span>
@@ -39,7 +39,7 @@ class AppHeader extends Component {
             ) : null}
           </NavLink>
           {this.props.user.prefs.teamOptions === 1 && (
-            <NavLink to="/teams">
+            <NavLink to="/teams" id="teamsNavLink">
               <i className="fa fa-users" aria-hidden="true" />
               &nbsp;Teams
               {this.props.userHasTeamInvites ? (
@@ -50,7 +50,7 @@ class AppHeader extends Component {
             </NavLink>
           )}
           {this.props.user.prefs.devOptions === 1 && (
-            <NavLink to="/blueprints">
+            <NavLink to="/blueprints" id="blueprintsNavLink">
               <i className="fa fa-map" aria-hidden="true" />
               &nbsp;Blueprints
             </NavLink>

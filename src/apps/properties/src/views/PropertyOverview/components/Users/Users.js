@@ -37,6 +37,7 @@ export default class Users extends Component {
                 type="email"
                 placeholder="Email of user to invite"
                 name="inviteeEmail"
+                id="inviteUserInput"
                 value={this.state.inviteeEmail}
                 onChange={this.handleEmail}
                 required
@@ -57,6 +58,7 @@ export default class Users extends Component {
               </Select>
               <Button
                 onClick={this.handleInvite}
+                id="inviteUserSend"
                 disabled={this.state.submitted}>
                 <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
               </Button>
