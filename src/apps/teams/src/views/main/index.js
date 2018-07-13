@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchTeams } from '../../store/teams'
+import { fetchTeamInvites } from '../../store/teamInvites'
 import TeamsGrid from '../../components/TeamsGrid'
 
 import styles from './teams.less'
@@ -20,8 +21,10 @@ export default connect(state => {
       loading: true
     }
     componentDidMount() {
-      this.props
-        .dispatch(fetchTeams())
+      Promise.all([
+        this.props.dispatch(fetchTeamInvites()),
+        this.props.dispatch(fetchTeams())
+      ])
         .then(() => {
           this.setState({
             loading: false
