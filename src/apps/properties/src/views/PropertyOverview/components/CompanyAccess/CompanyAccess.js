@@ -8,7 +8,6 @@ import {
   addTeamToInstance,
   removeTeamFromInstance
 } from '../../../../store/sitesTeams'
-import { getTeamMembers } from '../../../../../../teams/src/store'
 
 import styles from './CompanyAccess.less'
 import { notify } from '../../../../../../../shell/store/notifications'
@@ -48,15 +47,13 @@ export default class CompanyAccess extends Component {
                 <Select onSelect={this.handleRole}>
                   <Option key="default" value="" text="Select Role" />
                   {this.props.siteRoles.map(role => {
-                    if (!role.systemRole.super) {
-                      return (
-                        <Option
-                          key={role.ZUID}
-                          value={role.ZUID}
-                          text={role.name}
-                        />
-                      )
-                    }
+                    return (
+                      <Option
+                        key={role.ZUID}
+                        value={role.ZUID}
+                        text={role.name}
+                      />
+                    )
                   })}
                 </Select>
                 <Button
@@ -115,30 +112,22 @@ export default class CompanyAccess extends Component {
   }
   handleRemove = team => {
     this.setState({ removing: true })
-    this.props.dispatch(getTeamMembers(team.ZUID)).then(data => {
-      const teamMembers = data.reduce((acc, user) => {
-        acc.push(`${user.firstName} ${user.lastName}`)
-        return acc
-      }, [])
-      this.props.dispatch(
-        zConfirm({
-          kind: 'warn',
-          prompt: `are you sure you want to remove access from ${team.name}?
-           ${teamMembers.join(', ')} will be removed from the instance.`,
-          callback: result => {
-            if (!result) {
-              return
-            }
-            this.props
-              .dispatch(removeTeamFromInstance(this.props.siteZUID, team.ZUID))
-              .then(() => {
-                // clear team and users from instance
-              })
+    this.props.dispatch(
+      zConfirm({
+        kind: 'warn',
+        prompt: `Are you sure you want to remove access for the team: ${
+          team.name
+        }?`,
+        callback: confirmed => {
+          if (confirmed) {
+            this.props.dispatch(
+              removeTeamFromInstance(this.props.siteZUID, team.ZUID)
+            )
+            this.setState({ removing: false })
           }
-        })
-      )
-      this.setState({ removing: false })
-    })
+        }
+      })
+    )
   }
   handleTeam = evt => {
     this.setState({
@@ -151,13 +140,19 @@ export default class CompanyAccess extends Component {
     })
   }
   handleAddTeam = () => {
-    this.setState({ submitted: true })
+    this.setState({
+      submitted: true
+    })
     this.props
       .dispatch(
         addTeamToInstance(this.props.siteZUID, this.state.team, this.state.role)
       )
       .then(data => {
-        this.setState({ team: '', role: '', submitted: false })
+        this.setState({
+          team: '',
+          role: '',
+          submitted: false
+        })
         this.props.dispatch(
           notify({
             type: 'success',
@@ -168,7 +163,9 @@ export default class CompanyAccess extends Component {
         this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
       })
       .catch(() => {
-        this.setState({ submitted: false })
+        this.setState({
+          submitted: false
+        })
         this.props.dispatch(
           notify({
             type: 'error',

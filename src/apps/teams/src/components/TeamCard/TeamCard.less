@@ -1,129 +1,101 @@
 @import url('../../../../../shell/styles/colors.less');
 
-.Card {
-  margin: 1rem;
-  h2 {
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
-    max-width: 100%;
-    word-wrap: break-word;
-  }
-  h3 {
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
+.TeamCard {
+  display: grid;
+  grid-template-rows: 30px 3fr 50px;
+  max-height: 470px;
+
   &:hover,
   &:focus,
   &:active {
     box-shadow: 0 0 10px #8398bd;
   }
+
   .CardHeader {
-    padding: 0 1rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    position: relative;
-    p {
-      max-width: 100%;
-      word-wrap: break-word;
-    }
-    .Edit {
-      padding: 0.2rem;
-      transition: all 0.1s;
-      color: lighten(@zesty-gray, 20%);
+
+    .Copy {
       font-size: 0.7em;
-      &:hover {
-        color: @zesty-gray;
+      padding: 0.4rem 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    .ZUID {
+      font-weight: bold;
+    }
+  }
+
+  .CardContent {
+    margin: 1rem 0;
+    overflow-y: scroll;
+    position: relative;
+
+    .Settings {
+      .Edit {
+        color: lighten(@zesty-gray, 20%);
+        cursor: pointer;
+        position: absolute;
+        top: 3px;
+        right: 9px;
+        &:hover {
+          color: @zesty-gray;
+        }
+      }
+
+      .Editing {
+        width: 93%;
+        background: @zesty-teal;
+        padding: 0.5rem;
+        color: #fff;
+        border-radius: 3px;
+
+        input,
+        textarea {
+          display: block;
+          width: 100%;
+          margin: 0 0 1rem 0;
+        }
+        textarea {
+          height: 75px;
+        }
+        .Save {
+          flex: 2;
+        }
+        .Delete {
+          flex: 0;
+          i {
+            margin: 0;
+          }
+        }
       }
     }
-    .trash {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      transition: all 0.1s;
-      color: lighten(@zesty-gray, 40%);
-      &:hover,
-      &:active,
-      &:focus {
-        color: @zesty-red;
-      }
-    }
-    .InviteCode {
-      display: flex;
-      align-items: baseline;
-      margin-top: 0.5rem;
-      margin-bottom: 0.5rem;
-      width: 100%;
-      .ZUID {
-        padding: 0.2rem;
-        border-radius: 5px;
-        background-color: lighten(@zesty-tab-blue, 5%);
-        color: @zesty-white;
-      }
-      .copy {
-        margin-left: 0.2rem;
-        transition: all 0.2s;
-        &:hover,
-        &:active,
-        &:focus {
-          font-size: 1.1rem;
+
+    .Members {
+      margin: 1rem 0;
+      .Member {
+        display: flex;
+        margin: 0.5rem 0.5rem 0.5rem 0;
+
+        .Name {
+          flex: 1;
+          padding: 0 0.5rem;
+        }
+        .Remove {
+          cursor: pointer;
+          &:hover,
+          &:focus,
+          &:active {
+            color: @zesty-red;
+          }
         }
       }
     }
   }
 
-  .CardContent {
-    display: grid;
-    // margin: 0.5rem;
-    grid-template-columns: 1fr 5px;
-    i {
-      margin-right: 0.3rem;
-    }
-    .remove {
-      display: block;
-      color: @zesty-light-gray;
-      align-self: flex-end;
-      justify-self: flex-end;
-      transition: all 0.2s;
-      &:hover,
-      &:focus,
-      &:active {
-        color: @zesty-red;
-      }
-    }
-    .Admin {
-      color: lighten(@zesty-tab-blue, 20%);
-      transition: all 0.2s;
-
-      &:hover,
-      &:focus,
-      &:active {
-        color: lighten(@zesty-light-gray, 50%);
-      }
-    }
-    .NotAdmin {
-      color: lighten(@zesty-light-gray, 10%);
-      &:hover,
-      &:focus,
-      &:active {
-        color: @zesty-orange;
-      }
-    }
-  }
-  .Instance {
-    display: flex;
-    i {
-      margin-right: 0.3rem;
-    }
-  }
   .CardInvite {
     display: grid;
-    grid-template-columns: 1.2fr 3fr 0.6fr;
+    grid-template-columns: 1.2fr 3fr;
     grid-gap: 0.2rem;
-    .admin {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
   }
 }

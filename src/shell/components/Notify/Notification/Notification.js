@@ -18,6 +18,7 @@ export default class Notification extends PureComponent {
     return (
       <article
         key={this.props.epoch}
+        id="notificationMessage"
         className={cx(
           styles[this.props.type],
           styles.Notification,

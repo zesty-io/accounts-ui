@@ -35,11 +35,6 @@ class BlueprintEdit extends Component {
         }
       }
     }
-    if (props.blueprint === '') {
-      return {
-        blueprint: ''
-      }
-    }
     if (props.blueprint.ID !== state.blueprint.ID) {
       return {
         blueprint: props.blueprint
@@ -64,7 +59,7 @@ class BlueprintEdit extends Component {
             type="text"
             onChange={this.onChange}
             placeholder="ACME Co. Micro Site"
-            value={this.state.blueprint.name || ''}
+            value={this.state.blueprint.name}
             name="name"
           />
         </label>
@@ -83,7 +78,7 @@ class BlueprintEdit extends Component {
             type="text"
             onChange={this.onChange}
             placeholder="https://github.com/zesty-io/plate-material-ui"
-            value={this.state.blueprint.githubURL || ''}
+            value={this.state.blueprint.githubURL}
             name="githubURL"
           />
         </label>
@@ -94,7 +89,7 @@ class BlueprintEdit extends Component {
           <Input
             autoComplete="off"
             onChange={this.onChange}
-            value={this.state.blueprint.coverImage || ''}
+            value={this.state.blueprint.coverImage}
             name="coverImage"
           />
         </label>
@@ -106,7 +101,7 @@ class BlueprintEdit extends Component {
             autoComplete="off"
             type="text"
             onChange={this.onChange}
-            value={this.state.blueprint.mainImage || ''}
+            value={this.state.blueprint.mainImage}
             name="mainImage"
           />
         </label>
@@ -122,7 +117,7 @@ class BlueprintEdit extends Component {
             autoComplete="off"
             type="text"
             onChange={this.onChange}
-            value={this.state.blueprint.previewURL || ''}
+            value={this.state.blueprint.previewURL}
             name="previewURL"
           />
         </label>
@@ -134,7 +129,7 @@ class BlueprintEdit extends Component {
             wrap="soft"
             name="shortDescription"
             onChange={this.onChange}
-            value={this.state.blueprint.shortDescription || ''}
+            value={this.state.blueprint.shortDescription}
           />
         </label>
 
@@ -144,7 +139,7 @@ class BlueprintEdit extends Component {
             wrap="soft"
             name="description"
             onChange={this.onChange}
-            value={this.state.blueprint.description || ''}
+            value={this.state.blueprint.description}
           />
         </label>
 
@@ -155,8 +150,7 @@ class BlueprintEdit extends Component {
               className={styles.button}
               onClick={this.handleSubmit}
               form="Blueprint"
-              type="submit"
-            >
+              type="submit">
               <i className="fa fa-save" /> Save Blueprint
             </Button>
           ) : (
@@ -165,8 +159,7 @@ class BlueprintEdit extends Component {
               className={styles.button}
               onClick={this.handleCreate}
               form="Blueprint"
-              type="submit"
-            >
+              type="submit">
               <i className="fa fa-plus" /> Create New Blueprint
             </Button>
           )}
@@ -175,8 +168,7 @@ class BlueprintEdit extends Component {
             className={styles.button}
             onClick={() => {
               this.props.history.push('/blueprints')
-            }}
-          >
+            }}>
             <i className="fa fa-ban" /> Cancel
           </Button>
         </ButtonGroup>

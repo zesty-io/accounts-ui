@@ -9,3 +9,6 @@
 
 .DS_Store
 .vscode
+
+/cypress/screenshots
+/cypress/videos

@@ -18,8 +18,8 @@ export default class Blueprint extends PureComponent {
                 <Button
                   className={styles.Button}
                   type="cancel"
-                  onClick={this.handleChangeBlueprint}
-                >
+                  id="changeBlueprint"
+                  onClick={this.handleChangeBlueprint}>
                   <i className="fa fa-file-code-o" aria-hidden="true" />
                   &nbsp;Change Blueprint
                 </Button>
@@ -33,7 +33,9 @@ export default class Blueprint extends PureComponent {
               ) : (
                 <p>No cover image set for this blueprint</p>
               )}
-              <h2 className={styles.name}>{this.props.blueprint.name}</h2>
+              <h2 className={styles.name} id="blueprintName">
+                {this.props.blueprint.name}
+              </h2>
               <p>{this.props.blueprint.description}</p>
 
               {this.props.blueprint.githubURL ? (

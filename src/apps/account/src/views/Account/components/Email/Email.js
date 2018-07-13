@@ -54,42 +54,44 @@ class Email extends Component {
             }
           })}
           {this.state.emails &&
-            this.state.emails.map((email, i) => {
-              return (
-                <div className={styles.Email} key={i}>
-                  <i
-                    className={
-                      email.responseReceived
-                        ? cx(styles.verified, 'fa fa-check-square-o')
-                        : cx(styles.verify, 'fa fa-chain-broken')
-                    }
-                    onClick={() => {
-                      if (!email.responseReceived) {
-                        this.sendVerifyEmail(email.address)
-                      }
-                    }}
-                    aria-hidden="true"
-                    title={
-                      email.responseReceived
-                        ? 'This email is verified'
-                        : 'Click to re-send verification email'
-                    }
-                  />
-                  <span>{email.address}</span>
-                  {this.props.user.email === email.address ? (
-                    <strong className={styles.primary}>(Primary)</strong>
-                  ) : (
-                    <p>{email.name}</p>
-                  )}
-                  {
+            this.state.emails
+              .filter(eml => eml.address !== this.props.user.email)
+              .map((email, i) => {
+                return (
+                  <div className={styles.Email} key={i}>
                     <i
-                      className={`fa fa-close ${styles.delete}`}
-                      onClick={() => this.handleRemove(email.address)}
+                      className={
+                        email.responseReceived
+                          ? cx(styles.verified, 'fa fa-check-square-o')
+                          : cx(styles.verify, 'fa fa-chain-broken')
+                      }
+                      onClick={() => {
+                        if (!email.responseReceived) {
+                          this.sendVerifyEmail(email.address)
+                        }
+                      }}
+                      aria-hidden="true"
+                      title={
+                        email.responseReceived
+                          ? 'This email is verified'
+                          : 'Click to re-send verification email'
+                      }
                     />
-                  }
-                </div>
-              )
-            })}
+                    <span>{email.address}</span>
+                    {this.props.user.email === email.address ? (
+                      <strong className={styles.primary}>(Primary)</strong>
+                    ) : (
+                      <p>{email.name}</p>
+                    )}
+                    {this.props.user.email !== email.address && (
+                      <i
+                        className={`fa fa-close ${styles.delete}`}
+                        onClick={() => this.handleRemove(email.address)}
+                      />
+                    )}
+                  </div>
+                )
+              })}
           <article className={styles.addEmail}>
             <label>Name: </label>
             <Input
@@ -115,8 +117,7 @@ class Email extends Component {
           <Button
             className={styles.button}
             disabled={this.state.submitted}
-            onClick={this.handleAddEmail}
-          >
+            onClick={this.handleAddEmail}>
             <i className="fa fa-plus" aria-hidden="true" />
             Add Email Address
           </Button>

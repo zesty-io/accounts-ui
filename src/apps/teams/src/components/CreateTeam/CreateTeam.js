@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 
-import { createTeam } from '../../store'
-
-import styles from './create.less'
+import { createTeam } from '../../store/teams'
 import { notify } from '../../../../../shell/store/notifications'
-class CreateTeam extends Component {
+
+import styles from './CreateTeam.less'
+
+export default class CreateTeam extends Component {
   state = {
     name: '',
     description: '',
@@ -12,39 +13,48 @@ class CreateTeam extends Component {
   }
   render() {
     return (
-      <Card className={styles.Card}>
-        <CardHeader className={styles.CardHeader}>
-          <h1>Create Team</h1>
+      <Card className={styles.CreateTeam}>
+        <CardHeader>
+          <h3>Teams</h3>
         </CardHeader>
         <CardContent className={styles.CardContent}>
           <section>
-            <h4>
-              Teams can be invited to a role on an instance by using the invite
-              code Once the invitation is accepted by the team admin, all users
-              in the team have access to the instance
-            </h4>
-            <p>Learn More:</p>
-            <a href="#">link to docs</a>
-            <br />
-            <a href="#">link to walk through</a>
+            <p>
+              Teams are a great way to manage multiple users who need to access
+              an instance.
+            </p>
+
+            <p>
+              Once you have created a team you can share your team ID with an
+              instance owner to let them select a role and invite your team to
+              their instance. This will allow you to manage who has access to an
+              instance without needing the instance owner or admin.
+            </p>
+
+            {/* <Url href="#">Learn How Teams Work</Url> */}
           </section>
-          <section className={styles.Inputs}>
-            <label>Name your team:</label>
-            <Input
-              type="text"
-              name="name"
-              autoComplete="off"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-            <label>Describe your team:</label>
-            <textarea
-              rows="4"
-              cols="50"
-              name="description"
-              value={this.state.description}
-              onChange={this.handleChange}
-            />
+          <section className={styles.Team}>
+            <label>
+              <span>Team name:</span>
+              <Input
+                type="text"
+                name="name"
+                autoComplete="off"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+            </label>
+
+            <label>
+              <span>Description of your team:</span>
+              <textarea
+                rows="4"
+                cols="50"
+                name="description"
+                value={this.state.description}
+                onChange={this.handleChange}
+              />
+            </label>
           </section>
         </CardContent>
         <CardFooter>
@@ -59,16 +69,6 @@ class CreateTeam extends Component {
       </Card>
     )
   }
-  // addInvitee = () => {
-  //   const invitees = this.state.invitees
-  //   invitees.push('')
-  //   this.setState({ invitees })
-  // }
-  // addInviteField = evt => {
-  //   const invitees = this.state.invitees
-  //   invitees.splice(Number(evt.target.name), 1, evt.target.value)
-  //   this.setState({ invitees })
-  // }
   handleChange = evt => {
     this.setState({ [evt.target.name]: evt.target.value })
   }
@@ -96,5 +96,3 @@ class CreateTeam extends Component {
       })
   }
 }
-
-export default CreateTeam
