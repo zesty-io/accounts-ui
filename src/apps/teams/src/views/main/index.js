@@ -20,7 +20,8 @@ export default connect(state => {
       loading: true
     }
     componentDidMount() {
-      Promise.all([this.props.dispatch(fetchTeams())])
+      this.props
+        .dispatch(fetchTeams())
         .then(() => {
           this.setState({
             loading: false
