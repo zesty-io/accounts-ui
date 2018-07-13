@@ -5,8 +5,11 @@ export function teamInvites(state = {}, action) {
   switch (action.type) {
     case 'FETCH_TEAM_INVITES_SUCCESS':
       // Always sort after introducing new team invites
-
-      return { ...state, [action.data.ZUID]: action.data }
+      console.log
+      return {
+        ...state,
+        [action.inviteZUID]: { ...state[action.inviteZUID], ...action.data }
+      }
 
     // When successfully accepting or declining
     // a team invite we drop the team invitation data
@@ -32,11 +35,18 @@ export function fetchTeamInvites() {
     return request(`${CONFIG.API_ACCOUNTS}/teams/invites`)
       .then(res => {
         if (Array.isArray(res.data) && res.data.length) {
+          console.log(res.data)
+
           // map through and use inviteZUIDs to fetch each team
           return Promise.all(
-            res.data.map(team =>
-              dispatch(fetchInvitedTeam(team.teamZUID, res.data.inviteZUID))
-            )
+            res.data.map(team => {
+              dispatch({
+                type: 'FETCH_TEAM_INVITES_SUCCESS',
+                data: team,
+                inviteZUID: team.ZUID
+              })
+              dispatch(fetchInvitedTeam(team.teamZUID, team.ZUID))
+            })
           )
         }
         return res.data
@@ -60,7 +70,8 @@ export const fetchInvitedTeam = (teamZUID, inviteZUID) => {
       .then(res => {
         dispatch({
           type: 'FETCH_TEAM_INVITES_SUCCESS',
-          data: { ...res.data, inviteZUID }
+          data: res.data,
+          inviteZUID
         })
         return res.data
       })
