@@ -8,20 +8,24 @@ export function teamInvites(state = {}, action) {
       console.log
       return {
         ...state,
-        [action.inviteZUID]: { ...state[action.inviteZUID], ...action.data }
+        [action.inviteZUID]: {
+          ...state[action.inviteZUID],
+          ...action.data,
+          inviteZUID: action.inviteZUID
+        }
       }
 
     // When successfully accepting or declining
     // a team invite we drop the team invitation data
     case 'ACCEPT_TEAM_INVITE_SUCCESS':
     case 'DECLINE_TEAM_INVITE_SUCCESS':
-      return Object.keys(state)
-        .filter(ZUID => ZUID !== action.inviteZUID)
+      let remainingTeams = Object.keys(state)
+        .filter(ZUID => ZUID !== action.teamZUID)
         .reduce((acc, ZUID) => {
           acc[ZUID] = state[ZUID]
           return acc
         }, {})
-
+      return remainingTeams
     default:
       return state
   }
@@ -100,7 +104,7 @@ export function acceptTeamInvite(inviteZUID, teamZUID) {
       .then(res => {
         dispatch({
           type: 'ACCEPT_TEAM_INVITE_SUCCESS',
-          inviteZUID
+          teamZUID
         })
 
         return dispatch(fetchTeam(teamZUID))
@@ -116,7 +120,7 @@ export function acceptTeamInvite(inviteZUID, teamZUID) {
   }
 }
 
-export function declineTeamInvite(inviteZUID) {
+export function declineTeamInvite(inviteZUID, teamZUID) {
   return dispatch => {
     dispatch({
       type: 'DECLINE_TEAM_INVITE'
@@ -130,7 +134,7 @@ export function declineTeamInvite(inviteZUID) {
       .then(res => {
         dispatch({
           type: 'DECLINE_TEAM_INVITE_SUCCESS',
-          inviteZUID
+          teamZUID
         })
         return res.data
       })

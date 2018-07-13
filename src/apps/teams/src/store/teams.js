@@ -41,17 +41,17 @@ export function teams(state = {}, action) {
 
     case 'INVITE_TEAM_MEMBER_SUCCESS':
     case 'FETCH_TEAM_MEMBERS_SUCCESS':
-    // case 'FETCH_TEAM_MEMBER_INVITES_SUCCESS':
-    //   return {
-    //     ...state,
-    //     [action.teamZUID]: {
-    //       ...state[action.teamZUID],
-    //       members: [
-    //         ...state[action.teamZUID].members, // Previously fetched members
-    //         ...action.data.map(member => member.ZUID) // New members
-    //       ]
-    //     }
-    //   }
+    case 'FETCH_TEAM_MEMBER_INVITES_SUCCESS':
+      return {
+        ...state,
+        [action.teamZUID]: {
+          ...state[action.teamZUID],
+          members: [
+            ...state[action.teamZUID].members, // Previously fetched members
+            ...action.data.map(member => member.ZUID) // New members
+          ]
+        }
+      }
 
     case 'CANCEL_TEAM_INVITE_SUCCESS':
     case 'REMOVE_TEAM_MEMBER_SUCCESS':

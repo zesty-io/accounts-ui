@@ -141,8 +141,10 @@ export default class TeamCard extends Component {
               message="Loading team owners">
               {this.props.members.length
                 ? this.props.members
-                    .filter(member => member)
-                    .filter(member => member.admin)
+                    .filter(
+                      member =>
+                        member.ZUID === this.props.team.createdByUserZUID
+                    )
                     .map((member, i) => {
                       return (
                         <article className={styles.Member} key={i}>
@@ -166,8 +168,10 @@ export default class TeamCard extends Component {
               message="Loading team members">
               {this.props.members.length
                 ? this.props.members
-                    .filter(member => member)
-                    .filter(member => !member.admin)
+                    .filter(
+                      member =>
+                        member.ZUID !== this.props.team.createdByUserZUID
+                    )
                     .map((member, i) => {
                       return (
                         <article className={styles.Member} key={i}>
