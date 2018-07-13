@@ -14,6 +14,7 @@ import { properties } from '../../apps/properties/src/store'
 // Teams
 import { teams } from '../../apps/teams/src/store/teams'
 import { teamInvites } from '../../apps/teams/src/store/teamInvites'
+import { teamInstances } from '../../apps/teams/src/store/teamInstances'
 import { teamMembers } from '../../apps/teams/src/store/teamMembers'
 
 const loggerMiddleware = createLogger({
@@ -25,6 +26,7 @@ const appReducer = combineReducers({
   ...properties,
   user,
   teams,
+  teamInstances,
   teamInvites,
   teamMembers,
   auth,

@@ -7,8 +7,9 @@ import {
   inviteTeamMember,
   removeTeamMember
 } from '../../store/teamMembers'
-import { updateTeam, deleteTeam, fetchTeamInstances } from '../../store/teams'
+import { updateTeam, deleteTeam } from '../../store/teams'
 import { declineTeamInvite, cancelTeamInvite } from '../../store/teamInvites'
+import { fetchTeamInstances } from '../../store/teamInstances'
 
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
@@ -28,8 +29,8 @@ export default class TeamCard extends Component {
   componentDidMount() {
     Promise.all([
       this.props.dispatch(fetchTeamMembers(this.props.team.ZUID)),
-      this.props.dispatch(fetchTeamMemberInvites(this.props.team.ZUID))
-      // this.props.dispatch(fetchTeamInstances(this.props.team.ZUID))
+      this.props.dispatch(fetchTeamMemberInvites(this.props.team.ZUID)),
+      this.props.dispatch(fetchTeamInstances(this.props.team.ZUID))
     ]).then(() => {
       const isAdmin = Boolean(
         this.props.members.filter(member => member).find(member => {
@@ -210,7 +211,7 @@ export default class TeamCard extends Component {
             </WithLoader>
           </section>
 
-          {/* <section className={styles.Instances}>
+          <section className={styles.Instances}>
             <h3>Instances</h3>
             <WithLoader
               condition={this.state.loaded}
@@ -228,7 +229,7 @@ export default class TeamCard extends Component {
                   })
                 : 'No instances for this team'}
             </WithLoader>
-          </section> */}
+          </section>
         </CardContent>
         <CardFooter>
           {this.state.isAdmin && (
