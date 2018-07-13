@@ -37,6 +37,7 @@ export default class CreateTeam extends Component {
             <label>
               <span>Team name:</span>
               <Input
+                id="teamCreateName"
                 type="text"
                 name="name"
                 autoComplete="off"
@@ -48,6 +49,7 @@ export default class CreateTeam extends Component {
             <label>
               <span>Description of your team:</span>
               <textarea
+                id="teamCreateDescription"
                 rows="4"
                 cols="50"
                 name="description"
@@ -59,6 +61,7 @@ export default class CreateTeam extends Component {
         </CardContent>
         <CardFooter>
           <Button
+            id="teamCreateSave"
             type="save"
             disabled={this.state.submitted}
             onClick={this.handleSubmit}>
