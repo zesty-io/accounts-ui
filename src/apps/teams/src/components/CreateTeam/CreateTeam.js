@@ -76,6 +76,14 @@ export default class CreateTeam extends Component {
     this.setState({ [evt.target.name]: evt.target.value })
   }
   handleSubmit = evt => {
+    if (!this.state.name) {
+      return this.props.dispatch(
+        notify({
+          type: 'error',
+          message: 'Team must have a name'
+        })
+      )
+    }
     if (this.state.name.length > 50) {
       return this.props.dispatch(
         notify({
