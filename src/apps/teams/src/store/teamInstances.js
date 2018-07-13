@@ -7,7 +7,7 @@ export function teamInstances(state = {}, action) {
         ...state,
         [action.teamZUID]: {
           ...state[action.teamZUID],
-          instances: [...action.data]
+          ...action.data
         }
       }
 

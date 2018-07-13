@@ -44,7 +44,7 @@ export default class TeamCard extends Component {
     })
   }
   render() {
-    const { team } = this.props
+    const { team, instances } = this.props
     return (
       <Card className={styles.TeamCard}>
         <CardHeader className={styles.CardHeader}>
@@ -216,13 +216,15 @@ export default class TeamCard extends Component {
             <WithLoader
               condition={this.state.loaded}
               message="Loading team instances">
-              {team.instances && team.instances.length
-                ? team.instances.map(instance => {
+              {instances && Object.keys(instances).length
+                ? Object.keys(instances).map(instance => {
                     return (
-                      <article className={styles.Instance} key={instance.ZUID}>
-                        <AppLink to={`/instances/${instance.ZUID}`}>
-                          <i className="fa fa-globe" />
-                          {instance.name}
+                      <article
+                        className={styles.Instance}
+                        key={instances[instance].ZUID}>
+                        <AppLink to={`/instances/${instances[instance].ZUID}`}>
+                          {/* <i className="fa fa-globe" /> */}
+                          {instances[instance].name}
                         </AppLink>
                       </article>
                     )
