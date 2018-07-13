@@ -4,8 +4,6 @@ import { BrowserRouter, Route } from 'react-router-dom'
 
 import { store } from './store'
 import { verifyAuth } from './store/auth'
-import 'whatwg-fetch'
-import 'promise-polyfill/src/polyfill'
 
 import App from './views/App'
 
