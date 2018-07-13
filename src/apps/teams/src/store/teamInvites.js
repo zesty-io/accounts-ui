@@ -5,7 +5,6 @@ export function teamInvites(state = {}, action) {
   switch (action.type) {
     case 'FETCH_TEAM_INVITES_SUCCESS':
       // Always sort after introducing new team invites
-      console.log
       return {
         ...state,
         [action.inviteZUID]: {
@@ -20,7 +19,7 @@ export function teamInvites(state = {}, action) {
     case 'ACCEPT_TEAM_INVITE_SUCCESS':
     case 'DECLINE_TEAM_INVITE_SUCCESS':
       let remainingTeams = Object.keys(state)
-        .filter(ZUID => ZUID !== action.teamZUID)
+        .filter(ZUID => state[ZUID].inviteZUID !== action.inviteZUID)
         .reduce((acc, ZUID) => {
           acc[ZUID] = state[ZUID]
           return acc
@@ -104,6 +103,7 @@ export function acceptTeamInvite(inviteZUID, teamZUID) {
       .then(res => {
         dispatch({
           type: 'ACCEPT_TEAM_INVITE_SUCCESS',
+          inviteZUID,
           teamZUID
         })
 
@@ -134,6 +134,7 @@ export function declineTeamInvite(inviteZUID, teamZUID) {
       .then(res => {
         dispatch({
           type: 'DECLINE_TEAM_INVITE_SUCCESS',
+          inviteZUID,
           teamZUID
         })
         return res.data
