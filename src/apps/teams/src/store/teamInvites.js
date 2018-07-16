@@ -5,34 +5,26 @@ export function teamInvites(state = {}, action) {
   switch (action.type) {
     case 'FETCH_TEAM_INVITES_SUCCESS':
       // Always sort after introducing new team invites
-      action.data.sort((prev, next) => {
-        if (prev.createdAt < next.createdAt) {
-          return 1
+      return {
+        ...state,
+        [action.inviteZUID]: {
+          ...state[action.inviteZUID],
+          ...action.data,
+          inviteZUID: action.inviteZUID
         }
-        if (prev.createdAt > next.createdAt) {
-          return -1
-        }
-        return 0
-      })
-
-      const invites = action.data.reduce((acc, el) => {
-        acc[el.ZUID] = el
-        return acc
-      }, {})
-
-      return { ...state, ...invites }
+      }
 
     // When successfully accepting or declining
     // a team invite we drop the team invitation data
     case 'ACCEPT_TEAM_INVITE_SUCCESS':
     case 'DECLINE_TEAM_INVITE_SUCCESS':
-      return Object.keys(state)
-        .filter(ZUID => ZUID !== action.inviteZUID)
+      let remainingTeams = Object.keys(state)
+        .filter(ZUID => state[ZUID].inviteZUID !== action.inviteZUID)
         .reduce((acc, ZUID) => {
           acc[ZUID] = state[ZUID]
           return acc
         }, {})
-
+      return remainingTeams
     default:
       return state
   }
@@ -46,16 +38,49 @@ export function fetchTeamInvites() {
     return request(`${CONFIG.API_ACCOUNTS}/teams/invites`)
       .then(res => {
         if (Array.isArray(res.data) && res.data.length) {
-          dispatch({
-            type: 'FETCH_TEAM_INVITES_SUCCESS',
-            data: res.data
-          })
+          console.log(res.data)
+
+          // map through and use inviteZUIDs to fetch each team
+          return Promise.all(
+            res.data.map(team => {
+              dispatch({
+                type: 'FETCH_TEAM_INVITES_SUCCESS',
+                data: team,
+                inviteZUID: team.ZUID
+              })
+              dispatch(fetchInvitedTeam(team.teamZUID, team.ZUID))
+            })
+          )
         }
         return res.data
       })
       .catch(err => {
         dispatch({
           type: 'FETCH_TEAM_INVITES_ERROR',
+          err
+        })
+        console.error(err)
+        return err
+      })
+  }
+}
+export const fetchInvitedTeam = (teamZUID, inviteZUID) => {
+  return dispatch => {
+    dispatch({
+      type: 'FETCH_INVITED_TEAM'
+    })
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`)
+      .then(res => {
+        dispatch({
+          type: 'FETCH_TEAM_INVITES_SUCCESS',
+          data: res.data,
+          inviteZUID
+        })
+        return res.data
+      })
+      .catch(err => {
+        dispatch({
+          type: 'FETCH_INVITED_TEAM_FAILURE',
           err
         })
         console.error(err)
@@ -78,7 +103,8 @@ export function acceptTeamInvite(inviteZUID, teamZUID) {
       .then(res => {
         dispatch({
           type: 'ACCEPT_TEAM_INVITE_SUCCESS',
-          inviteZUID
+          inviteZUID,
+          teamZUID
         })
 
         return dispatch(fetchTeam(teamZUID))
@@ -94,7 +120,7 @@ export function acceptTeamInvite(inviteZUID, teamZUID) {
   }
 }
 
-export function declineTeamInvite(inviteZUID) {
+export function declineTeamInvite(inviteZUID, teamZUID) {
   return dispatch => {
     dispatch({
       type: 'DECLINE_TEAM_INVITE'
@@ -108,7 +134,8 @@ export function declineTeamInvite(inviteZUID) {
       .then(res => {
         dispatch({
           type: 'DECLINE_TEAM_INVITE_SUCCESS',
-          inviteZUID
+          inviteZUID,
+          teamZUID
         })
         return res.data
       })

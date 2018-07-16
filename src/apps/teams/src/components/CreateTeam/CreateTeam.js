@@ -37,6 +37,7 @@ export default class CreateTeam extends Component {
             <label>
               <span>Team name:</span>
               <Input
+                id="teamCreateName"
                 type="text"
                 name="name"
                 autoComplete="off"
@@ -48,6 +49,7 @@ export default class CreateTeam extends Component {
             <label>
               <span>Description of your team:</span>
               <textarea
+                id="teamCreateDescription"
                 rows="4"
                 cols="50"
                 name="description"
@@ -59,6 +61,7 @@ export default class CreateTeam extends Component {
         </CardContent>
         <CardFooter>
           <Button
+            id="teamCreateSave"
             type="save"
             disabled={this.state.submitted}
             onClick={this.handleSubmit}>
@@ -73,6 +76,14 @@ export default class CreateTeam extends Component {
     this.setState({ [evt.target.name]: evt.target.value })
   }
   handleSubmit = evt => {
+    if (!this.state.name) {
+      return this.props.dispatch(
+        notify({
+          type: 'error',
+          message: 'Team must have a name'
+        })
+      )
+    }
     if (this.state.name.length > 50) {
       return this.props.dispatch(
         notify({
