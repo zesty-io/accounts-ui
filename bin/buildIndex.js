@@ -11,18 +11,6 @@ module.exports = buildIndex = build => {
       <meta charset="UTF-8">
       <title>Zesty.io Accounts Application</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-
-      <script>
-        <!-- polyfills -->
-        if (!window.fetch) {
-          var head= document.getElementsByTagName('head')[0];
-          var script = document.createElement("script");
-          script.type = "text/javascript";
-          script.src = "/polyfills.js";
-          head.appendChild(script);
-        }
-      </script>
-
       <style type="text/css">
         * {
           margin: 0;
@@ -45,13 +33,13 @@ module.exports = buildIndex = build => {
           height: 100vh;
         }
 
-        #center {
+        #aligner {
           display: flex;
           flex-direction: column;
           align-items: center;
         }
 
-        #center h1 {
+        #aligner h1 {
           font-size: 2em;
           text-shadow: 1px 1px 1px #d6e5ff;
         }
@@ -130,7 +118,7 @@ module.exports = buildIndex = build => {
     <body>
       <main id="root">
         <div id="appBoot">
-          <div id="center">
+          <div id="aligner">
             <h1>Starting Zesty.io</h1>
             <div class="loader">
               <span class="bar"></span>

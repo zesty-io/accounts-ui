@@ -25,6 +25,7 @@
   "license": "All Rights Reserved",
   "dependencies": {
     "classnames": "2.2.5",
+    "core-js": "^2.5.7",
     "js-cookie": "2.2.0",
     "qs": "6.5.1",
     "react": "16.4.0",
@@ -33,7 +34,8 @@
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
-    "redux-thunk": "2.2.0"
+    "redux-thunk": "2.2.0",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "ava": "0.25.0",
