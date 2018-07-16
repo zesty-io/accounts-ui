@@ -5,6 +5,7 @@ import styles from './InviteCard.less'
 
 export default class InviteCard extends PureComponent {
   render() {
+    console.log(this.props)
     return (
       <Card className={styles.TeamInvite}>
         <CardHeader>
@@ -32,10 +33,15 @@ export default class InviteCard extends PureComponent {
   }
   handleAccept = () => {
     this.props.dispatch(
-      acceptTeamInvite(this.props.invite.ZUID, this.props.invite.teamZUID)
+      acceptTeamInvite(this.props.invite.inviteZUID, this.props.invite.teamZUID)
     )
   }
   handleDecline = () => {
-    this.props.dispatch(declineTeamInvite(this.props.invite.ZUID))
+    this.props.dispatch(
+      declineTeamInvite(
+        this.props.invite.inviteZUID,
+        this.props.invite.teamZUID
+      )
+    )
   }
 }
