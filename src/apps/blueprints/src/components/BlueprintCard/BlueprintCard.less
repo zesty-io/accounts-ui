@@ -1,9 +1,15 @@
 @import '../../../../../shell/styles/colors.less';
 .BlueprintCard {
-  display: grid;
-  grid-template-rows: 50px 3fr 35px;
-  padding: 0;
-  box-shadow: 0 0 5px #d6e1f3;
+  flex: 1 0 0;
+  max-width: 400px;
+  margin: 1rem;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 50px 3fr 35px;
+    padding: 0;
+    box-shadow: 0 0 5px #d6e1f3;
+    margin: 0;
+  }
 
   &:hover,
   &:focus,
