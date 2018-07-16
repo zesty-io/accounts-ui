@@ -119,7 +119,7 @@ module.exports = buildIndex = build => {
         if (!window.fetch) {
           var script = document.createElement("script");
           script.type = "text/javascript";
-          script.src = "/config.${build.data.gitCommit}.js";
+          script.src = "/bundle.${build.data.gitCommit}.polyfills.js";
           document.head.appendChild(script);
         }
       </script>
