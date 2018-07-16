@@ -4,6 +4,12 @@
   background-color: @zesty-teal;
   color: @zesty-white;
 
+  flex: 1 0 0%;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 30px 3fr 50px;
+  }
+
   &:hover,
   &:focus,
   &:active {

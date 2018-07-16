@@ -1,9 +1,13 @@
 @import url('../../../../../shell/styles/colors.less');
 
 .CreateTeam {
-  display: grid;
-  grid-template-rows: 30px 3fr 50px;
   max-height: 470px;
+
+  flex: 1 0 0%;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 30px 3fr 50px;
+  }
 
   .CardContent {
     padding: 1rem 0;

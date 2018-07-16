@@ -1,11 +1,19 @@
 @import url('../../../../../shell/styles/colors.less');
 
 .WebsiteCard {
-  display: grid;
-  grid-template-rows: 1fr 3fr 35px;
   padding: 0;
   box-shadow: 0 0 5px #d6e1f3;
-  // width: 350px;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0%;
+  max-width: 350px;
+  margin: 1rem;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 1fr 3fr 35px;
+    margin: 0;
+  }
 
   &:hover,
   &:focus,
@@ -45,6 +53,7 @@
 
   .CardContent {
     display: flex;
+    flex-basis: auto;
     align-items: center;
     justify-content: center;
     margin: 0;
@@ -65,17 +74,22 @@
 
   .CardFooter {
     padding: 0;
+
     .controls {
+      display: flex;
+      flex-basis: auto;
       display: grid;
       grid-template-columns: 35px 35px 35px 1fr;
 
       a {
         border-right: 1px solid @zesty-field-blue;
         padding: 9px;
+        flex-basis: auto;
         margin: 0;
         text-align: center;
       }
       a:last-child {
+        flex-basis: auto;
         border: none;
         text-align: right;
         padding: 4px 9px;

@@ -1,7 +1,13 @@
 .ColumnList {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
   padding: 0 1rem;
+
+  display: flex;
+  flex-direction: row;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+  }
+
   @media (max-width: 600px) {
     .Websites {
       padding: 0 0.5rem;
@@ -13,6 +19,8 @@
     overflow-y: scroll;
     width: 30vw;
     padding: 1.5rem 0;
+
+    flex: 1 0 0%;
 
     .SectionTitle {
       border-bottom: 1px solid #c0cee7;

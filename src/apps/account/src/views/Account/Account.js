@@ -32,19 +32,22 @@ class Account extends Component {
             condition={!this.state.loadingEmails}
             message="Loading Your Account Data">
             <div className={styles.SettingCards}>
-              <Profile />
+              <Profile className={styles.SettingCard} />
               <Email
+                className={styles.SettingCard}
                 dispatch={this.props.dispatch}
                 user={this.props.user}
                 emails={this.props.user.emails}
                 loadingEmails={this.state.loadingEmails}
               />
-              <Password />
+              <Password className={styles.SettingCard} />
               <TwoFactor
+                className={styles.SettingCard}
                 dispatch={this.props.dispatch}
                 user={this.props.user}
               />
               <Preferences
+                className={styles.SettingCard}
                 user={this.props.user}
                 dispatch={this.props.dispatch}
               />
