@@ -113,6 +113,16 @@ module.exports = buildIndex = build => {
       }.teams-app.css" type="text/css" rel="stylesheet" />
 
       <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+
+      <!-- Polyfills for IE11 -->
+      <script>
+        if (!window.fetch) {
+          var script = document.createElement("script");
+          script.type = "text/javascript";
+          script.src = "/config.${build.data.gitCommit}.js";
+          document.head.appendChild(script);
+        }
+      </script>
     </head>
 
     <body>
