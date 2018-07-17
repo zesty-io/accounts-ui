@@ -155,6 +155,7 @@ class PropertyOverview extends Component {
                     isAdmin={this.props.isAdmin}
                     dispatch={this.props.dispatch}
                     teams={this.props.teams}
+                    users={this.props.users}
                     siteRoles={this.props.siteRoles}
                     loadingTeams={this.state.loadingTeams}
                     siteZUID={this.props.siteZUID}

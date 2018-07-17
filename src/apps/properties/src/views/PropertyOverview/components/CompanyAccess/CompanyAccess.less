@@ -38,18 +38,18 @@
       grid-template-rows: auto;
       align-items: baseline;
       article {
+        align-items: center;
         min-height: 1.5rem;
-        i {
-          font-size: 1.1rem;
-          // margin: 0.4rem;
-          color: @zesty-light-grey;
-          cursor: pointer;
-        }
         display: grid;
         padding: 0.5rem;
         grid-template-columns: 1fr 2fr 0.5fr;
         &:nth-child(odd) {
           background-color: @zesty-white;
+        }
+        i {
+          font-size: 1.1rem;
+          color: @zesty-light-grey;
+          cursor: pointer;
         }
         .trash {
           transition: all 0.1s;
@@ -62,13 +62,23 @@
         .hidden {
           color: @zesty-white;
         }
+        span {
+          padding: 0.3rem 0;
+        }
+      }
+      .TeamMembers {
+        color: @zesty-light-grey;
+        grid-column: span 3;
+        padding: 0;
+        span {
+          padding: 0.3rem 0.5rem;
+        }
       }
     }
   }
   .info {
     color: #607394;
     display: block;
-    // font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 13px;
     font-weight: normal;
     overflow-y: visible;
