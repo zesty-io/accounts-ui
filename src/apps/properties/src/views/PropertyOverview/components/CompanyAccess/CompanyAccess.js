@@ -147,10 +147,26 @@ export default class CompanyAccess extends Component {
         }?`,
         callback: confirmed => {
           if (confirmed) {
-            this.props.dispatch(
-              removeTeamFromInstance(this.props.siteZUID, team.ZUID)
-            )
-            this.setState({ removing: false })
+            this.props
+              .dispatch(removeTeamFromInstance(this.props.siteZUID, team.ZUID))
+              .then(() => {
+                this.setState({ removing: false })
+                this.props.dispatch(
+                  notify({
+                    type: 'success',
+                    message: `${team.name} was removed`
+                  })
+                )
+              })
+              .catch(err => {
+                this.setState({ removing: false })
+                this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message: `Failed to remove ${team.name}`
+                  })
+                )
+              })
           }
         }
       })

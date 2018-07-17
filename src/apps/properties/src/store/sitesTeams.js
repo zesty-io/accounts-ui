@@ -61,7 +61,7 @@ export const addTeamToInstance = (siteZUID, teamZUID, roleZUID) => {
   }
 }
 
-export const removeTeamFromInstance = (siteZUID, teamZUID) => {
+export function removeTeamFromInstance(siteZUID, teamZUID) {
   return dispatch => {
     dispatch({ type: 'REMOVING_TEAM_FROM_INSTANCE' })
     return request(
