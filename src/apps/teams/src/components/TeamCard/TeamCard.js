@@ -18,8 +18,8 @@ import styles from './TeamCard.less'
 
 export default class TeamCard extends Component {
   state = {
-    name: '',
-    description: '',
+    name: this.props.team.name,
+    description: this.props.team.description,
     inviteeEmail: '',
     admin: false,
     editing: false,
@@ -95,10 +95,10 @@ export default class TeamCard extends Component {
             {this.state.editing ? (
               <div className={styles.Editing}>
                 <label>
-                  Team Name:{' '}
+                  Team Name:
                   <Input
                     type="text"
-                    placeholder={this.props.team.name}
+                    value={this.state.name}
                     onChange={this.handleChange}
                     name="name"
                   />
@@ -106,7 +106,7 @@ export default class TeamCard extends Component {
                 <label>
                   Team Description:
                   <textarea
-                    placeholder={this.props.team.description}
+                    value={this.state.description}
                     onChange={this.handleChange}
                     name="description"
                   />
