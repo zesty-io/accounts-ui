@@ -5,7 +5,6 @@ import styles from './InviteCard.less'
 
 export default class InviteCard extends PureComponent {
   render() {
-    console.log(this.props)
     return (
       <Card className={styles.TeamInvite}>
         <CardHeader>
