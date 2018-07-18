@@ -38,7 +38,7 @@ class AppHeader extends Component {
               </span>
             ) : null}
           </NavLink>
-          {this.props.user.prefs.teamOptions === 1 && (
+          {this.props.user.prefs.teamOptions !== 0 && (
             <NavLink to="/teams" id="teamsNavLink">
               <i className="fa fa-users" aria-hidden="true" />
               &nbsp;Teams
