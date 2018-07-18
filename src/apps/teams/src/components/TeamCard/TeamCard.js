@@ -33,9 +33,10 @@ export default class TeamCard extends Component {
       this.props.dispatch(fetchTeamInstances(this.props.team.ZUID))
     ]).then(() => {
       const isAdmin = Boolean(
-        this.props.members.filter(member => member).find(member => {
-          return member.ZUID === this.props.userZUID && member.admin
-        })
+        this.props.user.staff ||
+          this.props.members.filter(member => member).find(member => {
+            return member.ZUID === this.props.user.ZUID && member.admin
+          })
       )
       this.setState({
         loaded: true,
