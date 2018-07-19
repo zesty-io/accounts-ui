@@ -11,6 +11,7 @@ module.exports = buildIndex = build => {
       <meta charset="UTF-8">
       <title>Zesty.io Accounts Application</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,500,500i" rel="stylesheet">
       <style type="text/css">
         * {
           margin: 0;
@@ -21,8 +22,13 @@ module.exports = buildIndex = build => {
         body {
           background-color: #f2f4fb;
           color: #5B667D;
-          font-family: 'GibsonRegular', Arial, sans-serif;
+          font-family: "Montserrat", Arial, sans-serif;
+          font-weight: 400;
           font-size: 1em;
+        }
+
+        h1, h2, h3, h3, h5, h6 {
+          font-weight: 500;
         }
 
         #appBoot {
