@@ -316,9 +316,10 @@ export function sendInvite(siteZUID, inviteeEmail, inviteeRoleZUID) {
       }
     })
       .then(res => {
+        console.log(res.data)
         dispatch(
           notify({
-            message: `Invite sent to ${res.data.inviteeEmail}`,
+            message: `Invite sent to ${inviteeEmail}`,
             type: 'success'
           })
         )

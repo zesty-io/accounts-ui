@@ -2,7 +2,18 @@ describe('Blueprint Flow', () => {
   const timeStamp = Date.now()
   it('Can Create a blueprint', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.get('#blueprintsNavLink').click()
+    cy.get('#globalNav').then(nav => {
+      if (nav.find('#blueprintsNavLink').length) {
+        cy.get('#blueprintsNavLink').click()
+      } else {
+        cy.get('#root > section > header > nav.UserNav.UserNav').click({
+          force: true
+        })
+        cy.get('#userNavDropdown > li:nth-child(3) > a').click()
+        cy.get('#blueprintsToggle').click({ force: true })
+        cy.get('#blueprintsNavLink').click()
+      }
+    })
     cy.get('#createBlueprint').click()
 
     cy.get('#Blueprint > label:nth-child(2) > input').type(

@@ -16,7 +16,8 @@
     "A_RECORD": "130.211.21.25",
     "invalidEmail": "userDoesNot@exist.com",
     "invalidPassword": "asdASD123",
-    "validEmail": "grant.glidewell+test12@zesty.io",
+    "validEmail2": "grant.glidewell+test13@zesty.io",
+    "validEmail": "grant.glidewell+test1@zesty.io",
     "validPassword": "asdASD123"
   }
 }
