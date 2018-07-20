@@ -68,10 +68,10 @@ describe('User Settings Flow', () => {
     ).type(Cypress.env('validPassword'))
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(3)'
-    ).type('newValidPass12')
+    ).type('asdASD123')
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(4)'
-    ).type('newValidPass12')
+    ).type('asdASD123')
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > footer > button'
     ).click()
@@ -80,7 +80,7 @@ describe('User Settings Flow', () => {
     // set password back
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(2)'
-    ).type('newValidPass12')
+    ).type('asdASD123')
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(3)'
     ).type(Cypress.env('validPassword'))

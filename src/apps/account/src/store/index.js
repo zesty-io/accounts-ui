@@ -77,6 +77,7 @@ export function updatePassword(oldPassword, newPassword) {
         method: 'PUT',
         json: true,
         body: {
+          oldPassword,
           password: newPassword
         }
       }

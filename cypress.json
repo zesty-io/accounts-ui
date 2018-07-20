@@ -17,6 +17,6 @@
     "invalidEmail": "userDoesNot@exist.com",
     "invalidPassword": "asdASD123",
     "validEmail": "grant.glidewell+test12@zesty.io",
-    "validPassword": "asdASD123"
+    "validPassword": "newValidPass12"
   }
 }
