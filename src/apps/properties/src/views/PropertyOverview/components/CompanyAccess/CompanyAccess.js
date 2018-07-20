@@ -3,20 +3,27 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
-import { fetchSiteCompanies } from '../../../../store/sitesCompanies'
+import {
+  fetchSiteTeams,
+  addTeamToInstance,
+  removeTeamFromInstance
+} from '../../../../store/sitesTeams'
 
 import styles from './CompanyAccess.less'
+import { notify } from '../../../../../../../shell/store/notifications'
+import { fetchSiteUsers } from '../../../../store/sitesUsers'
 
 export default class CompanyAccess extends Component {
   constructor(props) {
     super(props)
     this.state = {
       team: '',
-      role: ''
+      role: '',
+      submitted: false
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchSiteCompanies(this.props.match.params.siteZUID))
+    this.props.dispatch(fetchSiteTeams(this.props.match.params.siteZUID))
   }
   render() {
     return (
@@ -36,10 +43,7 @@ export default class CompanyAccess extends Component {
                 used to provide an agency with access to manage your website.
               </p>
               <div className={styles.addCompany}>
-                <Input
-                  placeholder="Enter team ID"
-                  onChange={this.handleTream}
-                />
+                <Input placeholder="Enter team ID" onChange={this.handleTeam} />
                 <Select onSelect={this.handleRole}>
                   <Option key="default" value="" text="Select Role" />
                   {this.props.siteRoles.map(role => {
@@ -52,15 +56,19 @@ export default class CompanyAccess extends Component {
                     )
                   })}
                 </Select>
-                <Button name="companyAccessSubmit">Grant Access</Button>
+                <Button
+                  name="companyAccessSubmit"
+                  onClick={this.handleAddTeam}
+                  disabled={this.state.submitted}>
+                  Grant Access
+                </Button>
               </div>
             </React.Fragment>
           ) : null}
           <div className={styles.companyTable}>
             <header>
               <h3>Team</h3>
-              <h3>Contact</h3>
-              <h3>Email</h3>
+              <h3>Description</h3>
               <h3>Access</h3>
             </header>
             <main>
@@ -69,26 +77,54 @@ export default class CompanyAccess extends Component {
                 message="Loading Instance Teams"
                 height="100px"
                 width="100%">
-                {Object.keys(this.props.companies).map(ZUID => {
-                  let company = this.props.companies[ZUID]
+                {Object.keys(this.props.teams).map(teamZUID => {
+                  let team = this.props.teams[teamZUID]
                   return (
-                    <article key={ZUID}>
-                      <span>{company.name}</span>
-                      <span>{company.mainContactName}</span>
-                      <span>{company.mainContactEmail}</span>
+                    <article key={teamZUID}>
+                      <span>{team.name}</span>
+                      <span>{team.description}</span>
                       <span>
                         {this.props.isAdmin && (
-                          <i
-                            className="fa fa-trash-o"
-                            onClick={() => this.handleToggle(company)}
-                          />
+                          <Button onClick={() => this.handleRemove(team)}>
+                            <i
+                              className={`fa fa-trash-o ${
+                                this.state.removing
+                                  ? styles.hidden
+                                  : styles.trash
+                              }`}
+                            />&nbsp;Remove Team
+                          </Button>
                         )}
                       </span>
+
+                      <article className={styles.TeamMembers}>
+                        {Object.keys(this.props.users)
+                          .filter(userZUID => {
+                            return (
+                              this.props.users[userZUID].teamZUID === team.ZUID
+                            )
+                          })
+                          .map(userZUID => {
+                            return (
+                              <React.Fragment key={userZUID}>
+                                <span>{this.props.users[userZUID].email}</span>
+                                <span>
+                                  {this.props.users[userZUID].firstName}&nbsp;{
+                                    this.props.users[userZUID].lastName
+                                  }
+                                </span>
+                                <span>
+                                  {this.props.users[userZUID].role.name}
+                                </span>
+                              </React.Fragment>
+                            )
+                          })}
+                      </article>
                     </article>
                   )
                 })}
 
-                {!Object.keys(this.props.companies).length &&
+                {!Object.keys(this.props.teams).length &&
                 !this.props.loadingTeams ? (
                   <article>
                     <em>No team access added for this instance.</em>
@@ -101,15 +137,37 @@ export default class CompanyAccess extends Component {
       </Card>
     )
   }
-  handleToggle = company => {
+  handleRemove = team => {
+    this.setState({ removing: true })
     this.props.dispatch(
       zConfirm({
-        prompt: `are you sure you want to remove access from ${company.name}`,
-        callback: result => {
-          if (!result) {
-            return
+        kind: 'warn',
+        prompt: `Are you sure you want to remove access for the team: ${
+          team.name
+        }?`,
+        callback: confirmed => {
+          if (confirmed) {
+            this.props
+              .dispatch(removeTeamFromInstance(this.props.siteZUID, team.ZUID))
+              .then(() => {
+                this.setState({ removing: false })
+                this.props.dispatch(
+                  notify({
+                    type: 'success',
+                    message: `${team.name} was removed`
+                  })
+                )
+              })
+              .catch(err => {
+                this.setState({ removing: false })
+                this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message: `Failed to remove ${team.name}`
+                  })
+                )
+              })
           }
-          // make a call to remove the company
         }
       })
     )
@@ -123,5 +181,40 @@ export default class CompanyAccess extends Component {
     this.setState({
       role: evt.target.dataset.value
     })
+  }
+  handleAddTeam = () => {
+    this.setState({
+      submitted: true
+    })
+    this.props
+      .dispatch(
+        addTeamToInstance(this.props.siteZUID, this.state.team, this.state.role)
+      )
+      .then(data => {
+        this.setState({
+          team: '',
+          role: '',
+          submitted: false
+        })
+        this.props.dispatch(
+          notify({
+            type: 'success',
+            message: 'Team successfully added'
+          })
+        )
+        this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
+        this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
+      })
+      .catch(() => {
+        this.setState({
+          submitted: false
+        })
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: 'Team failed to add'
+          })
+        )
+      })
   }
 }

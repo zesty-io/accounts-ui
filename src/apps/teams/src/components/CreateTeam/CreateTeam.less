@@ -1,0 +1,40 @@
+@import url('../../../../../shell/styles/colors.less');
+
+.CreateTeam {
+  max-height: 470px;
+  max-width: 500px;
+
+  flex: 1 0 0%;
+  margin: 1rem;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 30px 3fr 50px;
+    margin: 0;
+  }
+
+  .CardContent {
+    padding: 1rem 0;
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    .Team {
+      span {
+        font-weight: bold;
+      }
+      input {
+        display: block;
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+      textarea {
+        width: 100%;
+        display: block;
+        height: 100px;
+        font-size: 1rem;
+        padding: 0.2rem;
+      }
+    }
+  }
+}

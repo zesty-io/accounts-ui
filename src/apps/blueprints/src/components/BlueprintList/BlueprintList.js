@@ -22,8 +22,7 @@ export default function BlueprintList(props) {
               <li>
                 <Url
                   href="https://developer.zesty.io/docs/templating/plate-xml/"
-                  target="_blank"
-                >
+                  target="_blank">
                   Learn how blueprints work
                 </Url>
               </li>
@@ -36,7 +35,7 @@ export default function BlueprintList(props) {
           </CardContent>
           <CardFooter className={styles.CardFooter}>
             <ButtonGroup className={styles.controls}>
-              <AppLink to="/blueprints/create">
+              <AppLink to="/blueprints/create" id="createBlueprint">
                 <i className="fa fa-plus" aria-hidden="true" />
                 &nbsp;Create Blueprint
               </AppLink>

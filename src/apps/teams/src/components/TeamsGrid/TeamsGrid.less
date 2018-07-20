@@ -1,0 +1,24 @@
+@import '../../../../../shell/styles/colors.less';
+
+.TeamsView {
+  padding: 2rem;
+  height: 86vh;
+  overflow-y: scroll;
+
+  .TeamsTitle {
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .TeamsGrid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    @supports (display: grid) {
+      display: grid;
+      grid-gap: 2rem;
+      grid-template-columns: repeat(auto-fill, 400px);
+      grid-auto-rows: minmax(30rem, auto);
+    }
+  }
+}

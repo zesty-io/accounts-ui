@@ -1,2 +1,112 @@
 @import url('../../../../../shell/styles/colors.less');
 
+.TeamCard {
+  max-height: 470px;
+  max-width: 500px;
+
+  flex: 1 0 0%;
+  margin: 1rem;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 30px 3fr 50px;
+    margin: 0;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0 0 10px #8398bd;
+  }
+
+  .CardHeader {
+    display: flex;
+    align-items: center;
+
+    .Copy {
+      font-size: 0.7em;
+      padding: 0.4rem 0.5rem;
+      margin-right: 0.5rem;
+    }
+
+    .ZUID {
+      font-weight: bold;
+    }
+  }
+
+  .CardContent {
+    margin: 1rem 0;
+    overflow-y: scroll;
+    position: relative;
+
+    .Settings {
+      .Edit {
+        color: lighten(@zesty-gray, 20%);
+        cursor: pointer;
+        position: absolute;
+        top: 3px;
+        right: 9px;
+        &:hover {
+          color: @zesty-gray;
+        }
+      }
+
+      h3 {
+        margin-right: 25px;
+      }
+
+      .Editing {
+        width: 93%;
+        background: @zesty-teal;
+        padding: 0.5rem;
+        color: #fff;
+        border-radius: 3px;
+
+        input,
+        textarea {
+          display: block;
+          width: 100%;
+          margin: 0 0 1rem 0;
+        }
+        textarea {
+          height: 75px;
+        }
+        .Save {
+          flex: 2;
+        }
+        .Delete {
+          flex: 0;
+          i {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .Members {
+      margin: 1rem 0;
+      .Member {
+        display: flex;
+        margin: 0.5rem 0.5rem 0.5rem 0;
+
+        .Name {
+          flex: 1;
+          padding: 0 0.5rem;
+        }
+        .Remove {
+          cursor: pointer;
+          &:hover,
+          &:focus,
+          &:active {
+            color: @zesty-red;
+          }
+        }
+      }
+    }
+  }
+
+  .CardInvite {
+    display: grid;
+    grid-template-columns: 1.2fr 3fr;
+    grid-gap: 0.2rem;
+  }
+}

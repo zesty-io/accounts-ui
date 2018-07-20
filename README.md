@@ -4,6 +4,12 @@ We are following the "sub-app" pattern established in `zesty-io/instances-ui`. T
 
 This also aligns us with eventually making this a PWA.
 
+**Browser Support**
+
+- Chrome / Firefox / Edge / Safari (latest)
+- IE11
+  - https://github.com/philipwalton/flexbugs#flexbug-4
+
 ## Running Locally
 
 This app requires the Zesty.io platform(`zesty-io/zesty-dev`) to be running and available in order to load data, handle authentication, etc. The app itself can be run locally with the command:
@@ -12,10 +18,10 @@ This app requires the Zesty.io platform(`zesty-io/zesty-dev`) to be running and 
 
 This will do the following tasks:
 
-* Install all dependencies
-* Build all necessary bundles
-  * Watch code for updates and rebuild bundles
-* Start a local server on `localhost:6006`
+- Install all dependencies
+- Build all necessary bundles
+  - Watch code for updates and rebuild bundles
+- Start a local server on `localhost:6006`
 
 ## Production
 
@@ -27,10 +33,9 @@ It's very important when deploying to production a "production" webpack build is
 
 Build environments-
 
-    npm run build-dev
+    npm run build-development
     npm run build-stage
-    npm run build-prod
-
+    npm run build-production
 
 ### Deploying
 

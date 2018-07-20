@@ -96,7 +96,6 @@ export function createBlueprint(body) {
         return res.data
       })
       .catch(err => {
-        console.table(err)
         dispatch({
           type: 'CREATE_BLUEPRINT_ERROR',
           err
@@ -151,7 +150,6 @@ export function deleteBlueprint(id) {
         return blueprint
       })
       .catch(err => {
-        console.table(err)
         dispatch({
           type: 'FETCHING_BLUEPRINTS_ERROR',
           err

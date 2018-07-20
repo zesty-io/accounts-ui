@@ -37,6 +37,7 @@ export default class Users extends Component {
                 type="email"
                 placeholder="Email of user to invite"
                 name="inviteeEmail"
+                id="inviteUserInput"
                 value={this.state.inviteeEmail}
                 onChange={this.handleEmail}
                 required
@@ -57,8 +58,8 @@ export default class Users extends Component {
               </Select>
               <Button
                 onClick={this.handleInvite}
-                disabled={this.state.submitted}
-              >
+                id="inviteUserSend"
+                disabled={this.state.submitted}>
                 <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
               </Button>
             </div>
@@ -77,36 +78,37 @@ export default class Users extends Component {
                 }
                 message="Loading Instance Users"
                 height="100px"
-                width="100%"
-              >
+                width="100%">
                 <div>
-                  {Object.keys(this.props.users).map(ZUID => {
-                    const user = this.props.users[ZUID]
-                    if (user.pending) {
-                      return (
-                        <UserPendingRow
-                          key={ZUID}
-                          siteZUID={this.props.siteZUID}
-                          siteRoles={this.props.siteRoles}
-                          dispatch={this.props.dispatch}
-                          isAdmin={this.props.isAdmin}
-                          {...user}
-                        />
-                      )
-                    } else {
-                      return (
-                        <UserRow
-                          key={ZUID}
-                          siteZUID={this.props.siteZUID}
-                          siteRoles={this.props.siteRoles}
-                          dispatch={this.props.dispatch}
-                          isAdmin={this.props.isAdmin}
-                          isOwner={this.props.isOwner}
-                          {...user}
-                        />
-                      )
-                    }
-                  })}
+                  {Object.keys(this.props.users)
+                    .filter(ZUID => !this.props.users[ZUID].teamZUID)
+                    .map(ZUID => {
+                      const user = this.props.users[ZUID]
+                      if (user.pending) {
+                        return (
+                          <UserPendingRow
+                            key={ZUID}
+                            siteZUID={this.props.siteZUID}
+                            siteRoles={this.props.siteRoles}
+                            dispatch={this.props.dispatch}
+                            isAdmin={this.props.isAdmin}
+                            {...user}
+                          />
+                        )
+                      } else {
+                        return (
+                          <UserRow
+                            key={ZUID}
+                            siteZUID={this.props.siteZUID}
+                            siteRoles={this.props.siteRoles}
+                            dispatch={this.props.dispatch}
+                            isAdmin={this.props.isAdmin}
+                            isOwner={this.props.isOwner}
+                            {...user}
+                          />
+                        )
+                      }
+                    })}
                 </div>
               </WithLoader>
             </main>
@@ -148,7 +150,7 @@ export default class Users extends Component {
     } else {
       this.props.dispatch(
         notify({
-          HTML: `<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;Please provide a valid Email address`,
+          message: `Please provide a valid Email address`,
           type: 'error'
         })
       )

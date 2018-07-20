@@ -3,11 +3,20 @@
 .WebsiteInvite {
   background: #3a445a;
   border: 0;
-  display: grid;
-  grid-template-rows: 1fr 3fr 50px;
+
   padding: 0;
   box-shadow: 0 0 5px #d6e1f3;
   width: 350px;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 0%;
+  margin: 1rem;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 1fr 3fr 50px;
+    margin: 0;
+  }
 
   .CardHeader {
     border-bottom: 1px solid #5c708a;
@@ -28,6 +37,7 @@
   .CardContent {
     display: flex;
     align-items: center;
+    flex-basis: auto;
     justify-content: center;
     margin: 0;
     width: 100%;

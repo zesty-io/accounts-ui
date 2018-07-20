@@ -27,6 +27,10 @@ class Login extends Component {
         }
       })
     }
+    // if a user has a valid session send them through to instances
+    if (this.props.auth.valid) {
+      this.props.history.push('/instances')
+    }
   }
   render() {
     return (
@@ -53,7 +57,7 @@ class Login extends Component {
               </label>
               <label>
                 <p>
-                  Password&nbsp;<small>
+                  Password &nbsp;<small>
                     (<AppLink to="/reset-password" tabIndex="4">
                       Forgot?
                     </AppLink>)
@@ -109,18 +113,11 @@ class Login extends Component {
               <h3>Welcome to Zesty.io</h3>
               <p>
                 Start creating content ready to be delivered securely, quickly
-                and reliably to everywhere from anywhere.
+                and reliably. Anywhere, anytime.
               </p>
               <AppLink to="/signup" tabIndex="5">
                 Create An Account
               </AppLink>
-              {/* <h3>Additional Information</h3>
-              <p>
-                <Url href="https://zesty.io">https://zesty.io</Url>
-              </p>
-              <p>
-                <Url href="mailto:hello@zesty.io">hello@zesty.io</Url>
-              </p> */}
             </div>
           </main>
         </div>

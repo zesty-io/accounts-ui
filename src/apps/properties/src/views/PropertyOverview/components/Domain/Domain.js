@@ -32,8 +32,7 @@ export default class Domain extends Component {
               this.setState({
                 editing: true
               })
-            }}
-          >
+            }}>
             {this.props.domain}
             <i className="fa fa-pencil" />
           </span>
@@ -41,6 +40,7 @@ export default class Domain extends Component {
           <span className={styles.Edit}>
             <Input
               value={this.state.domain}
+              id="editDomainInput"
               placeholder="Set a custom domain"
               onChange={evt => {
                 this.setState({
@@ -48,7 +48,7 @@ export default class Domain extends Component {
                 })
               }}
             />
-            <Button onClick={this.handleSave}>
+            <Button onClick={this.handleSave} id="editDomainSave">
               <i className="fa fa-save" aria-hidden="true" />Save
             </Button>
           </span>
@@ -74,7 +74,7 @@ export default class Domain extends Component {
         })
         this.props.dispatch(
           notify({
-            message: `Your domain has been set to ${domain}`,
+            message: `Your domain has been set to ${strippedDomain}`,
             type: 'success'
           })
         )

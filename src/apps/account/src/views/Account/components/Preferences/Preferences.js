@@ -19,8 +19,18 @@ class Preferences extends Component {
             Manage Blueprints
             <Toggle
               name="blueprints"
+              id="blueprintsToggle"
               onChange={this.handleChange}
               checked={this.props.user.prefs.devOptions}
+            />
+          </article>
+          <article className={styles.PrefItem}>
+            Manage Teams
+            <Toggle
+              name="teams"
+              id="teamsToggle"
+              onChange={this.handleChange}
+              checked={this.props.user.prefs.teamOptions}
             />
           </article>
           <article className={styles.PrefItem}>
@@ -40,6 +50,12 @@ class Preferences extends Component {
     if (evt.target.name === 'blueprints') {
       this.props.dispatch({
         type: 'DEV_PREFS',
+        payload: evt.target.checked ? 1 : 0
+      })
+    }
+    if (evt.target.name === 'teams') {
+      this.props.dispatch({
+        type: 'TEAM_PREFS',
         payload: evt.target.checked ? 1 : 0
       })
     }

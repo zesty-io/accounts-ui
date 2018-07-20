@@ -13,7 +13,9 @@
     "start": "npm run build-development && node bin/start",
     "build-development": "export NODE_ENV=\"development\" && node bin/build",
     "build-stage": "export NODE_ENV=\"stage\" && node bin/build",
-    "build-production": "export NODE_ENV=\"production\" && node bin/build"
+    "build-production": "export NODE_ENV=\"production\" && node bin/build",
+    "test:dev": "cypress open",
+    "test": "cypress run --browser chrome"
   },
   "author": "Zesty.io<developers@zesty.io>",
   "contributors": [
@@ -23,6 +25,7 @@
   "license": "All Rights Reserved",
   "dependencies": {
     "classnames": "2.2.5",
+    "core-js": "2.5.7",
     "js-cookie": "2.2.0",
     "qs": "6.5.1",
     "react": "16.4.0",
@@ -31,7 +34,8 @@
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
-    "redux-thunk": "2.2.0"
+    "redux-thunk": "2.2.0",
+    "whatwg-fetch": "2.0.4"
   },
   "devDependencies": {
     "ava": "0.25.0",
@@ -41,6 +45,7 @@
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
     "css-loader": "0.28.10",
+    "cypress": "3.0.2",
     "extract-text-webpack-plugin": "3.0.2",
     "husky": "0.14.3",
     "less": "3.0.1",

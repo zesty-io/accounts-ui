@@ -10,7 +10,12 @@ import { notifications } from './notifications'
 import { confirm } from './confirm'
 import { systemRoles } from './systemRoles'
 import { properties } from '../../apps/properties/src/store'
-import { teams } from '../../apps/teams/src/store'
+
+// Teams
+import { teams } from '../../apps/teams/src/store/teams'
+import { teamInvites } from '../../apps/teams/src/store/teamInvites'
+import { teamInstances } from '../../apps/teams/src/store/teamInstances'
+import { teamMembers } from '../../apps/teams/src/store/teamMembers'
 
 const loggerMiddleware = createLogger({
   collapsed: true,
@@ -21,6 +26,9 @@ const appReducer = combineReducers({
   ...properties,
   user,
   teams,
+  teamInstances,
+  teamInvites,
+  teamMembers,
   auth,
   settings,
   // modal,
@@ -41,8 +49,12 @@ const middleware =
     ? applyMiddleware(thunkMiddleware)
     : applyMiddleware(thunkMiddleware, loggerMiddleware)
 
-export const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  middleware
-)
+export const store =
+  CONFIG.ENV === 'production'
+    ? createStore(rootReducer, middleware)
+    : createStore(
+        rootReducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__(),
+        middleware
+      )
