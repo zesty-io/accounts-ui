@@ -77,22 +77,49 @@ export default class CompanyAccess extends Component {
                 message="Loading Instance Teams"
                 height="100px"
                 width="100%">
-                {Object.keys(this.props.teams).map(ZUID => {
-                  let team = this.props.teams[ZUID]
+                {Object.keys(this.props.teams).map(teamZUID => {
+                  let team = this.props.teams[teamZUID]
                   return (
-                    <article key={ZUID}>
+                    <article key={teamZUID}>
                       <span>{team.name}</span>
                       <span>{team.description}</span>
                       <span>
                         {this.props.isAdmin && (
-                          <i
-                            className={`fa fa-trash-o ${
-                              this.state.removing ? styles.hidden : styles.trash
-                            }`}
-                            onClick={() => this.handleRemove(team)}
-                          />
+                          <Button onClick={() => this.handleRemove(team)}>
+                            <i
+                              className={`fa fa-trash-o ${
+                                this.state.removing
+                                  ? styles.hidden
+                                  : styles.trash
+                              }`}
+                            />&nbsp;Remove Team
+                          </Button>
                         )}
                       </span>
+
+                      <article className={styles.TeamMembers}>
+                        {Object.keys(this.props.users)
+                          .filter(userZUID => {
+                            return (
+                              this.props.users[userZUID].teamZUID === team.ZUID
+                            )
+                          })
+                          .map(userZUID => {
+                            return (
+                              <React.Fragment key={userZUID}>
+                                <span>{this.props.users[userZUID].email}</span>
+                                <span>
+                                  {this.props.users[userZUID].firstName}&nbsp;{
+                                    this.props.users[userZUID].lastName
+                                  }
+                                </span>
+                                <span>
+                                  {this.props.users[userZUID].role.name}
+                                </span>
+                              </React.Fragment>
+                            )
+                          })}
+                      </article>
                     </article>
                   )
                 })}
@@ -120,10 +147,26 @@ export default class CompanyAccess extends Component {
         }?`,
         callback: confirmed => {
           if (confirmed) {
-            this.props.dispatch(
-              removeTeamFromInstance(this.props.siteZUID, team.ZUID)
-            )
-            this.setState({ removing: false })
+            this.props
+              .dispatch(removeTeamFromInstance(this.props.siteZUID, team.ZUID))
+              .then(() => {
+                this.setState({ removing: false })
+                this.props.dispatch(
+                  notify({
+                    type: 'success',
+                    message: `${team.name} was removed`
+                  })
+                )
+              })
+              .catch(err => {
+                this.setState({ removing: false })
+                this.props.dispatch(
+                  notify({
+                    type: 'error',
+                    message: `Failed to remove ${team.name}`
+                  })
+                )
+              })
           }
         }
       })

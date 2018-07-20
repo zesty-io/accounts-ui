@@ -19,6 +19,7 @@ class Preferences extends Component {
             Manage Blueprints
             <Toggle
               name="blueprints"
+              id="blueprintsToggle"
               onChange={this.handleChange}
               checked={this.props.user.prefs.devOptions}
             />
@@ -27,6 +28,7 @@ class Preferences extends Component {
             Manage Teams
             <Toggle
               name="teams"
+              id="teamsToggle"
               onChange={this.handleChange}
               checked={this.props.user.prefs.teamOptions}
             />

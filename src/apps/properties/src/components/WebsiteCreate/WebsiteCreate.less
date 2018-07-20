@@ -7,9 +7,13 @@
 
   display: flex;
   flex-direction: column;
-
-  display: grid;
-  grid-template-rows: 0fr 2fr 0fr;
+  flex: 1 0 0%;
+  margin: 1rem;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 0fr 2fr 0fr;
+    margin: 0;
+  }
 
   header {
     padding: 1rem;
@@ -23,7 +27,7 @@
   main {
     border-bottom: 1px solid #f2f4fb;
     padding: 1rem;
-    flex: 1;
+    flex: 1 0 0%;
     h1 {
       font-size: 1.4rem;
       margin-bottom: 0.5rem;

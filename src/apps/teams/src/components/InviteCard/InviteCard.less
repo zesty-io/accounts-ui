@@ -3,6 +3,15 @@
 .TeamInvite {
   background-color: @zesty-teal;
   color: @zesty-white;
+  max-width: 500px;
+
+  flex: 1 0 0%;
+  margin: 1rem;
+  @supports (display: grid) {
+    display: grid;
+    grid-template-rows: 30px 3fr 50px;
+    margin: 0;
+  }
 
   &:hover,
   &:focus,
@@ -12,6 +21,9 @@
 
   .CardContent {
     margin: 1rem 0;
+    h3 {
+      margin-bottom: 1rem;
+    }
   }
   .CardFooter {
     button:first-child {

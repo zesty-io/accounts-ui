@@ -80,33 +80,35 @@ export default class Users extends Component {
                 height="100px"
                 width="100%">
                 <div>
-                  {Object.keys(this.props.users).map(ZUID => {
-                    const user = this.props.users[ZUID]
-                    if (user.pending) {
-                      return (
-                        <UserPendingRow
-                          key={ZUID}
-                          siteZUID={this.props.siteZUID}
-                          siteRoles={this.props.siteRoles}
-                          dispatch={this.props.dispatch}
-                          isAdmin={this.props.isAdmin}
-                          {...user}
-                        />
-                      )
-                    } else {
-                      return (
-                        <UserRow
-                          key={ZUID}
-                          siteZUID={this.props.siteZUID}
-                          siteRoles={this.props.siteRoles}
-                          dispatch={this.props.dispatch}
-                          isAdmin={this.props.isAdmin}
-                          isOwner={this.props.isOwner}
-                          {...user}
-                        />
-                      )
-                    }
-                  })}
+                  {Object.keys(this.props.users)
+                    .filter(ZUID => !this.props.users[ZUID].teamZUID)
+                    .map(ZUID => {
+                      const user = this.props.users[ZUID]
+                      if (user.pending) {
+                        return (
+                          <UserPendingRow
+                            key={ZUID}
+                            siteZUID={this.props.siteZUID}
+                            siteRoles={this.props.siteRoles}
+                            dispatch={this.props.dispatch}
+                            isAdmin={this.props.isAdmin}
+                            {...user}
+                          />
+                        )
+                      } else {
+                        return (
+                          <UserRow
+                            key={ZUID}
+                            siteZUID={this.props.siteZUID}
+                            siteRoles={this.props.siteRoles}
+                            dispatch={this.props.dispatch}
+                            isAdmin={this.props.isAdmin}
+                            isOwner={this.props.isOwner}
+                            {...user}
+                          />
+                        )
+                      }
+                    })}
                 </div>
               </WithLoader>
             </main>

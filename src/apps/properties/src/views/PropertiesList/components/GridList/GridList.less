@@ -12,16 +12,20 @@
 
   .SectionTitle {
     margin: 2rem 0 0 0;
+    font-weight: 200;
   }
   .siteList {
+    margin: 1rem 0 0 0;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    display: grid;
-    grid-gap: 2rem;
-    grid-template-columns: repeat(auto-fill, 338px);
-    grid-auto-rows: minmax(10rem, auto);
-    margin: 1rem 0 0 0;
+    @supports (display: grid) {
+      display: grid;
+      grid-gap: 2rem;
+      grid-template-columns: repeat(auto-fill, 338px);
+      grid-auto-rows: minmax(10rem, auto);
+    }
   }
   .siteList:last-child {
     padding-bottom: 3rem;

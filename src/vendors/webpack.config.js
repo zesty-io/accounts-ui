@@ -1,12 +1,13 @@
 'use strict'
-
 const build = require('../../build/buildinfo.json')
-const webpack = require('webpack')
 
 module.exports = {
-  entry: './index.js',
+  entry: {
+    vendors: './vendors.js',
+    polyfills: './polyfills.js'
+  },
   devtool: 'cheap-module-source-map',
   output: {
-    filename: `../../build/bundle.${build.data.gitCommit}.vendors.js`
+    filename: `../../build/bundle.${build.data.gitCommit}.[name].js`
   }
 }

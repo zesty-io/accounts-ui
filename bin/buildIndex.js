@@ -9,8 +9,9 @@ module.exports = buildIndex = build => {
   <html>
     <head>
       <meta charset="UTF-8">
-      <title>Zesty Accounts</title>
+      <title>Zesty.io Accounts Application</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+      <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,500,500i" rel="stylesheet">
       <style type="text/css">
         * {
           margin: 0;
@@ -21,8 +22,13 @@ module.exports = buildIndex = build => {
         body {
           background-color: #f2f4fb;
           color: #5B667D;
-          font-family: 'GibsonRegular', Arial, sans-serif;
+          font-family: "Montserrat", Arial, sans-serif;
+          font-weight: 400;
           font-size: 1em;
+        }
+
+        h1, h2, h3, h3, h5, h6 {
+          font-weight: 500;
         }
 
         #appBoot {
@@ -33,13 +39,13 @@ module.exports = buildIndex = build => {
           height: 100vh;
         }
 
-        #center {
+        #aligner {
           display: flex;
           flex-direction: column;
           align-items: center;
         }
 
-        #center h1 {
+        #aligner h1 {
           font-size: 2em;
           text-shadow: 1px 1px 1px #d6e5ff;
         }
@@ -113,12 +119,22 @@ module.exports = buildIndex = build => {
       }.teams-app.css" type="text/css" rel="stylesheet" />
 
       <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+
+      <!-- Polyfills for IE11 -->
+      <script>
+        if (!window.fetch) {
+          var script = document.createElement("script");
+          script.type = "text/javascript";
+          script.src = "/bundle.${build.data.gitCommit}.polyfills.js";
+          document.head.appendChild(script);
+        }
+      </script>
     </head>
 
     <body>
       <main id="root">
         <div id="appBoot">
-          <div id="center">
+          <div id="aligner">
             <h1>Starting Zesty.io</h1>
             <div class="loader">
               <span class="bar"></span>
@@ -161,6 +177,7 @@ module.exports = buildIndex = build => {
       <script src="/bundle.${build.data.gitCommit}.support-app.js"></script>
       <script src="/bundle.${build.data.gitCommit}.teams-app.js"></script>
       <script src="/bundle.${build.data.gitCommit}.shell.js"></script>
+
 
     </body>
   </html>

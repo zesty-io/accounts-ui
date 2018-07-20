@@ -11,6 +11,7 @@ export default connect(state => {
   return {
     teams: state.teams,
     teamInvites: state.teamInvites,
+    teamInstances: state.teamInstances,
     teamMembers: state.teamMembers,
     user: state.user
   }

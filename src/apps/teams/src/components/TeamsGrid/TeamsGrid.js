@@ -36,7 +36,8 @@ export default class TeamsGrid extends Component {
               members={this.props.teams[teamZUID].members.map(
                 memberZUID => this.props.teamMembers[memberZUID]
               )}
-              userZUID={this.props.user.ZUID}
+              instances={this.props.teamInstances[teamZUID]}
+              user={this.props.user}
             />
           ))}
         </div>

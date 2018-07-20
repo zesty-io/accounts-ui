@@ -7,8 +7,9 @@ import {
   inviteTeamMember,
   removeTeamMember
 } from '../../store/teamMembers'
-import { updateTeam, deleteTeam, fetchTeamInstances } from '../../store/teams'
+import { updateTeam, deleteTeam } from '../../store/teams'
 import { declineTeamInvite, cancelTeamInvite } from '../../store/teamInvites'
+import { fetchTeamInstances } from '../../store/teamInstances'
 
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
@@ -17,8 +18,8 @@ import styles from './TeamCard.less'
 
 export default class TeamCard extends Component {
   state = {
-    name: '',
-    description: '',
+    name: this.props.team.name,
+    description: this.props.team.description,
     inviteeEmail: '',
     admin: false,
     editing: false,
@@ -28,13 +29,14 @@ export default class TeamCard extends Component {
   componentDidMount() {
     Promise.all([
       this.props.dispatch(fetchTeamMembers(this.props.team.ZUID)),
-      this.props.dispatch(fetchTeamMemberInvites(this.props.team.ZUID))
-      // this.props.dispatch(fetchTeamInstances(this.props.team.ZUID))
+      this.props.dispatch(fetchTeamMemberInvites(this.props.team.ZUID)),
+      this.props.dispatch(fetchTeamInstances(this.props.team.ZUID))
     ]).then(() => {
       const isAdmin = Boolean(
-        this.props.members.filter(member => member).find(member => {
-          return member.ZUID === this.props.userZUID && member.admin
-        })
+        this.props.user.staff ||
+          this.props.members.filter(member => member).find(member => {
+            return member.ZUID === this.props.user.ZUID && member.admin
+          })
       )
       this.setState({
         loaded: true,
@@ -43,7 +45,7 @@ export default class TeamCard extends Component {
     })
   }
   render() {
-    const { team } = this.props
+    const { team, instances } = this.props
     return (
       <Card className={styles.TeamCard}>
         <CardHeader className={styles.CardHeader}>
@@ -93,10 +95,10 @@ export default class TeamCard extends Component {
             {this.state.editing ? (
               <div className={styles.Editing}>
                 <label>
-                  Team Name:{' '}
+                  Team Name:
                   <Input
                     type="text"
-                    placeholder={this.props.team.name}
+                    value={this.state.name}
                     onChange={this.handleChange}
                     name="name"
                   />
@@ -104,7 +106,7 @@ export default class TeamCard extends Component {
                 <label>
                   Team Description:
                   <textarea
-                    placeholder={this.props.team.description}
+                    value={this.state.description}
                     onChange={this.handleChange}
                     name="description"
                   />
@@ -140,8 +142,10 @@ export default class TeamCard extends Component {
               message="Loading team owners">
               {this.props.members.length
                 ? this.props.members
-                    .filter(member => member)
-                    .filter(member => member.admin)
+                    .filter(
+                      member =>
+                        member.ZUID === this.props.team.createdByUserZUID
+                    )
                     .map((member, i) => {
                       return (
                         <article className={styles.Member} key={i}>
@@ -165,8 +169,10 @@ export default class TeamCard extends Component {
               message="Loading team members">
               {this.props.members.length
                 ? this.props.members
-                    .filter(member => member)
-                    .filter(member => !member.admin)
+                    .filter(
+                      member =>
+                        member.ZUID !== this.props.team.createdByUserZUID
+                    )
                     .map((member, i) => {
                       return (
                         <article className={styles.Member} key={i}>
@@ -210,25 +216,27 @@ export default class TeamCard extends Component {
             </WithLoader>
           </section>
 
-          {/* <section className={styles.Instances}>
+          <section className={styles.Instances}>
             <h3>Instances</h3>
             <WithLoader
               condition={this.state.loaded}
               message="Loading team instances">
-              {team.instances && team.instances.length
-                ? team.instances.map(instance => {
+              {instances && Object.keys(instances).length
+                ? Object.keys(instances).map(instance => {
                     return (
-                      <article className={styles.Instance} key={instance.ZUID}>
-                        <AppLink to={`/instances/${instance.ZUID}`}>
-                          <i className="fa fa-globe" />
-                          {instance.name}
+                      <article
+                        className={styles.Instance}
+                        key={instances[instance].ZUID}>
+                        <AppLink to={`/instances/${instances[instance].ZUID}`}>
+                          {/* <i className="fa fa-globe" /> */}
+                          {instances[instance].name}
                         </AppLink>
                       </article>
                     )
                   })
                 : 'No instances for this team'}
             </WithLoader>
-          </section> */}
+          </section>
         </CardContent>
         <CardFooter>
           {this.state.isAdmin && (

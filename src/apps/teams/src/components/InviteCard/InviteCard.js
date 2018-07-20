@@ -8,12 +8,11 @@ export default class InviteCard extends PureComponent {
     return (
       <Card className={styles.TeamInvite}>
         <CardHeader>
-          <h3>Invited to Team: {this.props.invite.name}</h3>
+          <h3>You Have Been Invited to a Team!</h3>
         </CardHeader>
         <CardContent className={styles.CardContent}>
-          <h3>Team description</h3>
+          <h3>{this.props.invite.name}</h3>
           <p>{this.props.invite.description}</p>
-          <p>Accept or decline this invite below</p>
         </CardContent>
         <CardFooter className={styles.CardFooter}>
           <ButtonGroup>
@@ -32,10 +31,15 @@ export default class InviteCard extends PureComponent {
   }
   handleAccept = () => {
     this.props.dispatch(
-      acceptTeamInvite(this.props.invite.ZUID, this.props.invite.teamZUID)
+      acceptTeamInvite(this.props.invite.inviteZUID, this.props.invite.teamZUID)
     )
   }
   handleDecline = () => {
-    this.props.dispatch(declineTeamInvite(this.props.invite.ZUID))
+    this.props.dispatch(
+      declineTeamInvite(
+        this.props.invite.inviteZUID,
+        this.props.invite.teamZUID
+      )
+    )
   }
 }
