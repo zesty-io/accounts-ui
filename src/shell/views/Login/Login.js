@@ -150,7 +150,13 @@ class Login extends Component {
                 submitted: false,
                 message: 'Redirecting'
               })
-              window.location = queryParams.redirect + window.location.hash
+              // open a new tab and send the user to the workflow
+              window.open(
+                queryParams.redirect + this.props.history.location.hash,
+                '_blank'
+              )
+              // send the app into instances
+              this.props.history.push('/instances')
             } else {
               this.setState({
                 error: true,
