@@ -67,14 +67,17 @@ export default connect((state, props) => {
       const name = site.name && site.name.toString().toLowerCase()
       if (name && name.includes(searchString)) {
         filtered[zuid] = site
-      } else if (site.ZUID && site.ZUID.includes(searchString)) {
+      }
+      if (site.ZUID && site.ZUID.includes(searchString)) {
         filtered[zuid] = site
-      } else if (site.domain && site.domain.includes(searchString)) {
+      }
+      if (site.domain && site.domain.includes(searchString)) {
         filtered[zuid] = site
-      } else if (
-        site.RandomHashID &&
-        site.RandomHashID.includes(searchString)
-      ) {
+      }
+      if (String(site.ID) && String(site.ID).includes(searchString)) {
+        filtered[zuid] = site
+      }
+      if (site.randomHashID && site.randomHashID.includes(searchString)) {
         filtered[zuid] = site
       }
     }
