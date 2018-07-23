@@ -3,6 +3,10 @@ import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { update2fa } from '../../../../../../../shell/store/user'
 
 import styles from './TwoFactor.less'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
+import { Input } from '@zesty-io/core/Input'
 
 export default class TwoFactorOptions extends Component {
   constructor(props) {
@@ -38,8 +42,7 @@ export default class TwoFactorOptions extends Component {
                 <Url
                   className={styles.InfoLink}
                   target="_blank"
-                  href="https://authy.com/what-is-2fa/"
-                >
+                  href="https://authy.com/what-is-2fa/">
                   What is Authy 2 Factor Authentication?
                 </Url>
               </p>
@@ -77,8 +80,7 @@ export default class TwoFactorOptions extends Component {
           {this.props.user.authyEnabled ? (
             <Button
               onClick={this.handleDisable}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               {this.state.submitted ? (
                 <React.Fragment>
                   <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Disabling
@@ -95,8 +97,7 @@ export default class TwoFactorOptions extends Component {
             <Button
               form="TwoFactor"
               onClick={this.handleEnable}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               {this.state.submitted ? (
                 <React.Fragment>
                   <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Enabling

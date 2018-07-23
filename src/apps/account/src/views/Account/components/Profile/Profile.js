@@ -1,6 +1,10 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../shell/store/notifications'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
+
 import {
   updateProfile,
   saveProfile

@@ -4,6 +4,9 @@ import { notify } from '../../../../../../../shell/store/notifications'
 import { updatePassword } from '../../../../store'
 
 import styles from './Password.less'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
 
 // TODO this regex pattern is invalid
 const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[]{}-_.+,]{8,}$/g

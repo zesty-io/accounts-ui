@@ -1,6 +1,8 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+
 import { fetchUserEmails } from '../../../../../shell/store/user'
 
 import Profile from './components/Profile'

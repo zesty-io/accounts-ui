@@ -1,5 +1,7 @@
 import react, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Toggle } from '@zesty-io/core/Toggle'
 
 import styles from './Preferences.less'
 import { saveProfile } from '../../../../../../../shell/store/user'
