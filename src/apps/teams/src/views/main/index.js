@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
+import { WithLoader } from '@zesty-io/core/WithLoader'
 import { fetchTeams } from '../../store/teams'
 import { fetchTeamInvites } from '../../store/teamInvites'
 import TeamsGrid from '../../components/TeamsGrid'

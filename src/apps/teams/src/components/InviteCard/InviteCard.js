@@ -1,6 +1,10 @@
 import React, { PureComponent } from 'react'
 import { acceptTeamInvite, declineTeamInvite } from '../../store/teamInvites'
 
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+
 import styles from './InviteCard.less'
 
 export default class InviteCard extends PureComponent {
