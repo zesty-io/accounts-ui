@@ -1,0 +1,48 @@
+@import '../../styles/colors.less';
+.LogoutWrap {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  .Logout {
+    max-width: 39rem;
+    max-height: 40rem;
+
+    header {
+      margin: 0 0 1.5rem;
+      padding: 0 1rem;
+      a {
+        margin: 0;
+        img {
+          height: 70px;
+        }
+      }
+    }
+
+    main {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 1rem;
+
+      .LogoutForm {
+        flex: 1;
+        @media screen and (-ms-high-contrast: active),
+          (-ms-high-contrast: none) {
+          flex-basis: auto;
+        }
+        margin-right: 1rem;
+        label {
+          font-weight: bold;
+        }
+        input {
+          margin-bottom: 1rem;
+          min-width: 300px;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
