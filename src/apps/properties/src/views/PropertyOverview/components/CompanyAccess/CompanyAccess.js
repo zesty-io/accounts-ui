@@ -1,8 +1,13 @@
 import { Component } from 'react'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
+
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
+import { Select, Option } from '@zesty-io/core/Select'
+import { WithLoader } from '@zesty-io/core/WithLoader'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
+
 import {
   fetchSiteTeams,
   addTeamToInstance,

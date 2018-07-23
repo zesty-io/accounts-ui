@@ -1,5 +1,6 @@
 import { PureComponent } from 'react'
 import styles from './UserPendingRow.less'
+import { Button } from '@zesty-io/core/Button'
 
 import { cancelInvite } from '../../../../../store/sites'
 import { zConfirm } from '../../../../../../../../shell/store/confirm'

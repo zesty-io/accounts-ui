@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
+import { Button } from '@zesty-io/core/Button'
 
 import styles from './GridList.less'
 

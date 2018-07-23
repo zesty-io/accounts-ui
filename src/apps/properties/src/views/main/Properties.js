@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import styles from './Websites.less'
+import { WithLoader } from '@zesty-io/core/WithLoader'
 
 import { fetchSites, fetchSitesWithInvites } from '../../store/sites'
 import { fetchSystemRoles } from '../../../../../shell/store/systemRoles'
@@ -35,8 +36,7 @@ class Properties extends Component {
           condition={
             !this.state.loadingSites && !this.state.loadingInvitedSites
           }
-          message="Loading Your Instances"
-        >
+          message="Loading Your Instances">
           <Switch>
             <Route
               exact

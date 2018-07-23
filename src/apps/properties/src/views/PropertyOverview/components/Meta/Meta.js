@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropertyName from '../PropertyName'
 import Domain from '../Domain'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Url } from '@zesty-io/core/Url'
 
 import styles from './Meta.less'
 
@@ -80,8 +82,7 @@ export default class Meta extends PureComponent {
             target="_blank"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${
               this.props.site.randomHashID
-            }${CONFIG.MANAGER_URL}/#!/config/settings/general/`}
-          >
+            }${CONFIG.MANAGER_URL}/#!/config/settings/general/`}>
             <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
             Instance Settings
           </Url>

@@ -1,6 +1,10 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+import { AppLink } from '@zesty-io/core/AppLink'
 
 import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
@@ -71,8 +75,7 @@ export default class Roles extends Component {
                       <span>
                         <ButtonGroup>
                           <AppLink
-                            to={`${this.props.match.url}role/${role.ZUID}`}
-                          >
+                            to={`${this.props.match.url}role/${role.ZUID}`}>
                             <i className="fa fa-pencil" aria-hidden="true" />&nbsp;Edit
                           </AppLink>
                           <Button onClick={() => this.handleRemove(role.ZUID)}>

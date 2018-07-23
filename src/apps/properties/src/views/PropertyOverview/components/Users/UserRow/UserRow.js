@@ -1,5 +1,7 @@
 import { Component } from 'react'
 import styles from './UserRow.less'
+import { Loader } from '@zesty-io/core/Loader'
+import { Select, Option } from '@zesty-io/core/Select'
 
 import { updateRole, removeUser } from '../../../../../store/sitesUsers'
 

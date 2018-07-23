@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Select } from '@zesty-io/core/Select'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
+import { WithLoader } from '@zesty-io/core/WithLoader'
 
 import styles from './Users.less'
 
 import { sendInvite } from '../../../../store/sites'
 import { notify } from '../../../../../../../shell/store/notifications'
-import { fetchSiteUsersPending } from '../../../../store/sitesUsers'
-
 import UserRow from './UserRow'
 import UserPendingRow from './UserPendingRow'
 

@@ -2,6 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Url } from '@zesty-io/core/Url'
 
 import InstanceFavorite from '../InstanceFavorite'
 
@@ -56,8 +61,7 @@ export default props => {
             title={`Preview instance: ${site.name}`}
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.PREVIEW_URL
-            }`}
-          >
+            }`}>
             <i className={'fa fa-eye'} aria-hidden="true" />
           </Url>
 
@@ -65,8 +69,7 @@ export default props => {
             <Url
               href={`http://${site.domain}`}
               target="_blank"
-              title="View live domain"
-            >
+              title="View live domain">
               <i className="fa fa-globe" aria-hidden="true" />
             </Url>
           ) : (
@@ -79,8 +82,7 @@ export default props => {
             title="Load instance manager"
             href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.MANAGER_URL
-            }`}
-          >
+            }`}>
             Open Manager&nbsp;<i
               className="fa fa-external-link-square"
               aria-hidden="true"

@@ -1,5 +1,6 @@
 import { Component } from 'React'
 import styles from './AppError.less'
+import { Url } from '@zesty-io/core/Url'
 
 export default class AppError extends Component {
   constructor(props) {

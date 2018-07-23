@@ -1,6 +1,11 @@
 import { PureComponent } from 'react'
 import styles from './Blueprint.less'
 
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
+import { Loader } from '@zesty-io/core/Loader'
+
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 
 export default class Blueprint extends PureComponent {

@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import { updateDomain } from '../../../../store/sites'
 import { notify } from '../../../../../../../shell/store/notifications'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
 
 import styles from './Domain.less'
 

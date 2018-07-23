@@ -1,5 +1,8 @@
 import { Component } from 'react'
 import cx from 'classnames'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+
 import styles from './PropertyName.less'
 
 import { notify } from '../../../../../../../shell/store/notifications'

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styles from './VerifyEmail.less'
+import { AppLink } from '@zesty-io/core/AppLink'
+
 export default class VerifyEmail extends Component {
   constructor(props) {
     super(props)

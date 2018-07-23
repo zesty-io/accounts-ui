@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
 // NOTE: Fetch Sites seems unecessary. Should be able to fetch the individual site
 import { fetchSites, acceptInvite, declineInvite } from '../../store/sites'
@@ -35,8 +38,7 @@ class WebsiteInvite extends Component {
               className={styles.Preview}
               target="_blank"
               title={`Preview  ${this.props.site.name}`}
-              href={`https://${this.props.site.randomHashID}.preview.zesty.io`}
-            >
+              href={`https://${this.props.site.randomHashID}.preview.zesty.io`}>
               <i
                 className={cx(styles.icon, 'fa fa-globe')}
                 aria-hidden="true"
@@ -50,16 +52,14 @@ class WebsiteInvite extends Component {
             type="save"
             className={styles.invite}
             onClick={this.handleAccept}
-            disabled={this.state.submitted}
-          >
+            disabled={this.state.submitted}>
             <i className="fa fa-check-circle-o" aria-hidden="true" />
             Accept Invite
           </Button>
           <Button
             type="cancel"
             onClick={this.handleDecline}
-            disabled={this.state.submitted}
-          >
+            disabled={this.state.submitted}>
             <i className="fa fa-ban" aria-hidden="true" />
             Decline
           </Button>

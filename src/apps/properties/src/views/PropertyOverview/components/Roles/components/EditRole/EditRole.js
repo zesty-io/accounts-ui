@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styles from './EditRole.less'
+import { Input } from '@zesty-io/core/Input'
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Button } from '@zesty-io/core/Button'
 
 import { fetchSiteCollections } from '../../../../../../store/sitesCollections'
 

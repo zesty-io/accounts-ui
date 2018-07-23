@@ -1,6 +1,8 @@
 import React from 'react'
 import cx from 'classnames'
 import styles from './InstanceRow.less'
+import { Url } from '@zesty-io/core/Url'
+import { AppLink } from '@zesty-io/core/AppLink'
 
 import InstanceFavorite from '../../../../../../components/InstanceFavorite'
 
@@ -16,8 +18,7 @@ export default function InstanceRow(props) {
       />
       <AppLink
         className={cx(styles.action, styles.overview)}
-        to={`/instances/${site.ZUID}`}
-      >
+        to={`/instances/${site.ZUID}`}>
         {site.name}
       </AppLink>
 
@@ -27,8 +28,7 @@ export default function InstanceRow(props) {
         title={`Open instance preview: ${site.name}`}
         href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
           CONFIG.PREVIEW_URL
-        }`}
-      >
+        }`}>
         <i className={'fa fa-eye'} aria-hidden="true" />
       </Url>
       <Url
@@ -37,8 +37,7 @@ export default function InstanceRow(props) {
         title="Open instance manager"
         href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
           CONFIG.MANAGER_URL
-        }`}
-      >
+        }`}>
         <i className="fa fa-external-link-square" aria-hidden="true" />
       </Url>
     </span>

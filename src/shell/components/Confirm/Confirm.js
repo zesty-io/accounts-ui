@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
 import { connect } from 'react-redux'
+import { Button } from '@zesty-io/core/Button'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
 
 import styles from './Confirm.less'
 
