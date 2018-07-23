@@ -7,6 +7,8 @@ import { verifyAuth } from './store/auth'
 
 import App from './views/App'
 
+import '@zesty-io/core/core.css'
+
 let unsubscribe = store.subscribe(() => {
   let state = store.getState()
   if (!state.auth.checking) {

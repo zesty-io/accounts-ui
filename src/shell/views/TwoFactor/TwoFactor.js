@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
+import { Input } from '@zesty-io/core/Input'
+import { Url } from '@zesty-io/core/Url'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
 
 import styles from './TwoFactor.less'
 import { request } from '../../../util/request'

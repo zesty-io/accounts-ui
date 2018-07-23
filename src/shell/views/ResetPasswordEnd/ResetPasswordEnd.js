@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import qs from 'qs'
+import { Button } from '@zesty-io/core/Button'
 
 import styles from './ResetPasswordEnd.less'
 import { request } from '../../../util/request'

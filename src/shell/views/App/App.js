@@ -2,6 +2,7 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
+import { WithLoader } from '@zesty-io/core/WithLoader'
 
 import Login from '../Login'
 import TwoFactor from '../TwoFactor'

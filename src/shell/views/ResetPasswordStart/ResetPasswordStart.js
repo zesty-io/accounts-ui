@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { Button } from '@zesty-io/core/Button'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Input } from '@zesty-io/core/Input'
 
 import styles from './ResetPasswordStart.less'
 import { request } from '../../../util/request'
