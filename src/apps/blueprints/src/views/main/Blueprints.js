@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Switch, Route, withRouter } from 'react-router-dom'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+
 import BlueprintEdit from '../../components/BlueprintEdit'
 import BlueprintList from '../../components/BlueprintList'
 

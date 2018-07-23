@@ -1,5 +1,10 @@
 import React from 'react'
 
+import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Url } from '@zesty-io/core/Url'
+import { AppLink } from '@zesty-io/core/AppLink'
+
 import styles from './BlueprintCard.less'
 const BlueprintCard = props => {
   const { blueprint } = props
@@ -31,8 +36,7 @@ const BlueprintCard = props => {
             <Url
               target="_blank"
               title={`Preview blueprint: ${blueprint.name}`}
-              href={blueprint.previewURL}
-            >
+              href={blueprint.previewURL}>
               <i className={'fa fa-eye'} aria-hidden="true" />
             </Url>
           ) : (
