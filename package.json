@@ -24,6 +24,7 @@
   ],
   "license": "All Rights Reserved",
   "dependencies": {
+    "@zesty-io/core": "0.0.19",
     "classnames": "2.2.5",
     "core-js": "2.5.7",
     "js-cookie": "2.2.0",

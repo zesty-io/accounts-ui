@@ -1,4 +1,4 @@
-@import '../../shell/styles/colors.less';
+@import '~@zesty-io/core/colors.less';
 
 .loader {
   display: flex;
@@ -11,11 +11,21 @@
     opacity: 1;
     width: 1rem;
 
-    &:nth-child(1) { animation-delay: -0.16s }
-    &:nth-child(2) { animation-delay: 1s }
-    &:nth-child(3) { animation-delay: -0.32s }
-    &:nth-child(4) { animation-delay: 2s }
-    &:nth-child(5) { animation-delay: -0.16s }
+    &:nth-child(1) {
+      animation-delay: -0.16s;
+    }
+    &:nth-child(2) {
+      animation-delay: 1s;
+    }
+    &:nth-child(3) {
+      animation-delay: -0.32s;
+    }
+    &:nth-child(4) {
+      animation-delay: 2s;
+    }
+    &:nth-child(5) {
+      animation-delay: -0.16s;
+    }
   }
 }
 
