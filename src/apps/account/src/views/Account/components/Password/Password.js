@@ -5,9 +5,6 @@ import { updatePassword } from '../../../../store'
 
 import styles from './Password.less'
 
-// TODO this regex pattern is invalid
-const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[]{}-_.+,]{8,}$/g
-
 class Password extends Component {
   constructor(props) {
     super(props)
@@ -39,7 +36,6 @@ class Password extends Component {
           <Input
             name="newPassword"
             placeholder="New Password"
-            pattern={passwordPattern}
             onChange={this.handleChange}
             value={this.state.newPassword}
             type="password"
@@ -48,7 +44,6 @@ class Password extends Component {
           <Input
             name="confirmNewPassword"
             placeholder="Confirm New Password"
-            pattern={passwordPattern}
             onChange={this.handleChange}
             value={this.state.confirmNewPassword}
             type="password"
@@ -91,13 +86,6 @@ class Password extends Component {
     if (this.state.newPassword !== this.state.confirmNewPassword) {
       notify({
         message: 'Your new password does not match your password confirmation.',
-        type: 'error'
-      })
-      return
-    }
-    if (this.state.newPassword.match(passwordPattern)) {
-      notify({
-        message: 'Your new password does not meet the password requirements.',
         type: 'error'
       })
       return
