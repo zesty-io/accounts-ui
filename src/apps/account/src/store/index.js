@@ -65,35 +65,19 @@ export function deleteUserEmail(email) {
   }
 }
 
-export function updatePassword(oldPassword, newPassword) {
+export function updatePassword(oldPassword, password) {
   return (dispatch, getState) => {
-    const { email, ZUID } = getState().user
-
-    // TODO this endpoint does not return json which breaks our
-    // request handler
+    const { ZUID } = getState().user
     return request(
       `${CONFIG.API_ACCOUNTS}/users/${ZUID}?action=updatePassword`,
       {
         method: 'PUT',
         json: true,
         body: {
-          password: newPassword
+          password,
+          oldPassword
         }
       }
     )
-
-    // TODO should we log user out after password reset?
-
-    // TODO this won't work because it does not account for 2FA login flows
-    // we need to figure out another way to validate the old password
-    // return request(`${CONFIG.API_AUTH}/login`, {
-    //   body: {
-    //     email: email,
-    //     password: oldPassword
-    //   }
-    // }).then(data => {
-    //   console.log();
-    //
-    // })
   }
 }
