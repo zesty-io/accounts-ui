@@ -112,14 +112,19 @@ class Password extends Component {
             type: 'success'
           })
         )
+        // log out and sign in with new password
+        this.props.history.push('/logout')
       })
       .catch(() => {
         this.props.dispatch(
           notify({
-            message: 'Password not updated. An API error occured.',
+            message: 'Password not updated. An API error occurred.',
             type: 'error'
           })
         )
+        // the API invalidates the session
+        // user must login with their old password
+        this.props.history.push('/login')
       })
       .finally(() => {
         this.setState({
