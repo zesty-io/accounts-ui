@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
-import { Select } from '@zesty-io/core/Select'
+import { Select, Option } from '@zesty-io/core/Select'
 import { Button } from '@zesty-io/core/Button'
 import { Input } from '@zesty-io/core/Input'
 import { WithLoader } from '@zesty-io/core/WithLoader'

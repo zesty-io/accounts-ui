@@ -25,11 +25,11 @@ import { Option } from './Select'
 // window.Divider = Divider
 // window.Url = Url
 // window.AppLink = AppLink
-window.Loader = Loader
+// window.Loader = Loader
 // window.WithLoader = WithLoader
 // window.Search = Search
 // window.Select = Select
-window.Option = Option
+// window.Option = Option
 // window.Infotip = Infotip
 // window.Input = Input
 // window.Toggle = Toggle

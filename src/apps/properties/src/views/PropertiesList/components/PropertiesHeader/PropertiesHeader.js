@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Button } from '@zesty-io/core/Button'
 import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
-import { Select } from '@zesty-io/core/Select'
+import { Select, Option } from '@zesty-io/core/Select'
 import { Search } from '@zesty-io/core/Search'
 
 import debounce from '../../../../../../../util/debounce'
