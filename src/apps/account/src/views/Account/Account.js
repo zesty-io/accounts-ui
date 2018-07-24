@@ -40,7 +40,10 @@ class Account extends Component {
                 emails={this.props.user.emails}
                 loadingEmails={this.state.loadingEmails}
               />
-              <Password className={styles.SettingCard} />
+              <Password
+                history={this.props.history}
+                className={styles.SettingCard}
+              />
               <TwoFactor
                 className={styles.SettingCard}
                 dispatch={this.props.dispatch}
