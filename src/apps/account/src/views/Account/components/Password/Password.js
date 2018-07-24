@@ -90,13 +90,6 @@ class Password extends Component {
       })
       return
     }
-    if (this.state.newPassword.match(passwordPattern)) {
-      notify({
-        message: 'Your new password does not meet the password requirements.',
-        type: 'error'
-      })
-      return
-    }
 
     return this.props
       .dispatch(updatePassword(this.state.oldPassword, this.state.newPassword))
