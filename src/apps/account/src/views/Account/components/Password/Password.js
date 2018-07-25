@@ -104,15 +104,18 @@ class Password extends Component {
     }
     return this.props
       .dispatch(updatePassword(this.state.oldPassword, this.state.newPassword))
-      .then(() => {
-        this.props.dispatch(
-          notify({
-            message: 'Password was updated',
-            type: 'success'
-          })
-        )
-        // log out and sign in with new password
-        this.props.history.push('/logout')
+      .then(data => {
+        if (data.error) {
+          this.props.dispatch(
+            notify({
+              message: data.error,
+              type: 'error'
+            })
+          )
+        } else {
+          // log out and sign in with new password
+          this.props.history.push('/logout')
+        }
       })
       .catch(() => {
         this.props.dispatch(
