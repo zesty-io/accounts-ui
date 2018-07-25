@@ -124,9 +124,6 @@ class Password extends Component {
             type: 'error'
           })
         )
-        // the API invalidates the session
-        // user must login with their old password
-        this.props.history.push('/login')
       })
   }
   failsRequirements = pass => {
