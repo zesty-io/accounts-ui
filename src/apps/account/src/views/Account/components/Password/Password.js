@@ -5,9 +5,6 @@ import { updatePassword } from '../../../../store'
 
 import styles from './Password.less'
 
-// TODO this regex pattern is invalid
-const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[]{}-_.+,]{8,}$/g
-
 class Password extends Component {
   constructor(props) {
     super(props)
@@ -39,7 +36,6 @@ class Password extends Component {
           <Input
             name="newPassword"
             placeholder="New Password"
-            pattern={passwordPattern}
             onChange={this.handleChange}
             value={this.state.newPassword}
             type="password"
@@ -48,7 +44,6 @@ class Password extends Component {
           <Input
             name="confirmNewPassword"
             placeholder="Confirm New Password"
-            pattern={passwordPattern}
             onChange={this.handleChange}
             value={this.state.confirmNewPassword}
             type="password"
@@ -89,20 +84,24 @@ class Password extends Component {
       return
     }
     if (this.state.newPassword !== this.state.confirmNewPassword) {
-      notify({
-        message: 'Your new password does not match your password confirmation.',
-        type: 'error'
-      })
+      this.props.dispatch(
+        notify({
+          message:
+            'Your new password does not match your password confirmation.',
+          type: 'error'
+        })
+      )
       return
     }
-    if (this.state.newPassword.match(passwordPattern)) {
-      notify({
-        message: 'Your new password does not meet the password requirements.',
-        type: 'error'
-      })
+    if (this.failsRequirements(this.state.newPassword)) {
+      this.props.dispatch(
+        notify({
+          message: 'Your new password does not meet the password requirements.',
+          type: 'error'
+        })
+      )
       return
     }
-
     return this.props
       .dispatch(updatePassword(this.state.oldPassword, this.state.newPassword))
       .then(() => {
@@ -126,13 +125,12 @@ class Password extends Component {
         // user must login with their old password
         this.props.history.push('/login')
       })
-      .finally(() => {
-        this.setState({
-          oldPassword: '',
-          confirmNewPassword: '',
-          newPassword: ''
-        })
-      })
+  }
+  failsRequirements = pass => {
+    if (pass.length < 8 || !pass.match(/\d/g) || !pass.match(/[A-Z]/g)) {
+      return true
+    }
+    return false
   }
 }
 
