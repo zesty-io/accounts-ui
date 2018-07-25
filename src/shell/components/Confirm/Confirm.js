@@ -13,7 +13,10 @@ const Confirm = props => {
         <section className={cx(styles.Confirm, styles[props.kind])}>
           <h1>{props.prompt}</h1>
           <footer>
-            <ButtonGroup className={styles.buttons}>
+            <ButtonGroup
+              className={`${styles.buttons} ${
+                props.single ? styles.short : ''
+              }`}>
               <Button
                 id="confirmTrue"
                 type={props.kind}
@@ -27,7 +30,7 @@ const Confirm = props => {
                     aria-hidden="true"
                   />
                 )}
-                Yes
+                {props.confirmText || 'Yes'}
               </Button>
               <Button
                 id="confirmFalse"
@@ -35,6 +38,7 @@ const Confirm = props => {
                   props.callback(false)
                   props.dispatch({ type: REMOVE_CONFIRM })
                 }}
+                className={props.single ? styles.hide : ''}
                 text="No"
               />
             </ButtonGroup>

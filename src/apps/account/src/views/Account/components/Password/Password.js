@@ -1,6 +1,7 @@
 import { Component } from 'React'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../shell/store/notifications'
+import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { updatePassword } from '../../../../store'
 
 import styles from './Password.less'
@@ -113,8 +114,21 @@ class Password extends Component {
             })
           )
         } else {
+          // notify user
           // log out and sign in with new password
-          this.props.history.push('/logout')
+          this.props.dispatch(
+            zConfirm({
+              single: true,
+              confirmText: 'Go to login',
+              prompt:
+                'Your password has been changed, please log in with your new password',
+              callback: confirmed => {
+                if (confirmed) {
+                  this.props.history.push('/logout')
+                }
+              }
+            })
+          )
         }
       })
       .catch(() => {
