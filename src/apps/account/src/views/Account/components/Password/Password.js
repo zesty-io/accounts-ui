@@ -1,6 +1,7 @@
 import { Component } from 'React'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../shell/store/notifications'
+import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { updatePassword } from '../../../../store'
 
 import styles from './Password.less'
@@ -104,15 +105,31 @@ class Password extends Component {
     }
     return this.props
       .dispatch(updatePassword(this.state.oldPassword, this.state.newPassword))
-      .then(() => {
-        this.props.dispatch(
-          notify({
-            message: 'Password was updated',
-            type: 'success'
-          })
-        )
-        // log out and sign in with new password
-        this.props.history.push('/logout')
+      .then(data => {
+        if (data.error) {
+          this.props.dispatch(
+            notify({
+              message: data.error,
+              type: 'error'
+            })
+          )
+        } else {
+          // notify user
+          // log out and sign in with new password
+          this.props.dispatch(
+            zConfirm({
+              single: true,
+              confirmText: 'Go to login',
+              prompt:
+                'Your password has been changed, please log in with your new password',
+              callback: confirmed => {
+                if (confirmed) {
+                  this.props.history.push('/logout')
+                }
+              }
+            })
+          )
+        }
       })
       .catch(() => {
         this.props.dispatch(
@@ -121,9 +138,6 @@ class Password extends Component {
             type: 'error'
           })
         )
-        // the API invalidates the session
-        // user must login with their old password
-        this.props.history.push('/login')
       })
   }
   failsRequirements = pass => {
