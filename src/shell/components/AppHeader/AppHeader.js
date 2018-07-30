@@ -1,9 +1,9 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { Url } from '@zesty-io/core/Url'
 import cx from 'classnames'
 import styles from './AppHeader.less'
-import { Url } from '@zesty-io/core/Url'
 
 import { logout } from '../../store/auth'
 // import { fetchSitesWithInvites } from '../../../apps/properties/src/store/sites'
@@ -139,10 +139,7 @@ class AppHeader extends Component {
   }
 }
 const mapStateToProps = state => {
-  const teamArray = Object.keys(state.teams).reduce((acc, team) => {
-    acc.push(state.teams[team])
-    return acc
-  }, [])
+  const teamArray = Object.keys(state.teamInvites)
   const siteArray = Object.keys(state.sites).reduce((acc, site) => {
     acc.push(state.sites[site])
     return acc
@@ -152,9 +149,7 @@ const mapStateToProps = state => {
   const userHasSiteInvites = Boolean(
     siteArray.filter(site => site.inviteZUID).length
   )
-  const userHasTeamInvites = Boolean(
-    teamArray.filter(team => team.teamInviteZUID).length
-  )
+  const userHasTeamInvites = Boolean(teamArray.length)
   return { user, userHasSiteInvites, userHasTeamInvites }
 }
 

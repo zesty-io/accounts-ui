@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { Url } from '@zesty-io/core/Url'
 
 import styles from './Logout.less'
 import { logout } from '../../store/auth'

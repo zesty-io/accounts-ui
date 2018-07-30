@@ -38,8 +38,6 @@ export function fetchTeamInvites() {
     return request(`${CONFIG.API_ACCOUNTS}/teams/invites`)
       .then(res => {
         if (Array.isArray(res.data) && res.data.length) {
-          console.log(res.data)
-
           // map through and use inviteZUIDs to fetch each team
           return Promise.all(
             res.data.map(team => {
