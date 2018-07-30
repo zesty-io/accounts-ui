@@ -18,7 +18,7 @@ export function ecosystems(state = {}, action) {
         },
         '24291': {
           id: 24291,
-          name: 'Pet Desk'
+          name: 'PetDesk'
         }
       }
       const ecoIDs = action.sites.filter(site => site.ecoID)

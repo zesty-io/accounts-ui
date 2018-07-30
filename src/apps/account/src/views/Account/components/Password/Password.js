@@ -1,15 +1,13 @@
 import { Component } from 'React'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../shell/store/notifications'
+import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { updatePassword } from '../../../../store'
 
 import styles from './Password.less'
 import { Card, CardContent, CardFooter, CardHeader } from '@zesty-io/core/Card'
 import { Button } from '@zesty-io/core/Button'
 import { Input } from '@zesty-io/core/Input'
-
-// TODO this regex pattern is invalid
-const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[]{}-_.+,]{8,}$/g
 
 class Password extends Component {
   constructor(props) {
@@ -42,7 +40,6 @@ class Password extends Component {
           <Input
             name="newPassword"
             placeholder="New Password"
-            pattern={passwordPattern}
             onChange={this.handleChange}
             value={this.state.newPassword}
             type="password"
@@ -51,7 +48,6 @@ class Password extends Component {
           <Input
             name="confirmNewPassword"
             placeholder="Confirm New Password"
-            pattern={passwordPattern}
             onChange={this.handleChange}
             value={this.state.confirmNewPassword}
             type="password"
@@ -92,45 +88,66 @@ class Password extends Component {
       return
     }
     if (this.state.newPassword !== this.state.confirmNewPassword) {
-      notify({
-        message: 'Your new password does not match your password confirmation.',
-        type: 'error'
-      })
+      this.props.dispatch(
+        notify({
+          message:
+            'Your new password does not match your password confirmation.',
+          type: 'error'
+        })
+      )
       return
     }
-    if (this.state.newPassword.match(passwordPattern)) {
-      notify({
-        message: 'Your new password does not meet the password requirements.',
-        type: 'error'
-      })
+    if (this.failsRequirements(this.state.newPassword)) {
+      this.props.dispatch(
+        notify({
+          message: 'Your new password does not meet the password requirements.',
+          type: 'error'
+        })
+      )
       return
     }
-
     return this.props
       .dispatch(updatePassword(this.state.oldPassword, this.state.newPassword))
-      .then(() => {
-        this.props.dispatch(
-          notify({
-            message: 'Password was updated',
-            type: 'success'
-          })
-        )
+      .then(data => {
+        if (data.error) {
+          this.props.dispatch(
+            notify({
+              message: data.error,
+              type: 'error'
+            })
+          )
+        } else {
+          // notify user
+          // log out and sign in with new password
+          this.props.dispatch(
+            zConfirm({
+              single: true,
+              confirmText: 'Go to login',
+              prompt:
+                'Your password has been changed, please log in with your new password',
+              callback: confirmed => {
+                if (confirmed) {
+                  this.props.history.push('/logout')
+                }
+              }
+            })
+          )
+        }
       })
       .catch(() => {
         this.props.dispatch(
           notify({
-            message: 'Password not updated. An API error occured.',
+            message: 'Password not updated. An API error occurred.',
             type: 'error'
           })
         )
       })
-      .finally(() => {
-        this.setState({
-          oldPassword: '',
-          confirmNewPassword: '',
-          newPassword: ''
-        })
-      })
+  }
+  failsRequirements = pass => {
+    if (pass.length < 8 || !pass.match(/\d/g) || !pass.match(/[A-Z]/g)) {
+      return true
+    }
+    return false
   }
 }
 

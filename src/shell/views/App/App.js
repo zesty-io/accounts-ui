@@ -5,6 +5,7 @@ import cx from 'classnames'
 import { WithLoader } from '@zesty-io/core/WithLoader'
 
 import Login from '../Login'
+import Logout from '../Logout'
 import TwoFactor from '../TwoFactor'
 import Signup from '../Signup'
 import ResetPasswordStart from '../ResetPasswordStart'
@@ -79,6 +80,7 @@ class App extends Component {
               <Redirect exact from="/" to="/instances" />
               <Redirect exact from="/login" to="/instances" />
               <Redirect from="/z/*" to="/instances" />
+              <Route path="/logout" component={Logout} />
               <Route component={NotFound} />
             </Switch>
           </section>
