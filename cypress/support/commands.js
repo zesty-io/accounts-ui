@@ -14,10 +14,10 @@ Cypress.Commands.add('login', (email, password) => {
   cy.visit(Cypress.env('ACCOUNTS_UI'))
   cy.get(
     '#root > section > div > main > form > label:nth-child(1) > input'
-  ).type(Cypress.env('validEmail'))
+  ).type(email || Cypress.env('validEmail'))
   cy.get(
     '#root > section > div > main > form > label:nth-child(2) > input'
-  ).type(Cypress.env('validPassword'))
+  ).type(password || Cypress.env('validPassword'))
   cy.get('#root > section > div > main > form > button').click()
 })
 //
