@@ -68,19 +68,28 @@ describe('User Settings Flow', () => {
     ).type(Cypress.env('validPassword'))
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(3)'
-    ).type('newValidPass12')
+    ).type('newValidPass2')
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(4)'
-    ).type('newValidPass12')
+    ).type('newValidPass2')
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > footer > button'
     ).click()
     cy.wait(2000)
-    cy.get('#notificationMessage').should('contain', 'Password was updated')
+    //
+    // handle logout redirect
+    cy.get('#confirmTrue').click()
+    //
     // set password back
+
+    cy.login(Cypress.env('validEmail'), 'newValidPass2')
+    cy.get('#root > section > header > nav.UserNav.UserNav').click({
+      force: true
+    })
+    cy.get('#userNavDropdown > li:nth-child(3) > a').click()
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(2)'
-    ).type('newValidPass12')
+    ).type('newValidPass2')
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(3)'
     ).type(Cypress.env('validPassword'))
@@ -91,8 +100,6 @@ describe('User Settings Flow', () => {
       '#root > section > section.AppMain.AppMain > section > div > div > article:nth-child(3) > footer > button'
     ).click()
     cy.wait(2000)
-    cy.get('#notificationMessage').should('contain', 'Password was updated')
+    cy.get('#confirmTrue').click()
   })
-
-  // 2fa?
 })
