@@ -8,6 +8,8 @@ const env = new webpack.EnvironmentPlugin(['NODE_ENV'])
 const extractLess = new ExtractTextPlugin({
   filename: `../../build/bundle.${build.data.gitCommit}.shell.css`
 })
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 
 module.exports = {
   entry: './index.js',
@@ -28,7 +30,7 @@ module.exports = {
     modules: ['node_modules', 'src'],
     extensions: ['.js', '.jsx']
   },
-  plugins: [env, extractLess],
+  plugins: [env, extractLess, new BundleAnalyzerPlugin()],
   module: {
     rules: [
       {
