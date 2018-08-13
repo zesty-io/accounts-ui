@@ -56,14 +56,6 @@ class AppHeader extends Component {
             </NavLink>
           )}
         </nav>
-        <nav className={styles.LegacyLink}>
-          <Url
-            href={CONFIG.LEGACY_ACCOUNTS}
-            title="Return to the legacy accounts application">
-            <i className="fa fa-info-circle" aria-hidden="true" />&nbsp;Legacy
-            Accounts
-          </Url>
-        </nav>
         <nav
           ref={nav => (this.userNav = nav)}
           className={cx(
