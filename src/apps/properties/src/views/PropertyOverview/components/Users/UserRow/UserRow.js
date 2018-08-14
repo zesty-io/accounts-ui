@@ -11,6 +11,7 @@ export default class UserRow extends Component {
     submitted: false
   }
   render() {
+    console.log('props in user row', this.props)
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>
@@ -22,11 +23,13 @@ export default class UserRow extends Component {
           {this.state.submitted ? (
             <Loader />
           ) : this.props.isAdmin ? (
+            // for admins render options to modify users
             this.props.role.name === 'Owner' ? (
               <React.Fragment>
                 <i className="fa fa-fort-awesome" />
                 <span className={styles.Owner}>Owner</span>
-                {this.props.isOwner && (
+                {/* only allow delete if a user is Owner or Staff */}
+                {(this.props.isOwner || this.props.staff) && (
                   <i
                     className={styles.trash + ' fa fa-trash-o'}
                     aria-hidden="true"
@@ -40,6 +43,7 @@ export default class UserRow extends Component {
                 )}
               </React.Fragment>
             ) : (
+              // render a dropdown to change roles
               <span className={styles.select}>
                 <Select
                   onSelect={this.handleSelectRole}
@@ -60,6 +64,7 @@ export default class UserRow extends Component {
                     )
                   })}
                 </Select>
+                {/*  render a trashcan to delete users */}
                 <i
                   className={styles.trash + ' fa fa-trash-o'}
                   aria-hidden="true"
@@ -72,7 +77,8 @@ export default class UserRow extends Component {
                 />
               </span>
             )
-          ) : this.props.role.name === 'Owner' ? (
+          ) : // Render text only for non-permissioned users
+          this.props.role.name === 'Owner' ? (
             <React.Fragment>
               <i className="fa fa-fort-awesome" />&nbsp;{this.props.role.name}
             </React.Fragment>

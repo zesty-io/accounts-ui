@@ -252,7 +252,8 @@ export default connect((state, props) => {
   } else {
     if (
       state.sitesUsers[siteZUID] &&
-      state.sitesUsers[siteZUID][state.user.ZUID]
+      state.sitesUsers[siteZUID][state.user.ZUID] &&
+      state.sitesUsers[siteZUID][state.user.ZUID].role
     ) {
       if (state.sitesUsers[siteZUID][state.user.ZUID].role.systemRole.super) {
         isOwner = true
