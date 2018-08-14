@@ -167,6 +167,12 @@ module.exports = buildIndex = build => {
       </script>
 
       <script src="/config.${build.data.gitCommit}.js"></script>
+      <script>
+        if (window.location.protocol === 'http:' && CONFIG.ENV === 'production') {
+          window.location = 'https://accounts.zesty.io'+window.location.pathname+window.location.hash
+        }
+      </script>
+
       <script src="/bundle.${build.data.gitCommit}.vendors.js"></script>
       <script src="/bundle.${build.data.gitCommit}.core.js"></script>
 

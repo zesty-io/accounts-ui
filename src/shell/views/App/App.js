@@ -133,11 +133,6 @@ class LoadUser extends Component {
 }
 
 class Shell extends Component {
-  componentDidMount() {
-    if (window.location.protocol === 'http:' && CONFIG.ENV === 'production') {
-      return (window.location = 'https://accounts.zesty.io/login')
-    }
-  }
   render() {
     return (
       <React.Fragment>
