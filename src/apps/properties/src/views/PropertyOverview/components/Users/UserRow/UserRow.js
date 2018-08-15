@@ -11,7 +11,6 @@ export default class UserRow extends Component {
     submitted: false
   }
   render() {
-    console.log('props in user row', this.props)
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>
