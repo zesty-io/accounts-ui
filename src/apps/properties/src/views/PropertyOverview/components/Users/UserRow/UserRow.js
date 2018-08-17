@@ -11,7 +11,6 @@ export default class UserRow extends PureComponent {
     submitted: false
   }
   render() {
-    console.log('Props in UserRow', this.props)
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>
