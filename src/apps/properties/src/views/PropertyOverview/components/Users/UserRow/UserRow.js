@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { PureComponent } from 'react'
 import styles from './UserRow.less'
 
 import { updateRole, removeUser } from '../../../../../store/sitesUsers'
@@ -6,11 +6,12 @@ import { updateRole, removeUser } from '../../../../../store/sitesUsers'
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
 
-export default class UserRow extends Component {
+export default class UserRow extends PureComponent {
   state = {
     submitted: false
   }
   render() {
+    console.log('Props in UserRow', this.props)
     return (
       <article className={styles.UserRow}>
         <span className={styles.name}>
@@ -24,11 +25,12 @@ export default class UserRow extends Component {
           ) : this.props.isAdmin ? (
             // for admins render options to modify users
             this.props.role.name === 'Owner' ? (
+              // if the role is owner the role is rendered with no dropdown
               <React.Fragment>
                 <i className="fa fa-fort-awesome" />
                 <span className={styles.Owner}>Owner</span>
-                {/* only allow delete if a user is Owner or Staff */}
-                {(this.props.isOwner || this.props.staff) && (
+                {/* only allow delete if a user is Owner */}
+                {this.props.isOwner && (
                   <i
                     className={styles.trash + ' fa fa-trash-o'}
                     aria-hidden="true"
