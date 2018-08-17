@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { PureComponent } from 'react'
 import styles from './UserRow.less'
 
 import { updateRole, removeUser } from '../../../../../store/sitesUsers'
@@ -6,7 +6,7 @@ import { updateRole, removeUser } from '../../../../../store/sitesUsers'
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
 
-export default class UserRow extends Component {
+export default class UserRow extends PureComponent {
   state = {
     submitted: false
   }
@@ -22,10 +22,13 @@ export default class UserRow extends Component {
           {this.state.submitted ? (
             <Loader />
           ) : this.props.isAdmin ? (
+            // for admins render options to modify users
             this.props.role.name === 'Owner' ? (
+              // if the role is owner the role is rendered with no dropdown
               <React.Fragment>
                 <i className="fa fa-fort-awesome" />
                 <span className={styles.Owner}>Owner</span>
+                {/* only allow delete if a user is Owner */}
                 {this.props.isOwner && (
                   <i
                     className={styles.trash + ' fa fa-trash-o'}
@@ -40,6 +43,7 @@ export default class UserRow extends Component {
                 )}
               </React.Fragment>
             ) : (
+              // render a dropdown to change roles
               <span className={styles.select}>
                 <Select
                   onSelect={this.handleSelectRole}
@@ -60,6 +64,7 @@ export default class UserRow extends Component {
                     )
                   })}
                 </Select>
+                {/*  render a trashcan to delete users */}
                 <i
                   className={styles.trash + ' fa fa-trash-o'}
                   aria-hidden="true"
@@ -72,7 +77,8 @@ export default class UserRow extends Component {
                 />
               </span>
             )
-          ) : this.props.role.name === 'Owner' ? (
+          ) : // Render text only for non-permissioned users
+          this.props.role.name === 'Owner' ? (
             <React.Fragment>
               <i className="fa fa-fort-awesome" />&nbsp;{this.props.role.name}
             </React.Fragment>
