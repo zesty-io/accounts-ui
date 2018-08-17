@@ -106,17 +106,14 @@ class PropertiesHeader extends Component {
     )
   }
 
-  onSearch = term => {
-    this.setState(
-      { searchTerm: term },
-      debounce(() => {
-        this.props.dispatch({
-          type: 'SETTING_FILTER',
-          filter: this.state.searchTerm
-        })
-      }, 300)
+  onSearch = debounce(term => {
+    this.setState({ searchTerm: term }, () =>
+      this.props.dispatch({
+        type: 'SETTING_FILTER',
+        filter: this.state.searchTerm
+      })
     )
-  }
+  }, 300)
 
   filterByEco = evt => {
     if (evt.target.dataset.value === '') {
