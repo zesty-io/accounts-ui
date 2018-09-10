@@ -1,4 +1,4 @@
-import { Component } from 'React'
+import { Component } from 'react'
 import { connect } from 'react-redux'
 
 import styles from './PropertyBlueprint.less'

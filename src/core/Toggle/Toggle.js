@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import styles from "./Toggle.less";
+import styles from './Toggle.less'
 
 const Toggle = props => {
   return (
@@ -8,7 +8,7 @@ const Toggle = props => {
       <input {...props} type="checkbox" />
       <span className={styles.slider} />
     </label>
-  );
-};
+  )
+}
 
-export default Toggle;
+export default Toggle
