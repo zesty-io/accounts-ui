@@ -1,4 +1,4 @@
-import { Component } from 'React'
+import { Component } from 'react'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'

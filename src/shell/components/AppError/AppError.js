@@ -1,4 +1,4 @@
-import { Component } from 'React'
+import { Component } from 'react'
 import styles from './AppError.less'
 
 export default class AppError extends Component {

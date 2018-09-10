@@ -1,4 +1,4 @@
-import React, { Component } from 'React'
+import React, { Component } from 'react'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { update2fa } from '../../../../../../../shell/store/user'
 
@@ -38,8 +38,7 @@ export default class TwoFactorOptions extends Component {
                 <Url
                   className={styles.InfoLink}
                   target="_blank"
-                  href="https://authy.com/what-is-2fa/"
-                >
+                  href="https://authy.com/what-is-2fa/">
                   What is Authy 2 Factor Authentication?
                 </Url>
               </p>
@@ -77,8 +76,7 @@ export default class TwoFactorOptions extends Component {
           {this.props.user.authyEnabled ? (
             <Button
               onClick={this.handleDisable}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               {this.state.submitted ? (
                 <React.Fragment>
                   <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Disabling
@@ -95,8 +93,7 @@ export default class TwoFactorOptions extends Component {
             <Button
               form="TwoFactor"
               onClick={this.handleEnable}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               {this.state.submitted ? (
                 <React.Fragment>
                   <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Enabling
