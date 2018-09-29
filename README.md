@@ -57,3 +57,7 @@ We write and run our end-to-end tests using [cypress.io](https://www.cypress.io/
 This application is configured to run and deploy against our internal stack and process. As such we do not provide a way to run on `localhost`.
 
 When deploying it is important to use the `npm run build-production` command as this will cause a production [webpack](https://webpack.js.org/) build which adds large optimizations to the bundle size and runtime code.
+
+---
+
+Copyright (C) [Zesty.io Inc.](https://zesty.io/)
