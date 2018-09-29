@@ -38,19 +38,19 @@ Being aware of errors your end users experience is an important part of iteratin
 
 ## Developing
 
-In order to start developing against this code base it's as simple as running;
-
 ```
 npm start
 ```
 
-This will install all necessary dependencies and do a development build which will begin watching your files and rebuild when changes occur.
+This will install all necessary dependencies and do a development build which will begin watching your files and rebuild when changes occur. You will need the complete stack running in order to load the account-ui.
 
 ### Testing
 
-#### Cypress.io
+```
+npm test
+```
 
-We write and run our integration tests using [cypress.io](https://www.cypress.io/)
+We write and run our end-to-end tests using [cypress.io](https://www.cypress.io/). Tests require the complete platform stack to be running.
 
 ### Running Locally & Deploying
 
