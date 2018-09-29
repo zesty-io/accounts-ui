@@ -24,6 +24,8 @@ We use [Redux](https://redux.js.org/) for managing our state and follow a single
 
 The [Zesty.io design system](https://github.com/zesty-io/design-system) is our central location for components and patterns which are shared across our various external and internal applications. Our design system follows the [atomic design pattern](http://atomicdesign.bradfrost.com/) popularized by Brad Frost.
 
+Can be installed via `npm install @zesty-io/core` into any application. This is under active development and will have major breaking changes until we land 1.0. **NOT PRODUCTION READY**
+
 ### Error Handling
 
 #### User Notifications
