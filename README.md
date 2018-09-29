@@ -34,7 +34,7 @@ When ever possible we want to communicate useful information to end users when e
 
 #### Error Aggregation
 
-Being aware of errors your end users experience is an important part of iterating and improving upon our applications. We use [Sentry](https://sentry.io) for error aggregation in order to
+Being aware of errors your users experience is an important part of iterating and improving upon an application. We use [Sentry](https://sentry.io) for error aggregation in order to capture, debug and report on code quality.
 
 ## Developing
 
