@@ -46,15 +46,23 @@ class PropertyOverview extends Component {
     return (
       <article className={styles.PropertyOverview}>
         <header className={styles.PropertyOverviewHeader}>
-          <Url
-            className={styles.manager}
-            target="_blank"
-            href={`${CONFIG.MANAGER_URL_PROTOCOL}${
-              this.props.site.randomHashID
-            }${CONFIG.MANAGER_URL}`}>
-            <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
-            Manager
-          </Url>
+          {/* only display link to manager if a blueprint has been selected */}
+          {this.props.site.blueprintID !== null ? (
+            <Url
+              className={styles.manager}
+              target="_blank"
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${
+                this.props.site.randomHashID
+              }${CONFIG.MANAGER_URL}`}>
+              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
+              Manager
+            </Url>
+          ) : (
+            <AppLink to={`/instances/${this.props.site.ZUID}/blueprint`}>
+              <i className="fa fa-file-code-o" aria-hidden="true" />
+              &nbsp;Select Blueprint
+            </AppLink>
+          )}
           <Url
             className={styles.manager}
             target="_blank"

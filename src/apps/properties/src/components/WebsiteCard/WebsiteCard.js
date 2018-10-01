@@ -56,8 +56,7 @@ export default props => {
             title={`Preview instance: ${site.name}`}
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
               CONFIG.PREVIEW_URL
-            }`}
-          >
+            }`}>
             <i className={'fa fa-eye'} aria-hidden="true" />
           </Url>
 
@@ -65,27 +64,31 @@ export default props => {
             <Url
               href={`http://${site.domain}`}
               target="_blank"
-              title="View live domain"
-            >
+              title="View live domain">
               <i className="fa fa-globe" aria-hidden="true" />
             </Url>
           ) : (
             <span />
           )}
-
-          <Url
-            className={styles.manager}
-            target="_blank"
-            title="Load instance manager"
-            href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
-              CONFIG.MANAGER_URL
-            }`}
-          >
-            Open Manager&nbsp;<i
-              className="fa fa-external-link-square"
-              aria-hidden="true"
-            />
-          </Url>
+          {/* only display link to manager if a blueprint has been selected */}
+          {site.blueprintID !== null ? (
+            <Url
+              className={styles.manager}
+              target="_blank"
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
+                CONFIG.MANAGER_URL
+              }`}>
+              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
+              Manager
+            </Url>
+          ) : (
+            <AppLink
+              to={`/instances/${site.ZUID}/blueprint`}
+              className={styles.selectBlueprint}>
+              <i className="fa fa-file-code-o" aria-hidden="true" />
+              &nbsp;Select Blueprint
+            </AppLink>
+          )}
         </ButtonGroup>
       </CardFooter>
     </Card>
