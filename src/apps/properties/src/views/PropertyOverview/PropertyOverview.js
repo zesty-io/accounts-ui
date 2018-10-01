@@ -58,7 +58,7 @@ class PropertyOverview extends Component {
               Manager
             </Url>
           ) : (
-            <AppLink to={`${this.props.site.ZUID}/blueprint`}>
+            <AppLink to={`/instances/${this.props.site.ZUID}/blueprint`}>
               <i className="fa fa-file-code-o" aria-hidden="true" />
               &nbsp;Select Blueprint
             </AppLink>
