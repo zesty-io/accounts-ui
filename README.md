@@ -12,9 +12,9 @@
 
 ![accounts-ui-arcitecture](https://jvsr216n.media.zestyio.com/accounts-ui-code-architecture.png)
 
-We are working towards the [PRPL pattern](https://developers.google.com/web/fundamentals/performance/prpl-pattern/) for delivering a <abbr title="Progressive Web App">PWA</abbr> as described by Addy Osmani on developers.google.com
+We are working towards the [PRPL pattern](https://developers.google.com/web/fundamentals/performance/prpl-pattern/) for delivering a <abbr title="Progressive Web App">PWA</abbr> as described by [Addy Osmani on developers.google.com](https://developers.google.com/web/fundamentals/performance/prpl-pattern/)
 
-Currently we bundle are "sub-apps" individually but include them all on initial load. Eventually we want these bundles to be loaded on demand when their views are visited and the code becomes necessary.
+Currently we bundle our "sub-apps" individually but include them all on initial load. Eventually we want these bundles to be loaded on demand when their views are visited and the code becomes necessary.
 
 ### State
 
