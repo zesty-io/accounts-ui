@@ -51,11 +51,7 @@ export const addTeamToInstance = (siteZUID, teamZUID, roleZUID) => {
       }
     })
       .then(data => {
-        dispatch({
-          type: 'ADDING_TEAM_TO_INSTANCE_SUCCESS',
-          team: data.data
-        })
-        return data.data
+        return data
       })
       .catch(err => console.error(err))
   }

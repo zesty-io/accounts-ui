@@ -448,7 +448,7 @@ export default class TeamCard extends Component {
                   notify({
                     type: 'error',
                     message:
-                      'An error occured canceling this users team invitation'
+                      'An error occurred canceling this users team invitation'
                   })
                 )
               })
