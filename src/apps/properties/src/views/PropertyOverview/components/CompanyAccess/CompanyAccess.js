@@ -183,6 +183,14 @@ export default class CompanyAccess extends Component {
     })
   }
   handleAddTeam = () => {
+    if (!this.state.role || !this.state.team) {
+      return this.props.dispatch(
+        notify({
+          type: 'error',
+          message: `You must select a role and a team`
+        })
+      )
+    }
     this.setState({
       submitted: true
     })
@@ -191,28 +199,40 @@ export default class CompanyAccess extends Component {
         addTeamToInstance(this.props.siteZUID, this.state.team, this.state.role)
       )
       .then(data => {
-        this.setState({
-          team: '',
-          role: '',
-          submitted: false
-        })
-        this.props.dispatch(
-          notify({
-            type: 'success',
-            message: 'Team successfully added'
+        if (data && !data.error) {
+          this.setState({
+            team: '',
+            role: '',
+            submitted: false
           })
-        )
-        this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
-        this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
+          this.props.dispatch(
+            notify({
+              type: 'success',
+              message: 'Team successfully added'
+            })
+          )
+          this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
+          this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
+        } else {
+          this.setState({
+            submitted: false
+          })
+          this.props.dispatch(
+            notify({
+              type: 'error',
+              message: `Team failed to add`
+            })
+          )
+        }
       })
-      .catch(() => {
+      .catch(err => {
         this.setState({
           submitted: false
         })
         this.props.dispatch(
           notify({
             type: 'error',
-            message: 'Team failed to add'
+            message: `Team failed to add`
           })
         )
       })
