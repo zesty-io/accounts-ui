@@ -1,3 +1,5 @@
+import { notify } from '../shell/store/notifications.js'
+
 export function request(url, opts = {}) {
   if (!url) {
     throw new Error('A URL is required to make a request')
@@ -40,7 +42,59 @@ export function request(url, opts = {}) {
   opts.method = opts.method || 'GET'
 
   return fetch(encodeURI(url), opts)
-    .then(res => res.json())
+    .then(res => {
+      // Success
+      if (res.status < 300) {
+        try {
+          return res.json()
+        } catch (err) {
+          notify(`We ran into an issue processing an API response. 200`)
+        }
+      }
+
+      // Request Denied
+      if (res.status === 400) {
+        try {
+          // It's up to the request initiator to handle bad requests
+          return res.json().then(function(json) {
+            return Object.assign({}, json, { status: res.status })
+          })
+        } catch (err) {
+          notify(`We ran into an issue processing an API response. 400`)
+        }
+      }
+      if (res.status === 401) {
+        notify(`Unauthorized: Sign back in to continue`, 'red-growl')
+
+        riot.mount(document.querySelector('#modalMount'), 'login-modal', {
+          email: USER.email,
+          callback: () => {
+            console.log('relogin complete')
+          }
+        })
+      }
+      if (res.status === 404) {
+        notify(`We could not find a requested resource. 404`, 'red-growl')
+      }
+      if (res.status === 410) {
+        notify(`Your two factor authentication has expired. 410`, 'red-growl')
+      }
+      if (res.status === 422) {
+        try {
+          return res.json()
+        } catch (err) {
+          notify(`We ran into an issue processing an API response. 422`)
+        }
+      }
+
+      // Server Failed
+      if (res.status >= 500) {
+        throw { res: res, opts: opts, url: url }
+      }
+
+      // If a result hasn't been returned yet return the response
+      return res.json()
+    })
     .then(json => {
       if (opts.callback) {
         opts.callback(json)

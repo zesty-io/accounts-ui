@@ -60,24 +60,37 @@ export default class Domain extends Component {
   handleSave = () => {
     this.setState({ submitted: true })
 
-    const strippedDomain = this.state.domain
-      .toLowerCase()
-      .replace(/http:\/\/|https:\/\//g, '')
+    let strippedDomain = ''
+    if (this.state.domain) {
+      strippedDomain = this.state.domain
+        .toLowerCase()
+        .replace(/http:\/\/|https:\/\//g, '')
+    }
 
     this.props
       .dispatch(updateDomain(this.props.siteZUID, strippedDomain))
-      .then(domain => {
-        this.setState({
-          domain,
-          submitted: false,
-          editing: false
-        })
-        this.props.dispatch(
-          notify({
-            message: `Your domain has been set to ${strippedDomain}`,
-            type: 'success'
+      .then(({ error, domain }) => {
+        if (error) {
+          this.setState({ submitted: false })
+          this.props.dispatch(
+            notify({
+              message: `There was an error changing your domain: ${error}`,
+              type: 'error'
+            })
+          )
+        } else {
+          this.setState({
+            domain,
+            submitted: false,
+            editing: false
           })
-        )
+          this.props.dispatch(
+            notify({
+              message: `Your domain has been set to ${strippedDomain}`,
+              type: 'success'
+            })
+          )
+        }
       })
       .catch(data => {
         this.setState({ submitted: false })

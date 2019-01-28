@@ -393,12 +393,14 @@ export function updateDomain(siteZUID, domain) {
         body: { domain }
       }
     ).then(res => {
-      dispatch({
-        type: 'UPDATE_SITE_DOMAIN',
-        domain,
-        siteZUID
-      })
-      return res.data.domain
+      if (!res.error) {
+        dispatch({
+          type: 'UPDATE_SITE_DOMAIN',
+          domain,
+          siteZUID
+        })
+      }
+      return { domain, error: res.error }
     })
   }
 }
