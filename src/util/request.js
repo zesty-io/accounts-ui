@@ -48,7 +48,10 @@ export function request(url, opts = {}) {
         try {
           return res.json()
         } catch (err) {
-          notify(`We ran into an issue processing an API response. 200`)
+          notify({
+            message: `We ran into an issue processing an API response. 200`,
+            type: 'error'
+          })
         }
       }
 
@@ -60,23 +63,38 @@ export function request(url, opts = {}) {
             return Object.assign({}, json, { status: res.status })
           })
         } catch (err) {
-          notify(`We ran into an issue processing an API response. 400`)
+          notify({
+            message: `We ran into an issue processing an API response. 400`,
+            type: 'error'
+          })
         }
       }
       if (res.status === 401) {
-        notify(`Unauthorized: Sign back in to continue`)
+        notify({
+          message: `Unauthorized: Sign back in to continue`,
+          type: 'error'
+        })
       }
       if (res.status === 404) {
-        notify(`We could not find a requested resource. 404`)
+        notify({
+          message: `We could not find a requested resource. 404`,
+          type: 'error'
+        })
       }
       if (res.status === 410) {
-        notify(`Your two factor authentication has expired. 410`)
+        notify({
+          message: `Your two factor authentication has expired. 410`,
+          type: 'error'
+        })
       }
       if (res.status === 422) {
         try {
           return res.json()
         } catch (err) {
-          notify(`We ran into an issue processing an API response. 422`)
+          notify({
+            message: `We ran into an issue processing an API response. 422`,
+            type: 'error'
+          })
         }
       }
 
