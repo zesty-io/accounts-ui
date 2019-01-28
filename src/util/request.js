@@ -65,13 +65,6 @@ export function request(url, opts = {}) {
       }
       if (res.status === 401) {
         notify(`Unauthorized: Sign back in to continue`, 'red-growl')
-
-        riot.mount(document.querySelector('#modalMount'), 'login-modal', {
-          email: USER.email,
-          callback: () => {
-            console.log('relogin complete')
-          }
-        })
       }
       if (res.status === 404) {
         notify(`We could not find a requested resource. 404`, 'red-growl')
