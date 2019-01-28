@@ -64,13 +64,13 @@ export function request(url, opts = {}) {
         }
       }
       if (res.status === 401) {
-        notify(`Unauthorized: Sign back in to continue`, 'red-growl')
+        notify(`Unauthorized: Sign back in to continue`)
       }
       if (res.status === 404) {
-        notify(`We could not find a requested resource. 404`, 'red-growl')
+        notify(`We could not find a requested resource. 404`)
       }
       if (res.status === 410) {
-        notify(`Your two factor authentication has expired. 410`, 'red-growl')
+        notify(`Your two factor authentication has expired. 410`)
       }
       if (res.status === 422) {
         try {
@@ -92,10 +92,6 @@ export function request(url, opts = {}) {
       if (opts.callback) {
         opts.callback(json)
       }
-      // if (json.code > 400 || json.error) {
-      //   // TODO trigger global app notification
-      //   console.error(json)
-      // }
       return json
     })
     .catch(err => {
