@@ -194,7 +194,14 @@ class Email extends Component {
       this.props
         .dispatch(addEmail(this.state.name, this.state.email))
         .then(() => {
-          this.props.dispatch(fetchUserEmails())
+          this.props.dispatch(fetchUserEmails()).catch(err => {
+            this.props.dispatch(
+              notify({
+                message: `Error fetching emails`,
+                type: 'error'
+              })
+            )
+          })
           this.setState({
             submitted: false,
             name: '',
