@@ -194,7 +194,8 @@ export function saveProfile(payload) {
         return res.data
       })
       .catch(err => {
-        return dispatch({ type: 'SAVING_PROFILE_ERROR' })
+        dispatch({ type: 'SAVING_PROFILE_ERROR' })
+        return err
       })
   }
 }

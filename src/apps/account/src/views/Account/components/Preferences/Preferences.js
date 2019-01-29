@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import styles from './Preferences.less'
 import { saveProfile } from '../../../../../../../shell/store/user'
+import { notify } from '../../../../../../../shell/store/notifications'
 
 class Preferences extends Component {
   render() {
@@ -70,7 +71,21 @@ class Preferences extends Component {
             layout: 'grid'
           })
     }
-    this.props.dispatch(saveProfile())
+    this.props
+      .dispatch(saveProfile())
+      .then(() => {
+        this.props.dispatch(
+          notify({ message: 'Saved preference change', type: 'success' })
+        )
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: err.error || 'Error saving preference',
+            type: 'error'
+          })
+        )
+      })
   }
 }
 
