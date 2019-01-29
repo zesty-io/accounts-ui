@@ -12,7 +12,11 @@ class PropertyBlueprint extends Component {
     submitted: false
   }
   componentDidMount() {
-    this.props.dispatch(fetchBlueprints())
+    this.props.dispatch(fetchBlueprints()).catch(() => {
+      this.props.dispatch(
+        notify({ message: 'Error fetching blueprints', type: 'error' })
+      )
+    })
   }
   render() {
     return (

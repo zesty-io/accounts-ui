@@ -23,7 +23,13 @@ export default class CompanyAccess extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchSiteTeams(this.props.match.params.siteZUID))
+    this.props
+      .dispatch(fetchSiteTeams(this.props.match.params.siteZUID))
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error fetching teams', type: 'error' })
+        )
+      })
   }
   render() {
     return (
@@ -212,7 +218,11 @@ export default class CompanyAccess extends Component {
             })
           )
           this.props.dispatch(fetchSiteTeams(this.props.siteZUID))
-          this.props.dispatch(fetchSiteUsers(this.props.siteZUID))
+          this.props.dispatch(fetchSiteUsers(this.props.siteZUID)).catch(() => {
+            this.props.dispatch(
+              notify({ message: 'Error fetching users', type: 'error' })
+            )
+          })
         } else {
           this.setState({
             submitted: false

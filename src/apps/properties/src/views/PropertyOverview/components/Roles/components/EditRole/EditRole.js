@@ -19,7 +19,13 @@ class EditRole extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchSiteCollections(this.props.match.params.siteZUID))
+    this.props
+      .dispatch(fetchSiteCollections(this.props.match.params.siteZUID))
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error fetching collections', type: 'error' })
+        )
+      })
   }
 
   componentDidMount() {

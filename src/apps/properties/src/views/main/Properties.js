@@ -20,9 +20,19 @@ class Properties extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchSites()).then(() => {
-      this.setState({ loadingSites: false })
-    })
+    this.props
+      .dispatch(fetchSites())
+      .then(() => {
+        this.setState({ loadingSites: false })
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({
+            message: 'There was a problem fetching your instances',
+            type: 'error'
+          })
+        )
+      })
     this.props
       .dispatch(fetchSitesWithInvites())
       .then(() => {

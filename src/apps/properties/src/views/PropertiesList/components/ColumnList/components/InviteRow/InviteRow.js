@@ -35,21 +35,31 @@ function handleAccept(props) {
   props
     .dispatch(acceptInvite(props.site.inviteZUID))
     .then(data => {
-      this.props.dispatch(fetchSites()).then(data => {
-        const invitedSite = data.data.filter(site => {
-          return site.ZUID === this.props.site.ZUID
-        })
-        this.props.dispatch(
-          notify({
-            message: `You accepted your invite to ${this.props.site.name}`,
-            type: 'success',
-            timeout: 6000
+      this.props
+        .dispatch(fetchSites())
+        .then(data => {
+          const invitedSite = data.data.filter(site => {
+            return site.ZUID === this.props.site.ZUID
           })
-        )
-        return this.props.history.push(
-          `/instances/${this.props.site.ZUID}?invited=true`
-        )
-      })
+          this.props.dispatch(
+            notify({
+              message: `You accepted your invite to ${this.props.site.name}`,
+              type: 'success',
+              timeout: 6000
+            })
+          )
+          return this.props.history.push(
+            `/instances/${this.props.site.ZUID}?invited=true`
+          )
+        })
+        .catch(() => {
+          this.props.dispatch(
+            notify({
+              message: 'There was a problem fetching your instances',
+              type: 'error'
+            })
+          )
+        })
     })
     .catch(() => {
       this.props.dispatch(
@@ -67,7 +77,14 @@ function handleDecline(props) {
           type: 'info'
         })
       )
-      this.props.dispatch(fetchSites())
+      this.props.dispatch(fetchSites()).catch(() => {
+        this.props.dispatch(
+          notify({
+            message: 'There was a problem fetching your instances',
+            type: 'error'
+          })
+        )
+      })
     })
     .catch(() => {
       this.props.dispatch(

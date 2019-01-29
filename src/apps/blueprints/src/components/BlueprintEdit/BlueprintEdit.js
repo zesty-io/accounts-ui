@@ -182,14 +182,21 @@ class BlueprintEdit extends Component {
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
       .then(data => {
         this.setState({ saving: false })
-        this.props.dispatch(fetchBlueprints()).then(() => {
-          this.props.dispatch(
-            notify({
-              type: 'success',
-              message: 'Successfully saved changes'
-            })
-          )
-        })
+        this.props
+          .dispatch(fetchBlueprints())
+          .then(() => {
+            this.props.dispatch(
+              notify({
+                type: 'success',
+                message: 'Successfully saved changes'
+              })
+            )
+          })
+          .catch(() => {
+            this.props.dispatch(
+              notify({ message: 'Error fetching blueprints', type: 'error' })
+            )
+          })
       })
       .catch(err => {
         this.setState({ saving: false })

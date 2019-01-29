@@ -33,10 +33,9 @@ export const fetchSiteRoles = siteZUID => {
     dispatch({
       type: 'FETCHING_ROLES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/roles`)
-      .then(res => {
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/roles`).then(
+      res => {
         const state = getState()
-
         dispatch({
           type: 'FETCH_ROLES_SUCCESS',
           siteZUID,
@@ -48,49 +47,38 @@ export const fetchSiteRoles = siteZUID => {
                 ...state.systemRoles[role.systemRoleZUID]
               }
             }
-
             return acc
           }, {})
         })
 
         return res.data
-      })
-      .catch(err => {
-        console.error(err)
-        dispatch({
-          type: 'FETCH_ROLES_ERROR',
-          err
-        })
-      })
+      }
+    )
   }
 }
 
 export const getRole = (roleZUID, siteZUID) => {
   return dispatch => {
     dispatch({ type: 'FETCHING_ROLE' })
-    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}`)
-      .then(data => {
-        let normalizedGranularRoles = {}
-        data.data.granularRoles &&
-          data.data.granularRoles.map(role => {
-            normalizedGranularRoles[role.resourceZUID] = { ...role }
-          })
-        let role = {
-          [data.data.ZUID]: {
-            ...data.data,
-            granularRoles: normalizedGranularRoles
-          }
-        }
-        dispatch({
-          type: 'FETCHING_ROLE_SUCCESS',
-          role,
-          siteZUID
+    return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}`).then(data => {
+      let normalizedGranularRoles = {}
+      data.data.granularRoles &&
+        data.data.granularRoles.map(role => {
+          normalizedGranularRoles[role.resourceZUID] = { ...role }
         })
-        return data.data
+      let role = {
+        [data.data.ZUID]: {
+          ...data.data,
+          granularRoles: normalizedGranularRoles
+        }
+      }
+      dispatch({
+        type: 'FETCHING_ROLE_SUCCESS',
+        role,
+        siteZUID
       })
-      .catch(err => {
-        return dispatch({ type: 'FETCHING_ROLE_FAILURE' })
-      })
+      return data.data
+    })
   }
 }
 
@@ -106,18 +94,14 @@ export const createRole = (siteZUID, body) => {
         systemRoleZUID: body.systemRoleZUID
         // add expiry once allowed by API again
       }
+    }).then(data => {
+      dispatch({
+        type: 'ADDING_ROLE_SUCCESS',
+        siteZUID,
+        role: data.data
+      })
+      return data.data
     })
-      .then(data => {
-        dispatch({
-          type: 'ADDING_ROLE_SUCCESS',
-          siteZUID,
-          role: data.data
-        })
-        return data.data
-      })
-      .catch(err => {
-        return dispatch({ type: 'ADDING_ROLE_FAILURE' })
-      })
   }
 }
 
@@ -129,14 +113,10 @@ export const removeRole = (roleZUID, siteZUID) => {
     dispatch({ type: 'DELETING_ROLE' })
     return request(`${CONFIG.API_ACCOUNTS}/roles/${roleZUID}`, {
       method: 'DELETE'
+    }).then(data => {
+      dispatch({ type: 'DELETING_ROLE_SUCCESS', roleZUID, siteRoles })
+      return data
     })
-      .then(data => {
-        dispatch({ type: 'DELETING_ROLE_SUCCESS', roleZUID, siteRoles })
-        return data
-      })
-      .catch(err => {
-        return dispatch({ type: 'DELETING_ROLE_FAILURE' })
-      })
   }
 }
 
@@ -147,14 +127,10 @@ export const updateGranularRole = (resourceZUID, role, roleZUID) => {
       method: 'PUT',
       json: true,
       body: [{ resourceZUID, ...role }]
+    }).then(data => {
+      dispatch({ type: 'UPDATING_ROLE_SUCCESS' })
+      return data
     })
-      .then(data => {
-        dispatch({ type: 'UPDATING_ROLE_SUCCESS' })
-        return data
-      })
-      .catch(err => {
-        return dispatch({ type: 'UPDATING_ROLE_FAILURE', err })
-      })
   }
 }
 
@@ -165,13 +141,9 @@ export const createGranularRole = (resourceZUID, granularRole, roleZUID) => {
       method: 'POST',
       json: true,
       body: { resourceZUID, ...granularRole }
+    }).then(data => {
+      dispatch({ type: 'CREATING_ROLE_SUCCESS' })
+      return data
     })
-      .then(data => {
-        dispatch({ type: 'CREATING_ROLE_SUCCESS' })
-        return data
-      })
-      .catch(err => {
-        return dispatch({ type: 'CREATING_ROLE_FAILURE', err })
-      })
   }
 }

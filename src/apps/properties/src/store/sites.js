@@ -47,36 +47,23 @@ export function fetchSites() {
     dispatch({
       type: 'FETCHING_SITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances`)
-      .then(sites => {
-        sites.data.sort((prev, next) => {
-          if (prev.name < next.name) {
-            return -1
-          }
-          if (prev.name > next.name) {
-            return 1
-          }
-          return 0
-        })
+    return request(`${CONFIG.API_ACCOUNTS}/instances`).then(sites => {
+      sites.data.sort((prev, next) => {
+        if (prev.name < next.name) {
+          return -1
+        }
+        if (prev.name > next.name) {
+          return 1
+        }
+        return 0
+      })
 
-        dispatch({
-          type: 'FETCH_SITES_SUCCESS',
-          sites: sites.data
-        })
-        return sites
+      dispatch({
+        type: 'FETCH_SITES_SUCCESS',
+        sites: sites.data
       })
-      .catch(err => {
-        dispatch(
-          notify({
-            message: 'There was a problem fetching your instances',
-            type: 'error'
-          })
-        )
-        dispatch({
-          type: 'FETCH_SITES_ERROR',
-          err
-        })
-      })
+      return sites
+    })
   }
 }
 
@@ -95,7 +82,6 @@ export function fetchSitesWithInvites() {
         }
         return 0
       })
-
       dispatch({
         type: 'FETCH_SITES_INVITES_SUCCESS',
         sites: sites.data

@@ -201,33 +201,68 @@ class PropertyOverview extends Component {
       loadingCollections: true,
       loadingBlueprint: true
     })
-    props.dispatch(fetchSiteUsers(props.siteZUID)).then(() => {
-      this.setState({
-        loadingUsers: false
-      })
-    })
-    props.dispatch(fetchSiteUsersPending(props.siteZUID)).then(() => {
-      this.setState({
-        loadingUsersPending: false
-      })
-    })
-    props.dispatch(fetchSiteRoles(props.siteZUID)).then(() => {
-      this.setState({
-        loadingRoles: false
-      })
-    })
-    props.dispatch(fetchSiteTeams(props.siteZUID)).then(() => {
-      this.setState({
-        loadingTeams: false
-      })
-    })
-    // validity check blueprint ID before fetching
-    if (parseInt(props.site.blueprintID)) {
-      props.dispatch(fetchBlueprint(props.site.blueprintID)).then(() => {
+    props
+      .dispatch(fetchSiteUsers(props.siteZUID))
+      .then(() => {
         this.setState({
-          loadingBlueprint: false
+          loadingUsers: false
         })
       })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error fetching users', type: 'error' })
+        )
+      })
+    props
+      .dispatch(fetchSiteUsersPending(props.siteZUID))
+      .then(() => {
+        this.setState({
+          loadingUsersPending: false
+        })
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error fetching pending users', type: 'error' })
+        )
+      })
+    props
+      .dispatch(fetchSiteRoles(props.siteZUID))
+      .then(() => {
+        this.setState({
+          loadingRoles: false
+        })
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error fetching roles', type: 'error' })
+        )
+      })
+    props
+      .dispatch(fetchSiteTeams(props.siteZUID))
+      .then(() => {
+        this.setState({
+          loadingTeams: false
+        })
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error fetching teams', type: 'error' })
+        )
+      })
+    // validity check blueprint ID before fetching
+    if (parseInt(props.site.blueprintID)) {
+      props
+        .dispatch(fetchBlueprint(props.site.blueprintID))
+        .then(() => {
+          this.setState({
+            loadingBlueprint: false
+          })
+        })
+        .catch(() => {
+          this.props.dispatch(
+            notify({ message: 'Error fetching blueprints', type: 'error' })
+          )
+        })
     } else {
       this.setState({ loadingBlueprint: false })
     }

@@ -70,18 +70,28 @@ class WebsiteInvite extends Component {
     this.props
       .dispatch(acceptInvite(this.props.site.inviteZUID))
       .then(data => {
-        this.props.dispatch(fetchSites()).then(data => {
-          this.props.dispatch(
-            notify({
-              message: `You accepted your invite to ${this.props.site.name}`,
-              type: 'success',
-              timeout: 6000
-            })
-          )
-          return this.props.history.push(
-            `/instances/${this.props.site.ZUID}?invited=true`
-          )
-        })
+        this.props
+          .dispatch(fetchSites())
+          .then(data => {
+            this.props.dispatch(
+              notify({
+                message: `You accepted your invite to ${this.props.site.name}`,
+                type: 'success',
+                timeout: 6000
+              })
+            )
+            return this.props.history.push(
+              `/instances/${this.props.site.ZUID}?invited=true`
+            )
+          })
+          .catch(() => {
+            this.props.dispatch(
+              notify({
+                message: 'There was a problem fetching your instances',
+                type: 'error'
+              })
+            )
+          })
       })
       .catch(() => {
         this.props.dispatch(
@@ -100,7 +110,14 @@ class WebsiteInvite extends Component {
             type: 'info'
           })
         )
-        this.props.dispatch(fetchSites())
+        this.props.dispatch(fetchSites()).catch(() => {
+          this.props.dispatch(
+            notify({
+              message: 'There was a problem fetching your instances',
+              type: 'error'
+            })
+          )
+        })
       })
       .catch(() => {
         this.setState({ submitted: false })
