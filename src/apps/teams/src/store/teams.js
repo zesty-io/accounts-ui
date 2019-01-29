@@ -124,8 +124,8 @@ export const createTeam = (name, description) => {
       method: 'POST',
       json: true,
       body: {
-        // name,
-        // description
+        name,
+        description
       }
     }).then(res => {
       dispatch({
