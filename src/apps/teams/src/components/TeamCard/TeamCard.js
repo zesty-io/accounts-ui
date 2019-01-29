@@ -417,7 +417,7 @@ export default class TeamCard extends Component {
                 this.props.dispatch(
                   notify({
                     type: 'error',
-                    message: 'An error occured removing this user'
+                    message: 'An error occurred removing this user'
                   })
                 )
               })

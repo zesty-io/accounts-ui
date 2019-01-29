@@ -92,22 +92,13 @@ export function fetchTeams() {
     dispatch({
       type: 'FETCH_TEAMS'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/teams`)
-      .then(res => {
-        dispatch({
-          type: 'FETCH_TEAMS_SUCCESS',
-          data: res.data
-        })
-        return res.data
+    return request(`${CONFIG.API_ACCOUNTS}/teams`).then(res => {
+      dispatch({
+        type: 'FETCH_TEAMS_SUCCESS',
+        data: res.data
       })
-      .catch(err => {
-        dispatch({
-          type: 'FETCH_TEAMS_FAILURE',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      return res.data
+    })
   }
 }
 
@@ -116,22 +107,13 @@ export const fetchTeam = teamZUID => {
     dispatch({
       type: 'FETCH_TEAM'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`)
-      .then(res => {
-        dispatch({
-          type: 'FETCH_TEAM_SUCCESS',
-          data: [res.data]
-        })
-        return res.data
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`).then(res => {
+      dispatch({
+        type: 'FETCH_TEAM_SUCCESS',
+        data: [res.data]
       })
-      .catch(err => {
-        dispatch({
-          type: 'FETCH_TEAM_FAILURE',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      return res.data
+    })
   }
 }
 
@@ -142,31 +124,16 @@ export const createTeam = (name, description) => {
       method: 'POST',
       json: true,
       body: {
-        name,
-        description
+        // name,
+        // description
       }
+    }).then(res => {
+      dispatch({
+        type: 'CREATE_TEAM_SUCCESS',
+        data: [res.data] // put data into shape the reducer expects
+      })
+      return res.data
     })
-      .then(res => {
-        dispatch({
-          type: 'CREATE_TEAM_SUCCESS',
-          data: [res.data] // put data into shape the reducer expects
-        })
-        dispatch(
-          notify({
-            type: 'success',
-            message: 'Created team successfully'
-          })
-        )
-        return res.data
-      })
-      .catch(err => {
-        dispatch({
-          type: 'CREATE_TEAM_FAILURE',
-          err
-        })
-        console.error(err)
-        return err
-      })
   }
 }
 
@@ -177,22 +144,13 @@ export function deleteTeam(teamZUID) {
     })
     return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`, {
       method: 'DELETE'
+    }).then(res => {
+      dispatch({
+        type: 'DELETE_TEAM_SUCCESS',
+        teamZUID
+      })
+      return res.data
     })
-      .then(res => {
-        dispatch({
-          type: 'DELETE_TEAM_SUCCESS',
-          teamZUID
-        })
-        return res.data
-      })
-      .catch(err => {
-        dispatch({
-          type: 'DELETE_TEAM_FAILURE',
-          err
-        })
-        console.error(err)
-        return err
-      })
   }
 }
 
@@ -205,24 +163,14 @@ export function updateTeam(teamZUID, team) {
       method: 'PUT',
       json: true,
       body: team
+    }).then(res => {
+      dispatch({
+        type: 'UPDATE_TEAM_SUCCESS',
+        data: [res.data]
+      })
+
+      return res.data
     })
-      .then(res => {
-        dispatch({
-          type: 'UPDATE_TEAM_SUCCESS',
-          data: [res.data]
-        })
-
-        return res.data
-      })
-      .catch(err => {
-        dispatch({
-          type: 'UPDATE_TEAM_FAILURE',
-          err
-        })
-
-        console.error(err)
-        return err
-      })
   }
 }
 

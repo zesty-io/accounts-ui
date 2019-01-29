@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { acceptTeamInvite, declineTeamInvite } from '../../store/teamInvites'
 
 import styles from './InviteCard.less'
+import { notify } from '../../../../../shell/store/notifications'
 
 export default class InviteCard extends PureComponent {
   render() {
@@ -30,16 +31,41 @@ export default class InviteCard extends PureComponent {
     )
   }
   handleAccept = () => {
-    this.props.dispatch(
-      acceptTeamInvite(this.props.invite.inviteZUID, this.props.invite.teamZUID)
-    )
+    this.props
+      .dispatch(
+        acceptTeamInvite(
+          this.props.invite.inviteZUID,
+          this.props.invite.teamZUID
+        )
+      )
+      .then(() => {
+        this.props.dispatch(
+          notify({ message: 'Invite accepted', type: 'success' })
+        )
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error accepting invite', type: 'error' })
+        )
+      })
   }
   handleDecline = () => {
-    this.props.dispatch(
-      declineTeamInvite(
-        this.props.invite.inviteZUID,
-        this.props.invite.teamZUID
+    this.props
+      .dispatch(
+        declineTeamInvite(
+          this.props.invite.inviteZUID,
+          this.props.invite.teamZUID
+        )
       )
-    )
+      .then(() => {
+        this.props.dispatch(
+          notify({ message: 'Invite declined', type: 'success' })
+        )
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error declining invite', type: 'error' })
+        )
+      })
   }
 }
