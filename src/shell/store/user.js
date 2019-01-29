@@ -188,15 +188,10 @@ export function saveProfile(payload) {
         prefs: JSON.stringify(user.prefs),
         ...payload
       }
+    }).then(res => {
+      dispatch({ type: 'SAVING_PROFILE_SUCCESS' })
+      return res.data
     })
-      .then(res => {
-        dispatch({ type: 'SAVING_PROFILE_SUCCESS' })
-        return res.data
-      })
-      .catch(err => {
-        dispatch({ type: 'SAVING_PROFILE_ERROR' })
-        return err
-      })
   }
 }
 

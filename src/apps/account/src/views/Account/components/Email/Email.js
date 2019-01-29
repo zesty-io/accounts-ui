@@ -136,7 +136,14 @@ class Email extends Component {
     return this.props
       .dispatch(deleteUserEmail(email))
       .then(() => {
-        this.props.dispatch(fetchUserEmails())
+        this.props.dispatch(fetchUserEmails()).catch(err => {
+          this.props.dispatch(
+            notify({
+              message: `Error fetching emails`,
+              type: 'error'
+            })
+          )
+        })
         this.props.dispatch(
           notify({
             type: 'success',
@@ -148,7 +155,7 @@ class Email extends Component {
         this.props.dispatch(
           notify({
             type: 'error',
-            message: 'encountered a problem removing email'
+            message: 'Error removing email'
           })
         )
       })

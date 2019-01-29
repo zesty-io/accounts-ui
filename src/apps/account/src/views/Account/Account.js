@@ -16,11 +16,21 @@ class Account extends Component {
     loadingEmails: true
   }
   componentDidMount() {
-    this.props.dispatch(fetchUserEmails()).then(data => {
-      this.setState({
-        loadingEmails: false
+    this.props
+      .dispatch(fetchUserEmails())
+      .then(data => {
+        this.setState({
+          loadingEmails: false
+        })
       })
-    })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: `Error fetching emails`,
+            type: 'error'
+          })
+        )
+      })
   }
   render() {
     return (
