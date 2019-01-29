@@ -11,22 +11,6 @@ export function addEmail(name, address) {
         address
       }
     })
-      .then(() => {
-        dispatch(
-          notify({
-            message: 'Email added',
-            type: 'success'
-          })
-        )
-      })
-      .catch(err => {
-        dispatch(
-          notify({
-            message: `Problem adding email: ${err}`,
-            type: 'error'
-          })
-        )
-      })
   }
 }
 
@@ -46,22 +30,6 @@ export function deleteUserEmail(email) {
     return request(`${CONFIG.API_ACCOUNTS}/users/emails?address=${email}`, {
       method: 'DELETE'
     })
-      .then(data => {
-        dispatch(
-          notify({
-            type: 'success',
-            message: 'email successfully removed'
-          })
-        )
-      })
-      .catch(err => {
-        dispatch(
-          notify({
-            type: 'error',
-            message: 'encountered a problem removing email'
-          })
-        )
-      })
   }
 }
 
