@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { update2fa } from '../../../../../../../shell/store/user'
+import { notify } from '../../../../../../../shell/store/notifications'
 
 import styles from './TwoFactor.less'
 
@@ -54,7 +55,7 @@ export default class TwoFactorOptions extends Component {
                     required
                     type="text"
                     size="5"
-                    placeholder="+1"
+                    placeholder="1"
                     name="authyPhoneCountryCode"
                     value={this.state.authyPhoneCountryCode}
                     onChange={this.handleChange}
@@ -130,9 +131,17 @@ export default class TwoFactorOptions extends Component {
         this.setState({
           submitted: false
         })
+        this.props.dispatch(
+          notify({ message: 'Two-Factor auth enabled', type: 'success' })
+        )
       })
       .catch(err => {
-        console.error(err)
+        this.props.dispatch(
+          notify({
+            message: 'Two-Factor auth had a problem enabling',
+            type: 'error'
+          })
+        )
         this.setState({
           submitted: false
         })
@@ -150,12 +159,23 @@ export default class TwoFactorOptions extends Component {
             this.props
               .dispatch(update2fa(this.props.user.ZUID, false))
               .then(() => {
+                this.props.dispatch(
+                  notify({
+                    message: 'Two-Factor auth disabled',
+                    type: 'success'
+                  })
+                )
                 this.setState({
                   submitted: false
                 })
               })
               .catch(err => {
-                console.error(err)
+                this.props.dispatch(
+                  notify({
+                    message: 'Two-Factor auth had a problem disabling',
+                    type: 'error'
+                  })
+                )
                 this.setState({
                   submitted: false
                 })
