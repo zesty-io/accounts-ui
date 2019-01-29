@@ -70,36 +70,26 @@ export default class Domain extends Component {
     this.props
       .dispatch(updateDomain(this.props.siteZUID, strippedDomain))
       .then(({ error, domain }) => {
-        if (error) {
-          this.setState({ submitted: false })
-          this.props.dispatch(
-            notify({
-              message: `There was an error changing your domain: ${error}`,
-              type: 'error'
-            })
-          )
-        } else {
-          this.setState({
-            domain,
-            submitted: false,
-            editing: false
+        this.setState({
+          domain,
+          submitted: false,
+          editing: false
+        })
+        this.props.dispatch(
+          notify({
+            message: `Your domain has been set to ${strippedDomain}`,
+            type: 'success'
           })
-          this.props.dispatch(
-            notify({
-              message: `Your domain has been set to ${strippedDomain}`,
-              type: 'success'
-            })
-          )
-        }
+        )
       })
       .catch(data => {
         this.setState({ submitted: false })
-        this.props.dispatch(
-          notify({
-            message: `There was an error changing your domain`,
-            type: 'error'
-          })
-        )
+        notify({
+          message: `There was an error changing your domain: ${
+            data.statusText
+          }`,
+          type: 'error'
+        })
       })
   }
 }

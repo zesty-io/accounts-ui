@@ -59,6 +59,7 @@ export function request(url, opts = {}) {
       if (res.status === 400) {
         try {
           // It's up to the request initiator to handle bad requests
+          return Promise.reject(res)
           return res.json().then(function(json) {
             return Object.assign({}, json, { status: res.status })
           })
@@ -113,6 +114,9 @@ export function request(url, opts = {}) {
       return json
     })
     .catch(err => {
+      if (err.status && err.status === 400) {
+        return Promise.reject(err)
+      }
       // TODO global app notification on total request failure
       Raven.captureException(err)
       bugsnagClient.notify(err, {
