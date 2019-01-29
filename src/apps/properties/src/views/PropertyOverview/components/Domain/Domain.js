@@ -84,12 +84,12 @@ export default class Domain extends Component {
       })
       .catch(data => {
         this.setState({ submitted: false })
-        notify({
-          message: `There was an error changing your domain: ${
-            data.statusText
-          }`,
-          type: 'error'
-        })
+        this.props.dispatch(
+          notify({
+            message: data.error,
+            type: 'error'
+          })
+        )
       })
   }
 }

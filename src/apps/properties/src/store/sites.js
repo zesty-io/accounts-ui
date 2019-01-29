@@ -400,7 +400,7 @@ export function updateDomain(siteZUID, domain) {
           siteZUID
         })
       }
-      return { domain, error: res.error }
+      return { domain, ...res }
     })
   }
 }

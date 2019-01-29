@@ -58,10 +58,11 @@ export function request(url, opts = {}) {
       // Request Denied
       if (res.status === 400) {
         try {
-          // It's up to the request initiator to handle bad requests
-          return Promise.reject(res)
+          // It's up to the request initiator to handle bad requests in a catch
           return res.json().then(function(json) {
-            return Object.assign({}, json, { status: res.status })
+            return Promise.reject(
+              Object.assign({}, json, { status: res.status })
+            )
           })
         } catch (err) {
           notify({
@@ -114,6 +115,7 @@ export function request(url, opts = {}) {
       return json
     })
     .catch(err => {
+      // It's up to the request initiator to handle bad requests in a catch
       if (err.status && err.status === 400) {
         return Promise.reject(err)
       }
@@ -124,7 +126,6 @@ export function request(url, opts = {}) {
           if (report.message === 'Invalid user') report.ignore
         }
       })
-      console.error('error in request', err)
       throw err
     })
 }
