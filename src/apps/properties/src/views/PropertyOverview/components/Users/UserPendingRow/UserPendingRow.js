@@ -39,8 +39,16 @@ export default class UserPendingRow extends PureComponent {
               .then(() => {
                 this.props.dispatch(
                   notify({
-                    message: 'User Invite Cancelled',
+                    message: 'User invite cancelled',
                     type: 'success'
+                  })
+                )
+              })
+              .catch(() => {
+                this.props.dispatch(
+                  notify({
+                    message: 'Error cancelling invite',
+                    type: 'error'
                   })
                 )
               })

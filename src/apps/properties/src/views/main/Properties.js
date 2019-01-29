@@ -23,9 +23,19 @@ class Properties extends Component {
     this.props.dispatch(fetchSites()).then(() => {
       this.setState({ loadingSites: false })
     })
-    this.props.dispatch(fetchSitesWithInvites()).then(() => {
-      this.setState({ loadingInvitedSites: false })
-    })
+    this.props
+      .dispatch(fetchSitesWithInvites())
+      .then(() => {
+        this.setState({ loadingInvitedSites: false })
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({
+            message: 'There was a problem fetching your instances',
+            type: 'error'
+          })
+        )
+      })
     this.props.dispatch(fetchSystemRoles())
   }
   render() {
@@ -35,8 +45,7 @@ class Properties extends Component {
           condition={
             !this.state.loadingSites && !this.state.loadingInvitedSites
           }
-          message="Loading Your Instances"
-        >
+          message="Loading Your Instances">
           <Switch>
             <Route
               exact

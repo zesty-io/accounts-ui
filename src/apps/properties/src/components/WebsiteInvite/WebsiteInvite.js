@@ -35,8 +35,7 @@ class WebsiteInvite extends Component {
               className={styles.Preview}
               target="_blank"
               title={`Preview  ${this.props.site.name}`}
-              href={`https://${this.props.site.randomHashID}.preview.zesty.io`}
-            >
+              href={`https://${this.props.site.randomHashID}.preview.zesty.io`}>
               <i
                 className={cx(styles.icon, 'fa fa-globe')}
                 aria-hidden="true"
@@ -50,16 +49,14 @@ class WebsiteInvite extends Component {
             type="save"
             className={styles.invite}
             onClick={this.handleAccept}
-            disabled={this.state.submitted}
-          >
+            disabled={this.state.submitted}>
             <i className="fa fa-check-circle-o" aria-hidden="true" />
             Accept Invite
           </Button>
           <Button
             type="cancel"
             onClick={this.handleDecline}
-            disabled={this.state.submitted}
-          >
+            disabled={this.state.submitted}>
             <i className="fa fa-ban" aria-hidden="true" />
             Decline
           </Button>
@@ -70,23 +67,27 @@ class WebsiteInvite extends Component {
   handleAccept = evt => {
     this.setState({ submitted: true })
     // post accepted invite data THEN route to the overview when the user has permissions
-    this.props.dispatch(acceptInvite(this.props.site.inviteZUID)).then(data => {
-      this.props.dispatch(fetchSites()).then(data => {
-        const invitedSite = data.data.filter(site => {
-          return site.ZUID === this.props.site.ZUID
+    this.props
+      .dispatch(acceptInvite(this.props.site.inviteZUID))
+      .then(data => {
+        this.props.dispatch(fetchSites()).then(data => {
+          this.props.dispatch(
+            notify({
+              message: `You accepted your invite to ${this.props.site.name}`,
+              type: 'success',
+              timeout: 6000
+            })
+          )
+          return this.props.history.push(
+            `/instances/${this.props.site.ZUID}?invited=true`
+          )
         })
-        return this.props.history.push(
-          `/instances/${this.props.site.ZUID}?invited=true`
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error occurred accepting invite', type: 'error' })
         )
       })
-      this.props.dispatch(
-        notify({
-          message: `You accepted your invite to ${this.props.site.name}`,
-          type: 'success',
-          timeout: 6000
-        })
-      )
-    })
   }
   handleDecline = evt => {
     this.setState({ submitted: true })
@@ -100,6 +101,12 @@ class WebsiteInvite extends Component {
           })
         )
         this.props.dispatch(fetchSites())
+      })
+      .catch(() => {
+        this.setState({ submitted: false })
+        this.props.dispatch(
+          notify({ message: 'Error declining invite', type: 'error' })
+        )
       })
   }
 }

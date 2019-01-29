@@ -32,36 +32,49 @@ export default connect()(function InviteRow(props) {
 })
 
 function handleAccept(props) {
-  props.dispatch(acceptInvite(props.site.inviteZUID)).then(data => {
-    this.props.dispatch(fetchSites()).then(data => {
-      const invitedSite = data.data.filter(site => {
-        return site.ZUID === this.props.site.ZUID
-      })
-      return this.props.history.push(
-        `/instances/${this.props.site.ZUID}?invited=true`
-      )
-    })
-    this.props.dispatch(
-      notify({
-        message: `You accepted your invite to ${this.props.site.name}`,
-        type: 'success',
-        timeout: 6000
-      })
-    )
-  })
-}
-function handleDecline(props) {
-  props.dispatch(declineInvite(props.site.inviteZUID)).then(data => {
-    this.props
-      .dispatch(declineInvite(this.props.site.inviteZUID))
-      .then(data => {
+  props
+    .dispatch(acceptInvite(props.site.inviteZUID))
+    .then(data => {
+      this.props.dispatch(fetchSites()).then(data => {
+        const invitedSite = data.data.filter(site => {
+          return site.ZUID === this.props.site.ZUID
+        })
         this.props.dispatch(
           notify({
-            message: `You have declined your invite to ${this.props.site.name}`,
-            type: 'info'
+            message: `You accepted your invite to ${this.props.site.name}`,
+            type: 'success',
+            timeout: 6000
           })
         )
-        this.props.dispatch(fetchSites())
+        return this.props.history.push(
+          `/instances/${this.props.site.ZUID}?invited=true`
+        )
       })
-  })
+    })
+    .catch(() => {
+      this.props.dispatch(
+        notify({ message: 'Error accepting invite', type: 'error' })
+      )
+    })
+}
+function handleDecline(props) {
+  this.props
+    .dispatch(declineInvite(this.props.site.inviteZUID))
+    .then(data => {
+      this.props.dispatch(
+        notify({
+          message: `You have declined your invite to ${this.props.site.name}`,
+          type: 'info'
+        })
+      )
+      this.props.dispatch(fetchSites())
+    })
+    .catch(() => {
+      this.props.dispatch(
+        notify({
+          message: `Error declining invite`,
+          type: 'error'
+        })
+      )
+    })
 }

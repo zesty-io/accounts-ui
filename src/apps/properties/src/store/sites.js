@@ -85,36 +85,23 @@ export function fetchSitesWithInvites() {
     dispatch({
       type: 'FETCHING_SITES_INVITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/invites`)
-      .then(sites => {
-        sites.data.sort((prev, next) => {
-          if (prev.name < next.name) {
-            return -1
-          }
-          if (prev.name > next.name) {
-            return 1
-          }
-          return 0
-        })
+    return request(`${CONFIG.API_ACCOUNTS}/instances/invites`).then(sites => {
+      sites.data.sort((prev, next) => {
+        if (prev.name < next.name) {
+          return -1
+        }
+        if (prev.name > next.name) {
+          return 1
+        }
+        return 0
+      })
 
-        dispatch({
-          type: 'FETCH_SITES_INVITES_SUCCESS',
-          sites: sites.data
-        })
-        return sites
+      dispatch({
+        type: 'FETCH_SITES_INVITES_SUCCESS',
+        sites: sites.data
       })
-      .catch(err => {
-        dispatch(
-          notify({
-            message: 'There was a problem fetching your instances',
-            type: 'error'
-          })
-        )
-        dispatch({
-          type: 'FETCH_SITES_INVITES_ERROR',
-          err
-        })
-      })
+      return sites
+    })
   }
 }
 
@@ -135,7 +122,7 @@ export function fetchSite(siteZUID) {
       .catch(err => {
         dispatch(
           notify({
-            message: 'There was a problem fetching sites',
+            message: 'There was a problem fetching the instance',
             type: 'error'
           })
         )
@@ -156,18 +143,13 @@ export function updateSite(siteZUID, payload) {
       method: 'PUT',
       json: true,
       body: payload
+    }).then(res => {
+      dispatch({
+        type: 'UPDATE_SITE_SUCCESS',
+        site: res.data
+      })
+      return res.data
     })
-      .then(res => {
-        dispatch({
-          type: 'UPDATE_SITE_SUCCESS',
-          site: res.data
-        })
-        return res.data
-      })
-      .catch(err => {
-        dispatch({ type: 'UPDATE_SITE_FAILURE' })
-        throw err
-      })
   }
 }
 
@@ -183,19 +165,14 @@ export function updateSiteBlueprint(siteZUID, payload) {
         json: true,
         body: payload
       }
-    )
-      .then(res => {
-        dispatch({
-          type: 'UPDATE_SITE_BLUEPRINT_SUCCESS',
-          siteZUID,
-          blueprintID: payload.blueprintID
-        })
-        return res.data
+    ).then(res => {
+      dispatch({
+        type: 'UPDATE_SITE_BLUEPRINT_SUCCESS',
+        siteZUID,
+        blueprintID: payload.blueprintID
       })
-      .catch(err => {
-        dispatch({ type: 'UPDATE_SITE_FAILURE' })
-        throw err
-      })
+      return res.data
+    })
   }
 }
 
@@ -208,18 +185,13 @@ export function createInstance(name) {
       method: 'POST',
       json: true,
       body: { name }
+    }).then(res => {
+      dispatch({
+        type: 'CREATE_SITE_SUCCESS',
+        site: res.data
+      })
+      return res.data
     })
-      .then(res => {
-        dispatch({
-          type: 'CREATE_SITE_SUCCESS',
-          site: res.data
-        })
-        return res.data
-      })
-      .catch(err => {
-        console.error(err)
-        return err
-      })
   }
 }
 
@@ -232,20 +204,10 @@ export function acceptInvite(inviteZUID) {
       {
         method: 'PUT'
       }
-    )
-      .then(data => {
-        dispatch({ type: 'ACCEPT_INVITE_SUCCESS' })
-        return data
-      })
-      .catch(err => {
-        dispatch({ type: 'ACCEPT_INVITE_FAILURE' })
-        return dispatch(
-          notify({
-            message: `There was an error accepting the invite`,
-            type: 'error'
-          })
-        )
-      })
+    ).then(data => {
+      dispatch({ type: 'ACCEPT_INVITE_SUCCESS' })
+      return data
+    })
   }
 }
 
@@ -257,18 +219,13 @@ export function declineInvite(inviteZUID) {
       {
         method: 'PUT'
       }
-    )
-      .then(res => {
-        dispatch({
-          type: 'DECLINE_INVITE_SUCCESS',
-          inviteZUID
-        })
-        return res.data
+    ).then(res => {
+      dispatch({
+        type: 'DECLINE_INVITE_SUCCESS',
+        inviteZUID
       })
-      .catch(err => {
-        dispatch({ type: 'DECLINE_INVITE_FAILURE' })
-        throw err
-      })
+      return res.data
+    })
   }
 }
 
@@ -280,22 +237,14 @@ export function cancelInvite(inviteZUID, siteZUID) {
       {
         method: 'PUT'
       }
-    )
-      .then(res => {
-        dispatch({
-          type: 'CANCEL_INVITE_SUCCESS',
-          userZUID: inviteZUID, // REMOVE_USER_SUCCESS uses the same logic so make these share the same key
-          siteZUID
-        })
-        return res.data
+    ).then(res => {
+      dispatch({
+        type: 'CANCEL_INVITE_SUCCESS',
+        userZUID: inviteZUID, // REMOVE_USER_SUCCESS uses the same logic so make these share the same key
+        siteZUID
       })
-      .catch(err => {
-        console.error(err)
-        dispatch({
-          type: 'CANCEL_INVITE_FAILURE',
-          err
-        })
-      })
+      return res.data
+    })
   }
 }
 
@@ -314,33 +263,13 @@ export function sendInvite(siteZUID, inviteeEmail, inviteeRoleZUID) {
         accessLevel: systemRole.accessLevel // NOTE support access levels until custom roles are complete
         // roleZUID: payload.roleZUID
       }
+    }).then(res => {
+      dispatch({
+        type: 'SEND_INVITE_SUCCESS',
+        user: res.data
+      })
+      return res.data
     })
-      .then(res => {
-        dispatch(
-          notify({
-            message: `Invite sent to ${res.data.inviteeEmail}`,
-            type: 'success'
-          })
-        )
-        dispatch({
-          type: 'SEND_INVITE_SUCCESS',
-          user: res.data
-        })
-        return res.data
-      })
-      .catch(err => {
-        console.error(err)
-        dispatch(
-          notify({
-            message: `Error occurred sending the invite`,
-            type: 'error'
-          })
-        )
-        dispatch({
-          type: 'SEND_INVITE_ERROR',
-          err
-        })
-      })
   }
 }
 

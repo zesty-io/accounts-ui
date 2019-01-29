@@ -128,7 +128,14 @@ export default class Users extends Component {
     })
   }
   handleInvite = evt => {
-    // NOTE do we need to improve this validity check?
+    if (!this.state.inviteeRoleZUID) {
+      return this.props.dispatch(
+        notify({
+          message: `Please select a role`,
+          type: 'error'
+        })
+      )
+    }
     if (this.state.inviteeEmail.includes('@')) {
       this.setState({
         submitted: true
@@ -146,6 +153,21 @@ export default class Users extends Component {
             submitted: false,
             inviteeEmail: ''
           })
+          this.props.dispatch(
+            notify({
+              message: `Invite sent`,
+              type: 'success'
+            })
+          )
+        })
+        .catch(err => {
+          this.setState({ submitted: false })
+          this.props.dispatch(
+            notify({
+              message: `Error occurred sending the invite`,
+              type: 'error'
+            })
+          )
         })
     } else {
       this.props.dispatch(

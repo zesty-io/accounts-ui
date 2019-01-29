@@ -99,7 +99,6 @@ class PropertyBlueprint extends Component {
         this.props.history.push(`/instances/${this.props.siteZUID}`)
       })
       .catch(err => {
-        console.error(err)
         this.setState({
           submitted: false
         })
