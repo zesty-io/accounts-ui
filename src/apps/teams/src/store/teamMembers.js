@@ -23,23 +23,16 @@ export function fetchTeamMembers(teamZUID) {
     dispatch({
       type: 'FETCH_TEAM_MEMBERS'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users`)
-      .then(res => {
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users`).then(
+      res => {
         dispatch({
           type: 'FETCH_TEAM_MEMBERS_SUCCESS',
           data: res.data,
           teamZUID
         })
         return res.data
-      })
-      .catch(err => {
-        dispatch({
-          type: 'FETCH_TEAM_MEMBERS_FAILURE',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      }
+    )
   }
 }
 
@@ -48,20 +41,16 @@ export function fetchTeamMemberInvites(teamZUID) {
     dispatch({
       type: 'FETCH_TEAM_MEMBER_INVITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/pending`)
-      .then(res => {
-        dispatch({
-          type: 'FETCH_TEAM_MEMBER_INVITES_SUCCESS',
-          data: res.data,
-          teamZUID
-        })
-        return res.data
+    return request(
+      `${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/users/pending`
+    ).then(res => {
+      dispatch({
+        type: 'FETCH_TEAM_MEMBER_INVITES_SUCCESS',
+        data: res.data,
+        teamZUID
       })
-      .catch(err => {
-        dispatch({ type: 'FETCH_TEAM_MEMBER_INVITES_FAILURE', err })
-        console.error(err)
-        return err
-      })
+      return res.data
+    })
   }
 }
 
@@ -76,25 +65,15 @@ export function inviteTeamMember(teamZUID, inviteeEmail, admin) {
         inviteeEmail,
         admin
       }
+    }).then(res => {
+      dispatch({
+        type: 'INVITE_TEAM_MEMBER_SUCCESS',
+        data: [res.data],
+        inviteeEmail,
+        teamZUID
+      })
+      return res.data
     })
-      .then(res => {
-        dispatch({
-          type: 'INVITE_TEAM_MEMBER_SUCCESS',
-          data: [res.data],
-          inviteeEmail,
-          teamZUID
-        })
-        return res.data
-      })
-      .catch(err => {
-        dispatch({
-          type: 'INVITE_TEAM_MEMBER_FAILURE',
-          err
-        })
-
-        console.error(err)
-        return err
-      })
   }
 }
 
@@ -108,22 +87,13 @@ export function removeTeamMember(teamZUID, userZUID) {
       {
         method: 'DELETE'
       }
-    )
-      .then(res => {
-        dispatch({
-          type: 'REMOVE_TEAM_MEMBER_SUCCESS',
-          teamZUID,
-          memberZUID: userZUID
-        })
-        return res.data
+    ).then(res => {
+      dispatch({
+        type: 'REMOVE_TEAM_MEMBER_SUCCESS',
+        teamZUID,
+        memberZUID: userZUID
       })
-      .catch(err => {
-        dispatch({
-          type: 'REMOVE_TEAM_MEMBER_SUCCESS',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      return res.data
+    })
   }
 }

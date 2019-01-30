@@ -110,7 +110,7 @@ export default class CreateTeam extends Component {
       })
       .catch(() => {
         this.props.dispatch(
-          notify({ message: 'Error occurred creating team', type: 'error' })
+          notify({ message: 'Error creating team', type: 'error' })
         )
       })
   }

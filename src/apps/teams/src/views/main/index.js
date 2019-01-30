@@ -6,6 +6,7 @@ import { fetchTeamInvites } from '../../store/teamInvites'
 import TeamsGrid from '../../components/TeamsGrid'
 
 import styles from './teams.less'
+import { notify } from '../../../../../shell/store/notifications'
 
 export default connect(state => {
   return {
@@ -31,7 +32,10 @@ export default connect(state => {
           })
         })
         .catch(err => {
-          console.error(err)
+          console.log('final catch')
+          this.props.dispatch(
+            notify({ message: 'Error fetching team data', type: 'error' })
+          )
           this.setState({
             loading: false
           })

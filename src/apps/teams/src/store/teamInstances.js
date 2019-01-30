@@ -21,22 +21,15 @@ export function fetchTeamInstances(teamZUID) {
     dispatch({
       type: 'FETCH_TEAM_INSTANCES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/instances`)
-      .then(res => {
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}/instances`).then(
+      res => {
         dispatch({
           type: 'FETCH_TEAM_INSTANCES_SUCCESS',
           data: res.data,
           teamZUID
         })
         return res.data
-      })
-      .catch(err => {
-        dispatch({
-          type: 'FETCH_TEAM_INSTANCES_FAILURE',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      }
+    )
   }
 }

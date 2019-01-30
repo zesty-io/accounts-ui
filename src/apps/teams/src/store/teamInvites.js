@@ -13,7 +13,6 @@ export function teamInvites(state = {}, action) {
           inviteZUID: action.inviteZUID
         }
       }
-
     // When successfully accepting or declining
     // a team invite we drop the team invitation data
     case 'ACCEPT_TEAM_INVITE_SUCCESS':
@@ -35,33 +34,23 @@ export function fetchTeamInvites() {
     dispatch({
       type: 'FETCH_TEAM_INVITES'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/teams/invites`)
-      .then(res => {
-        if (Array.isArray(res.data) && res.data.length) {
-          console.log(res.data)
-
-          // map through and use inviteZUIDs to fetch each team
-          return Promise.all(
-            res.data.map(team => {
-              dispatch({
-                type: 'FETCH_TEAM_INVITES_SUCCESS',
-                data: team,
-                inviteZUID: team.ZUID
-              })
-              dispatch(fetchInvitedTeam(team.teamZUID, team.ZUID))
+    return request(`${CONFIG.API_ACCOUNTS}/teams/invites`).then(res => {
+      if (Array.isArray(res.data) && res.data.length) {
+        console.log(res.data)
+        // map through and use inviteZUIDs to fetch each team
+        return Promise.all(
+          res.data.map(team => {
+            dispatch({
+              type: 'FETCH_TEAM_INVITES_SUCCESS',
+              data: team,
+              inviteZUID: team.ZUID
             })
-          )
-        }
-        return res.data
-      })
-      .catch(err => {
-        dispatch({
-          type: 'FETCH_TEAM_INVITES_ERROR',
-          err
-        })
-        console.error(err)
-        return err
-      })
+            dispatch(fetchInvitedTeam(team.teamZUID, team.ZUID))
+          })
+        )
+      }
+      return res.data
+    })
   }
 }
 export const fetchInvitedTeam = (teamZUID, inviteZUID) => {
@@ -69,23 +58,14 @@ export const fetchInvitedTeam = (teamZUID, inviteZUID) => {
     dispatch({
       type: 'FETCH_INVITED_TEAM'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`)
-      .then(res => {
-        dispatch({
-          type: 'FETCH_TEAM_INVITES_SUCCESS',
-          data: res.data,
-          inviteZUID
-        })
-        return res.data
+    return request(`${CONFIG.API_ACCOUNTS}/teams/${teamZUID}`).then(res => {
+      dispatch({
+        type: 'FETCH_TEAM_INVITES_SUCCESS',
+        data: res.data,
+        inviteZUID
       })
-      .catch(err => {
-        dispatch({
-          type: 'FETCH_INVITED_TEAM_FAILURE',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      return res.data
+    })
   }
 }
 
@@ -99,24 +79,14 @@ export function acceptTeamInvite(inviteZUID, teamZUID) {
       {
         method: 'PUT'
       }
-    )
-      .then(res => {
-        dispatch({
-          type: 'ACCEPT_TEAM_INVITE_SUCCESS',
-          inviteZUID,
-          teamZUID
-        })
-
-        return dispatch(fetchTeam(teamZUID))
+    ).then(res => {
+      dispatch({
+        type: 'ACCEPT_TEAM_INVITE_SUCCESS',
+        inviteZUID,
+        teamZUID
       })
-      .catch(err => {
-        dispatch({
-          type: 'ACCEPT_TEAM_INVITE_ERROR',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      return dispatch(fetchTeam(teamZUID))
+    })
   }
 }
 
@@ -130,23 +100,14 @@ export function declineTeamInvite(inviteZUID, teamZUID) {
       {
         method: 'PUT'
       }
-    )
-      .then(res => {
-        dispatch({
-          type: 'DECLINE_TEAM_INVITE_SUCCESS',
-          inviteZUID,
-          teamZUID
-        })
-        return res.data
+    ).then(res => {
+      dispatch({
+        type: 'DECLINE_TEAM_INVITE_SUCCESS',
+        inviteZUID,
+        teamZUID
       })
-      .catch(err => {
-        dispatch({
-          type: 'DECLINE_TEAM_INVITE_ERROR',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      return res.data
+    })
   }
 }
 
@@ -160,22 +121,13 @@ export function cancelTeamInvite(teamZUID, inviteZUID) {
       {
         method: 'PUT'
       }
-    )
-      .then(res => {
-        dispatch({
-          type: 'CANCEL_TEAM_INVITE_SUCCESS',
-          teamZUID,
-          memberZUID: inviteZUID
-        })
-        return res.data
+    ).then(res => {
+      dispatch({
+        type: 'CANCEL_TEAM_INVITE_SUCCESS',
+        teamZUID,
+        memberZUID: inviteZUID
       })
-      .catch(err => {
-        dispatch({
-          type: 'CANCEL_TEAM_INVITE_ERROR',
-          err
-        })
-        console.error(err)
-        return err
-      })
+      return res.data
+    })
   }
 }
