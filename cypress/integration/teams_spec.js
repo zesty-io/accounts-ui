@@ -23,10 +23,7 @@ describe('Teams Flow', () => {
       'this is a description of the team and its purpose'
     )
     cy.get('#teamCreateSave').click()
-    cy.get('#notificationMessage').should(
-      'contain',
-      'Created team successfully'
-    )
+    cy.get('#notificationMessage').should('contain', 'Team created')
   })
 
   // add team to an instance
@@ -42,7 +39,7 @@ describe('Teams Flow', () => {
       '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > footer > form > button'
     ).click()
     cy.wait(3000)
-    cy.get('#notificationMessage').should('contain', 'Team invitation sent')
+    cy.get('#notificationMessage').should('contain', 'sent')
   })
 
   it('Can remove an invite', () => {
