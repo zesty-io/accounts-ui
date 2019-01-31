@@ -182,21 +182,28 @@ class BlueprintEdit extends Component {
       .dispatch(updateBlueprint(this.state.blueprint.ID, this.state.blueprint))
       .then(data => {
         this.setState({ saving: false })
-        this.props.dispatch(fetchBlueprints()).then(() => {
-          this.props.dispatch(
-            notify({
-              type: 'success',
-              message: 'Successfully saved changes'
-            })
-          )
-        })
+        this.props
+          .dispatch(fetchBlueprints())
+          .then(() => {
+            this.props.dispatch(
+              notify({
+                type: 'success',
+                message: 'Successfully saved changes'
+              })
+            )
+          })
+          .catch(() => {
+            this.props.dispatch(
+              notify({ message: 'Error fetching blueprints', type: 'error' })
+            )
+          })
       })
       .catch(err => {
         this.setState({ saving: false })
         this.props.dispatch(
           notify({
             type: 'error',
-            message: 'Something went wrong saving your changes'
+            message: 'There was an error saving your changes'
           })
         )
       })
@@ -226,7 +233,7 @@ class BlueprintEdit extends Component {
         this.props.dispatch(
           notify({
             type: 'error',
-            message: 'something went wrong creating the blueprint'
+            message: 'There was an error creating the blueprint'
           })
         )
       })

@@ -23,6 +23,7 @@ import styles from './App.less'
 import { fetchUser, saveProfile } from '../../store/user'
 import { zConfirm } from '../../store/confirm'
 import { verifyAuth } from '../../store/auth'
+import { notify } from '../../store/notifications'
 
 class App extends Component {
   constructor(props) {
@@ -109,13 +110,23 @@ class LoadUser extends Component {
     }
   }
   componentDidMount() {
-    this.props.dispatch(fetchUser(this.props.userZUID)).then(user => {
-      Raven.setUserContext(user)
-      bugsnagClient.user = user
-      this.setState({
-        loadingUser: false
+    this.props
+      .dispatch(fetchUser(this.props.userZUID))
+      .then(user => {
+        Raven.setUserContext(user)
+        bugsnagClient.user = user
+        this.setState({
+          loadingUser: false
+        })
       })
-    })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: `Error fetching user`,
+            type: 'error'
+          })
+        )
+      })
   }
   render() {
     if (this.props.auth) {

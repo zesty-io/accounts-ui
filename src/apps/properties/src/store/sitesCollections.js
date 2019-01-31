@@ -1,6 +1,5 @@
 import { request } from '../../../../util/request'
 
-
 export function sitesCollections(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_COLLECTIONS':
@@ -19,8 +18,8 @@ export const fetchSiteCollections = siteZuid => {
     dispatch({
       type: 'FETCHING_COLLECTIONS'
     })
-    request(`http://${siteZuid}${CONFIG.API_INSTANCE}collections/`)
-      .then(collections => {
+    request(`http://${siteZuid}${CONFIG.API_INSTANCE}collections/`).then(
+      collections => {
         let normalizedCollections = {}
         collections.data.forEach(collection => {
           return (normalizedCollections[collection.zuid] = collection)
@@ -30,13 +29,7 @@ export const fetchSiteCollections = siteZuid => {
           siteZuid,
           collections: normalizedCollections
         })
-      })
-      .catch(err => {
-        console.error(err)
-        dispatch({
-          type: 'FETCH_COLLECTIONS_ERROR',
-          err
-        })
-      })
+      }
+    )
   }
 }

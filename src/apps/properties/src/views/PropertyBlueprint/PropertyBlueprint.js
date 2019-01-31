@@ -12,7 +12,11 @@ class PropertyBlueprint extends Component {
     submitted: false
   }
   componentDidMount() {
-    this.props.dispatch(fetchBlueprints())
+    this.props.dispatch(fetchBlueprints()).catch(() => {
+      this.props.dispatch(
+        notify({ message: 'Error fetching blueprints', type: 'error' })
+      )
+    })
   }
   render() {
     return (
@@ -99,7 +103,6 @@ class PropertyBlueprint extends Component {
         this.props.history.push(`/instances/${this.props.siteZUID}`)
       })
       .catch(err => {
-        console.error(err)
         this.setState({
           submitted: false
         })

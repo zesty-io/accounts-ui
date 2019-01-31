@@ -21,21 +21,15 @@ export const fetchSiteTeams = siteZUID => {
     dispatch({
       type: 'FETCHING_INSTANCE_TEAMS'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/teams`)
-      .then(teams => {
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/teams`).then(
+      teams => {
         dispatch({
           type: 'FETCH_INSTANCE_TEAMS_SUCCESS',
           teams: teams.data,
           siteZUID
         })
-      })
-      .catch(err => {
-        console.error(err)
-        dispatch({
-          type: 'FETCH_INSTANCE_TEAMS_ERROR',
-          err
-        })
-      })
+      }
+    )
   }
 }
 
@@ -49,11 +43,9 @@ export const addTeamToInstance = (siteZUID, teamZUID, roleZUID) => {
         teamZUID,
         roleZUID
       }
+    }).then(data => {
+      return data
     })
-      .then(data => {
-        return data
-      })
-      .catch(err => console.error(err))
   }
 }
 
@@ -65,16 +57,14 @@ export function removeTeamFromInstance(siteZUID, teamZUID) {
       {
         method: 'DELETE'
       }
-    )
-      .then(data => {
-        dispatch({
-          type: 'REMOVING_TEAM_FROM_INSTANCE_SUCCESS',
-          team: data.data,
-          siteZUID,
-          teamZUID
-        })
-        return data.data
+    ).then(data => {
+      dispatch({
+        type: 'REMOVING_TEAM_FROM_INSTANCE_SUCCESS',
+        team: data.data,
+        siteZUID,
+        teamZUID
       })
-      .catch(err => console.error(err))
+      return data.data
+    })
   }
 }

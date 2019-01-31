@@ -31,18 +31,27 @@ export default class TeamCard extends Component {
       this.props.dispatch(fetchTeamMembers(this.props.team.ZUID)),
       this.props.dispatch(fetchTeamMemberInvites(this.props.team.ZUID)),
       this.props.dispatch(fetchTeamInstances(this.props.team.ZUID))
-    ]).then(() => {
-      const isAdmin = Boolean(
-        this.props.user.staff ||
-          this.props.members.filter(member => member).find(member => {
-            return member.ZUID === this.props.user.ZUID && member.admin
-          })
-      )
-      this.setState({
-        loaded: true,
-        isAdmin
+    ])
+      .then(() => {
+        const isAdmin = Boolean(
+          this.props.user.staff ||
+            this.props.members.filter(member => member).find(member => {
+              return member.ZUID === this.props.user.ZUID && member.admin
+            })
+        )
+        this.setState({
+          loaded: true,
+          isAdmin
+        })
       })
-    })
+      .catch(() => {
+        this.setState({
+          loaded: true
+        })
+        this.props.dispatch(
+          notify({ message: 'Error fetching team data', type: 'error' })
+        )
+      })
   }
   render() {
     const { team, instances } = this.props
@@ -417,7 +426,7 @@ export default class TeamCard extends Component {
                 this.props.dispatch(
                   notify({
                     type: 'error',
-                    message: 'An error occured removing this user'
+                    message: 'An error occurred removing this user'
                   })
                 )
               })

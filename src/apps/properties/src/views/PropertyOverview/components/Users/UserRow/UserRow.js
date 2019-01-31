@@ -143,7 +143,6 @@ export default class UserRow extends PureComponent {
         )
       })
       .catch(err => {
-        console.error(err)
         this.props.dispatch(
           notify({
             message: 'There was a problem updating the role',

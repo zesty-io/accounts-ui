@@ -60,13 +60,16 @@ export default class Domain extends Component {
   handleSave = () => {
     this.setState({ submitted: true })
 
-    const strippedDomain = this.state.domain
-      .toLowerCase()
-      .replace(/http:\/\/|https:\/\//g, '')
+    let strippedDomain = ''
+    if (this.state.domain) {
+      strippedDomain = this.state.domain
+        .toLowerCase()
+        .replace(/http:\/\/|https:\/\//g, '')
+    }
 
     this.props
       .dispatch(updateDomain(this.props.siteZUID, strippedDomain))
-      .then(domain => {
+      .then(({ error, domain }) => {
         this.setState({
           domain,
           submitted: false,
@@ -83,7 +86,7 @@ export default class Domain extends Component {
         this.setState({ submitted: false })
         this.props.dispatch(
           notify({
-            message: `There was an error changing your domain`,
+            message: data.error,
             type: 'error'
           })
         )

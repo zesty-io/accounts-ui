@@ -25,6 +25,11 @@ class Blueprints extends Component {
       this.props
         .dispatch(fetchBlueprints())
         .then(() => this.setState({ loadingBlueprints: false }))
+        .catch(() => {
+          this.props.dispatch(
+            notify({ message: 'Error fetching blueprints', type: 'error' })
+          )
+        })
     } else {
       this.setState({ loadingBlueprints: false })
     }

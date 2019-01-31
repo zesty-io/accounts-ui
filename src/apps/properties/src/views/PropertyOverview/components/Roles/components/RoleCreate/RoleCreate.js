@@ -109,6 +109,9 @@ class RoleCreate extends Component {
             submitted: !this.state.submitted,
             name: ''
           })
+          this.props.dispatch(
+            notify({ message: 'Error creating roles', type: 'error' })
+          )
         })
     } else {
       this.props.dispatch(

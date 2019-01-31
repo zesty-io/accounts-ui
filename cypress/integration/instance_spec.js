@@ -100,7 +100,7 @@ describe('Instance Flow', () => {
       .click({ force: true })
     cy.get('#inviteUserSend').click({ force: true })
     cy.wait(2000)
-    cy.get('#notificationMessage').should('contain', 'testInvite@zesty.io')
+    cy.get('#notificationMessage').should('contain', 'Invite sent')
   })
 
   it('Cancels an invite', () => {
@@ -117,7 +117,7 @@ describe('Instance Flow', () => {
       .click()
     cy.get('#revoke-button').click({ force: true })
     cy.get('#confirmTrue').click()
-    cy.get('#notificationMessage').should('contain', 'Cancelled')
+    cy.get('#notificationMessage').should('contain', 'User invite cancelled')
   })
 
   it('Updates an instance blueprint', () => {

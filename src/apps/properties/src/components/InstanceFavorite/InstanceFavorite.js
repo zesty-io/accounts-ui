@@ -16,7 +16,14 @@ export default connect()(function InstanceFavorite(props) {
       aria-hidden="true"
       onClick={() => {
         props.dispatch(favoriteSite(props.ZUID, action))
-        props.dispatch(saveProfile())
+        props.dispatch(saveProfile()).catch(err => {
+          this.props.dispatch(
+            notify({
+              message: `Error saving user profile data`,
+              type: 'error'
+            })
+          )
+        })
       }}
     />
   )

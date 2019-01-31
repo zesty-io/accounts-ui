@@ -70,24 +70,18 @@ export const fetchSiteUsers = siteZUID => {
     dispatch({
       type: 'FETCHING_USERS'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/roles`)
-      .then(users => {
-        dispatch({
-          type: 'FETCH_USERS_SUCCESS',
-          siteZUID,
-          users: users.data.reduce((acc, user) => {
-            acc[user.ZUID] = user
-            return acc
-          }, {})
-        })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/roles`
+    ).then(users => {
+      dispatch({
+        type: 'FETCH_USERS_SUCCESS',
+        siteZUID,
+        users: users.data.reduce((acc, user) => {
+          acc[user.ZUID] = user
+          return acc
+        }, {})
       })
-      .catch(err => {
-        console.error(err)
-        dispatch({
-          type: 'FETCH_USERS_ERROR',
-          err
-        })
-      })
+    })
   }
 }
 
@@ -96,25 +90,19 @@ export const fetchSiteUsersPending = siteZUID => {
     dispatch({
       type: 'FETCHING_USERS_PENDING'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/pending`)
-      .then(users => {
-        dispatch({
-          type: 'FETCH_USERS_PENDING_SUCCESS',
-          siteZUID,
-          users: users.data.reduce((acc, user) => {
-            acc[user.inviteZUID] = user
-            acc[user.inviteZUID].pending = true
-            return acc
-          }, {})
-        })
+    return request(
+      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/users/pending`
+    ).then(users => {
+      dispatch({
+        type: 'FETCH_USERS_PENDING_SUCCESS',
+        siteZUID,
+        users: users.data.reduce((acc, user) => {
+          acc[user.inviteZUID] = user
+          acc[user.inviteZUID].pending = true
+          return acc
+        }, {})
       })
-      .catch(err => {
-        console.error(err)
-        dispatch({
-          type: 'FETCH_USERS_PENDING_ERROR',
-          err
-        })
-      })
+    })
   }
 }
 
@@ -124,22 +112,14 @@ export const removeUser = (siteZUID, userZUID, roleZUID) => {
     return request(
       `${CONFIG.API_ACCOUNTS}/users/${userZUID}/roles/${roleZUID}`,
       { method: 'DELETE' }
-    )
-      .then(res => {
-        dispatch({
-          type: 'REMOVE_USER_SUCCESS',
-          siteZUID,
-          userZUID
-        })
-        return res.data
+    ).then(res => {
+      dispatch({
+        type: 'REMOVE_USER_SUCCESS',
+        siteZUID,
+        userZUID
       })
-      .catch(err => {
-        console.error(err)
-        dispatch({
-          type: 'REMOVE_USER_ERROR',
-          err
-        })
-      })
+      return res.data
+    })
   }
 }
 
@@ -157,18 +137,14 @@ export function updateRole(siteZUID, userZUID, newRoleZUID) {
           roleZUID: newRoleZUID
         }
       }
-    )
-      .then(res => {
-        dispatch({
-          type: 'UPDATE_USER_ROLE',
-          siteZUID,
-          userZUID,
-          role: state.sitesRoles[siteZUID][res.data.roleZUID]
-        })
-        return res.data
+    ).then(res => {
+      dispatch({
+        type: 'UPDATE_USER_ROLE',
+        siteZUID,
+        userZUID,
+        role: state.sitesRoles[siteZUID][res.data.roleZUID]
       })
-      .catch(err => {
-        console.error(err)
-      })
+      return res.data
+    })
   }
 }

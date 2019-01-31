@@ -71,8 +71,7 @@ export default class Roles extends Component {
                       <span>
                         <ButtonGroup>
                           <AppLink
-                            to={`${this.props.match.url}role/${role.ZUID}`}
-                          >
+                            to={`${this.props.match.url}role/${role.ZUID}`}>
                             <i className="fa fa-pencil" aria-hidden="true" />&nbsp;Edit
                           </AppLink>
                           <Button onClick={() => this.handleRemove(role.ZUID)}>
@@ -105,6 +104,11 @@ export default class Roles extends Component {
                     message: 'Role successfully deleted',
                     type: 'success'
                   })
+                )
+              })
+              .catch(() => {
+                this.props.dispatch(
+                  notify({ message: 'Error deleting role', type: 'error' })
                 )
               })
           }

@@ -95,35 +95,28 @@ export function fetchUser(ZUID) {
     dispatch({
       type: 'FETCHING_USER'
     })
-    return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}`)
-      .then(user => {
-        if (user.data) {
-          // Parse user data response
-          user.data.unverifiedEmails = user.data.unverifiedEmails
-            ? user.data.unverifiedEmails.split(',')
-            : []
-          user.data.verifiedEmails = user.data.verifiedEmails
-            ? user.data.verifiedEmails.split(',')
-            : []
-          user.data.prefs = JSON.parse(user.data.prefs || '{}')
-          user.data.prefs.favorite_sites = user.data.prefs.favorite_sites || []
+    return request(`${CONFIG.API_ACCOUNTS}/users/${ZUID}`).then(user => {
+      if (user.data) {
+        // Parse user data response
+        user.data.unverifiedEmails = user.data.unverifiedEmails
+          ? user.data.unverifiedEmails.split(',')
+          : []
+        user.data.verifiedEmails = user.data.verifiedEmails
+          ? user.data.verifiedEmails.split(',')
+          : []
+        user.data.prefs = JSON.parse(user.data.prefs || '{}')
+        user.data.prefs.favorite_sites = user.data.prefs.favorite_sites || []
 
-          dispatch({
-            type: 'FETCH_USER_SUCCESS',
-            user: user.data
-          })
-
-          return user.data
-        } else {
-          throw new Error('API returned missing user data')
-        }
-      })
-      .catch(err => {
-        return dispatch({
-          type: 'FETCH_USER_ERROR',
-          err
+        dispatch({
+          type: 'FETCH_USER_SUCCESS',
+          user: user.data
         })
-      })
+
+        return user.data
+      } else {
+        throw new Error('API returned missing user data')
+      }
+    })
   }
 }
 
@@ -188,14 +181,10 @@ export function saveProfile(payload) {
         prefs: JSON.stringify(user.prefs),
         ...payload
       }
+    }).then(res => {
+      dispatch({ type: 'SAVING_PROFILE_SUCCESS' })
+      return res.data
     })
-      .then(res => {
-        dispatch({ type: 'SAVING_PROFILE_SUCCESS' })
-        return res.data
-      })
-      .catch(err => {
-        return dispatch({ type: 'SAVING_PROFILE_ERROR' })
-      })
   }
 }
 

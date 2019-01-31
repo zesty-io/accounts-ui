@@ -104,6 +104,14 @@ export default class CreateTeam extends Component {
       .dispatch(createTeam(this.state.name, this.state.description))
       .then(() => {
         this.setState({ name: '', description: '' })
+        this.props.dispatch(
+          notify({ message: 'Team created', type: 'success' })
+        )
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error creating team', type: 'error' })
+        )
       })
   }
 }

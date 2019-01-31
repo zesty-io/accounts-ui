@@ -125,6 +125,7 @@ class Email extends Component {
       </Card>
     )
   }
+
   handleChange = evt => {
     this.setState({
       [evt.target.name]: evt.target.value
@@ -132,19 +133,55 @@ class Email extends Component {
   }
 
   handleRemove = email => {
-    return this.props.dispatch(deleteUserEmail(email)).then(data => {
-      this.props.dispatch(fetchUserEmails())
-    })
+    return this.props
+      .dispatch(deleteUserEmail(email))
+      .then(() => {
+        this.props.dispatch(fetchUserEmails()).catch(err => {
+          this.props.dispatch(
+            notify({
+              message: `Error fetching emails`,
+              type: 'error'
+            })
+          )
+        })
+        this.props.dispatch(
+          notify({
+            type: 'success',
+            message: 'email successfully removed'
+          })
+        )
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: 'Error removing email'
+          })
+        )
+      })
+
+      .then(data => {})
   }
 
   sendVerifyEmail = email => {
-    this.props.dispatch(resendVerificationEmail(email))
-    this.props.dispatch(
-      notify({
-        message: 'Verification email re-sent',
-        type: 'success'
+    this.props
+      .dispatch(resendVerificationEmail(email))
+      .then(() =>
+        this.props.dispatch(
+          notify({
+            message: 'Verification email re-sent',
+            type: 'success'
+          })
+        )
+      )
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            message: 'There was a problem re-sending the verification email.',
+            type: 'error'
+          })
+        )
       })
-    )
   }
 
   handleAddEmail = evt => {
@@ -156,13 +193,30 @@ class Email extends Component {
       })
       this.props
         .dispatch(addEmail(this.state.name, this.state.email))
-        .then(data => {
-          this.props.dispatch(fetchUserEmails())
-          return this.setState({
+        .then(() => {
+          this.props.dispatch(fetchUserEmails()).catch(err => {
+            this.props.dispatch(
+              notify({
+                message: `Error fetching emails`,
+                type: 'error'
+              })
+            )
+          })
+          this.setState({
             submitted: false,
             name: '',
             email: ''
           })
+          dispatch(
+            notify({
+              message: 'Email added',
+              type: 'success'
+            })
+          )
+        })
+        .catch(err => {
+          this.setState({ submitted: false })
+          this.props.dispatch(notify({ message: err.error, type: 'error' }))
         })
     } else {
       this.props.dispatch(
