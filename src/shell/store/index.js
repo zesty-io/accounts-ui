@@ -18,8 +18,7 @@ import { teamInstances } from '../../apps/teams/src/store/teamInstances'
 import { teamMembers } from '../../apps/teams/src/store/teamMembers'
 
 const loggerMiddleware = createLogger({
-  collapsed: true,
-  diff: true
+  collapsed: true
 })
 
 const appReducer = combineReducers({
