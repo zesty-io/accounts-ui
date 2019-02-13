@@ -15,19 +15,22 @@ describe('Instance Flow', () => {
 
   it('Creates an instance', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.wait(2000)
 
-    cy.get('#siteListWrapper > main > article > footer > a > button').click()
+    cy.get('#siteListWrapper > main > article > footer > a > button', {
+      timeout: 10000
+    }).click()
     cy.get('#root > section > section > section > section > div > input').type(
       `TEST INSTANCE ${timeStamp}`
     )
     cy.get(
       '#root > section > section > section > section > div > div > button'
     ).click()
-    cy.wait(10000)
+
     cy.get(
-      '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(1) > footer > button'
+      '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(1) > footer > button',
+      { timeout: 10000 }
     ).click()
+
     cy.get('#siteListWrapper > section > div > article > main').should(
       'contain',
       timeStamp
@@ -36,8 +39,8 @@ describe('Instance Flow', () => {
 
   it('Updates an instance name', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.wait(2000)
-    cy.get('#siteListWrapper > main')
+
+    cy.get('#siteListWrapper > main', { timeout: 10000 })
       .find('article')
       .contains(timeStamp)
       .parent()
@@ -56,8 +59,8 @@ describe('Instance Flow', () => {
 
   it('Adds a domain', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.wait(2000)
-    cy.get('#siteListWrapper > main')
+
+    cy.get('#siteListWrapper > main', { timeout: 10000 })
       .find('article')
       .contains(timeStamp)
       .parent()
@@ -78,8 +81,8 @@ describe('Instance Flow', () => {
 
   it('Invites a User', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.wait(2000)
-    cy.get('#siteListWrapper > main')
+
+    cy.get('#siteListWrapper > main', { timeout: 10000 })
       .find('article')
       .contains(timeStamp)
       .parent()
@@ -99,14 +102,17 @@ describe('Instance Flow', () => {
       .contains('Developer')
       .click({ force: true })
     cy.get('#inviteUserSend').click({ force: true })
-    cy.wait(2000)
-    cy.get('#notificationMessage').should('contain', 'Invite sent')
+
+    cy.get('#notificationMessage', { timeout: 10000 }).should(
+      'contain',
+      'Invite sent'
+    )
   })
 
   it('Cancels an invite', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.wait(2000)
-    cy.get('#siteListWrapper > main')
+
+    cy.get('#siteListWrapper > main', { timeout: 10000 })
       .find('article')
       .contains(timeStamp)
       .parent()
@@ -122,8 +128,8 @@ describe('Instance Flow', () => {
 
   it('Updates an instance blueprint', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.wait(2000)
-    cy.get('#siteListWrapper > main')
+
+    cy.get('#siteListWrapper > main', { timeout: 10000 })
       .find('article')
       .contains(timeStamp)
       .parent()
@@ -137,8 +143,8 @@ describe('Instance Flow', () => {
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(4) > footer > button'
     ).click()
-    cy.wait(2000)
-    cy.get('#blueprintName').should('contain', 'BS3')
+
+    cy.get('#blueprintName', { timeout: 10000 }).should('contain', 'BS3')
   })
 
   // // invites a team

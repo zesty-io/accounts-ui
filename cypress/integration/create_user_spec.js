@@ -16,8 +16,8 @@ describe('User Creation Flow', function() {
     )
     cy.get('#root > section > form > label:nth-child(6) > input').click()
     cy.get('#root > section > form > button').click()
-    cy.wait(10000)
-    cy.get('#root > section > main > p').should(
+
+    cy.get('#root > section > main > p', { timeout: 10000 }).should(
       'contain',
       'We have sent a verification email to the email address you signed up with. This is done for account security to ensure you are the owner of the email address. Once you have verified your email return here to begin using Zesty.io'
     )

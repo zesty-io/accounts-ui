@@ -8,10 +8,9 @@ describe('User Login Failure', function() {
       .type(Cypress.env('invalidPassword'))
       .should('have.value', Cypress.env('invalidPassword'))
     cy.get('button').click()
-    cy.get('#root > section > div > main > form > p').should(
-      'contain',
-      'There was a problem logging you in'
-    )
+    cy.get('#root > section > div > main > form > p', {
+      timeout: 10000
+    }).should('contain', 'There was a problem logging you in')
   })
 })
 
@@ -26,7 +25,10 @@ describe('User Login Flow', function() {
       .should('have.value', Cypress.env('validPassword'))
     cy.get('#root > section > div > main > form > button').click()
     // assert that the app loads
-    cy.get('#root > section > header > nav.UserNav').should('contain', 'test')
+    cy.get('#root > section > header > nav.UserNav', { timeout: 10000 }).should(
+      'contain',
+      'test'
+    )
   })
 })
 

@@ -38,8 +38,8 @@ describe('Teams Flow', () => {
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > footer > form > button'
     ).click()
-    cy.wait(3000)
-    cy.get('#notificationMessage').should('contain', 'sent')
+
+    cy.get('#notificationMessage', { timeout: 10000 }).should('contain', 'sent')
   })
 
   it('Can remove an invite', () => {
