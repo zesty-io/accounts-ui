@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom'
 import { request } from '../../../util/request'
 
 import styles from './ResendEmail.less'
-
 export default class ResendEmail extends Component {
   state = {
     email: '',
@@ -32,8 +31,7 @@ export default class ResendEmail extends Component {
             <Button
               onClick={this.handleClick}
               className={styles.button}
-              disabled={this.state.submitted}
-            >
+              disabled={this.state.submitted}>
               <i className="fa fa-envelope-o" aria-hidden="true" />Send
               Verification
             </Button>
@@ -68,44 +66,51 @@ export default class ResendEmail extends Component {
   }
   handleClick = evt => {
     evt.preventDefault()
-    if (this.state.email.includes('@')) {
-      this.setState({
-        submitted: true,
-        error: ''
-      })
-      request(
-        `${
-          CONFIG.API_ACCOUNTS
-        }/users/emails/verifications?address=${encodeURIComponent(
-          this.state.email
-        )}`,
-        {
-          method: 'POST'
-        }
-      )
-        .then(data => {
-          if (!data.error) {
-            this.setState({
-              submitted: false,
-              success: 'A verification link has been re-sent!'
-            })
-          } else {
-            this.setState({
-              submitted: false,
-              error:
-                'There was a problem sending a verification link to the email address you provided'
-            })
-          }
-        })
-        .catch(err => {
-          this.setState({
-            submitted: false
-          })
-        })
-    } else {
+
+    if (!this.state.email.includes('@')) {
       this.setState({
         error: 'You must provide a valid email address'
       })
+      return
     }
+
+    this.setState({
+      submitted: true,
+      error: ''
+    })
+
+    request(
+      `${
+        CONFIG.API_ACCOUNTS
+      }/users/emails/verifications?address=${encodeURIComponent(
+        this.state.email
+      )}`,
+      {
+        method: 'POST'
+      }
+    )
+      .then(data => {
+        if (!data.error) {
+          this.setState({
+            submitted: false,
+            success: `A verification link has been sent to ${this.state.email}`,
+            error: ''
+          })
+        } else {
+          this.setState({
+            submitted: false,
+            success: '',
+            error:
+              'There was a problem sending a verification link to the email address you provided'
+          })
+        }
+      })
+      .catch(err => {
+        this.setState({
+          submitted: false,
+          error: err.error || 'Failed to re-send verification email',
+          success: ''
+        })
+      })
   }
 }
