@@ -86,8 +86,8 @@ class Signup extends Component {
           <label>
             <p>Password</p>
             <small>
-              Minimum 8 characters with at least one number, uppercase and
-              lowercase letter.
+              Minimum 8 characters. At least one number. Both lower and
+              uppercase letters.
             </small>
             <Input
               required
@@ -99,7 +99,7 @@ class Signup extends Component {
               onChange={this.handleChange}
             />
           </label>
-          <label>
+          <label className={styles.eula}>
             <Input
               required
               className={styles.checkbox}
@@ -117,28 +117,31 @@ class Signup extends Component {
               </Url>
             </span>
           </label>
-          <Button type="submit" disabled={this.state.submitted}>
-            {this.state.submitted ? (
-              <React.Fragment>
-                <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Creating
-                Your Account
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                <i className="fa fa-plus" aria-hidden="true" />
-                &nbsp;Create Your Account
-              </React.Fragment>
-            )}
-          </Button>
-          <small>
-            <AppLink to="/login">Already have an account?</AppLink>
-          </small>
+
+          <div className={styles.Actions}>
+            <Button type="submit" disabled={this.state.submitted}>
+              {this.state.submitted ? (
+                <React.Fragment>
+                  <i className="fa fa-hourglass-o" aria-hidden="true" />
+                  &nbsp;Creating Your Account
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <i className="fa fa-plus" aria-hidden="true" />
+                  &nbsp;Create Your Account
+                </React.Fragment>
+              )}
+            </Button>
+            <AppLink to="/login">
+              Log In&nbsp;
+              <i className="fa fa-sign-in" aria-hidden="true" />
+            </AppLink>
+          </div>
 
           {this.state.message ? (
             <p className={styles.error}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                this.state.message
-              }
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+              &nbsp;{this.state.message}
             </p>
           ) : null}
         </form>

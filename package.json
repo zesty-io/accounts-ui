@@ -11,7 +11,7 @@
     "serve": "./node_modules/.bin/serve ./build --port 6006 --single",
     "prestart": "npm install",
     "start": "npm run build-development && node bin/start",
-    "build-dev": "export NODE_ENV=\"development\" && node bin/build",
+    "build-development": "export NODE_ENV=\"development\" && node bin/build",
     "build-stage": "export NODE_ENV=\"stage\" && node bin/build",
     "build-prod": "export NODE_ENV=\"production\" && node bin/build",
     "test:dev": "cypress open",
