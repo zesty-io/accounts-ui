@@ -28,14 +28,16 @@ class PropertyBlueprint extends Component {
             <header>
               <h1>Select a Blueprint</h1>
               <AppLink type="cancel" to={`/instances`}>
-                <i className="fa fa-ban" aria-hidden="true" />&nbsp;Cancel
+                <i className="fa fa-ban" aria-hidden="true" />
+                &nbsp;Cancel
               </AppLink>
             </header>
             <p className={styles.description}>
-              Blueprints are the starting point of your new website. They can
-              come pre-built with CSS, HTML, JavaScript, Pages, and Datasets.
-              You can find a selection of common community design frameworks
-              configured for Zesty.io.
+              Blueprints are the starting point of your new content instance.
+              They can come pre-built with CSS, HTML, JavaScript, Schemas, and
+              content items(e.g. pages, headless data, etc.). Here you will find
+              a selection of community design frameworks configured as Zesty.io
+              blueprints.
             </p>
             <main className={styles.Blueprints}>
               {this.props.blueprints.map(blueprint => {
