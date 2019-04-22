@@ -113,7 +113,7 @@ class Signup extends Component {
               <Url
                 href="https://www.zesty.io/en-us/about/end-user-license-agreement/"
                 target="_blank">
-                End User License Agreement
+                <abbr title="End User License Agreement">EULA</abbr>
               </Url>
             </span>
           </label>
