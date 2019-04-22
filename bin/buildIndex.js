@@ -148,7 +148,7 @@ module.exports = buildIndex = build => {
       </main>
 
       <!-- Bug Reporting -->
-      <script src=https://cdn.ravenjs.com/3.24.0/raven.min.js
+      <script src=https://cdn.ravenjs.com/3.26.4/raven.min.js
       crossorigin=anonymous></script>
       <script>
         Raven.config('https://12c3a25b9d4c4442aa93f22dcf39c26a@sentry.io/1229171', {
