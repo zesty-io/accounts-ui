@@ -174,6 +174,12 @@ class Signup extends Component {
         // this is in place of a code === 201,
         // server only returns an error, no code
         if (!json.error) {
+          // run GA call
+          gtag('event', 'button', {
+            event_category: 'account-creation',
+            event_label: 'accounts.zesty.io ' + this.state.email
+          })
+
           // log the new user in to get a valid session
           // send the user to the confirm email page
           // once validated user will automatically get into the app
