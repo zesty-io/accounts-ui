@@ -175,12 +175,11 @@ class Signup extends Component {
         // server only returns an error, no code
         if (!json.error) {
           // run GA call
-          ga('send', {
-            hitType: 'event',
-            eventCategory: 'AccountCreation',
-            eventAction: 'signup',
-            eventLabel: 'Accounts Signup Page'
+          gtag('event', 'button', {
+            event_category: 'account-creation',
+            event_label: 'Accounts Signup ' + this.state.email
           })
+
           // log the new user in to get a valid session
           // send the user to the confirm email page
           // once validated user will automatically get into the app
