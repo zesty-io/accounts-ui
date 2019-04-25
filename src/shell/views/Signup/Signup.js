@@ -177,7 +177,11 @@ class Signup extends Component {
           // run GA call
           gtag('event', 'button', {
             event_category: 'account-creation',
-            event_label: 'accounts.zesty.io ' + this.state.email
+            event_label: 'new user: ' + this.state.email
+          })
+
+          gtag('event', 'conversion', {
+            send_to: 'AW-955374362/ivZJCMeG3JoBEJq2x8cD'
           })
 
           // log the new user in to get a valid session
