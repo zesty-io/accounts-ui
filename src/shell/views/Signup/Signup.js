@@ -174,6 +174,13 @@ class Signup extends Component {
         // this is in place of a code === 201,
         // server only returns an error, no code
         if (!json.error) {
+          // run GA call
+          ga('send', {
+            hitType: 'event',
+            eventCategory: 'AccountCreation',
+            eventAction: 'signup',
+            eventLabel: 'Accounts Signup Page'
+          })
           // log the new user in to get a valid session
           // send the user to the confirm email page
           // once validated user will automatically get into the app
