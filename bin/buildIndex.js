@@ -138,6 +138,7 @@ module.exports = buildIndex = build => {
         gtag('js', new Date());
 
         gtag('config', 'UA-21247490-1');
+        gtag('config', 'AW-955374362');
       </script>
 
 
