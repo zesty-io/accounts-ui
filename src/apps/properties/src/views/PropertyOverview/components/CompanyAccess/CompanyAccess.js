@@ -66,7 +66,7 @@ export default class CompanyAccess extends Component {
                   name="companyAccessSubmit"
                   onClick={this.handleAddTeam}
                   disabled={this.state.submitted}>
-                  Grant Access
+                  <i className="fa fa-plus"></i>Add Team
                 </Button>
               </div>
             </React.Fragment>
@@ -98,7 +98,8 @@ export default class CompanyAccess extends Component {
                                   ? styles.hidden
                                   : styles.trash
                               }`}
-                            />&nbsp;Remove Team
+                            />
+                            &nbsp;Remove Team
                           </Button>
                         )}
                       </span>
@@ -115,9 +116,8 @@ export default class CompanyAccess extends Component {
                               <React.Fragment key={userZUID}>
                                 <span>{this.props.users[userZUID].email}</span>
                                 <span>
-                                  {this.props.users[userZUID].firstName}&nbsp;{
-                                    this.props.users[userZUID].lastName
-                                  }
+                                  {this.props.users[userZUID].firstName}&nbsp;
+                                  {this.props.users[userZUID].lastName}
                                 </span>
                                 <span>
                                   {this.props.users[userZUID].role.name}
@@ -148,9 +148,7 @@ export default class CompanyAccess extends Component {
     this.props.dispatch(
       zConfirm({
         kind: 'warn',
-        prompt: `Are you sure you want to remove access for the team: ${
-          team.name
-        }?`,
+        prompt: `Are you sure you want to remove access for the team: ${team.name}?`,
         callback: confirmed => {
           if (confirmed) {
             this.props
