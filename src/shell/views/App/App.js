@@ -76,6 +76,7 @@ class App extends Component {
               <Route path="/settings" component={Settings} />
               <Route path="/blueprints/:id?" component={Blueprints} />
               <Route path="/support" component={Support} />
+              <Route path="/billing" component={Billing} />
               <Route path="/teams" component={Teams} />
               <Redirect exact from="/" to="/instances" />
               <Redirect exact from="/login" to="/instances" />

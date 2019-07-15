@@ -180,6 +180,7 @@ module.exports = buildIndex = build => {
       <script src="/bundle.${build.data.gitCommit}.settings-app.js"></script>
       <script src="/bundle.${build.data.gitCommit}.blueprints-app.js"></script>
       <script src="/bundle.${build.data.gitCommit}.support-app.js"></script>
+      <script src="/bundle.${build.data.gitCommit}.billing-app.js"></script>
       <script src="/bundle.${build.data.gitCommit}.teams-app.js"></script>
       <script src="/bundle.${build.data.gitCommit}.shell.js"></script>
 

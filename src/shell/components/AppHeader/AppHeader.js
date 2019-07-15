@@ -32,9 +32,11 @@ class AppHeader extends Component {
         <nav className={styles.GlobalNav} id="globalNav">
           <NavLink to="/instances" id="instancesNavLink">
             <i className="fa fa-globe" aria-hidden="true" />
-            &nbsp;Instances{this.props.userHasSiteInvites ? (
+            &nbsp;Instances
+            {this.props.userHasSiteInvites ? (
               <span>
-                &nbsp;<i className={`fa fa-circle ${styles.red}`} />
+                &nbsp;
+                <i className={`fa fa-circle ${styles.red}`} />
               </span>
             ) : null}
           </NavLink>
@@ -44,7 +46,8 @@ class AppHeader extends Component {
               &nbsp;Teams
               {this.props.userHasTeamInvites ? (
                 <span>
-                  &nbsp;<i className={`fa fa-circle ${styles.red}`} />
+                  &nbsp;
+                  <i className={`fa fa-circle ${styles.red}`} />
                 </span>
               ) : null}
             </NavLink>
@@ -55,6 +58,10 @@ class AppHeader extends Component {
               &nbsp;Blueprints
             </NavLink>
           )}
+          <NavLink to="/billing" id="billingNavLink">
+            <i className="fa fa-credit-card" aria-hidden="true" />
+            &nbsp;Billing
+          </NavLink>
         </nav>
         <nav
           ref={nav => (this.userNav = nav)}
@@ -67,9 +74,7 @@ class AppHeader extends Component {
           {this.props.user.firstName} {this.props.user.lastName}
           <img
             className={styles.avatar}
-            src={`https://www.gravatar.com/avatar/${
-              this.props.user.emailHash
-            }?d=mm&s=30`}
+            src={`https://www.gravatar.com/avatar/${this.props.user.emailHash}?d=mm&s=30`}
           />
           <ul className={styles.UserMenu} id="userNavDropdown">
             <li className={styles.user}>
