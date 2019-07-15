@@ -1,119 +1,138 @@
-import { Component } from 'react'
-import styles from './LaunchWizard.less'
+import React, { useState, useEffect } from 'react'
 
+import { notify } from '../../../../../../../shell/store/notifications'
 import { checkDNS } from '../../../../store/sites'
 
 import Domain from '../Domain'
-import { notify } from '../../../../../../../shell/store/notifications'
 
-export default class LaunchWizard extends Component {
-  state = {
-    isVerified: false,
-    submitted: false
-  }
-  render() {
-    return (
-      <Card className={styles.LaunchWizard}>
-        <CardHeader className={styles.CardHeader}>
-          <h2>
-            <i className="fa fa-rocket" aria-hidden="true" />
-            &nbsp;Send Your Instance Live!
-          </h2>
-        </CardHeader>
-        <CardContent>
-          <p className={styles.instructions}>
-            By sending your instance live it will have a domain which allows
-            public internet access. This can be done in 2 steps. View our{' '}
-            <Url
-              href="https://zesty.org/services/web-engine/guides/how-to-launch-an-instance#setting-a-custom-domain-in-zesty-io-accounts"
-              target="_blank">
-              documentation
-            </Url>{' '}
-            for more detail.
-          </p>
-          <ol>
-            <li>
-              <h4>Set your domain</h4>
-              {this.props.isAdmin ? (
-                <Domain
-                  siteZUID={this.props.site.ZUID}
-                  site={this.props.site}
-                  domain={this.props.site.domain}
-                  dispatch={this.props.dispatch}
-                />
-              ) : (
-                <p className={styles.domain}>
-                  <em>
-                    <i
-                      className="fa fa-exclamation-triangle"
-                      aria-hidden="true"
-                    />
-                    &nbsp; You must be a instance owner or admin to set the
-                    domain
-                  </em>
-                </p>
-              )}
-            </li>
+import styles from './LaunchWizard.less'
+export default function LaunchWizard(props) {
+  const [verified, setVerified] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-            <li className={styles.dns}>
-              Configure your <abbr title="Domain Name Servers">DNS</abbr>{' '}
-              provider
-              <div className={styles.settings}>
-                <p>
-                  CNAME: <code>{CONFIG.C_NAME}</code>
-                </p>
-                <p>
-                  A Record: <code>{CONFIG.A_RECORD}</code>
-                </p>
-              </div>
-            </li>
-            <li className={styles.confirm}>
-              Confirm your instance is live
-              <Button
-                type="save"
-                onClick={this.handleCheckDNS}
-                disabled={this.state.submitted}>
-                {this.state.isVerified ? (
-                  <i className="fa fa-check" aria-hidden="true" />
-                ) : (
-                  <i className="fa fa-question" aria-hidden="true" />
-                )}
-                Check DNS
-              </Button>
-            </li>
-          </ol>
-        </CardContent>
-      </Card>
-    )
-  }
-  handleCheckDNS = () => {
-    this.setState({ submitted: true })
-    this.props
+  const handleCheckDNS = () => {
+    if (!props.site.domain) {
+      props.dispatch(
+        notify({
+          type: 'error',
+          message: 'A domain must be set in order to verify DNS'
+        })
+      )
+      return
+    }
+
+    setLoading(true)
+
+    props
       .dispatch(
         checkDNS({
           aRecord: CONFIG.A_RECORD,
           cName: CONFIG.C_NAME,
-          domain: this.props.site.domain
+          domain: props.site.domain
         })
       )
       .then(data => {
+        setLoading(false)
+
         if (data.verified) {
-          this.props.dispatch(
+          setVerified(true)
+          props.dispatch(
             notify({
               type: 'success',
               message: 'Your DNS successfully verified'
             })
           )
-          this.setState({ isVerified: true, submitted: false })
         } else {
-          this.props.dispatch(
+          setVerified(false)
+          props.dispatch(
             notify({
               type: 'error',
               message: 'Your DNS could not be verified'
             })
           )
-          this.setState({ isVerified: false, submitted: false })
         }
       })
+      .catch(err => {
+        setVerified(false)
+        setLoading(false)
+
+        props.dispatch(
+          notify({
+            type: 'error',
+            message: err.error
+          })
+        )
+      })
   }
+
+  return (
+    <Card className={styles.LaunchWizard}>
+      <CardHeader className={styles.CardHeader}>
+        <h2>
+          <i className="fa fa-rocket" aria-hidden="true" />
+          &nbsp;Launch Your Instance!
+        </h2>
+      </CardHeader>
+      <CardContent>
+        <p className={styles.instructions}>
+          The process of launching your website is done by adding a
+          pre-purchased domain to your instance. Allowing your vistors access to
+          any pages or API endpoints you have created. View our{' '}
+          <Url
+            href="https://zesty.org/services/web-engine/guides/how-to-launch-an-instance#setting-a-custom-domain-in-zesty-io-accounts"
+            target="_blank">
+            documentation
+          </Url>{' '}
+          for more detail.
+        </p>
+        <ol>
+          <li>
+            <h4>Set a domain for this instance</h4>
+            {props.isAdmin ? (
+              <Domain
+                siteZUID={props.site.ZUID}
+                site={props.site}
+                domain={props.site.domain}
+                dispatch={props.dispatch}
+              />
+            ) : (
+              <p className={styles.domain}>
+                <em>
+                  <i
+                    className="fa fa-exclamation-triangle"
+                    aria-hidden="true"
+                  />
+                  &nbsp; You must be a instance owner or admin to set the domain
+                </em>
+              </p>
+            )}
+          </li>
+
+          <li className={styles.dns}>
+            Add a CNAME record to your{' '}
+            <abbr title="Domain Name Servers">DNS</abbr> provider
+            <div className={styles.settings}>
+              <p>
+                <code>{CONFIG.C_NAME}</code>
+              </p>
+              {/* <p>
+                A Record: <code>{CONFIG.A_RECORD}</code>
+              </p> */}
+            </div>
+          </li>
+          <li className={styles.confirm}>
+            Confirm your instance is live
+            <Button type="save" onClick={handleCheckDNS} disabled={loading}>
+              {verified ? (
+                <i className="fa fa-check" aria-hidden="true" />
+              ) : (
+                <i className="fa fa-question" aria-hidden="true" />
+              )}
+              Check DNS
+            </Button>
+          </li>
+        </ol>
+      </CardContent>
+    </Card>
+  )
 }
