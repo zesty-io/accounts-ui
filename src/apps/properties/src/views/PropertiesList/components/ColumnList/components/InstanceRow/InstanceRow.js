@@ -4,6 +4,8 @@ import styles from './InstanceRow.less'
 
 import InstanceFavorite from '../../../../../../components/InstanceFavorite'
 
+import AppLink from '../../../../../../../../../core/AppLink'
+
 export default function InstanceRow(props) {
   const { site } = props
   return (
@@ -24,18 +26,14 @@ export default function InstanceRow(props) {
         className={styles.action}
         target="_blank"
         title={`Open instance preview: ${site.name}`}
-        href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
-          CONFIG.PREVIEW_URL
-        }`}>
+        href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${CONFIG.PREVIEW_URL}`}>
         <i className={'fa fa-eye'} aria-hidden="true" />
       </Url>
       {site.blueprintID !== null ? (
         <Url
           className={styles.action}
           target="_blank"
-          href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
-            CONFIG.MANAGER_URL
-          }`}>
+          href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${CONFIG.MANAGER_URL}`}>
           <i className="fa fa-external-link-square" aria-hidden="true" />
         </Url>
       ) : (

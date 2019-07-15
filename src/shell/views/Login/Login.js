@@ -7,6 +7,8 @@ import styles from './Login.less'
 
 import { login } from '../../store/auth'
 
+import AppLink from '../../../core/AppLink'
+
 class Login extends Component {
   constructor(props) {
     super()
@@ -57,10 +59,13 @@ class Login extends Component {
               </label>
               <label>
                 <p>
-                  Password &nbsp;<small>
-                    (<AppLink to="/reset-password" tabIndex="4">
+                  Password &nbsp;
+                  <small>
+                    (
+                    <AppLink to="/reset-password" tabIndex="4">
                       Forgot?
-                    </AppLink>)
+                    </AppLink>
+                    )
                   </small>
                 </p>
 
@@ -82,10 +87,8 @@ class Login extends Component {
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    Log In&nbsp;<i
-                      className="fa fa-sign-in"
-                      aria-hidden="true"
-                    />
+                    Log In&nbsp;
+                    <i className="fa fa-sign-in" aria-hidden="true" />
                   </React.Fragment>
                 )}
               </Button>

@@ -57,9 +57,8 @@ class TwoFactor extends Component {
 
           {this.state.message ? (
             <p className={styles.error}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                this.state.message
-              }
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+              &nbsp;{this.state.message}
             </p>
           ) : null}
         </form>

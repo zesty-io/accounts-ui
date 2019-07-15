@@ -8,6 +8,8 @@ import {
   declineInvite
 } from '../../../../../../store/sites'
 
+import AppLink from '../../../../../../../../../core/AppLink'
+
 export default connect()(function InviteRow(props) {
   const { site } = props
   return (

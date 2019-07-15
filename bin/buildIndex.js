@@ -96,27 +96,13 @@ module.exports = buildIndex = build => {
       </style>
       <link rel="icon" type="image/png" href="/favicon.png" />
 
-      <link href="/bundle.${
-        build.data.gitCommit
-      }.core.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.${
-        build.data.gitCommit
-      }.shell.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.${
-        build.data.gitCommit
-      }.properties-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.${
-        build.data.gitCommit
-      }.settings-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.${
-        build.data.gitCommit
-      }.blueprints-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.${
-        build.data.gitCommit
-      }.support-app.css" type="text/css" rel="stylesheet" />
-      <link href="/bundle.${
-        build.data.gitCommit
-      }.teams-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${build.data.gitCommit}.core.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${build.data.gitCommit}.shell.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${build.data.gitCommit}.properties-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${build.data.gitCommit}.settings-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${build.data.gitCommit}.blueprints-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${build.data.gitCommit}.support-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${build.data.gitCommit}.teams-app.css" type="text/css" rel="stylesheet" />
 
       <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
 
