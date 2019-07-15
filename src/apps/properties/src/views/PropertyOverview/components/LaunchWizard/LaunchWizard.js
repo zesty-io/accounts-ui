@@ -25,7 +25,7 @@ export default class LaunchWizard extends Component {
             By sending your instance live it will have a domain which allows
             public internet access. This can be done in 2 steps. View our{' '}
             <Url
-              href="https://developer.zesty.io/docs/satellite-sites/launching-a-satellite-site/"
+              href="https://zesty.org/services/web-engine/guides/how-to-launch-an-instance#setting-a-custom-domain-in-zesty-io-accounts"
               target="_blank">
               documentation
             </Url>{' '}
@@ -47,7 +47,8 @@ export default class LaunchWizard extends Component {
                     <i
                       className="fa fa-exclamation-triangle"
                       aria-hidden="true"
-                    />&nbsp; You must be a instance owner or admin to set the
+                    />
+                    &nbsp; You must be a instance owner or admin to set the
                     domain
                   </em>
                 </p>

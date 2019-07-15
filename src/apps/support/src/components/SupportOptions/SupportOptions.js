@@ -19,7 +19,7 @@ export default class SupportOptions extends PureComponent {
             <i className="fa fa-files-o fa-3x" />
             <span>Help Docs</span>
           </a>
-          <a href="https://developer.zesty.io/" target="_blank">
+          <a href="https://zesty.org/" target="_blank">
             <i className="fa fa-code fa-3x" />
             <span>Developer Docs</span>
           </a>
