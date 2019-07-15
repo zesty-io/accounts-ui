@@ -68,7 +68,8 @@ class Blueprints extends Component {
         message="Loading Your Custom Blueprints">
         <section className={styles.Blueprints}>
           <h1 className={styles.BlueprintsTitle}>
-            Manage Your Custom Blueprints
+            <i className="fa fa-map" aria-hidden="true" />
+            &nbsp;Manage Your Custom Blueprints
           </h1>
           <Switch>
             <Route

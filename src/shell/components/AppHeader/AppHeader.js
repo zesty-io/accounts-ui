@@ -2,12 +2,12 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import cx from 'classnames'
-import styles from './AppHeader.less'
 
 import { logout } from '../../store/auth'
 // import { fetchSitesWithInvites } from '../../../apps/properties/src/store/sites'
 // import { getUserTeamInvites } from '../../../apps/teams/src/store'
 
+import styles from './AppHeader.less'
 class AppHeader extends Component {
   constructor(props) {
     super(props)

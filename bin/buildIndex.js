@@ -101,6 +101,7 @@ module.exports = buildIndex = build => {
       <link href="/bundle.${build.data.gitCommit}.properties-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.settings-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.blueprints-app.css" type="text/css" rel="stylesheet" />
+      <link href="/bundle.${build.data.gitCommit}.billing-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.support-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.teams-app.css" type="text/css" rel="stylesheet" />
 
