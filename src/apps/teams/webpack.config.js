@@ -27,10 +27,6 @@ module.exports = {
   output: {
     filename: `../../../../build/bundle.${build.data.gitCommit}.teams-app.js`
   },
-  // resolve: {
-  //   modules: ['node_modules', 'src'],
-  //   extensions: ['.js', '.jsx']
-  // },
   plugins: [extractLess],
   module: {
     rules: [
