@@ -2,14 +2,18 @@
 
 const build = require('../../../build/buildinfo.json')
 const webpack = require('webpack')
+const path = require('path')
+
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const extractLess = new ExtractTextPlugin({
-  filename: `../../../build/bundle.${build.data.gitCommit}.properties-app.css`
+  filename: `../../../../build/bundle.${build.data.gitCommit}.properties-app.css`
 })
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './index.js',
+  context: path.resolve(__dirname, 'src'),
   devtool: 'cheap-module-source-map',
+  mode: process.env.NODE_ENV || 'development',
   externals: {
     classnames: 'cx',
     react: 'React',
@@ -21,11 +25,7 @@ module.exports = {
     'redux-thunk': 'ReduxThunk'
   },
   output: {
-    filename: `../../../build/bundle.${build.data.gitCommit}.properties-app.js`
-  },
-  resolve: {
-    modules: ['node_modules', 'src'],
-    extensions: ['.js', '.jsx']
+    filename: `../../../../build/bundle.${build.data.gitCommit}.properties-app.js`
   },
   plugins: [extractLess],
   module: {
@@ -48,11 +48,27 @@ module.exports = {
         })
       },
       {
+        test: /\.css$/,
+        use: extractLess.extract({
+          use: [
+            {
+              loader: 'css-loader'
+            }
+          ]
+        })
+      },
+      {
         test: /\.js$/,
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets: ['react', 'es2015', 'stage-2']
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: [
+            // "@babel/plugin-syntax-dynamic-import",
+            // "@babel/plugin-syntax-import-meta",
+            ['@babel/plugin-proposal-class-properties', { loose: false }]
+            // "@babel/plugin-proposal-json-strings"
+          ]
         }
       }
     ]

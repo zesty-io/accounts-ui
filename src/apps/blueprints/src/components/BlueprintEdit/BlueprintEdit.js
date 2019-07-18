@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import BlueprintList from '../BlueprintList'
 
+import AppLink from '../../../../../core/AppLink'
+
 import { notify } from '../../../../../shell/store/notifications'
 import {
   updateBlueprint,
@@ -10,7 +12,6 @@ import {
 } from '../../../../properties/src/store/blueprints'
 
 import styles from './BlueprintEdit.less'
-
 class BlueprintEdit extends Component {
   state = {
     saving: false,
@@ -48,8 +49,8 @@ class BlueprintEdit extends Component {
     return (
       <form id="Blueprint" className={styles.BlueprintEdit}>
         <AppLink to="/blueprints">
-          <i className="fa fa-long-arrow-left" aria-hidden="true" />&nbsp;Back
-          to overview
+          <i className="fa fa-long-arrow-left" aria-hidden="true" />
+          &nbsp;Back to overview
         </AppLink>
 
         <label>
@@ -70,7 +71,8 @@ class BlueprintEdit extends Component {
             Looking for a Blueprint? Try starting with one of our{' '}
             <Url href="https://github.com/zesty-io?q=plate" target="_blank">
               Zesty.io blueprints
-            </Url>.
+            </Url>
+            .
           </em>
           <Input
             required
@@ -134,7 +136,8 @@ class BlueprintEdit extends Component {
         </label>
 
         <label>
-          Description<textarea
+          Description
+          <textarea
             autoComplete="off"
             wrap="soft"
             name="description"

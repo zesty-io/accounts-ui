@@ -8,6 +8,8 @@ import styles from './Signup.less'
 import { request } from '../../../util/request'
 import { login } from '../../store/auth'
 
+import AppLink from '../../../core/AppLink'
+
 class Signup extends Component {
   constructor(props) {
     super()

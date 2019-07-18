@@ -1,5 +1,7 @@
 import React from 'react'
 
+import AppLink from '../../../../../core/AppLink'
+
 import styles from './BlueprintCard.less'
 const BlueprintCard = props => {
   const { blueprint } = props
@@ -31,8 +33,7 @@ const BlueprintCard = props => {
             <Url
               target="_blank"
               title={`Preview blueprint: ${blueprint.name}`}
-              href={blueprint.previewURL}
-            >
+              href={blueprint.previewURL}>
               <i className={'fa fa-eye'} aria-hidden="true" />
             </Url>
           ) : (
@@ -40,7 +41,8 @@ const BlueprintCard = props => {
           )}
 
           <AppLink to={`/blueprints/${blueprint.ID}`}>
-            <i className="fa fa-pencil-square-o" aria-hidden="true" />&nbsp;Edit
+            <i className="fa fa-pencil-square-o" aria-hidden="true" />
+            &nbsp;Edit
           </AppLink>
         </ButtonGroup>
       </CardFooter>

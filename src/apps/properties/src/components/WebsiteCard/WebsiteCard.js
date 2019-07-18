@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
+import AppLink from '../../../../../core/AppLink'
+
 import InstanceFavorite from '../InstanceFavorite'
 
 export default props => {
@@ -35,7 +37,8 @@ export default props => {
 
           <AppLink to={`/instances/${site.ZUID}/launch`}>
             <Button type="save">
-              <i className="fa fa-rocket" aria-hidden="true" />Launch Instance
+              <i className="fa fa-rocket" aria-hidden="true" />
+              Launch Instance
             </Button>
           </AppLink>
         </CardContent>
@@ -54,9 +57,7 @@ export default props => {
           <Url
             target="_blank"
             title={`Preview instance: ${site.name}`}
-            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${
-              CONFIG.PREVIEW_URL
-            }`}>
+            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${CONFIG.PREVIEW_URL}`}>
             <i className={'fa fa-eye'} aria-hidden="true" />
           </Url>
 
@@ -75,11 +76,9 @@ export default props => {
             <Url
               className={styles.manager}
               target="_blank"
-              href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${
-                CONFIG.MANAGER_URL
-              }`}>
-              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
-              Manager
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${CONFIG.MANAGER_URL}`}>
+              <i className="fa fa-external-link" aria-hidden="true" />
+              &nbsp;Open Manager
             </Url>
           ) : (
             <AppLink

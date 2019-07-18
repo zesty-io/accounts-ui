@@ -9,13 +9,16 @@ import WebsiteCreate from '../../../../components/WebsiteCreate'
 import InstanceRow from './components/InstanceRow'
 import InviteRow from './components/InviteRow'
 
+import AppLink from '../../../../../../../core/AppLink'
+
 export default function ColumnList(props) {
   return (
     <section className={styles.ColumnList}>
       <nav className={styles.List}>
         <AppLink to="/instances/create">
           <Button className={styles.Create} type="save">
-            <i className="fa fa-plus" />Create New Instance
+            <i className="fa fa-plus" />
+            Create New Instance
           </Button>
         </AppLink>
 

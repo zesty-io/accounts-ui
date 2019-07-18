@@ -14,6 +14,8 @@ import { fetchTeamInstances } from '../../store/teamInstances'
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
 
+import AppLink from '../../../../../core/AppLink'
+
 import styles from './TeamCard.less'
 
 export default class TeamCard extends Component {
@@ -35,9 +37,11 @@ export default class TeamCard extends Component {
       .then(() => {
         const isAdmin = Boolean(
           this.props.user.staff ||
-            this.props.members.filter(member => member).find(member => {
-              return member.ZUID === this.props.user.ZUID && member.admin
-            })
+            this.props.members
+              .filter(member => member)
+              .find(member => {
+                return member.ZUID === this.props.user.ZUID && member.admin
+              })
         )
         this.setState({
           loaded: true,

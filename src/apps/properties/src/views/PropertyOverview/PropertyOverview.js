@@ -22,6 +22,8 @@ import { fetchBlueprint } from '../../store/blueprints'
 // import { updateSite } from '../../store/sites'
 // import { notify } from '../../../../../shell/store/notifications'
 
+import AppLink from '../../../../../core/AppLink'
+
 class PropertyOverview extends Component {
   constructor(props) {
     super(props)
@@ -51,11 +53,9 @@ class PropertyOverview extends Component {
             <Url
               className={styles.manager}
               target="_blank"
-              href={`${CONFIG.MANAGER_URL_PROTOCOL}${
-                this.props.site.randomHashID
-              }${CONFIG.MANAGER_URL}`}>
-              <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
-              Manager
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}`}>
+              <i className="fa fa-external-link" aria-hidden="true" />
+              &nbsp;Open Manager
             </Url>
           ) : (
             <AppLink to={`/instances/${this.props.site.ZUID}/blueprint`}>
@@ -66,17 +66,17 @@ class PropertyOverview extends Component {
           <Url
             className={styles.manager}
             target="_blank"
-            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${
-              this.props.site.randomHashID
-            }${CONFIG.PREVIEW_URL}`}>
-            <i className="fa fa-eye" aria-hidden="true" />&nbsp;Open Preview
+            href={`${CONFIG.PREVIEW_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.PREVIEW_URL}`}>
+            <i className="fa fa-eye" aria-hidden="true" />
+            &nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
             <Url
               className={styles.manager}
               target="_blank"
               href={`http://${this.props.site.domain}`}>
-              <i className="fa fa-globe" aria-hidden="true" />&nbsp;Live Domain
+              <i className="fa fa-globe" aria-hidden="true" />
+              &nbsp;Live Domain
             </Url>
           ) : null}
         </header>

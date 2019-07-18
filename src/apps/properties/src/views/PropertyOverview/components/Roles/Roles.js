@@ -13,6 +13,8 @@ import {
 
 // import Modal from '../../../../../../../shell/components/Modal'
 
+import AppLink from '../../../../../../../core/AppLink'
+
 import EditRole from './components/EditRole'
 import RoleCreate from './components/RoleCreate'
 
@@ -72,10 +74,12 @@ export default class Roles extends Component {
                         <ButtonGroup>
                           <AppLink
                             to={`${this.props.match.url}role/${role.ZUID}`}>
-                            <i className="fa fa-pencil" aria-hidden="true" />&nbsp;Edit
+                            <i className="fa fa-pencil" aria-hidden="true" />
+                            &nbsp;Edit
                           </AppLink>
                           <Button onClick={() => this.handleRemove(role.ZUID)}>
-                            <i className="fa fa-trash-o" aria-hidden="true" />Remove
+                            <i className="fa fa-trash-o" aria-hidden="true" />
+                            Remove
                           </Button>
                         </ButtonGroup>
                       </span>

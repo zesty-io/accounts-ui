@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+
+import AppLink from '../../../core/AppLink'
+
 import styles from './VerifyEmail.less'
 export default class VerifyEmail extends Component {
   constructor(props) {
@@ -9,10 +12,8 @@ export default class VerifyEmail extends Component {
       <section className={styles.VerifyEmail}>
         <main className={styles.aligner}>
           <h1>
-            Check your email&nbsp;<i
-              className="fa fa-envelope-o"
-              aria-hidden="true"
-            />
+            Check your email&nbsp;
+            <i className="fa fa-envelope-o" aria-hidden="true" />
           </h1>
           <p>
             We have sent a verification email to the email address you signed up
@@ -27,10 +28,8 @@ export default class VerifyEmail extends Component {
           </small>
 
           <AppLink className={styles.Continue} to="/instances">
-            Continue to Zesty.io&nbsp;<i
-              className="fa fa-arrow-right"
-              aria-hidden="true"
-            />
+            Continue to Zesty.io&nbsp;
+            <i className="fa fa-arrow-right" aria-hidden="true" />
           </AppLink>
         </main>
       </section>

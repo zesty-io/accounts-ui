@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import styles from './ResetPasswordStart.less'
 import { request } from '../../../util/request'
 
+import AppLink from '../../../core/AppLink'
+
 export default class ResetPasswordStart extends Component {
   state = {
     error: false,
@@ -43,15 +45,13 @@ export default class ResetPasswordStart extends Component {
           {this.state.message ? (
             this.state.error ? (
               <p className={styles.error}>
-                <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-                  this.state.message
-                }
+                <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+                &nbsp;{this.state.message}
               </p>
             ) : (
               <p>
-                <i className="fa fa-info-circle" aria-hidden="true" />&nbsp;{
-                  this.state.message
-                }
+                <i className="fa fa-info-circle" aria-hidden="true" />
+                &nbsp;{this.state.message}
               </p>
             )
           ) : null}

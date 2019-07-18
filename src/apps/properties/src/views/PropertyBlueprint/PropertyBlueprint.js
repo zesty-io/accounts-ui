@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import styles from './PropertyBlueprint.less'
 
+import AppLink from '../../../../../core/AppLink'
+
 import { updateSiteBlueprint } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 import { fetchBlueprints } from '../../store/blueprints'
@@ -96,9 +98,7 @@ class PropertyBlueprint extends Component {
       .then(data => {
         if (!this.props.siteBlueprint) {
           window.open(
-            `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${
-              CONFIG.MANAGER_URL
-            }`,
+            `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${CONFIG.MANAGER_URL}`,
             '_blank'
           )
         }
