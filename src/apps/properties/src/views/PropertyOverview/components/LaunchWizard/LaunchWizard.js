@@ -74,7 +74,7 @@ export default class LaunchWizard extends Component {
             <li className={styles.confirm}>
               Confirm your instance is live
               <Button
-                type="save"
+                kind="save"
                 onClick={this.handleCheckDNS}
                 disabled={this.state.submitted}>
                 {this.state.isVerified ? (

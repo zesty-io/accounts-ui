@@ -31,7 +31,7 @@ export default class WebsiteCreate extends PureComponent {
         </main>
         <footer>
           <Link to="/instances/create" className={styles.Button}>
-            <Button type="save">
+            <Button kind="save">
               <i className="fa fa-plus" aria-hidden="true" />
               {this.props.first
                 ? 'Create Your First Instance'

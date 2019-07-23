@@ -70,7 +70,7 @@ class BugReport extends Component {
             </label>
           </span>
           <Button disabled={this.state.submitted} type="submit" text="Submit" />
-          <Button type="cancel" text="Cancel" onClick={this.cancel} />
+          <Button kind="cancel" text="Cancel" onClick={this.cancel} />
         </form>
       </div>
     )

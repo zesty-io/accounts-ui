@@ -19,13 +19,13 @@ export default connect()(function InviteRow(props) {
         {site.name}
       </AppLink>
       <Button
-        type="save"
+        kind="save"
         className={styles.action}
         onClick={() => handleAccept(props)}>
         <i className="fa fa-check" aria-hidden="true" />
       </Button>
       <Button
-        type="cancel"
+        kind="cancel"
         className={styles.action}
         onClick={() => handleDecline(props)}>
         <i className="fa fa-ban" aria-hidden="true" />

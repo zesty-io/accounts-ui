@@ -7,8 +7,8 @@ import debounce from '../../../../../../../util/debounce'
 import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
 
-import { Select, Option } from '@zesty-io/core/Select'
 import { Search } from '@zesty-io/core/Search'
+import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
 import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
 import { Button } from '@zesty-io/core/Button'
 
@@ -32,7 +32,7 @@ class PropertiesHeader extends Component {
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
           {this.props.ecosystems.length ? (
-            <Select
+            <DropDownFieldType
               className={styles.Ecosystem}
               name="ecoFilter"
               onSelect={this.filterByEco}
@@ -42,13 +42,17 @@ class PropertiesHeader extends Component {
                   .map(eco => {
                     return { value: eco.id, text: eco.name }
                   })[0]
-              }>
-              {this.props.ecosystems
+              }
+              options={this.props.ecosystems
                 .filter(eco => eco.id !== this.state.eco)
                 .map(eco => {
-                  return <Option key={eco.id} value={eco.id} text={eco.name} />
+                  return {
+                    key: eco.id,
+                    value: eco.value,
+                    text: eco.name
+                  }
                 })}
-            </Select>
+            />
           ) : null}
 
           <Search

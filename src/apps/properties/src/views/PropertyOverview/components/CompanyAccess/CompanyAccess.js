@@ -13,7 +13,10 @@ import { fetchSiteUsers } from '../../../../store/sitesUsers'
 
 import { WithLoader } from '@zesty-io/core/WithLoader'
 import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
-import { Select, Option } from '@zesty-io/core/Select'
+// import { Select, Option } from '@zesty-io/core/Select'
+
+import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
+
 import { Input } from '@zesty-io/core/Input'
 import { Button } from '@zesty-io/core/Button'
 
@@ -54,18 +57,21 @@ export default class CompanyAccess extends Component {
               </p>
               <div className={styles.addCompany}>
                 <Input placeholder="Enter team ID" onChange={this.handleTeam} />
-                <Select name="siteRoles" onSelect={this.handleRole}>
-                  <Option key="default" value="" text="Select Role" />
-                  {this.props.siteRoles.map(role => {
-                    return (
-                      <Option
-                        key={role.ZUID}
-                        value={role.ZUID}
-                        text={role.name}
-                      />
-                    )
+
+                <DropDownFieldType
+                  name="siteRoles"
+                  defaultValue=""
+                  defaultText="- Select Role -"
+                  onSelect={this.handleRole}
+                  options={this.props.siteRoles.map(role => {
+                    return {
+                      key: role.ZUID,
+                      value: role.ZUID,
+                      text: role.name
+                    }
                   })}
-                </Select>
+                />
+
                 <Button
                   name="companyAccessSubmit"
                   onClick={this.handleAddTeam}

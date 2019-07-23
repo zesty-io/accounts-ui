@@ -131,7 +131,7 @@ export default class TeamCard extends Component {
                 <ButtonGroup>
                   <Button
                     className={styles.Save}
-                    type="save"
+                    kind="save"
                     onClick={this.handleUpdateTeam}>
                     <i className="fa fa-floppy-o" aria-hidden="true" />
                     Update Team

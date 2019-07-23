@@ -24,7 +24,7 @@ export default class InviteCard extends PureComponent {
               <i className="fa fa-check" />
               Accept Invite
             </Button>
-            <Button onClick={this.handleDecline} type="cancel">
+            <Button onClick={this.handleDecline} kind="cancel">
               <i className="fa fa-close" />
               Decline
             </Button>

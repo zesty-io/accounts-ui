@@ -17,7 +17,7 @@ export default function ColumnList(props) {
     <section className={styles.ColumnList}>
       <nav className={styles.List}>
         <AppLink to="/instances/create">
-          <Button className={styles.Create} type="save">
+          <Button className={styles.Create} kind="save">
             <i className="fa fa-plus" />
             Create New Instance
           </Button>

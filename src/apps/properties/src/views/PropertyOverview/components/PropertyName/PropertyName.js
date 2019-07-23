@@ -34,7 +34,7 @@ export default class PropertyName extends Component {
               <i className="fa fa-save" />
               Save
             </Button>
-            <Button type="cancel" onClick={() => {}}>
+            <Button kind="cancel" onClick={() => {}}>
               <i className="fa fa-ban" />
               &nbsp;
             </Button>

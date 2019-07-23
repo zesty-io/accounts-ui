@@ -21,7 +21,7 @@ export default class Blueprint extends PureComponent {
               {this.props.isAdmin ? (
                 <Button
                   className={styles.Button}
-                  type="cancel"
+                  kind="cancel"
                   id="changeBlueprint"
                   onClick={this.handleChangeBlueprint}>
                   <i className="fa fa-file-code-o" aria-hidden="true" />

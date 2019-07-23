@@ -14,7 +14,7 @@ export default props => {
   return (
     <Card className={styles.WebsiteCard}>
       <CardHeader className={styles.CardHeader}>
-        <h1>{site.name}</h1>
+        <h1 className={styles.subheadline}>{site.name}</h1>
         <InstanceFavorite
           className={styles.favorite}
           favorite={site.favorite}
@@ -38,7 +38,7 @@ export default props => {
           />
 
           <AppLink to={`/instances/${site.ZUID}/launch`}>
-            <Button type="save">
+            <Button kind="save">
               <i className="fa fa-rocket" aria-hidden="true" />
               Launch Instance
             </Button>

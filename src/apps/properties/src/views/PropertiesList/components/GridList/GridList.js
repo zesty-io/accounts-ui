@@ -8,11 +8,7 @@ import WebsiteCard from '../../../../components/WebsiteCard'
 import WebsiteCreate from '../../../../components/WebsiteCreate'
 import WebsiteInvite from '../../../../components/WebsiteInvite'
 
-import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
-import { AppLink } from '@zesty-io/core/AppLink'
-import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
 import { Button } from '@zesty-io/core/Button'
-import { Url } from '@zesty-io/core/Url'
 
 export default class GridList extends Component {
   constructor(props) {
@@ -50,7 +46,7 @@ export default class GridList extends Component {
 
         {this.props.sitesInvited.length ? (
           <React.Fragment>
-            <h2 className={styles.SectionTitle}>
+            <h2 className={cx(styles.display, styles.SectionTitle)}>
               <i className="fa fa-envelope-o" aria-hidden="true" />
               &nbsp;Invites
             </h2>
@@ -64,7 +60,7 @@ export default class GridList extends Component {
 
         {this.props.sitesFavorite.length ? (
           <React.Fragment>
-            <h2 className={styles.SectionTitle}>
+            <h2 className={cx(styles.display, styles.SectionTitle)}>
               <i className="fa fa-star-o" aria-hidden="true" />
               &nbsp;Favorites
             </h2>
@@ -83,7 +79,7 @@ export default class GridList extends Component {
         ) : null}
 
         <React.Fragment>
-          <h2 className={styles.SectionTitle}>
+          <h2 className={cx(styles.display, styles.SectionTitle)}>
             <i className="fa fa-th" aria-hidden="true" />
             &nbsp;All Instances
           </h2>

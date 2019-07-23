@@ -65,7 +65,7 @@ export default class CreateTeam extends Component {
         <CardFooter>
           <Button
             id="teamCreateSave"
-            type="save"
+            kind="save"
             disabled={this.state.submitted}
             onClick={this.handleSubmit}>
             <i className="fa fa-plus" />

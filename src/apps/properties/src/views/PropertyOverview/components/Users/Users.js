@@ -11,7 +11,7 @@ import UserPendingRow from './UserPendingRow'
 
 import { WithLoader } from '@zesty-io/core/WithLoader'
 import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
-import { Select, Option } from '@zesty-io/core/Select'
+import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
 import { Button } from '@zesty-io/core/Button'
 import { Input } from '@zesty-io/core/Input'
 
@@ -46,20 +46,23 @@ export default class Users extends Component {
                 onChange={this.handleEmail}
                 required
               />
-              <Select name="siteRoles" onSelect={this.handleSelectRole}>
-                <Option key="default" value="" text="Select Role" />
-                {this.props.siteRoles
+
+              <DropDownFieldType
+                name="siteRoles"
+                defaultValue=""
+                defaultText="- Select Role -"
+                onSelect={this.handleSelectRole}
+                options={this.props.siteRoles
                   .filter(role => role.name !== 'Owner')
                   .map(role => {
-                    return (
-                      <Option
-                        key={role.ZUID}
-                        value={role.ZUID}
-                        text={role.name}
-                      />
-                    )
+                    return {
+                      key: role.ZUID,
+                      value: role.ZUID,
+                      text: role.name
+                    }
                   })}
-              </Select>
+              />
+
               <Button
                 onClick={this.handleInvite}
                 id="inviteUserSend"

@@ -6,6 +6,8 @@ import { updateRole, removeUser } from '../../../../../store/sitesUsers'
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
 
+import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
+
 export default class UserRow extends PureComponent {
   state = {
     submitted: false
@@ -45,7 +47,7 @@ export default class UserRow extends PureComponent {
             ) : (
               // render a dropdown to change roles
               <span className={styles.select}>
-                <Select
+                {/* <Select
                   name="siteRoles"
                   onSelect={this.handleSelectRole}
                   selection={
@@ -64,7 +66,25 @@ export default class UserRow extends PureComponent {
                       />
                     )
                   })}
-                </Select>
+                </Select> */}
+
+                <DropDownFieldType
+                  name="siteRoles"
+                  onSelect={this.handleSelectRole}
+                  selection={
+                    this.props.siteRoles
+                      .filter(role => role.ZUID === this.props.role.ZUID)
+                      .map(item => item.ZUID)[0]
+                  }
+                  options={this.props.siteRoles.map(role => {
+                    return {
+                      key: role.ZUID,
+                      value: role.ZUID,
+                      text: role.name
+                    }
+                  })}
+                />
+
                 {/*  render a trashcan to delete users */}
                 <i
                   className={styles.trash + ' fa fa-trash-o'}

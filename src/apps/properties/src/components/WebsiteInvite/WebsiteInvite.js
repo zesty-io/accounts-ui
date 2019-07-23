@@ -24,7 +24,7 @@ class WebsiteInvite extends Component {
     return (
       <Card className={styles.WebsiteInvite}>
         <CardHeader className={styles.CardHeader}>
-          <h1 className={styles.Name}>{this.props.site.name}</h1>
+          <h1 className={styles.subheadline}>{this.props.site.name}</h1>
         </CardHeader>
 
         {this.props.site.screenshotURL ? (
@@ -49,7 +49,7 @@ class WebsiteInvite extends Component {
 
         <CardFooter className={cx(styles.CardFooter, styles.Actions)}>
           <Button
-            type="save"
+            kind="save"
             className={styles.invite}
             onClick={this.handleAccept}
             disabled={this.state.submitted}>
@@ -57,7 +57,7 @@ class WebsiteInvite extends Component {
             Accept Invite
           </Button>
           <Button
-            type="cancel"
+            kind="cancel"
             onClick={this.handleDecline}
             disabled={this.state.submitted}>
             <i className="fa fa-ban" aria-hidden="true" />

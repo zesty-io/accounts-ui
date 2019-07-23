@@ -32,7 +32,7 @@ class PropertyAcceptInvite extends Component {
               <i className="fa fa-check-circle-o" aria-hidden="true" />
               Accept Invite
             </Button>
-            <Button type="cancel" onClick={this.handleDecline}>
+            <Button kind="cancel" onClick={this.handleDecline}>
               <i className="fa fa-ban" aria-hidden="true" />
               Decline
             </Button>
