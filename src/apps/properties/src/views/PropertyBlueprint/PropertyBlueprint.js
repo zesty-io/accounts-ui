@@ -32,7 +32,7 @@ class PropertyBlueprint extends Component {
           <section>
             <header>
               <h1>Select a Blueprint</h1>
-              <AppLink type="cancel" to={`/instances`}>
+              <AppLink kind="cancel" to={`/instances`}>
                 <i className="fa fa-ban" aria-hidden="true" />
                 &nbsp;Cancel
               </AppLink>

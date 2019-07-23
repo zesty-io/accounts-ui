@@ -39,12 +39,10 @@ export default function BlueprintList(props) {
             </ul>
           </CardContent>
           <CardFooter className={styles.CardFooter}>
-            <ButtonGroup className={styles.controls}>
-              <AppLink to="/blueprints/create" id="createBlueprint">
-                <i className="fa fa-plus" aria-hidden="true" />
-                &nbsp;Register Your Blueprint
-              </AppLink>
-            </ButtonGroup>
+            <AppLink to="/blueprints/create" id="createBlueprint">
+              <i className="fa fa-plus" aria-hidden="true" />
+              &nbsp;Register Your Blueprint
+            </AppLink>
           </CardFooter>
         </Card>
         {props.userBlueprints.map(blueprint => (

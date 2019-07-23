@@ -32,22 +32,20 @@ const BlueprintCard = props => {
           <Url href={blueprint.githubURL} target="_blank">
             <i className="fa fa-github" aria-hidden="true" />
           </Url>
-          {blueprint.previewURL ? (
+
+          {blueprint.previewURL && (
             <Url
               target="_blank"
               title={`Preview blueprint: ${blueprint.name}`}
               href={blueprint.previewURL}>
               <i className={'fa fa-eye'} aria-hidden="true" />
             </Url>
-          ) : (
-            <span />
           )}
-
-          <AppLink to={`/blueprints/${blueprint.ID}`}>
-            <i className="fa fa-pencil-square-o" aria-hidden="true" />
-            &nbsp;Edit
-          </AppLink>
         </ButtonGroup>
+        <AppLink to={`/blueprints/${blueprint.ID}`}>
+          <i className="fa fa-pencil-square-o" aria-hidden="true" />
+          &nbsp;Edit
+        </AppLink>
       </CardFooter>
     </Card>
   )
