@@ -3,8 +3,11 @@ import React, { Component } from 'react'
 import { createTeam } from '../../store/teams'
 import { notify } from '../../../../../shell/store/notifications'
 
-import styles from './CreateTeam.less'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
 
+import styles from './CreateTeam.less'
 export default class CreateTeam extends Component {
   state = {
     name: '',

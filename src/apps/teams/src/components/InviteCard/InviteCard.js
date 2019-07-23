@@ -4,6 +4,9 @@ import { acceptTeamInvite, declineTeamInvite } from '../../store/teamInvites'
 import styles from './InviteCard.less'
 import { notify } from '../../../../../shell/store/notifications'
 
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+
 export default class InviteCard extends PureComponent {
   render() {
     return (

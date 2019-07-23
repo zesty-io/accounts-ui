@@ -1,12 +1,14 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
-import AppLink from '../../../../../core/AppLink'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
 import InstanceFavorite from '../InstanceFavorite'
-
 export default props => {
   const { site } = props
   return (

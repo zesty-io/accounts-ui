@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import AppLink from '../../../core/AppLink'
+import { AppLink } from '@zesty-io/core/AppLink'
 
 import styles from './VerifyEmail.less'
 export default class VerifyEmail extends Component {

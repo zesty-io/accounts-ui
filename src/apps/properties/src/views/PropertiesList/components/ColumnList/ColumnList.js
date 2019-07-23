@@ -9,7 +9,8 @@ import WebsiteCreate from '../../../../components/WebsiteCreate'
 import InstanceRow from './components/InstanceRow'
 import InviteRow from './components/InviteRow'
 
-import AppLink from '../../../../../../../core/AppLink'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
 
 export default function ColumnList(props) {
   return (

@@ -8,7 +8,8 @@ import {
   declineInvite
 } from '../../../../../../store/sites'
 
-import AppLink from '../../../../../../../../../core/AppLink'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
 
 export default connect()(function InviteRow(props) {
   const { site } = props

@@ -13,6 +13,10 @@ import {
 import { notify } from '../../../../../../../../../shell/store/notifications'
 import Modal from '../../../../../../../../../shell/components/Modal'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+
 class EditRole extends Component {
   constructor(props) {
     super(props)

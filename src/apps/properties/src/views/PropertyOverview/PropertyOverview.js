@@ -22,7 +22,9 @@ import { fetchBlueprint } from '../../store/blueprints'
 // import { updateSite } from '../../store/sites'
 // import { notify } from '../../../../../shell/store/notifications'
 
-import AppLink from '../../../../../core/AppLink'
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Url } from '@zesty-io/core/Url'
 
 class PropertyOverview extends Component {
   constructor(props) {

@@ -109,9 +109,11 @@ export default connect((state, props) => {
     sites: Object.keys(state.sites),
     sitesFiltered: removedFavorites.filter(site => !site.inviteZUID),
     sitesInvited: removedFavorites.filter(site => site.inviteZUID),
-    sitesFavorite: favorites.filter(site => filtered[site]).map(ZUID => {
-      return { ...filtered[ZUID], favorite: true }
-    }),
+    sitesFavorite: favorites
+      .filter(site => filtered[site])
+      .map(ZUID => {
+        return { ...filtered[ZUID], favorite: true }
+      }),
     dispatch: props.dispatch,
     settings: state.settings,
     searchString

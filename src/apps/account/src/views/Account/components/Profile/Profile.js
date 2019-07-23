@@ -6,8 +6,11 @@ import {
   saveProfile
 } from '../../../../../../../shell/store/user'
 
-import styles from './Profile.less'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
 
+import styles from './Profile.less'
 class Profile extends Component {
   constructor() {
     super()
@@ -26,9 +29,7 @@ class Profile extends Component {
             <h4>Gravatar</h4>
             <img
               className={styles.avatar}
-              src={`https://www.gravatar.com/avatar/${
-                this.props.profile.emailHash
-              }?d=mm&s=80`}
+              src={`https://www.gravatar.com/avatar/${this.props.profile.emailHash}?d=mm&s=80`}
             />
           </div>
           <h4>User Name</h4>
@@ -67,9 +68,7 @@ class Profile extends Component {
       .then(data => {
         this.props.dispatch(
           notify({
-            message: `Name updated to ${this.props.profile.firstName} ${
-              this.props.profile.lastName
-            }`,
+            message: `Name updated to ${this.props.profile.firstName} ${this.props.profile.lastName}`,
             type: 'success'
           })
         )

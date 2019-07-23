@@ -1,5 +1,4 @@
 import { Component } from 'react'
-import { connect } from 'react-redux'
 import { Route } from 'react-router'
 
 import { notify } from '../../../../../../../shell/store/notifications'
@@ -13,13 +12,14 @@ import {
 
 // import Modal from '../../../../../../../shell/components/Modal'
 
-import AppLink from '../../../../../../../core/AppLink'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
 
 import EditRole from './components/EditRole'
 import RoleCreate from './components/RoleCreate'
 
 import styles from './Roles.less'
-
 const formatDate = date => {
   if (!date) {
     return ''

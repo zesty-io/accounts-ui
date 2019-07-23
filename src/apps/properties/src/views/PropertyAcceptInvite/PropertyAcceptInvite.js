@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
-import { acceptInvite, fetchSites, deleteInvite } from '../../store/sites'
+import { acceptInvite, deleteInvite } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 
-import styles from './PropertyAccept.less'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
 
+import styles from './PropertyAccept.less'
 class PropertyAcceptInvite extends Component {
   constructor(props) {
     super()

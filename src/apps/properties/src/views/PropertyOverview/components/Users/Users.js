@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
 
 import styles from './Users.less'
 
@@ -10,6 +8,12 @@ import { fetchSiteUsersPending } from '../../../../store/sitesUsers'
 
 import UserRow from './UserRow'
 import UserPendingRow from './UserPendingRow'
+
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Select, Option } from '@zesty-io/core/Select'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
 
 export default class Users extends Component {
   constructor(props) {
@@ -42,7 +46,7 @@ export default class Users extends Component {
                 onChange={this.handleEmail}
                 required
               />
-              <Select onSelect={this.handleSelectRole}>
+              <Select name="siteRoles" onSelect={this.handleSelectRole}>
                 <Option key="default" value="" text="Select Role" />
                 {this.props.siteRoles
                   .filter(role => role.name !== 'Owner')
@@ -60,7 +64,8 @@ export default class Users extends Component {
                 onClick={this.handleInvite}
                 id="inviteUserSend"
                 disabled={this.state.submitted}>
-                <i className="fa fa-envelope-o" aria-hidden="true" />Send Invite
+                <i className="fa fa-envelope-o" aria-hidden="true" />
+                Send Invite
               </Button>
             </div>
           ) : null}

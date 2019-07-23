@@ -3,6 +3,10 @@ import styles from './Blueprint.less'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
+
 export default class Blueprint extends PureComponent {
   render() {
     return (

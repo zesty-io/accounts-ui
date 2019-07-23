@@ -3,15 +3,17 @@ import React, { Component } from 'react'
 import { updateDomain } from '../../../../store/sites'
 import { notify } from '../../../../../../../shell/store/notifications'
 
-import styles from './Domain.less'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
 
+import styles from './Domain.less'
 export default class Domain extends Component {
   /* TODO:
-  **  users need to confirm and upgrade their
-  **  accounts in order to use the custom
-  **  domain feature. this will be implemented
-  **  in a future API version
-  */
+   **  users need to confirm and upgrade their
+   **  accounts in order to use the custom
+   **  domain feature. this will be implemented
+   **  in a future API version
+   */
   constructor(props) {
     super(props)
     this.state = {
@@ -49,7 +51,8 @@ export default class Domain extends Component {
               }}
             />
             <Button onClick={this.handleSave} id="editDomainSave">
-              <i className="fa fa-save" aria-hidden="true" />Save
+              <i className="fa fa-save" aria-hidden="true" />
+              Save
             </Button>
           </span>
         )}

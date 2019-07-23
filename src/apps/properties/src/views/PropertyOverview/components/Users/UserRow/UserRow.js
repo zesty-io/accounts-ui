@@ -46,6 +46,7 @@ export default class UserRow extends PureComponent {
               // render a dropdown to change roles
               <span className={styles.select}>
                 <Select
+                  name="siteRoles"
                   onSelect={this.handleSelectRole}
                   selection={
                     this.props.siteRoles
@@ -80,7 +81,8 @@ export default class UserRow extends PureComponent {
           ) : // Render text only for non-permissioned users
           this.props.role.name === 'Owner' ? (
             <React.Fragment>
-              <i className="fa fa-fort-awesome" />&nbsp;{this.props.role.name}
+              <i className="fa fa-fort-awesome" />
+              &nbsp;{this.props.role.name}
             </React.Fragment>
           ) : (
             this.props.role.name

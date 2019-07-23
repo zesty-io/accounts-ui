@@ -7,7 +7,10 @@ import styles from './Login.less'
 
 import { login } from '../../store/auth'
 
-import AppLink from '../../../core/AppLink'
+import { Input } from '@zesty-io/core/Input'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
 class Login extends Component {
   constructor(props) {

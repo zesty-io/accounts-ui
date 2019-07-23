@@ -4,11 +4,15 @@ import { connect } from 'react-redux'
 
 import debounce from '../../../../../../../util/debounce'
 
-import styles from './PropertiesHeader.less'
-
 import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
 
+import { Select, Option } from '@zesty-io/core/Select'
+import { Search } from '@zesty-io/core/Search'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+
+import styles from './PropertiesHeader.less'
 class PropertiesHeader extends Component {
   constructor(props) {
     super(props)
@@ -30,6 +34,7 @@ class PropertiesHeader extends Component {
           {this.props.ecosystems.length ? (
             <Select
               className={styles.Ecosystem}
+              name="ecoFilter"
               onSelect={this.filterByEco}
               selection={
                 this.props.ecosystems

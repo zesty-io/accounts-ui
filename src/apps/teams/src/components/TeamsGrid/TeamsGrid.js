@@ -11,8 +11,8 @@ export default class TeamsGrid extends Component {
     return (
       <section className={styles.TeamsView}>
         <h1 className={styles.TeamsTitle}>
-          <i className="fa fa-users" aria-hidden="true" />&nbsp; Manage Your
-          Teams
+          <i className="fa fa-users" aria-hidden="true" />
+          &nbsp; Manage Your Teams
         </h1>
         <div className={styles.TeamsGrid}>
           {/* creation card */}

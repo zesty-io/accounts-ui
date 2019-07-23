@@ -10,6 +10,10 @@ import {
 import styles from './Email.less'
 import { fetchUserEmails } from '../../../../../../../shell/store/user'
 
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+
 class Email extends Component {
   constructor(props) {
     super()

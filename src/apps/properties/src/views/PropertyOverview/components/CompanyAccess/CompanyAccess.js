@@ -1,6 +1,4 @@
 import { Component } from 'react'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import {
@@ -12,6 +10,12 @@ import {
 import styles from './CompanyAccess.less'
 import { notify } from '../../../../../../../shell/store/notifications'
 import { fetchSiteUsers } from '../../../../store/sitesUsers'
+
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Select, Option } from '@zesty-io/core/Select'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
 
 export default class CompanyAccess extends Component {
   constructor(props) {
@@ -50,7 +54,7 @@ export default class CompanyAccess extends Component {
               </p>
               <div className={styles.addCompany}>
                 <Input placeholder="Enter team ID" onChange={this.handleTeam} />
-                <Select onSelect={this.handleRole}>
+                <Select name="siteRoles" onSelect={this.handleRole}>
                   <Option key="default" value="" text="Select Role" />
                   {this.props.siteRoles.map(role => {
                     return (
@@ -98,7 +102,8 @@ export default class CompanyAccess extends Component {
                                   ? styles.hidden
                                   : styles.trash
                               }`}
-                            />&nbsp;Remove Team
+                            />
+                            &nbsp;Remove Team
                           </Button>
                         )}
                       </span>
@@ -115,9 +120,8 @@ export default class CompanyAccess extends Component {
                               <React.Fragment key={userZUID}>
                                 <span>{this.props.users[userZUID].email}</span>
                                 <span>
-                                  {this.props.users[userZUID].firstName}&nbsp;{
-                                    this.props.users[userZUID].lastName
-                                  }
+                                  {this.props.users[userZUID].firstName}&nbsp;
+                                  {this.props.users[userZUID].lastName}
                                 </span>
                                 <span>
                                   {this.props.users[userZUID].role.name}
@@ -148,9 +152,7 @@ export default class CompanyAccess extends Component {
     this.props.dispatch(
       zConfirm({
         kind: 'warn',
-        prompt: `Are you sure you want to remove access for the team: ${
-          team.name
-        }?`,
+        prompt: `Are you sure you want to remove access for the team: ${team.name}?`,
         callback: confirmed => {
           if (confirmed) {
             this.props

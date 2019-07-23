@@ -1,6 +1,9 @@
 import React from 'react'
 
-import AppLink from '../../../../../core/AppLink'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Url } from '@zesty-io/core/Url'
 
 import styles from './BlueprintCard.less'
 const BlueprintCard = props => {

@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom'
 import { createInstance } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 
-import styles from './PropertyCreate.less'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
 
+import styles from './PropertyCreate.less'
 class PropertyCreate extends Component {
   constructor(props) {
     super(props)

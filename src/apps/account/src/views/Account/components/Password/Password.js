@@ -4,8 +4,11 @@ import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { updatePassword } from '../../../../store'
 
-import styles from './Password.less'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
 
+import styles from './Password.less'
 class Password extends Component {
   constructor(props) {
     super(props)

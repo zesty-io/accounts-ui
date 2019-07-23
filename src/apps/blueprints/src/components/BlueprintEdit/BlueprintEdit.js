@@ -2,14 +2,18 @@ import React, { Component } from 'react'
 
 import BlueprintList from '../BlueprintList'
 
-import AppLink from '../../../../../core/AppLink'
-
 import { notify } from '../../../../../shell/store/notifications'
 import {
   updateBlueprint,
   createBlueprint,
   fetchBlueprints
 } from '../../../../properties/src/store/blueprints'
+
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Url } from '@zesty-io/core/Url'
 
 import styles from './BlueprintEdit.less'
 class BlueprintEdit extends Component {

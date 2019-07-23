@@ -5,6 +5,9 @@ import styles from './PropertyName.less'
 import { notify } from '../../../../../../../shell/store/notifications'
 import { updateSite, fetchSite } from '../../../../store/sites'
 
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+
 export default class PropertyName extends Component {
   constructor(props) {
     super(props)
@@ -28,10 +31,12 @@ export default class PropertyName extends Component {
               }}
             />
             <Button onClick={this.handleNameUpdate} id="editInstanceNameSave">
-              <i className="fa fa-save" />Save
+              <i className="fa fa-save" />
+              Save
             </Button>
             <Button type="cancel" onClick={() => {}}>
-              <i className="fa fa-ban" />&nbsp;
+              <i className="fa fa-ban" />
+              &nbsp;
             </Button>
           </div>
         ) : (

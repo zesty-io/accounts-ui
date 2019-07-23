@@ -7,7 +7,7 @@ class Dashboard extends Component {
   render() {
     return (
       <ErrorBoundary>
-        <section id='dashboard'>
+        <section id="dashboard">
           <h2>Dashboard</h2>
           <h3>**INSERT FANCY GRAPHS**</h3>
         </section>

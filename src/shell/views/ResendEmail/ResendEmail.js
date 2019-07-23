@@ -3,6 +3,9 @@ import { Route } from 'react-router-dom'
 
 import { request } from '../../../util/request'
 
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+
 import styles from './ResendEmail.less'
 export default class ResendEmail extends Component {
   state = {
@@ -32,8 +35,8 @@ export default class ResendEmail extends Component {
               onClick={this.handleClick}
               className={styles.button}
               disabled={this.state.submitted}>
-              <i className="fa fa-envelope-o" aria-hidden="true" />Send
-              Verification
+              <i className="fa fa-envelope-o" aria-hidden="true" />
+              Send Verification
             </Button>
           </section>
 

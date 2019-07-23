@@ -4,7 +4,8 @@ import styles from './InstanceRow.less'
 
 import InstanceFavorite from '../../../../../../components/InstanceFavorite'
 
-import AppLink from '../../../../../../../../../core/AppLink'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Url } from '@zesty-io/core/Url'
 
 export default function InstanceRow(props) {
   const { site } = props

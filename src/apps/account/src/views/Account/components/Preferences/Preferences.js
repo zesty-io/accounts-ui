@@ -1,9 +1,12 @@
-import react, { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import styles from './Preferences.less'
 import { saveProfile } from '../../../../../../../shell/store/user'
 import { notify } from '../../../../../../../shell/store/notifications'
+
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Toggle } from '@zesty-io/core/Toggle'
 
 class Preferences extends Component {
   render() {

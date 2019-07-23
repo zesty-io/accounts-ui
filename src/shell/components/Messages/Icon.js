@@ -1,12 +1,12 @@
-import {PureComponent} from 'react'
+import { PureComponent } from 'react'
 // import {Link} from 'react-router-dom'
 import styles from './Icon.less'
 
 export class MessageIcon extends PureComponent {
-  render () {
+  render() {
     return (
       <span className={styles.MessageIcon}>
-        <i className='fa fa-comments' aria-hidden='true' />
+        <i className="fa fa-comments" aria-hidden="true" />
       </span>
     )
   }

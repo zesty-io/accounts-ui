@@ -5,6 +5,9 @@ import qs from 'qs'
 import styles from './ResetPasswordEnd.less'
 import { request } from '../../../util/request'
 
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+
 class ResetPasswordEnd extends Component {
   state = {
     message: '',
@@ -45,9 +48,8 @@ class ResetPasswordEnd extends Component {
         </form>
         {this.state.message ? (
           <p className={styles.error}>
-            <i className="fa fa-exclamation-triangle" aria-hidden="true" />&nbsp;{
-              this.state.message
-            }
+            <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+            &nbsp;{this.state.message}
           </p>
         ) : null}
       </section>
@@ -78,9 +80,7 @@ class ResetPasswordEnd extends Component {
           return this.props.history.push('/login')
         } else {
           this.setState({
-            message: `There was a problem with your password reset confirmation: ${
-              data.message
-            }`,
+            message: `There was a problem with your password reset confirmation: ${data.message}`,
             submitted: false
           })
         }

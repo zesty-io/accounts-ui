@@ -6,6 +6,9 @@ import styles from './Confirm.less'
 
 import { REMOVE_CONFIRM } from '../../store/confirm'
 
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+
 const Confirm = props => {
   return (
     (props.isOpen && (

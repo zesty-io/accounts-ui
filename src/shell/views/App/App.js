@@ -25,6 +25,8 @@ import { zConfirm } from '../../store/confirm'
 import { verifyAuth } from '../../store/auth'
 import { notify } from '../../store/notifications'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+
 class App extends Component {
   constructor(props) {
     super(props)

@@ -14,10 +14,14 @@ import { fetchTeamInstances } from '../../store/teamInstances'
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
 
-import AppLink from '../../../../../core/AppLink'
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Input } from '@zesty-io/core/Input'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
 
 import styles from './TeamCard.less'
-
 export default class TeamCard extends Component {
   state = {
     name: this.props.team.name,

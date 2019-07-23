@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import styles from './ResetPasswordStart.less'
 import { request } from '../../../util/request'
 
-import AppLink from '../../../core/AppLink'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
 
 export default class ResetPasswordStart extends Component {
   state = {

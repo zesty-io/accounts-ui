@@ -9,8 +9,9 @@ import Password from './components/Password'
 import TwoFactor from './components/TwoFactor'
 import Preferences from './components/Preferences'
 
-import styles from './Account.less'
+import { WithLoader } from '@zesty-io/core/WithLoader'
 
+import styles from './Account.less'
 class Account extends Component {
   state = {
     loadingEmails: true

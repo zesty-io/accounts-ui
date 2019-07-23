@@ -6,7 +6,6 @@ import { ErrorBoundary } from './err'
 import Account from '../Account'
 
 import styles from './styles.less'
-
 class Settings extends Component {
   render() {
     return (

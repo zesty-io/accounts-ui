@@ -12,6 +12,8 @@ import {
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+
 import styles from './Blueprints.less'
 class Blueprints extends Component {
   state = {

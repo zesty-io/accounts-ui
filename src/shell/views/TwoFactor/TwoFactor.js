@@ -5,6 +5,11 @@ import { Link, withRouter } from 'react-router-dom'
 import styles from './TwoFactor.less'
 import { request } from '../../../util/request'
 
+import { Input } from '@zesty-io/core/Input'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
+
 class TwoFactor extends Component {
   constructor(props) {
     super(props)

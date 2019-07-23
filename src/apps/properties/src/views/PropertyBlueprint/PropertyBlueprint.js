@@ -1,14 +1,17 @@
 import { Component } from 'react'
 import { connect } from 'react-redux'
 
-import styles from './PropertyBlueprint.less'
-
-import AppLink from '../../../../../core/AppLink'
-
 import { updateSiteBlueprint } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 import { fetchBlueprints } from '../../store/blueprints'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
+
+import styles from './PropertyBlueprint.less'
 class PropertyBlueprint extends Component {
   state = {
     submitted: false

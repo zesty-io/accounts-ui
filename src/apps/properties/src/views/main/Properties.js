@@ -11,6 +11,8 @@ import PropertyCreate from '../PropertyCreate'
 import PropertyBlueprint from '../PropertyBlueprint'
 import PropertyOverview from '../PropertyOverview'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+
 class Properties extends Component {
   constructor(props) {
     super(props)
