@@ -1,4 +1,6 @@
 @import '~@zesty-io/core/colors.less';
+@import '~@zesty-io/core/typography.less';
+
 .LoginWrap {
   height: 100vh;
   display: flex;
@@ -12,46 +14,53 @@
     max-height: 40rem;
 
     header {
-      margin: 0 0 1.5rem;
+      text-align: center;
+      margin: 0 0 1rem;
       padding: 0 1rem;
       a {
         margin: 0;
         img {
-          height: 70px;
+          height: 50px;
         }
       }
     }
 
     main {
-      display: flex;
-      flex-wrap: wrap;
       padding: 1rem;
 
       .LoginForm {
-        flex: 1;
-        @media screen and (-ms-high-contrast: active),
-          (-ms-high-contrast: none) {
-          flex-basis: auto;
+        display: flex;
+        flex-direction: column;
+        background-color: @zesty-white;
+        padding: 16px;
+        border-radius: 4px;
+        border: 1px solid @zesty-light-grey;
+
+        .FormTitle {
+          margin-bottom: 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+
+          a {
+            font-size: 12px;
+          }
         }
-        margin-right: 1rem;
+
         label {
-          font-weight: bold;
-        }
-        input {
-          margin-bottom: 1rem;
-          min-width: 300px;
-          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 12px;
+          input {
+            margin: 0 0 0 8px;
+            min-width: 300px;
+            width: 100%;
+          }
         }
       }
       .createAccount {
-        flex: 1;
-        h3 {
-          margin: 1rem 0 0 0;
-        }
-        p {
-          line-height: 1.2em;
-          margin: 5px 0 8px 0;
-        }
+        margin-top: 12px;
       }
     }
   }
