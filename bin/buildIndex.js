@@ -104,7 +104,7 @@ module.exports = buildIndex = build => {
       <link href="/bundle.${build.data.gitCommit}.support-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.teams-app.css" type="text/css" rel="stylesheet" />
 
-      <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet" />
 
       <!-- Polyfills for IE11 -->
       <script>
@@ -126,8 +126,6 @@ module.exports = buildIndex = build => {
         gtag('config', 'UA-21247490-1');
         gtag('config', 'AW-955374362');
       </script>
-
-
     </head>
 
     <body>
