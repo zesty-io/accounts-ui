@@ -53,7 +53,7 @@ class WebsiteInvite extends Component {
             className={styles.invite}
             onClick={this.handleAccept}
             disabled={this.state.submitted}>
-            <i className="fa fa-check-circle-o" aria-hidden="true" />
+            <i className="fas fa-check-circle" aria-hidden="true" />
             Accept Invite
           </Button>
           <Button

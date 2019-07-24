@@ -57,7 +57,7 @@ class PropertyOverview extends Component {
               target="_blank"
               href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}`}>
               <i className="fa fa-external-link" aria-hidden="true" />
-              &nbsp;Open Manager
+              &nbsp;Open Instance
             </Url>
           ) : (
             <AppLink to={`/instances/${this.props.site.ZUID}/blueprint`}>

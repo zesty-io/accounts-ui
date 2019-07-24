@@ -38,9 +38,9 @@ export default props => {
           />
 
           <AppLink to={`/instances/${site.ZUID}/launch`}>
-            <Button kind="save">
+            <Button kind="secondary">
               <i className="fa fa-rocket" aria-hidden="true" />
-              Launch Instance
+              Publish Instance
             </Button>
           </AppLink>
         </CardContent>
@@ -80,7 +80,7 @@ export default props => {
               target="_blank"
               href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${CONFIG.MANAGER_URL}`}>
               <i className="fa fa-external-link" aria-hidden="true" />
-              &nbsp;Open Manager
+              &nbsp;Open Instance
             </Url>
           ) : (
             <AppLink

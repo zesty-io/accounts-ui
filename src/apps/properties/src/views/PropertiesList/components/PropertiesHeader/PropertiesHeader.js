@@ -71,7 +71,7 @@ class PropertiesHeader extends Component {
                 this.setState({ sort: 'name' })
                 return this.sort('name')
               }}>
-              <i className={`fa fa-sort-alpha-asc`} />
+              <i className={`fas fa-sort-alpha-down`} />
             </Button>
             <Button
               title="Sort by created date"
@@ -80,7 +80,7 @@ class PropertiesHeader extends Component {
                 this.setState({ sort: 'date' })
                 return this.sort('createdAt')
               }}>
-              <i className={`fa fa-calendar-o`} />
+              <i className={`fas fa-calendar`} />
             </Button>
           </ButtonGroup>
 
