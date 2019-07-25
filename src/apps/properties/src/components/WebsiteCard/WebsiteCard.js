@@ -79,8 +79,8 @@ export default props => {
               className={styles.manager}
               target="_blank"
               href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${CONFIG.MANAGER_URL}`}>
-              <i className="fa fa-external-link" aria-hidden="true" />
-              &nbsp;Open Instance
+              <i className="fas fa-edit"></i>
+              &nbsp;Edit Content
             </Url>
           ) : (
             <AppLink

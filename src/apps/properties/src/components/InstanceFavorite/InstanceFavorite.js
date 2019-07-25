@@ -13,7 +13,7 @@ export default connect()(function InstanceFavorite(props) {
   return (
     <i
       title={props.title}
-      className={cx(icon, status, styles.Favorite, props.className)}
+      className={cx(icon, styles.Favorite, status, props.className)}
       aria-hidden="true"
       onClick={() => {
         props.dispatch(favoriteSite(props.ZUID, action))
