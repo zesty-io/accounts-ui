@@ -67,6 +67,7 @@ class Login extends Component {
                   type="text"
                   placeholder="Email"
                   name="email"
+                  required={true}
                   autoFocus
                 />
               </label>
@@ -78,6 +79,7 @@ class Login extends Component {
                   placeholder="Password"
                   type="password"
                   name="pass"
+                  required={true}
                 />
               </label>
 
@@ -110,7 +112,7 @@ class Login extends Component {
                   </React.Fragment>
                 ) : (
                   <React.Fragment>
-                    <i class="fas fa-sign-in-alt"></i>&nbsp;Sign In
+                    <i className="fas fa-sign-in-alt"></i>&nbsp;Sign In
                   </React.Fragment>
                 )}
               </Button>

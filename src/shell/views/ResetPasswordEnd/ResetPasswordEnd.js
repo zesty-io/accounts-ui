@@ -42,16 +42,18 @@ class ResetPasswordEnd extends Component {
               name="passConfirm"
             />
           </label>
+
+          {this.state.message ? (
+            <p className={styles.error}>
+              <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+              &nbsp;{this.state.message}
+            </p>
+          ) : null}
+
           <Button disabled={this.state.submitted}>
             {this.state.submitted ? 'Requesting Reset' : 'Reset Password'}
           </Button>
         </form>
-        {this.state.message ? (
-          <p className={styles.error}>
-            <i className="fa fa-exclamation-triangle" aria-hidden="true" />
-            &nbsp;{this.state.message}
-          </p>
-        ) : null}
       </section>
     )
   }
