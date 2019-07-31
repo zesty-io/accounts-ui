@@ -69,7 +69,7 @@ class App extends Component {
   }
   render() {
     return (
-      <section className={styles.AppShell}>
+      <section className={cx(styles.AppShell, styles.bodyText)}>
         <AppHeader />
         <AppError user={this.props.user}>
           <section className={cx('AppMain', styles.AppMain)}>
