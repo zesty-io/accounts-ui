@@ -68,8 +68,8 @@ export default class Users extends Component {
                 onClick={this.handleInvite}
                 id="inviteUserSend"
                 disabled={this.state.submitted}>
-                <i className="fas fa-paper-plane"></i>
-                Send Invite
+                <i className="fas fa-user-plus"></i>
+                Add User
               </Button>
             </div>
           ) : null}
