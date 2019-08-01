@@ -25,6 +25,7 @@ import { fetchBlueprint } from '../../store/blueprints'
 import { WithLoader } from '@zesty-io/core/WithLoader'
 import { AppLink } from '@zesty-io/core/AppLink'
 import { Url } from '@zesty-io/core/Url'
+import { Button } from '@zesty-io/core/Button'
 
 class PropertyOverview extends Component {
   constructor(props) {
@@ -50,32 +51,29 @@ class PropertyOverview extends Component {
     return (
       <article className={styles.PropertyOverview}>
         <header className={styles.PropertyOverviewHeader}>
-          {/* only display link to manager if a blueprint has been selected */}
-          {this.props.site.blueprintID !== null ? (
-            <Url
-              className={styles.manager}
-              target="_blank"
-              href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}`}>
-              <i className="fas fa-edit"></i>&nbsp;Edit Content
-            </Url>
-          ) : (
-            <AppLink to={`/instances/${this.props.site.ZUID}/blueprint`}>
-              <i className="fas fa-file-code" aria-hidden="true" />
-              &nbsp;Select Blueprint
-            </AppLink>
-          )}
+          <Button kind="secondary" className={styles.manager}>
+            {/* only display link to manager if a blueprint has been selected */}
+            {this.props.site.blueprintID !== null ? (
+              <Url
+                target="_blank"
+                href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}`}>
+                <i className="fas fa-edit"></i>&nbsp;Edit Content
+              </Url>
+            ) : (
+              <AppLink to={`/instances/${this.props.site.ZUID}/blueprint`}>
+                <i className="fas fa-file-code" aria-hidden="true" />
+                &nbsp;Select Blueprint
+              </AppLink>
+            )}
+          </Button>
           <Url
-            className={styles.manager}
             target="_blank"
             href={`${CONFIG.PREVIEW_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.PREVIEW_URL}`}>
             <i className="fa fa-eye" aria-hidden="true" />
             &nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
-            <Url
-              className={styles.manager}
-              target="_blank"
-              href={`http://${this.props.site.domain}`}>
+            <Url target="_blank" href={`http://${this.props.site.domain}`}>
               <i className="fa fa-globe" aria-hidden="true" />
               &nbsp;Live Domain
             </Url>
