@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import debounce from '../../../../../../../util/debounce'
@@ -17,43 +16,32 @@ class PropertiesHeader extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      eco: false,
+      eco: this.props.settings && this.props.settings.eco,
       sort: 'name'
     }
   }
-  componentDidMount() {
-    // set the ecosystem state to the store's value
-    this.props.settings &&
-      this.props.settings.eco &&
-      this.setState({ eco: this.props.settings.eco })
-  }
   render() {
+    const ecosystems = this.props.ecosystems
+      // .filter(eco => eco.id !== this.state.eco)
+      .map(eco => {
+        return {
+          value: eco.id,
+          text: eco.name
+        }
+      })
+
     return (
       <header className={styles.PropertiesHeader}>
         <div className={styles.Actions}>
-          {this.props.ecosystems.length ? (
+          {ecosystems.length && (
             <DropDownFieldType
               className={styles.Ecosystem}
               name="ecoFilter"
-              onSelect={this.filterByEco}
-              selection={
-                this.props.ecosystems
-                  .filter(eco => eco.id == this.state.eco)
-                  .map(eco => {
-                    return { value: eco.id, text: eco.name }
-                  })[0]
-              }
-              options={this.props.ecosystems
-                .filter(eco => eco.id !== this.state.eco)
-                .map(eco => {
-                  return {
-                    key: eco.id,
-                    value: eco.value,
-                    text: eco.name
-                  }
-                })}
+              onChange={this.filterByEco}
+              selection={ecosystems.find(eco => eco.id == this.state.eco)}
+              options={ecosystems}
             />
-          ) : null}
+          )}
 
           <Search
             className={styles.Search}
@@ -116,27 +104,32 @@ class PropertiesHeader extends Component {
   }
 
   onSearch = debounce(term => {
-    this.setState({ searchTerm: term }, () =>
-      this.props.dispatch({
-        type: 'SETTING_FILTER',
-        filter: this.state.searchTerm
-      })
+    this.setState(
+      {
+        searchTerm: term
+      },
+      () =>
+        this.props.dispatch({
+          type: 'SETTING_FILTER',
+          filter: this.state.searchTerm
+        })
     )
   }, 300)
 
-  filterByEco = evt => {
-    if (evt.target.dataset.value === '') {
+  filterByEco = (name, value) => {
+    if (value) {
+      this.setState({ eco: value })
+      this.props.dispatch({
+        type: 'SETTING_ECO',
+        eco: Number(value)
+      })
+    } else {
       this.setState({ eco: false })
-      return this.props.dispatch({
+      this.props.dispatch({
         type: 'SETTING_ECO',
         eco: ''
       })
     }
-    this.setState({ eco: evt.target.dataset.value })
-    this.props.dispatch({
-      type: 'SETTING_ECO',
-      eco: Number(evt.target.dataset.value)
-    })
   }
 
   sort = by => {
@@ -144,4 +137,4 @@ class PropertiesHeader extends Component {
   }
 }
 
-export default withRouter(connect(state => state)(PropertiesHeader))
+export default connect(state => state)(PropertiesHeader)
