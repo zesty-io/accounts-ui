@@ -46,7 +46,7 @@ class RoleCreate extends Component {
 
         <label className={styles.Base}>
           Base Role
-          <Select name="roles" onSelect={this.selectBaseRole}>
+          <Select name="roles" onChange={this.selectBaseRole}>
             <Option key="default" value="" text="Select Role" />
             {this.props.systemRoles.map(role => {
               return (

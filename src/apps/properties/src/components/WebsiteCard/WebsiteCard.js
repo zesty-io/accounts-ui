@@ -86,7 +86,7 @@ export default props => {
             <AppLink
               to={`/instances/${site.ZUID}/blueprint`}
               className={styles.selectBlueprint}>
-              <i className="fa fa-file-code-o" aria-hidden="true" />
+              <i className="fas fa-file-code" aria-hidden="true" />
               &nbsp;Select Blueprint
             </AppLink>
           )}

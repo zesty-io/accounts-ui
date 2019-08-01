@@ -54,7 +54,7 @@ class PropertyBlueprint extends Component {
                     <CardContent className={styles.CardContent}>
                       {blueprint.coverImage === '' ? (
                         <div className={styles.noimage} aria-hidden="true">
-                          <i className="fa fa-file-code-o" aria-hidden="true" />
+                          <i className="fas fa-file-code" aria-hidden="true" />
                         </div>
                       ) : (
                         <img
@@ -68,7 +68,7 @@ class PropertyBlueprint extends Component {
                       <Button
                         disabled={this.state.submitted}
                         onClick={() => this.setInstanceBlueprint(blueprint.ID)}>
-                        <i className="fa fa-file-code-o" aria-hidden="true" />
+                        <i className="fas fa-file-code" aria-hidden="true" />
                         Select Blueprint
                       </Button>
                       {blueprint.previewURL && (

@@ -15,7 +15,7 @@ export default class Blueprint extends PureComponent {
           <Card className={styles.Blueprint}>
             <CardHeader>
               <h2>
-                <i className="fa fa-file-code-o" aria-hidden="true" />
+                <i className="fas fa-file-code" aria-hidden="true" />
                 &nbsp;Blueprint
               </h2>
               {this.props.isAdmin ? (
@@ -24,7 +24,7 @@ export default class Blueprint extends PureComponent {
                   kind="cancel"
                   id="changeBlueprint"
                   onClick={this.handleChangeBlueprint}>
-                  <i className="fa fa-file-code-o" aria-hidden="true" />
+                  <i className="fas fa-file-code" aria-hidden="true" />
                   &nbsp;Change Blueprint
                 </Button>
               ) : null}

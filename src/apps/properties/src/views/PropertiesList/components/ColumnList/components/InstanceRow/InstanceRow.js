@@ -41,7 +41,7 @@ export default function InstanceRow(props) {
         <AppLink
           className={styles.action}
           to={`/instances/${site.ZUID}/blueprint`}>
-          <i className="fa fa-file-code-o" aria-hidden="true" />
+          <i className="fas fa-file-code" aria-hidden="true" />
         </AppLink>
       )}
     </span>

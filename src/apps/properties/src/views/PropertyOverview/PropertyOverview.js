@@ -56,12 +56,11 @@ class PropertyOverview extends Component {
               className={styles.manager}
               target="_blank"
               href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}`}>
-              <i className="fa fa-external-link" aria-hidden="true" />
-              &nbsp;Open Instance
+              <i className="fas fa-edit"></i>&nbsp;Edit Content
             </Url>
           ) : (
             <AppLink to={`/instances/${this.props.site.ZUID}/blueprint`}>
-              <i className="fa fa-file-code-o" aria-hidden="true" />
+              <i className="fas fa-file-code" aria-hidden="true" />
               &nbsp;Select Blueprint
             </AppLink>
           )}
