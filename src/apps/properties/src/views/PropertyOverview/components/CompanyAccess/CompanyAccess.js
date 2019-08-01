@@ -13,8 +13,7 @@ import { fetchSiteUsers } from '../../../../store/sitesUsers'
 
 import { WithLoader } from '@zesty-io/core/WithLoader'
 import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
-// import { Select, Option } from '@zesty-io/core/Select'
-
+import { AppLink } from '@zesty-io/core/AppLink'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
 
 import { Input } from '@zesty-io/core/Input'
@@ -54,15 +53,21 @@ export default class CompanyAccess extends Component {
                 By providing a team access you can allow an external group of
                 users access to manage your instance. For example: this can be
                 used to provide an agency with access to manage your website.
+                <AppLink to="/teams">&nbsp;Learn more about teams</AppLink>
               </p>
               <div className={styles.addCompany}>
-                <Input placeholder="Enter team ID" onChange={this.handleTeam} />
+                <span>
+                  <Input
+                    placeholder="Enter team ID"
+                    onChange={this.handleTeam}
+                  />
+                </span>
 
                 <DropDownFieldType
                   name="siteRoles"
                   defaultValue=""
                   defaultText="- Select Role -"
-                  onSelect={this.handleRole}
+                  onChange={this.handleRole}
                   options={this.props.siteRoles.map(role => {
                     return {
                       key: role.ZUID,
@@ -76,7 +81,8 @@ export default class CompanyAccess extends Component {
                   name="companyAccessSubmit"
                   onClick={this.handleAddTeam}
                   disabled={this.state.submitted}>
-                  Grant Access
+                  <i className="fas fa-users"></i>
+                  Add Team
                 </Button>
               </div>
             </React.Fragment>
