@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import debounce from '../../../../../../../util/debounce'
+import debounce from 'lodash.debounce'
 
 import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
@@ -16,8 +16,6 @@ import styles from './PropertiesHeader.less'
 export default connect(state => state)(
   class PropertiesHeader extends Component {
     constructor(props) {
-      console.log('PropertiesHeader', props)
-
       super(props)
       this.state = {
         eco: props.settings && props.settings.eco,
@@ -25,18 +23,12 @@ export default connect(state => state)(
       }
     }
 
-    onSearch = debounce(term => {
-      this.setState(
-        {
-          searchTerm: term
-        },
-        () =>
-          this.props.dispatch({
-            type: 'SETTING_FILTER',
-            filter: this.state.searchTerm
-          })
-      )
-    }, 300)
+    onSearch = debounce((name, term) => {
+      this.props.dispatch({
+        type: 'SETTING_FILTER',
+        filter: term
+      })
+    }, 250)
 
     filterByEco = (name, value) => {
       if (value) {
@@ -84,7 +76,7 @@ export default connect(state => state)(
               override={this.props.settings && this.props.settings.filter}
               placeholder="Search by instance name or domain"
               onSubmit={this.onSearch}
-              onKeyUp={this.onSearch}
+              onChange={this.onSearch}
             />
 
             <ButtonGroup className={styles.Sort}>
