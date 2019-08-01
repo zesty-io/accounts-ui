@@ -20,8 +20,6 @@ class RoleCreate extends Component {
   constructor(props) {
     super(props)
 
-    console.log('RoleCreate', props)
-
     this.state = {
       submitted: false,
       name: '',
