@@ -28,14 +28,14 @@ export default function InstanceRow(props) {
         target="_blank"
         title={`Open instance preview: ${site.name}`}
         href={`${CONFIG.PREVIEW_URL_PROTOCOL}${site.randomHashID}${CONFIG.PREVIEW_URL}`}>
-        <i className={'fa fa-eye'} aria-hidden="true" />
+        <i className={'fas fa-eye'} aria-hidden="true" />
       </Url>
       {site.blueprintID !== null ? (
         <Url
           className={styles.action}
           target="_blank"
           href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${CONFIG.MANAGER_URL}`}>
-          <i className="fa fa-external-link-square" aria-hidden="true" />
+          <i className="fas fa-edit" aria-hidden="true" />
         </Url>
       ) : (
         <AppLink
