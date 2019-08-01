@@ -1,39 +1,24 @@
 @import '~@zesty-io/core/colors.less';
+@import '~@zesty-io/core/typography.less';
 
 .UserRow {
   padding: 0.5rem;
   align-items: center;
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 2fr 200px 40px;
+  grid-gap: 8px;
 
   &:nth-child(odd) {
     background-color: @zesty-white;
   }
-  p {
-    font-size: 1.1em;
+
+  label {
+    width: 100%;
   }
-  span:last-child {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    max-height: 50px;
-    .select {
-      flex: 3;
-    }
-    .trash {
-      margin: 0.4rem;
-      transition: all 0.1s;
-      color: lighten(@zesty-gray, 40%);
-      &:hover,
-      &:active,
-      &:focus {
-        color: @zesty-red;
-      }
-    }
-  }
+
   .Owner {
     flex: 1;
-    padding-left: 0.2rem;
+    padding-left: 4px;
   }
 }

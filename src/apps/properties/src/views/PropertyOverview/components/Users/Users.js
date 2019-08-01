@@ -36,27 +36,28 @@ export default class Users extends Component {
         <CardContent>
           {this.props.isAdmin ? (
             <div className={styles.invite}>
-              <Input
-                className={styles.email}
-                type="email"
-                placeholder="Email of user to invite"
-                name="inviteeEmail"
-                id="inviteUserInput"
-                value={this.state.inviteeEmail}
-                onChange={this.handleEmail}
-                required
-              />
+              <div className={styles.inviteeEmail}>
+                <Input
+                  className={styles.email}
+                  type="email"
+                  placeholder="Email of user to invite"
+                  name="inviteeEmail"
+                  id="inviteUserInput"
+                  value={this.state.inviteeEmail}
+                  onChange={this.handleEmail}
+                  required
+                />
+              </div>
 
               <DropDownFieldType
                 name="siteRoles"
                 defaultValue=""
                 defaultText="- Select Role -"
-                onSelect={this.handleSelectRole}
+                onChange={this.handleSelectRole}
                 options={this.props.siteRoles
                   .filter(role => role.name !== 'Owner')
                   .map(role => {
                     return {
-                      key: role.ZUID,
                       value: role.ZUID,
                       text: role.name
                     }
@@ -67,7 +68,7 @@ export default class Users extends Component {
                 onClick={this.handleInvite}
                 id="inviteUserSend"
                 disabled={this.state.submitted}>
-                <i className="fa fa-envelope-o" aria-hidden="true" />
+                <i className="fas fa-paper-plane"></i>
                 Send Invite
               </Button>
             </div>

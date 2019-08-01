@@ -1,13 +1,13 @@
 import { PureComponent } from 'react'
-import styles from './UserRow.less'
 
 import { updateRole, removeUser } from '../../../../../store/sitesUsers'
-
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
 
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
+import { Button } from '@zesty-io/core/Button'
 
+import styles from './UserRow.less'
 export default class UserRow extends PureComponent {
   state = {
     submitted: false
@@ -18,96 +18,80 @@ export default class UserRow extends PureComponent {
         <span className={styles.name}>
           {this.props.firstName} {this.props.lastName}
         </span>
+
         <span className={styles.email}>{this.props.email}</span>
 
         <span className={styles.action}>
           {this.state.submitted ? (
             <Loader />
-          ) : this.props.isAdmin ? (
-            // for admins render options to modify users
-            this.props.role.name === 'Owner' ? (
-              // if the role is owner the role is rendered with no dropdown
-              <React.Fragment>
-                <i className="fa fa-fort-awesome" />
-                <span className={styles.Owner}>Owner</span>
-                {/* only allow delete if a user is Owner */}
-                {this.props.isOwner && (
-                  <i
-                    className={styles.trash + ' fa fa-trash-o'}
-                    aria-hidden="true"
-                    onClick={() =>
-                      this.removeUserFromInstance(
-                        this.props.ZUID,
-                        this.props.role.ZUID
-                      )
-                    }
-                  />
-                )}
-              </React.Fragment>
-            ) : (
-              // render a dropdown to change roles
-              <span className={styles.select}>
-                {/* <Select
-                  name="siteRoles"
-                  onSelect={this.handleSelectRole}
-                  selection={
-                    this.props.siteRoles
-                      .filter(role => role.ZUID === this.props.role.ZUID)
-                      .map(item => {
-                        return { value: item.ZUID, text: item.name }
-                      })[0]
-                  }>
-                  {this.props.siteRoles.map(role => {
-                    return (
-                      <Option
-                        key={role.ZUID}
-                        value={role.ZUID}
-                        text={role.name}
-                      />
-                    )
-                  })}
-                </Select> */}
-
-                <DropDownFieldType
-                  name="siteRoles"
-                  onSelect={this.handleSelectRole}
-                  selection={
-                    this.props.siteRoles
-                      .filter(role => role.ZUID === this.props.role.ZUID)
-                      .map(item => item.ZUID)[0]
-                  }
-                  options={this.props.siteRoles.map(role => {
-                    return {
-                      key: role.ZUID,
-                      value: role.ZUID,
-                      text: role.name
-                    }
-                  })}
-                />
-
-                {/*  render a trashcan to delete users */}
-                <i
-                  className={styles.trash + ' fa fa-trash-o'}
-                  aria-hidden="true"
-                  onClick={() =>
-                    this.removeUserFromInstance(
-                      this.props.ZUID,
-                      this.props.role.ZUID
-                    )
-                  }
-                />
-              </span>
-            )
-          ) : // Render text only for non-permissioned users
-          this.props.role.name === 'Owner' ? (
-            <React.Fragment>
-              <i className="fa fa-fort-awesome" />
-              &nbsp;{this.props.role.name}
-            </React.Fragment>
           ) : (
-            this.props.role.name
+            <React.Fragment>
+              {this.props.isAdmin ? (
+                // for admins render options to modify users
+                this.props.role.name === 'Owner' ? (
+                  // if the role is owner the role is rendered with no dropdown
+                  <React.Fragment>
+                    <i className="fas fa-crown"></i>
+                    <span className={styles.Owner}>Owner</span>
+                  </React.Fragment>
+                ) : (
+                  // render a dropdown to change roles
+                  <DropDownFieldType
+                    name="siteRoles"
+                    onChange={this.handleSelectRole}
+                    selection={
+                      this.props.siteRoles
+                        .filter(role => role.ZUID === this.props.role.ZUID)
+                        .map(item => item.ZUID)[0]
+                    }
+                    options={this.props.siteRoles.map(role => {
+                      return {
+                        value: role.ZUID,
+                        text: role.name
+                      }
+                    })}
+                  />
+                )
+              ) : // Render text only for non-permissioned users
+              this.props.role.name === 'Owner' ? (
+                <React.Fragment>
+                  <i className="fas fa-crown"></i>
+                  &nbsp;{this.props.role.name}
+                </React.Fragment>
+              ) : (
+                this.props.role.name
+              )}
+            </React.Fragment>
           )}
         </span>
+
+        {/* only owners can delete another owner */}
+        {this.props.isAdmin &&
+          (this.props.role.name === 'Owner' ? (
+            this.props.isOwner && (
+              <Button
+                kind="cancel"
+                onClick={() =>
+                  this.removeUserFromInstance(
+                    this.props.ZUID,
+                    this.props.role.ZUID
+                  )
+                }>
+                <i className={'fas fa-user-minus'} />
+              </Button>
+            )
+          ) : (
+            <Button
+              kind="cancel"
+              onClick={() =>
+                this.removeUserFromInstance(
+                  this.props.ZUID,
+                  this.props.role.ZUID
+                )
+              }>
+              <i className={'fas fa-user-minus'} />
+            </Button>
+          ))}
       </article>
     )
   }
