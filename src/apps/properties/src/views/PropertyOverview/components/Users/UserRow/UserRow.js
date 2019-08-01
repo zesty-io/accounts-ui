@@ -74,7 +74,8 @@ export default class UserRow extends PureComponent {
                 onClick={() =>
                   this.removeUserFromInstance(
                     this.props.ZUID,
-                    this.props.role.ZUID
+                    this.props.role.ZUID,
+                    this.props.email
                   )
                 }>
                 <i className={'fas fa-user-minus'} />
@@ -86,7 +87,8 @@ export default class UserRow extends PureComponent {
               onClick={() =>
                 this.removeUserFromInstance(
                   this.props.ZUID,
-                  this.props.role.ZUID
+                  this.props.role.ZUID,
+                  this.props.email
                 )
               }>
               <i className={'fas fa-user-minus'} />
@@ -95,10 +97,10 @@ export default class UserRow extends PureComponent {
       </article>
     )
   }
-  removeUserFromInstance = (userZUID, roleZUID) => {
+  removeUserFromInstance = (userZUID, roleZUID, email) => {
     this.props.dispatch(
       zConfirm({
-        prompt: 'Are you sure you want to remove this user?',
+        prompt: `Are you sure you want to remove ${email} from this instance?`,
         callback: result => {
           if (result) {
             this.props
