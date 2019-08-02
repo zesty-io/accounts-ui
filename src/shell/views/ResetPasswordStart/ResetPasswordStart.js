@@ -50,7 +50,7 @@ export default class ResetPasswordStart extends Component {
                     &nbsp;{this.state.message}
                   </p>
                 ) : (
-                  <p>
+                  <p className={styles.success}>
                     <i className="fa fa-info-circle" aria-hidden="true" />
                     &nbsp;{this.state.message}
                   </p>

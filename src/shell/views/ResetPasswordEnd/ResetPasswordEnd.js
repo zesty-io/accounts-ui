@@ -34,10 +34,14 @@ class ResetPasswordEnd extends Component {
               name="ResetPasswordEnd"
               onSubmit={this.handleCompleteReset}
               className={styles.ResetPasswordEndForm}>
-              <h2 className={styles.headline}>Choose Your New Password</h2>
               <label>
                 <p>New Password</p>
-                <Input className={styles.input} type="password" name="pass" />
+                <Input
+                  className={styles.input}
+                  type="password"
+                  name="pass"
+                  placeholder="Choose your new password"
+                />
               </label>
               <label>
                 <p>Confirm New Password</p>
@@ -45,6 +49,7 @@ class ResetPasswordEnd extends Component {
                   className={styles.input}
                   type="password"
                   name="passConfirm"
+                  placeholder="Repeat your new password"
                 />
               </label>
 

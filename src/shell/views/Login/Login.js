@@ -86,6 +86,7 @@ class Login extends Component {
               {this.state.message ? (
                 <p
                   className={cx(
+                    'error',
                     styles.message,
                     this.state.error ? styles.error : styles.success
                   )}>

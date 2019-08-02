@@ -61,7 +61,7 @@ export default connect(state => state)(
       return (
         <header className={styles.PropertiesHeader}>
           <div className={styles.Actions}>
-            {ecosystems.length && (
+            {ecosystems.length ? (
               <DropDownFieldType
                 className={styles.Ecosystem}
                 name="ecoFilter"
@@ -69,7 +69,7 @@ export default connect(state => state)(
                 selection={ecosystems.find(eco => eco.id == this.state.eco)}
                 options={ecosystems}
               />
-            )}
+            ) : null}
 
             <Search
               className={styles.Search}
