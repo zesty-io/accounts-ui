@@ -1,16 +1,21 @@
 @import '~@zesty-io/core/colors.less';
 
 .TeamCard {
-  max-height: 470px;
-  max-width: 500px;
+  display: flex;
+  flex-direction: column;
 
-  flex: 1 0 0%;
-  margin: 1rem;
-  @supports (display: grid) {
-    display: grid;
-    grid-template-rows: 30px 3fr 50px;
-    margin: 0;
-  }
+  margin: 0 !important;
+
+  max-height: 570px;
+  // max-width: 500px;
+
+  // flex: 1 0 0%;
+  // margin: 1rem;
+  // @supports (display: grid) {
+  //   display: grid;
+  //   grid-template-rows: 30px 3fr 50px;
+  //   margin: 0;
+  // }
 
   &:hover,
   &:focus,
@@ -19,18 +24,18 @@
   }
 
   .CardHeader {
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
 
-    .Copy {
-      font-size: 0.7em;
-      padding: 0.4rem 0.5rem;
-      margin-right: 0.5rem;
-    }
+    // .Copy {
+    //   font-size: 0.7em;
+    //   padding: 0.4rem 0.5rem;
+    //   margin-right: 0.5rem;
+    // }
 
-    .ZUID {
-      font-weight: bold;
-    }
+    // .ZUID {
+    //   font-weight: bold;
+    // }
   }
 
   .CardContent {
@@ -105,8 +110,20 @@
   }
 
   .CardInvite {
-    display: grid;
-    grid-template-columns: 1.2fr 3fr;
-    grid-gap: 0.2rem;
+    // display: grid;
+    // grid-template-columns: 1.2fr 3fr;
+    // grid-gap: 0.2rem;
+  }
+
+  .CardFooter {
+    form {
+      display: flex;
+      align-items: center;
+
+      input {
+        margin-right: 8px;
+        flex: 1;
+      }
+    }
   }
 }

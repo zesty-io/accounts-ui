@@ -1,5 +1,6 @@
 {
   "projectId": "Accounts-UI",
+  "baseUrl": "http://accounts.zesty.localdev:3100",
   "env": {
     "ACCOUNTS_UI": "http://accounts.zesty.localdev:3100",
     "API_ACCOUNTS": "http://accounts.api.zesty.localdev:3022/v1",

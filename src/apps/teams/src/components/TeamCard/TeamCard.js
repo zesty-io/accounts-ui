@@ -66,9 +66,9 @@ export default class TeamCard extends Component {
     return (
       <Card className={styles.TeamCard}>
         <CardHeader className={styles.CardHeader}>
-          <Button
+          <i
+            className={cx(styles.copy, 'fa fa-clipboard')}
             title="Click to copy team ID"
-            className={styles.Copy}
             onClick={e => {
               const input = document.createElement('input')
               document.body.appendChild(input)
@@ -91,10 +91,9 @@ export default class TeamCard extends Component {
                   message: `Copied team ID ${team.ZUID} to your clipboard`
                 })
               )
-            }}>
-            <i className={cx(styles.copy, 'fa fa-clipboard')} />
-            Copy ID
-          </Button>
+            }}
+          />
+          &nbsp;
           <span className={styles.ZUID}>{team.ZUID}</span>
         </CardHeader>
         <CardContent className={styles.CardContent}>
@@ -255,22 +254,23 @@ export default class TeamCard extends Component {
             </WithLoader>
           </section>
         </CardContent>
-        <CardFooter>
+        <CardFooter className={styles.CardFooter}>
           {this.state.isAdmin && (
             <form className={styles.CardInvite} onSubmit={this.handleInvite}>
+              <div>
+                <Input
+                  required
+                  type="text"
+                  name="inviteeEmail"
+                  placeholder="Enter your team members email address"
+                  autoComplete="off"
+                  value={this.state.inviteeEmail}
+                  onChange={this.handleInviteEmail}
+                />
+              </div>
               <Button disabled={this.state.submitted} type="submit">
-                <i className="fa fa-envelope-o" />
-                Invite
+                <i className="fas fa-user-plus"></i>Invite
               </Button>
-              <Input
-                required
-                type="text"
-                name="inviteeEmail"
-                placeholder="team-member@acme.com"
-                autoComplete="off"
-                value={this.state.inviteeEmail}
-                onChange={this.handleInviteEmail}
-              />
             </form>
           )}
         </CardFooter>

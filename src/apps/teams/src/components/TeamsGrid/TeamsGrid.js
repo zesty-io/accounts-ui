@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import cx from 'classnames'
 
 import CreateTeam from '../../components/CreateTeam'
 import TeamCard from '../../components/TeamCard'
@@ -9,7 +10,7 @@ import InviteCard from '../InviteCard/'
 export default class TeamsGrid extends Component {
   render() {
     return (
-      <section className={styles.TeamsView}>
+      <section className={cx('teams', styles.TeamsView)}>
         <h1 className={styles.TeamsTitle}>
           <i className="fa fa-users" aria-hidden="true" />
           &nbsp; Manage Your Teams
