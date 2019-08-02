@@ -44,7 +44,7 @@ export default class Blueprint extends PureComponent {
 
               {this.props.blueprint.githubURL ? (
                 <Url href={this.props.blueprint.githubURL} target="_blank">
-                  <i className="fa fa-github" aria-hidden="true" />
+                  <i className="fab fa-github" aria-hidden="true" />
                   View On GitHub
                 </Url>
               ) : null}

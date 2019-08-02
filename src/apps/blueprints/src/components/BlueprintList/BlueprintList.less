@@ -3,18 +3,20 @@
 .Blueprints {
   .BlueprintList {
     display: flex;
+    flex-wrap: wrap;
     @supports (display: grid) {
       display: grid;
-      grid-gap: 1rem;
+      grid-gap: 28px;
       grid-template-columns: repeat(auto-fill, 400px);
-      grid-auto-rows: 20rem;
-      margin: 1rem 0 0 0;
+      // grid-auto-rows: 20rem;
+      // margin: 1rem 0 0 0;
     }
   }
 
   .Create {
     display: flex;
     flex-direction: column;
+    margin: 0 !important;
     p {
       margin: 0 0 1rem 0;
     }
@@ -28,55 +30,15 @@
         }
       }
     }
+    .CardFooter {
+      button {
+        a {
+          color: @zesty-white;
+          text-shadow: none;
+        }
+      }
+    }
   }
-
-  // .Create {
-  //   flex: 1 0 0%;
-  //   max-width: 400px;
-  //   margin: 1rem;
-  //   padding: 0;
-  //   box-shadow: 0 0 5px #d6e1f3;
-  //   @supports (display: grid) {
-  //     display: grid;
-  //     grid-template-rows: 50px 3fr 35px;
-  //     margin: 0;
-  //   }
-
-  //   &:hover,
-  //   &:focus,
-  //   &:active {
-  //     box-shadow: 0 0 10px #8398bd;
-  //   }
-
-  //   .CardHeader {
-  //     padding: 1rem;
-  //   }
-  //   .CardContent {
-  //     padding: 1rem;
-  //     p {
-  //       margin: 0 0 1rem 0;
-  //     }
-  //     ul {
-  //       margin: 0.3rem 0 0 0;
-  //       li {
-  //         list-style-position: inside;
-  //         margin: 0;
-  //         a {
-  //           margin: 0;
-  //         }
-  //       }
-  //     }
-  //   }
-  //   .CardFooter {
-  //     padding: 0;
-  //     .controls {
-  //       a {
-  //         padding: 4px 8px;
-  //         margin: 0;
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 .Loading {
