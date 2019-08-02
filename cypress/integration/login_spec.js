@@ -1,14 +1,17 @@
 describe('User Login Failure', function() {
   it('Log in fails with bad credentials', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
-    cy.get('#root > section > div > main > form > label:nth-child(1) > input')
+
+    cy.get('form[name="login"] input[name="email"]')
       .type(Cypress.env('invalidEmail'))
       .should('have.value', Cypress.env('invalidEmail'))
-    cy.get('#root > section > div > main > form > label:nth-child(2) > input')
+    cy.get('form[name="login"] input[name="pass"]')
       .type(Cypress.env('invalidPassword'))
       .should('have.value', Cypress.env('invalidPassword'))
-    cy.get('button').click()
-    cy.get('#root > section > div > main > form > p', {
+
+    cy.get('form[name="login"] button').click()
+
+    cy.get('form[name="login"] .error', {
       timeout: 10000
     }).should('contain', 'There was a problem logging you in')
   })
@@ -17,13 +20,16 @@ describe('User Login Failure', function() {
 describe('User Login Flow', function() {
   it('Logs in with good credentials', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
-    cy.get('#root > section > div > main > form > label:nth-child(1) > input')
+
+    cy.get('form[name="login"] input[name="email"]')
       .type(Cypress.env('validEmail'))
       .should('have.value', Cypress.env('validEmail'))
-    cy.get('#root > section > div > main > form > label:nth-child(2) > input')
+    cy.get('form[name="login"] input[name="pass"]')
       .type(Cypress.env('validPassword'))
       .should('have.value', Cypress.env('validPassword'))
-    cy.get('#root > section > div > main > form > button').click()
+
+    cy.get('form[name="login"] button').click()
+
     // assert that the app loads
     cy.get('#root > section > header > nav.UserNav', { timeout: 10000 }).should(
       'contain',

@@ -12,13 +12,11 @@
 // -- This is a parent command --
 Cypress.Commands.add('login', (email, password) => {
   cy.visit(Cypress.env('ACCOUNTS_UI'))
-  cy.get(
-    '#root > section > div > main > form > label:nth-child(1) > input'
-  ).type(email || Cypress.env('validEmail'))
-  cy.get(
-    '#root > section > div > main > form > label:nth-child(2) > input'
-  ).type(password || Cypress.env('validPassword'))
-  cy.get('#root > section > div > main > form > button').click()
+  cy.get('form input[name="email"]').type(email || Cypress.env('validEmail'))
+  cy.get('form input[name="pass"]').type(
+    password || Cypress.env('validPassword')
+  )
+  cy.get('form[name="login"] button').click()
 })
 //
 //
