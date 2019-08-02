@@ -26,17 +26,16 @@ describe('Blueprint Flow', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
     cy.get('#blueprintsNavLink').click()
 
-    cy.get(
-      '#root > section > section.AppMain.AppMain > section > section > section'
-    )
+    cy.get('.blueprints > section > section')
       .find('article')
       .contains(timeStamp)
       .parent()
       .siblings('footer')
       .children('div')
       .children('a')
-      .last()
+      .contains('Edit')
       .click()
+
     cy.get('#Blueprint > label:nth-child(2) > input').type(`Edited`)
     cy.get('#Blueprint > label:nth-child(3) > input').type('Edited')
     cy.get('#Blueprint > label:nth-child(4) > input').type('Edited')
@@ -44,6 +43,7 @@ describe('Blueprint Flow', () => {
     cy.get('#Blueprint > label:nth-child(6) > input').type('Edited')
     cy.get('#Blueprint > label:nth-child(7) > textarea').type('Edited')
     cy.get('#Blueprint > label:nth-child(8) > textarea').type('Edited')
+
     cy.get('#Blueprint > div > button:nth-child(1)').click()
     cy.get('#notificationMessage').should('contain', 'Successfully saved')
   })
@@ -52,17 +52,15 @@ describe('Blueprint Flow', () => {
     cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
     cy.get('#blueprintsNavLink').click()
 
-    cy.get(
-      '#root > section > section.AppMain.AppMain > section > section > section'
-    )
+    cy.get('.blueprints > section > section')
       .find('article')
       .contains(timeStamp)
       .parent()
       .siblings('footer')
-      .children('div')
-      .children('a')
+      .children('button')
       .first()
       .click()
+
     cy.get('#confirmTrue').click()
     cy.get('#notificationMessage').should(
       'contain',

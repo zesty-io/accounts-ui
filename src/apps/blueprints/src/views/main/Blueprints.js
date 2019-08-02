@@ -68,7 +68,7 @@ class Blueprints extends Component {
         className={styles.Loading}
         condition={!this.state.loadingBlueprints}
         message="Loading Your Custom Blueprints">
-        <section className={styles.Blueprints}>
+        <section className={cx('blueprints', styles.Blueprints)}>
           <h1 className={styles.BlueprintsTitle}>
             Manage Your Custom Blueprints
           </h1>
