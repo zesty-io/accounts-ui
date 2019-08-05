@@ -16,6 +16,8 @@ import { notify } from '../../../../../shell/store/notifications'
 
 import { WithLoader } from '@zesty-io/core/WithLoader'
 import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { TextFieldType } from '@zesty-io/core/TextFieldType'
+import { TextareaFieldType } from '@zesty-io/core/TextareaFieldType'
 import { Input } from '@zesty-io/core/Input'
 import { AppLink } from '@zesty-io/core/AppLink'
 import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
@@ -102,7 +104,7 @@ export default class TeamCard extends Component {
               <i
                 className={cx(
                   styles.Edit,
-                  this.state.editing ? 'fa fa-ban' : 'fa fa-cog'
+                  this.state.editing ? 'fas fa-window-close' : 'fas fa-cog'
                 )}
                 title="Edit team settings"
                 onClick={this.handleEdit}
@@ -110,36 +112,32 @@ export default class TeamCard extends Component {
             )}
             {this.state.editing ? (
               <div className={styles.Editing}>
-                <label>
-                  Team Name:
-                  <Input
-                    type="text"
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                    name="name"
-                  />
-                </label>
-                <label>
-                  Team Description:
-                  <textarea
-                    value={this.state.description}
-                    onChange={this.handleChange}
-                    name="description"
-                  />
-                </label>
-                <ButtonGroup>
+                <TextFieldType
+                  name="name"
+                  label="Team Name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+                <TextareaFieldType
+                  name="description"
+                  label="Team Description"
+                  value={this.state.description}
+                  onChange={this.handleChange}
+                />
+
+                <ButtonGroup className={styles.actions}>
                   <Button
                     className={styles.Save}
-                    kind="save"
+                    kind="secondary"
                     onClick={this.handleUpdateTeam}>
-                    <i className="fa fa-floppy-o" aria-hidden="true" />
+                    <i className="fas fa-save" aria-hidden="true" />
                     Update Team
                   </Button>
                   <Button
                     className={styles.Delete}
                     type="warn"
                     onClick={this.handleDeleteTeam}>
-                    <i className="fa fa-trash-o" aria-hidden="true" />
+                    <i className="fas fa-trash-alt" aria-hidden="true" />
                   </Button>
                 </ButtonGroup>
               </div>
