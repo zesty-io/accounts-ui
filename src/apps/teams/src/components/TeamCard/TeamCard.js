@@ -151,11 +151,10 @@ export default class TeamCard extends Component {
             )}
           </section>
 
-          <section className={styles.Members}>
-            <h3>Owners</h3>
-            <WithLoader
-              condition={this.state.loaded}
-              message="Loading team owners">
+          <WithLoader condition={this.state.loaded}>
+            <section className={styles.Members}>
+              <h3>Owners</h3>
+
               {this.props.members.length
                 ? this.props.members
                     .filter(
@@ -175,14 +174,10 @@ export default class TeamCard extends Component {
                       )
                     })
                 : 'Team is missing an owner'}
-            </WithLoader>
-          </section>
+            </section>
 
-          <section className={styles.Members}>
-            <h3>Members</h3>
-            <WithLoader
-              condition={this.state.loaded}
-              message="Loading team members">
+            <section className={styles.Members}>
+              <h3>Members</h3>
               {this.props.members.length
                 ? this.props.members
                     .filter(
@@ -229,14 +224,10 @@ export default class TeamCard extends Component {
                       )
                     })
                 : 'No members for this team'}
-            </WithLoader>
-          </section>
+            </section>
 
-          <section className={styles.Instances}>
-            <h3>Instances</h3>
-            <WithLoader
-              condition={this.state.loaded}
-              message="Loading team instances">
+            <section className={styles.Instances}>
+              <h3>Instances</h3>
               {instances && Object.keys(instances).length
                 ? Object.keys(instances).map(instance => {
                     return (
@@ -251,8 +242,8 @@ export default class TeamCard extends Component {
                     )
                   })
                 : 'No instances for this team'}
-            </WithLoader>
-          </section>
+            </section>
+          </WithLoader>
         </CardContent>
         <CardFooter className={styles.CardFooter}>
           {this.state.isAdmin && (
