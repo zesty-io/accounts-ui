@@ -1,9 +1,12 @@
 describe('Blueprint Flow', () => {
   const timeStamp = Date.now()
-  it('Can Create a blueprint', () => {
+
+  before(function() {
     cy.login()
     cy.visit('/blueprints')
+  })
 
+  it('Can Create a blueprint', () => {
     cy.get('#createBlueprint').click()
 
     cy.get('#Blueprint > label:nth-child(2) > input').type(
@@ -24,9 +27,6 @@ describe('Blueprint Flow', () => {
   })
 
   it('Can Edit a blueprint', () => {
-    cy.login()
-    cy.visit('/blueprints')
-
     cy.get('.blueprints > section > section')
       .find('article')
       .contains(timeStamp)
@@ -50,9 +50,6 @@ describe('Blueprint Flow', () => {
   })
 
   it('Can Delete a blueprint', () => {
-    cy.login()
-    cy.visit('/blueprints')
-
     cy.get('.blueprints > section > section')
       .find('article')
       .contains(timeStamp)
