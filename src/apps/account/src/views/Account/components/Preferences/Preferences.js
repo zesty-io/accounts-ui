@@ -46,7 +46,7 @@ class Preferences extends Component {
             />
           </article>
         </CardContent>
-        <CardFooter />
+        {/* <CardFooter /> */}
       </Card>
     )
   }

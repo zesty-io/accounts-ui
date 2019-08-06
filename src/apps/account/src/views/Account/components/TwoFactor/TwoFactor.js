@@ -20,11 +20,11 @@ export default class TwoFactorOptions extends Component {
   }
   render() {
     return (
-      <Card>
+      <Card className={styles.TwoFactor}>
         <CardHeader>
           <h1>Two-Factor Authentication (2FA)</h1>
         </CardHeader>
-        <CardContent className={styles.TwoFactor}>
+        <CardContent>
           {this.props.user.authyEnabled ? (
             <React.Fragment>
               <p>
@@ -52,27 +52,30 @@ export default class TwoFactorOptions extends Component {
                 below.
               </p>
               <form id="TwoFactor">
-                <label className={styles.PhoneNumber}>
-                  <span className={styles.PhoneNumberLabel}>Phone Number</span>
-                  <Input
-                    required
-                    type="text"
-                    size="5"
-                    placeholder="1"
-                    name="authyPhoneCountryCode"
-                    value={this.state.authyPhoneCountryCode}
-                    onChange={this.handleChange}
-                  />
-                  &nbsp;
-                  <Input
-                    required
-                    type="tel"
-                    placeholder="123-456-7890"
-                    name="authyPhoneNumber"
-                    value={this.state.authyPhoneNumber}
-                    onChange={this.handleChange}
-                  />
-                </label>
+                <p className={styles.PhoneNumberLabel}>Phone Number</p>
+                <div className={styles.PhoneNumber}>
+                  <label for="authyPhoneCountryCode">
+                    <Input
+                      required
+                      type="text"
+                      size="5"
+                      placeholder="1"
+                      name="authyPhoneCountryCode"
+                      value={this.state.authyPhoneCountryCode}
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                  <label>
+                    <Input
+                      required
+                      type="tel"
+                      placeholder="123-456-7890"
+                      name="authyPhoneNumber"
+                      value={this.state.authyPhoneNumber}
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </div>
               </form>
             </React.Fragment>
           )}
@@ -84,12 +87,12 @@ export default class TwoFactorOptions extends Component {
               disabled={this.state.submitted}>
               {this.state.submitted ? (
                 <React.Fragment>
-                  <i className="fa fa-hourglass-o" aria-hidden="true" />
+                  <i className="fas fa-hourglass" aria-hidden="true" />
                   &nbsp;Disabling Authy 2FA
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <i className="fa fa-shield" aria-hidden="true" />
+                  <i className="fas fa-shield-alt" aria-hidden="true" />
                   &nbsp;Disable Authy 2FA
                 </React.Fragment>
               )}
@@ -101,12 +104,12 @@ export default class TwoFactorOptions extends Component {
               disabled={this.state.submitted}>
               {this.state.submitted ? (
                 <React.Fragment>
-                  <i className="fa fa-hourglass-o" aria-hidden="true" />
+                  <i className="fas fa-hourglass" aria-hidden="true" />
                   &nbsp;Enabling Authy 2FA
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <i className="fa fa-shield" aria-hidden="true" />
+                  <i className="fas fa-shield-alt" aria-hidden="true" />
                   &nbsp;Enable Authy 2FA
                 </React.Fragment>
               )}
@@ -129,6 +132,7 @@ export default class TwoFactorOptions extends Component {
     this.setState({
       submitted: true
     })
+
     this.props
       .dispatch(update2fa(this.props.user.ZUID, true, this.state))
       .then(() => {

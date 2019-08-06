@@ -1,17 +1,19 @@
 describe('User Settings Flow', () => {
   const timeStamp = Date.now()
 
+  before(function() {
+    cy.login()
+    cy.visit('/settings/account')
+  })
+
   it('Changes name', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-
-    cy.get('#root > section > header > nav.UserNav.UserNav').click({
-      force: true
-    })
-    cy.get('#userNavDropdown > li:nth-child(3) > a').click()
-
-    cy.get('.AppMain input[name="firstName"]')
+    cy.get('[name="firstName"]')
       .clear()
-      .type('name')
+      .type('FirstName')
+
+    cy.get('[name="lastName"]')
+      .clear()
+      .type('LastName')
 
     cy.get(
       'section.AppMain > section > div > div > article:nth-child(1) > footer > button'
@@ -24,13 +26,6 @@ describe('User Settings Flow', () => {
   })
 
   it('Adds email', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-
-    cy.get('#root > section > header > nav.UserNav.UserNav').click({
-      force: true
-    })
-    cy.get('#userNavDropdown > li:nth-child(3) > a').click()
-
     cy.get('.AppMain input[name="name"]').type('Email Name')
     cy.get('.AppMain input[name="email"]').type('testEmail@zesty.io')
     cy.get(
@@ -44,12 +39,6 @@ describe('User Settings Flow', () => {
   })
 
   it('Removes email', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.get('#root > section > header > nav.UserNav.UserNav').click({
-      force: true
-    })
-    cy.get('#userNavDropdown > li:nth-child(3) > a').click()
-
     cy.get(
       '#root > section > section.AppMain > section > div > div > article:nth-child(2) > main'
     )
@@ -66,13 +55,6 @@ describe('User Settings Flow', () => {
   })
 
   it('Changes password', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-
-    cy.get('#root > section > header > nav.UserNav.UserNav').click({
-      force: true
-    })
-    cy.get('#userNavDropdown > li:nth-child(3) > a').click()
-
     cy.get(
       '#root > section > section.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(2)'
     ).type(Cypress.env('validPassword'))
@@ -94,11 +76,7 @@ describe('User Settings Flow', () => {
     // set password back
 
     cy.login(Cypress.env('validEmail'), 'newValidPass2')
-
-    cy.get('#root > section > header > nav.UserNav.UserNav').click({
-      force: true
-    })
-    cy.get('#userNavDropdown > li:nth-child(3) > a').click()
+    cy.visit('/settings/account')
 
     cy.get(
       '#root > section > section.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(2)'

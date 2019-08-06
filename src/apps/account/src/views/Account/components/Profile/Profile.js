@@ -12,19 +12,17 @@ import { Input } from '@zesty-io/core/Input'
 
 import styles from './Profile.less'
 class Profile extends Component {
-  constructor() {
-    super()
-    this.state = {
-      submitted: false
-    }
+  state = {
+    submitted: false
   }
+
   render() {
     return (
-      <Card>
+      <Card className={styles.Profile}>
         <CardHeader>
           <h1>Your Profile</h1>
         </CardHeader>
-        <CardContent className={styles.Profile}>
+        <CardContent>
           <div className={styles.gravatar}>
             <h4>Gravatar</h4>
             <img
@@ -32,7 +30,7 @@ class Profile extends Component {
               src={`https://www.gravatar.com/avatar/${this.props.profile.emailHash}?d=mm&s=80`}
             />
           </div>
-          <h4>User Name</h4>
+          {/* <h4>User Name</h4> */}
           <Input
             type="text"
             value={this.props.profile.firstName}
@@ -53,7 +51,7 @@ class Profile extends Component {
             onClick={this.handleClick}
             className={styles.ProfileSave}
             disabled={this.state.submitted}>
-            <i className="fa fa-floppy-o" aria-hidden="true" />
+            <i className="fas fa-save" aria-hidden="true" />
             Update User Name
           </Button>
         </CardFooter>
