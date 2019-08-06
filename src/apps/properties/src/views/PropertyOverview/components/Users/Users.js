@@ -39,10 +39,10 @@ export default class Users extends Component {
               <div className={styles.inviteeEmail}>
                 <Input
                   className={styles.email}
+                  name="inviteeEmail"
+                  data-test="inviteeEmail"
                   type="email"
                   placeholder="Email of user to invite"
-                  name="inviteeEmail"
-                  id="inviteUserInput"
                   value={this.state.inviteeEmail}
                   onChange={this.handleEmail}
                   required
@@ -50,6 +50,7 @@ export default class Users extends Component {
               </div>
 
               <DropDownFieldType
+                data-test="siteRoles"
                 name="siteRoles"
                 defaultValue=""
                 defaultText="- Select Role -"

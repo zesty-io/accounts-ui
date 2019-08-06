@@ -1,8 +1,9 @@
 describe('Blueprint Flow', () => {
   const timeStamp = Date.now()
   it('Can Create a blueprint', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.get('#blueprintsNavLink').click()
+    cy.login()
+    cy.visit('/blueprints')
+
     cy.get('#createBlueprint').click()
 
     cy.get('#Blueprint > label:nth-child(2) > input').type(
@@ -23,8 +24,8 @@ describe('Blueprint Flow', () => {
   })
 
   it('Can Edit a blueprint', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.get('#blueprintsNavLink').click()
+    cy.login()
+    cy.visit('/blueprints')
 
     cy.get('.blueprints > section > section')
       .find('article')
@@ -49,8 +50,8 @@ describe('Blueprint Flow', () => {
   })
 
   it('Can Delete a blueprint', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.get('#blueprintsNavLink').click()
+    cy.login()
+    cy.visit('/blueprints')
 
     cy.get('.blueprints > section > section')
       .find('article')

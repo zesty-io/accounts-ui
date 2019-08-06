@@ -114,7 +114,7 @@ class Signup extends Component {
                   className={styles.checkbox}
                   type="checkbox"
                   name="eula"
-                  checked={this.state.eula}
+                  value={this.state.eula}
                   onChange={this.handleChange}
                 />
                 <span>
@@ -128,7 +128,10 @@ class Signup extends Component {
               </label>
 
               <div className={styles.Actions}>
-                <Button type="submit" disabled={this.state.submitted}>
+                <Button
+                  type="submit"
+                  name="submit"
+                  disabled={this.state.submitted}>
                   {this.state.submitted ? (
                     <React.Fragment>
                       <i className="fa fa-hourglass-o" aria-hidden="true" />
