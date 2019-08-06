@@ -1,41 +1,41 @@
 describe('Teams Flow', () => {
   const timeStamp = Date.now()
 
-  it('Can Create a team', () => {
+  before(function() {
     cy.login()
     cy.visit('/teams')
+  })
 
-    // create a team
-    cy.get('input[name="name"]').type(`New Team ${timeStamp}`)
+  it('Can Create a team', () => {
+    cy.get('input[name="name"]').type(timeStamp)
     cy.get('textarea[name="description"]').type(
-      'this is a description of the team and its purpose'
+      'This is a test description of the team and its purpose'
     )
     cy.get('#teamCreateSave').click()
     cy.get('#notificationMessage').should('contain', 'Team created')
   })
 
-  // add team to an instance
-
   it('Can invite a member', () => {
-    cy.login()
-    cy.visit('/teams')
-
-    //add a team member
-    cy.get('.team article')
+    cy.get('.teams article')
+      .children('main h3')
       .contains(timeStamp)
+      .parents('article')
+      .children('footer input[name=inviteeEmail]', {
+        timeout: 15000 // Wait for members to be loaded after team creation
+      })
       .type('testInvite@zesty.io')
+      .parents('article')
+      .children('footer button')
+      .click()
 
-    cy.get(
-      '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > footer > form > button'
-    ).click()
+    // cy.get(
+    //   '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > footer > form > button'
+    // ).click()
 
     cy.get('#notificationMessage', { timeout: 10000 }).should('contain', 'sent')
   })
 
   it('Can remove an invite', () => {
-    cy.login()
-    cy.visit('/teams')
-
     //remove the invitiation
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > main > section:nth-child(3) > article'
