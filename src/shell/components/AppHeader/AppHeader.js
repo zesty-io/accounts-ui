@@ -30,7 +30,7 @@ class AppHeader extends Component {
       <header className={styles.AppHeader}>
         <img className={styles.logo} src="/zesty-z-logo.svg" />
         <nav className={styles.GlobalNav} id="globalNav">
-          <NavLink to="/instances" id="instancesNavLink">
+          <NavLink to="/instances" data-test="instancesNavLink">
             <i className="fa fa-globe" aria-hidden="true" />
             &nbsp;Instances
             {this.props.userHasSiteInvites ? (
@@ -41,7 +41,7 @@ class AppHeader extends Component {
             ) : null}
           </NavLink>
           {this.props.user.prefs.teamOptions !== 0 && (
-            <NavLink to="/teams" id="teamsNavLink">
+            <NavLink to="/teams" data-test="teamsNavLink">
               <i className="fa fa-users" aria-hidden="true" />
               &nbsp;Teams
               {this.props.userHasTeamInvites ? (
@@ -53,7 +53,7 @@ class AppHeader extends Component {
             </NavLink>
           )}
           {this.props.user.prefs.devOptions === 1 && (
-            <NavLink to="/blueprints" id="blueprintsNavLink">
+            <NavLink to="/blueprints" data-test="blueprintsNavLink">
               <i className="fa fa-map" aria-hidden="true" />
               &nbsp;Blueprints
             </NavLink>
@@ -61,6 +61,7 @@ class AppHeader extends Component {
         </nav>
         <nav
           ref={nav => (this.userNav = nav)}
+          data-test="UserNav"
           className={cx(
             'UserNav',
             styles.UserNav,
@@ -83,13 +84,13 @@ class AppHeader extends Component {
             <hr />
 
             <li>
-              <NavLink to="/settings/account">
+              <NavLink to="/settings/account" data-test="accountNavLink">
                 <i className="fa fa-cog" aria-hidden="true" /> My Account
               </NavLink>
             </li>
 
             <li>
-              <NavLink to="/support">
+              <NavLink to="/support" data-test="supportNavLink">
                 <i
                   className={cx(styles.icon, 'fa fa-question-circle')}
                   aria-hidden="true"
@@ -102,6 +103,7 @@ class AppHeader extends Component {
 
             <li
               className={styles.logout}
+              data-test="logoutNavLink"
               title="Logout"
               onClick={() => this.props.dispatch(logout())}>
               <i className="fa fa-sign-out" aria-hidden="true" />
