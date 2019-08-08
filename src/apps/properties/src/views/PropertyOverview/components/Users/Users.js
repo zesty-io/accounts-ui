@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-
-import styles from './Users.less'
+import cx from 'classnames'
 
 import { sendInvite } from '../../../../store/sites'
 import { notify } from '../../../../../../../shell/store/notifications'
@@ -15,6 +14,7 @@ import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
 import { Button } from '@zesty-io/core/Button'
 import { Input } from '@zesty-io/core/Input'
 
+import styles from './Users.less'
 export default class Users extends Component {
   constructor(props) {
     super(props)
@@ -35,12 +35,11 @@ export default class Users extends Component {
         </CardHeader>
         <CardContent>
           {this.props.isAdmin ? (
-            <div className={styles.invite}>
+            <div className={cx(styles.invite, 'invite')}>
               <div className={styles.inviteeEmail}>
                 <Input
                   className={styles.email}
                   name="inviteeEmail"
-                  data-test="inviteeEmail"
                   type="email"
                   placeholder="Email of user to invite"
                   value={this.state.inviteeEmail}
@@ -50,7 +49,6 @@ export default class Users extends Component {
               </div>
 
               <DropDownFieldType
-                data-test="siteRoles"
                 name="siteRoles"
                 defaultValue=""
                 defaultText="- Select Role -"
@@ -132,9 +130,9 @@ export default class Users extends Component {
       inviteeEmail: evt.target.value
     })
   }
-  handleSelectRole = evt => {
+  handleSelectRole = (name, value) => {
     this.setState({
-      inviteeRoleZUID: evt.target.dataset.value
+      inviteeRoleZUID: value
     })
   }
   handleInvite = evt => {

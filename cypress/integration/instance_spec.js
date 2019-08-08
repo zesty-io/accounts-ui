@@ -69,12 +69,11 @@ describe('Instance Flow', () => {
     cy.login()
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[data-test=inviteeEmail]')
-      .click({ force: true })
-      .type('testInvite@zesty.io', { force: true })
+    cy.get('[name=inviteeEmail]')
+      .focus()
+      .type('testInvite@zesty.io')
 
-    cy.get('[data-test=siteRoles]')
-      .first()
+    cy.get('.invite .Select')
       .click({ force: true })
       .find('li')
       .contains('Developer')
@@ -107,7 +106,7 @@ describe('Instance Flow', () => {
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(4) > footer > button'
     ).click()
 
-    cy.get('#blueprintName', { timeout: 10000 }).should('contain', 'BS3')
+    cy.get('#blueprintName', { timeout: 10000 }).should('contain', 'Skeleton')
   })
 
   // // invites a team
