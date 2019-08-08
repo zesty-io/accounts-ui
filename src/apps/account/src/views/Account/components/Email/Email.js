@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import cx from 'classnames'
+
 import { notify } from '../../../../../../../shell/store/notifications'
 import {
   resendVerificationEmail,
@@ -7,13 +8,13 @@ import {
   addEmail
 } from '../../../../store'
 
-import styles from './Email.less'
 import { fetchUserEmails } from '../../../../../../../shell/store/user'
 
 import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
 import { Input } from '@zesty-io/core/Input'
 import { Button } from '@zesty-io/core/Button'
 
+import styles from './Email.less'
 class Email extends Component {
   constructor(props) {
     super()
@@ -33,7 +34,7 @@ class Email extends Component {
   }
   render() {
     return (
-      <Card className={styles.Email}>
+      <Card className={cx(styles.Email, 'email')}>
         <CardHeader>
           <h1>Email</h1>
         </CardHeader>
@@ -59,7 +60,7 @@ class Email extends Component {
               )
             }
           })}
-          {this.state.emails &&
+          {Array.isArray(this.state.emails) &&
             this.state.emails
               .filter(eml => eml.address !== this.props.user.email)
               .map((email, i) => {
@@ -217,12 +218,14 @@ class Email extends Component {
               })
             )
           })
+
           this.setState({
             submitted: false,
             name: '',
             email: ''
           })
-          dispatch(
+
+          this.props.dispatch(
             notify({
               message: 'Email added',
               type: 'success'
@@ -231,7 +234,12 @@ class Email extends Component {
         })
         .catch(err => {
           this.setState({ submitted: false })
-          this.props.dispatch(notify({ message: err.error, type: 'error' }))
+          this.props.dispatch(
+            notify({
+              type: 'error',
+              message: err.error
+            })
+          )
         })
     } else {
       this.props.dispatch(

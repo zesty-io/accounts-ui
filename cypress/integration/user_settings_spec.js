@@ -26,25 +26,22 @@ describe('User Settings Flow', () => {
   })
 
   it('Adds email', () => {
-    cy.get('.AppMain input[name="name"]').type('Email Name')
-    cy.get('.AppMain input[name="email"]').type('testEmail@zesty.io')
-    cy.get(
-      'section.AppMain > section > div > div > article:nth-child(2) > footer > button'
-    ).click()
+    cy.get('[name="email"]').type('testEmail@zesty.io')
+    cy.get('[name="name"]').type('Email Name')
 
-    cy.get('#notificationMessage', { timeout: 3000 }).should(
+    cy.get('.email footer button').click()
+
+    cy.get('#notificationMessage', { timeout: 10000 }).should(
       'contain',
       'Email added'
     )
   })
 
   it('Removes email', () => {
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(2) > main'
-    )
+    cy.get('.email main')
       .children('div')
       .last()
-      .children('i')
+      .children('button')
       .last()
       .click()
 
