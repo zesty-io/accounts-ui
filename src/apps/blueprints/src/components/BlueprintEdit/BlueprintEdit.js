@@ -199,9 +199,14 @@ class BlueprintEdit extends Component {
               })
             )
           })
-          .catch(() => {
+          .catch(err => {
+            console.error(err)
             this.props.dispatch(
-              notify({ message: 'Error fetching blueprints', type: 'error' })
+              notify({
+                type: 'error',
+
+                message: 'Error fetching blueprints'
+              })
             )
           })
       })

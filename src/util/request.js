@@ -43,6 +43,8 @@ export function request(url, opts = {}) {
 
   return fetch(encodeURI(url), opts)
     .then(res => {
+      console.log('fetch', res)
+
       // Success
       if (res.status < 300) {
         try {

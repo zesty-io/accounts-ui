@@ -111,7 +111,7 @@ class Blueprints extends Component {
     const name = this.props.blueprints[blueprint].name
     this.props.dispatch(
       zConfirm({
-        prompt: 'Are you sure you want to delete this blueprint?',
+        prompt: `Are you sure you want to delete the blueprint? ${name}`,
         callback: response => {
           if (response) {
             this.props

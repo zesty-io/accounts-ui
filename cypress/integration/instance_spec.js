@@ -53,10 +53,11 @@ describe('Instance Flow', () => {
     cy.login()
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#editDomainInput')
-      .click({ force: true })
-      .type(`domain-test${timeStamp}.zesty.site`, { force: true })
-    cy.get('#editDomainSave').click({ force: true })
+    cy.get('[name=domain]')
+      .focus()
+      .type(`domain-test${timeStamp}.zesty.site`)
+
+    cy.get('[data-test=saveDomain]').click({ force: true })
 
     cy.get('#notificationMessage').should(
       'contain',
