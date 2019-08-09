@@ -8,18 +8,16 @@ import { saveProfile } from '../../../../../../../shell/store/user'
 
 import { Search } from '@zesty-io/core/Search'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
-import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
-import { Button } from '@zesty-io/core/Button'
+import { ToggleButton } from '@zesty-io/core/ToggleButton'
 
 import styles from './PropertiesHeader.less'
-
 export default connect(state => state)(
   class PropertiesHeader extends Component {
     constructor(props) {
       super(props)
       this.state = {
         eco: props.settings && props.settings.eco,
-        sort: 'name'
+        sort: 0
       }
     }
 
@@ -79,53 +77,35 @@ export default connect(state => state)(
               onChange={this.onSearch}
             />
 
-            <ButtonGroup className={styles.Sort}>
-              <Button
-                title="Sort alphabetically by name"
-                disabled={this.state.sort === 'name'}
-                onClick={() => {
-                  this.setState({ sort: 'name' })
-                  return this.sort('name')
-                }}>
-                <i className={`fas fa-sort-alpha-down`} />
-              </Button>
-              <Button
-                title="Sort by created date"
-                disabled={this.state.sort === 'date'}
-                onClick={() => {
-                  this.setState({ sort: 'date' })
-                  return this.sort('createdAt')
-                }}>
-                <i className={`fas fa-calendar`} />
-              </Button>
-            </ButtonGroup>
+            <ToggleButton
+              className={styles.Sort}
+              title="Switch instance sorting between alphabetical and created date"
+              value={this.state.sort}
+              offValue={<i className={`fas fa-sort-alpha-down`} />}
+              onValue={<i className={`fas fa-calendar`} />}
+              onChange={(name, value) => {
+                this.setState({
+                  sort: value
+                })
+                // if value 0 sort by name else if 1 sort by createdAt
+                this.sort(value ? 'createdAt' : 'name')
+              }}
+            />
 
-            <ButtonGroup className={styles.Layout}>
-              <Button
-                title="View instances as a grid"
-                disabled={this.props.layout === 'grid'}
-                onClick={() => {
-                  this.props.dispatch({
-                    type: 'INSTANCE_LAYOUT',
-                    layout: 'grid'
-                  })
-                  this.props.dispatch(saveProfile())
-                }}>
-                <i className={`fa fa-th`} />
-              </Button>
-              <Button
-                title="View instances as a list"
-                disabled={this.props.layout === 'list'}
-                onClick={() => {
-                  this.props.dispatch({
-                    type: 'INSTANCE_LAYOUT',
-                    layout: 'list'
-                  })
-                  this.props.dispatch(saveProfile())
-                }}>
-                <i className={`fa fa-th-list`} />
-              </Button>
-            </ButtonGroup>
+            <ToggleButton
+              className={styles.Layout}
+              title="Switch instance view between grid and list"
+              value={this.props.layout === 'grid' ? 0 : 1}
+              offValue={<i className={`fa fa-th`} />}
+              onValue={<i className={`fa fa-th-list`} />}
+              onChange={(name, value) => {
+                this.props.dispatch({
+                  type: 'INSTANCE_LAYOUT',
+                  layout: value ? 'list' : 'grid'
+                })
+                this.props.dispatch(saveProfile())
+              }}
+            />
           </div>
         </header>
       )
