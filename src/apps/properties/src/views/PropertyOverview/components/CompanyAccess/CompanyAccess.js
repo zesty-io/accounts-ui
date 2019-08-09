@@ -1,4 +1,5 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
+import cx from 'classnames'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import {
@@ -7,7 +8,6 @@ import {
   removeTeamFromInstance
 } from '../../../../store/sitesTeams'
 
-import styles from './CompanyAccess.less'
 import { notify } from '../../../../../../../shell/store/notifications'
 import { fetchSiteUsers } from '../../../../store/sitesUsers'
 
@@ -15,10 +15,10 @@ import { WithLoader } from '@zesty-io/core/WithLoader'
 import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
 import { AppLink } from '@zesty-io/core/AppLink'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
-
 import { Input } from '@zesty-io/core/Input'
 import { Button } from '@zesty-io/core/Button'
 
+import styles from './CompanyAccess.less'
 export default class CompanyAccess extends Component {
   constructor(props) {
     super(props)
@@ -55,9 +55,10 @@ export default class CompanyAccess extends Component {
                 used to provide an agency with access to manage your website.
                 <AppLink to="/teams">&nbsp;Learn more about teams</AppLink>
               </p>
-              <div className={styles.addCompany}>
+              <div className={styles.addCompany} data-test="teamInvite">
                 <span>
                   <Input
+                    name="teamZUID"
                     placeholder="Enter team ID"
                     onChange={this.handleTeam}
                   />
@@ -107,7 +108,9 @@ export default class CompanyAccess extends Component {
                       <span>{team.description}</span>
                       <span>
                         {this.props.isAdmin && (
-                          <Button onClick={() => this.handleRemove(team)}>
+                          <Button
+                            data-test="removeTeam"
+                            onClick={() => this.handleRemove(team)}>
                             <i
                               className={`fa fa-trash-o ${
                                 this.state.removing
@@ -197,9 +200,9 @@ export default class CompanyAccess extends Component {
       team: evt.target.value
     })
   }
-  handleRole = evt => {
+  handleRole = (name, value) => {
     this.setState({
-      role: evt.target.dataset.value
+      role: value
     })
   }
   handleAddTeam = () => {

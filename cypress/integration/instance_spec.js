@@ -2,7 +2,6 @@ describe('Instance Flow', () => {
   const timeStamp = Date.now()
 
   it('Fails to create an instance with no name', () => {
-    cy.login()
     cy.visit('/instances/create')
 
     cy.get(
@@ -15,7 +14,6 @@ describe('Instance Flow', () => {
   })
 
   it('Creates an instance', () => {
-    cy.login()
     cy.visit('/instances/create')
 
     cy.get('#root > section > section > section > section > div > input').type(
@@ -37,7 +35,6 @@ describe('Instance Flow', () => {
   })
 
   it('Updates an instance name', () => {
-    cy.login()
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
     cy.get('#editInstanceNameSpan').click({ force: true })
@@ -50,23 +47,21 @@ describe('Instance Flow', () => {
   })
 
   it('Adds a domain', () => {
-    cy.login()
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
     cy.get('[name=domain]')
-      .focus()
-      .type(`domain-test${timeStamp}.zesty.site`)
+      .clear({ force: true })
+      .type(`${timeStamp}-test.zesty.site`, { force: true })
 
     cy.get('[data-test=saveDomain]').click({ force: true })
 
     cy.get('#notificationMessage').should(
       'contain',
-      `domain-test${timeStamp}.zesty.site`
+      `${timeStamp}-test.zesty.site`
     )
   })
 
   it('Invites a User', () => {
-    cy.login()
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
     cy.get('[name=inviteeEmail]')
@@ -88,7 +83,6 @@ describe('Instance Flow', () => {
   })
 
   it('Cancels an invite', () => {
-    cy.login()
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
     cy.get('#revoke-button').click({ force: true })
@@ -97,7 +91,6 @@ describe('Instance Flow', () => {
   })
 
   it('Updates an instance blueprint', () => {
-    cy.login()
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
     cy.get('#changeBlueprint').click({ force: true })
@@ -109,34 +102,28 @@ describe('Instance Flow', () => {
     cy.get('#blueprintName', { timeout: 10000 }).should('contain', 'Skeleton')
   })
 
-  // // invites a team
-  // it('Invites a team', () => {
-  //   cy.login()
-  //   cy.wait(2000)
-  //   cy.get('#siteListWrapper > main')
-  //     .find('article')
-  //     .contains(timeStamp)
-  //     .parent()
-  //     .siblings('footer')
-  //     .children('div')
-  //     .children('a')
-  //     .first()
-  //     .click()
-  //   // invite the team
-  // })
+  it('Invites a team', () => {
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-  // it('Updates an instance blueprint', () => {
-  //   cy.login()
-  // cy.wait(2000)
-  // cy.get('#siteListWrapper > main')
-  //   .find('article')
-  //   .contains(timeStamp)
-  //   .parent()
-  //   .siblings('footer')
-  //   .children('div')
-  //   .children('a')
-  //   .first()
-  //   .click()
+    cy.get('[name=teamZUID]').type(Cypress.env('testTeamZUID'), { force: true })
 
-  // })
+    cy.get('[data-test=teamInvite] .Select')
+      .click({ force: true })
+      .find('li')
+      .contains('Developer')
+      .click({ force: true })
+
+    cy.get('[data-test=teamInvite] button').click({ force: true })
+
+    cy.get('#notificationMessage').should('contain', 'Team successfully added')
+  })
+
+  it('Removes a team', () => {
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
+
+    cy.get('[data-test=removeTeam]').click({ force: true })
+    cy.get('#confirmTrue').click()
+
+    cy.get('#notificationMessage').should('contain', 'was removed')
+  })
 })
