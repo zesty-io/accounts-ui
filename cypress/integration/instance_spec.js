@@ -36,7 +36,6 @@ describe('Instance Flow', () => {
 
     cy.get('#editInstanceName', { timeout: 15000 }).click({ force: true })
     cy.get('[name=instanceName')
-      // .click({ force: true })
       .clear({ force: true })
       .type(`TEST EDITED: ${timestamp}`, { force: true })
     cy.get('#saveInstanceName').click({ force: true })

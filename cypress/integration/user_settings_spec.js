@@ -5,7 +5,7 @@ describe('User Settings Flow', () => {
   })
 
   it('Changes name', () => {
-    cy.get('[name="firstName"]')
+    cy.get('[name="firstName"]', { timeout: 15000 })
       .clear()
       .type('FirstName')
 
@@ -24,7 +24,7 @@ describe('User Settings Flow', () => {
   })
 
   it('Adds email', () => {
-    cy.get('[name="email"]').type('testEmail@zesty.io')
+    cy.get('[name="email"]', { timeout: 15000 }).type('testEmail@zesty.io')
     cy.get('[name="name"]').type('Email Name')
 
     cy.get('.email footer button').click()
@@ -36,7 +36,7 @@ describe('User Settings Flow', () => {
   })
 
   it('Removes email', () => {
-    cy.get('.email main')
+    cy.get('.email main', { timeout: 15000 })
       .children('div')
       .last()
       .children('button')
@@ -50,44 +50,25 @@ describe('User Settings Flow', () => {
   })
 
   it('Changes password', () => {
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(2)'
-    ).type(Cypress.env('validPassword'))
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(3)'
-    ).type('newValidPass2')
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(4)'
-    ).type('newValidPass2')
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(3) > footer > button'
-    ).click()
+    cy.get('[name=oldPassword]', { timeout: 15000 }).type(
+      Cypress.env('validPassword')
+    )
+    cy.get('[name=newPassword]').type('newValidPass2')
+    cy.get('[name=confirmNewPassword]').type('newValidPass2')
+    cy.get('[data-test=changePassword]').click()
 
-    cy.wait(2000)
-    //
     // handle logout redirect
-    cy.get('#confirmTrue').click()
-    //
-    // set password back
+    cy.get('#confirmTrue', { timeout: 15000 }).click()
 
+    // set password back
     cy.login(Cypress.env('validEmail'), 'newValidPass2')
     cy.visit('/settings/account')
 
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(2)'
-    ).type('newValidPass2')
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(3)'
-    ).type(Cypress.env('validPassword'))
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(3) > main > input:nth-child(4)'
-    ).type(Cypress.env('validPassword'))
-    cy.get(
-      '#root > section > section.AppMain > section > div > div > article:nth-child(3) > footer > button'
-    ).click()
+    cy.get('[name=oldPassword]').type('newValidPass2')
+    cy.get('[name=newPassword]').type(Cypress.env('validPassword'))
+    cy.get('[name=confirmNewPassword]').type(Cypress.env('validPassword'))
+    cy.get('[data-test=changePassword]').click()
 
-    cy.wait(2000)
-
-    cy.get('#confirmTrue').click()
+    cy.get('#confirmTrue', { timeout: 15000 }).click()
   })
 })

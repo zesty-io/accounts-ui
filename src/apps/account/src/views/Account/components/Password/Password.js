@@ -55,7 +55,7 @@ class Password extends Component {
           />
         </CardContent>
         <CardFooter>
-          <Button onClick={this.handleClick}>
+          <Button data-test="changePassword" onClick={this.handleClick}>
             <i className="fas fa-key" aria-hidden="true" />
             Change Password
           </Button>

@@ -54,7 +54,7 @@ export default class TwoFactorOptions extends Component {
               <form id="TwoFactor">
                 <p className={styles.PhoneNumberLabel}>Phone Number</p>
                 <div className={styles.PhoneNumber}>
-                  <label for="authyPhoneCountryCode">
+                  <label htmlFor="authyPhoneCountryCode">
                     <Input
                       required
                       type="text"
