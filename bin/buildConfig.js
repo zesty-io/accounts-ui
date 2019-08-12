@@ -18,7 +18,6 @@ module.exports = buildConfig = build => {
       COOKIE_NAME: 'APP_SID',
       COOKIE_DOMAIN: '.zesty.io',
       EMAIL_SERVICE: 'https://email.zesty.io/send',
-      LEGACY_ACCOUNTS: 'https://accounts-legacy.zesty.io',
       C_NAME: 'sites2.zesty.zone',
       A_RECORD: '130.211.21.25'
     }
@@ -34,7 +33,6 @@ module.exports = buildConfig = build => {
       COOKIE_NAME: 'STAGE_APP_SID',
       COOKIE_DOMAIN: '.zesty.io',
       EMAIL_SERVICE: 'https://email.zesty.io/send',
-      LEGACY_ACCOUNTS: 'https://stage-accounts.zesty.io',
       C_NAME: 'sites2.zesty.zone',
       A_RECORD: '130.211.21.25'
     }
@@ -47,7 +45,6 @@ module.exports = buildConfig = build => {
       MANAGER_URL_PROTOCOL: 'http://',
       PREVIEW_URL: '-dev.preview.zestyio.localdev:3020',
       PREVIEW_URL_PROTOCOL: 'http://',
-      LEGACY_ACCOUNTS: 'http://accounts.zesty.localdev:3002',
       COOKIE_NAME: 'DEV_APP_SID',
       COOKIE_DOMAIN: '.zesty.localdev',
       C_NAME: 'sites2.zesty.zone',
