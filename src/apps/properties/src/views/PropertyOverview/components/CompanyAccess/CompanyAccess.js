@@ -197,7 +197,7 @@ export default class CompanyAccess extends Component {
   }
   handleTeam = evt => {
     this.setState({
-      team: evt.target.value
+      team: evt.target.value.trim()
     })
   }
   handleRole = (name, value) => {
