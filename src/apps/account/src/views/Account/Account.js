@@ -2,6 +2,7 @@ import { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchUserEmails } from '../../../../../shell/store/user'
+import { notify } from '../../../../../shell/store/notifications'
 
 import Profile from './components/Profile'
 import Email from './components/Email'

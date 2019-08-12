@@ -1,5 +1,4 @@
 import { request } from '../../util/request'
-import { notify } from '../store/notifications'
 
 export function user(
   state = {

@@ -4,6 +4,7 @@ import cx from 'classnames'
 import styles from './InstanceFavorite.less'
 
 import { favoriteSite, saveProfile } from '../../../../../shell/store/user'
+import { notify } from '../../../../../shell/store/notifications'
 
 export default connect()(function InstanceFavorite(props) {
   const action = props.favorite ? 'REMOVE' : 'ADD'
