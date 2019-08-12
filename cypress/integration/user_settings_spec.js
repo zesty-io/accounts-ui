@@ -1,7 +1,5 @@
 describe('User Settings Flow', () => {
-  const timeStamp = Date.now()
-
-  before(function() {
+  beforeEach(function() {
     cy.login()
     cy.visit('/settings/account')
   })

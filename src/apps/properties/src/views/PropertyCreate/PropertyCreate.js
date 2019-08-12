@@ -29,7 +29,10 @@ class PropertyCreate extends Component {
             onChange={this.handleChange}
           />
           <div className={styles.controls}>
-            <Button onClick={this.handleClick} disabled={this.state.submitted}>
+            <Button
+              data-test="createInstance"
+              onClick={this.handleClick}
+              disabled={this.state.submitted}>
               <i className="fa fa-plus" aria-hidden="true" />
               {this.state.submitted
                 ? 'Creating Your Instance'

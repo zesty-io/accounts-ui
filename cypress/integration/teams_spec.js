@@ -1,7 +1,7 @@
 describe('Teams Flow', () => {
   const timeStamp = Date.now()
 
-  before(function() {
+  beforeEach(function() {
     cy.login()
     cy.visit('/teams')
   })

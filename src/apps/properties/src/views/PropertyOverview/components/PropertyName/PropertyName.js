@@ -23,14 +23,14 @@ export default class PropertyName extends Component {
           <div className={styles.EditName}>
             <Input
               value={this.state.name}
-              id="editInstanceNameInput"
+              name="instanceName"
               onChange={evt => {
                 this.setState({
                   name: evt.target.value
                 })
               }}
             />
-            <Button onClick={this.handleNameUpdate} id="editInstanceNameSave">
+            <Button onClick={this.handleNameUpdate} id="saveInstanceName">
               <i className="fa fa-save" />
               Save
             </Button>
@@ -42,7 +42,7 @@ export default class PropertyName extends Component {
         ) : (
           <span
             className={styles.Name}
-            id="editInstanceNameSpan"
+            id="editInstanceName"
             onClick={this.editName}>
             {this.props.name}
             <i className={cx('fa fa-pencil', styles.Edit)} aria-hidden="true" />
