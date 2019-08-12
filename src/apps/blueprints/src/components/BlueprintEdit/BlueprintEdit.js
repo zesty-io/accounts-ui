@@ -170,14 +170,10 @@ class BlueprintEdit extends Component {
               <i className="fa fa-plus" /> Create New Blueprint
             </Button>
           )}
-          <Button
-            disabled={this.state.saving}
-            className={styles.button}
-            onClick={() => {
-              this.props.history.push('/blueprints')
-            }}>
+
+          <AppLink to="/blueprints">
             <i className="fa fa-ban" /> Cancel
-          </Button>
+          </AppLink>
         </ButtonGroup>
       </form>
     )
