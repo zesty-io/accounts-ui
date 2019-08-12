@@ -1,6 +1,10 @@
 describe('Instance Flow', () => {
   const timeStamp = Date.now()
 
+  beforeEach(() => {
+    cy.login()
+  })
+
   it('Fails to create an instance with no name', () => {
     cy.visit('/instances/create')
 

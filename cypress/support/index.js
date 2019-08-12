@@ -18,9 +18,3 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-
-beforeEach(function() {
-  // this runs prior to every test
-  // across all files no matter what
-  cy.login()
-})

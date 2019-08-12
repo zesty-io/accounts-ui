@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import styles from './InviteRow.less'
+import { withRouter } from 'react-router-dom'
+
+import { notify } from '../../../../../../../../../shell/store/notifications'
 
 import {
   fetchSites,
@@ -11,90 +13,86 @@ import {
 import { AppLink } from '@zesty-io/core/AppLink'
 import { Button } from '@zesty-io/core/Button'
 
-export default connect()(function InviteRow(props) {
-  const { site } = props
-  return (
-    <span className={styles.Invite}>
-      <AppLink className={styles.action} to={`/instances/${site.ZUID}`}>
-        {site.name}
-      </AppLink>
-      <Button
-        kind="save"
-        className={styles.action}
-        onClick={() => handleAccept(props)}>
-        <i className="fa fa-check" aria-hidden="true" />
-      </Button>
-      <Button
-        kind="cancel"
-        className={styles.action}
-        onClick={() => handleDecline(props)}>
-        <i className="fa fa-ban" aria-hidden="true" />
-      </Button>
-    </span>
-  )
-})
+import styles from './InviteRow.less'
+export default withRouter(
+  connect()(function InviteRow(props) {
+    const [loading, setLoading] = useState(false)
 
-function handleAccept(props) {
-  props
-    .dispatch(acceptInvite(props.site.inviteZUID))
-    .then(data => {
-      this.props
-        .dispatch(fetchSites())
-        .then(data => {
-          const invitedSite = data.data.filter(site => {
-            return site.ZUID === this.props.site.ZUID
-          })
-          this.props.dispatch(
+    const handleAccept = () => {
+      setLoading(true)
+
+      props
+        .dispatch(acceptInvite(props.site.inviteZUID))
+        .then(_ => {
+          setLoading(false)
+          props.dispatch(
             notify({
-              message: `You accepted your invite to ${this.props.site.name}`,
-              type: 'success',
-              timeout: 6000
+              message: `Invite accepted to ${props.site.name}`,
+              type: 'success'
             })
           )
-          return this.props.history.push(
-            `/instances/${this.props.site.ZUID}?invited=true`
+          props.history.push(`/instances/${props.site.ZUID}?invited=true`)
+          props.dispatch(fetchSites())
+        })
+        .catch(err => {
+          console.error(err)
+          setLoading(false)
+          props.dispatch(
+            notify({
+              type: 'error',
+              message: 'Error accepting invite'
+            })
           )
         })
-        .catch(() => {
-          this.props.dispatch(
+    }
+
+    const handleDecline = () => {
+      setLoading(true)
+      props
+        .dispatch(declineInvite(props.site.inviteZUID))
+        .then(_ => {
+          setLoading(false)
+          props.dispatch(
             notify({
-              message: 'There was a problem fetching your instances',
+              message: `You have declined your invite to ${props.site.name}`,
+              type: 'info'
+            })
+          )
+          props.history.push(`/instances`)
+          props.dispatch(fetchSites())
+        })
+        .catch(err => {
+          console.error(err)
+          setLoading(false)
+          props.dispatch(
+            notify({
+              message: `Error declining invite`,
               type: 'error'
             })
           )
         })
-    })
-    .catch(() => {
-      this.props.dispatch(
-        notify({ message: 'Error accepting invite', type: 'error' })
-      )
-    })
-}
-function handleDecline(props) {
-  this.props
-    .dispatch(declineInvite(this.props.site.inviteZUID))
-    .then(data => {
-      this.props.dispatch(
-        notify({
-          message: `You have declined your invite to ${this.props.site.name}`,
-          type: 'info'
-        })
-      )
-      this.props.dispatch(fetchSites()).catch(() => {
-        this.props.dispatch(
-          notify({
-            message: 'There was a problem fetching your instances',
-            type: 'error'
-          })
-        )
-      })
-    })
-    .catch(() => {
-      this.props.dispatch(
-        notify({
-          message: `Error declining invite`,
-          type: 'error'
-        })
-      )
-    })
-}
+    }
+
+    return (
+      <span className={styles.Invite}>
+        <AppLink className={styles.action} to={`/instances/${props.site.ZUID}`}>
+          {props.site.name}
+        </AppLink>
+        <Button
+          kind="save"
+          className={styles.action}
+          disabled={loading}
+          onClick={handleAccept}>
+          <i className="fa fa-check" aria-hidden="true" />
+        </Button>
+        <Button
+          kind="cancel"
+          className={styles.action}
+          disabled={loading}
+          onClick={handleDecline}>
+          <i className="fa fa-ban" aria-hidden="true" />
+        </Button>
+      </span>
+    )
+  })
+)

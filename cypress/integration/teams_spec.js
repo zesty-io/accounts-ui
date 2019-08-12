@@ -28,10 +28,6 @@ describe('Teams Flow', () => {
       .children('footer button')
       .click()
 
-    // cy.get(
-    //   '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > footer > form > button'
-    // ).click()
-
     cy.get('#notificationMessage', { timeout: 10000 }).should('contain', 'sent')
   })
 
