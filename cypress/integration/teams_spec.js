@@ -12,23 +12,26 @@ describe('Teams Flow', () => {
       'This is a test description of the team and its purpose'
     )
     cy.get('#teamCreateSave').click()
-    cy.get('#notificationMessage').should('contain', 'Team created')
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
+      'contain',
+      'Team created'
+    )
   })
 
   it('Can invite a member', () => {
     cy.get('.teams article')
-      .children('main h3')
-      .contains(timeStamp)
-      .parents('article')
-      .children('footer input[name=inviteeEmail]', {
+      .children('main h3', {
         timeout: 15000 // Wait for members to be loaded after team creation
       })
+      .contains(timeStamp)
+      .parents('article')
+      .children('footer input[name=inviteeEmail]')
       .type('testInvite@zesty.io')
       .parents('article')
       .children('footer button')
       .click()
 
-    cy.get('#notificationMessage', { timeout: 10000 }).should('contain', 'sent')
+    cy.get('#notificationMessage', { timeout: 15000 }).should('contain', 'sent')
   })
 
   it('Can remove an invite', () => {
@@ -42,6 +45,9 @@ describe('Teams Flow', () => {
 
     cy.get('#confirmTrue').click()
 
-    cy.get('#notificationMessage').should('contain', 'successfully')
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
+      'contain',
+      'successfully'
+    )
   })
 })

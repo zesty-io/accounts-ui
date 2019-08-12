@@ -96,7 +96,6 @@ module.exports = buildIndex = build => {
       </style>
       <link rel="icon" type="image/png" href="/favicon.png" />
 
-      <link href="/bundle.${build.data.gitCommit}.core.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.shell.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.properties-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.settings-app.css" type="text/css" rel="stylesheet" />
@@ -171,7 +170,6 @@ module.exports = buildIndex = build => {
       </script>
 
       <script src="/bundle.${build.data.gitCommit}.vendors.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.core.js"></script>
 
       <!-- load sub apps -->
       <script src="/bundle.${build.data.gitCommit}.properties-app.js"></script>
