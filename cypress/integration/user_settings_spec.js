@@ -17,7 +17,7 @@ describe('User Settings Flow', () => {
       'section.AppMain > section > div > div > article:nth-child(1) > footer > button'
     ).click()
 
-    cy.get('#notificationMessage', { timeout: 10000 }).should(
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
       'Name updated'
     )
@@ -29,7 +29,7 @@ describe('User Settings Flow', () => {
 
     cy.get('.email footer button').click()
 
-    cy.get('#notificationMessage', { timeout: 10000 }).should(
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
       'Email added'
     )
@@ -43,7 +43,7 @@ describe('User Settings Flow', () => {
       .last()
       .click()
 
-    cy.get('#notificationMessage', { timeout: 10000 }).should(
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
       'email successfully removed'
     )
