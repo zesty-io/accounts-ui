@@ -21,12 +21,13 @@ export default class UserPendingRow extends PureComponent {
               <Button
                 onClick={() => this.confirm(this.props.inviteZUID)}
                 id={`revoke-button`}>
-                <i className="fa fa-trash-o" aria-hidden="true" />
-                Revoke Invite
+                <i className="fas fa-ban" aria-hidden="true" />
+                Cancel Invite
               </Button>
             ) : null}
           </span>
         ) : null}
+        <span></span>
       </article>
     )
   }
@@ -34,7 +35,7 @@ export default class UserPendingRow extends PureComponent {
   confirm = inviteZUID => {
     this.props.dispatch(
       zConfirm({
-        prompt: 'Are you sure you want to revoke this users invite?',
+        prompt: 'Are you sure you want to cancel this users invite?',
         callback: result => {
           if (result) {
             this.props

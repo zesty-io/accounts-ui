@@ -78,6 +78,7 @@ export default class Users extends Component {
               <h3>Name</h3>
               <h3>Email</h3>
               <h3>Role</h3>
+              <span></span>
             </header>
             <main>
               <WithLoader

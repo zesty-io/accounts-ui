@@ -39,11 +39,7 @@ export default class UserRow extends PureComponent {
                   <DropDownFieldType
                     name="siteRoles"
                     onChange={this.handleSelectRole}
-                    selection={
-                      this.props.siteRoles
-                        .filter(role => role.ZUID === this.props.role.ZUID)
-                        .map(item => item.ZUID)[0]
-                    }
+                    value={this.props.role.ZUID}
                     options={this.props.siteRoles.map(role => {
                       return {
                         value: role.ZUID,
