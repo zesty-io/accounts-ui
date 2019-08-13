@@ -22,13 +22,14 @@ describe('Instance Flow', () => {
 
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(1) > footer > button',
-      { timeout: 15000 }
+      {
+        timeout: 20000 // Instance creation can take a long time
+      }
     ).click()
 
-    cy.get('#siteListWrapper article h1', { timeout: 15000 }).should(
-      'contain',
-      timestamp
-    )
+    cy.get('#siteListWrapper article h1', {
+      timeout: 15000
+    }).should('contain', timestamp)
   })
 
   it('Updates an instance name', () => {
