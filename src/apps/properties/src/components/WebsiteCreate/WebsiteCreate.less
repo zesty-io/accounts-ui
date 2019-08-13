@@ -1,15 +1,20 @@
 @import '~@zesty-io/core/colors.less';
+@import '~@zesty-io/core/typography.less';
+
 .WebsiteCreate {
   background: lighten(#f2f4fb, 2.5%);
-  margin: 1.5rem;
-  max-width: 60rem;
   word-break: break-word;
-
   display: flex;
   flex-direction: column;
-  flex: 0 0 350px;
+  flex: 0 0 450px;
+
   margin: 1rem;
   @supports (display: grid) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 3;
+
     display: grid;
     grid-template-rows: 0fr 2fr 0fr;
     margin: 0;
@@ -28,22 +33,13 @@
     border-bottom: 1px solid #f2f4fb;
     padding: 1rem;
     flex: 1 0 350px;
-    h1 {
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
-    }
-    p:first-child {
-      margin: 0 0 1rem 0;
+    p {
+      margin: 0 0 8px 0;
     }
   }
   footer {
     padding: 1rem;
-    button {
-      width: 100%;
-      text-decoration: none;
-    }
-    .Button {
-      width: 100%;
+    a {
       text-decoration: none;
     }
   }

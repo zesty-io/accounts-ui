@@ -13,7 +13,6 @@
 
   .SectionTitle {
     margin: 28px 0 0 0;
-    // font-size: 28px;
   }
 
   .siteList {
@@ -25,7 +24,7 @@
     @supports (display: grid) {
       display: grid;
       grid-gap: 28px;
-      grid-template-columns: repeat(auto-fill, 350px);
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
       grid-auto-rows: minmax(10rem, auto);
     }
   }

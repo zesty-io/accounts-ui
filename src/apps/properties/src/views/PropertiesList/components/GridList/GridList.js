@@ -85,7 +85,7 @@ export default class GridList extends Component {
           </h2>
 
           <main className={styles.siteList}>
-            <WebsiteCreate first={this.props.sites.length === 0} />
+            {this.props.sites.length === 0 && <WebsiteCreate />}
 
             {this.props.sitesFiltered.length ? (
               this.props.sitesFiltered.map(site => {

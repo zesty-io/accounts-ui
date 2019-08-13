@@ -39,7 +39,7 @@ class App extends Component {
       this.props.dispatch(
         zConfirm({
           prompt:
-            'Are you interested in using developer features, such as access to blueprints? You can change this setting any time in "My Account" under "Preferences"',
+            'Are you interested in using developer features, such as access to blueprints? You can change this any time in your account settings.',
           callback: response => {
             if (response) {
               this.props.dispatch({

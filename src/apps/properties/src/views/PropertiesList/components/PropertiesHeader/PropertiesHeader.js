@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import debounce from 'lodash.debounce'
 
@@ -9,6 +10,7 @@ import { saveProfile } from '../../../../../../../shell/store/user'
 import { Search } from '@zesty-io/core/Search'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
 import { ToggleButton } from '@zesty-io/core/ToggleButton'
+import { Button } from '@zesty-io/core/Button'
 
 import styles from './PropertiesHeader.less'
 export default connect(state => state)(
@@ -76,6 +78,13 @@ export default connect(state => state)(
               onSubmit={this.onSearch}
               onChange={this.onSearch}
             />
+
+            <Link className={styles.CreateInstance} to="/instances/create">
+              <Button kind="save">
+                <i className="fa fa-plus" aria-hidden="true" />
+                Create Instance
+              </Button>
+            </Link>
 
             <ToggleButton
               className={styles.Sort}
