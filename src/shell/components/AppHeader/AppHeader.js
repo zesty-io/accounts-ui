@@ -49,7 +49,10 @@ export default connect(state => {
         <header className={styles.AppHeader}>
           <img className={styles.logo} src="/zesty-z-logo.svg" />
           <nav className={styles.GlobalNav} id="globalNav">
-            <NavLink to="/instances" data-test="instancesNavLink">
+            <NavLink
+              className={styles.sudheadline}
+              to="/instances"
+              data-test="instancesNavLink">
               <i className="fa fa-globe" aria-hidden="true" />
               &nbsp;Instances
               {this.props.userHasSiteInvites ? (
@@ -60,7 +63,10 @@ export default connect(state => {
               ) : null}
             </NavLink>
             {this.props.user.prefs.teamOptions !== 0 && (
-              <NavLink to="/teams" data-test="teamsNavLink">
+              <NavLink
+                className={styles.sudheadline}
+                to="/teams"
+                data-test="teamsNavLink">
                 <i className="fa fa-users" aria-hidden="true" />
                 &nbsp;Teams
                 {this.props.userHasTeamInvites ? (
@@ -72,7 +78,10 @@ export default connect(state => {
               </NavLink>
             )}
             {this.props.user.prefs.devOptions === 1 && (
-              <NavLink to="/blueprints" data-test="blueprintsNavLink">
+              <NavLink
+                className={styles.sudheadline}
+                to="/blueprints"
+                data-test="blueprintsNavLink">
                 <i className="fa fa-map" aria-hidden="true" />
                 &nbsp;Blueprints
               </NavLink>

@@ -46,8 +46,8 @@ export default class GridList extends Component {
 
         {this.props.sitesInvited.length ? (
           <React.Fragment>
-            <h2 className={cx(styles.display, styles.SectionTitle)}>
-              <i className="fa fa-envelope" aria-hidden="true" />
+            <h2 className={cx(styles.subheadline, styles.SectionTitle)}>
+              <i className="fas fa-envelope" aria-hidden="true" />
               &nbsp;Invites
             </h2>
             <main className={styles.siteList}>
@@ -60,7 +60,7 @@ export default class GridList extends Component {
 
         {this.props.sitesFavorite.length ? (
           <React.Fragment>
-            <h2 className={cx(styles.display, styles.SectionTitle)}>
+            <h2 className={cx(styles.subheadline, styles.SectionTitle)}>
               <i className="fa fa-star" aria-hidden="true" />
               &nbsp;Favorites
             </h2>
@@ -79,7 +79,7 @@ export default class GridList extends Component {
         ) : null}
 
         <React.Fragment>
-          <h2 className={cx(styles.display, styles.SectionTitle)}>
+          <h2 className={cx(styles.subheadline, styles.SectionTitle)}>
             <i className="fa fa-th" aria-hidden="true" />
             &nbsp;All Instances
           </h2>

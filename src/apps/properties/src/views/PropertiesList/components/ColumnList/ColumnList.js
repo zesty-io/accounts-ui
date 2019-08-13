@@ -26,7 +26,7 @@ export default function ColumnList(props) {
         {props.sitesInvited.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
-              <i className="fa fa-envelope-o" aria-hidden="true" />
+              <i className="fa fa-envelope" aria-hidden="true" />
               &nbsp;Invites
             </h2>
             {props.sitesInvited.map(site => {
@@ -38,7 +38,7 @@ export default function ColumnList(props) {
         {props.sitesFavorite.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
-              <i className="fa fa-star-o" aria-hidden="true" />
+              <i className="fa fa-star" aria-hidden="true" />
               &nbsp;Favorites
             </h2>
             {props.sitesFavorite.map(site => (
