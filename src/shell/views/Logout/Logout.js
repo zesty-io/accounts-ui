@@ -14,7 +14,7 @@ export default withRouter(
         this.props.dispatch(logout()).then(_ => {
           setTimeout(() => {
             window.location = '/login'
-          }, 2000)
+          }, 1000)
         })
       }
       render() {
