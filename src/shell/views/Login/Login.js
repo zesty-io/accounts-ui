@@ -173,7 +173,7 @@ class Login extends Component {
           this.setState({
             error: true,
             submitted: false,
-            message: 'There was a problem logging you in'
+            message: 'There was a problem signing you in'
           })
           this.props.dispatch({
             type: 'FETCH_AUTH_ERROR',
@@ -193,7 +193,7 @@ class Login extends Component {
           this.setState({
             error: true,
             submitted: false,
-            message: 'There was a problem logging you in'
+            message: 'There was a problem signing you in'
           })
         }
       })

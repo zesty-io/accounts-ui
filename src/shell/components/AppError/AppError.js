@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import styles from './AppError.less'
 
 import { Url } from '@zesty-io/core/Url'

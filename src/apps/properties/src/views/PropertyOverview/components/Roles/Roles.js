@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { Route } from 'react-router'
 
 import { notify } from '../../../../../../../shell/store/notifications'

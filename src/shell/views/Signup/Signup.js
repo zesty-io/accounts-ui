@@ -134,12 +134,12 @@ class Signup extends Component {
                   disabled={this.state.submitted}>
                   {this.state.submitted ? (
                     <React.Fragment>
-                      <i className="fa fa-hourglass-o" aria-hidden="true" />
+                      <i className="fas fa-hourglass" aria-hidden="true" />
                       &nbsp;Creating Your Account
                     </React.Fragment>
                   ) : (
                     <React.Fragment>
-                      <i className="fa fa-plus" aria-hidden="true" />
+                      <i className="fas fa-plus" aria-hidden="true" />
                       &nbsp;Create Your Account
                     </React.Fragment>
                   )}

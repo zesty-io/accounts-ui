@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import { Url } from '@zesty-io/core/Url'
+import { Loader } from '@zesty-io/core/Loader'
 
 import { logout } from '../../store/auth'
 
@@ -11,21 +11,20 @@ export default withRouter(
   connect(state => state)(
     class Logout extends Component {
       componentDidMount() {
-        this.props.dispatch(logout())
+        this.props.dispatch(logout()).then(_ => {
+          setTimeout(() => {
+            window.location = '/login'
+          }, 2000)
+        })
       }
       render() {
         return (
           <section className={styles.LogoutWrap}>
             <div className={styles.Logout}>
-              <header>
-                <Url href="https://zesty.io" title="https://zesty.io">
-                  <img src="/zesty-io-logo.svg" height="70px" />
-                </Url>
-              </header>
-
               <main className={styles.gridSingle}>
                 <div className={styles.createAccount}>
-                  <p>logging you out...</p>
+                  <p className={styles.display}>Signing Out</p>
+                  <Loader />
                 </div>
               </main>
             </div>

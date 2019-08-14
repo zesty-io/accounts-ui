@@ -81,19 +81,13 @@ export function login(email, password) {
 
 export function logout() {
   return dispatch => {
-    request(`${CONFIG.API_AUTH}/logout`)
-      .then(json => {
-        dispatch({
-          type: 'LOGOUT'
-        })
+    return request(`${CONFIG.API_AUTH}/logout`).catch(err => {
+      console.error(err)
+      dispatch({
+        type: 'FETCH_AUTH_ERROR',
+        auth: false,
+        err
       })
-      .catch(err => {
-        console.error(err)
-        dispatch({
-          type: 'FETCH_AUTH_ERROR',
-          auth: false,
-          err
-        })
-      })
+    })
   }
 }

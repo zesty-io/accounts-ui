@@ -131,7 +131,6 @@ module.exports = buildIndex = build => {
       <main id="root">
         <div id="appBoot">
           <div id="aligner">
-            <h1>Starting Zesty.io</h1>
             <div class="loader">
               <span class="bar"></span>
               <span class="bar"></span>
