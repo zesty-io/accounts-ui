@@ -2,8 +2,10 @@ import React, { PureComponent } from 'react'
 import PropertyName from '../PropertyName'
 import Domain from '../Domain'
 
-import styles from './Meta.less'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Url } from '@zesty-io/core/Url'
 
+import styles from './Meta.less'
 const formatDate = date => {
   if (!date) {
     return ''
@@ -19,7 +21,8 @@ export default class Meta extends PureComponent {
       <Card className={styles.Meta}>
         <CardHeader className={styles.CardHeader}>
           <h2>
-            <i className="fa fa-info-circle" aria-hidden="true" />&nbsp;
+            <i className="fa fa-info-circle" aria-hidden="true" />
+            &nbsp;
             <PropertyName
               siteZUID={this.props.site.ZUID}
               name={this.props.site.name}
@@ -78,12 +81,9 @@ export default class Meta extends PureComponent {
           <Url
             className={styles.manager}
             target="_blank"
-            href={`${CONFIG.MANAGER_URL_PROTOCOL}${
-              this.props.site.randomHashID
-            }${CONFIG.MANAGER_URL}/#!/config/settings/general/`}
-          >
-            <i className="fa fa-external-link" aria-hidden="true" />&nbsp;Open
-            Instance Settings
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}/#!/config/settings/general/`}>
+            <i className="fa fa-external-link" aria-hidden="true" />
+            &nbsp;Open Instance Settings
           </Url>
         </CardContent>
       </Card>

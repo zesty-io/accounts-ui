@@ -10,16 +10,21 @@
 //
 //
 // -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  cy.visit(Cypress.env('ACCOUNTS_UI'))
-  cy.get(
-    '#root > section > div > main > form > label:nth-child(1) > input'
-  ).type(email || Cypress.env('validEmail'))
-  cy.get(
-    '#root > section > div > main > form > label:nth-child(2) > input'
-  ).type(password || Cypress.env('validPassword'))
-  cy.get('#root > section > div > main > form > button').click()
+Cypress.Commands.add('login', (email, pass) => {
+  const formBody = new FormData()
+
+  formBody.append('email', email || Cypress.env('validEmail'))
+  formBody.append('password', pass || Cypress.env('validPassword'))
+
+  return fetch(`${Cypress.env('API_AUTH')}/login`, {
+    method: 'POST',
+    credentials: 'include',
+    body: formBody
+  })
+    .then(res => res.json())
+    .then(json => json.data.data)
 })
+
 //
 //
 // -- This is a child command --

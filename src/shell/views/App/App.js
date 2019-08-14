@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
@@ -25,6 +25,8 @@ import { zConfirm } from '../../store/confirm'
 import { verifyAuth } from '../../store/auth'
 import { notify } from '../../store/notifications'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -37,7 +39,7 @@ class App extends Component {
       this.props.dispatch(
         zConfirm({
           prompt:
-            'Are you interested in using developer features, such as access to blueprints? You can change this setting any time in "My Account" under "Preferences"',
+            'Are you interested in using developer features, such as access to blueprints? You can change this any time in your account settings.',
           callback: response => {
             if (response) {
               this.props.dispatch({
@@ -67,7 +69,7 @@ class App extends Component {
   }
   render() {
     return (
-      <section className={styles.AppShell}>
+      <section className={cx(styles.AppShell, styles.bodyText)}>
         <AppHeader />
         <AppError user={this.props.user}>
           <section className={cx('AppMain', styles.AppMain)}>
@@ -80,7 +82,6 @@ class App extends Component {
               <Redirect exact from="/" to="/instances" />
               <Redirect exact from="/login" to="/instances" />
               <Redirect from="/z/*" to="/instances" />
-              <Route path="/logout" component={Logout} />
               <Route component={NotFound} />
             </Switch>
           </section>
@@ -92,34 +93,28 @@ class App extends Component {
   }
 }
 
-class VerifyUser extends Component {
-  render() {
-    if (this.props.verifiedEmails) {
-      return this.props.children
-    } else {
-      return <Redirect to="verify-email" />
-    }
-  }
-}
-
 class LoadUser extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      loadingUser: true
-    }
+  __mounted = false
+
+  state = {
+    loadingUser: true
   }
+
   componentDidMount() {
+    this.__mounted = true
     this.props
       .dispatch(fetchUser(this.props.userZUID))
       .then(user => {
-        Raven.setUserContext(user)
-        bugsnagClient.user = user
-        this.setState({
-          loadingUser: false
-        })
+        if (this.__mounted) {
+          Raven.setUserContext(user)
+          bugsnagClient.user = user
+          this.setState({
+            loadingUser: false
+          })
+        }
       })
       .catch(err => {
+        console.error(err)
         this.props.dispatch(
           notify({
             message: `Error fetching user`,
@@ -127,6 +122,9 @@ class LoadUser extends Component {
           })
         )
       })
+  }
+  componentWillUnmount() {
+    this.__mounted = false
   }
   render() {
     if (this.props.auth) {
@@ -143,34 +141,30 @@ class LoadUser extends Component {
   }
 }
 
-class Shell extends Component {
-  render() {
-    return (
-      <React.Fragment>
-        <Switch>
-          <Route path="/login/2fa" component={TwoFactor} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/reset-password-confirm" component={ResetPasswordEnd} />
-          <Route path="/reset-password" component={ResetPasswordStart} />
-          <Route path="/verify-email" component={VerifyEmail} />
-          <Route path="/resend-email" component={ResendEmail} />
+export default connect(state => state)(function Shell(props) {
+  return (
+    <React.Fragment>
+      <Switch>
+        <Route path="/logout" component={Logout} />
+        <Route path="/login/2fa" component={TwoFactor} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/reset-password-confirm" component={ResetPasswordEnd} />
+        <Route path="/reset-password" component={ResetPasswordStart} />
+        <Route path="/verify-email" component={VerifyEmail} />
+        <Route path="/resend-email" component={ResendEmail} />
 
-          <LoadUser
-            auth={this.props.auth.valid}
-            userZUID={this.props.user.ZUID}
-            dispatch={this.props.dispatch}>
-            <VerifyUser
-              verifiedEmails={
-                this.props.user.verifiedEmails &&
-                this.props.user.verifiedEmails.length
-              }>
-              <App user={this.props.user} dispatch={this.props.dispatch} />
-            </VerifyUser>
-          </LoadUser>
-        </Switch>
-      </React.Fragment>
-    )
-  }
-}
-export default connect(state => state)(Shell)
+        <LoadUser
+          auth={props.auth.valid}
+          userZUID={props.user.ZUID}
+          dispatch={props.dispatch}>
+          {props.user.verifiedEmails && props.user.verifiedEmails.length ? (
+            <App user={props.user} dispatch={props.dispatch} />
+          ) : (
+            <Redirect to="/verify-email" />
+          )}
+        </LoadUser>
+      </Switch>
+    </React.Fragment>
+  )
+})

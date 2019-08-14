@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import cx from 'classnames'
 import qs from 'qs'
 
 import styles from './Signup.less'
@@ -8,7 +9,10 @@ import styles from './Signup.less'
 import { request } from '../../../util/request'
 import { login } from '../../store/auth'
 
-import AppLink from '../../../core/AppLink'
+import { Input } from '@zesty-io/core/Input'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
 class Signup extends Component {
   constructor(props) {
@@ -40,113 +44,124 @@ class Signup extends Component {
   }
   render() {
     return (
-      <section className={styles.Signup}>
-        <form
-          name="signup"
-          className={styles.SignupForm}
-          onSubmit={this.handleSignup}>
-          <Url href="https://zesty.io" title="https://zesty.io">
-            <img src="/zesty-io-logo.svg" height="70px" />
-          </Url>
+      <section className={cx(styles.Signup, styles.bodyText)}>
+        <div className={styles.FormWrapper}>
+          <header className={styles.Logo}>
+            <Url href="https://zesty.io" title="https://zesty.io">
+              <img src="/zesty-io-logo.svg" height="70px" />
+            </Url>
+          </header>
+          <main>
+            <form
+              name="signup"
+              className={styles.SignupForm}
+              onSubmit={this.handleSignup}>
+              <label>
+                <p>Email Address</p>
+                <Input
+                  required
+                  autoFocus
+                  className={styles.input}
+                  type="email"
+                  name="email"
+                  placeholder="e.g. hello@zesty.io"
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <p>First Name</p>
+                <Input
+                  required
+                  className={styles.input}
+                  type="text"
+                  name="firstName"
+                  placeholder="Zesty"
+                  value={this.state.firstName}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <p>Last Name</p>
+                <Input
+                  required
+                  className={styles.input}
+                  type="text"
+                  name="lastName"
+                  value={this.state.lastName}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label>
+                <p>Password</p>
+                <small>
+                  Minimum 8 characters. At least one number. A combination of
+                  lower and uppercase letters.
+                </small>
+                <Input
+                  required
+                  className={styles.input}
+                  type="password"
+                  name="pass"
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
+                  value={this.state.pass}
+                  onChange={this.handleChange}
+                />
+              </label>
+              <label className={styles.eula}>
+                <Input
+                  required
+                  className={styles.checkbox}
+                  type="checkbox"
+                  name="eula"
+                  value={this.state.eula}
+                  onChange={this.handleChange}
+                />
+                <span>
+                  I have read and agree to the{' '}
+                  <Url
+                    href="https://www.zesty.io/en-us/about/end-user-license-agreement/"
+                    target="_blank">
+                    <abbr title="End User License Agreement">EULA</abbr>
+                  </Url>
+                </span>
+              </label>
 
-          <label>
-            <p>Email Address</p>
-            <Input
-              required
-              autoFocus
-              className={styles.input}
-              type="email"
-              name="email"
-              placeholder="e.g. hello@zesty.io"
-              value={this.state.email}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            <p>First Name</p>
-            <Input
-              required
-              className={styles.input}
-              type="text"
-              name="firstName"
-              placeholder="Zesty"
-              value={this.state.firstName}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            <p>Last Name</p>
-            <Input
-              required
-              className={styles.input}
-              type="text"
-              name="lastName"
-              value={this.state.lastName}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            <p>Password</p>
-            <small>
-              Minimum 8 characters. At least one number. Both lower and
-              uppercase letters.
-            </small>
-            <Input
-              required
-              className={styles.input}
-              type="password"
-              name="pass"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
-              value={this.state.pass}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label className={styles.eula}>
-            <Input
-              required
-              className={styles.checkbox}
-              type="checkbox"
-              name="eula"
-              checked={this.state.eula}
-              onChange={this.handleChange}
-            />
-            <span>
-              I have read and agree to the{' '}
-              <Url
-                href="https://www.zesty.io/en-us/about/end-user-license-agreement/"
-                target="_blank">
-                <abbr title="End User License Agreement">EULA</abbr>
-              </Url>
-            </span>
-          </label>
+              <div className={styles.Actions}>
+                <Button
+                  type="submit"
+                  name="submit"
+                  disabled={this.state.submitted}>
+                  {this.state.submitted ? (
+                    <React.Fragment>
+                      <i className="fas fa-hourglass" aria-hidden="true" />
+                      &nbsp;Creating Your Account
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <i className="fas fa-plus" aria-hidden="true" />
+                      &nbsp;Create Your Account
+                    </React.Fragment>
+                  )}
+                </Button>
+              </div>
 
-          <div className={styles.Actions}>
-            <Button type="submit" disabled={this.state.submitted}>
-              {this.state.submitted ? (
-                <React.Fragment>
-                  <i className="fa fa-hourglass-o" aria-hidden="true" />
-                  &nbsp;Creating Your Account
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <i className="fa fa-plus" aria-hidden="true" />
-                  &nbsp;Create Your Account
-                </React.Fragment>
-              )}
-            </Button>
-            <AppLink to="/login">
-              Log In&nbsp;
-              <i className="fa fa-sign-in" aria-hidden="true" />
-            </AppLink>
-          </div>
-
-          {this.state.message ? (
-            <p className={styles.error}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />
-              &nbsp;{this.state.message}
-            </p>
-          ) : null}
-        </form>
+              {this.state.message ? (
+                <p className={styles.error}>
+                  <i
+                    className="fa fa-exclamation-triangle"
+                    aria-hidden="true"
+                  />
+                  &nbsp;{this.state.message}
+                </p>
+              ) : null}
+            </form>
+          </main>
+          <footer className={styles.Login}>
+            <p>Already have an account?</p>
+            <AppLink to="/login">Sign In</AppLink>
+          </footer>
+        </div>
       </section>
     )
   }

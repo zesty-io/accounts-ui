@@ -8,6 +8,8 @@ import WebsiteCard from '../../../../components/WebsiteCard'
 import WebsiteCreate from '../../../../components/WebsiteCreate'
 import WebsiteInvite from '../../../../components/WebsiteInvite'
 
+import { Button } from '@zesty-io/core/Button'
+
 export default class GridList extends Component {
   constructor(props) {
     super(props)
@@ -44,8 +46,8 @@ export default class GridList extends Component {
 
         {this.props.sitesInvited.length ? (
           <React.Fragment>
-            <h2 className={styles.SectionTitle}>
-              <i className="fa fa-envelope-o" aria-hidden="true" />
+            <h2 className={cx(styles.subheadline, styles.SectionTitle)}>
+              <i className="fas fa-envelope" aria-hidden="true" />
               &nbsp;Invites
             </h2>
             <main className={styles.siteList}>
@@ -58,8 +60,8 @@ export default class GridList extends Component {
 
         {this.props.sitesFavorite.length ? (
           <React.Fragment>
-            <h2 className={styles.SectionTitle}>
-              <i className="fa fa-star-o" aria-hidden="true" />
+            <h2 className={cx(styles.subheadline, styles.SectionTitle)}>
+              <i className="fa fa-star" aria-hidden="true" />
               &nbsp;Favorites
             </h2>
             <main className={cx(styles.siteList, styles.Favorites)}>
@@ -77,13 +79,13 @@ export default class GridList extends Component {
         ) : null}
 
         <React.Fragment>
-          <h2 className={styles.SectionTitle}>
+          <h2 className={cx(styles.subheadline, styles.SectionTitle)}>
             <i className="fa fa-th" aria-hidden="true" />
             &nbsp;All Instances
           </h2>
 
           <main className={styles.siteList}>
-            <WebsiteCreate first={this.props.sites.length === 0} />
+            {this.props.sites.length === 0 && <WebsiteCreate />}
 
             {this.props.sitesFiltered.length ? (
               this.props.sitesFiltered.map(site => {

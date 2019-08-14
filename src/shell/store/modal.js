@@ -1,13 +1,13 @@
-const initialState = { isOpen: false };
+const initialState = { isOpen: false }
 
 export function modal(state = initialState, action) {
   switch (action.type) {
-    case "NEW_MODAL":
-      return { ...state, isOpen: true, ...action };
-    case "REMOVE_MODAL":
-      return { isOpen: false };
+    case 'NEW_MODAL':
+      return { ...state, isOpen: true, ...action }
+    case 'REMOVE_MODAL':
+      return { isOpen: false }
     default:
-      return state;
+      return state
   }
 }
 
@@ -16,13 +16,13 @@ export function openModal(data) {
   //   throw new Error("Cannot trigger modal without a component");
   // }
   return {
-    type: "NEW_MODAL",
+    type: 'NEW_MODAL',
     data
-  };
+  }
 }
 
 export function closeModal() {
   return {
-    type: "REMOVE_MODAL"
-  };
+    type: 'REMOVE_MODAL'
+  }
 }

@@ -3,6 +3,10 @@ import styles from './Blueprint.less'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
+
 export default class Blueprint extends PureComponent {
   render() {
     return (
@@ -11,16 +15,16 @@ export default class Blueprint extends PureComponent {
           <Card className={styles.Blueprint}>
             <CardHeader>
               <h2>
-                <i className="fa fa-file-code-o" aria-hidden="true" />
+                <i className="fas fa-file-code" aria-hidden="true" />
                 &nbsp;Blueprint
               </h2>
               {this.props.isAdmin ? (
                 <Button
                   className={styles.Button}
-                  type="cancel"
+                  kind="cancel"
                   id="changeBlueprint"
                   onClick={this.handleChangeBlueprint}>
-                  <i className="fa fa-file-code-o" aria-hidden="true" />
+                  <i className="fas fa-file-code" aria-hidden="true" />
                   &nbsp;Change Blueprint
                 </Button>
               ) : null}
@@ -40,7 +44,7 @@ export default class Blueprint extends PureComponent {
 
               {this.props.blueprint.githubURL ? (
                 <Url href={this.props.blueprint.githubURL} target="_blank">
-                  <i className="fa fa-github" aria-hidden="true" />
+                  <i className="fab fa-github" aria-hidden="true" />
                   View On GitHub
                 </Url>
               ) : null}

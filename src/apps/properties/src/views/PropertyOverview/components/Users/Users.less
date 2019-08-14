@@ -1,21 +1,32 @@
-@import '../../../../../../../shell/styles/colors.less';
+@import '~@zesty-io/core/colors.less';
 
 .Users {
   margin: 0 0 1.5rem;
   .invite {
+    align-items: center;
     display: grid;
-    grid-gap: 0.4rem;
-    justify-content: end;
-    grid-template-columns: 1fr 0.5fr 0.4fr;
-    padding: 1rem 0;
+    grid-auto-flow: row;
+    grid-template-columns: 1fr 300px 120px;
+    grid-gap: 8px;
+    padding: 16px 0;
+
+    .inviteeEmail {
+      input {
+        display: block;
+        width: 100%;
+      }
+    }
   }
   .UserList {
     display: grid;
     padding: 1rem 0 0;
     header {
+      align-items: center;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      padding: 0 0.5rem 0.5rem;
+      grid-auto-flow: row;
+      grid-template-columns: 1fr 2fr 200px 40px;
+      grid-gap: 8px;
+
       h3 {
         font-size: 1em;
       }

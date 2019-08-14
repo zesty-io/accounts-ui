@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../shell/store/notifications'
 import {
@@ -6,32 +6,31 @@ import {
   saveProfile
 } from '../../../../../../../shell/store/user'
 
-import styles from './Profile.less'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
 
+import styles from './Profile.less'
 class Profile extends Component {
-  constructor() {
-    super()
-    this.state = {
-      submitted: false
-    }
+  state = {
+    submitted: false
   }
+
   render() {
     return (
-      <Card>
+      <Card className={styles.Profile}>
         <CardHeader>
           <h1>Your Profile</h1>
         </CardHeader>
-        <CardContent className={styles.Profile}>
+        <CardContent>
           <div className={styles.gravatar}>
             <h4>Gravatar</h4>
             <img
               className={styles.avatar}
-              src={`https://www.gravatar.com/avatar/${
-                this.props.profile.emailHash
-              }?d=mm&s=80`}
+              src={`https://www.gravatar.com/avatar/${this.props.profile.emailHash}?d=mm&s=80`}
             />
           </div>
-          <h4>User Name</h4>
+          {/* <h4>User Name</h4> */}
           <Input
             type="text"
             value={this.props.profile.firstName}
@@ -52,7 +51,7 @@ class Profile extends Component {
             onClick={this.handleClick}
             className={styles.ProfileSave}
             disabled={this.state.submitted}>
-            <i className="fa fa-floppy-o" aria-hidden="true" />
+            <i className="fas fa-save" aria-hidden="true" />
             Update User Name
           </Button>
         </CardFooter>
@@ -67,9 +66,7 @@ class Profile extends Component {
       .then(data => {
         this.props.dispatch(
           notify({
-            message: `Name updated to ${this.props.profile.firstName} ${
-              this.props.profile.lastName
-            }`,
+            message: `Name updated to ${this.props.profile.firstName} ${this.props.profile.lastName}`,
             type: 'success'
           })
         )

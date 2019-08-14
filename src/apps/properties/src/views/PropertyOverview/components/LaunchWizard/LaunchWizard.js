@@ -1,10 +1,14 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import styles from './LaunchWizard.less'
 
 import { checkDNS } from '../../../../store/sites'
 
 import Domain from '../Domain'
 import { notify } from '../../../../../../../shell/store/notifications'
+
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
 export default class LaunchWizard extends Component {
   state = {
@@ -70,7 +74,7 @@ export default class LaunchWizard extends Component {
             <li className={styles.confirm}>
               Confirm your instance is live
               <Button
-                type="save"
+                kind="save"
                 onClick={this.handleCheckDNS}
                 disabled={this.state.submitted}>
                 {this.state.isVerified ? (

@@ -1,10 +1,12 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../../../shell/store/notifications'
 import { createRole, getRole } from '../../../../../../store/sitesRoles'
 
-import styles from './RoleCreate.less'
+import { Select, Option } from '@zesty-io/core/Select'
+import { Button } from '@zesty-io/core/Button'
 
+import styles from './RoleCreate.less'
 const today = () => {
   const newDate = new Date()
   return `${newDate.getFullYear()}-${
@@ -17,8 +19,6 @@ const today = () => {
 class RoleCreate extends Component {
   constructor(props) {
     super(props)
-
-    console.log('RoleCreate', props)
 
     this.state = {
       submitted: false,
@@ -44,7 +44,7 @@ class RoleCreate extends Component {
 
         <label className={styles.Base}>
           Base Role
-          <Select onSelect={this.selectBaseRole}>
+          <Select name="roles" onChange={this.selectBaseRole}>
             <Option key="default" value="" text="Select Role" />
             {this.props.systemRoles.map(role => {
               return (

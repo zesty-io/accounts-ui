@@ -14,10 +14,16 @@ import { fetchTeamInstances } from '../../store/teamInstances'
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
 
-import AppLink from '../../../../../core/AppLink'
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { TextFieldType } from '@zesty-io/core/TextFieldType'
+import { TextareaFieldType } from '@zesty-io/core/TextareaFieldType'
+import { Input } from '@zesty-io/core/Input'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
 
 import styles from './TeamCard.less'
-
 export default class TeamCard extends Component {
   state = {
     name: this.props.team.name,
@@ -62,9 +68,9 @@ export default class TeamCard extends Component {
     return (
       <Card className={styles.TeamCard}>
         <CardHeader className={styles.CardHeader}>
-          <Button
+          <i
+            className={cx(styles.copy, 'fa fa-clipboard')}
             title="Click to copy team ID"
-            className={styles.Copy}
             onClick={e => {
               const input = document.createElement('input')
               document.body.appendChild(input)
@@ -87,10 +93,9 @@ export default class TeamCard extends Component {
                   message: `Copied team ID ${team.ZUID} to your clipboard`
                 })
               )
-            }}>
-            <i className={cx(styles.copy, 'fa fa-clipboard')} />
-            Copy ID
-          </Button>
+            }}
+          />
+          &nbsp;
           <span className={styles.ZUID}>{team.ZUID}</span>
         </CardHeader>
         <CardContent className={styles.CardContent}>
@@ -99,7 +104,7 @@ export default class TeamCard extends Component {
               <i
                 className={cx(
                   styles.Edit,
-                  this.state.editing ? 'fa fa-ban' : 'fa fa-cog'
+                  this.state.editing ? 'fas fa-window-close' : 'fas fa-cog'
                 )}
                 title="Edit team settings"
                 onClick={this.handleEdit}
@@ -107,36 +112,32 @@ export default class TeamCard extends Component {
             )}
             {this.state.editing ? (
               <div className={styles.Editing}>
-                <label>
-                  Team Name:
-                  <Input
-                    type="text"
-                    value={this.state.name}
-                    onChange={this.handleChange}
-                    name="name"
-                  />
-                </label>
-                <label>
-                  Team Description:
-                  <textarea
-                    value={this.state.description}
-                    onChange={this.handleChange}
-                    name="description"
-                  />
-                </label>
-                <ButtonGroup>
+                <TextFieldType
+                  name="name"
+                  label="Team Name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                />
+                <TextareaFieldType
+                  name="description"
+                  label="Team Description"
+                  value={this.state.description}
+                  onChange={this.handleChange}
+                />
+
+                <ButtonGroup className={styles.actions}>
                   <Button
                     className={styles.Save}
-                    type="save"
+                    kind="secondary"
                     onClick={this.handleUpdateTeam}>
-                    <i className="fa fa-floppy-o" aria-hidden="true" />
+                    <i className="fas fa-save" aria-hidden="true" />
                     Update Team
                   </Button>
                   <Button
                     className={styles.Delete}
                     type="warn"
                     onClick={this.handleDeleteTeam}>
-                    <i className="fa fa-trash-o" aria-hidden="true" />
+                    <i className="fas fa-trash-alt" aria-hidden="true" />
                   </Button>
                 </ButtonGroup>
               </div>
@@ -148,11 +149,10 @@ export default class TeamCard extends Component {
             )}
           </section>
 
-          <section className={styles.Members}>
-            <h3>Owners</h3>
-            <WithLoader
-              condition={this.state.loaded}
-              message="Loading team owners">
+          <WithLoader condition={this.state.loaded}>
+            <section className={styles.Members}>
+              <h3>Owners</h3>
+
               {this.props.members.length
                 ? this.props.members
                     .filter(
@@ -172,14 +172,10 @@ export default class TeamCard extends Component {
                       )
                     })
                 : 'Team is missing an owner'}
-            </WithLoader>
-          </section>
+            </section>
 
-          <section className={styles.Members}>
-            <h3>Members</h3>
-            <WithLoader
-              condition={this.state.loaded}
-              message="Loading team members">
+            <section className={styles.Members}>
+              <h3>Members</h3>
               {this.props.members.length
                 ? this.props.members
                     .filter(
@@ -226,14 +222,10 @@ export default class TeamCard extends Component {
                       )
                     })
                 : 'No members for this team'}
-            </WithLoader>
-          </section>
+            </section>
 
-          <section className={styles.Instances}>
-            <h3>Instances</h3>
-            <WithLoader
-              condition={this.state.loaded}
-              message="Loading team instances">
+            <section className={styles.Instances}>
+              <h3>Instances</h3>
               {instances && Object.keys(instances).length
                 ? Object.keys(instances).map(instance => {
                     return (
@@ -248,25 +240,26 @@ export default class TeamCard extends Component {
                     )
                   })
                 : 'No instances for this team'}
-            </WithLoader>
-          </section>
+            </section>
+          </WithLoader>
         </CardContent>
-        <CardFooter>
+        <CardFooter className={styles.CardFooter}>
           {this.state.isAdmin && (
             <form className={styles.CardInvite} onSubmit={this.handleInvite}>
+              <div>
+                <Input
+                  required
+                  type="text"
+                  name="inviteeEmail"
+                  placeholder="Enter your team members email address"
+                  autoComplete="off"
+                  value={this.state.inviteeEmail}
+                  onChange={this.handleInviteEmail}
+                />
+              </div>
               <Button disabled={this.state.submitted} type="submit">
-                <i className="fa fa-envelope-o" />
-                Invite
+                <i className="fas fa-user-plus"></i>Invite
               </Button>
-              <Input
-                required
-                type="text"
-                name="inviteeEmail"
-                placeholder="team-member@acme.com"
-                autoComplete="off"
-                value={this.state.inviteeEmail}
-                onChange={this.handleInviteEmail}
-              />
             </form>
           )}
         </CardFooter>

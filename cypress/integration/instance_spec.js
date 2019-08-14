@@ -1,180 +1,142 @@
 describe('Instance Flow', () => {
-  const timeStamp = Date.now()
+  const timestamp = Date.now()
+
+  beforeEach(() => {
+    cy.login()
+  })
 
   it('Fails to create an instance with no name', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.get('#siteListWrapper > main > article > footer > a > button').click()
-    cy.get(
-      '#root > section > section > section > section > div > div > button'
-    ).click()
-    cy.get('#root > section > section > article > span > p').should(
-      'contain',
-      'You must enter a name'
-    )
+    cy.visit('/instances/create')
+
+    cy.get('[data-test=createInstance]').click()
+    cy.get('#root > section > section > article > span > p', {
+      timeout: 15000
+    }).should('contain', 'You must enter a name')
   })
 
   it('Creates an instance', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.visit('/instances/create')
 
-    cy.get('#siteListWrapper > main > article > footer > a > button', {
-      timeout: 10000
-    }).click()
-    cy.get('#root > section > section > section > section > div > input').type(
-      `TEST INSTANCE ${timeStamp}`
-    )
-    cy.get(
-      '#root > section > section > section > section > div > div > button'
-    ).click()
+    cy.get('[name=propertyName]').type(`TEST INSTANCE ${timestamp}`)
+    cy.get('[data-test=createInstance]').click()
 
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(1) > footer > button',
-      { timeout: 10000 }
+      {
+        timeout: 20000 // Instance creation can take a long time
+      }
     ).click()
 
-    cy.get('#siteListWrapper > section > div > article > main').should(
-      'contain',
-      timeStamp
-    )
+    cy.get('#siteListWrapper article h1', {
+      timeout: 15000
+    }).should('contain', timestamp)
   })
 
   it('Updates an instance name', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#siteListWrapper > main', { timeout: 10000 })
-      .find('article')
-      .contains(timeStamp)
-      .parent()
-      .siblings('footer')
-      .children('div')
-      .children('a')
-      .first()
-      .click()
-    cy.get('#editInstanceNameSpan').click({ force: true })
-    cy.get('#editInstanceNameInput')
-      .click({ force: true })
-      .type(' changed', { force: true })
-    cy.get('#editInstanceNameSave').click({ force: true })
-    cy.get('#notificationMessage').should('contain', 'Successfully')
+    cy.get('#editInstanceName', { timeout: 15000 }).click({ force: true })
+    cy.get('[name=instanceName')
+      .clear({ force: true })
+      .type(`TEST EDITED: ${timestamp}`, { force: true })
+    cy.get('#saveInstanceName').click({ force: true })
+
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
+      'contain',
+      'Successfully'
+    )
   })
 
   it('Adds a domain', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#siteListWrapper > main', { timeout: 10000 })
-      .find('article')
-      .contains(timeStamp)
-      .parent()
-      .siblings('footer')
-      .children('div')
-      .children('a')
-      .first()
-      .click()
-    cy.get('#editDomainInput')
-      .click({ force: true })
-      .type(`domain-test${timeStamp}.zesty.site`, { force: true })
-    cy.get('#editDomainSave').click({ force: true })
-    cy.get('#notificationMessage').should(
+    cy.get('[name=domain]', { timeout: 15000 })
+      .clear({ force: true })
+      .type(`${timestamp}-test.zesty.site`, { force: true })
+
+    cy.get('[data-test=saveDomain]').click({ force: true })
+
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
-      `domain-test${timeStamp}.zesty.site`
+      `${timestamp}-test.zesty.site`
     )
   })
 
   it('Invites a User', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#siteListWrapper > main', { timeout: 10000 })
-      .find('article')
-      .contains(timeStamp)
-      .parent()
-      .siblings('footer')
-      .children('div')
-      .children('a')
-      .first()
-      .click()
+    cy.get('[name=inviteeEmail]', { timeout: 15000 })
+      .focus()
+      .type('testInvite@zesty.io')
 
-    cy.get('#inviteUserInput')
-      .click({ force: true })
-      .type('testInvite@zesty.io', { force: true })
-    cy.get('.selector')
-      .first()
+    cy.get('.invite .Select')
       .click({ force: true })
       .find('li')
       .contains('Developer')
       .click({ force: true })
+
     cy.get('#inviteUserSend').click({ force: true })
 
-    cy.get('#notificationMessage', { timeout: 10000 }).should(
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
       'Invite sent'
     )
   })
 
   it('Cancels an invite', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#siteListWrapper > main', { timeout: 10000 })
-      .find('article')
-      .contains(timeStamp)
-      .parent()
-      .siblings('footer')
-      .children('div')
-      .children('a')
-      .first()
-      .click()
-    cy.get('#revoke-button').click({ force: true })
+    cy.get('#revoke-button', { timeout: 15000 }).click({ force: true })
     cy.get('#confirmTrue').click()
-    cy.get('#notificationMessage').should('contain', 'User invite cancelled')
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
+      'contain',
+      'User invite cancelled'
+    )
   })
 
   it('Updates an instance blueprint', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#siteListWrapper > main', { timeout: 10000 })
-      .find('article')
-      .contains(timeStamp)
-      .parent()
-      .siblings('footer')
-      .children('div')
-      .children('a')
-      .first()
-      .click()
-    cy.get('#changeBlueprint').click({ force: true })
+    cy.get('#changeBlueprint', { timeout: 15000 }).click({ force: true })
     cy.get('#confirmTrue').click()
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(4) > footer > button'
     ).click()
 
-    cy.get('#blueprintName', { timeout: 10000 }).should('contain', 'BS3')
+    cy.get('#blueprintName', { timeout: 15000 }).should('contain', 'Skeleton')
   })
 
-  // // invites a team
-  // it('Invites a team', () => {
-  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-  //   cy.wait(2000)
-  //   cy.get('#siteListWrapper > main')
-  //     .find('article')
-  //     .contains(timeStamp)
-  //     .parent()
-  //     .siblings('footer')
-  //     .children('div')
-  //     .children('a')
-  //     .first()
-  //     .click()
-  //   // invite the team
-  // })
+  it('Invites a team', () => {
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-  // it('Updates an instance blueprint', () => {
-  //   cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-  // cy.wait(2000)
-  // cy.get('#siteListWrapper > main')
-  //   .find('article')
-  //   .contains(timeStamp)
-  //   .parent()
-  //   .siblings('footer')
-  //   .children('div')
-  //   .children('a')
-  //   .first()
-  //   .click()
+    cy.get('[name=teamZUID]', { timeout: 15000 }).type(
+      Cypress.env('testTeamZUID'),
+      { force: true }
+    )
 
-  // })
+    cy.get('[data-test=teamInvite] .Select')
+      .click({ force: true })
+      .find('li')
+      .contains('Developer')
+      .click({ force: true })
+
+    cy.get('[data-test=teamInvite] button').click({ force: true })
+
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
+      'contain',
+      'Team successfully added'
+    )
+  })
+
+  it('Removes a team', () => {
+    cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
+
+    cy.get('[data-test=removeTeam]', { timeout: 15000 }).click({ force: true })
+    cy.get('#confirmTrue').click()
+
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
+      'contain',
+      'was removed'
+    )
+  })
 })

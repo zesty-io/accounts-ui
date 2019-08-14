@@ -4,7 +4,7 @@ import { HorizontalBar } from 'react-chartjs-2'
 
 class Stats extends Component {
   render() {
-    let consistentFakeStats = [3,65,1,56,4,2,84,54,235,64,3,2]
+    let consistentFakeStats = [3, 65, 1, 56, 4, 2, 84, 54, 235, 64, 3, 2]
     const data = {
       labels: ['This Month', 'All Time'],
       datasets: [
@@ -29,20 +29,17 @@ class Stats extends Component {
       ]
     }
     const options = {
-        scales: {
-            xAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    
+      scales: {
+        xAxes: [
+          {
+            ticks: {
+              beginAtZero: true
+            }
+          }
+        ]
+      }
     }
-    return <HorizontalBar
-      data={data}
-      height={50}
-      options={options}
-      />
+    return <HorizontalBar data={data} height={50} options={options} />
   }
 }
 

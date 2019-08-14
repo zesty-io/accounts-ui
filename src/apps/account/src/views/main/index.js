@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { ErrorBoundary } from './err'
@@ -6,7 +6,6 @@ import { ErrorBoundary } from './err'
 import Account from '../Account'
 
 import styles from './styles.less'
-
 class Settings extends Component {
   render() {
     return (

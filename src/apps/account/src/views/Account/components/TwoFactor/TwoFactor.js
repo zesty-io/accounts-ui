@@ -3,8 +3,12 @@ import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { update2fa } from '../../../../../../../shell/store/user'
 import { notify } from '../../../../../../../shell/store/notifications'
 
-import styles from './TwoFactor.less'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
+import styles from './TwoFactor.less'
 export default class TwoFactorOptions extends Component {
   constructor(props) {
     super(props)
@@ -16,11 +20,11 @@ export default class TwoFactorOptions extends Component {
   }
   render() {
     return (
-      <Card>
+      <Card className={styles.TwoFactor}>
         <CardHeader>
           <h1>Two-Factor Authentication (2FA)</h1>
         </CardHeader>
-        <CardContent className={styles.TwoFactor}>
+        <CardContent>
           {this.props.user.authyEnabled ? (
             <React.Fragment>
               <p>
@@ -28,9 +32,8 @@ export default class TwoFactorOptions extends Component {
                 registered phone number:
               </p>
               <p className={styles.RegisteredNumber}>
-                +{this.props.user.authyPhoneCountryCode}-{
-                  this.props.user.authyPhoneNumber
-                }
+                +{this.props.user.authyPhoneCountryCode}-
+                {this.props.user.authyPhoneNumber}
               </p>
             </React.Fragment>
           ) : (
@@ -49,26 +52,30 @@ export default class TwoFactorOptions extends Component {
                 below.
               </p>
               <form id="TwoFactor">
-                <label className={styles.PhoneNumber}>
-                  <span className={styles.PhoneNumberLabel}>Phone Number</span>
-                  <Input
-                    required
-                    type="text"
-                    size="5"
-                    placeholder="1"
-                    name="authyPhoneCountryCode"
-                    value={this.state.authyPhoneCountryCode}
-                    onChange={this.handleChange}
-                  />&nbsp;
-                  <Input
-                    required
-                    type="tel"
-                    placeholder="123-456-7890"
-                    name="authyPhoneNumber"
-                    value={this.state.authyPhoneNumber}
-                    onChange={this.handleChange}
-                  />
-                </label>
+                <p className={styles.PhoneNumberLabel}>Phone Number</p>
+                <div className={styles.PhoneNumber}>
+                  <label htmlFor="authyPhoneCountryCode">
+                    <Input
+                      required
+                      type="text"
+                      size="5"
+                      placeholder="1"
+                      name="authyPhoneCountryCode"
+                      value={this.state.authyPhoneCountryCode}
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                  <label>
+                    <Input
+                      required
+                      type="tel"
+                      placeholder="123-456-7890"
+                      name="authyPhoneNumber"
+                      value={this.state.authyPhoneNumber}
+                      onChange={this.handleChange}
+                    />
+                  </label>
+                </div>
               </form>
             </React.Fragment>
           )}
@@ -80,13 +87,13 @@ export default class TwoFactorOptions extends Component {
               disabled={this.state.submitted}>
               {this.state.submitted ? (
                 <React.Fragment>
-                  <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Disabling
-                  Authy 2FA
+                  <i className="fas fa-hourglass" aria-hidden="true" />
+                  &nbsp;Disabling Authy 2FA
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <i className="fa fa-shield" aria-hidden="true" />&nbsp;Disable
-                  Authy 2FA
+                  <i className="fas fa-shield-alt" aria-hidden="true" />
+                  &nbsp;Disable Authy 2FA
                 </React.Fragment>
               )}
             </Button>
@@ -97,13 +104,13 @@ export default class TwoFactorOptions extends Component {
               disabled={this.state.submitted}>
               {this.state.submitted ? (
                 <React.Fragment>
-                  <i className="fa fa-hourglass-o" aria-hidden="true" />&nbsp;Enabling
-                  Authy 2FA
+                  <i className="fas fa-hourglass" aria-hidden="true" />
+                  &nbsp;Enabling Authy 2FA
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <i className="fa fa-shield" aria-hidden="true" />&nbsp;Enable
-                  Authy 2FA
+                  <i className="fas fa-shield-alt" aria-hidden="true" />
+                  &nbsp;Enable Authy 2FA
                 </React.Fragment>
               )}
             </Button>
@@ -125,6 +132,7 @@ export default class TwoFactorOptions extends Component {
     this.setState({
       submitted: true
     })
+
     this.props
       .dispatch(update2fa(this.props.user.ZUID, true, this.state))
       .then(() => {

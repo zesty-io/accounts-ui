@@ -1,6 +1,8 @@
-.ColumnList {
-  padding: 0 1rem;
+@import '~@zesty-io/core/colors.less';
+@import '~@zesty-io/core/typography.less';
 
+.ColumnList {
+  padding: 0 1rem 0 0;
   display: flex;
   flex-direction: row;
   @supports (display: grid) {
@@ -15,20 +17,19 @@
   }
 
   .List {
-    height: 86vh;
+    height: 87vh;
     overflow-y: scroll;
     width: 30vw;
-    padding: 1.5rem 0;
-
-    flex: 1 0 0%;
+    padding: 0 0 0 1rem;
+    flex: 1 0 0px;
+    background: darken(@appBkgColor, 3%);
+    border-right: 1px solid #e0e8f4;
 
     .SectionTitle {
       border-bottom: 1px solid #c0cee7;
       font-size: 1.4em;
-      margin: 2rem 0 0 0;
-    }
-    .SectionTitle:first-child {
-      margin-top: 1rem;
+      margin: 28px 0 0 0;
+      padding-bottom: 4px;
     }
     .NoResults {
       text-align: center;
@@ -43,11 +44,20 @@
 
 .Zesty {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
   width: 100%;
-  font-size: 8em;
-  color: #dde8f9;
-  text-shadow: 1px 1px 1px #b5c3d8;
+
+  .title {
+    font-size: 60px;
+    line-height: 70px;
+    color: #b1c1db;
+  }
+  .subtitle {
+    color: #b1c1db;
+    padding: 0 28px;
+    text-align: center;
+  }
 }

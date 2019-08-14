@@ -9,23 +9,16 @@ import WebsiteCreate from '../../../../components/WebsiteCreate'
 import InstanceRow from './components/InstanceRow'
 import InviteRow from './components/InviteRow'
 
-import AppLink from '../../../../../../../core/AppLink'
-
 export default function ColumnList(props) {
   return (
     <section className={styles.ColumnList}>
       <nav className={styles.List}>
-        <AppLink to="/instances/create">
-          <Button className={styles.Create} type="save">
-            <i className="fa fa-plus" />
-            Create New Instance
-          </Button>
-        </AppLink>
+        {props.sitesFiltered.length === 0 && <WebsiteCreate />}
 
         {props.sitesInvited.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
-              <i className="fa fa-envelope-o" aria-hidden="true" />
+              <i className="fa fa-envelope" aria-hidden="true" />
               &nbsp;Invites
             </h2>
             {props.sitesInvited.map(site => {
@@ -37,7 +30,7 @@ export default function ColumnList(props) {
         {props.sitesFavorite.length ? (
           <React.Fragment>
             <h2 className={styles.SectionTitle}>
-              <i className="fa fa-star-o" aria-hidden="true" />
+              <i className="fa fa-star" aria-hidden="true" />
               &nbsp;Favorites
             </h2>
             {props.sitesFavorite.map(site => (
@@ -67,7 +60,14 @@ export default function ColumnList(props) {
             exact
             path="/instances/"
             render={() => {
-              return <h1 className={styles.Zesty}>Zesty.io</h1>
+              return (
+                <div className={styles.Zesty}>
+                  <h1 className={styles.title}>Zesty.io</h1>
+                  <h2 className={cx(styles.subtitle, styles.display)}>
+                    Control Content Anywhere from One Platform
+                  </h2>
+                </div>
+              )
             }}
           />
         </Switch>

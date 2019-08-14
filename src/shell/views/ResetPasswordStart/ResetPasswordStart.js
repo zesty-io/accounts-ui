@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
+import cx from 'classnames'
 
 import styles from './ResetPasswordStart.less'
 import { request } from '../../../util/request'
 
-import AppLink from '../../../core/AppLink'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
 
 export default class ResetPasswordStart extends Component {
   state = {
@@ -13,49 +16,59 @@ export default class ResetPasswordStart extends Component {
   }
   render() {
     return (
-      <section className={styles.ResetPasswordStart}>
-        <form
-          name="ResetPasswordStart"
-          onSubmit={this.handleReset}
-          className={styles.ResetPasswordStartForm}>
-          <img src="/zesty-io-logo.svg" />
-
-          <label>
-            <p>
-              Enter the email associated with your account and we will send an
-              email with instructions for resetting your password.
-            </p>
-            <Input
-              className={styles.input}
-              type="email"
-              name="email"
-              placeholder="Enter your account email"
-            />
-          </label>
-          <Button type="submit" disabled={this.state.submitted}>
-            <i className="fa fa-envelope-o" aria-hidden="true" />
-            {this.state.submitted
-              ? 'Sending Reset Request'
-              : 'Send Password Reset Email'}
-          </Button>
-          <small>
-            <AppLink to="/login">Return to Login?</AppLink>
-          </small>
-
-          {this.state.message ? (
-            this.state.error ? (
-              <p className={styles.error}>
-                <i className="fa fa-exclamation-triangle" aria-hidden="true" />
-                &nbsp;{this.state.message}
-              </p>
-            ) : (
+      <section className={cx(styles.ResetPasswordStart, styles.bodyText)}>
+        <div className={styles.Wrapper}>
+          <header className={styles.Logo}>
+            <img src="/zesty-io-logo.svg" />
+          </header>
+          <main>
+            <form
+              name="ResetPasswordStart"
+              onSubmit={this.handleReset}
+              className={styles.ResetPasswordStartForm}>
               <p>
-                <i className="fa fa-info-circle" aria-hidden="true" />
-                &nbsp;{this.state.message}
+                Enter the email associated with your account and we will send an
+                email with instructions for resetting your password.
               </p>
-            )
-          ) : null}
-        </form>
+              <label>
+                <i className="far fa-envelope"></i>
+                <Input
+                  className={styles.input}
+                  type="email"
+                  name="email"
+                  placeholder="Enter your account email"
+                />
+              </label>
+
+              {this.state.message ? (
+                this.state.error ? (
+                  <p className={styles.error}>
+                    <i
+                      className="fa fa-exclamation-triangle"
+                      aria-hidden="true"
+                    />
+                    &nbsp;{this.state.message}
+                  </p>
+                ) : (
+                  <p className={styles.success}>
+                    <i className="fa fa-info-circle" aria-hidden="true" />
+                    &nbsp;{this.state.message}
+                  </p>
+                )
+              ) : null}
+
+              <Button type="submit" disabled={this.state.submitted}>
+                <i className="fas fa-paper-plane"></i>
+                {this.state.submitted
+                  ? 'Sending Reset Request'
+                  : 'Send Password Reset Email'}
+              </Button>
+            </form>
+          </main>
+          <footer>
+            <AppLink to="/login">Return to Sign In?</AppLink>
+          </footer>
+        </div>
       </section>
     )
   }

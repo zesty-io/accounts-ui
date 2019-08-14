@@ -2,9 +2,14 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 
-import styles from './TwoFactor.less'
 import { request } from '../../../util/request'
 
+import { Input } from '@zesty-io/core/Input'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
+
+import styles from './TwoFactor.less'
 class TwoFactor extends Component {
   constructor(props) {
     super(props)
@@ -18,50 +23,59 @@ class TwoFactor extends Component {
   }
   render() {
     return (
-      <section className={styles.TwoFactor}>
-        <form name="TwoFactor" className={styles.TwoFactorForm}>
-          <Url
-            href="https://zesty.io"
-            title="https://zesty.io"
-            className={styles.logo}>
-            <img src="/zesty-io-logo.svg" height="70px" />
-          </Url>
+      <section className={cx(styles.TwoFactor, styles.bodyText)}>
+        <div className={styles.Wrapper}>
+          <header className={styles.Logo}>
+            <Url
+              href="https://zesty.io"
+              title="https://zesty.io"
+              className={styles.logo}>
+              <img src="/zesty-io-logo.svg" height="70px" />
+            </Url>
+          </header>
+          <main>
+            <form name="TwoFactor" className={styles.TwoFactorForm}>
+              <label>
+                <h1 className={styles.headline}>Enter Authy Token</h1>
+                <p>
+                  To sign in, open the
+                  <Url href="https://authy.com/" target="_blank">
+                    Authy
+                  </Url>
+                  app on your mobile device.
+                </p>
 
-          <label>
-            <p>Enter Authy Token</p>
-            <small>
-              To log in, open
-              <Url href="https://authy.com/" target="_blank">
-                Authy
-              </Url>
-              on your mobile device.
-            </small>
+                <Input
+                  type="text"
+                  autoComplete="off"
+                  name="token"
+                  className={styles.input}
+                />
+              </label>
 
-            <Input
-              type="text"
-              autoComplete="off"
-              name="token"
-              className={styles.input}
-            />
-          </label>
-          <ButtonGroup className={styles.controls}>
-            <Button onClick={this.handle2FA}>
-              <i className="fa fa-check-circle-o" aria-hidden="true" />
-              Check 2FA Token
-            </Button>
-            <Link to="/login">
-              <i className="fa fa-ban" aria-hidden="true" />
-              &nbsp;Cancel
-            </Link>
-          </ButtonGroup>
+              {this.state.message ? (
+                <p className={styles.error}>
+                  <i
+                    className="fa fa-exclamation-triangle"
+                    aria-hidden="true"
+                  />
+                  &nbsp;{this.state.message}
+                </p>
+              ) : null}
 
-          {this.state.message ? (
-            <p className={styles.error}>
-              <i className="fa fa-exclamation-triangle" aria-hidden="true" />
-              &nbsp;{this.state.message}
-            </p>
-          ) : null}
-        </form>
+              <ButtonGroup className={styles.controls}>
+                <Button onClick={this.handle2FA}>
+                  <i className="fa fa-check-circle" aria-hidden="true" />
+                  Check 2FA Token
+                </Button>
+                <Link to="/login">
+                  <i className="fa fa-ban" aria-hidden="true" />
+                  &nbsp;Cancel
+                </Link>
+              </ButtonGroup>
+            </form>
+          </main>
+        </div>
       </section>
     )
   }

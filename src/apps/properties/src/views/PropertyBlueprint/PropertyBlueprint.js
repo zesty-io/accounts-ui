@@ -1,14 +1,17 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-
-import styles from './PropertyBlueprint.less'
-
-import AppLink from '../../../../../core/AppLink'
 
 import { updateSiteBlueprint } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 import { fetchBlueprints } from '../../store/blueprints'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
+
+import styles from './PropertyBlueprint.less'
 class PropertyBlueprint extends Component {
   state = {
     submitted: false
@@ -29,7 +32,7 @@ class PropertyBlueprint extends Component {
           <section>
             <header>
               <h1>Select a Blueprint</h1>
-              <AppLink type="cancel" to={`/instances`}>
+              <AppLink kind="cancel" to={`/instances`}>
                 <i className="fa fa-ban" aria-hidden="true" />
                 &nbsp;Cancel
               </AppLink>
@@ -51,7 +54,7 @@ class PropertyBlueprint extends Component {
                     <CardContent className={styles.CardContent}>
                       {blueprint.coverImage === '' ? (
                         <div className={styles.noimage} aria-hidden="true">
-                          <i className="fa fa-file-code-o" aria-hidden="true" />
+                          <i className="fas fa-file-code" aria-hidden="true" />
                         </div>
                       ) : (
                         <img
@@ -65,7 +68,7 @@ class PropertyBlueprint extends Component {
                       <Button
                         disabled={this.state.submitted}
                         onClick={() => this.setInstanceBlueprint(blueprint.ID)}>
-                        <i className="fa fa-file-code-o" aria-hidden="true" />
+                        <i className="fas fa-file-code" aria-hidden="true" />
                         Select Blueprint
                       </Button>
                       {blueprint.previewURL && (

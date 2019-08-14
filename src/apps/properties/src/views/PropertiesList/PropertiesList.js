@@ -1,35 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
-import styles from './PropertiesList.less'
 
 import WebsiteCreate from '../../components/WebsiteCreate'
 import PropertiesHeader from './components/PropertiesHeader'
 import ColumnList from './components/ColumnList'
 import GridList from './components/GridList'
 
-class Properties extends Component {
-  render() {
-    return (
-      <section className={styles.Websites}>
-        <PropertiesHeader layout={this.props.layout} />
-
-        {this.props.layout === 'grid' ? (
-          <GridList {...this.props} />
-        ) : (
-          <ColumnList {...this.props} />
-        )}
-
-        {!this.props.sites.length ? (
-          <main className={styles.siteList}>
-            <WebsiteCreate />
-          </main>
-        ) : null}
-      </section>
-    )
-  }
-}
-
+import styles from './PropertiesList.less'
 export default connect((state, props) => {
   let favorites = state.user.prefs.favorite_sites.filter(ZUID =>
     Object.keys(state.sites).includes(ZUID)
@@ -109,11 +86,35 @@ export default connect((state, props) => {
     sites: Object.keys(state.sites),
     sitesFiltered: removedFavorites.filter(site => !site.inviteZUID),
     sitesInvited: removedFavorites.filter(site => site.inviteZUID),
-    sitesFavorite: favorites.filter(site => filtered[site]).map(ZUID => {
-      return { ...filtered[ZUID], favorite: true }
-    }),
+    sitesFavorite: favorites
+      .filter(site => filtered[site])
+      .map(ZUID => {
+        return { ...filtered[ZUID], favorite: true }
+      }),
     dispatch: props.dispatch,
     settings: state.settings,
     searchString
   }
-})(Properties)
+})(
+  class Properties extends Component {
+    render() {
+      return (
+        <section className={styles.Websites}>
+          <PropertiesHeader layout={this.props.layout} />
+
+          {this.props.layout === 'grid' ? (
+            <GridList {...this.props} />
+          ) : (
+            <ColumnList {...this.props} />
+          )}
+
+          {!this.props.sites.length ? (
+            <main className={styles.siteList}>
+              <WebsiteCreate />
+            </main>
+          ) : null}
+        </section>
+      )
+    }
+  }
+)

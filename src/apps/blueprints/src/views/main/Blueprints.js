@@ -12,6 +12,8 @@ import {
 import { zConfirm } from '../../../../../shell/store/confirm'
 import { notify } from '../../../../../shell/store/notifications'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+
 import styles from './Blueprints.less'
 class Blueprints extends Component {
   state = {
@@ -66,7 +68,7 @@ class Blueprints extends Component {
         className={styles.Loading}
         condition={!this.state.loadingBlueprints}
         message="Loading Your Custom Blueprints">
-        <section className={styles.Blueprints}>
+        <section className={cx('blueprints', styles.Blueprints)}>
           <h1 className={styles.BlueprintsTitle}>
             Manage Your Custom Blueprints
           </h1>
@@ -109,7 +111,7 @@ class Blueprints extends Component {
     const name = this.props.blueprints[blueprint].name
     this.props.dispatch(
       zConfirm({
-        prompt: 'Are you sure you want to delete this blueprint?',
+        prompt: `Are you sure you want to delete the blueprint? ${name}`,
         callback: response => {
           if (response) {
             this.props

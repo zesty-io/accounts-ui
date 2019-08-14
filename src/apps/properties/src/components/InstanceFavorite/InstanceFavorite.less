@@ -1,7 +1,8 @@
-@import url('../../../../../shell/styles/colors.less');
+@import '~@zesty-io/core/colors.less';
 .Favorite {
   cursor: pointer;
-  color: lighten(@zesty-tab-blue, 20%);
+  color: @zesty-orange;
+
   &:focus,
   &:hover {
     color: @zesty-orange;
@@ -9,5 +10,11 @@
   &:active {
     transition: all 0.2s;
     transform: rotate(90deg);
+  }
+}
+.NonFavorite {
+  color: lighten(@zesty-tab-blue, 20%);
+  &:hover {
+    color: @zesty-orange;
   }
 }
