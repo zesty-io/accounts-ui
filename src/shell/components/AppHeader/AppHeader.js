@@ -103,9 +103,6 @@ export default connect(state => {
             />
             <ul className={styles.UserMenu} id="userNavDropdown">
               <li className={styles.user}>
-                <span className={styles.name}>
-                  {this.props.user.firstName} {this.props.user.lastName}
-                </span>
                 <span className={styles.email}>{this.props.user.email}</span>
               </li>
 
@@ -113,29 +110,24 @@ export default connect(state => {
 
               <li>
                 <NavLink to="/settings/account" data-test="accountNavLink">
-                  <i className="fa fa-cog" aria-hidden="true" /> My Account
+                  <i className="fa fa-cog" aria-hidden="true" />
+                  &nbsp;My Account
                 </NavLink>
               </li>
 
               <li>
                 <NavLink to="/support" data-test="supportNavLink">
-                  <i
-                    className={cx(styles.icon, 'fa fa-question-circle')}
-                    aria-hidden="true"
-                  />{' '}
-                  Support
+                  <i className="far fa-life-ring"></i>&nbsp;Support
                 </NavLink>
               </li>
 
               <hr />
 
-              <li
-                className={styles.logout}
-                data-test="logoutNavLink"
-                title="Logout"
-                onClick={() => this.props.dispatch(logout())}>
-                <i className="fa fa-sign-out" aria-hidden="true" />
-                &nbsp;Logout
+              <li className={styles.logout}>
+                <NavLink to="/logout" data-test="logoutNavLink">
+                  <i className="fas fa-sign-out-alt"></i>
+                  &nbsp;Sign Out
+                </NavLink>
               </li>
             </ul>
           </nav>
