@@ -1,3 +1,6 @@
+@import '~@zesty-io/core/colors.less';
+@import '~@zesty-io/core/typography.less';
+
 .Billing {
   padding: 2rem;
   height: 86vh;
@@ -17,17 +20,29 @@
   flex-wrap: wrap;
   margin-top: 32px;
 
+  @supports (display: grid) {
+    display: grid;
+    grid-gap: 28px;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-auto-rows: minmax(10rem, auto);
+  }
+
   .CreditCard {
-    min-width: 400px;
-    margin: 0 16px 16px 0;
+    // min-width: 400px;
+    // margin: 0 16px 16px 0;
+    margin: 0 !important;
 
     .AddBilling {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      p {
+        margin: 4px 0 16px 0;
+      }
     }
     .CardContent {
-      margin: 16px 0;
+      // margin: 16px 0;
 
       p {
         margin: 4px 0;
@@ -35,6 +50,12 @@
       strong {
         display: block;
       }
+    }
+    footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }
