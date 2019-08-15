@@ -1,5 +1,6 @@
 {
   "projectId": "Accounts-UI",
+  "baseUrl": "http://accounts.zesty.localdev:3100",
   "env": {
     "ACCOUNTS_UI": "http://accounts.zesty.localdev:3100",
     "API_ACCOUNTS": "http://accounts.api.zesty.localdev:3022/v1",
@@ -9,7 +10,6 @@
     "MANAGER_URL_PROTOCOL": "http://",
     "PREVIEW_URL": "-dev.preview.zestyio.localdev:3020",
     "PREVIEW_URL_PROTOCOL": "http://",
-    "LEGACY_ACCOUNTS": "http://accounts.zesty.localdev:3002",
     "COOKIE_NAME": "DEV_APP_SID",
     "COOKIE_DOMAIN": ".zesty.localdev",
     "C_NAME": "sites2.zesty.zone",
@@ -17,6 +17,8 @@
     "invalidEmail": "userDoesNot@exist.com",
     "invalidPassword": "asdASD123",
     "validEmail": "stuart+test1@zesty.io",
-    "validPassword": "86FM8nMe9Y8KSOFEPoaBbxkZORAnhInPBWktfpq5IFuOZcsVFxWgxvcTmqClV0y1"
+    "validPassword": "86FM8nMe9Y8KSOFEPoaBbxkZORAnhInPBWktfpq5IFuOZcsVFxWgxvcTmqClV0y1",
+    "testInstanceZUID": "8-dac0aad2c5-plnfwb",
+    "testTeamZUID": "65-b6e3bafc9f-7q60kv"
   }
 }

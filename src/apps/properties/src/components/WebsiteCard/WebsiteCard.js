@@ -1,18 +1,20 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './WebsiteCard.less'
 
-import AppLink from '../../../../../core/AppLink'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
 import InstanceFavorite from '../InstanceFavorite'
-
 export default props => {
   const { site } = props
   return (
     <Card className={styles.WebsiteCard}>
       <CardHeader className={styles.CardHeader}>
-        <h1>{site.name}</h1>
+        <h1 className={styles.subheadline}>{site.name}</h1>
         <InstanceFavorite
           className={styles.favorite}
           favorite={site.favorite}
@@ -36,9 +38,9 @@ export default props => {
           />
 
           <AppLink to={`/instances/${site.ZUID}/launch`}>
-            <Button type="save">
+            <Button kind="secondary">
               <i className="fa fa-rocket" aria-hidden="true" />
-              Launch Instance
+              Publish Instance
             </Button>
           </AppLink>
         </CardContent>
@@ -77,14 +79,14 @@ export default props => {
               className={styles.manager}
               target="_blank"
               href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${CONFIG.MANAGER_URL}`}>
-              <i className="fa fa-external-link" aria-hidden="true" />
-              &nbsp;Open Manager
+              <i className="fas fa-edit"></i>
+              &nbsp;Edit Content
             </Url>
           ) : (
             <AppLink
               to={`/instances/${site.ZUID}/blueprint`}
               className={styles.selectBlueprint}>
-              <i className="fa fa-file-code-o" aria-hidden="true" />
+              <i className="fas fa-file-code" aria-hidden="true" />
               &nbsp;Select Blueprint
             </AppLink>
           )}

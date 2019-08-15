@@ -15,8 +15,7 @@ const SelectBlueprint = props => {
                 ? selectedStyle
                 : null
             }
-            onClick={() => props.handleSelect(bp.ID)}
-          >
+            onClick={() => props.handleSelect(bp.ID)}>
             <p>{bp.name}</p>
             <i
               className={`${styles.trash} fa fa-trash-o`}

@@ -1,50 +1,40 @@
 describe('Teams Flow', () => {
   const timeStamp = Date.now()
-  it('Can Create a team', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
 
-    // if the teams nav link is not displayed, turn it on in prefs
-    cy.get('#globalNav').then(nav => {
-      if (nav.find('#teamsNavLink').length) {
-        cy.get('#teamsNavLink').click()
-      } else {
-        cy.get('#root > section > header > nav.UserNav.UserNav').click({
-          force: true
-        })
-        cy.get('#userNavDropdown > li:nth-child(3) > a').click()
-        cy.get('#teamsToggle').click({ force: true })
-        cy.get('#teamsNavLink').click()
-      }
-    })
-
-    // create a team
-    cy.get('#teamCreateName').type('New Team')
-    cy.get('#teamCreateDescription').type(
-      'this is a description of the team and its purpose'
-    )
-    cy.get('#teamCreateSave').click()
-    cy.get('#notificationMessage').should('contain', 'Team created')
+  beforeEach(function() {
+    cy.login()
+    cy.visit('/teams')
   })
 
-  // add team to an instance
+  it('Can Create a team', () => {
+    cy.get('input[name="name"]').type(timeStamp)
+    cy.get('textarea[name="description"]').type(
+      'This is a test description of the team and its purpose'
+    )
+    cy.get('#teamCreateSave').click()
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
+      'contain',
+      'Team created'
+    )
+  })
 
   it('Can invite a member', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.get('#teamsNavLink').click()
-    //add a team member
-    cy.get(
-      '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > footer > form > input'
-    ).type('testInvite@zesty.io')
-    cy.get(
-      '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > footer > form > button'
-    ).click()
+    cy.get('.teams article')
+      .children('main h3', {
+        timeout: 15000 // Wait for members to be loaded after team creation
+      })
+      .contains(timeStamp)
+      .parents('article')
+      .children('footer input[name=inviteeEmail]')
+      .type('testInvite@zesty.io')
+      .parents('article')
+      .children('footer button')
+      .click()
 
-    cy.get('#notificationMessage', { timeout: 10000 }).should('contain', 'sent')
+    cy.get('#notificationMessage', { timeout: 15000 }).should('contain', 'sent')
   })
 
   it('Can remove an invite', () => {
-    cy.login(Cypress.env('validEmail'), Cypress.env('validPassword'))
-    cy.get('#teamsNavLink').click()
     //remove the invitiation
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > main > section:nth-child(3) > article'
@@ -55,6 +45,9 @@ describe('Teams Flow', () => {
 
     cy.get('#confirmTrue').click()
 
-    cy.get('#notificationMessage').should('contain', 'successfully')
+    cy.get('#notificationMessage', { timeout: 15000 }).should(
+      'contain',
+      'successfully'
+    )
   })
 })

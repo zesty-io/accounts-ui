@@ -1,11 +1,14 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { notify } from '../../../../../../../shell/store/notifications'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { updatePassword } from '../../../../store'
 
-import styles from './Password.less'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
 
+import styles from './Password.less'
 class Password extends Component {
   constructor(props) {
     super(props)
@@ -17,11 +20,11 @@ class Password extends Component {
   }
   render() {
     return (
-      <Card>
+      <Card className={styles.Password}>
         <CardHeader>
           <h1>Password</h1>
         </CardHeader>
-        <CardContent className={styles.Password}>
+        <CardContent>
           <p>
             Requirements are a minimum of 8 characters with at least one number,
             uppercase and lowercase letter.
@@ -44,7 +47,7 @@ class Password extends Component {
           />
           <Input
             name="confirmNewPassword"
-            placeholder="Confirm New Password"
+            placeholder="Repeat New Password"
             onChange={this.handleChange}
             value={this.state.confirmNewPassword}
             type="password"
@@ -52,8 +55,8 @@ class Password extends Component {
           />
         </CardContent>
         <CardFooter>
-          <Button onClick={this.handleClick}>
-            <i className="fa fa-floppy-o" aria-hidden="true" />
+          <Button data-test="changePassword" onClick={this.handleClick}>
+            <i className="fas fa-key" aria-hidden="true" />
             Change Password
           </Button>
         </CardFooter>

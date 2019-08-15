@@ -1,138 +1,123 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import debounce from '../../../../../../../util/debounce'
-
-import styles from './PropertiesHeader.less'
+import debounce from 'lodash.debounce'
 
 import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
 
-class PropertiesHeader extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      eco: false,
-      sort: 'name'
+import { Search } from '@zesty-io/core/Search'
+import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
+import { ToggleButton } from '@zesty-io/core/ToggleButton'
+import { Button } from '@zesty-io/core/Button'
+
+import styles from './PropertiesHeader.less'
+export default connect(state => state)(
+  class PropertiesHeader extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        eco: props.settings && props.settings.eco,
+        sort: 0
+      }
     }
-  }
-  componentDidMount() {
-    // set the ecosystem state to the store's value
-    this.props.settings &&
-      this.props.settings.eco &&
-      this.setState({ eco: this.props.settings.eco })
-  }
-  render() {
-    return (
-      <header className={styles.PropertiesHeader}>
-        <div className={styles.Actions}>
-          {this.props.ecosystems.length ? (
-            <Select
-              className={styles.Ecosystem}
-              onSelect={this.filterByEco}
-              selection={
-                this.props.ecosystems
-                  .filter(eco => eco.id == this.state.eco)
-                  .map(eco => {
-                    return { value: eco.id, text: eco.name }
-                  })[0]
-              }>
-              {this.props.ecosystems
-                .filter(eco => eco.id !== this.state.eco)
-                .map(eco => {
-                  return <Option key={eco.id} value={eco.id} text={eco.name} />
-                })}
-            </Select>
-          ) : null}
 
-          <Search
-            className={styles.Search}
-            override={this.props.settings && this.props.settings.filter}
-            placeholder="Search by instance name or domain"
-            onSubmit={this.onSearch}
-            onKeyUp={this.onSearch}
-          />
-
-          <ButtonGroup className={styles.Sort}>
-            <Button
-              title="Sort alphabetically by name"
-              disabled={this.state.sort === 'name'}
-              onClick={() => {
-                this.setState({ sort: 'name' })
-                return this.sort('name')
-              }}>
-              <i className={`fa fa-sort-alpha-asc`} />
-            </Button>
-            <Button
-              title="Sort by created date"
-              disabled={this.state.sort === 'date'}
-              onClick={() => {
-                this.setState({ sort: 'date' })
-                return this.sort('createdAt')
-              }}>
-              <i className={`fa fa-calendar-o`} />
-            </Button>
-          </ButtonGroup>
-
-          <ButtonGroup className={styles.Layout}>
-            <Button
-              title="View instances as a grid"
-              disabled={this.props.layout === 'grid'}
-              onClick={() => {
-                this.props.dispatch({
-                  type: 'INSTANCE_LAYOUT',
-                  layout: 'grid'
-                })
-                this.props.dispatch(saveProfile())
-              }}>
-              <i className={`fa fa-th`} />
-            </Button>
-            <Button
-              title="View instances as a list"
-              disabled={this.props.layout === 'list'}
-              onClick={() => {
-                this.props.dispatch({
-                  type: 'INSTANCE_LAYOUT',
-                  layout: 'list'
-                })
-                this.props.dispatch(saveProfile())
-              }}>
-              <i className={`fa fa-th-list`} />
-            </Button>
-          </ButtonGroup>
-        </div>
-      </header>
-    )
-  }
-
-  onSearch = debounce(term => {
-    this.setState({ searchTerm: term }, () =>
+    onSearch = debounce((name, term) => {
       this.props.dispatch({
         type: 'SETTING_FILTER',
-        filter: this.state.searchTerm
+        filter: term
       })
-    )
-  }, 300)
+    }, 250)
 
-  filterByEco = evt => {
-    if (evt.target.dataset.value === '') {
-      this.setState({ eco: false })
-      return this.props.dispatch({
-        type: 'SETTING_ECO',
-        eco: ''
-      })
+    filterByEco = (name, value) => {
+      if (value) {
+        this.setState({ eco: value })
+        this.props.dispatch({
+          type: 'SETTING_ECO',
+          eco: Number(value)
+        })
+      } else {
+        this.setState({ eco: false })
+        this.props.dispatch({
+          type: 'SETTING_ECO',
+          eco: ''
+        })
+      }
     }
-    this.setState({ eco: evt.target.dataset.value })
-    this.props.dispatch({
-      type: 'SETTING_ECO',
-      eco: Number(evt.target.dataset.value)
-    })
-  }
 
-  sort = by => {
-    this.props.dispatch(sortSites(by))
-  }
-}
+    sort = by => {
+      this.props.dispatch(sortSites(by))
+    }
 
-export default withRouter(connect(state => state)(PropertiesHeader))
+    render() {
+      const ecosystems = this.props.ecosystems.map(eco => {
+        return {
+          value: eco.id,
+          text: eco.name
+        }
+      })
+
+      return (
+        <header className={styles.PropertiesHeader}>
+          <div className={styles.Actions}>
+            {ecosystems.length ? (
+              <DropDownFieldType
+                className={styles.Ecosystem}
+                name="ecoFilter"
+                onChange={this.filterByEco}
+                selection={ecosystems.find(eco => eco.id == this.state.eco)}
+                options={ecosystems}
+              />
+            ) : null}
+
+            <Search
+              className={styles.Search}
+              override={this.props.settings && this.props.settings.filter}
+              placeholder="Search by instance name or domain"
+              onSubmit={this.onSearch}
+              onChange={this.onSearch}
+            />
+
+            <Link className={styles.CreateInstance} to="/instances/create">
+              <Button kind="save">
+                <i className="fa fa-plus" aria-hidden="true" />
+                Create Instance
+              </Button>
+            </Link>
+
+            <ToggleButton
+              className={styles.Sort}
+              title="Switch instance sorting between alphabetical and created date"
+              value={this.state.sort}
+              offValue={<i className={`fas fa-sort-alpha-down`} />}
+              onValue={<i className={`fas fa-calendar`} />}
+              onChange={(name, value) => {
+                this.setState({
+                  sort: value
+                })
+                // if value 0 sort by name else if 1 sort by createdAt
+                this.sort(value ? 'createdAt' : 'name')
+              }}
+            />
+
+            <ToggleButton
+              className={styles.Layout}
+              title="Switch instance view between grid and list"
+              value={this.props.layout === 'grid' ? 0 : 1}
+              offValue={<i className={`fa fa-th`} />}
+              onValue={<i className={`fa fa-th-list`} />}
+              onChange={(name, value) => {
+                this.props.dispatch({
+                  type: 'INSTANCE_LAYOUT',
+                  layout: value ? 'list' : 'grid'
+                })
+                this.props.dispatch(saveProfile())
+              }}
+            />
+          </div>
+        </header>
+      )
+    }
+  }
+)

@@ -1,5 +1,7 @@
-import { Component } from 'react'
+import React from 'react'
 import styles from './Modal.less'
+
+import { Button } from '@zesty-io/core/Button'
 
 export default function Modal(props) {
   return (

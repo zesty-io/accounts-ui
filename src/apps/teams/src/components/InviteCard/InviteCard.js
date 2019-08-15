@@ -1,9 +1,14 @@
 import React, { PureComponent } from 'react'
 import { acceptTeamInvite, declineTeamInvite } from '../../store/teamInvites'
 
-import styles from './InviteCard.less'
 import { notify } from '../../../../../shell/store/notifications'
 
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+
+import styles from './InviteCard.less'
 export default class InviteCard extends PureComponent {
   render() {
     return (
@@ -12,17 +17,19 @@ export default class InviteCard extends PureComponent {
           <h3>You Have Been Invited to a Team!</h3>
         </CardHeader>
         <CardContent className={styles.CardContent}>
-          <h3>{this.props.invite.name}</h3>
-          <p>{this.props.invite.description}</p>
+          <WithLoader condition={this.props.invite.name}>
+            <h3>{this.props.invite.name}</h3>
+            <p>{this.props.invite.description}</p>
+          </WithLoader>
         </CardContent>
         <CardFooter className={styles.CardFooter}>
-          <ButtonGroup>
-            <Button onClick={this.handleAccept}>
-              <i className="fa fa-check" />
+          <ButtonGroup className={styles.actions}>
+            <Button onClick={this.handleAccept} kind="secondary">
+              <i className="fas fa-check" />
               Accept Invite
             </Button>
-            <Button onClick={this.handleDecline} type="cancel">
-              <i className="fa fa-close" />
+            <Button onClick={this.handleDecline}>
+              <i className="fas fa-ban" />
               Decline
             </Button>
           </ButtonGroup>

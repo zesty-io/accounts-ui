@@ -5,11 +5,14 @@ import styles from './Websites.less'
 
 import { fetchSites, fetchSitesWithInvites } from '../../store/sites'
 import { fetchSystemRoles } from '../../../../../shell/store/systemRoles'
+import { notify } from '../../../../../shell/store/notifications'
 
 import PropertiesList from '../PropertiesList'
 import PropertyCreate from '../PropertyCreate'
 import PropertyBlueprint from '../PropertyBlueprint'
 import PropertyOverview from '../PropertyOverview'
+
+import { WithLoader } from '@zesty-io/core/WithLoader'
 
 class Properties extends Component {
   constructor(props) {

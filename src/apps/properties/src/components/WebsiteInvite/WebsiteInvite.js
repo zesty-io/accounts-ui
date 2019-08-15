@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import cx from 'classnames'
 
 // NOTE: Fetch Sites seems unecessary. Should be able to fetch the individual site
 import { fetchSites, acceptInvite, declineInvite } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
 
-import cx from 'classnames'
-import styles from './WebsiteInvite.less'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
+import styles from './WebsiteInvite.less'
 class WebsiteInvite extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +24,7 @@ class WebsiteInvite extends Component {
     return (
       <Card className={styles.WebsiteInvite}>
         <CardHeader className={styles.CardHeader}>
-          <h1 className={styles.Name}>{this.props.site.name}</h1>
+          <h1 className={styles.subheadline}>{this.props.site.name}</h1>
         </CardHeader>
 
         {this.props.site.screenshotURL ? (
@@ -46,15 +49,15 @@ class WebsiteInvite extends Component {
 
         <CardFooter className={cx(styles.CardFooter, styles.Actions)}>
           <Button
-            type="save"
+            kind="save"
             className={styles.invite}
             onClick={this.handleAccept}
             disabled={this.state.submitted}>
-            <i className="fa fa-check-circle-o" aria-hidden="true" />
+            <i className="fas fa-check-circle" aria-hidden="true" />
             Accept Invite
           </Button>
           <Button
-            type="cancel"
+            kind="cancel"
             onClick={this.handleDecline}
             disabled={this.state.submitted}>
             <i className="fa fa-ban" aria-hidden="true" />

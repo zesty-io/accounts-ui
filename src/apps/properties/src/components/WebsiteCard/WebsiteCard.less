@@ -1,17 +1,15 @@
-@import url('../../../../../shell/styles/colors.less');
+@import '~@zesty-io/core/colors.less';
+@import '~@zesty-io/core/typography.less';
 
 .WebsiteCard {
   padding: 0;
   box-shadow: 0 0 5px #d6e1f3;
-
   display: flex;
   flex-direction: column;
-  flex: 1 0 0%;
-  max-width: 350px;
-  margin: 1rem;
+  flex: 0 0 350px;
   @supports (display: grid) {
     display: grid;
-    grid-template-rows: 1fr 3fr 35px;
+    grid-template-rows: 1fr 206px 35px;
     margin: 0;
   }
 
@@ -22,23 +20,14 @@
   }
 
   .CardHeader {
-    padding: 0 1rem;
     display: flex;
     align-items: center;
-    position: relative;
-
-    .favorite {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-    }
+    justify-content: space-between;
 
     h1 {
-      font-size: 1.2em;
       word-break: break-word;
     }
     a {
-      font-size: 0.9rem;
       margin: 0;
     }
     i {
@@ -57,7 +46,6 @@
     align-items: center;
     justify-content: center;
     margin: 0;
-    width: 100%;
     height: 190px;
     color: #b2c7d6;
 

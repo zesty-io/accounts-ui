@@ -96,7 +96,6 @@ module.exports = buildIndex = build => {
       </style>
       <link rel="icon" type="image/png" href="/favicon.png" />
 
-      <link href="/bundle.${build.data.gitCommit}.core.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.shell.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.properties-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.settings-app.css" type="text/css" rel="stylesheet" />
@@ -105,7 +104,7 @@ module.exports = buildIndex = build => {
       <link href="/bundle.${build.data.gitCommit}.support-app.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.teams-app.css" type="text/css" rel="stylesheet" />
 
-      <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet" />
 
       <!-- Polyfills for IE11 -->
       <script>
@@ -127,15 +126,12 @@ module.exports = buildIndex = build => {
         gtag('config', 'UA-21247490-1');
         gtag('config', 'AW-955374362');
       </script>
-
-
     </head>
 
     <body>
       <main id="root">
         <div id="appBoot">
           <div id="aligner">
-            <h1>Starting Zesty.io</h1>
             <div class="loader">
               <span class="bar"></span>
               <span class="bar"></span>
@@ -174,7 +170,6 @@ module.exports = buildIndex = build => {
       </script>
 
       <script src="/bundle.${build.data.gitCommit}.vendors.js"></script>
-      <script src="/bundle.${build.data.gitCommit}.core.js"></script>
 
       <!-- load sub apps -->
       <script src="/bundle.${build.data.gitCommit}.properties-app.js"></script>

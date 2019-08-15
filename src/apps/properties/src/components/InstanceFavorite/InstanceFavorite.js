@@ -4,15 +4,17 @@ import cx from 'classnames'
 import styles from './InstanceFavorite.less'
 
 import { favoriteSite, saveProfile } from '../../../../../shell/store/user'
+import { notify } from '../../../../../shell/store/notifications'
 
 export default connect()(function InstanceFavorite(props) {
   const action = props.favorite ? 'REMOVE' : 'ADD'
-  const icon = props.favorite ? 'fa-star' : 'fa-star-o'
+  const icon = props.favorite ? 'fas fa-star' : 'far fa-star'
+  const status = props.favorite ? null : styles.NonFavorite
 
   return (
     <i
       title={props.title}
-      className={cx('fa', icon, styles.Favorite, props.className)}
+      className={cx(icon, styles.Favorite, status, props.className)}
       aria-hidden="true"
       onClick={() => {
         props.dispatch(favoriteSite(props.ZUID, action))

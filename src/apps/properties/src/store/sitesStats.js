@@ -1,6 +1,5 @@
 import { request } from '../../../../util/request'
 
-
 export function sitesStats(state = {}, action) {
   switch (action.type) {
     case 'FETCHING_SITE_STATS':

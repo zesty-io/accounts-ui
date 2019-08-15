@@ -1,16 +1,16 @@
-@import '../../../shell/styles/colors.less';
+@import '~@zesty-io/core/colors.less';
+@import '~@zesty-io/core/typography.less';
+
 .AppHeader {
   align-items: center;
   background-color: @globalHeader;
   display: flex;
-  font-size: 0.8em;
   flex-direction: row;
-  text-rendering: optimizeLegibility;
   align-items: center;
   height: 6vh;
   max-height: 60px;
   min-height: 30px;
-  padding: 0 2rem;
+  padding: 0 1rem;
   position: sticky;
   top: 0;
   z-index: 30;
@@ -32,16 +32,15 @@
   flex-direction: row;
   flex: 1;
   align-items: center;
+
   a {
-    border-left: 1px solid #22293e;
+    // border-left: 1px solid #22293e;
     text-decoration: none;
-    letter-spacing: 1px;
     margin: 0;
     padding: 0.4rem 0.8rem;
-    text-shadow: 0 0 4px #000;
+    // text-shadow: 0 0 4px #000;
     color: #a7afbf;
     text-align: center;
-    transition: all 0.1s;
     line-height: 1.4em;
     &:hover,
     &:focus {
@@ -139,15 +138,6 @@
         span {
           display: block;
           padding-bottom: 0;
-        }
-      }
-      .logout {
-        color: @zesty-white;
-        cursor: pointer;
-
-        &:hover,
-        &:focus {
-          color: @zesty-orange;
         }
       }
     }

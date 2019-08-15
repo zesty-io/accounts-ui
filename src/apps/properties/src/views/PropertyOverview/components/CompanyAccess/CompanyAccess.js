@@ -1,6 +1,5 @@
-import { Component } from 'react'
-import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
+import React, { Component } from 'react'
+import cx from 'classnames'
 
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import {
@@ -9,10 +8,17 @@ import {
   removeTeamFromInstance
 } from '../../../../store/sitesTeams'
 
-import styles from './CompanyAccess.less'
 import { notify } from '../../../../../../../shell/store/notifications'
 import { fetchSiteUsers } from '../../../../store/sitesUsers'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+
+import styles from './CompanyAccess.less'
 export default class CompanyAccess extends Component {
   constructor(props) {
     super(props)
@@ -45,28 +51,39 @@ export default class CompanyAccess extends Component {
             <React.Fragment>
               <p>
                 By providing a team access you can allow an external group of
-                users access to manage your instance. e.g. Providing a digital
-                agency with access to manage your instance.
+                users access to manage your instance. For example: this can be
+                used to provide an agency with access to manage your website.
+                <AppLink to="/teams">&nbsp;Learn more about teams</AppLink>
               </p>
-              <div className={styles.addCompany}>
-                <Input placeholder="Enter team ID" onChange={this.handleTeam} />
-                <Select onSelect={this.handleRole}>
-                  <Option key="default" value="" text="Select Role" />
-                  {this.props.siteRoles.map(role => {
-                    return (
-                      <Option
-                        key={role.ZUID}
-                        value={role.ZUID}
-                        text={role.name}
-                      />
-                    )
+              <div className={styles.addCompany} data-test="teamInvite">
+                <span>
+                  <Input
+                    name="teamZUID"
+                    placeholder="Enter team ID"
+                    onChange={this.handleTeam}
+                  />
+                </span>
+
+                <DropDownFieldType
+                  name="siteRoles"
+                  defaultValue=""
+                  defaultText="- Select Role -"
+                  onChange={this.handleRole}
+                  options={this.props.siteRoles.map(role => {
+                    return {
+                      key: role.ZUID,
+                      value: role.ZUID,
+                      text: role.name
+                    }
                   })}
-                </Select>
+                />
+
                 <Button
                   name="companyAccessSubmit"
                   onClick={this.handleAddTeam}
                   disabled={this.state.submitted}>
-                  <i className="fa fa-plus"></i>Add Team
+                  <i className="fas fa-users" />
+                  Add Team
                 </Button>
               </div>
             </React.Fragment>
@@ -91,7 +108,9 @@ export default class CompanyAccess extends Component {
                       <span>{team.description}</span>
                       <span>
                         {this.props.isAdmin && (
-                          <Button onClick={() => this.handleRemove(team)}>
+                          <Button
+                            data-test="removeTeam"
+                            onClick={() => this.handleRemove(team)}>
                             <i
                               className={`fa fa-trash-o ${
                                 this.state.removing
@@ -178,12 +197,12 @@ export default class CompanyAccess extends Component {
   }
   handleTeam = evt => {
     this.setState({
-      team: evt.target.value
+      team: evt.target.value.trim()
     })
   }
-  handleRole = evt => {
+  handleRole = (name, value) => {
     this.setState({
-      role: evt.target.dataset.value
+      role: value
     })
   }
   handleAddTeam = () => {

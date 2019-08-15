@@ -1,20 +1,26 @@
 .TwoFactor {
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
-  p {
-    margin: 0 0 1rem 0;
-  }
+  margin: 0 !important;
+
   .InfoLink {
     margin: 0;
   }
-  .PhoneNumberLabel {
-    font-weight: bold;
-    display: block;
-    margin: 0 0 0.1rem 0;
-  }
-  .RegisteredNumber {
-    font-weight: bold;
-    font-size: 1.2em;
+
+  form {
+    margin-top: 16px;
+
+    .PhoneNumber {
+      display: flex;
+      flex-direction: row;
+
+      label:nth-child(1) {
+        flex: 0 0 50px;
+        margin-right: 8px;
+      }
+      label:nth-child(2) {
+        flex: 2 0 0px;
+      }
+    }
   }
 }

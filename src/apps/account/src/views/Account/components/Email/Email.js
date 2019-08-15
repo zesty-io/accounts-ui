@@ -1,5 +1,6 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import cx from 'classnames'
+
 import { notify } from '../../../../../../../shell/store/notifications'
 import {
   resendVerificationEmail,
@@ -7,9 +8,13 @@ import {
   addEmail
 } from '../../../../store'
 
-import styles from './Email.less'
 import { fetchUserEmails } from '../../../../../../../shell/store/user'
 
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Input } from '@zesty-io/core/Input'
+import { Button } from '@zesty-io/core/Button'
+
+import styles from './Email.less'
 class Email extends Component {
   constructor(props) {
     super()
@@ -29,11 +34,11 @@ class Email extends Component {
   }
   render() {
     return (
-      <Card>
+      <Card className={cx(styles.Email, 'email')}>
         <CardHeader>
           <h1>Email</h1>
         </CardHeader>
-        <CardContent className={styles.Email}>
+        <CardContent>
           <p>
             Setting up multiple emails lets you accept invitations from your
             verified addresses.
@@ -41,29 +46,31 @@ class Email extends Component {
           {this.props.user.verifiedEmails.map((email, i) => {
             if (email === this.props.user.email) {
               return (
-                <div className={styles.Email} key={i}>
+                <div className={styles.EmailAddress} key={i}>
                   <i
-                    className={cx(styles.verified, 'fa fa-check-square-o')}
+                    className={cx(styles.verified, 'fas fa-check-square')}
                     aria-hidden="true"
                     title="This email is verified"
                   />
                   <span>{email}</span>
-                  <strong className={styles.primary}>(Primary)</strong>
+                  <strong className={styles.primary}>
+                    <i className="fas fa-crown"></i>&nbsp;Primary
+                  </strong>
                 </div>
               )
             }
           })}
-          {this.state.emails &&
+          {Array.isArray(this.state.emails) &&
             this.state.emails
               .filter(eml => eml.address !== this.props.user.email)
               .map((email, i) => {
                 return (
-                  <div className={styles.Email} key={i}>
+                  <div className={styles.EmailAddress} key={i}>
                     <i
                       className={
                         email.responseReceived
-                          ? cx(styles.verified, 'fa fa-check-square-o')
-                          : cx(styles.verify, 'fa fa-chain-broken')
+                          ? cx(styles.verified, 'fas fa-check-square')
+                          : cx(styles.verify, 'fas fa-unlink')
                       }
                       onClick={() => {
                         if (!email.responseReceived) {
@@ -79,38 +86,47 @@ class Email extends Component {
                     />
                     <span>{email.address}</span>
                     {this.props.user.email === email.address ? (
-                      <strong className={styles.primary}>(Primary)</strong>
+                      <strong className={styles.primary}>
+                        <i className="fas fa-crown"></i>&nbsp;Primary
+                      </strong>
                     ) : (
                       <p>{email.name}</p>
                     )}
                     {this.props.user.email !== email.address && (
-                      <i
-                        className={`fa fa-close ${styles.delete}`}
-                        onClick={() => this.handleRemove(email.address)}
-                      />
+                      <Button
+                        kind="warn"
+                        className={styles.delete}
+                        onClick={() => this.handleRemove(email.address)}>
+                        <i className="fas fa-trash" />
+                      </Button>
                     )}
                   </div>
                 )
               })}
           <article className={styles.addEmail}>
-            <label>Name: </label>
-            <Input
-              type="text"
-              autoComplete="off"
-              name="name"
-              value={this.state.name}
-              placeholder="backup email"
-              onChange={this.handleChange}
-            />
-            <label>Email: </label>
-            <Input
-              type="text"
-              autoComplete="off"
-              name="email"
-              value={this.state.email}
-              placeholder="email@acme-corp.com"
-              onChange={this.handleChange}
-            />
+            <label>
+              Email
+              <Input
+                type="text"
+                autoComplete="off"
+                name="email"
+                value={this.state.email}
+                placeholder="e.g. email@acme-corp.com"
+                onChange={this.handleChange}
+              />
+            </label>
+
+            <label>
+              Name
+              <Input
+                type="text"
+                autoComplete="off"
+                name="name"
+                value={this.state.name}
+                placeholder="e.g. backup email"
+                onChange={this.handleChange}
+              />
+            </label>
           </article>
         </CardContent>
         <CardFooter>
@@ -202,12 +218,14 @@ class Email extends Component {
               })
             )
           })
+
           this.setState({
             submitted: false,
             name: '',
             email: ''
           })
-          dispatch(
+
+          this.props.dispatch(
             notify({
               message: 'Email added',
               type: 'success'
@@ -216,7 +234,12 @@ class Email extends Component {
         })
         .catch(err => {
           this.setState({ submitted: false })
-          this.props.dispatch(notify({ message: err.error, type: 'error' }))
+          this.props.dispatch(
+            notify({
+              type: 'error',
+              message: err.error
+            })
+          )
         })
     } else {
       this.props.dispatch(

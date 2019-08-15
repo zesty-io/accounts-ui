@@ -7,7 +7,10 @@ import styles from './Login.less'
 
 import { login } from '../../store/auth'
 
-import AppLink from '../../../core/AppLink'
+import { Input } from '@zesty-io/core/Input'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Button } from '@zesty-io/core/Button'
+import { Url } from '@zesty-io/core/Url'
 
 class Login extends Component {
   constructor(props) {
@@ -36,7 +39,7 @@ class Login extends Component {
   }
   render() {
     return (
-      <section className={styles.LoginWrap}>
+      <section className={cx(styles.LoginWrap, styles.bodyText)}>
         <div className={styles.Login}>
           <header>
             <Url href="https://zesty.io" title="https://zesty.io">
@@ -46,55 +49,44 @@ class Login extends Component {
 
           <main className={styles.gridSingle}>
             <form name="login" className={styles.LoginForm}>
+              <div className={styles.FormTitle}>
+                <h1 className={styles.subheadline}>Sign In</h1>
+                <AppLink
+                  className={styles.bodyText}
+                  to="/reset-password"
+                  tabIndex="4">
+                  Forgot password?
+                </AppLink>
+              </div>
+
               <label>
-                <p>Email Address</p>
+                <i className="far fa-envelope"></i>
                 <Input
                   tabIndex="1"
                   className={styles.loginInput}
                   type="text"
-                  placeholder="e.g. hello@zesty.io"
+                  placeholder="Email"
                   name="email"
+                  required={true}
                   autoFocus
                 />
               </label>
               <label>
-                <p>
-                  Password &nbsp;
-                  <small>
-                    (
-                    <AppLink to="/reset-password" tabIndex="4">
-                      Forgot?
-                    </AppLink>
-                    )
-                  </small>
-                </p>
-
+                <i className="fas fa-key"></i>
                 <Input
                   tabIndex="2"
                   className={styles.loginInput}
+                  placeholder="Password"
                   type="password"
                   name="pass"
+                  required={true}
                 />
               </label>
-              <Button
-                tabIndex="3"
-                onClick={this.handleLogin}
-                disabled={this.state.submitted}>
-                {this.state.submitted ? (
-                  <React.Fragment>
-                    Logging You In&nbsp;
-                    <i className="fa fa-hourglass-o" aria-hidden="true" />
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    Log In&nbsp;
-                    <i className="fa fa-sign-in" aria-hidden="true" />
-                  </React.Fragment>
-                )}
-              </Button>
+
               {this.state.message ? (
                 <p
                   className={cx(
+                    'error',
                     styles.message,
                     this.state.error ? styles.error : styles.success
                   )}>
@@ -110,16 +102,27 @@ class Login extends Component {
                   {this.state.message}
                 </p>
               ) : null}
+
+              <Button
+                tabIndex="3"
+                onClick={this.handleLogin}
+                disabled={this.state.submitted}>
+                {this.state.submitted ? (
+                  <React.Fragment>
+                    <i className="fas fa-spinner"></i>&nbsp;Signing In
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <i className="fas fa-sign-in-alt"></i>&nbsp;Sign In
+                  </React.Fragment>
+                )}
+              </Button>
             </form>
 
             <div className={styles.createAccount}>
-              <h3>Welcome to Zesty.io</h3>
-              <p>
-                Start creating content ready to be delivered securely, quickly
-                and reliably. Anywhere, anytime.
-              </p>
+              <p>Don't have an account?</p>
               <AppLink to="/signup" tabIndex="5">
-                Create An Account
+                Sign up for free
               </AppLink>
             </div>
           </main>
@@ -170,7 +173,7 @@ class Login extends Component {
           this.setState({
             error: true,
             submitted: false,
-            message: 'There was a problem logging you in'
+            message: 'There was a problem signing you in'
           })
           this.props.dispatch({
             type: 'FETCH_AUTH_ERROR',
@@ -190,7 +193,7 @@ class Login extends Component {
           this.setState({
             error: true,
             submitted: false,
-            message: 'There was a problem logging you in'
+            message: 'There was a problem signing you in'
           })
         }
       })

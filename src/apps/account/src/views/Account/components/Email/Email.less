@@ -1,55 +1,39 @@
-@import '../../../../../../../shell/styles/colors.less';
+@import '~@zesty-io/core/colors.less';
 
 .Email {
-  flex: 1 0 0%;
-  p {
-    margin: 0 0 1rem 0;
-  }
-  .Email {
-    margin: 1rem 0;
-    display: grid;
-    grid-template-columns: 0.1fr 1fr 0.4fr 0.1fr;
+  display: flex;
+  flex-direction: column;
+  margin: 0 !important;
 
-    p {
-      margin: 0;
-    }
-
-    .delete {
-      transition: all 0.1s;
-      color: @zesty-light-gray;
-      &:hover,
-      &:active,
-      &:focus {
-        color: @zesty-red;
-      }
-    }
-    .verify {
-      color: lighten(@zesty-red, 10%);
-      transition: all 0.1s;
-      &:hover,
-      &:active,
-      &:focus {
-        color: @zesty-green;
-      }
-    }
-    .verified {
-      color: @zesty-green;
-    }
-    .primary {
-      margin-left: 5px;
-    }
-  }
-  .addEmail {
+  .EmailAddress {
+    margin: 8px 0;
     display: grid;
-    grid-template-columns: 0.3fr 3fr;
-    grid-auto-rows: 2.5rem;
+    grid-template-columns: 20px 2fr 1fr 43px;
     align-items: center;
-    label {
-      margin-right: 1rem;
-    }
+    grid-gap: 4px;
   }
-  input {
-    width: 15rem;
-    margin: 0.5rem 0 0 0;
+
+  .addEmail {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 16px;
+
+    label {
+      display: block;
+      margin: 8px 0 0 0;
+      width: 100%;
+      input {
+        width: 100%;
+      }
+    }
+
+    label:nth-child(1) {
+      flex: 2 0 0px;
+      margin-right: 8px;
+    }
+    label:nth-child(2) {
+      flex: 1 0 0px;
+    }
   }
 }

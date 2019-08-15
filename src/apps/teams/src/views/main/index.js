@@ -8,6 +8,8 @@ import TeamsGrid from '../../components/TeamsGrid'
 import styles from './teams.less'
 import { notify } from '../../../../../shell/store/notifications'
 
+import { WithLoader } from '@zesty-io/core/WithLoader'
+
 export default connect(state => {
   return {
     teams: state.teams,

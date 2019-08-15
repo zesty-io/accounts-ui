@@ -2,14 +2,18 @@ import React, { Component } from 'react'
 
 import BlueprintList from '../BlueprintList'
 
-import AppLink from '../../../../../core/AppLink'
-
 import { notify } from '../../../../../shell/store/notifications'
 import {
   updateBlueprint,
   createBlueprint,
   fetchBlueprints
 } from '../../../../properties/src/store/blueprints'
+
+import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
+import { Button } from '@zesty-io/core/Button'
+import { Input } from '@zesty-io/core/Input'
+import { AppLink } from '@zesty-io/core/AppLink'
+import { Url } from '@zesty-io/core/Url'
 
 import styles from './BlueprintEdit.less'
 class BlueprintEdit extends Component {
@@ -166,14 +170,10 @@ class BlueprintEdit extends Component {
               <i className="fa fa-plus" /> Create New Blueprint
             </Button>
           )}
-          <Button
-            disabled={this.state.saving}
-            className={styles.button}
-            onClick={() => {
-              this.props.history.push('/blueprints')
-            }}>
+
+          <AppLink to="/blueprints">
             <i className="fa fa-ban" /> Cancel
-          </Button>
+          </AppLink>
         </ButtonGroup>
       </form>
     )
@@ -195,9 +195,14 @@ class BlueprintEdit extends Component {
               })
             )
           })
-          .catch(() => {
+          .catch(err => {
+            console.error(err)
             this.props.dispatch(
-              notify({ message: 'Error fetching blueprints', type: 'error' })
+              notify({
+                type: 'error',
+
+                message: 'Error fetching blueprints'
+              })
             )
           })
       })
