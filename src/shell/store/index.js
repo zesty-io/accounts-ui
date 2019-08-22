@@ -9,6 +9,8 @@ import { notifications } from './notifications'
 // import { modal } from './modal'
 import { confirm } from './confirm'
 import { systemRoles } from './systemRoles'
+import { ecosystems } from './ecosystems'
+
 import { properties } from '../../apps/properties/src/store'
 
 // Teams
@@ -35,7 +37,8 @@ const appReducer = combineReducers({
   // modal,
   confirm,
   notifications,
-  systemRoles
+  systemRoles,
+  ecosystems
 })
 
 const rootReducer = (state, action) => {
