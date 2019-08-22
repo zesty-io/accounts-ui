@@ -15,7 +15,11 @@ import { Button } from '@zesty-io/core/Button'
 
 import styles from './Billing.less'
 export default withRouter(
-  connect(state => state)(
+  connect(state => {
+    return {
+      ecosystems: state.ecosystems
+    }
+  })(
     class Billing extends React.PureComponent {
       componentDidMount() {
         console.log('Billing', this.props)

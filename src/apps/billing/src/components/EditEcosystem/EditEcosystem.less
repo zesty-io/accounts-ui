@@ -1,46 +1,20 @@
 @import '~@zesty-io/core/colors.less';
 @import '~@zesty-io/core/typography.less';
 
-.Billing {
-  padding: 2rem;
-  height: 86vh;
-  overflow-y: scroll;
-
-  .BillingTitle {
-    font-size: 1.8rem;
-    margin: 0 0 1rem 0;
-  }
-  .Description {
-    max-width: 50rem;
-  }
-
-  header {
+main {
+  display: flex;
+  flex-direction: column;
+  .row {
     display: flex;
-    margin: 16px 0 8px 0;
-    align-items: center;
-    .ecosystem {
-      width: 300px;
-    }
-    .total {
-      flex: 1;
-      margin: 0 8px;
-    }
-  }
-  main {
-    display: flex;
-    flex-direction: column;
-    .row {
-      display: flex;
-      flex-direction: row;
-      margin: 8px 0;
+    flex-direction: row;
+    margin: 8px 0;
 
-      & > {
-        flex: 1;
-      }
-    }
-    .Card {
-      margin: 0 !important;
+    & > {
       flex: 1;
     }
+  }
+  .Card {
+    margin: 0 !important;
+    flex: 1;
   }
 }
