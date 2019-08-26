@@ -31,7 +31,7 @@ export default withRouter(
           <section className={styles.Billing}>
             <h1 className={styles.BillingTitle}>
               <i className="fa fa-credit-card" aria-hidden="true" />
-              &nbsp; Manage Your Account Billing
+              &nbsp; Manage Your Ecosystem Billing
             </h1>
 
             <p className={styles.Description}>

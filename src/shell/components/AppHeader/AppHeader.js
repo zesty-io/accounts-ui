@@ -88,7 +88,7 @@ export default connect(state => {
             )}
             <NavLink to="/billing" id="billingNavLink">
               <i className="fa fa-credit-card" aria-hidden="true" />
-              &nbsp;Billing
+              &nbsp;Ecosystems
             </NavLink>
           </nav>
           <nav
