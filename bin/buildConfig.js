@@ -18,8 +18,8 @@ module.exports = buildConfig = build => {
       COOKIE_NAME: 'APP_SID',
       COOKIE_DOMAIN: '.zesty.io',
       EMAIL_SERVICE: 'https://email.zesty.io/send',
-      C_NAME: 'sites2.zesty.zone',
-      A_RECORD: '130.211.21.25'
+      C_NAME: 'zesty.map.fastly.net',
+      A_RECORD: '151.101.1.161'
     }
   } else if (build.data.environment.toUpperCase() === 'STAGE') {
     config = {
@@ -33,8 +33,8 @@ module.exports = buildConfig = build => {
       COOKIE_NAME: 'STAGE_APP_SID',
       COOKIE_DOMAIN: '.zesty.io',
       EMAIL_SERVICE: 'https://email.zesty.io/send',
-      C_NAME: 'sites2.zesty.zone',
-      A_RECORD: '130.211.21.25'
+      C_NAME: 'zesty.map.fastly.net',
+      A_RECORD: '151.101.1.161'
     }
   } else {
     config = {
@@ -47,8 +47,8 @@ module.exports = buildConfig = build => {
       PREVIEW_URL_PROTOCOL: 'http://',
       COOKIE_NAME: 'DEV_APP_SID',
       COOKIE_DOMAIN: '.zesty.localdev',
-      C_NAME: 'sites2.zesty.zone',
-      A_RECORD: '130.211.21.25'
+      C_NAME: 'zesty.map.fastly.net',
+      A_RECORD: '151.101.1.161'
     }
   }
 

@@ -27,7 +27,7 @@ export default class LaunchWizard extends Component {
         <CardContent>
           <p className={styles.instructions}>
             By sending your instance live it will have a domain which allows
-            public internet access. This can be done in 2 steps. View our{' '}
+            public internet access. This can be done in 3 steps. Read our{' '}
             <Url
               href="https://zesty.org/services/web-engine/guides/how-to-launch-an-instance#setting-a-custom-domain-in-zesty-io-accounts"
               target="_blank">
@@ -64,7 +64,7 @@ export default class LaunchWizard extends Component {
               provider
               <div className={styles.settings}>
                 <p>
-                  CNAME: <code>{CONFIG.C_NAME}</code>
+                  CNAME (<em>preferred</em>): <code>{CONFIG.C_NAME}</code>
                 </p>
                 <p>
                   A Record: <code>{CONFIG.A_RECORD}</code>
