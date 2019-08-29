@@ -21,20 +21,10 @@ export default class LaunchWizard extends Component {
         <CardHeader className={styles.CardHeader}>
           <h2>
             <i className="fa fa-rocket" aria-hidden="true" />
-            &nbsp;Send Your Instance Live!
+            &nbsp;Publish Your Instance!
           </h2>
         </CardHeader>
-        <CardContent>
-          <p className={styles.instructions}>
-            By sending your instance live it will have a domain which allows
-            public internet access. This can be done in 3 steps. Read our{' '}
-            <Url
-              href="https://zesty.org/services/web-engine/guides/how-to-launch-an-instance#setting-a-custom-domain-in-zesty-io-accounts"
-              target="_blank">
-              documentation
-            </Url>{' '}
-            for more detail.
-          </p>
+        <CardContent className={styles.CardContent}>
           <ol>
             <li>
               <h4>Set your domain</h4>
@@ -64,10 +54,15 @@ export default class LaunchWizard extends Component {
               provider
               <div className={styles.settings}>
                 <p>
-                  CNAME (<em>preferred</em>): <code>{CONFIG.C_NAME}</code>
+                  Adding a CNAME record for both the apex and www domain allows
+                  Zesty.io to serve this instance when browsing to your custom
+                  domain.&nbsp;
+                  <Url href="https://zesty.org/services/web-engine/guides/how-to-launch-an-instance#3-configure-you-domains-dns-settings">
+                    Learn more about DNS in our documentation.
+                  </Url>
                 </p>
-                <p>
-                  A Record: <code>{CONFIG.A_RECORD}</code>
+                <p className={styles.cname}>
+                  CNAME value <code>{CONFIG.C_NAME}</code>
                 </p>
               </div>
             </li>
@@ -91,6 +86,16 @@ export default class LaunchWizard extends Component {
     )
   }
   handleCheckDNS = () => {
+    if (!this.props.site.domain) {
+      this.props.dispatch(
+        notify({
+          type: 'error',
+          message: 'You must set a custom domain first'
+        })
+      )
+      return
+    }
+
     this.setState({ submitted: true })
     this.props
       .dispatch(
@@ -118,6 +123,15 @@ export default class LaunchWizard extends Component {
           )
           this.setState({ isVerified: false, submitted: false })
         }
+      })
+      .catch(err => {
+        this.props.dispatch(
+          notify({
+            type: 'error',
+            message: 'Your DNS could not be verified'
+          })
+        )
+        this.setState({ isVerified: false, submitted: false })
       })
   }
 }

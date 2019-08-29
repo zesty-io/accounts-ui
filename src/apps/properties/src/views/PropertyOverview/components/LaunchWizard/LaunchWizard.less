@@ -1,41 +1,43 @@
+@import '~@zesty-io/core/colors.less';
+
 .LaunchWizard {
   margin: 0 0 1.5rem;
   background: #323644 !important;
   box-shadow: inset 0px 0px 10px #13151d;
   color: #efefef;
-  padding: 2rem;
+
   .CardHeader {
     border: none;
   }
 
-  .instructions {
-    a {
-      margin: 0;
-      text-shadow: none;
-    }
+  a {
+    margin: 0;
+    text-shadow: none;
   }
+
   ol {
     font-weight: bold;
-    font-size: 1.4em;
+    font-size: 1.2em;
     margin: 1rem 0 0 2rem;
-    line-height: 2.2rem;
 
     li {
-      margin-bottom: 1rem;
-    }
+      margin-bottom: 28px;
 
-    .domain {
-      font-size: 0.8em;
-    }
-    .dns {
-      .settings {
-        font-size: 0.8em;
+      p {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      code {
+        padding: 4px;
+        background-color: @zesty-white;
+        color: @zesty-dark-blue;
+      }
+      .cname {
+        margin: 16px 0;
+      }
+      button {
+        margin: 4px 0;
       }
     }
-    // .confirm {
-    //   button {
-    //     font-size: 0.8em;
-    //   }
-    // }
   }
 }
