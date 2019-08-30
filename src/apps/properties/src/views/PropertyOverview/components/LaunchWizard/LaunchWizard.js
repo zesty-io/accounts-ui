@@ -54,15 +54,28 @@ export default class LaunchWizard extends Component {
               provider
               <div className={styles.settings}>
                 <p>
-                  Adding a CNAME record for both the apex and www domain allows
-                  Zesty.io to serve this instance when browsing to your custom
-                  domain.&nbsp;
-                  <Url href="https://zesty.org/services/web-engine/guides/how-to-launch-an-instance#3-configure-you-domains-dns-settings">
+                  Add these A records for your apex domain. Multiple records
+                  allow for DNS lookup redundancy.
+                </p>
+                <p className={styles.aRecords}>
+                  {CONFIG.A_RECORDS.map(rec => (
+                    <code>{rec}</code>
+                  ))}
+                </p>
+
+                <div className={styles.cname}>
+                  <p>Add this CNAME record for your www sub-domain.</p>
+                  <p>
+                    <code>{CONFIG.C_NAME}</code>
+                  </p>
+                </div>
+
+                <p>
+                  <Url
+                    target="_blank"
+                    href="https://zesty.org/services/web-engine/guides/how-to-launch-an-instance#3-configure-you-domains-dns-settings">
                     Learn more about DNS in our documentation.
                   </Url>
-                </p>
-                <p className={styles.cname}>
-                  CNAME value <code>{CONFIG.C_NAME}</code>
                 </p>
               </div>
             </li>
