@@ -20,7 +20,7 @@ import { fetchSiteTeams } from '../../store/sitesTeams'
 import { fetchBlueprint } from '../../store/blueprints'
 // import { fetchSite } from '../../store/sites'
 // import { updateSite } from '../../store/sites'
-// import { notify } from '../../../../../shell/store/notifications'
+import { notify } from '../../../../../shell/store/notifications'
 
 import { WithLoader } from '@zesty-io/core/WithLoader'
 import { AppLink } from '@zesty-io/core/AppLink'
