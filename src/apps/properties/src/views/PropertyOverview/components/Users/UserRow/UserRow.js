@@ -4,7 +4,8 @@ import { updateRole, removeUser } from '../../../../../store/sitesUsers'
 import { zConfirm } from '../../../../../../../../shell/store/confirm'
 import { notify } from '../../../../../../../../shell/store/notifications'
 
-import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
+import { Select, Option } from '@zesty-io/core/Select'
+import { Loader } from '@zesty-io/core/Loader'
 import { Button } from '@zesty-io/core/Button'
 
 import styles from './UserRow.less'
@@ -36,17 +37,20 @@ export default class UserRow extends PureComponent {
                   </React.Fragment>
                 ) : (
                   // render a dropdown to change roles
-                  <DropDownFieldType
+                  <Select
                     name="siteRoles"
-                    onChange={this.handleSelectRole}
                     value={this.props.role.ZUID}
-                    options={this.props.siteRoles.map(role => {
-                      return {
-                        value: role.ZUID,
-                        text: role.name
-                      }
+                    onSelect={this.handleSelectRole}>
+                    {this.props.siteRoles.map(role => {
+                      return (
+                        <Option
+                          key={role.ZUID}
+                          value={role.ZUID}
+                          text={role.name}
+                        />
+                      )
                     })}
-                  />
+                  </Select>
                 )
               ) : // Render text only for non-permissioned users
               this.props.role.name === 'Owner' ? (
@@ -123,19 +127,13 @@ export default class UserRow extends PureComponent {
     )
   }
 
-  handleSelectRole = evt => {
+  handleSelectRole = (name, value) => {
     this.setState({
       submitted: true
     })
     this.props
-      .dispatch(
-        updateRole(
-          this.props.siteZUID,
-          this.props.ZUID,
-          evt.target.dataset.value
-        )
-      )
-      .then(data => {
+      .dispatch(updateRole(this.props.siteZUID, this.props.ZUID, value))
+      .then(_ => {
         this.setState({
           submitted: false
         })
