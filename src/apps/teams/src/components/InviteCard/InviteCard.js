@@ -18,7 +18,7 @@ export default class InviteCard extends PureComponent {
         </CardHeader>
         <CardContent className={styles.CardContent}>
           <WithLoader condition={this.props.invite.name}>
-            <h3>{this.props.invite.name}</h3>
+            <h3 className={styles.headline}>{this.props.invite.name}</h3>
             <p>{this.props.invite.description}</p>
           </WithLoader>
         </CardContent>
