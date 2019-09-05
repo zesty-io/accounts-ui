@@ -58,8 +58,8 @@ export default class LaunchWizard extends Component {
                   allow for DNS lookup redundancy.
                 </p>
                 <p className={styles.aRecords}>
-                  {CONFIG.A_RECORDS.map(rec => (
-                    <code>{rec}</code>
+                  {CONFIG.A_RECORDS.map((rec, i) => (
+                    <code key={i}>{rec}</code>
                   ))}
                 </p>
 
