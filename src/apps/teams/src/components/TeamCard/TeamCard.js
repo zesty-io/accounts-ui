@@ -186,9 +186,9 @@ export default class TeamCard extends Component {
                       return (
                         <article className={styles.Member} key={i}>
                           {member.invitedByUserZUID ? (
-                            <i className="fa fa-clock-o" />
+                            <i className="fas fa-clock" />
                           ) : (
-                            <i className="fa fa-user" />
+                            <i className="fas fa-user" />
                           )}
 
                           <span className={styles.Name}>
