@@ -106,7 +106,10 @@ class LoadUser extends Component {
       .dispatch(fetchUser(this.props.userZUID))
       .then(user => {
         if (this.__mounted) {
-          Raven.setUserContext(user)
+          Sentry.configureScope(scope => {
+            scope.setUser({ ...user, id: user.ID })
+          })
+
           bugsnagClient.user = user
           this.setState({
             loadingUser: false

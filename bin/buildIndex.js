@@ -143,15 +143,19 @@ module.exports = buildIndex = build => {
       </main>
 
       <!-- Bug Reporting -->
-      <script src=https://cdn.ravenjs.com/3.26.4/raven.min.js
-      crossorigin=anonymous></script>
+      <script
+        src="https://browser.sentry-cdn.com/5.6.3/bundle.min.js"
+        integrity="sha384-/Cqa/8kaWn7emdqIBLk3AkFMAHBk0LObErtMhO+hr52CntkaurEnihPmqYj3uJho"
+        crossorigin="anonymous"></script>
       <script>
-        Raven.config('https://12c3a25b9d4c4442aa93f22dcf39c26a@sentry.io/1229171', {
+        Sentry.init({ 
+          dsn: 'https://0e6bbe66b97446589b1e19dac951b207@sentry.io/1230598' ,
           release: '${build.data.gitCommit}',
           environment: '${build.data.environment}',
           ignoreErrors: [/^Invalid user$/g]
-        }).install()
+        });
       </script>
+
       <script src="//d2wy8f7a9ursnm.cloudfront.net/v4/bugsnag.min.js"></script>
       <script>
         window.bugsnagClient = bugsnag({
@@ -160,6 +164,9 @@ module.exports = buildIndex = build => {
           releaseStage: '${build.data.environment}'
         })
       </script>
+      
+
+
 
       <script src="/config.${build.data.gitCommit}.js"></script>
       <script>

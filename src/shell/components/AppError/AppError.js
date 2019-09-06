@@ -19,7 +19,7 @@ export default class AppError extends Component {
       hasError: true
     })
     // log the error to error reporting services
-    Raven.captureException(error)
+    Sentry.captureException(error)
     bugsnagClient.notify(error)
     console.error(error)
   }

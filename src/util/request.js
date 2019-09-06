@@ -77,6 +77,12 @@ export function request(url, opts = {}) {
           type: 'error'
         })
       }
+      if (res.status === 403) {
+        notify({
+          message: `You are not allowed to take this action. 403`,
+          type: 'error'
+        })
+      }
       if (res.status === 404) {
         notify({
           message: `We could not find a requested resource. 404`,
@@ -120,7 +126,7 @@ export function request(url, opts = {}) {
         return Promise.reject(err)
       }
       // TODO global app notification on total request failure
-      Raven.captureException(err)
+      Sentry.captureException(err)
       bugsnagClient.notify(err, {
         beforeSend: function(report) {
           if (report.message === 'Invalid user') report.ignore
