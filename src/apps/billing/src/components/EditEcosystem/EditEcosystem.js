@@ -19,7 +19,7 @@ export default connect(state => state)(function EditEcosystem(props) {
   }, [])
 
   return (
-    <main>
+    <main className={styles.EditEcosystem}>
       <div className={styles.row}>
         <Card className={styles.Card}>
           <CardHeader>Payment Sources</CardHeader>
