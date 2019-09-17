@@ -6,6 +6,7 @@ import debounce from 'lodash.debounce'
 
 import { sortSites } from '../../../../store/sites'
 import { saveProfile } from '../../../../../../../shell/store/user'
+import { fetchEcosystems } from '../../../../../../../shell/store/ecosystems'
 
 import { Search } from '@zesty-io/core/Search'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
@@ -21,6 +22,10 @@ export default connect(state => state)(
         eco: props.settings && props.settings.eco,
         sort: 0
       }
+    }
+
+    componentDidMount() {
+      this.props.dispatch(fetchEcosystems())
     }
 
     onSearch = debounce((name, term) => {
@@ -53,7 +58,7 @@ export default connect(state => state)(
     render() {
       const ecosystems = this.props.ecosystems.map(eco => {
         return {
-          value: eco.id,
+          value: eco.orgID,
           text: eco.name
         }
       })
