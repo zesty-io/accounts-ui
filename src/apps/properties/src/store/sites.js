@@ -170,7 +170,7 @@ export function createInstance(name, ecoZUID) {
     return request(`${CONFIG.API_ACCOUNTS}/instances`, {
       method: 'POST',
       json: true,
-      body: { name, eco_zuid: ecoZUID }
+      body: { name, ecoZUID }
     }).then(res => {
       dispatch({
         type: 'CREATE_SITE_SUCCESS',
