@@ -47,7 +47,10 @@ export default connect(state => {
     render() {
       return (
         <header className={styles.AppHeader}>
-          <img className={styles.logo} src="/zesty-z-logo.svg" />
+          <img
+            className={styles.logo}
+            src="https://brand-assets.zesty.io/zesty-io-logo.svg"
+          />
           <nav className={styles.GlobalNav} id="globalNav">
             <NavLink
               className={styles.sudheadline}
