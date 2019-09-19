@@ -48,7 +48,10 @@ class Signup extends Component {
         <div className={styles.FormWrapper}>
           <header className={styles.Logo}>
             <Url href="https://zesty.io" title="https://zesty.io">
-              <img src="/zesty-io-logo.svg" height="70px" />
+              <img
+                src="https://brand-assets.zesty.io/zesty-io-logo-vertical.svg"
+                height="200px"
+              />
             </Url>
           </header>
           <main>

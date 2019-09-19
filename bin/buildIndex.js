@@ -94,7 +94,7 @@ module.exports = buildIndex = build => {
           }
         }
       </style>
-      <link rel="icon" type="image/png" href="/favicon.png" />
+      <link rel="icon" type="image/png" href="https://brand-assets.zesty.io/zesty-io-logo-dark.png" />
 
       <link href="/bundle.${build.data.gitCommit}.shell.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.properties-app.css" type="text/css" rel="stylesheet" />
