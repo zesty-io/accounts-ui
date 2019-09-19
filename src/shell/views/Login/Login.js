@@ -43,7 +43,10 @@ class Login extends Component {
         <div className={styles.Login}>
           <header>
             <Url href="https://zesty.io" title="https://zesty.io">
-              <img src="/zesty-io-logo.svg" height="70px" />
+              <img
+                src="https://brand-assets.zesty.io/zesty-io-logo-vertical.svg"
+                height="200px"
+              />
             </Url>
           </header>
 
@@ -102,21 +105,22 @@ class Login extends Component {
                   {this.state.message}
                 </p>
               ) : null}
-
-              <Button
-                tabIndex="3"
-                onClick={this.handleLogin}
-                disabled={this.state.submitted}>
-                {this.state.submitted ? (
-                  <React.Fragment>
-                    <i className="fas fa-spinner"></i>&nbsp;Signing In
-                  </React.Fragment>
-                ) : (
-                  <React.Fragment>
-                    <i className="fas fa-sign-in-alt"></i>&nbsp;Sign In
-                  </React.Fragment>
-                )}
-              </Button>
+              <div className={styles.loginButtonWrap}>
+                <Button
+                  tabIndex="3"
+                  onClick={this.handleLogin}
+                  disabled={this.state.submitted}>
+                  {this.state.submitted ? (
+                    <React.Fragment>
+                      <i className="fas fa-spinner"></i>&nbsp;Signing In
+                    </React.Fragment>
+                  ) : (
+                    <React.Fragment>
+                      <i className="fas fa-sign-in-alt"></i>&nbsp;Sign In
+                    </React.Fragment>
+                  )}
+                </Button>
+              </div>
             </form>
 
             <div className={styles.createAccount}>
