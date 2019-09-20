@@ -24,8 +24,6 @@ export default connect(state => {
       loading: true
     }
     componentDidMount() {
-      document.title = 'Accounts: Teams'
-
       Promise.all([
         this.props.dispatch(fetchTeamInvites()),
         this.props.dispatch(fetchTeams())
@@ -46,6 +44,7 @@ export default connect(state => {
         })
     }
     render() {
+      document.title = 'Accounts: Teams'
       return (
         <WithLoader
           className={styles.Loading}
