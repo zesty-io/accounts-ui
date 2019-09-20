@@ -11,7 +11,6 @@ export default connect((state, props) => {
   let favorites = state.user.prefs.favorite_sites.filter(ZUID =>
     Object.keys(state.sites).includes(ZUID)
   )
-  document.title = 'Accounts: Instances'
 
   const layout = state.user.prefs.instance_layout || 'grid'
 
