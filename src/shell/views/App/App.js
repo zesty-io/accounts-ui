@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
+import { withRouter } from 'react-router-dom'
 
 import Login from '../Login'
 import Logout from '../Logout'
@@ -141,30 +142,32 @@ class LoadUser extends Component {
   }
 }
 
-export default connect(state => state)(function Shell(props) {
-  return (
-    <React.Fragment>
-      <Switch>
-        <Route path="/logout" component={Logout} />
-        <Route path="/login/2fa" component={TwoFactor} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/reset-password-confirm" component={ResetPasswordEnd} />
-        <Route path="/reset-password" component={ResetPasswordStart} />
-        <Route path="/verify-email" component={VerifyEmail} />
-        <Route path="/resend-email" component={ResendEmail} />
+export default withRouter(
+  connect(state => state)(function Shell(props) {
+    return (
+      <React.Fragment>
+        <Switch>
+          <Route path="/logout" component={Logout} />
+          <Route path="/login/2fa" component={TwoFactor} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/reset-password-confirm" component={ResetPasswordEnd} />
+          <Route path="/reset-password" component={ResetPasswordStart} />
+          <Route path="/verify-email" component={VerifyEmail} />
+          <Route path="/resend-email" component={ResendEmail} />
 
-        <LoadUser
-          auth={props.auth.valid}
-          userZUID={props.user.ZUID}
-          dispatch={props.dispatch}>
-          {props.user.verifiedEmails && props.user.verifiedEmails.length ? (
-            <App user={props.user} dispatch={props.dispatch} />
-          ) : (
-            <Redirect to="/verify-email" />
-          )}
-        </LoadUser>
-      </Switch>
-    </React.Fragment>
-  )
-})
+          <LoadUser
+            auth={props.auth.valid}
+            userZUID={props.user.ZUID}
+            dispatch={props.dispatch}>
+            {props.user.verifiedEmails && props.user.verifiedEmails.length ? (
+              <App user={props.user} dispatch={props.dispatch} />
+            ) : (
+              <Redirect to="/verify-email" />
+            )}
+          </LoadUser>
+        </Switch>
+      </React.Fragment>
+    )
+  })
+)

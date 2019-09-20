@@ -43,13 +43,14 @@ class Signup extends Component {
     }
   }
   render() {
+    document.title = 'Accounts: Create an Account'
     return (
       <section className={cx(styles.Signup, styles.bodyText)}>
         <div className={styles.FormWrapper}>
           <header className={styles.Logo}>
             <Url href="https://zesty.io" title="https://zesty.io">
               <img
-                src="https://brand-assets.zesty.io/zesty-io-logo-vertical.svg"
+                src="https://brand.zesty.io/zesty-io-logo-vertical.svg"
                 height="200px"
               />
             </Url>

@@ -48,6 +48,7 @@ class PropertyOverview extends Component {
     }
   }
   render() {
+    document.title = `Accounts: ${this.props.site.name}`
     return (
       <article className={styles.PropertyOverview}>
         <header className={styles.PropertyOverviewHeader}>
