@@ -38,13 +38,14 @@ class Login extends Component {
     }
   }
   render() {
+    document.title = 'Accounts: Login'
     return (
       <section className={cx(styles.LoginWrap, styles.bodyText)}>
         <div className={styles.Login}>
           <header>
             <Url href="https://zesty.io" title="https://zesty.io">
               <img
-                src="https://brand-assets.zesty.io/zesty-io-logo-vertical.svg"
+                src="https://brand.zesty.io/zesty-io-logo-vertical.svg"
                 height="200px"
               />
             </Url>

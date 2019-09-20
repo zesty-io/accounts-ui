@@ -24,6 +24,8 @@ export default connect(state => {
       loading: true
     }
     componentDidMount() {
+      document.title = 'Accounts: Teams'
+
       Promise.all([
         this.props.dispatch(fetchTeamInvites()),
         this.props.dispatch(fetchTeams())

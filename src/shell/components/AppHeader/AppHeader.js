@@ -49,7 +49,7 @@ export default connect(state => {
         <header className={styles.AppHeader}>
           <img
             className={styles.logo}
-            src="https://brand-assets.zesty.io/zesty-io-logo.svg"
+            src="https://brand.zesty.io/zesty-io-logo.svg"
           />
           <nav className={styles.GlobalNav} id="globalNav">
             <NavLink
