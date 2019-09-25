@@ -22,17 +22,10 @@ class TwoFactor extends Component {
     clearInterval(this.state.polling)
   }
   render() {
+    document.title = 'Accounts: 2FA Verify'
     return (
       <section className={cx(styles.TwoFactor, styles.bodyText)}>
         <div className={styles.Wrapper}>
-          <header className={styles.Logo}>
-            <Url
-              href="https://zesty.io"
-              title="https://zesty.io"
-              className={styles.logo}>
-              <img src="/zesty-io-logo.svg" height="70px" />
-            </Url>
-          </header>
           <main>
             <form name="TwoFactor" className={styles.TwoFactorForm}>
               <label>

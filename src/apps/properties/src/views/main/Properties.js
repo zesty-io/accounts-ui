@@ -52,6 +52,7 @@ class Properties extends Component {
     this.props.dispatch(fetchSystemRoles())
   }
   render() {
+    document.title = 'Accounts: Instances'
     return (
       <section className={styles.Websites}>
         <WithLoader

@@ -5,6 +5,7 @@ import { ErrorBoundary } from './err'
 
 class Dashboard extends Component {
   render() {
+    document.title = 'Accounts: Dashboard'
     return (
       <ErrorBoundary>
         <section id="dashboard">

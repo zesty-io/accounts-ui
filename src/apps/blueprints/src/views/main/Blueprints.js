@@ -63,6 +63,7 @@ class Blueprints extends Component {
     }
   }
   render() {
+    document.title = 'Accounts: Blueprints'
     return (
       <WithLoader
         className={styles.Loading}

@@ -44,6 +44,7 @@ export default connect(state => {
         })
     }
     render() {
+      document.title = 'Accounts: Teams'
       return (
         <WithLoader
           className={styles.Loading}

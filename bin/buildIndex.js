@@ -9,7 +9,7 @@ module.exports = buildIndex = build => {
   <html>
     <head>
       <meta charset="UTF-8">
-      <title>Zesty.io Accounts Application</title>
+      <title>Accounts</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
       <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,500,500i" rel="stylesheet">
       <style type="text/css">
@@ -94,7 +94,7 @@ module.exports = buildIndex = build => {
           }
         }
       </style>
-      <link rel="icon" type="image/png" href="/favicon.png" />
+      <link rel="icon" type="image/png" href="https://brand.zesty.io/zesty-io-logo-dark.png" />
 
       <link href="/bundle.${build.data.gitCommit}.shell.css" type="text/css" rel="stylesheet" />
       <link href="/bundle.${build.data.gitCommit}.properties-app.css" type="text/css" rel="stylesheet" />
