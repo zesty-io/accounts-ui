@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
 import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import Login from '../Login'
 import Logout from '../Logout'
@@ -68,6 +69,21 @@ class App extends Component {
       )
     }
   }
+
+  componentDidUpdate(prevProps) {
+    // NOTE: in order to have access to this information, you will need
+    // to wrap this component in the `withRouter` HOC
+
+    const {
+      location: { pathname }
+    } = this.props
+    const previousLocation = prevProps.location.pathname
+
+    if (pathname !== previousLocation) {
+      window.Appcues.page()
+    }
+  }
+
   render() {
     return (
       <section className={cx(styles.AppShell, styles.bodyText)}>
@@ -93,6 +109,8 @@ class App extends Component {
     )
   }
 }
+
+const AppWithRouter = withRouter(App)
 
 class LoadUser extends Component {
   __mounted = false
@@ -161,7 +179,7 @@ export default withRouter(
             userZUID={props.user.ZUID}
             dispatch={props.dispatch}>
             {props.user.verifiedEmails && props.user.verifiedEmails.length ? (
-              <App user={props.user} dispatch={props.dispatch} />
+              <AppWithRouter user={props.user} dispatch={props.dispatch} />
             ) : (
               <Redirect to="/verify-email" />
             )}
