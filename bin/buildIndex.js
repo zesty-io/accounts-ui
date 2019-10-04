@@ -125,6 +125,8 @@ module.exports = buildIndex = build => {
         gtag('config', 'UA-21247490-1');
         gtag('config', 'AW-955374362');
       </script>
+
+      <script src="//fast.appcues.com/57826.js"></script>
     </head>
 
     <body>
