@@ -8,6 +8,7 @@ module.exports = buildIndex = build => {
   const html = `
   <html>
     <head>
+      <script src="//fast.appcues.com/57826.js"></script>
       <meta charset="UTF-8">
       <title>Accounts</title>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
@@ -126,7 +127,7 @@ module.exports = buildIndex = build => {
         gtag('config', 'AW-955374362');
       </script>
 
-      <script src="//fast.appcues.com/57826.js"></script>
+
     </head>
 
     <body>
