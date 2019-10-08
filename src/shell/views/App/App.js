@@ -197,11 +197,7 @@ export default withRouter(
             auth={props.auth.valid}
             userZUID={props.user.ZUID}
             dispatch={props.dispatch}>
-            {props.user.verifiedEmails && props.user.verifiedEmails.length ? (
-              <AppWithRouter user={props.user} dispatch={props.dispatch} />
-            ) : (
-              <Redirect to="/verify-email" />
-            )}
+            <AppWithRouter user={props.user} dispatch={props.dispatch} />
           </LoadUser>
         </Switch>
       </React.Fragment>
