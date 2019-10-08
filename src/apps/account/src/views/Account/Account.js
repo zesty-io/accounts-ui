@@ -36,6 +36,7 @@ export default connect(state => state)(
         })
     }
     render() {
+      document.title = 'Accounts: My Account'
       return (
         <section className={styles.Settings}>
           <h1 className={styles.SettingsTitle}>Manage Your Account Settings</h1>

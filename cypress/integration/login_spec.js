@@ -13,7 +13,7 @@ describe('User Login Failure', function() {
 
     cy.get('form[name="login"] .error', {
       timeout: 10000
-    }).should('contain', 'There was a problem logging you in')
+    }).should('contain', 'There was a problem signing you in')
   })
 })
 

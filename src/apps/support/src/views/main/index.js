@@ -7,6 +7,7 @@ import BugReport from '../../components/BugReport'
 
 class Support extends Component {
   render() {
+    document.title = 'Accounts: Support'
     return (
       <section>
         <Switch>

@@ -8,6 +8,7 @@ export default class VerifyEmail extends Component {
     super(props)
   }
   render() {
+    document.title = 'Accounts: Verify Email'
     return (
       <section className={cx(styles.VerifyEmail, styles.bodyText)}>
         <main className={styles.aligner}>

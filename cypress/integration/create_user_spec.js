@@ -14,7 +14,7 @@ describe('User Creation Flow', function() {
 
     cy.get('#root > section > main > p', { timeout: 15000 }).should(
       'contain',
-      'We have sent a verification email to the email address you signed up with. This is done for account security to ensure you are the owner of the email address. Once you have verified your email return here to begin using Zesty.io'
+      'We have sent a verification email from donotreply@system.zesty.email to the email address you signed up with. This is done for account security to ensure you are the owner of the email address. If you do not see a verification email in your inbox, make sure to check your spam folder.'
     )
   })
 })
