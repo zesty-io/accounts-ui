@@ -211,7 +211,7 @@ class Signup extends Component {
           this.props
             .dispatch(login(this.state.email, this.state.pass))
             .then(() => {
-              this.props.history.push('/verify-email')
+              this.props.history.push('/instances')
             })
         } else {
           this.setState({
