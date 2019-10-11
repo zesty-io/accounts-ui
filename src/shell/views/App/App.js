@@ -37,6 +37,7 @@ class App extends Component {
     }, 60000)
   }
   componentDidMount() {
+    /*
     if (!this.props.user.prefs.hasSelectedDev) {
       this.props.dispatch(
         zConfirm({
@@ -68,6 +69,7 @@ class App extends Component {
         })
       )
     }
+    */
   }
 
   componentDidUpdate(prevProps) {
