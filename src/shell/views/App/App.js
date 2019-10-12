@@ -22,8 +22,7 @@ import Notify from '../../components/Notify'
 import Confirm from '../../components/Confirm'
 
 import styles from './App.less'
-import { fetchUser, saveProfile } from '../../store/user'
-import { zConfirm } from '../../store/confirm'
+import { fetchUser } from '../../store/user'
 import { verifyAuth } from '../../store/auth'
 import { notify } from '../../store/notifications'
 
