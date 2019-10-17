@@ -28,7 +28,7 @@ export default withRouter(
         <section className={cx(styles.ResetPasswordEnd, styles.bodyText)}>
           <div className={styles.Wrapper}>
             <header className={styles.Logo}>
-              <img src="/zesty-io-logo.svg" />
+              <img src="/zesty-io-logo.png" />
             </header>
             <main>
               <form

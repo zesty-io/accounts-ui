@@ -19,7 +19,7 @@ export default class ResetPasswordStart extends Component {
       <section className={cx(styles.ResetPasswordStart, styles.bodyText)}>
         <div className={styles.Wrapper}>
           <header className={styles.Logo}>
-            <img src="/zesty-io-logo.svg" />
+            <img src="/zesty-io-logo.png" />
           </header>
           <main>
             <form
