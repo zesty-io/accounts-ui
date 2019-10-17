@@ -45,7 +45,7 @@ class Login extends Component {
           <header>
             <Url href="https://zesty.io" title="https://zesty.io">
               <img
-                src="https://brand.zesty.io/zesty-io-logo-vertical.svg"
+                src="https://brand.zesty.io/zesty-io-logo-vertical.png"
                 height="200px"
               />
             </Url>
