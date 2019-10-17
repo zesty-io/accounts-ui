@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchUserEmails } from '../../../../../shell/store/user'
+import { fetchUserEmails, saveProfile } from '../../../../../shell/store/user'
 import { notify } from '../../../../../shell/store/notifications'
+import { zConfirm } from '../../../../../shell/store/confirm'
 
 import Profile from './components/Profile'
 import Email from './components/Email'
@@ -34,6 +35,38 @@ export default connect(state => state)(
             })
           )
         })
+
+      if (!this.props.user.prefs.hasSelectedDev) {
+        this.props.dispatch(
+          zConfirm({
+            prompt:
+              'Are you interested in using developer features, such as access to blueprints? You can change this any time in your account settings.',
+            callback: response => {
+              if (response) {
+                this.props.dispatch({
+                  type: 'DEV_PREFS',
+                  payload: 1
+                })
+                this.props.dispatch(
+                  saveProfile({
+                    websiteCreator: true
+                  })
+                )
+              } else {
+                this.props.dispatch({
+                  type: 'DEV_PREFS',
+                  payload: 0
+                })
+                this.props.dispatch(
+                  saveProfile({
+                    websiteCreator: false
+                  })
+                )
+              }
+            }
+          })
+        )
+      }
     }
     render() {
       document.title = 'Accounts: My Account'

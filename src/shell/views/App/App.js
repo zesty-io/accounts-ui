@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import cx from 'classnames'
 import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import Login from '../Login'
 import Logout from '../Logout'
@@ -21,8 +22,7 @@ import Notify from '../../components/Notify'
 import Confirm from '../../components/Confirm'
 
 import styles from './App.less'
-import { fetchUser, saveProfile } from '../../store/user'
-import { zConfirm } from '../../store/confirm'
+import { fetchUser } from '../../store/user'
 import { verifyAuth } from '../../store/auth'
 import { notify } from '../../store/notifications'
 
@@ -35,39 +35,40 @@ class App extends Component {
       this.props.dispatch(verifyAuth())
     }, 60000)
   }
-  componentDidMount() {
-    if (!this.props.user.prefs.hasSelectedDev) {
-      this.props.dispatch(
-        zConfirm({
-          prompt:
-            'Are you interested in using developer features, such as access to blueprints? You can change this any time in your account settings.',
-          callback: response => {
-            if (response) {
-              this.props.dispatch({
-                type: 'DEV_PREFS',
-                payload: 1
-              })
-              this.props.dispatch(
-                saveProfile({
-                  websiteCreator: true
-                })
-              )
-            } else {
-              this.props.dispatch({
-                type: 'DEV_PREFS',
-                payload: 0
-              })
-              this.props.dispatch(
-                saveProfile({
-                  websiteCreator: false
-                })
-              )
-            }
-          }
-        })
-      )
+
+  componentDidUpdate(prevProps) {
+    // NOTE: in order to have access to this information, you will need
+    // to wrap this component in the `withRouter` HOC
+
+    const {
+      location: { pathname }
+    } = this.props
+    const previousLocation = prevProps.location.pathname
+
+    if (pathname !== previousLocation) {
+      window.Appcues.page()
     }
+    console.log(prevProps)
+    window.Appcues.identify(
+      prevProps.user.ZUID, // unique, required
+      {
+        // recommended (optional) properties
+
+        createdAt: prevProps.user.createdAt, // Unix timestamp of user signup date
+        purchasedAd: null, // Unix timestamp of account purchase date (leave null if empty)
+        planTier: 'uknn', // Current user’s plan tier
+        role: 'unkwn', // Current user’s role or permissions
+        accountId: prevProps.user.ID, // Current user's account ID
+        firstName: prevProps.user.firstName, // current user's first name
+        lastName: prevProps.user.lastName, // current user's first name
+
+        // additional suggestions
+
+        email: prevProps.user.email // Current user's email
+      }
+    )
   }
+
   render() {
     return (
       <section className={cx(styles.AppShell, styles.bodyText)}>
@@ -93,6 +94,8 @@ class App extends Component {
     )
   }
 }
+
+const AppWithRouter = withRouter(App)
 
 class LoadUser extends Component {
   __mounted = false
@@ -160,11 +163,7 @@ export default withRouter(
             auth={props.auth.valid}
             userZUID={props.user.ZUID}
             dispatch={props.dispatch}>
-            {props.user.verifiedEmails && props.user.verifiedEmails.length ? (
-              <App user={props.user} dispatch={props.dispatch} />
-            ) : (
-              <Redirect to="/verify-email" />
-            )}
+            <AppWithRouter user={props.user} dispatch={props.dispatch} />
           </LoadUser>
         </Switch>
       </React.Fragment>
