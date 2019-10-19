@@ -45,28 +45,30 @@ class App extends Component {
     } = this.props
     const previousLocation = prevProps.location.pathname
 
-    if (pathname !== previousLocation) {
-      window.Appcues.page()
-    }
-    console.log(prevProps)
-    window.Appcues.identify(
-      prevProps.user.ZUID, // unique, required
-      {
-        // recommended (optional) properties
-
-        createdAt: prevProps.user.createdAt, // Unix timestamp of user signup date
-        purchasedAd: null, // Unix timestamp of account purchase date (leave null if empty)
-        planTier: 'uknn', // Current user’s plan tier
-        role: 'unkwn', // Current user’s role or permissions
-        accountId: prevProps.user.ID, // Current user's account ID
-        firstName: prevProps.user.firstName, // current user's first name
-        lastName: prevProps.user.lastName, // current user's first name
-
-        // additional suggestions
-
-        email: prevProps.user.email // Current user's email
+    if (window.Appcues !== undefined) {
+      if (pathname !== previousLocation) {
+        window.Appcues.page()
       }
-    )
+
+      window.Appcues.identify(
+        prevProps.user.ZUID, // unique, required
+        {
+          // recommended (optional) properties
+
+          createdAt: prevProps.user.createdAt, // Unix timestamp of user signup date
+          purchasedAd: null, // Unix timestamp of account purchase date (leave null if empty)
+          planTier: 'uknn', // Current user’s plan tier
+          role: 'unkwn', // Current user’s role or permissions
+          accountId: prevProps.user.ID, // Current user's account ID
+          firstName: prevProps.user.firstName, // current user's first name
+          lastName: prevProps.user.lastName, // current user's first name
+
+          // additional suggestions
+
+          email: prevProps.user.email // Current user's email
+        }
+      )
+    }
   }
 
   render() {
