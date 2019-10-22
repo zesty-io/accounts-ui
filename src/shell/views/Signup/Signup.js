@@ -50,8 +50,9 @@ class Signup extends Component {
           <header className={styles.Logo}>
             <Url href="https://zesty.io" title="https://zesty.io">
               <img
-                src="https://brand.zesty.io/zesty-io-logo-vertical.svg"
+                src="https://brand.zesty.io/zesty-io-logo-vertical.png"
                 height="200px"
+                alt="zesty logo"
               />
             </Url>
           </header>
@@ -211,7 +212,7 @@ class Signup extends Component {
           this.props
             .dispatch(login(this.state.email, this.state.pass))
             .then(() => {
-              this.props.history.push('/verify-email')
+              this.props.history.push('/instances')
             })
         } else {
           this.setState({
