@@ -46,7 +46,27 @@ module.exports = buildConfig = build => {
         '151.101.193.161'
       ]
     }
-  } else {
+  } else if (build.data.environment.toUpperCase() === 'DEVELOPMENT') {
+    config = {
+      API_ACCOUNTS: 'http://accounts.api.dev-zesty.io/v1',
+      API_INSTANCE: '.api.dev-zesty.io/v1/',
+      API_AUTH: 'http://svc.zesty.localdev:3011/auth',
+      MANAGER_URL: '.manage.dev-zesty.io:3020',
+      MANAGER_URL_PROTOCOL: 'http://',
+      PREVIEW_URL: '-dev.preview.zestyio.localdev:3020',
+      PREVIEW_URL_PROTOCOL: 'http://',
+      COOKIE_NAME: 'DEV_APP_SID',
+      COOKIE_DOMAIN: '.zesty.localdev',
+      C_NAME: 'zesty.map.fastly.net',
+      A_RECORDS: [
+        '151.101.1.161',
+        '151.101.65.161',
+        '151.101.129.161',
+        '151.101.193.161'
+      ]
+    }
+  }
+  else {
     config = {
       API_ACCOUNTS: 'http://accounts.api.zesty.localdev:3022/v1',
       API_INSTANCE: '.api.zesty.localdev:3023/v1/',
