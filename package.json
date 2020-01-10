@@ -8,7 +8,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "precommit": "pretty-quick --staged",
-    "serve": "./node_modules/.bin/serve ./build --port 6006 --single",
+    "serve": "./node_modules/.bin/serve ./build -l 6006 --single",
     "prestart": "npm install",
     "start": "npm run build-dev && node bin/start",
     "build-dev": "export NODE_ENV=\"development\" && node bin/build",
