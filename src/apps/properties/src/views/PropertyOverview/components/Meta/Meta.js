@@ -81,7 +81,7 @@ export default class Meta extends PureComponent {
           <Url
             className={styles.manager}
             target="_blank"
-            href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}/#!/config/settings/general/`}>
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}/#!/settings/instance/general`}>
             <i className="fa fa-external-link" aria-hidden="true" />
             &nbsp;Open Instance Settings
           </Url>
