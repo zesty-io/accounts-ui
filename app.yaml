@@ -1,6 +1,8 @@
+service: accounts-ui
+
 runtime: custom
 env: flex
-service: accounts-ui
+
 automatic_scaling:
   min_num_instances: 2
   max_num_instances: 5
@@ -16,7 +18,7 @@ liveness_check:
   success_threshold: 2
 
 readiness_check:
-  path: '/'
+  path: '/readiness_check'
   check_interval_sec: 5
   timeout_sec: 4
   failure_threshold: 2
