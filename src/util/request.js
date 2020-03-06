@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie'
+
 import { notify } from '../shell/store/notifications.js'
 
 export function request(url, opts = {}) {
@@ -6,7 +8,9 @@ export function request(url, opts = {}) {
   }
 
   opts.headers = opts.headers || {}
-  // opts.headers['X-Auth'] = readCookie(AUTH_SERVICE_COOKIE_NAME)
+
+  opts.headers['X-Auth'] = Cookies.get(CONFIG.COOKIE_NAME)
+  opts.headers['Authorization'] = Cookies.get(CONFIG.COOKIE_NAME)
 
   if (!opts.method && opts.body) {
     opts.method = 'POST'
@@ -37,8 +41,8 @@ export function request(url, opts = {}) {
     }
   }
 
-  // Default to authenticated requests
-  opts.credentials = opts.credentials || 'include'
+  // Do not allow cookie sessions
+  opts.credentials = 'omit'
   opts.method = opts.method || 'GET'
 
   return fetch(encodeURI(url), opts)

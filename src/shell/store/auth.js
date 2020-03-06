@@ -5,7 +5,8 @@ import { request } from '../../util/request'
 export function auth(
   state = {
     checking: false,
-    valid: Cookies.get(CONFIG.COOKIE_NAME) ? true : false
+    valid: Cookies.get(CONFIG.COOKIE_NAME) ? true : false,
+    sessionToken: Cookies.get(CONFIG.COOKIE_NAME)
   },
   action
 ) {
@@ -15,19 +16,32 @@ export function auth(
         ...state,
         checking: true
       }
+
     case 'FETCH_AUTH_SUCCESS':
-    case 'FETCH_AUTH_ERROR':
     case 'FETCH_VERIFY_SUCCESS':
-    case 'FETCH_VERIFY_ERROR':
+      Cookies.set(CONFIG.COOKIE_NAME, action.payload.meta.token)
+
       return {
+        ...state,
         checking: false,
-        valid: action.auth
+        valid: action.payload.code === 200,
+        sessionToken: action.payload.meta.token
       }
+
+    case 'FETCH_VERIFY_ERROR':
+    case 'FETCH_AUTH_ERROR':
+      return {
+        ...state,
+        checking: false,
+        valid: false
+      }
+
     case 'LOGOUT':
       Cookies.remove(CONFIG.COOKIE_NAME, {
         path: '/',
         domain: CONFIG.COOKIE_DOMAIN
       })
+
       return {
         checking: false,
         valid: false
@@ -43,8 +57,7 @@ export function verifyAuth(unsubscribe) {
       .then(json => {
         dispatch({
           type: 'FETCH_VERIFY_SUCCESS',
-          ZUID: json.meta.userZuid,
-          auth: json.code === 200
+          payload: json
         })
         if (unsubscribe) {
           unsubscribe()
@@ -69,8 +82,7 @@ export function login(email, password) {
       if (!json.error && json.code === 200) {
         dispatch({
           type: 'FETCH_AUTH_SUCCESS',
-          ZUID: json.meta.userZuid,
-          auth: true
+          payload: json
         })
       }
 
@@ -85,7 +97,6 @@ export function logout() {
       console.error(err)
       dispatch({
         type: 'FETCH_AUTH_ERROR',
-        auth: false,
         err
       })
     })
