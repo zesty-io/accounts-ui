@@ -33,6 +33,11 @@ export function auth(
         sessionToken: action.payload.meta.token
       }
 
+    case 'FETCH_2FA_SUCCESS':
+      return { ...state, valid: true }
+    case 'FETCH_2FA_ERROR':
+      return { ...state, valid: false }
+
     case 'FETCH_VERIFY_ERROR':
     case 'FETCH_AUTH_ERROR':
       return {
