@@ -11,7 +11,7 @@ export function request(url, opts = {}) {
 
   const token = Cookies.get(CONFIG.COOKIE_NAME)
   if (token) {
-    opts.headers['Authorization'] = token
+    opts.headers['Authorization'] = `Bearer ${token}`
   }
 
   if (!opts.method && opts.body) {
