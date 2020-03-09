@@ -9,8 +9,10 @@ export function request(url, opts = {}) {
 
   opts.headers = opts.headers || {}
 
-  opts.headers['X-Auth'] = Cookies.get(CONFIG.COOKIE_NAME)
-  opts.headers['Authorization'] = Cookies.get(CONFIG.COOKIE_NAME)
+  const token = Cookies.get(CONFIG.COOKIE_NAME)
+  if (token) {
+    opts.headers['Authorization'] = token
+  }
 
   if (!opts.method && opts.body) {
     opts.method = 'POST'
