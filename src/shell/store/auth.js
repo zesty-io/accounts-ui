@@ -20,7 +20,10 @@ export function auth(
     case 'FETCH_AUTH_SUCCESS':
     case 'FETCH_VERIFY_SUCCESS':
       if (action.payload.meta.token) {
-        Cookies.set(CONFIG.COOKIE_NAME, action.payload.meta.token)
+        Cookies.set(CONFIG.COOKIE_NAME, action.payload.meta.token, {
+          path: '/',
+          domain: CONFIG.COOKIE_DOMAIN
+        })
       }
 
       return {
