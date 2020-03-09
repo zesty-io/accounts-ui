@@ -84,7 +84,7 @@ export function login(email, password) {
     return request(`${CONFIG.API_AUTH}/login`, {
       body: { email, password }
     }).then(json => {
-      if (!json.error && json.code === 200) {
+      if ((!json.error && json.code === 200) || json.code === 202) {
         dispatch({
           type: 'FETCH_AUTH_SUCCESS',
           payload: json
