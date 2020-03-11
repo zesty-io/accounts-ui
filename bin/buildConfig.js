@@ -28,8 +28,8 @@ module.exports = buildConfig = build => {
     }
   } else if (build.data.environment.toUpperCase() === 'STAGE') {
     config = {
-      API_ACCOUNTS: 'https://accounts.stage-api.zesty.io/v1',
-      API_INSTANCE: '.stage-api.zesty.io/v1/',
+      API_ACCOUNTS: 'https://accounts.api.stage.zesty.io/v1',
+      API_INSTANCE: '.api.stage.zesty.io/v1/',
       API_AUTH: 'https://auth.stage.zesty.io',
       MANAGER_URL: '.stage-manage.zesty.io',
       MANAGER_URL_PROTOCOL: 'https://',

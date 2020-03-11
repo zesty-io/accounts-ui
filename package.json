@@ -17,7 +17,8 @@
     "test:dev": "cypress open",
     "test": "cypress run --config video=false",
     "release:stage": "npm test && zesty deploy stage .",
-    "release:prod": "npm test && zesty deploy prod ."
+    "release:prod": "npm test && zesty deploy prod .",
+    "cleanup": "echo 'All done'."
   },
   "author": "Zesty.io<developers@zesty.io>",
   "contributors": [
