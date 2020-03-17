@@ -15,14 +15,10 @@ export function user(
         ...action.user
       }
     case 'FETCH_AUTH_SUCCESS':
-      return {
-        ...state,
-        ZUID: action.ZUID
-      }
     case 'FETCH_VERIFY_SUCCESS':
       return {
         ...state,
-        ZUID: action.ZUID
+        ZUID: action.payload.meta.userZuid
       }
 
     case 'UPDATE_USER_PROFILE':

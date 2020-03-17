@@ -83,9 +83,7 @@ class TwoFactor extends Component {
       .then(json => {
         if (json.code === 200) {
           this.props.dispatch({
-            type: 'FETCH_AUTH_SUCCESS',
-            ZUID: json.meta.userZuid,
-            auth: true
+            type: 'FETCH_2FA_SUCCESS'
           })
           this.props.history.push('/instances')
         } else {
@@ -93,8 +91,7 @@ class TwoFactor extends Component {
             message: json.message
           })
           this.props.dispatch({
-            type: 'FETCH_AUTH_ERROR',
-            auth: false
+            type: 'FETCH_2FA_ERROR'
           })
         }
       })
@@ -108,9 +105,7 @@ class TwoFactor extends Component {
       .then(json => {
         if (json.code === 200) {
           this.props.dispatch({
-            type: 'FETCH_AUTH_SUCCESS',
-            ZUID: json.meta.userZuid,
-            auth: true
+            type: 'FETCH_2FA_SUCCESS'
           })
           this.props.history.push('/instances')
         }
