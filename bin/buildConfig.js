@@ -10,7 +10,7 @@ module.exports = buildConfig = build => {
       ENV: 'production',
       API_ACCOUNTS: 'https://accounts.api.zesty.io/v1',
       API_INSTANCE: '.api.zesty.io/v1/',
-      API_AUTH: 'https://auth.zesty.io',
+      API_AUTH: 'https://auth.api.zesty.io',
       MANAGER_URL: '.manage.zesty.io',
       MANAGER_URL_PROTOCOL: 'https://',
       PREVIEW_URL: '-dev.preview.zestyio.com',
@@ -30,7 +30,7 @@ module.exports = buildConfig = build => {
     config = {
       API_ACCOUNTS: 'https://accounts.api.stage.zesty.io/v1',
       API_INSTANCE: '.api.stage.zesty.io/v1/',
-      API_AUTH: 'https://auth.stage.zesty.io',
+      API_AUTH: 'https://auth.api.stage.zesty.io',
       MANAGER_URL: '.stage-manage.zesty.io',
       MANAGER_URL_PROTOCOL: 'https://',
       PREVIEW_URL: '-dev.stage-preview.zestyio.com',
@@ -50,7 +50,7 @@ module.exports = buildConfig = build => {
     config = {
       API_ACCOUNTS: 'http://accounts.api.zesty.localdev:3022/v1',
       API_INSTANCE: '.api.zesty.localdev:3023/v1/',
-      API_AUTH: 'http://auth.zesty.localdev:3011',
+      API_AUTH: 'http://auth.api.zesty.localdev:3011',
       MANAGER_URL: '.manage.zesty.localdev:3017',
       MANAGER_URL_PROTOCOL: 'http://',
       PREVIEW_URL: '-dev.preview.zestyio.localdev:3016',
