@@ -5,7 +5,8 @@ import { request } from '../../util/request'
 export function auth(
   state = {
     checking: false,
-    valid: Cookies.get(CONFIG.COOKIE_NAME) ? true : false
+    valid: Cookies.get(CONFIG.COOKIE_NAME) ? true : false,
+    sessionToken: Cookies.get(CONFIG.COOKIE_NAME)
   },
   action
 ) {
@@ -15,19 +16,42 @@ export function auth(
         ...state,
         checking: true
       }
+
     case 'FETCH_AUTH_SUCCESS':
-    case 'FETCH_AUTH_ERROR':
     case 'FETCH_VERIFY_SUCCESS':
-    case 'FETCH_VERIFY_ERROR':
-      return {
-        checking: false,
-        valid: action.auth
+      if (action.payload.meta.token) {
+        Cookies.set(CONFIG.COOKIE_NAME, action.payload.meta.token, {
+          path: '/',
+          domain: CONFIG.COOKIE_DOMAIN
+        })
       }
+
+      return {
+        ...state,
+        checking: false,
+        valid: action.payload.code === 200,
+        sessionToken: action.payload.meta.token
+      }
+
+    case 'FETCH_2FA_SUCCESS':
+      return { ...state, valid: true }
+    case 'FETCH_2FA_ERROR':
+      return { ...state, valid: false }
+
+    case 'FETCH_VERIFY_ERROR':
+    case 'FETCH_AUTH_ERROR':
+      return {
+        ...state,
+        checking: false,
+        valid: false
+      }
+
     case 'LOGOUT':
       Cookies.remove(CONFIG.COOKIE_NAME, {
         path: '/',
         domain: CONFIG.COOKIE_DOMAIN
       })
+
       return {
         checking: false,
         valid: false
@@ -43,8 +67,7 @@ export function verifyAuth(unsubscribe) {
       .then(json => {
         dispatch({
           type: 'FETCH_VERIFY_SUCCESS',
-          ZUID: json.meta.userZuid,
-          auth: json.code === 200
+          payload: json
         })
         if (unsubscribe) {
           unsubscribe()
@@ -66,11 +89,10 @@ export function login(email, password) {
     return request(`${CONFIG.API_AUTH}/login`, {
       body: { email, password }
     }).then(json => {
-      if (!json.error && json.code === 200) {
+      if ((!json.error && json.code === 200) || json.code === 202) {
         dispatch({
           type: 'FETCH_AUTH_SUCCESS',
-          ZUID: json.meta.userZuid,
-          auth: true
+          payload: json
         })
       }
 
@@ -85,7 +107,6 @@ export function logout() {
       console.error(err)
       dispatch({
         type: 'FETCH_AUTH_ERROR',
-        auth: false,
         err
       })
     })
