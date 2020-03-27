@@ -162,7 +162,7 @@ export function updateSiteBlueprint(siteZUID, payload) {
   }
 }
 
-export function createInstance(name) {
+export function createInstance(name, ecoZUID) {
   return dispatch => {
     dispatch({
       type: 'CREATING_SITE'
@@ -170,7 +170,7 @@ export function createInstance(name) {
     return request(`${CONFIG.API_ACCOUNTS}/instances`, {
       method: 'POST',
       json: true,
-      body: { name }
+      body: { name, ecoZUID }
     }).then(res => {
       dispatch({
         type: 'CREATE_SITE_SUCCESS',

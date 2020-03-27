@@ -1,4 +1,6 @@
 @import '~@zesty-io/core/colors.less';
+@import '~@zesty-io/core/typography.less';
+
 // @keyframes slideIn {
 //   0% {
 //     right: -100vw;
@@ -11,6 +13,7 @@
 //   0% {opacity:0;}
 // 	100% { opacity: 1; }
 // }
+
 .PropertyCreate {
   display: flex;
   flex-direction: row;
@@ -24,27 +27,38 @@
   height: 95vh;
   width: 100vw;
   // animation: slideIn 400ms forwards;
+
   .nameNew {
     width: 25rem;
+
     h1 {
       font-size: 1.4rem;
-      margin-bottom: 5px;
+      margin-bottom: 4px;
     }
     input {
       width: 100%;
       margin-bottom: 10px;
     }
-  }
-  .controls {
-    display: flex;
-    align-items: center;
-    button {
-      flex: 1 0 0%;
+
+    h2 {
+      margin-bottom: 4px;
     }
-    a {
-      margin-left: 1rem;
-      color: @zesty-grey;
-      text-decoration: none;
+
+    .Ecosystem {
+      margin-bottom: 16px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      button {
+        flex: 1 0 0%;
+      }
+      a {
+        margin-left: 1rem;
+        color: @zesty-grey;
+        text-decoration: none;
+      }
     }
   }
 }

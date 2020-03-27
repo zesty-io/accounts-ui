@@ -9,6 +9,8 @@ import { notifications } from './notifications'
 // import { modal } from './modal'
 import { confirm } from './confirm'
 import { systemRoles } from './systemRoles'
+import { ecosystems } from './ecosystems'
+
 import { properties } from '../../apps/properties/src/store'
 
 // Teams
@@ -25,6 +27,7 @@ const loggerMiddleware = createLogger({
 
 const appReducer = combineReducers({
   ...properties,
+  ecosystems,
   user,
   teams,
   teamInstances,
