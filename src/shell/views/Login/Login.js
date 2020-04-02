@@ -18,6 +18,7 @@ class Login extends Component {
     this.state = {
       error: false,
       submitted: false,
+      logoUrl: 'https://brand.zesty.io/zesty-io-logo-vertical.png',
       message: ''
     }
   }
@@ -43,9 +44,10 @@ class Login extends Component {
       <section className={cx(styles.LoginWrap, styles.bodyText)}>
         <div className={styles.Login}>
           <header>
-            <Url href="https://zesty.io" title="https://zesty.io">
+            <Url href="https://www.zesty.io" title="https://www.zesty.io">
               <img
-                src="https://brand.zesty.io/zesty-io-logo-vertical.png"
+                alt="Zesty.io Logo"
+                src={this.state.logoUrl}
                 height="200px"
               />
             </Url>
