@@ -48,6 +48,7 @@ export default connect(state => {
       return (
         <header className={styles.AppHeader}>
           <img
+            alt="zesty.io logo"
             className={styles.logo}
             src="https://brand.zesty.io/zesty-io-logo.svg"
           />
@@ -101,6 +102,7 @@ export default connect(state => {
             onClick={this.toggleUserNav}>
             {this.props.user.firstName} {this.props.user.lastName}
             <img
+              alt={`${this.props.user.firstName} ${this.props.user.lastName} Avatar`}
               className={styles.avatar}
               src={`https://www.gravatar.com/avatar/${this.props.user.emailHash}?d=mm&s=30`}
             />
