@@ -35,7 +35,9 @@ export default connect(state => state)(
       })
     }, 250)
 
-    filterByEco = (name, eco) => {
+    filterByEco = (name, value) => {
+      let eco = value && value !== '0' ? value : false
+
       this.setState({ eco })
       this.props.dispatch({
         type: 'SETTING_ECO',
