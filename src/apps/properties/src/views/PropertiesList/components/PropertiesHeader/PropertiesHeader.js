@@ -35,20 +35,12 @@ export default connect(state => state)(
       })
     }, 250)
 
-    filterByEco = (name, value) => {
-      if (value) {
-        this.setState({ eco: value })
-        this.props.dispatch({
-          type: 'SETTING_ECO',
-          eco: Number(value)
-        })
-      } else {
-        this.setState({ eco: false })
-        this.props.dispatch({
-          type: 'SETTING_ECO',
-          eco: ''
-        })
-      }
+    filterByEco = (name, eco) => {
+      this.setState({ eco })
+      this.props.dispatch({
+        type: 'SETTING_ECO',
+        eco
+      })
     }
 
     sort = by => {
@@ -58,7 +50,7 @@ export default connect(state => state)(
     render() {
       const ecosystems = this.props.ecosystems.map(eco => {
         return {
-          value: eco.orgID,
+          value: eco.ZUID,
           text: eco.name
         }
       })
@@ -71,7 +63,7 @@ export default connect(state => state)(
                 className={styles.Ecosystem}
                 name="ecoFilter"
                 onChange={this.filterByEco}
-                selection={ecosystems.find(eco => eco.id == this.state.eco)}
+                selection={ecosystems.find(eco => eco.ZUID == this.state.eco)}
                 options={ecosystems}
               />
             ) : null}
