@@ -23,10 +23,9 @@ export default props => {
       </CardHeader>
       {site.domain ? (
         site.screenshotURL ? (
-          <CardContent
-            className={cx(styles.CardContent, styles.cover)}
-            style={{ backgroundImage: `url(${site.screenshotURL})` }}
-          />
+          <CardContent className={cx(styles.CardContent, styles.cover)}>
+            <img src={site.screenshotURL} loading="lazy" width="100%" />
+          </CardContent>
         ) : (
           <CardContent className={cx(styles.CardContent, styles.cover)} />
         )
