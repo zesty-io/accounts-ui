@@ -1,0 +1,46 @@
+.Table {
+  margin: 0 0 30px 0;
+
+  .TableHeader {
+    padding: 0;
+    display: flex;
+    width: 100%;
+  }
+
+  .TableContent {
+    width: 100%;
+  }
+
+  .HeaderItem {
+    padding: 5px 20px;
+    font-weight: bold;
+    display: block;
+    text-transform: capitalize;
+    box-sizing: border-box;
+  }
+
+  .LastHeaderItem {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .TableRow {
+    &:nth-child(odd) {
+      background-color: #eff5ff;
+    }
+  }
+
+  .Cell {
+    color: #8c96ab;
+    padding: 10px 20px;
+    box-sizing: border-box;
+  }
+
+  .RowActions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}
