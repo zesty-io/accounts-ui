@@ -18,6 +18,8 @@ import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
 import { fetchSiteTeams } from '../../store/sitesTeams'
 import { fetchBlueprint } from '../../store/blueprints'
+import { fetchDomains } from '../../store/sitesDomains'
+
 // import { fetchSite } from '../../store/sites'
 // import { updateSite } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
@@ -36,7 +38,8 @@ class PropertyOverview extends Component {
       loadingUsersPending: true,
       loadingTeams: true,
       loadingCollections: true,
-      loadingBlueprint: true
+      loadingBlueprint: true,
+      loadingDomains: true
     }
   }
   componentDidMount() {
@@ -86,7 +89,8 @@ class PropertyOverview extends Component {
               !this.state.loadingRoles &&
               !this.state.loadingTeams &&
               !this.state.loadingUsers &&
-              !this.state.loadingBlueprint
+              !this.state.loadingBlueprint &&
+              !this.state.loadingDomains
             }
             message="Checking Instance Permissions">
             <Route
@@ -112,6 +116,7 @@ class PropertyOverview extends Component {
                     isAdmin={this.props.isAdmin}
                     dispatch={this.props.dispatch}
                     site={this.props.site}
+                    domains={this.props.domains}
                   />
                 )
               }}
@@ -199,8 +204,21 @@ class PropertyOverview extends Component {
       loadingUsersPending: true,
       loadingTeams: true,
       loadingCollections: true,
-      loadingBlueprint: true
+      loadingBlueprint: true,
+      loadingDomains: true
     })
+    props
+      .dispatch(fetchSiteUsers(props.siteZUID))
+      .then(() => {
+        this.setState({
+          loadingUsers: false
+        })
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error fetching users', type: 'error' })
+        )
+      })
     props
       .dispatch(fetchSiteUsers(props.siteZUID))
       .then(() => {
@@ -247,6 +265,19 @@ class PropertyOverview extends Component {
       .catch(() => {
         this.props.dispatch(
           notify({ message: 'Error fetching teams', type: 'error' })
+        )
+      })
+    props
+      .dispatch(fetchDomains(props.siteZUID))
+      .then(() => {
+        this.setState({
+          loadingDomains: false
+        })
+      })
+      .catch(e => {
+        console.log('e', e)
+        this.props.dispatch(
+          notify({ message: 'Error fetching domains', type: 'error' })
         )
       })
     // validity check blueprint ID before fetching
@@ -321,6 +352,9 @@ export default connect((state, props) => {
     teams: state.sitesTeams[siteZUID] || {},
     blueprint: state.sites[siteZUID]
       ? state.blueprints[state.sites[siteZUID].blueprintID] || {}
+      : {},
+    domains: state.sitesDomains[siteZUID]
+      ? state.sitesDomains[siteZUID].domains
       : {}
   }
 })(PropertyOverview)
