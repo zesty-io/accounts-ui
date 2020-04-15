@@ -50,6 +50,34 @@ class PropertyOverview extends Component {
       this.fetchSiteData(this.props)
     }
   }
+
+  renderDomainUI = routeProps => {
+    const customDomains = this.props.domains.filter(item => {
+      const domainParts = item.domain.split('.')
+      const customDomain = domainParts
+        .slice(Math.max(domainParts.length - 2, 0))
+        .join('.')
+      return customDomain !== 'zesty.dev'
+    })
+    return customDomains && customDomains.length > 0 ? (
+      <Meta
+        {...routeProps}
+        isAdmin={this.props.isAdmin}
+        dispatch={this.props.dispatch}
+        site={this.props.site}
+        domains={this.props.domains}
+        customDomains={customDomains}
+      />
+    ) : (
+      <LaunchWizard
+        {...routeProps}
+        isAdmin={this.props.isAdmin}
+        dispatch={this.props.dispatch}
+        site={this.props.site}
+      />
+    )
+  }
+
   render() {
     document.title = `Accounts: ${this.props.site.name}`
     return (
@@ -95,31 +123,13 @@ class PropertyOverview extends Component {
             message="Checking Instance Permissions">
             <Route
               path="/instances/:siteZUID/launch"
-              render={routeProps => {
-                return (
-                  <LaunchWizard
-                    {...routeProps}
-                    isAdmin={this.props.isAdmin}
-                    dispatch={this.props.dispatch}
-                    site={this.props.site}
-                  />
-                )
-              }}
+              render={routeProps => this.renderDomainUI(routeProps)}
             />
 
             <Route
               path="/instances/:siteZUID"
-              render={routeProps => {
-                return (
-                  <Meta
-                    {...routeProps}
-                    isAdmin={this.props.isAdmin}
-                    dispatch={this.props.dispatch}
-                    site={this.props.site}
-                    domains={this.props.domains}
-                  />
-                )
-              }}
+              exact
+              render={routeProps => this.renderDomainUI(routeProps)}
             />
 
             <Route

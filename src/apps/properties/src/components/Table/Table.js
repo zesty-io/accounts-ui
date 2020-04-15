@@ -20,36 +20,43 @@ export const Table = React.memo(function Table(props) {
     )
     setHeaders(headers)
   }
-  const arrangement = props.arrangement.split(' ')
-  const columns = arrangement.reduce((a, b) => {
-    return Number(a) + Number(b)
-  }, 0)
+  const columns = headers.length + (props.actions ? 1 : 0)
 
-  const getWidth = index => `${(100 / columns) * arrangement[index]}%`
+  const getTemplateColumns = () => {
+    let value = ''
+
+    for (let i = 0; i < columns; i++) {
+      value += '1fr '
+    }
+
+    return value
+  }
+
+  const templateColumns = getTemplateColumns()
 
   return (
     <article className={styles.Table}>
-      <header className={styles.TableHeader}>
-        {headers.map((header, index) => (
-          <div className={styles.HeaderItem} style={{ width: getWidth(index) }}>
+      <header
+        className={styles.TableHeader}
+        style={{ gridTemplateColumns: templateColumns }}>
+        {headers.map(header => (
+          <div className={styles.HeaderItem}>
             <span>{header}</span>
           </div>
         ))}
       </header>
       <div className={styles.TableContent}>
         {props.data.map((row, rowIndex) => (
-          <article className={styles.TableRow}>
-            {Object.keys(props.data[0]).map((header, index) => (
-              <p className={styles.Cell} style={{ width: getWidth(index) }}>
+          <article
+            className={styles.TableRow}
+            style={{ gridTemplateColumns: templateColumns }}>
+            {Object.keys(props.data[0]).map(header => (
+              <p className={styles.Cell}>
                 <span>{row[header]}</span>
               </p>
             ))}
             {props.actions && (
-              <p
-                className={styles.RowActions}
-                style={{ width: getWidth(headers.length) }}>
-                {props.actions(rowIndex)}
-              </p>
+              <p className={styles.RowActions}>{props.actions(rowIndex)}</p>
             )}
           </article>
         ))}
