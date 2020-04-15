@@ -51,14 +51,16 @@ class PropertyOverview extends Component {
     }
   }
 
-  renderDomainUI = routeProps => {
-    const customDomains = this.props.domains.filter(item => {
-      const domainParts = item.domain.split('.')
-      const customDomain = domainParts
-        .slice(Math.max(domainParts.length - 2, 0))
-        .join('.')
-      return customDomain !== 'zesty.dev'
-    })
+  renderDomainsUI = routeProps => {
+    const customDomains =
+      this.props.domains &&
+      this.props.domains.filter(item => {
+        const domainParts = item.domain.split('.')
+        const customDomain = domainParts
+          .slice(Math.max(domainParts.length - 2, 0))
+          .join('.')
+        return customDomain !== 'zesty.dev'
+      })
     return customDomains && customDomains.length > 0 ? (
       <Meta
         {...routeProps}
@@ -123,13 +125,13 @@ class PropertyOverview extends Component {
             message="Checking Instance Permissions">
             <Route
               path="/instances/:siteZUID/launch"
-              render={routeProps => this.renderDomainUI(routeProps)}
+              render={routeProps => this.renderDomainsUI(routeProps)}
             />
 
             <Route
               path="/instances/:siteZUID"
               exact
-              render={routeProps => this.renderDomainUI(routeProps)}
+              render={routeProps => this.renderDomainsUI(routeProps)}
             />
 
             <Route
