@@ -20,7 +20,7 @@ export default class Domain extends Component {
     this.state = {
       submitted: false,
       domain: null,
-      domainBranch: 'dev'
+      domainBranch: 'live'
     }
     this.branches = [
       { value: 'dev', text: 'dev' },
@@ -48,7 +48,7 @@ export default class Domain extends Component {
       )
       .then(({ error, domain }) => {
         this.setState({
-          domain,
+          domain: null,
           submitted: false
         })
         this.props.dispatch(

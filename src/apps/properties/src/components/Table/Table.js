@@ -40,7 +40,7 @@ export const Table = React.memo(function Table(props) {
         className={styles.TableHeader}
         style={{ gridTemplateColumns: templateColumns }}>
         {headers.map(header => (
-          <div className={styles.HeaderItem}>
+          <div className={styles.HeaderItem} key={header}>
             <span>{header}</span>
           </div>
         ))}
@@ -48,10 +48,11 @@ export const Table = React.memo(function Table(props) {
       <div className={styles.TableContent}>
         {props.data.map((row, rowIndex) => (
           <article
+            key={row.domain}
             className={styles.TableRow}
             style={{ gridTemplateColumns: templateColumns }}>
             {Object.keys(props.data[0]).map(header => (
-              <p className={styles.Cell}>
+              <p className={styles.Cell} key={row[header]}>
                 <span>{row[header]}</span>
               </p>
             ))}

@@ -39,19 +39,21 @@ class PropertyOverview extends Component {
       loadingTeams: true,
       loadingCollections: true,
       loadingBlueprint: true,
-      loadingDomains: true
+      loadingDomains: true,
+      customDomains: []
     }
   }
   componentDidMount() {
     this.fetchSiteData(this.props)
   }
+
   componentDidUpdate(prevProps) {
     if (this.props.siteZUID !== prevProps.siteZUID) {
       this.fetchSiteData(this.props)
     }
   }
 
-  renderDomainsUI = routeProps => {
+  getCustomDomains = routeProps => {
     const customDomains =
       this.props.domains &&
       this.props.domains.filter(item => {
@@ -61,23 +63,7 @@ class PropertyOverview extends Component {
           .join('.')
         return customDomain !== 'zesty.dev'
       })
-    return customDomains && customDomains.length > 0 ? (
-      <Meta
-        {...routeProps}
-        isAdmin={this.props.isAdmin}
-        dispatch={this.props.dispatch}
-        site={this.props.site}
-        domains={this.props.domains}
-        customDomains={customDomains}
-      />
-    ) : (
-      <LaunchWizard
-        {...routeProps}
-        isAdmin={this.props.isAdmin}
-        dispatch={this.props.dispatch}
-        site={this.props.site}
-      />
-    )
+    return customDomains
   }
 
   render() {
@@ -125,13 +111,54 @@ class PropertyOverview extends Component {
             message="Checking Instance Permissions">
             <Route
               path="/instances/:siteZUID/launch"
-              render={routeProps => this.renderDomainsUI(routeProps)}
+              render={routeProps => {
+                const customDomains = this.getCustomDomains(routeProps)
+                return (
+                  <>
+                    <LaunchWizard
+                      {...routeProps}
+                      isAdmin={this.props.isAdmin}
+                      dispatch={this.props.dispatch}
+                      site={this.props.site}
+                    />
+                    {customDomains && customDomains.length > 0 && (
+                      <Meta
+                        {...routeProps}
+                        isAdmin={this.props.isAdmin}
+                        dispatch={this.props.dispatch}
+                        site={this.props.site}
+                        domains={this.props.domains}
+                        customDomains={customDomains}
+                      />
+                    )}
+                  </>
+                )
+              }}
             />
 
             <Route
               path="/instances/:siteZUID"
               exact
-              render={routeProps => this.renderDomainsUI(routeProps)}
+              render={routeProps => {
+                const customDomains = this.getCustomDomains(routeProps)
+                return customDomains && customDomains.length > 0 ? (
+                  <Meta
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    dispatch={this.props.dispatch}
+                    site={this.props.site}
+                    domains={this.props.domains}
+                    customDomains={customDomains}
+                  />
+                ) : (
+                  <LaunchWizard
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    dispatch={this.props.dispatch}
+                    site={this.props.site}
+                  />
+                )
+              }}
             />
 
             <Route
