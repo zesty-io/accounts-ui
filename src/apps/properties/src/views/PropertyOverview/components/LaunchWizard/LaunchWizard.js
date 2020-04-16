@@ -42,8 +42,8 @@ export default class LaunchWizard extends Component {
                       className="fa fa-exclamation-triangle"
                       aria-hidden="true"
                     />
-                    &nbsp; You must be a instance owner or admin to set the
-                    domain
+                    &nbsp; You must be this instance's owner or admin to manage
+                    domains
                   </em>
                 </p>
               )}

@@ -67,13 +67,16 @@ export default class Meta extends Component {
 
   renderDomainsActions = index => {
     const domainZUID = this.props.domains[index].ZUID
+
     return (
-      <Button
-        kind="warn"
-        className={styles.delete}
-        onClick={() => this.handleConfirmDelete(domainZUID)}>
-        <i className="fas fa-trash" />
-      </Button>
+      this.props.isAdmin && (
+        <Button
+          kind="warn"
+          className={styles.delete}
+          onClick={() => this.handleConfirmDelete(domainZUID)}>
+          <i className="fas fa-trash" />
+        </Button>
+      )
     )
   }
 
@@ -120,8 +123,8 @@ export default class Meta extends Component {
                       className="fa fa-exclamation-triangle"
                       aria-hidden="true"
                     />
-                    &nbsp; You must be a instance owner or admin to set the
-                    domain
+                    &nbsp; You must be this instance's owner or admin to manage
+                    domains
                   </em>
                 </p>
               )}

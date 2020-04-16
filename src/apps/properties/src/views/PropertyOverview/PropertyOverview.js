@@ -61,7 +61,7 @@ class PropertyOverview extends Component {
         const customDomain = domainParts
           .slice(Math.max(domainParts.length - 2, 0))
           .join('.')
-        return customDomain !== 'zesty.dev'
+        return customDomain !== 'zesty.dev' && customDomain !== 'zesty.site'
       })
     return customDomains
   }
