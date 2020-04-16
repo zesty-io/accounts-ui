@@ -18,6 +18,8 @@ import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
 import { fetchSiteTeams } from '../../store/sitesTeams'
 import { fetchBlueprint } from '../../store/blueprints'
+import { fetchDomains } from '../../store/sitesDomains'
+
 // import { fetchSite } from '../../store/sites'
 // import { updateSite } from '../../store/sites'
 import { notify } from '../../../../../shell/store/notifications'
@@ -36,17 +38,34 @@ class PropertyOverview extends Component {
       loadingUsersPending: true,
       loadingTeams: true,
       loadingCollections: true,
-      loadingBlueprint: true
+      loadingBlueprint: true,
+      loadingDomains: true,
+      customDomains: []
     }
   }
   componentDidMount() {
     this.fetchSiteData(this.props)
   }
+
   componentDidUpdate(prevProps) {
     if (this.props.siteZUID !== prevProps.siteZUID) {
       this.fetchSiteData(this.props)
     }
   }
+
+  getCustomDomains = routeProps => {
+    const customDomains =
+      this.props.domains &&
+      this.props.domains.filter(item => {
+        const domainParts = item.domain.split('.')
+        const customDomain = domainParts
+          .slice(Math.max(domainParts.length - 2, 0))
+          .join('.')
+        return customDomain !== 'zesty.dev' && customDomain !== 'zesty.site'
+      })
+    return customDomains
+  }
+
   render() {
     document.title = `Accounts: ${this.props.site.name}`
     return (
@@ -86,28 +105,53 @@ class PropertyOverview extends Component {
               !this.state.loadingRoles &&
               !this.state.loadingTeams &&
               !this.state.loadingUsers &&
-              !this.state.loadingBlueprint
+              !this.state.loadingBlueprint &&
+              !this.state.loadingDomains
             }
             message="Checking Instance Permissions">
             <Route
               path="/instances/:siteZUID/launch"
               render={routeProps => {
+                const customDomains = this.getCustomDomains(routeProps)
                 return (
-                  <LaunchWizard
-                    {...routeProps}
-                    isAdmin={this.props.isAdmin}
-                    dispatch={this.props.dispatch}
-                    site={this.props.site}
-                  />
+                  <>
+                    <LaunchWizard
+                      {...routeProps}
+                      isAdmin={this.props.isAdmin}
+                      dispatch={this.props.dispatch}
+                      site={this.props.site}
+                    />
+                    {customDomains && customDomains.length > 0 && (
+                      <Meta
+                        {...routeProps}
+                        isAdmin={this.props.isAdmin}
+                        dispatch={this.props.dispatch}
+                        site={this.props.site}
+                        domains={this.props.domains}
+                        customDomains={customDomains}
+                      />
+                    )}
+                  </>
                 )
               }}
             />
 
             <Route
               path="/instances/:siteZUID"
+              exact
               render={routeProps => {
-                return (
+                const customDomains = this.getCustomDomains(routeProps)
+                return customDomains && customDomains.length > 0 ? (
                   <Meta
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    dispatch={this.props.dispatch}
+                    site={this.props.site}
+                    domains={this.props.domains}
+                    customDomains={customDomains}
+                  />
+                ) : (
+                  <LaunchWizard
                     {...routeProps}
                     isAdmin={this.props.isAdmin}
                     dispatch={this.props.dispatch}
@@ -199,8 +243,21 @@ class PropertyOverview extends Component {
       loadingUsersPending: true,
       loadingTeams: true,
       loadingCollections: true,
-      loadingBlueprint: true
+      loadingBlueprint: true,
+      loadingDomains: true
     })
+    props
+      .dispatch(fetchSiteUsers(props.siteZUID))
+      .then(() => {
+        this.setState({
+          loadingUsers: false
+        })
+      })
+      .catch(() => {
+        this.props.dispatch(
+          notify({ message: 'Error fetching users', type: 'error' })
+        )
+      })
     props
       .dispatch(fetchSiteUsers(props.siteZUID))
       .then(() => {
@@ -247,6 +304,19 @@ class PropertyOverview extends Component {
       .catch(() => {
         this.props.dispatch(
           notify({ message: 'Error fetching teams', type: 'error' })
+        )
+      })
+    props
+      .dispatch(fetchDomains(props.siteZUID))
+      .then(() => {
+        this.setState({
+          loadingDomains: false
+        })
+      })
+      .catch(e => {
+        console.log('e', e)
+        this.props.dispatch(
+          notify({ message: 'Error fetching domains', type: 'error' })
         )
       })
     // validity check blueprint ID before fetching
@@ -321,6 +391,9 @@ export default connect((state, props) => {
     teams: state.sitesTeams[siteZUID] || {},
     blueprint: state.sites[siteZUID]
       ? state.blueprints[state.sites[siteZUID].blueprintID] || {}
+      : {},
+    domains: state.sitesDomains[siteZUID]
+      ? state.sitesDomains[siteZUID].domains
       : {}
   }
 })(PropertyOverview)

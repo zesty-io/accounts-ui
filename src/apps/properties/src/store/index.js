@@ -5,6 +5,7 @@ import { sitesStats } from './sitesStats'
 import { sitesUsers } from './sitesUsers'
 import { sitesRoles } from './sitesRoles'
 import { sitesCollections } from './sitesCollections'
+import { sitesDomains } from './sitesDomains'
 
 export const properties = {
   sites,
@@ -13,7 +14,8 @@ export const properties = {
   sitesStats,
   sitesUsers,
   sitesRoles,
-  blueprints
+  blueprints,
+  sitesDomains
 }
 
 export const normalizeSites = sites => {

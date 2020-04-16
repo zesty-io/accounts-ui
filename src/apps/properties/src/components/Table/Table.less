@@ -1,0 +1,60 @@
+.Table {
+  margin: 0 0 30px 0;
+  display: grid;
+
+  .TableHeader {
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: 8px;
+  }
+
+  .TableContent {
+    width: 100%;
+
+    .TableRow {
+      display: grid;
+      grid-auto-flow: row;
+      grid-gap: 8px;
+
+      &:nth-child(odd) {
+        background-color: #eff5ff;
+      }
+    }
+  }
+
+  .HeaderItem {
+    padding: 5px 20px;
+    font-weight: bold;
+    display: block;
+    text-transform: capitalize;
+    box-sizing: border-box;
+
+    &:first-child {
+      min-width: 250px;
+    }
+  }
+
+  .LastHeaderItem {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .Cell {
+    color: #8c96ab;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+
+    &:first-child {
+      min-width: 250px;
+    }
+  }
+
+  .RowActions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+}

@@ -199,10 +199,7 @@ export default class TeamCard extends Component {
 
                           {this.state.isAdmin ? (
                             <i
-                              className={cx(
-                                styles.Remove,
-                                'fa fa-times-circle-o'
-                              )}
+                              className={cx(styles.Remove, 'fas fa-user-slash')}
                               onClick={() => {
                                 if (member.inviteeEmail) {
                                   this.handleCancelInvite(
