@@ -105,13 +105,26 @@ export default class Meta extends Component {
           </CardHeader>
           <CardContent className={styles.CardContent}>
             <div className={styles.TableAction}>
-              <Domain
-                siteZUID={this.props.site.ZUID}
-                site={this.props.site}
-                dispatch={this.props.dispatch}
-                domain={this.props.domains}
-                customDomains={this.props.customDomains}
-              />
+              {this.props.isAdmin ? (
+                <Domain
+                  siteZUID={this.props.site.ZUID}
+                  site={this.props.site}
+                  dispatch={this.props.dispatch}
+                  domain={this.props.domains}
+                  customDomains={this.props.customDomains}
+                />
+              ) : (
+                <p className={styles.domain}>
+                  <em>
+                    <i
+                      className="fa fa-exclamation-triangle"
+                      aria-hidden="true"
+                    />
+                    &nbsp; You must be a instance owner or admin to set the
+                    domain
+                  </em>
+                </p>
+              )}
             </div>
             {this.props.domains ? (
               <Table
