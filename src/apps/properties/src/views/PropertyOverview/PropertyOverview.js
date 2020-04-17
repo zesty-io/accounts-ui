@@ -53,16 +53,17 @@ class PropertyOverview extends Component {
     }
   }
 
-  getCustomDomains = routeProps => {
+  getCustomDomains = () => {
     const customDomains =
-      this.props.domains &&
-      this.props.domains.filter(item => {
-        const domainParts = item.domain.split('.')
-        const customDomain = domainParts
-          .slice(Math.max(domainParts.length - 2, 0))
-          .join('.')
-        return customDomain !== 'zesty.dev' && customDomain !== 'zesty.site'
-      })
+      this.props.domains && Array.isArray(this.props.domains)
+        ? this.props.domains.filter(item => {
+            const domainParts = item.domain.split('.')
+            const customDomain = domainParts
+              .slice(Math.max(domainParts.length - 2, 0))
+              .join('.')
+            return customDomain !== 'zesty.dev' && customDomain !== 'zesty.site'
+          })
+        : []
     return customDomains
   }
 
@@ -112,26 +113,13 @@ class PropertyOverview extends Component {
             <Route
               path="/instances/:siteZUID/launch"
               render={routeProps => {
-                const customDomains = this.getCustomDomains(routeProps)
                 return (
-                  <>
-                    <LaunchWizard
-                      {...routeProps}
-                      isAdmin={this.props.isAdmin}
-                      dispatch={this.props.dispatch}
-                      site={this.props.site}
-                    />
-                    {customDomains && customDomains.length > 0 && (
-                      <Meta
-                        {...routeProps}
-                        isAdmin={this.props.isAdmin}
-                        dispatch={this.props.dispatch}
-                        site={this.props.site}
-                        domains={this.props.domains}
-                        customDomains={customDomains}
-                      />
-                    )}
-                  </>
+                  <LaunchWizard
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    dispatch={this.props.dispatch}
+                    site={this.props.site}
+                  />
                 )
               }}
             />
@@ -140,8 +128,26 @@ class PropertyOverview extends Component {
               path="/instances/:siteZUID"
               exact
               render={routeProps => {
-                const customDomains = this.getCustomDomains(routeProps)
-                return customDomains && customDomains.length > 0 ? (
+                const customDomains = this.getCustomDomains()
+                return (
+                  customDomains &&
+                  customDomains.length === 0 && (
+                    <LaunchWizard
+                      {...routeProps}
+                      isAdmin={this.props.isAdmin}
+                      dispatch={this.props.dispatch}
+                      site={this.props.site}
+                    />
+                  )
+                )
+              }}
+            />
+
+            <Route
+              path="/instances/:siteZUID"
+              render={routeProps => {
+                const customDomains = this.getCustomDomains()
+                return (
                   <Meta
                     {...routeProps}
                     isAdmin={this.props.isAdmin}
@@ -149,13 +155,6 @@ class PropertyOverview extends Component {
                     site={this.props.site}
                     domains={this.props.domains}
                     customDomains={customDomains}
-                  />
-                ) : (
-                  <LaunchWizard
-                    {...routeProps}
-                    isAdmin={this.props.isAdmin}
-                    dispatch={this.props.dispatch}
-                    site={this.props.site}
                   />
                 )
               }}

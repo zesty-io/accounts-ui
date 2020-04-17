@@ -107,41 +107,44 @@ export default class Meta extends Component {
             </h2>
           </CardHeader>
           <CardContent className={styles.CardContent}>
-            <div className={styles.TableAction}>
-              {this.props.isAdmin ? (
-                <Domain
-                  siteZUID={this.props.site.ZUID}
-                  site={this.props.site}
-                  dispatch={this.props.dispatch}
-                  domain={this.props.domains}
-                  customDomains={this.props.customDomains}
-                />
-              ) : (
-                <p className={styles.domain}>
-                  <em>
-                    <i
-                      className="fa fa-exclamation-triangle"
-                      aria-hidden="true"
+            {this.props.customDomains && this.props.customDomains.length > 0 && (
+              <>
+                <div className={styles.TableAction}>
+                  {this.props.isAdmin ? (
+                    <Domain
+                      siteZUID={this.props.site.ZUID}
+                      site={this.props.site}
+                      dispatch={this.props.dispatch}
+                      domain={this.props.domains}
+                      customDomains={this.props.customDomains}
                     />
-                    &nbsp; You must be this instance's owner or admin to manage
-                    domains
-                  </em>
-                </p>
-              )}
-            </div>
-            {this.props.domains ? (
-              <Table
-                arrangement="3 1 1 1"
-                data={domainsTable}
-                siteZUID={this.props.site.ZUID}
-                dispatch={this.props.dispatch}
-                isAdmin={this.props.isAdmin}
-                actions={this.renderDomainsActions}
-              />
-            ) : (
-              <em>Ask your instance owner to set a domain</em>
+                  ) : (
+                    <p className={styles.domain}>
+                      <em>
+                        <i
+                          className="fa fa-exclamation-triangle"
+                          aria-hidden="true"
+                        />
+                        &nbsp; You must be this instance's owner or admin to
+                        manage domains
+                      </em>
+                    </p>
+                  )}
+                </div>
+                {this.props.domains ? (
+                  <Table
+                    arrangement="3 1 1 1"
+                    data={domainsTable}
+                    siteZUID={this.props.site.ZUID}
+                    dispatch={this.props.dispatch}
+                    isAdmin={this.props.isAdmin}
+                    actions={this.renderDomainsActions}
+                  />
+                ) : (
+                  <em>Ask your instance owner to set a domain</em>
+                )}
+              </>
             )}
-
             <article>
               <p className={styles.setting}>
                 <span className={styles.title}>Created On:</span>{' '}
