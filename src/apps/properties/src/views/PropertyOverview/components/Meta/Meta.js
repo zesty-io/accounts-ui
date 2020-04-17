@@ -83,6 +83,7 @@ export default class Meta extends Component {
   render() {
     const domainsTable =
       this.props.domains &&
+      Array.isArray(this.props.domains) &&
       this.props.domains.map(domainData => {
         const { domain, branch, createdAt } = domainData
         return {
