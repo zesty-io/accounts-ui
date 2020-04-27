@@ -13,12 +13,14 @@ import Roles from './components/Roles'
 import Blueprint from './components/Blueprint'
 import Meta from './components/Meta'
 import LaunchWizard from './components/LaunchWizard'
+import AccessTokens from './components/AccessTokens'
 
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
 import { fetchSiteTeams } from '../../store/sitesTeams'
 import { fetchBlueprint } from '../../store/blueprints'
 import { fetchDomains } from '../../store/sitesDomains'
+import { fetchAccessTokens } from '../../store/sitesAccessTokens'
 
 // import { fetchSite } from '../../store/sites'
 // import { updateSite } from '../../store/sites'
@@ -40,6 +42,7 @@ class PropertyOverview extends Component {
       loadingCollections: true,
       loadingBlueprint: true,
       loadingDomains: true,
+      loadingAccessTokens: true,
       customDomains: []
     }
   }
@@ -68,6 +71,7 @@ class PropertyOverview extends Component {
   }
 
   render() {
+    console.log('this.props.accessTokens', this.props.accessTokens)
     document.title = `Accounts: ${this.props.site.name}`
     return (
       <article className={styles.PropertyOverview}>
@@ -107,7 +111,8 @@ class PropertyOverview extends Component {
               !this.state.loadingTeams &&
               !this.state.loadingUsers &&
               !this.state.loadingBlueprint &&
-              !this.state.loadingDomains
+              !this.state.loadingDomains &&
+              !this.state.loadingAccessTokens
             }
             message="Checking Instance Permissions">
             <Route
@@ -219,6 +224,22 @@ class PropertyOverview extends Component {
               path="/instances/:siteZUID"
               render={routeProps => {
                 return (
+                  <AccessTokens
+                    {...routeProps}
+                    isAdmin={this.props.isAdmin}
+                    dispatch={this.props.dispatch}
+                    site={this.props.site}
+                    accessTokens={this.props.accessTokens}
+                    siteRoles={this.props.siteRoles}
+                  />
+                )
+              }}
+            />
+
+            <Route
+              path="/instances/:siteZUID"
+              render={routeProps => {
+                return (
                   <Blueprint
                     {...routeProps}
                     isAdmin={this.props.isAdmin}
@@ -243,7 +264,8 @@ class PropertyOverview extends Component {
       loadingTeams: true,
       loadingCollections: true,
       loadingBlueprint: true,
-      loadingDomains: true
+      loadingDomains: true,
+      loadingAccessTokens: true
     })
     props
       .dispatch(fetchSiteUsers(props.siteZUID))
@@ -318,6 +340,19 @@ class PropertyOverview extends Component {
           notify({ message: 'Error fetching domains', type: 'error' })
         )
       })
+    props
+      .dispatch(fetchAccessTokens(props.siteZUID))
+      .then(() => {
+        this.setState({
+          loadingAccessTokens: false
+        })
+      })
+      .catch(e => {
+        console.log('e', e)
+        this.props.dispatch(
+          notify({ message: 'Error fetching access tokens', type: 'error' })
+        )
+      })
     // validity check blueprint ID before fetching
     if (parseInt(props.site.blueprintID)) {
       props
@@ -377,7 +412,7 @@ export default connect((state, props) => {
       }
     }
   }
-
+  console.log('state.sitesAccessTokens', state.sitesAccessTokens[siteZUID])
   return {
     siteZUID,
     systemRoles,
@@ -393,6 +428,9 @@ export default connect((state, props) => {
       : {},
     domains: state.sitesDomains[siteZUID]
       ? state.sitesDomains[siteZUID].domains
+      : {},
+    accessTokens: state.sitesAccessTokens[siteZUID]
+      ? state.sitesAccessTokens[siteZUID].accessTokens
       : {}
   }
 })(PropertyOverview)

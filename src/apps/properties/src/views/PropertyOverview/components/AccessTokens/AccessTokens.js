@@ -1,0 +1,188 @@
+import React, { Component, useState } from 'react'
+import { connect } from 'react-redux'
+import { removeDomain } from '../../../../store/sitesDomains'
+import { notify } from '../../../../../../../shell/store/notifications'
+
+import Table from '../../../../components/Table'
+import { Card, CardHeader, CardContent, CardFooter } from '@zesty-io/core/Card'
+import { Modal, ModalContent, ModalFooter } from '@zesty-io/core/Modal'
+import { Url } from '@zesty-io/core/Url'
+import { Button } from '@zesty-io/core/Button'
+
+import styles from './AccessTokens.less'
+import NewAccessToken from '../NewAccessToken'
+
+const formatDate = date => {
+  if (!date) {
+    return ''
+  }
+  const newDate = new Date(date)
+  return `${newDate.getMonth() +
+    1}-${newDate.getDate()}-${newDate.getFullYear()}`
+}
+
+export default class AccessTokens extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      openRemoveModal: false,
+      tokenToDelete: null
+    }
+  }
+
+  setRemoveModalOpen = openRemoveModal => {
+    this.setState({ openRemoveModal })
+  }
+
+  handleRemove = () => {
+    if (this.state.tokenToDelete) {
+      this.props
+        .dispatch(
+          removeAccessToken(this.props.site.ZUID, this.state.tokenToDelete)
+        )
+        .then(({ error, accessToken }) => {
+          this.props.dispatch(
+            notify({
+              message: `Your access token has been removed`,
+              type: 'success'
+            })
+          )
+          this.setState({ tokenToDelete: null, openRemoveModal: false })
+        })
+        .catch(data => {
+          this.setState({ submitted: false })
+          this.props.dispatch(
+            notify({
+              message: data.error,
+              type: 'error'
+            })
+          )
+        })
+    }
+  }
+
+  handleConfirmDelete = accessTokenZUID => {
+    this.setState({ tokenToDelete: accessTokenZUID })
+    this.setRemoveModalOpen(true)
+  }
+
+  renderAccessTokensActions = index => {
+    const accessTokenZUID =
+      this.props.accessTokens.length > 0 && this.props.accessTokens[index].ZUID
+
+    return (
+      this.props.isAdmin &&
+      accessTokenZUID && (
+        <Button
+          kind="warn"
+          className={styles.delete}
+          onClick={() => this.handleConfirmDelete(accessTokenZUID)}>
+          <i className="fas fa-trash" />
+        </Button>
+      )
+    )
+  }
+
+  render() {
+    const tokensTable =
+      this.props.accessTokens &&
+      Array.isArray(this.props.accessTokens) &&
+      this.props.accessTokens.length > 0
+        ? this.props.accessTokens.map(tokenData => {
+            const { name, token, ZUID, role, createdAt, expiry } = tokenData
+            return {
+              token: `
+            ${token}
+            ${name} &nbsp;
+            ${ZUID} &nbsp;
+            ${createdAt} &nbsp;
+          `,
+              role,
+              expires: formatDate(expiry)
+            }
+          })
+        : [
+            {
+              token: 'No access tokens added for this instance.',
+              role: null
+            }
+          ]
+
+    return (
+      <>
+        <Card className={styles.Meta}>
+          <CardHeader className={styles.CardHeader}>
+            <h2>
+              <i className="fa fa-code" aria-hidden="true" />
+              &nbsp;Access Tokens
+            </h2>
+          </CardHeader>
+          <CardContent className={styles.CardContent}>
+            <p>
+              The access token feature is beta and is recommended for use with
+              the ATOM IDE plugin, experimenting with CI/CD flows, and/or Node
+              SDK script usage. This feature will be augmented in the future.
+              After that automated production flows using tokens will be
+              generally available.
+            </p>
+            <div className={styles.TableAction}>
+              {this.props.isAdmin ? (
+                <NewAccessToken
+                  siteZUID={this.props.site.ZUID}
+                  site={this.props.site}
+                  dispatch={this.props.dispatch}
+                  siteRoles={this.props.siteRoles}
+                />
+              ) : (
+                <p className={styles.domain}>
+                  <em>
+                    <i
+                      className="fa fa-exclamation-triangle"
+                      aria-hidden="true"
+                    />
+                    &nbsp; You must be this instance's owner or admin to manage
+                    domains
+                  </em>
+                </p>
+              )}
+            </div>
+            {this.props.accessTokens ? (
+              <Table
+                data={tokensTable}
+                siteZUID={this.props.site.ZUID}
+                dispatch={this.props.dispatch}
+                isAdmin={this.props.isAdmin}
+                actions={this.renderAccessTokensActions}
+              />
+            ) : (
+              <em>Ask your instance owner to create access tokens</em>
+            )}
+          </CardContent>
+        </Card>
+        {this.state.openRemoveModal && (
+          <Modal
+            className={styles.Modal}
+            onClose={() => this.setRemoveModalOpen(false)}>
+            <ModalContent className={styles.ModalContent}>
+              <h2>Are you sure you want to remove your domain?</h2>
+            </ModalContent>
+            <ModalFooter className={styles.ModalFooter}>
+              <Button
+                kind="cancel"
+                onClick={() => this.setRemoveModalOpen(false)}>
+                <i className="fas fa-ban"></i>Cancel (ESC)
+              </Button>
+              <Button
+                data-test="saveDomain"
+                kind="warn"
+                onClick={this.handleRemove}>
+                <i className="fas fa-trash" aria-hidden="true" />
+                Remove
+              </Button>
+            </ModalFooter>
+          </Modal>
+        )}
+      </>
+    )
+  }
+}
