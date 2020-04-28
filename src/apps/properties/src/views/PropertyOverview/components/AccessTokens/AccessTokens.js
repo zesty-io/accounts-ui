@@ -111,18 +111,27 @@ export default class AccessTokens extends Component {
       this.props.accessTokens.length > 0 && this.props.accessTokens[index].ZUID
     const name =
       this.props.accessTokens.length > 0 && this.props.accessTokens[index].name
+    const expiry =
+      this.props.accessTokens.length > 0 &&
+      this.props.accessTokens[index].expiry
+    const parseExpiry = new Date(expiry)
+    const today = new Date()
 
-    return (
-      this.props.isAdmin &&
-      accessTokenZUID && (
-        <Button
-          kind="save"
-          className={styles.delete}
-          onClick={() => this.handleRenew(name, accessTokenZUID)}>
-          <i className="fas fa-retweet" />
-        </Button>
+    if (today.getTime() === parseExpiry.getTime()) {
+      return (
+        this.props.isAdmin &&
+        accessTokenZUID && (
+          <Button
+            kind="save"
+            className={styles.delete}
+            onClick={() => this.handleRenew(name, accessTokenZUID)}>
+            <i className="fas fa-retweet" />
+          </Button>
+        )
       )
-    )
+    }
+
+    return <></>
   }
 
   handleCopy = e => {
@@ -140,6 +149,7 @@ export default class AccessTokens extends Component {
       this.props.accessTokens.length > 0
         ? this.props.accessTokens.map(tokenData => {
             const { name, token, ZUID, roleZUID, createdAt, expiry } = tokenData
+
             return {
               token: (function() {
                 return (

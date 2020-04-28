@@ -34,33 +34,55 @@ export const Table = React.memo(function Table(props) {
 
   const templateColumns = getTemplateColumns()
 
+  const validateExpiry = (date, type = 'expires') => {
+    if (type === 'expires') {
+      const arr = date.split('-')
+      const sort = [arr[2], arr[0], arr[1]]
+      const stringDate = sort.join('-')
+      const parseDate = new Date(stringDate)
+      const today = new Date()
+
+      return parseDate.getTime() === today.getTime()
+    }
+  }
+
   return (
     <article className={styles.Table}>
       <header
         className={styles.TableHeader}
         style={{ gridTemplateColumns: templateColumns }}>
-        {headers.map(header => (
-          <div className={styles.HeaderItem} key={header}>
-            <span>{header}</span>
-          </div>
-        ))}
+        {headers.map(header => {
+          return (
+            <div className={styles.HeaderItem} key={header}>
+              <span>{header}</span>
+            </div>
+          )
+        })}
       </header>
       <div className={styles.TableContent}>
-        {props.data.map((row, rowIndex) => (
-          <article
-            key={row.domain}
-            className={styles.TableRow}
-            style={{ gridTemplateColumns: templateColumns }}>
-            {Object.keys(props.data[0]).map(header => (
-              <p className={styles.Cell} key={row[header]}>
-                <span>{row[header]}</span>
-              </p>
-            ))}
-            {props.actions && (
-              <p className={styles.RowActions}>{props.actions(rowIndex)}</p>
-            )}
-          </article>
-        ))}
+        {props.data.map((row, rowIndex) => {
+          return (
+            <article
+              key={row.domain}
+              className={
+                row.expires && validateExpiry(row.expires)
+                  ? styles.OpacityExpired
+                  : styles.TableRow
+              }
+              style={{ gridTemplateColumns: templateColumns }}>
+              {Object.keys(props.data[0]).map(header => {
+                return (
+                  <p className={styles.Cell} key={row[header]}>
+                    <span>{row[header]}</span>
+                  </p>
+                )
+              })}
+              {props.actions && (
+                <p className={styles.RowActions}>{props.actions(rowIndex)}</p>
+              )}
+            </article>
+          )
+        })}
       </div>
     </article>
   )
