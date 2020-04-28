@@ -21,7 +21,7 @@ export function sitesAccessTokens(state = {}, action) {
           ...state[action.siteZUID],
           accessTokens: [
             ...state[action.siteZUID].accessTokens,
-            action.accessTokens
+            action.accessToken
           ]
         }
       }
@@ -54,7 +54,7 @@ export function fetchAccessTokens(siteZUID) {
         name: item.name,
         token: item.token,
         createdAt: item.createdAt,
-        role: item.roleZUID,
+        roleZUID: item.roleZUID,
         expiry: item.expiry
       }))
 
@@ -79,8 +79,8 @@ export function createAccessToken(siteZUID, name, roleZUID) {
     }).then(res => {
       if (!res.error) {
         dispatch({
-          type: 'UPDATE_SITE_DOMAINS',
-          domain: res.data,
+          type: 'UPDATE_SITE_ACCESS_TOKENS',
+          accessToken: res.data,
           siteZUID
         })
       }

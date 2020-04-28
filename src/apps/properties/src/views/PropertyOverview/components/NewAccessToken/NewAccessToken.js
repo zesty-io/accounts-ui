@@ -9,12 +9,6 @@ import { createAccessToken } from '../../../../store/sitesAccessTokens'
 import styles from './NewAccessToken.less'
 
 export default class Domain extends Component {
-  /* TODO:
-   **  users need to confirm and upgrade their
-   **  accounts in order to use the custom
-   **  domain feature. this will be implemented
-   **  in a future API version
-   */
   constructor(props) {
     super(props)
     this.state = {
@@ -42,14 +36,16 @@ export default class Domain extends Component {
       .dispatch(
         createAccessToken(this.props.siteZUID, this.state.token, role.ZUID)
       )
-      .then(({ error, domain }) => {
+      .then(({ error, token }) => {
+        console.log('token', token)
         this.setState({
-          domain: null,
+          token: null,
           submitted: false
         })
+        this.props.setNewToken(token)
         this.props.dispatch(
           notify({
-            message: `Your domain has been set to ${strippedDomain}`,
+            message: `Your token has been created`,
             type: 'success'
           })
         )
@@ -82,8 +78,8 @@ export default class Domain extends Component {
         </div>
         {this.props.siteRoles && this.props.siteRoles.length > 0 && (
           <DropDownFieldType
-            name="branch"
-            onChange={this.selectBranch}
+            name="role"
+            onChange={this.selectRole}
             selection={this.roles.filter(
               role => role.value === this.state.selectedRole
             )}
