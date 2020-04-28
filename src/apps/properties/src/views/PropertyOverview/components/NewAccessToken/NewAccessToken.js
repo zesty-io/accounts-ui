@@ -96,7 +96,7 @@ export default class Domain extends Component {
           }
           onClick={this.handleSave}>
           <i className="fa fa-plus" aria-hidden="true" />
-          Save Token
+          Create Token
         </Button>
       </label>
     )

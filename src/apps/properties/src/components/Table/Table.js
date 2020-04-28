@@ -34,16 +34,23 @@ export const Table = React.memo(function Table(props) {
 
   const templateColumns = getTemplateColumns()
 
-  const validateExpiry = (date, type = 'expires') => {
-    if (type === 'expires') {
-      const arr = date.split('-')
-      const sort = [arr[2], arr[0], arr[1]]
-      const stringDate = sort.join('-')
-      const parseDate = new Date(stringDate)
-      const today = new Date()
+  const validateExpiry = date => {
+    const arr = date.split('-')
+    const sort = [arr[2], arr[0], arr[1]]
+    const stringDate = sort.join('-')
+    const parseDate = new Date(stringDate)
+    const today = new Date()
 
-      return parseDate.getTime() === today.getTime()
-    }
+    return parseDate.getTime() === today.getTime()
+  }
+
+  const parseExpires = date => {
+    const arr = date.split('-')
+    const sort = [arr[2], arr[0], arr[1]]
+    const stringDate = sort.join('-')
+    const parseDate = new Date(stringDate)
+
+    return parseDate.getTime()
   }
 
   return (
@@ -60,29 +67,38 @@ export const Table = React.memo(function Table(props) {
         })}
       </header>
       <div className={styles.TableContent}>
-        {props.data.map((row, rowIndex) => {
-          return (
-            <article
-              key={row.domain}
-              className={
-                row.expires && validateExpiry(row.expires)
-                  ? styles.OpacityExpired
-                  : styles.TableRow
-              }
-              style={{ gridTemplateColumns: templateColumns }}>
-              {Object.keys(props.data[0]).map(header => {
-                return (
-                  <p className={styles.Cell} key={row[header]}>
-                    <span>{row[header]}</span>
-                  </p>
-                )
-              })}
-              {props.actions && (
-                <p className={styles.RowActions}>{props.actions(rowIndex)}</p>
-              )}
-            </article>
-          )
-        })}
+        {props.data
+          .sort((a, b) => {
+            const today = new Date()
+            if (today.getTime() - parseExpires(a.expires) === 1296000000) {
+              return -1
+            } else {
+              return 1
+            }
+          })
+          .map((row, rowIndex) => {
+            return (
+              <article
+                key={row.domain}
+                className={
+                  row.expires && validateExpiry(row.expires)
+                    ? styles.OpacityExpired
+                    : styles.TableRow
+                }
+                style={{ gridTemplateColumns: templateColumns }}>
+                {Object.keys(props.data[0]).map(header => {
+                  return (
+                    <p className={styles.Cell} key={row[header]}>
+                      <span>{row[header]}</span>
+                    </p>
+                  )
+                })}
+                {props.actions && (
+                  <p className={styles.RowActions}>{props.actions(rowIndex)}</p>
+                )}
+              </article>
+            )
+          })}
       </div>
     </article>
   )

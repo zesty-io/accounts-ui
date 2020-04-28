@@ -131,3 +131,12 @@ export const removeDomain = (siteZUID, accessTokenZUID) => {
     })
   }
 }
+
+export const getUsageToken = ZUID => {
+  return request(`${CONFIG.API_ACCOUNTS}/audits/${ZUID}`, {
+    method: 'GET',
+    json: true
+  })
+    .then(res => console.log('res', res))
+    .catch(err => console.log('err', err))
+}

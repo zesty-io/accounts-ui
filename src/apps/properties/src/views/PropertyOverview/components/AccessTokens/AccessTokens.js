@@ -11,7 +11,10 @@ import { Button } from '@zesty-io/core/Button'
 
 import styles from './AccessTokens.less'
 import NewAccessToken from '../NewAccessToken'
-import { renewAccessToken } from '../../../../store/sitesAccessTokens'
+import {
+  renewAccessToken,
+  getUsageToken
+} from '../../../../store/sitesAccessTokens'
 
 const formatDate = date => {
   if (!date) {
@@ -22,12 +25,21 @@ const formatDate = date => {
     1}-${newDate.getDate()}-${newDate.getFullYear()}`
 }
 
+const getUsage = ZUID => {
+  console.log('ZUID', ZUID)
+  getUsageToken(ZUID)
+    .then(res => console.log('RES', res))
+    .catch(err => console.log('ERR', err))
+  return ''
+}
+
 export default class AccessTokens extends Component {
   constructor(props) {
     super(props)
     this.state = {
       openNewTokenModal: false,
       tokenToRenew: null,
+      tokenToDelete: null,
       newToken: null,
       copied: false
     }
@@ -43,10 +55,10 @@ export default class AccessTokens extends Component {
   }
 
   handleRemove = () => {
-    if (this.state.tokenToRenew) {
+    if (this.state.tokenToDelete) {
       this.props
         .dispatch(
-          removeAccessToken(this.props.site.ZUID, this.state.tokenToRenew)
+          removeAccessToken(this.props.site.ZUID, this.state.tokenToDelete)
         )
         .then(({ error, accessToken }) => {
           this.props.dispatch(
@@ -55,7 +67,7 @@ export default class AccessTokens extends Component {
               type: 'success'
             })
           )
-          this.setState({ tokenToRenew: null, openRemoveModal: false })
+          this.setState({ tokenToDelete: null, openRemoveModal: false })
         })
         .catch(data => {
           this.setState({ submitted: false })
@@ -106,6 +118,11 @@ export default class AccessTokens extends Component {
       })
   }
 
+  handleConfirmDelete = accessTokenZUID => {
+    this.setState({ tokenToDelete: accessTokenZUID })
+    this.setRemoveModalOpen(true)
+  }
+
   renderAccessTokensActions = index => {
     const accessTokenZUID =
       this.props.accessTokens.length > 0 && this.props.accessTokens[index].ZUID
@@ -114,24 +131,26 @@ export default class AccessTokens extends Component {
     const expiry =
       this.props.accessTokens.length > 0 &&
       this.props.accessTokens[index].expiry
-    const parseExpiry = new Date(expiry)
-    const today = new Date()
 
-    if (today.getTime() === parseExpiry.getTime()) {
-      return (
-        this.props.isAdmin &&
-        accessTokenZUID && (
+    return (
+      this.props.isAdmin &&
+      accessTokenZUID && (
+        <>
           <Button
             kind="save"
             className={styles.delete}
             onClick={() => this.handleRenew(name, accessTokenZUID)}>
             <i className="fas fa-retweet" />
           </Button>
-        )
+          <Button
+            kind="warn"
+            className={styles.delete}
+            onClick={() => this.handleRemove(name, accessTokenZUID)}>
+            <i className="fas fa-trash" />
+          </Button>
+        </>
       )
-    }
-
-    return <></>
+    )
   }
 
   handleCopy = e => {
@@ -162,7 +181,8 @@ export default class AccessTokens extends Component {
                 )
               })(),
               role: roleZUID,
-              expires: formatDate(expiry)
+              expires: formatDate(expiry),
+              usage: getUsage(ZUID)
             }
           })
         : [
