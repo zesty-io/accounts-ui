@@ -53,6 +53,13 @@ export const Table = React.memo(function Table(props) {
     return parseDate.getTime()
   }
 
+  const expireSoon = expires => {
+    const today = new Date()
+    if (expires) {
+      return today.getTime() - parseExpires(expires) === 1296000000
+    }
+  }
+
   return (
     <article className={styles.Table}>
       <header
@@ -80,11 +87,14 @@ export const Table = React.memo(function Table(props) {
             return (
               <article
                 key={row.domain}
-                className={
+                className={cx(
+                  expireSoon(row.expires)
+                    ? styles.BorderExpired
+                    : styles.TableRow,
                   row.expires && validateExpiry(row.expires)
                     ? styles.OpacityExpired
                     : styles.TableRow
-                }
+                )}
                 style={{ gridTemplateColumns: templateColumns }}>
                 {Object.keys(props.data[0]).map(header => {
                   return (

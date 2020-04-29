@@ -1,6 +1,5 @@
 import React, { Component, useState } from 'react'
 import { connect } from 'react-redux'
-import { removeDomain } from '../../../../store/sitesDomains'
 import { notify } from '../../../../../../../shell/store/notifications'
 
 import Table from '../../../../components/Table'
@@ -13,7 +12,8 @@ import styles from './AccessTokens.less'
 import NewAccessToken from '../NewAccessToken'
 import {
   renewAccessToken,
-  getUsageToken
+  getUsageToken,
+  removeDomain
 } from '../../../../store/sitesAccessTokens'
 
 const formatDate = date => {
@@ -35,9 +35,11 @@ const getUsage = ZUID => {
 
 export default class AccessTokens extends Component {
   constructor(props) {
+    console.log('PROS!!!', props)
     super(props)
     this.state = {
       openNewTokenModal: false,
+      openConfirmModal: false,
       tokenToRenew: null,
       tokenToDelete: null,
       newToken: null,
@@ -58,7 +60,8 @@ export default class AccessTokens extends Component {
     if (this.state.tokenToDelete) {
       this.props
         .dispatch(
-          removeAccessToken(this.props.site.ZUID, this.state.tokenToDelete)
+          // removeAccessToken(this.props.site.ZUID, this.state.tokenToDelete)
+          removeDomain(this.props.site.ZUID, this.state.tokenToDelete)
         )
         .then(({ error, accessToken }) => {
           this.props.dispatch(
@@ -67,7 +70,7 @@ export default class AccessTokens extends Component {
               type: 'success'
             })
           )
-          this.setState({ tokenToDelete: null, openRemoveModal: false })
+          this.setState({ tokenToDelete: null, openConfirmModal: false })
         })
         .catch(data => {
           this.setState({ submitted: false })
@@ -119,8 +122,8 @@ export default class AccessTokens extends Component {
   }
 
   handleConfirmDelete = accessTokenZUID => {
-    this.setState({ tokenToDelete: accessTokenZUID })
-    this.setRemoveModalOpen(true)
+    this.setState({ tokenToDelete: accessTokenZUID, openConfirmModal: true })
+    // this.setRemoveModalOpen(true)
   }
 
   renderAccessTokensActions = index => {
@@ -145,7 +148,7 @@ export default class AccessTokens extends Component {
           <Button
             kind="warn"
             className={styles.delete}
-            onClick={() => this.handleRemove(name, accessTokenZUID)}>
+            onClick={() => this.handleConfirmDelete(accessTokenZUID)}>
             <i className="fas fa-trash" />
           </Button>
         </>
@@ -168,6 +171,9 @@ export default class AccessTokens extends Component {
       this.props.accessTokens.length > 0
         ? this.props.accessTokens.map(tokenData => {
             const { name, token, ZUID, roleZUID, createdAt, expiry } = tokenData
+            const roleName = this.props.siteRoles.find(
+              role => role.ZUID === roleZUID
+            )
 
             return {
               token: (function() {
@@ -180,9 +186,9 @@ export default class AccessTokens extends Component {
                   </>
                 )
               })(),
-              role: roleZUID,
-              expires: formatDate(expiry),
-              usage: getUsage(ZUID)
+              role: roleName.name,
+              expires: formatDate(expiry)
+              // usage: getUsage(ZUID)
             }
           })
         : [
@@ -266,6 +272,40 @@ export default class AccessTokens extends Component {
                 )}
               </div>
             </ModalContent>
+          </Modal>
+        )}
+
+        {this.state.openConfirmModal && (
+          <Modal
+            className={styles.Modal}
+            onClose={() => this.setOpenNewTokenModal(false)}>
+            <ModalContent className={styles.ModalContent}>
+              <h2>Are you sure?</h2>
+              <p>Do you want to remove this token?</p>
+              {/* <div className={styles.TokenDisplay}>
+                <Button data-test="copy" kind="save" onClick={this.handleCopy}>
+                  <i className="fas fa-copy" aria-hidden="true" />
+                  Copy
+                </Button>
+              </div> */}
+            </ModalContent>
+            <ModalFooter>
+              <div className={styles.ButtonsConfirm}>
+                <Button
+                  kind="save"
+                  onClick={() =>
+                    this.setState({
+                      openConfirmModal: false,
+                      tokenToDelete: null
+                    })
+                  }>
+                  No
+                </Button>
+                <Button kind="warn" onClick={this.handleRemove}>
+                  Yes
+                </Button>
+              </div>
+            </ModalFooter>
           </Modal>
         )}
       </>
