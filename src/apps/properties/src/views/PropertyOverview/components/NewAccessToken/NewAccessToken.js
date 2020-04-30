@@ -89,11 +89,6 @@ export default class Domain extends Component {
         <Button
           className={styles.Button}
           data-test="saveAccessToken"
-          disabled={
-            !this.state.token ||
-            !this.state.selectedRole ||
-            this.state.submitted
-          }
           onClick={this.handleSave}>
           <i className="fa fa-plus" aria-hidden="true" />
           Create Token

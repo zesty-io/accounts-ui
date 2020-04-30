@@ -13,7 +13,7 @@ import NewAccessToken from '../NewAccessToken'
 import {
   renewAccessToken,
   getUsageToken,
-  removeDomain
+  removeAccessToken
 } from '../../../../store/sitesAccessTokens'
 
 const formatDate = date => {
@@ -60,8 +60,7 @@ export default class AccessTokens extends Component {
     if (this.state.tokenToDelete) {
       this.props
         .dispatch(
-          // removeAccessToken(this.props.site.ZUID, this.state.tokenToDelete)
-          removeDomain(this.props.site.ZUID, this.state.tokenToDelete)
+          removeAccessToken(this.props.site.ZUID, this.state.tokenToDelete)
         )
         .then(({ error, accessToken }) => {
           this.props.dispatch(
@@ -170,7 +169,15 @@ export default class AccessTokens extends Component {
       Array.isArray(this.props.accessTokens) &&
       this.props.accessTokens.length > 0
         ? this.props.accessTokens.map(tokenData => {
-            const { name, token, ZUID, roleZUID, createdAt, expiry } = tokenData
+            const {
+              name,
+              token,
+              ZUID,
+              roleZUID,
+              createdAt,
+              expiry,
+              usage
+            } = tokenData
             const roleName = this.props.siteRoles.find(
               role => role.ZUID === roleZUID
             )
@@ -179,16 +186,25 @@ export default class AccessTokens extends Component {
               token: (function() {
                 return (
                   <>
-                    <p>{token}</p>
+                    <p className={styles.Token}>{token}</p>
                     <p>{name}</p>
                     <p>{ZUID}</p>
-                    <p>{createdAt}</p>
+                    <p>{formatDate(createdAt)}</p>
                   </>
                 )
               })(),
               role: roleName.name,
-              expires: formatDate(expiry)
-              // usage: getUsage(ZUID)
+              expires: formatDate(expiry),
+              usage: (function() {
+                return usage && usage[0] ? (
+                  <p>
+                    Last used on {formatDate(usage[0].happenedAt)} (
+                    {usage[0].meta.message})
+                  </p>
+                ) : (
+                  'This token has not been used yet'
+                )
+              })()
             }
           })
         : [
@@ -210,10 +226,11 @@ export default class AccessTokens extends Component {
           <CardContent className={styles.CardContent}>
             <p>
               The access token feature is beta and is recommended for use with
-              the ATOM IDE plugin, experimenting with CI/CD flows, and/or Node
-              SDK script usage. This feature will be augmented in the future.
-              After that automated production flows using tokens will be
-              generally available.
+              the Atom IDE plugin, experimenting with CI/CD flows, and/or{' '}
+              <a href="https://github.com/zesty-io/node-sdk">Node SDK</a> script
+              usage. This feature will be augmented in the future. After that
+              automated production flows using tokens will be generally
+              available.
             </p>
             <div className={styles.TableAction}>
               {this.props.isAdmin ? (
@@ -232,7 +249,7 @@ export default class AccessTokens extends Component {
                       aria-hidden="true"
                     />
                     &nbsp; You must be this instance's owner or admin to manage
-                    domains
+                    tokens
                   </em>
                 </p>
               )}
@@ -282,12 +299,6 @@ export default class AccessTokens extends Component {
             <ModalContent className={styles.ModalContent}>
               <h2>Are you sure?</h2>
               <p>Do you want to remove this token?</p>
-              {/* <div className={styles.TokenDisplay}>
-                <Button data-test="copy" kind="save" onClick={this.handleCopy}>
-                  <i className="fas fa-copy" aria-hidden="true" />
-                  Copy
-                </Button>
-              </div> */}
             </ModalContent>
             <ModalFooter>
               <div className={styles.ButtonsConfirm}>
@@ -299,7 +310,7 @@ export default class AccessTokens extends Component {
                       tokenToDelete: null
                     })
                   }>
-                  No
+                  Cancel
                 </Button>
                 <Button kind="warn" onClick={this.handleRemove}>
                   Yes
