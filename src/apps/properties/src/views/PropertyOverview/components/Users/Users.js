@@ -91,6 +91,11 @@ export default class Users extends Component {
                 <div>
                   {Object.keys(this.props.users)
                     .filter(ZUID => !this.props.users[ZUID].teamZUID)
+                    .filter(
+                      ZUID =>
+                        this.props.users[ZUID].lastName !==
+                        this.props.users[ZUID].ZUID
+                    )
                     .map(ZUID => {
                       const user = this.props.users[ZUID]
                       if (user.pending) {
