@@ -52,7 +52,6 @@ export function sitesAccessTokens(state = {}, action) {
         }
       }
     case 'RENEW_SITE_ACCESS_TOKEN':
-      console.log('Renew token', action)
       return state
     default:
       return state
@@ -113,7 +112,7 @@ export function createAccessToken(siteZUID, name, roleZUID) {
 
 export function renewAccessToken(name, siteZUID) {
   return dispatch => {
-    return request(`${CONFIG.API_ACCOUNTS}/tokens?action=renew`, {
+    return request(`${CONFIG.API_ACCOUNTS}/tokens?action=renew%20`, {
       method: 'PUT',
       json: true,
       body: { name }

@@ -84,13 +84,8 @@ export default class AccessTokens extends Component {
   }
 
   handleRenew = (name, accessTokenZUID) => {
-    // this.setState({ tokenToRenew: accessTokenZUID })
-    // this.setRemoveModalOpen(true)
     this.props
-      .dispatch(
-        // renewAccessToken(this.props.site.ZUID, this.state.tokenToRenew)
-        renewAccessToken(name, accessTokenZUID)
-      )
+      .dispatch(renewAccessToken(name, accessTokenZUID))
       .then(res => {
         if (!res) {
           this.props.dispatch(
@@ -137,20 +132,19 @@ export default class AccessTokens extends Component {
     return (
       this.props.isAdmin &&
       accessTokenZUID && (
-        <>
+        <p className={styles.TokenActions}>
           <Button
-            kind="save"
-            className={styles.delete}
+            className={styles.TokenAction}
             onClick={() => this.handleRenew(name, accessTokenZUID)}>
             <i className="fas fa-retweet" />
+            Renew
           </Button>
           <Button
-            kind="warn"
-            className={styles.delete}
+            className={styles.TokenAction}
             onClick={() => this.handleConfirmDelete(accessTokenZUID)}>
             <i className="fas fa-trash" />
           </Button>
-        </>
+        </p>
       )
     )
   }
@@ -187,9 +181,18 @@ export default class AccessTokens extends Component {
                 return (
                   <>
                     <p className={styles.Token}>{token}</p>
-                    <p>{name}</p>
-                    <p>{ZUID}</p>
-                    <p>{formatDate(createdAt)}</p>
+                    <p>
+                      <strong className={styles.TokenMeta}>Name: </strong>
+                      {name}
+                    </p>
+                    <p>
+                      <strong className={styles.TokenMeta}>ZUID: </strong>
+                      {ZUID}
+                    </p>
+                    <p>
+                      <strong className={styles.TokenMeta}>Created: </strong>
+                      {formatDate(createdAt)}
+                    </p>
                   </>
                 )
               })(),
