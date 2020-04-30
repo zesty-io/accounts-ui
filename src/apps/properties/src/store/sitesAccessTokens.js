@@ -36,6 +36,9 @@ export function sitesAccessTokens(state = {}, action) {
           accessTokens
         }
       }
+    case 'RENEW_SITE_ACCESS_TOKEN':
+      console.log('Renew token', action)
+      return state
     default:
       return state
   }
@@ -86,6 +89,31 @@ export function createAccessToken(siteZUID, name, roleZUID) {
       }
       return res.data
     })
+  }
+}
+
+export function renewAccessToken(name, siteZUID) {
+  return dispatch => {
+    return request(`${CONFIG.API_ACCOUNTS}/tokens?action=renew`, {
+      method: 'PUT',
+      json: true,
+      body: { name }
+    })
+      .then(res => {
+        console.log('RES', res)
+        if (!res.error) {
+          dispatch({
+            type: 'RENEW_SITE_ACCESS_TOKEN',
+            accessToken: res.data,
+            siteZUID
+          })
+        }
+        return res.data
+      })
+      .catch(err => {
+        console.error('ERROR:', err)
+        return err
+      })
   }
 }
 

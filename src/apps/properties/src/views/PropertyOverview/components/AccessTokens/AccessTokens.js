@@ -11,6 +11,7 @@ import { Button } from '@zesty-io/core/Button'
 
 import styles from './AccessTokens.less'
 import NewAccessToken from '../NewAccessToken'
+import { renewAccessToken } from '../../../../store/sitesAccessTokens'
 
 const formatDate = date => {
   if (!date) {
@@ -26,7 +27,7 @@ export default class AccessTokens extends Component {
     super(props)
     this.state = {
       openNewTokenModal: false,
-      tokenToDelete: null,
+      tokenToRenew: null,
       newToken: null,
       copied: false
     }
@@ -42,10 +43,10 @@ export default class AccessTokens extends Component {
   }
 
   handleRemove = () => {
-    if (this.state.tokenToDelete) {
+    if (this.state.tokenToRenew) {
       this.props
         .dispatch(
-          removeAccessToken(this.props.site.ZUID, this.state.tokenToDelete)
+          removeAccessToken(this.props.site.ZUID, this.state.tokenToRenew)
         )
         .then(({ error, accessToken }) => {
           this.props.dispatch(
@@ -54,7 +55,7 @@ export default class AccessTokens extends Component {
               type: 'success'
             })
           )
-          this.setState({ tokenToDelete: null, openRemoveModal: false })
+          this.setState({ tokenToRenew: null, openRemoveModal: false })
         })
         .catch(data => {
           this.setState({ submitted: false })
@@ -68,23 +69,57 @@ export default class AccessTokens extends Component {
     }
   }
 
-  handleConfirmDelete = accessTokenZUID => {
-    this.setState({ tokenToDelete: accessTokenZUID })
-    this.setRemoveModalOpen(true)
+  handleRenew = (name, accessTokenZUID) => {
+    // this.setState({ tokenToRenew: accessTokenZUID })
+    // this.setRemoveModalOpen(true)
+    this.props
+      .dispatch(
+        // renewAccessToken(this.props.site.ZUID, this.state.tokenToRenew)
+        renewAccessToken(name, accessTokenZUID)
+      )
+      .then(res => {
+        if (!res) {
+          this.props.dispatch(
+            notify({
+              message: `Your access token has been renovated`,
+              type: 'success'
+            })
+          )
+        } else {
+          this.props.dispatch(
+            notify({
+              message: JSON.stringify(res),
+              type: 'error'
+            })
+          )
+        }
+        // this.setState({ tokenToRenew: null, openRemoveModal: false })
+      })
+      .catch(data => {
+        this.setState({ submitted: false })
+        this.props.dispatch(
+          notify({
+            message: data.error,
+            type: 'error'
+          })
+        )
+      })
   }
 
   renderAccessTokensActions = index => {
     const accessTokenZUID =
       this.props.accessTokens.length > 0 && this.props.accessTokens[index].ZUID
+    const name =
+      this.props.accessTokens.length > 0 && this.props.accessTokens[index].name
 
     return (
       this.props.isAdmin &&
       accessTokenZUID && (
         <Button
-          kind="warn"
+          kind="save"
           className={styles.delete}
-          onClick={() => this.handleConfirmDelete(accessTokenZUID)}>
-          <i className="fas fa-trash" />
+          onClick={() => this.handleRenew(name, accessTokenZUID)}>
+          <i className="fas fa-retweet" />
         </Button>
       )
     )
