@@ -22,8 +22,8 @@ export default class Domain extends Component {
     }))
   }
 
-  selectRole = value => {
-    this.setState({ siteRole: value })
+  selectRole = (name, value) => {
+    this.setState({ selectedRole: value })
   }
 
   handleSave = () => {
@@ -31,13 +31,11 @@ export default class Domain extends Component {
     const role = this.props.siteRoles.find(
       role => this.state.selectedRole === role.name
     )
-    console.log('role', role)
     this.props
       .dispatch(
         createAccessToken(this.props.siteZUID, this.state.token, role.ZUID)
       )
       .then(({ error, token }) => {
-        console.log('token', token)
         this.setState({
           token: null,
           submitted: false
@@ -79,7 +77,7 @@ export default class Domain extends Component {
         {this.props.siteRoles && this.props.siteRoles.length > 0 && (
           <DropDownFieldType
             name="role"
-            onChange={this.selectRole}
+            onChange={(name, value) => this.selectRole(name, value)}
             selection={this.roles.filter(
               role => role.value === this.state.selectedRole
             )}
