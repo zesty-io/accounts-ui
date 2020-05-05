@@ -85,7 +85,7 @@ export default class AccessTokens extends Component {
 
   handleRenew = (name, accessTokenZUID) => {
     this.props
-      .dispatch(renewAccessToken(name, accessTokenZUID))
+      .dispatch(renewAccessToken(name, accessTokenZUID, this.props.site.ZUID))
       .then(res => {
         if (!res.error) {
           this.props.dispatch(
@@ -298,7 +298,12 @@ export default class AccessTokens extends Component {
         {this.state.openConfirmModal && (
           <Modal
             className={styles.Modal}
-            onClose={() => this.setOpenNewTokenModal(false)}>
+            onClose={() => {
+              this.setState({
+                openConfirmModal: false,
+                tokenToDelete: null
+              })
+            }}>
             <ModalContent className={styles.ModalContent}>
               <h2>Are you sure?</h2>
               <p>Do you want to remove this token?</p>
