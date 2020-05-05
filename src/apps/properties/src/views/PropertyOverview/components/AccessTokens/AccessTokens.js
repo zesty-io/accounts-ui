@@ -87,7 +87,7 @@ export default class AccessTokens extends Component {
     this.props
       .dispatch(renewAccessToken(name, accessTokenZUID))
       .then(res => {
-        if (!res) {
+        if (!res.error) {
           this.props.dispatch(
             notify({
               message: `Your access token has been renovated`,
@@ -97,7 +97,7 @@ export default class AccessTokens extends Component {
         } else {
           this.props.dispatch(
             notify({
-              message: JSON.stringify(res),
+              message: res.error,
               type: 'error'
             })
           )

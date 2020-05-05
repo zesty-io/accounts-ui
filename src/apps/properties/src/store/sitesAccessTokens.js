@@ -112,13 +112,12 @@ export function createAccessToken(siteZUID, name, roleZUID) {
 
 export function renewAccessToken(name, siteZUID) {
   return dispatch => {
-    return request(`${CONFIG.API_ACCOUNTS}/tokens?action=renew%20`, {
+    return request(`${CONFIG.API_ACCOUNTS}/tokens/${siteZUID}?action=renew`, {
       method: 'PUT',
       json: true,
       body: { name }
     })
       .then(res => {
-        console.log('RES', res)
         if (!res.error) {
           dispatch({
             type: 'RENEW_SITE_ACCESS_TOKEN',
