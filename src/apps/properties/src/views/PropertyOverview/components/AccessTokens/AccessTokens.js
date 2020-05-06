@@ -158,6 +158,23 @@ export default class AccessTokens extends Component {
   }
 
   render() {
+    const noTokens = [
+      {
+        token: (function() {
+          return (
+            <React.Fragment>
+              <p class={styles.Token}>
+                No access tokens added for this instance.
+              </p>
+            </React.Fragment>
+          )
+        })(),
+        role: '',
+        expires: null,
+        usage: '---'
+      }
+    ]
+
     const tokensTable =
       this.props.accessTokens &&
       Array.isArray(this.props.accessTokens) &&
@@ -179,7 +196,7 @@ export default class AccessTokens extends Component {
             return {
               token: (function() {
                 return (
-                  <>
+                  <React.Fragment key={ZUID}>
                     <p className={styles.Token}>{token}</p>
                     <p>
                       <strong className={styles.TokenMeta}>Name: </strong>
@@ -193,7 +210,7 @@ export default class AccessTokens extends Component {
                       <strong className={styles.TokenMeta}>Created: </strong>
                       {formatDate(createdAt)}
                     </p>
-                  </>
+                  </React.Fragment>
                 )
               })(),
               role: roleName.name,
@@ -210,12 +227,7 @@ export default class AccessTokens extends Component {
               })()
             }
           })
-        : [
-            {
-              token: 'No access tokens added for this instance.',
-              role: null
-            }
-          ]
+        : noTokens
 
     return (
       <>
