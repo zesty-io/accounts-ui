@@ -300,7 +300,7 @@ export default class AccessTokens extends Component {
 
         {this.state.openConfirmModal && (
           <Modal
-            className={styles.Modal}
+            className={styles.ConfirmModal}
             onClose={() => {
               this.setState({
                 openConfirmModal: false,

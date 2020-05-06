@@ -45,6 +45,8 @@ export const Table = React.memo(function Table(props) {
   }
 
   const parseExpires = date => {
+    if (!date) return 0
+
     const arr = date.split('-')
     const sort = [arr[2], arr[0], arr[1]]
     const stringDate = sort.join('-')
