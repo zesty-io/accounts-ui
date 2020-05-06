@@ -25,17 +25,8 @@ const formatDate = date => {
     1}-${newDate.getDate()}-${newDate.getFullYear()}`
 }
 
-const getUsage = ZUID => {
-  console.log('ZUID', ZUID)
-  getUsageToken(ZUID)
-    .then(res => console.log('RES', res))
-    .catch(err => console.log('ERR', err))
-  return ''
-}
-
 export default class AccessTokens extends Component {
   constructor(props) {
-    console.log('PROS!!!', props)
     super(props)
     this.state = {
       openNewTokenModal: false,

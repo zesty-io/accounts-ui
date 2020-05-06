@@ -110,16 +110,18 @@ export function createAccessToken(siteZUID, name, roleZUID) {
       method: 'POST',
       json: true,
       body: { roleZUID, name }
-    }).then(res => {
-      if (!res.error) {
-        dispatch({
-          type: 'UPDATE_SITE_ACCESS_TOKENS',
-          accessToken: res.data,
-          siteZUID
-        })
-      }
-      return res.data
     })
+      .then(res => {
+        if (!res.error) {
+          dispatch({
+            type: 'UPDATE_SITE_ACCESS_TOKENS',
+            accessToken: res.data,
+            siteZUID
+          })
+        }
+        return res.data
+      })
+      .catch(err => err)
   }
 }
 
@@ -140,10 +142,7 @@ export function renewAccessToken(name, token, siteZUID) {
         }
         return res.data
       })
-      .catch(err => {
-        console.error('ERROR:', err)
-        return err
-      })
+      .catch(err => err)
   }
 }
 
@@ -180,6 +179,6 @@ export const fetchUsage = (siteZUID, item) => {
         })
         return res.data
       })
-      .catch(err => console.log('err', err))
+      .catch(err => err)
   }
 }
