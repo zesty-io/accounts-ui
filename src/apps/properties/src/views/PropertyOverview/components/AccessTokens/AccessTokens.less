@@ -1,0 +1,51 @@
+.Modal {
+  max-width: 700px;
+
+  .TokenDisplay {
+    display: flex;
+    margin-top: 2em;
+
+    .TokenArea {
+      pointer-events: none;
+      border: 0;
+      width: 80%;
+      font-size: 16px;
+      resize: none;
+      height: 40px;
+      background: #ebebeb;
+      padding: 10px;
+    }
+  }
+  .CopySuccess {
+    text-align: center;
+    padding: 8px;
+  }
+}
+
+.ConfirmModal {
+  max-width: 300px;
+
+  .ButtonsConfirm {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.Token {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.TokenActions {
+  display: flex;
+}
+
+.TokenAction {
+  margin-right: 1em;
+  height: 40px;
+}
+
+.TokenMeta {
+  color: #404659;
+}

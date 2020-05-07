@@ -21,6 +21,21 @@
         background-color: #eff5ff;
       }
     }
+
+    .OpacityExpired {
+      opacity: 0.4;
+      display: grid;
+      grid-auto-flow: row;
+      grid-gap: 8px;
+
+      &:nth-child(odd) {
+        background-color: #eff5ff;
+      }
+    }
+
+    .BorderExpired {
+      border: 1px solid tomato;
+    }
   }
 
   .HeaderItem {
@@ -43,7 +58,6 @@
   }
 
   .Cell {
-    color: #8c96ab;
     padding: 10px 20px;
     box-sizing: border-box;
     overflow-wrap: break-word;
