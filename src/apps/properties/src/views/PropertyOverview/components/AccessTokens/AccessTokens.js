@@ -281,6 +281,11 @@ export default class AccessTokens extends Component {
                 Once this modal is closed you will not be able to retrive the
                 access token again.
               </p>
+              <p>
+                Access tokens are secrets which should be stored securely.
+                Anyone who has the token will be able to make API requests to
+                this instance at the selected role &amp; permissions level.
+              </p>
               <div className={styles.TokenDisplay}>
                 <textarea
                   className={styles.TokenArea}
