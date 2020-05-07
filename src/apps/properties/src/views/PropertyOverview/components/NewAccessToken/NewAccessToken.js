@@ -14,7 +14,11 @@ export default class Domain extends Component {
     this.state = {
       submitted: false,
       token: null,
-      selectedRole: 'Admin'
+      selectedRole: 'Admin',
+      errors: {
+        name: false,
+        role: false
+      }
     }
     this.roles = this.props.siteRoles.map(role => ({
       value: role.name,
@@ -23,40 +27,48 @@ export default class Domain extends Component {
   }
 
   selectRole = (name, value) => {
-    this.setState({ selectedRole: value })
+    this.setState({
+      selectedRole: value,
+      errors: { ...this.state.errors, role: value == 0 }
+    })
   }
 
   handleSave = () => {
     this.setState({ submitted: true })
-    const role = this.props.siteRoles.find(
-      role => this.state.selectedRole === role.name
-    )
-    this.props
-      .dispatch(
-        createAccessToken(this.props.siteZUID, this.state.token, role.ZUID)
+    if (!this.state.errors.name && !this.state.errors.role) {
+      const role = this.props.siteRoles.find(
+        role => this.state.selectedRole === role.name
       )
-      .then(({ error, token }) => {
-        this.setState({
-          token: null,
-          submitted: false
+      this.props
+        .dispatch(
+          createAccessToken(this.props.siteZUID, this.state.token, role.ZUID)
+        )
+        .then(({ error, token }) => {
+          this.setState({
+            token: null,
+            submitted: false
+          })
+          this.props.setNewToken(token)
+          this.props.dispatch(
+            notify({
+              message: `Your token has been created`,
+              type: 'success'
+            })
+          )
         })
-        this.props.setNewToken(token)
-        this.props.dispatch(
-          notify({
-            message: `Your token has been created`,
-            type: 'success'
-          })
-        )
-      })
-      .catch(data => {
-        this.setState({ submitted: false })
-        this.props.dispatch(
-          notify({
-            message: data.error,
-            type: 'error'
-          })
-        )
-      })
+        .catch(data => {
+          this.setState({ submitted: false })
+          this.props.dispatch(
+            notify({
+              message: data.error,
+              type: 'error'
+            })
+          )
+        })
+    } else {
+      this.setState({ ...this.state, errors: { name: true, role: true } })
+      this.setState({ submitted: false })
+    }
   }
 
   render() {
@@ -69,25 +81,42 @@ export default class Domain extends Component {
             value={this.state.token}
             onChange={evt => {
               this.setState({
+                ...this.state,
+                errors: {
+                  ...this.state.errors,
+                  name: !event.target.value
+                }
+              })
+              this.setState({
                 token: evt.target.value
               })
             }}
           />
+          {this.state.errors.name && (
+            <span className={styles.Error}>Name is required</span>
+          )}
         </div>
         {this.props.siteRoles && this.props.siteRoles.length > 0 && (
-          <DropDownFieldType
-            name="role"
-            onChange={(name, value) => this.selectRole(name, value)}
-            selection={this.roles.filter(
-              role => role.value === this.state.selectedRole
+          <div className={styles.Dropdown}>
+            <DropDownFieldType
+              name="role"
+              value={this.state.selectedRole}
+              onChange={(name, value) => this.selectRole(name, value)}
+              selection={this.roles.filter(
+                role => role.value === this.state.selectedRole
+              )}
+              options={this.roles}
+            />
+            {this.state.errors.role && (
+              <span className={styles.Error}>Select a role</span>
             )}
-            options={this.roles}
-          />
+          </div>
         )}
         <Button
           className={styles.Button}
           data-test="saveAccessToken"
-          onClick={this.handleSave}>
+          onClick={this.handleSave}
+          disabled={!this.state.token && !this.state.role}>
           <i className="fa fa-plus" aria-hidden="true" />
           Create Token
         </Button>

@@ -131,6 +131,7 @@ export default class AccessTokens extends Component {
             Renew
           </Button>
           <Button
+            kind="warn"
             className={styles.TokenAction}
             onClick={() => this.handleConfirmDelete(accessTokenZUID)}>
             <i className="fas fa-trash" />
@@ -231,10 +232,10 @@ export default class AccessTokens extends Component {
           </CardHeader>
           <CardContent className={styles.CardContent}>
             <p>
-              The access token feature is in beta and only recommended for use
-              with the Atom IDE plugin, experimenting with CI/CD flows, and/or{' '}
-              <a href="https://github.com/zesty-io/node-sdk">Node SDK</a> script
-              usage. This feature is still actively being developed.
+              The access token feature is beta and is recommended for use with
+              the Atom IDE plugin, experimenting with CI/CD flows, and/or{' '}
+              <Url href="https://github.com/zesty-io/node-sdk">Node SDK</Url>{' '}
+              script usage. This feature is still actively being developed.
             </p>
             <div className={styles.TableAction}>
               {this.props.isAdmin ? (
@@ -287,18 +288,23 @@ export default class AccessTokens extends Component {
                 this instance at the selected role &amp; permissions level.
               </p>
               <div className={styles.TokenDisplay}>
-                <textarea
+                {/* <textarea
                   className={styles.TokenArea}
                   ref={tokenRef => (this.tokenRef = tokenRef)}>
                   {this.state.newToken}
-                </textarea>
-                <Button data-test="copy" kind="save" onClick={this.handleCopy}>
+                </textarea> */}
+                <div
+                  className={styles.TokenArea}
+                  ref={tokenRef => (this.tokenRef = tokenRef)}>
+                  {this.state.newToken}
+                </div>
+                {/* <Button data-test="copy" kind="save" onClick={this.handleCopy}>
                   <i className="fas fa-copy" aria-hidden="true" />
                   Copy
                 </Button>
                 {this.state.copied && (
                   <p className={styles.CopySuccess}>Copied!</p>
-                )}
+                )} */}
               </div>
             </ModalContent>
           </Modal>
