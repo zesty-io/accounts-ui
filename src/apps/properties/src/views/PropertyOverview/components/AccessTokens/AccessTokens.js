@@ -231,12 +231,10 @@ export default class AccessTokens extends Component {
           </CardHeader>
           <CardContent className={styles.CardContent}>
             <p>
-              The access token feature is beta and is recommended for use with
-              the Atom IDE plugin, experimenting with CI/CD flows, and/or{' '}
+              The access token feature is in beta and only recommended for use
+              with the Atom IDE plugin, experimenting with CI/CD flows, and/or{' '}
               <a href="https://github.com/zesty-io/node-sdk">Node SDK</a> script
-              usage. This feature will be augmented in the future. After that
-              automated production flows using tokens will be generally
-              available.
+              usage. This feature is still actively being developed.
             </p>
             <div className={styles.TableAction}>
               {this.props.isAdmin ? (
@@ -278,8 +276,11 @@ export default class AccessTokens extends Component {
             className={styles.Modal}
             onClose={() => this.setOpenNewTokenModal(false)}>
             <ModalContent className={styles.ModalContent}>
-              <h2>You have successfully created a new token</h2>
-              <p>Your access token will only be visible once here.</p>
+              <h2>You must copy this access token now.</h2>
+              <p>
+                Once this modal is closed you will not be able to retrive the
+                access token again.
+              </p>
               <div className={styles.TokenDisplay}>
                 <textarea
                   className={styles.TokenArea}
@@ -308,8 +309,12 @@ export default class AccessTokens extends Component {
               })
             }}>
             <ModalContent className={styles.ModalContent}>
-              <h2>Are you sure?</h2>
-              <p>Do you want to remove this token?</p>
+              <h2>Are you sure you want to delete this token?</h2>
+              <p>
+                Any usage of the token will be denied once it is delete. If you
+                have scripts using this access token their API access will begin
+                to fail.
+              </p>
             </ModalContent>
             <ModalFooter>
               <div className={styles.ButtonsConfirm}>
