@@ -232,10 +232,23 @@ export default class AccessTokens extends Component {
           </CardHeader>
           <CardContent className={styles.CardContent}>
             <p>
-              The access token feature is beta and is recommended for use with
-              the Atom IDE plugin, experimenting with CI/CD flows, and/or{' '}
-              <Url href="https://github.com/zesty-io/node-sdk">Node SDK</Url>{' '}
-              script usage. This feature is still actively being developed.
+              The{' '}
+              <Url
+                href="https://zesty.org/apis/auth-api#token-based-authentication"
+                target="_blank">
+                access token
+              </Url>{' '}
+              feature is beta and is recommended for use with the{' '}
+              <Url href=" https://zesty.org/tools/atom-package" target="_blank">
+                Atom IDE plugin
+              </Url>
+              , experimenting with CI/CD flows, and/or{' '}
+              <Url href="https://github.com/zesty-io/node-sdk" target="_blank">
+                Node SDK
+              </Url>{' '}
+              script usage. This feature will be augmented in the future. After
+              that automated production flows using tokens will be generally
+              available.
             </p>
             <div className={styles.TableAction}>
               {this.props.isAdmin ? (
