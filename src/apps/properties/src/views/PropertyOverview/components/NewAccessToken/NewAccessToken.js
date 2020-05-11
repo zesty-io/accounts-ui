@@ -14,10 +14,10 @@ export default class Domain extends Component {
     this.state = {
       submitted: false,
       token: null,
-      selectedRole: 'Admin',
+      selectedRole: null,
       errors: {
-        name: false,
-        role: false
+        name: true,
+        role: true
       }
     }
     this.roles = this.props.siteRoles.map(role => ({
@@ -33,8 +33,28 @@ export default class Domain extends Component {
     })
   }
 
+  validateFields = () => {
+    if (this.state.errors.name) {
+      this.props.dispatch(
+        notify({
+          message: `Please specify the name of the token`,
+          type: 'error'
+        })
+      )
+    }
+    if (this.state.errors.role) {
+      this.props.dispatch(
+        notify({
+          message: `Please select the role`,
+          type: 'error'
+        })
+      )
+    }
+  }
+
   handleSave = () => {
     this.setState({ submitted: true })
+    this.validateFields()
     if (!this.state.errors.name && !this.state.errors.role) {
       const role = this.props.siteRoles.find(
         role => this.state.selectedRole === role.name
@@ -46,7 +66,10 @@ export default class Domain extends Component {
         .then(({ error, token }) => {
           this.setState({
             token: null,
-            submitted: false
+            submitted: false,
+            errors: {
+              name: true
+            }
           })
           this.props.setNewToken(token)
           this.props.dispatch(
@@ -65,36 +88,27 @@ export default class Domain extends Component {
             })
           )
         })
-    } else {
-      this.setState({ ...this.state, errors: { name: true, role: true } })
-      this.setState({ submitted: false })
     }
   }
 
   render() {
     return (
-      <label className={styles.Domain}>
-        <div className={styles.DomainInput}>
+      <label className={styles.AccessToken}>
+        <div className={styles.AccessTokenInput}>
           <Input
             name="token"
             placeholder="Enter token name"
             value={this.state.token}
             onChange={evt => {
               this.setState({
-                ...this.state,
+                token: evt.target.value,
                 errors: {
                   ...this.state.errors,
                   name: !event.target.value
                 }
               })
-              this.setState({
-                token: evt.target.value
-              })
             }}
           />
-          {this.state.errors.name && (
-            <span className={styles.Error}>Name is required</span>
-          )}
         </div>
         {this.props.siteRoles && this.props.siteRoles.length > 0 && (
           <div className={styles.Dropdown}>
@@ -107,16 +121,12 @@ export default class Domain extends Component {
               )}
               options={this.roles}
             />
-            {this.state.errors.role && (
-              <span className={styles.Error}>Select a role</span>
-            )}
           </div>
         )}
         <Button
           className={styles.Button}
           data-test="saveAccessToken"
-          onClick={this.handleSave}
-          disabled={!this.state.token && !this.state.role}>
+          onClick={this.handleSave}>
           <i className="fa fa-plus" aria-hidden="true" />
           Create Token
         </Button>

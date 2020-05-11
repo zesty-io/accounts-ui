@@ -234,16 +234,23 @@ export default class AccessTokens extends Component {
             <p>
               The{' '}
               <Url
+                className={styles.Link}
                 href="https://zesty.org/apis/auth-api#token-based-authentication"
                 target="_blank">
                 access token
               </Url>{' '}
               feature is beta and is recommended for use with the{' '}
-              <Url href=" https://zesty.org/tools/atom-package" target="_blank">
+              <Url
+                className={styles.Link}
+                href=" https://zesty.org/tools/atom-package"
+                target="_blank">
                 Atom IDE plugin
               </Url>
               , experimenting with CI/CD flows, and/or{' '}
-              <Url href="https://github.com/zesty-io/node-sdk" target="_blank">
+              <Url
+                className={styles.Link}
+                href="https://github.com/zesty-io/node-sdk"
+                target="_blank">
                 Node SDK
               </Url>{' '}
               script usage. This feature will be augmented in the future. After
