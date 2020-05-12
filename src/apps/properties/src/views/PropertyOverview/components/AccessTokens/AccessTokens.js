@@ -308,23 +308,18 @@ export default class AccessTokens extends Component {
                 this instance at the selected role &amp; permissions level.
               </p>
               <div className={styles.TokenDisplay}>
-                {/* <textarea
+                <textarea
                   className={styles.TokenArea}
                   ref={tokenRef => (this.tokenRef = tokenRef)}>
                   {this.state.newToken}
-                </textarea> */}
-                <div
-                  className={styles.TokenArea}
-                  ref={tokenRef => (this.tokenRef = tokenRef)}>
-                  {this.state.newToken}
-                </div>
-                {/* <Button data-test="copy" kind="save" onClick={this.handleCopy}>
+                </textarea>
+                <Button data-test="copy" kind="save" onClick={this.handleCopy}>
                   <i className="fas fa-copy" aria-hidden="true" />
                   Copy
                 </Button>
                 {this.state.copied && (
                   <p className={styles.CopySuccess}>Copied!</p>
-                )} */}
+                )}
               </div>
             </ModalContent>
           </Modal>
