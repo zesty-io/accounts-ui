@@ -1,13 +1,14 @@
-.Domain {
+.AccessToken {
   align-items: center;
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: 1fr 1fr 135px;
+  grid-template-columns: 1fr 1fr 150px;
   grid-gap: 8px;
   padding: 16px 0;
   width: 100%;
 
-  .DomainInput {
+  .AccessTokenInput {
+    position: relative;
     input {
       display: block;
       width: 100%;
@@ -43,4 +44,17 @@
   .Button {
     width: 150px;
   }
+}
+
+.Dropdown {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.Error {
+  color: tomato;
+  font-size: 10px;
+  position: absolute;
+  bottom: -20px;
 }

@@ -131,6 +131,7 @@ export default class AccessTokens extends Component {
             Renew
           </Button>
           <Button
+            kind="warn"
             className={styles.TokenAction}
             onClick={() => this.handleConfirmDelete(accessTokenZUID)}>
             <i className="fas fa-trash" />
@@ -231,10 +232,30 @@ export default class AccessTokens extends Component {
           </CardHeader>
           <CardContent className={styles.CardContent}>
             <p>
-              The access token feature is in beta and only recommended for use
-              with the Atom IDE plugin, experimenting with CI/CD flows, and/or{' '}
-              <a href="https://github.com/zesty-io/node-sdk">Node SDK</a> script
-              usage. This feature is still actively being developed.
+              The{' '}
+              <Url
+                className={styles.Link}
+                href="https://zesty.org/apis/auth-api#token-based-authentication"
+                target="_blank">
+                access token
+              </Url>{' '}
+              feature is beta and is recommended for use with the{' '}
+              <Url
+                className={styles.Link}
+                href=" https://zesty.org/tools/atom-package"
+                target="_blank">
+                Atom IDE plugin
+              </Url>
+              , experimenting with CI/CD flows, and/or{' '}
+              <Url
+                className={styles.Link}
+                href="https://github.com/zesty-io/node-sdk"
+                target="_blank">
+                Node SDK
+              </Url>{' '}
+              script usage. This feature will be augmented in the future. After
+              that automated production flows using tokens will be generally
+              available.
             </p>
             <div className={styles.TableAction}>
               {this.props.isAdmin ? (
@@ -294,11 +315,8 @@ export default class AccessTokens extends Component {
                 </textarea>
                 <Button data-test="copy" kind="save" onClick={this.handleCopy}>
                   <i className="fas fa-copy" aria-hidden="true" />
-                  Copy
+                  {this.state.copied ? <span>Copied!</span> : <span>Copy</span>}
                 </Button>
-                {this.state.copied && (
-                  <p className={styles.CopySuccess}>Copied!</p>
-                )}
               </div>
             </ModalContent>
           </Modal>
