@@ -71,7 +71,6 @@ class PropertyOverview extends Component {
   }
 
   render() {
-    console.log('this.props.accessTokens', this.props.accessTokens)
     document.title = `Accounts: ${this.props.site.name}`
     return (
       <article className={styles.PropertyOverview}>
@@ -335,7 +334,6 @@ class PropertyOverview extends Component {
         })
       })
       .catch(e => {
-        console.log('e', e)
         this.props.dispatch(
           notify({ message: 'Error fetching domains', type: 'error' })
         )
@@ -348,7 +346,6 @@ class PropertyOverview extends Component {
         })
       })
       .catch(e => {
-        console.log('e', e)
         this.props.dispatch(
           notify({ message: 'Error fetching access tokens', type: 'error' })
         )
@@ -412,7 +409,7 @@ export default connect((state, props) => {
       }
     }
   }
-  console.log('state.sitesAccessTokens', state.sitesAccessTokens[siteZUID])
+
   return {
     siteZUID,
     systemRoles,

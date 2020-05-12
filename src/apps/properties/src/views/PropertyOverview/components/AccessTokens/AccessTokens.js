@@ -315,11 +315,8 @@ export default class AccessTokens extends Component {
                 </textarea>
                 <Button data-test="copy" kind="save" onClick={this.handleCopy}>
                   <i className="fas fa-copy" aria-hidden="true" />
-                  Copy
+                  {this.state.copied ? <span>Copied!</span> : <span>Copy</span>}
                 </Button>
-                {this.state.copied && (
-                  <p className={styles.CopySuccess}>Copied!</p>
-                )}
               </div>
             </ModalContent>
           </Modal>

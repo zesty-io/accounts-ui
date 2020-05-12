@@ -96,8 +96,6 @@ export default connect(state => {
       })
     }
     handleClick = () => {
-      console.log('handleClick', this.state)
-
       if (this.state.name) {
         this.setState({ submitted: true })
         this.props

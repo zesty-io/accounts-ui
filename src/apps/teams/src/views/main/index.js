@@ -34,7 +34,6 @@ export default connect(state => {
           })
         })
         .catch(err => {
-          console.log('final catch')
           this.props.dispatch(
             notify({ message: 'Error fetching team data', type: 'error' })
           )
