@@ -81,17 +81,33 @@ export default class Meta extends Component {
   }
 
   render() {
+    const noDomains = [
+      {
+        domain: (function() {
+          return (
+            <React.Fragment>
+              <p class={styles.Token}>No domains added for this instance.</p>
+            </React.Fragment>
+          )
+        })(),
+        branch: '',
+        createdAt: ''
+      }
+    ]
+
     const domainsTable =
       this.props.domains &&
       Array.isArray(this.props.domains) &&
-      this.props.domains.map(domainData => {
-        const { domain, branch, createdAt } = domainData
-        return {
-          domain,
-          branch,
-          createdAt: formatDate(createdAt)
-        }
-      })
+      this.props.domains.length > 0
+        ? this.props.domains.map(domainData => {
+            const { domain, branch, createdAt } = domainData
+            return {
+              domain,
+              branch,
+              createdAt: formatDate(createdAt)
+            }
+          })
+        : noDomains
 
     return (
       <>

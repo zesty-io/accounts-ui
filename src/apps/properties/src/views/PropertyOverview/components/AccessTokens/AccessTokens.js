@@ -108,7 +108,6 @@ export default class AccessTokens extends Component {
   }
 
   handleConfirmDelete = accessTokenZUID => {
-    console.log('Token to delete', accessTokenZUID)
     this.setState({ tokenToDelete: accessTokenZUID, openConfirmModal: true })
     // this.setRemoveModalOpen(true)
   }
