@@ -23,6 +23,7 @@ export default class GridList extends Component {
     document.removeEventListener('keydown', this.close)
   }
   render() {
+    console.log('Props sites', this.props)
     return (
       <div className={styles.GridList} id="siteListWrapper">
         <Route
