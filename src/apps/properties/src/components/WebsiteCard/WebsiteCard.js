@@ -9,8 +9,6 @@ import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
 import { Button } from '@zesty-io/core/Button'
 import { Url } from '@zesty-io/core/Url'
 
-import { fetchDomains } from '../../store/sitesDomains'
-
 import InstanceFavorite from '../InstanceFavorite'
 export default connect(state => state)(props => {
   const [domains, setDomains] = useState([])
@@ -18,20 +16,10 @@ export default connect(state => state)(props => {
 
   const getDomains = () => {
     setLoading(true)
-    props
-      .dispatch(fetchDomains(props.site.ZUID))
-      .then(res => {
-        const domainsLive = res.filter(domain => domain.branch === 'live')
-        setDomains(domainsLive)
-        setLoading(false)
-      })
-      .catch(e => {
-        console.log('e', e)
-        props.dispatch(
-          notify({ message: 'Error fetching domains', type: 'error' })
-        )
-        setLoading(false)
-      })
+    setTimeout(() => {
+      setLoading(false)
+      setDomains(props.site.domains)
+    }, 1000)
   }
 
   const renderDomains = () => {

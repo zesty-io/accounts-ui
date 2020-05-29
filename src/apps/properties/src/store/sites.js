@@ -53,6 +53,37 @@ export function fetchSites() {
         return 0
       })
 
+      const requests = sites.data.map(site => {
+        return request(
+          `${CONFIG.API_ACCOUNTS}/instances/${site.ZUID}/domains`,
+          {
+            method: 'Get',
+            json: true
+          }
+        ).then(res => {
+          return res.data.map(item => ({
+            ZUID: item.ZUID,
+            instanceZUID: site.ZUID,
+            domain: item.domain,
+            branch: item.branch,
+            createdAt: item.createdAt
+          }))
+        })
+      })
+
+      Promise.all(requests)
+        .then(responses => {
+          const domains = responses.reduce((acc, r) => {
+            acc = [...acc, ...r]
+            return acc
+          })
+          sites.data.map(site => {
+            site.domains = domains.filter(dom => dom.instanceZUID === site.ZUID)
+            return site
+          })
+        })
+        .catch(err => console.log('ERR:', err))
+
       dispatch({
         type: 'FETCH_SITES_SUCCESS',
         sites: sites.data
