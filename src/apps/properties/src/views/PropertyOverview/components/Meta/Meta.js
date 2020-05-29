@@ -38,7 +38,12 @@ export default class Meta extends Component {
   handleRemove = () => {
     if (this.state.domainToDelete) {
       this.props
-        .dispatch(removeDomain(this.props.site.ZUID, this.state.domainToDelete))
+        .dispatch(
+          removeDomain(
+            this.props.site.ZUID,
+            this.state.domainToDelete.domainZUID
+          )
+        )
         .then(({ error, domain }) => {
           this.props.dispatch(
             notify({
@@ -60,20 +65,21 @@ export default class Meta extends Component {
     }
   }
 
-  handleConfirmDelete = domainZUID => {
-    this.setState({ domainToDelete: domainZUID })
+  handleConfirmDelete = (domainZUID, domainName) => {
+    this.setState({ domainToDelete: { domainZUID, domainName } })
     this.setRemoveModalOpen(true)
   }
 
   renderDomainsActions = index => {
     const domainZUID = this.props.domains[index].ZUID
+    const domainName = this.props.domains[index].domain
 
     return (
       this.props.isAdmin && (
         <Button
           kind="warn"
           className={styles.delete}
-          onClick={() => this.handleConfirmDelete(domainZUID)}>
+          onClick={() => this.handleConfirmDelete(domainZUID, domainName)}>
           <i className="fas fa-trash" />
         </Button>
       )
@@ -210,7 +216,10 @@ export default class Meta extends Component {
             className={styles.Modal}
             onClose={() => this.setRemoveModalOpen(false)}>
             <ModalContent className={styles.ModalContent}>
-              <h2>Are you sure you want to remove your domain?</h2>
+              <h2>
+                Are you sure you want to remove{' '}
+                {this.state.domainToDelete.domainName}?
+              </h2>
             </ModalContent>
             <ModalFooter className={styles.ModalFooter}>
               <Button
