@@ -97,10 +97,26 @@ class PropertyOverview extends Component {
             &nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
-            <Url target="_blank" href={`http://${this.props.site.domain}`}>
-              <i className="fa fa-globe" aria-hidden="true" />
-              &nbsp;Live Domain
-            </Url>
+            <div className={styles.DomainsDropDown}>
+              <i
+                className={`fa fa-globe ${styles.DomainsDropDownBtn}`}
+                aria-hidden="true"
+              />
+              &nbsp;Live Domains
+              {this.props.site.domains && (
+                <div className={styles.DomainsDropDownContent}>
+                  {this.props.site.domains.map(dom => (
+                    <Url
+                      key={dom.ZUID}
+                      href={dom.domain}
+                      target="_blank"
+                      title="View live domain">
+                      {dom.domain}
+                    </Url>
+                  ))}
+                </div>
+              )}
+            </div>
           ) : null}
         </header>
         <main className={styles.Cards}>
