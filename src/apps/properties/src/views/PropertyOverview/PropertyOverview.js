@@ -71,7 +71,6 @@ class PropertyOverview extends Component {
   }
 
   render() {
-    console.log('this.props.accessTokens', this.props.accessTokens)
     document.title = `Accounts: ${this.props.site.name}`
     return (
       <article className={styles.PropertyOverview}>

@@ -102,10 +102,10 @@ export default class Meta extends Component {
     ]
 
     const domainsTable =
-      this.props.domains &&
-      Array.isArray(this.props.domains) &&
-      this.props.domains.length > 0
-        ? this.props.domains.map(domainData => {
+      this.props.customDomains &&
+      Array.isArray(this.props.customDomains) &&
+      this.props.customDomains.length > 0
+        ? this.props.customDomains.map(domainData => {
             const { domain, branch, createdAt } = domainData
             return {
               domain,
@@ -130,7 +130,7 @@ export default class Meta extends Component {
             </h2>
           </CardHeader>
           <CardContent className={styles.CardContent}>
-            {this.props.customDomains && this.props.customDomains.length > 0 && (
+            {this.props.customDomains && (
               <>
                 <div className={styles.TableAction}>
                   {this.props.isAdmin ? (
