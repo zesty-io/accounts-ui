@@ -23,7 +23,6 @@ class Properties extends Component {
     }
   }
   componentDidMount() {
-    console.log('hacemos la carga inicial')
     this.props
       .dispatch(fetchSites())
       .then(() => {

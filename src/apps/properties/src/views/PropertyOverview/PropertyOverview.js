@@ -43,7 +43,8 @@ class PropertyOverview extends Component {
       loadingBlueprint: true,
       loadingDomains: true,
       loadingAccessTokens: true,
-      customDomains: []
+      customDomains: [],
+      liveDomains: []
     }
   }
   componentDidMount() {
@@ -68,6 +69,10 @@ class PropertyOverview extends Component {
           })
         : []
     return customDomains
+  }
+
+  getDomains = () => {
+    this.setState({ ...this.state, liveDomains: this.props.domains })
   }
 
   render() {
@@ -97,23 +102,29 @@ class PropertyOverview extends Component {
             &nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
-            <div className={styles.DomainsDropDown}>
+            <div
+              className={styles.DomainsDropDown}
+              onMouseEnter={() => this.getDomains()}>
               <i
                 className={`fa fa-globe ${styles.DomainsDropDownBtn}`}
                 aria-hidden="true"
               />
               &nbsp;Live Domains
-              {this.props.site.domains && (
+              {this.props.domains && (
                 <div className={styles.DomainsDropDownContent}>
-                  {this.props.site.domains.map(dom => (
-                    <Url
-                      key={dom.ZUID}
-                      href={dom.domain}
-                      target="_blank"
-                      title="View live domain">
-                      {dom.domain}
-                    </Url>
-                  ))}
+                  {this.state.liveDomains.length ? (
+                    this.state.liveDomains.map(dom => (
+                      <Url
+                        key={dom.ZUID}
+                        href={dom.domain}
+                        target="_blank"
+                        title="View live domain">
+                        {dom.domain}
+                      </Url>
+                    ))
+                  ) : (
+                    <span>No domains added</span>
+                  )}
                 </div>
               )}
             </div>

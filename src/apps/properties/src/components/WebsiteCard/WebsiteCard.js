@@ -9,17 +9,31 @@ import { ButtonGroup } from '@zesty-io/core/ButtonGroup'
 import { Button } from '@zesty-io/core/Button'
 import { Url } from '@zesty-io/core/Url'
 
+import { fetchDomains } from '../../store/sitesDomains'
+
 import InstanceFavorite from '../InstanceFavorite'
 export default connect(state => state)(props => {
   const [domains, setDomains] = useState([])
   const [loading, setLoading] = useState(false)
 
-  const getDomains = () => {
+  const getDomains = site => {
     setLoading(true)
-    setTimeout(() => {
+    if (props.sitesDomains.hasOwnProperty(site.ZUID)) {
+      setDomains(props.sitesDomains[site.ZUID].domains)
       setLoading(false)
-      setDomains(props.site.domains)
-    }, 1000)
+    } else {
+      props
+        .dispatch(fetchDomains(site.ZUID))
+        .then(res => {
+          setLoading(false)
+          setDomains(res)
+        })
+        .catch(err => {
+          console.log('Err', err)
+          setLoading(false)
+          setDomains([])
+        })
+    }
   }
 
   const renderDomains = () => {
@@ -94,7 +108,7 @@ export default connect(state => state)(props => {
             <div className={styles.DomainsDropDown}>
               <i
                 className={`fa fa-globe ${styles.DomainsDropDownBtn}`}
-                onMouseEnter={getDomains}
+                onMouseEnter={() => getDomains(site)}
                 aria-hidden="true"
               />
               <div className={styles.DomainsDropDownContent}>
