@@ -71,6 +71,9 @@ export default class Meta extends Component {
   }
 
   renderDomainsActions = index => {
+    if (this.props.domains.length === 0) return
+
+    console.log('domains', this.props.domains)
     const domainZUID = this.props.domains[index].ZUID
     const domainName = this.props.domains[index].domain
 
@@ -102,10 +105,10 @@ export default class Meta extends Component {
     ]
 
     const domainsTable =
-      this.props.customDomains &&
-      Array.isArray(this.props.customDomains) &&
-      this.props.customDomains.length > 0
-        ? this.props.customDomains.map(domainData => {
+      this.props.domains &&
+      Array.isArray(this.props.domains) &&
+      this.props.domains.length > 0
+        ? this.props.domains.map(domainData => {
             const { domain, branch, createdAt } = domainData
             return {
               domain,

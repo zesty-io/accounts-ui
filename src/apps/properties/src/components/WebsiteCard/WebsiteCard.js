@@ -17,11 +17,10 @@ export default connect(state => state)(props => {
   const [loading, setLoading] = useState(false)
 
   const getDomains = site => {
-    setLoading(true)
     if (props.sitesDomains.hasOwnProperty(site.ZUID)) {
       setDomains(props.sitesDomains[site.ZUID].domains)
-      setLoading(false)
     } else {
+      setLoading(true)
       props
         .dispatch(fetchDomains(site.ZUID))
         .then(res => {
@@ -41,7 +40,7 @@ export default connect(state => state)(props => {
       return domains.map(dom => (
         <Url
           key={dom.ZUID}
-          href={dom.domain}
+          href={`//${dom.domain}`}
           target="_blank"
           title="View live domain">
           {dom.domain}
