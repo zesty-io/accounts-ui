@@ -173,16 +173,16 @@ export default class Users extends Component {
           )
         )
         .then(() => {
-          this.setState({
-            submitted: false,
-            inviteeEmail: ''
-          })
           this.props.dispatch(
             notify({
               message: `User invite sent to ${this.state.inviteeEmail}`,
               type: 'success'
             })
           )
+          this.setState({
+            submitted: false,
+            inviteeEmail: ''
+          })
         })
         .catch(err => {
           this.setState({ submitted: false })
