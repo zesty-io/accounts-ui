@@ -179,7 +179,7 @@ export default class Users extends Component {
           })
           this.props.dispatch(
             notify({
-              message: `Invite sent`,
+              message: `User invite sent to ${this.state.inviteeEmail}`,
               type: 'success'
             })
           )
