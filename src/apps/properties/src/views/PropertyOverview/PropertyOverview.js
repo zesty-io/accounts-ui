@@ -15,6 +15,7 @@ import Meta from './components/Meta'
 import LaunchWizard from './components/LaunchWizard'
 import AccessTokens from './components/AccessTokens'
 
+import { fetchSite } from '../../store/sites'
 import { fetchSiteUsers, fetchSiteUsersPending } from '../../store/sitesUsers'
 import { fetchSiteRoles } from '../../store/sitesRoles'
 import { fetchSiteTeams } from '../../store/sitesTeams'
@@ -35,6 +36,7 @@ class PropertyOverview extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loadingSite: true,
       loadingUsers: true,
       loadingRoles: true,
       loadingUsersPending: true,
@@ -257,6 +259,7 @@ class PropertyOverview extends Component {
   }
   fetchSiteData(props) {
     this.setState({
+      loadingSite: true,
       loadingUsers: true,
       loadingRoles: true,
       loadingUsersPending: true,
@@ -267,15 +270,15 @@ class PropertyOverview extends Component {
       loadingAccessTokens: true
     })
     props
-      .dispatch(fetchSiteUsers(props.siteZUID))
+      .dispatch(fetchSite(props.siteZUID))
       .then(() => {
         this.setState({
-          loadingUsers: false
+          loadingSite: false
         })
       })
       .catch(() => {
         this.props.dispatch(
-          notify({ message: 'Error fetching users', type: 'error' })
+          notify({ message: 'Error fetching instance', type: 'error' })
         )
       })
     props
