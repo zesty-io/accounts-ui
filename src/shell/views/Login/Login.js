@@ -48,7 +48,7 @@ class Login extends Component {
               <img
                 alt="Zesty.io Logo"
                 src={this.state.logoUrl}
-                height="200px"
+                height="160px"
               />
             </Url>
           </header>
@@ -123,17 +123,17 @@ class Login extends Component {
                     </React.Fragment>
                   )}
                 </Button>
+
+                <div className={styles.createAccount}>
+                  <p>Don't have an account?</p>
+                  <AppLink to="/signup" tabIndex="5">
+                    Sign up for free
+                  </AppLink>
+                </div>
               </div>
             </form>
 
-            <div className={styles.createAccount}>
-              <p>Don't have an account?</p>
-              <AppLink to="/signup" tabIndex="5">
-                Sign up for free
-              </AppLink>
-            </div>
-
-            <div id="sso">
+            <div className={styles.sso}>
               <a href={`${CONFIG.API_AUTH}/azure/login`}>
                 <img
                   src="/ms-symbollockup_signin_light.svg"
