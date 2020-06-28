@@ -132,6 +132,17 @@ class Login extends Component {
                 Sign up for free
               </AppLink>
             </div>
+
+            <div id="sso">
+              <a href={`${CONFIG.API_AUTH}/azure/login`}>
+                <img
+                  src="/ms-symbollockup_signin_light.svg"
+                  height=""
+                  width=""
+                  alt="Microsoft Single Sign On"
+                />
+              </a>
+            </div>
           </main>
         </div>
       </section>
