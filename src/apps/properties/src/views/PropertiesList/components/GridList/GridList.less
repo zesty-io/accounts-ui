@@ -2,8 +2,8 @@
 @import '~@zesty-io/core/typography.less';
 
 .GridList {
-  height: 87vh;
-  overflow-y: scroll;
+  /* subtract both headers + gridlist margin top */
+  height: calc(100vh - 44px - 44px - 28px);
   padding: 0 1rem;
   @media (max-width: 600px) {
     .Websites {
