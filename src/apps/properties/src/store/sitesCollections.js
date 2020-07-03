@@ -18,7 +18,7 @@ export const fetchSiteCollections = siteZuid => {
     dispatch({
       type: 'FETCHING_COLLECTIONS'
     })
-    request(`http://${siteZuid}${CONFIG.API_INSTANCE}collections/`).then(
+    request(`http://${siteZuid}${CONFIG.API_INSTANCE}/collections/`).then(
       collections => {
         let normalizedCollections = {}
         collections.data.forEach(collection => {
