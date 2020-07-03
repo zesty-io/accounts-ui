@@ -6,6 +6,8 @@ import PropertiesHeader from './components/PropertiesHeader'
 import ColumnList from './components/ColumnList'
 import GridList from './components/GridList'
 
+import { fetchDomains } from '../../store/sitesDomains'
+
 import styles from './PropertiesList.less'
 export default connect((state, props) => {
   let favorites = state.user.prefs.favorite_sites.filter(ZUID =>

@@ -45,14 +45,14 @@ export const Table = React.memo(function Table(props) {
   }
 
   const parseExpires = date => {
-    if (!date) return 0
+    if (date) {
+      const arr = date.split('-')
+      const sort = [arr[2], arr[0], arr[1]]
+      const stringDate = sort.join('-')
+      const parseDate = new Date(stringDate)
 
-    const arr = date.split('-')
-    const sort = [arr[2], arr[0], arr[1]]
-    const stringDate = sort.join('-')
-    const parseDate = new Date(stringDate)
-
-    return parseDate.getTime()
+      return parseDate.getTime()
+    }
   }
 
   const expireSoon = expires => {
@@ -107,7 +107,9 @@ export const Table = React.memo(function Table(props) {
                 })}
 
                 {props.actions && (
-                  <p className={styles.RowActions}>{props.actions(index)}</p>
+                  <p className={styles.RowActions}>
+                    {props.actions(index, row)}
+                  </p>
                 )}
               </article>
             )

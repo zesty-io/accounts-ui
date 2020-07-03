@@ -18,18 +18,18 @@ export const fetchSiteCollections = siteZuid => {
     dispatch({
       type: 'FETCHING_COLLECTIONS'
     })
-    request(`http://${siteZuid}${CONFIG.API_INSTANCE}collections/`).then(
-      collections => {
-        let normalizedCollections = {}
-        collections.data.forEach(collection => {
-          return (normalizedCollections[collection.zuid] = collection)
-        })
-        dispatch({
-          type: 'FETCH_COLLECTIONS_SUCCESS',
-          siteZuid,
-          collections: normalizedCollections
-        })
-      }
-    )
+    request(
+      `${CONFIG.API_INSTANCE_PROTOCOL}${siteZuid}${CONFIG.API_INSTANCE}/collections/`
+    ).then(collections => {
+      let normalizedCollections = {}
+      collections.data.forEach(collection => {
+        return (normalizedCollections[collection.zuid] = collection)
+      })
+      dispatch({
+        type: 'FETCH_COLLECTIONS_SUCCESS',
+        siteZuid,
+        collections: normalizedCollections
+      })
+    })
   }
 }

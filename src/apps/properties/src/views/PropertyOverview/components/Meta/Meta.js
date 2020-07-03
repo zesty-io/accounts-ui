@@ -38,7 +38,12 @@ export default class Meta extends Component {
   handleRemove = () => {
     if (this.state.domainToDelete) {
       this.props
-        .dispatch(removeDomain(this.props.site.ZUID, this.state.domainToDelete))
+        .dispatch(
+          removeDomain(
+            this.props.site.ZUID,
+            this.state.domainToDelete.domainZUID
+          )
+        )
         .then(({ error, domain }) => {
           this.props.dispatch(
             notify({
@@ -60,20 +65,23 @@ export default class Meta extends Component {
     }
   }
 
-  handleConfirmDelete = domainZUID => {
-    this.setState({ domainToDelete: domainZUID })
+  handleConfirmDelete = (domainZUID, domainName) => {
+    this.setState({ domainToDelete: { domainZUID, domainName } })
     this.setRemoveModalOpen(true)
   }
 
   renderDomainsActions = index => {
+    if (this.props.domains.length === 0) return
+
     const domainZUID = this.props.domains[index].ZUID
+    const domainName = this.props.domains[index].domain
 
     return (
       this.props.isAdmin && (
         <Button
           kind="warn"
           className={styles.delete}
-          onClick={() => this.handleConfirmDelete(domainZUID)}>
+          onClick={() => this.handleConfirmDelete(domainZUID, domainName)}>
           <i className="fas fa-trash" />
         </Button>
       )
@@ -81,17 +89,35 @@ export default class Meta extends Component {
   }
 
   render() {
+    const noDomains = [
+      {
+        domain: (function() {
+          return (
+            <React.Fragment>
+              <p className={styles.Token}>
+                No domains added for this instance.
+              </p>
+            </React.Fragment>
+          )
+        })(),
+        branch: '',
+        createdAt: ''
+      }
+    ]
+
     const domainsTable =
       this.props.domains &&
       Array.isArray(this.props.domains) &&
-      this.props.domains.map(domainData => {
-        const { domain, branch, createdAt } = domainData
-        return {
-          domain,
-          branch,
-          createdAt: formatDate(createdAt)
-        }
-      })
+      this.props.domains.length > 0
+        ? this.props.domains.map(domainData => {
+            const { domain, branch, createdAt } = domainData
+            return {
+              domain,
+              branch,
+              createdAt: formatDate(createdAt)
+            }
+          })
+        : noDomains
 
     return (
       <>
@@ -108,7 +134,7 @@ export default class Meta extends Component {
             </h2>
           </CardHeader>
           <CardContent className={styles.CardContent}>
-            {this.props.customDomains && this.props.customDomains.length > 0 && (
+            {this.props.customDomains && (
               <>
                 <div className={styles.TableAction}>
                   {this.props.isAdmin ? (
@@ -194,7 +220,10 @@ export default class Meta extends Component {
             className={styles.Modal}
             onClose={() => this.setRemoveModalOpen(false)}>
             <ModalContent className={styles.ModalContent}>
-              <h2>Are you sure you want to remove your domain?</h2>
+              <h2>
+                Are you sure you want to remove{' '}
+                {this.state.domainToDelete.domainName}?
+              </h2>
             </ModalContent>
             <ModalFooter className={styles.ModalFooter}>
               <Button
