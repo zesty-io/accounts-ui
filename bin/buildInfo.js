@@ -17,7 +17,7 @@ module.exports = async function buildInfo(env) {
   const gitBranch = await execSync('git rev-parse --abbrev-ref HEAD')
     .toString()
     .trim(-2)
-  let gitState = await execSync('git status --porcelain 2>/dev/null')
+  let gitState = await execSync('git status --porcelain')
     .toString()
     .trim(-2)
   gitState = gitState === '' ? 'clean' : 'dirty'

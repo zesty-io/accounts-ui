@@ -4,11 +4,15 @@
   "description": "Creates vendor bundle for SiteManager",
   "main": "webpack.config.js",
   "scripts": {
-    "start": "export NODE_ENV=\"development\" && ../../node_modules/.bin/webpack --watch",
-    "build-development": "export NODE_ENV=\"development\" && ../../node_modules/.bin/webpack --progress",
-    "build-stage": "export NODE_ENV=\"stage\" && ../../node_modules/.bin/webpack --progress -p",
-    "build-production": "export NODE_ENV=\"production\" && ../../node_modules/.bin/webpack -p --verbose=false --colors=true --display=normal --progress"
+    "start": "cross-env NODE_ENV=\"development\" ../../node_modules/.bin/webpack --watch",
+    "build-local": "cross-env  NODE_ENV=\"development\" ../../node_modules/.bin/webpack --progress",
+    "build-development": "cross-env NODE_ENV=\"development\" ../../node_modules/.bin/webpack --progress",
+    "build-stage": "cross-env NODE_ENV=\"stage\" ../../node_modules/.bin/webpack --progress -p",
+    "build-production": "cross-env NODE_ENV=\"production\" ../../node_modules/.bin/webpack -p --verbose=false --colors=true --display=normal --progress"
   },
   "author": "Zesty.io<developers@zesty.io>",
-  "license": "All Rights Reserved"
+  "license": "All Rights Reserved",
+  "devDependencies": {
+    "cross-env": "^7.0.2"
+  }
 }

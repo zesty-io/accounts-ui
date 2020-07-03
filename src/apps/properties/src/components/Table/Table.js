@@ -85,10 +85,10 @@ export const Table = React.memo(function Table(props) {
               return 1
             }
           })
-          .map((row, rowIndex) => {
+          .map((row, index) => {
             return (
               <article
-                key={row.domain}
+                key={index}
                 className={cx(
                   expireSoon(row.expires)
                     ? styles.BorderExpired
@@ -98,13 +98,14 @@ export const Table = React.memo(function Table(props) {
                     : styles.TableRow
                 )}
                 style={{ gridTemplateColumns: templateColumns }}>
-                {Object.keys(props.data[0]).map(header => {
+                {Object.keys(props.data[0]).map((header, i) => {
                   return (
-                    <p className={styles.Cell} key={row[header]}>
-                      <span>{row[header]}</span>
-                    </p>
+                    <div className={styles.Cell} key={i}>
+                      {row[header]}
+                    </div>
                   )
                 })}
+
                 {props.actions && (
                   <p className={styles.RowActions}>
                     {props.actions(rowIndex, row)}

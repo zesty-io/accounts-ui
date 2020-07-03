@@ -79,7 +79,7 @@ describe('Instance Flow', () => {
 
     cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
-      'Invite sent'
+      'User invite sent to'
     )
   })
 

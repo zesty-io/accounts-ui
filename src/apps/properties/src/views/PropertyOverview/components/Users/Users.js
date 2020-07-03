@@ -90,12 +90,22 @@ export default class Users extends Component {
                 width="100%">
                 <div>
                   {Object.keys(this.props.users)
+                    // Do not include users who belong to a team
                     .filter(ZUID => !this.props.users[ZUID].teamZUID)
-                    .filter(
-                      ZUID =>
+                    .filter(ZUID => {
+                      /**
+                       * 1) Pending invites do not have last names so we need to account for them
+                       * here to ensure they are included on the users table
+                       *
+                       * 2) A user with a lastName equal to a ZUID is an access token.
+                       * Do not include them on the users table
+                       */
+                      return (
+                        this.props.users[ZUID].pending ||
                         this.props.users[ZUID].lastName !==
-                        this.props.users[ZUID].ZUID
-                    )
+                          this.props.users[ZUID].ZUID
+                      )
+                    })
                     .map(ZUID => {
                       const user = this.props.users[ZUID]
                       if (user.pending) {
@@ -163,16 +173,16 @@ export default class Users extends Component {
           )
         )
         .then(() => {
+          this.props.dispatch(
+            notify({
+              message: `User invite sent to ${this.state.inviteeEmail}`,
+              type: 'success'
+            })
+          )
           this.setState({
             submitted: false,
             inviteeEmail: ''
           })
-          this.props.dispatch(
-            notify({
-              message: `Invite sent`,
-              type: 'success'
-            })
-          )
         })
         .catch(err => {
           this.setState({ submitted: false })
