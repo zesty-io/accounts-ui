@@ -94,7 +94,9 @@ export default class Meta extends Component {
         domain: (function() {
           return (
             <React.Fragment>
-              <p class={styles.Token}>No domains added for this instance.</p>
+              <p className={styles.Token}>
+                No domains added for this instance.
+              </p>
             </React.Fragment>
           )
         })(),

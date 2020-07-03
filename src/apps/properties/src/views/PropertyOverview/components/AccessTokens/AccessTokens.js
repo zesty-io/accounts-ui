@@ -157,7 +157,7 @@ export default class AccessTokens extends Component {
         token: (function() {
           return (
             <React.Fragment>
-              <p class={styles.Token}>
+              <p className={styles.Token}>
                 No access tokens added for this instance.
               </p>
             </React.Fragment>
