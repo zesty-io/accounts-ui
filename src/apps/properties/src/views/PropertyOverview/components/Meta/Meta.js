@@ -73,7 +73,6 @@ export default class Meta extends Component {
   renderDomainsActions = index => {
     if (this.props.domains.length === 0) return
 
-    console.log('domains', this.props.domains)
     const domainZUID = this.props.domains[index].ZUID
     const domainName = this.props.domains[index].domain
 

@@ -13,7 +13,6 @@ import { Button } from '@zesty-io/core/Button'
 
 export default connect(state => state)(props => {
   useEffect(() => {
-    console.log('PROPS', props)
     document.addEventListener('click', close)
     document.addEventListener('keydown', close)
 
