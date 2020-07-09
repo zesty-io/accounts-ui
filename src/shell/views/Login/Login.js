@@ -69,8 +69,17 @@ class Login extends Component {
               </label>
 
               <label>
-                <span>
-                  <i className="fas fa-key"></i> Password
+                <span className={styles.passwordTitle}>
+                  <span>
+                    <i className="fas fa-key"></i> Password
+                  </span>
+
+                  <AppLink
+                    className={styles.bodyText}
+                    to="/reset-password"
+                    tabIndex="4">
+                    Forgot password?
+                  </AppLink>
                 </span>
                 <Input
                   tabIndex="2"
@@ -79,14 +88,6 @@ class Login extends Component {
                   name="current-password"
                   required={true}
                 />
-                <div className={styles.forgot}>
-                  <AppLink
-                    className={styles.bodyText}
-                    to="/reset-password"
-                    tabIndex="4">
-                    Forgot password?
-                  </AppLink>
-                </div>
               </label>
 
               <div className={styles.LoginActions}>
@@ -101,7 +102,8 @@ class Login extends Component {
                     </React.Fragment>
                   ) : (
                     <React.Fragment>
-                      <i className="fas fa-sign-in-alt"></i>&nbsp;Sign In
+                      <i className="fas fa-sign-in-alt"></i>&nbsp;Sign In With
+                      Zesty.io Account
                     </React.Fragment>
                   )}
                 </Button>
