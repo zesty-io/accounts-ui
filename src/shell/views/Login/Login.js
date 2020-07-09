@@ -14,11 +14,10 @@ import { Url } from '@zesty-io/core/Url'
 
 class Login extends Component {
   constructor(props) {
-    super()
+    super(props)
     this.state = {
       error: false,
       submitted: false,
-      logoUrl: 'https://brand.zesty.io/zesty-io-logo-vertical.png',
       message: ''
     }
   }
@@ -47,70 +46,53 @@ class Login extends Component {
             <Url href="https://www.zesty.io" title="https://www.zesty.io">
               <img
                 alt="Zesty.io Logo"
-                src={this.state.logoUrl}
-                height="160px"
+                src="https://brand.zesty.io/zesty-io-logo-vertical.png"
+                height="140px"
               />
             </Url>
           </header>
 
-          <main className={styles.gridSingle}>
+          <main>
             <form name="login" className={styles.LoginForm}>
-              <div className={styles.FormTitle}>
-                <h1 className={styles.subheadline}>Sign In</h1>
-                <AppLink
-                  className={styles.bodyText}
-                  to="/reset-password"
-                  tabIndex="4">
-                  Forgot password?
-                </AppLink>
-              </div>
-
               <label>
-                <i className="far fa-envelope"></i>
+                <span>
+                  <i className="far fa-envelope"></i> Email
+                </span>
                 <Input
                   tabIndex="1"
                   className={styles.loginInput}
                   type="text"
-                  placeholder="Email"
                   name="email"
                   required={true}
                   autoFocus
                 />
               </label>
+
               <label>
-                <i className="fas fa-key"></i>
+                <span>
+                  <i className="fas fa-key"></i> Password
+                </span>
                 <Input
                   tabIndex="2"
                   className={styles.loginInput}
-                  placeholder="Password"
                   type="password"
-                  name="pass"
+                  name="current-password"
                   required={true}
                 />
+                <div className={styles.forgot}>
+                  <AppLink
+                    className={styles.bodyText}
+                    to="/reset-password"
+                    tabIndex="4">
+                    Forgot password?
+                  </AppLink>
+                </div>
               </label>
 
-              {this.state.message ? (
-                <p
-                  className={cx(
-                    'error',
-                    styles.message,
-                    this.state.error ? styles.error : styles.success
-                  )}>
-                  {this.state.error ? (
-                    <i
-                      className="fa fa-exclamation-triangle"
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <i className="fa fa-check-circle-o" aria-hidden="true" />
-                  )}
-                  &nbsp;
-                  {this.state.message}
-                </p>
-              ) : null}
-              <div className={styles.loginButtonWrap}>
+              <div className={styles.LoginActions}>
                 <Button
                   tabIndex="3"
+                  className={styles.primary}
                   onClick={this.handleLogin}
                   disabled={this.state.submitted}>
                   {this.state.submitted ? (
@@ -124,24 +106,46 @@ class Login extends Component {
                   )}
                 </Button>
 
-                <div className={styles.createAccount}>
-                  <p>Don't have an account?</p>
-                  <AppLink to="/signup" tabIndex="5">
-                    Sign up for free
-                  </AppLink>
-                </div>
+                {this.state.message ? (
+                  <p
+                    className={cx(
+                      'error',
+                      styles.message,
+                      this.state.error ? styles.error : styles.success
+                    )}>
+                    {this.state.error ? (
+                      <i
+                        className="fa fa-exclamation-triangle"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <i className="fa fa-check-circle-o" aria-hidden="true" />
+                    )}
+                    &nbsp;
+                    {this.state.message}
+                  </p>
+                ) : null}
+
+                <p className={styles.divider}>
+                  <span className={styles.text}>or</span>
+                </p>
+
+                <a href={`${CONFIG.API_AUTH}/azure/login`}>
+                  <img
+                    src="/ms-symbollockup_signin_light.svg"
+                    height=""
+                    width=""
+                    alt="Microsoft Single Sign On"
+                  />
+                </a>
               </div>
             </form>
 
-            <div className={styles.sso}>
-              <a href={`${CONFIG.API_AUTH}/azure/login`}>
-                <img
-                  src="/ms-symbollockup_signin_light.svg"
-                  height=""
-                  width=""
-                  alt="Microsoft Single Sign On"
-                />
-              </a>
+            <div className={styles.createAccount}>
+              <p>Don't have an account?</p>
+              <AppLink to="/signup" tabIndex="5">
+                Sign up for free
+              </AppLink>
             </div>
           </main>
         </div>
@@ -158,7 +162,10 @@ class Login extends Component {
 
     this.props
       .dispatch(
-        login(document.forms.login.email.value, document.forms.login.pass.value)
+        login(
+          document.forms.login.email.value,
+          document.forms.login['current-password'].value
+        )
       )
       .then(json => {
         if (json.code === 200) {

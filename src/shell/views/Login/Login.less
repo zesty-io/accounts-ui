@@ -23,47 +23,59 @@
     }
 
     main {
-      padding: 1rem;
-
       .LoginForm {
         display: flex;
         flex-direction: column;
         background-color: #fff;
-        padding: 16px;
+        padding: 26px;
         border-radius: 4px;
         border: 1px solid @zesty-light-grey;
+        width: 300px;
 
-        .FormTitle {
-          margin-bottom: 16px;
-          display: flex;
-          justify-content: space-between;
-          align-items: baseline;
-
-          a {
-            font-size: 12px;
-          }
+        @media (min-width: 600px) {
+          width: 400px;
         }
 
         label {
-          margin-bottom: 12px;
+          margin-bottom: 18px;
+
           input {
-            display: inline-block;
-            margin: 0 0 0 8px;
-            width: 350px;
+            margin: 0;
+            width: 100%;
+          }
+
+          .forgot {
+            display: flex;
+            justify-content: flex-end;
           }
         }
       }
     }
   }
-  .loginButtonWrap {
-    align-items: center;
-    display: flex;
-    margin-left: 20px;
 
-    .createAccount {
-      margin-left: 16px;
+  .LoginActions {
+    .primary {
+      width: 100%;
+    }
+
+    .divider {
+      border-bottom: 1px solid @zesty-light-grey;
+      display: block;
+      margin: 26px 0 36px;
+      text-align: center;
+      .text {
+        background-color: #fff;
+        display: inline-block;
+        margin-bottom: -10px;
+        padding: 0 12px;
+      }
     }
   }
+
+  .createAccount {
+    margin-top: 16px;
+  }
+
   .message {
     margin: 12px 0 16px 20px;
   }
@@ -72,9 +84,5 @@
   }
   .success {
     color: @zesty-green;
-  }
-
-  .sso {
-    margin-top: 32px;
   }
 }
