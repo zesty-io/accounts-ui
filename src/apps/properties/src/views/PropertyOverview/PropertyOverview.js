@@ -43,7 +43,8 @@ class PropertyOverview extends Component {
       loadingBlueprint: true,
       loadingDomains: true,
       loadingAccessTokens: true,
-      customDomains: []
+      customDomains: [],
+      liveDomains: []
     }
   }
   componentDidMount() {
@@ -68,6 +69,10 @@ class PropertyOverview extends Component {
           })
         : []
     return customDomains
+  }
+
+  getDomains = () => {
+    this.setState({ ...this.state, liveDomains: this.props.domains })
   }
 
   render() {
@@ -97,10 +102,32 @@ class PropertyOverview extends Component {
             &nbsp;Open Preview
           </Url>
           {this.props.site.domain ? (
-            <Url target="_blank" href={`http://${this.props.site.domain}`}>
-              <i className="fa fa-globe" aria-hidden="true" />
-              &nbsp;Live Domain
-            </Url>
+            <div
+              className={styles.DomainsDropDown}
+              onMouseEnter={() => this.getDomains()}>
+              <i
+                className={`fa fa-globe ${styles.DomainsDropDownBtn}`}
+                aria-hidden="true"
+              />
+              &nbsp;Live Domains
+              {this.props.domains && (
+                <div className={styles.DomainsDropDownContent}>
+                  {this.state.liveDomains.length ? (
+                    this.state.liveDomains.map(dom => (
+                      <Url
+                        key={dom.ZUID}
+                        href={`//${dom.domain}`}
+                        target="_blank"
+                        title="View live domain">
+                        {dom.domain}
+                      </Url>
+                    ))
+                  ) : (
+                    <span>No domains added</span>
+                  )}
+                </div>
+              )}
+            </div>
           ) : null}
         </header>
         <main className={styles.Cards}>
@@ -425,9 +452,9 @@ export default connect((state, props) => {
       : {},
     domains: state.sitesDomains[siteZUID]
       ? state.sitesDomains[siteZUID].domains
-      : {},
+      : [],
     accessTokens: state.sitesAccessTokens[siteZUID]
       ? state.sitesAccessTokens[siteZUID].accessTokens
-      : {}
+      : []
   }
 })(PropertyOverview)

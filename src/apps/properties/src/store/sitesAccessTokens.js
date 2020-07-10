@@ -164,7 +164,7 @@ export const removeAccessToken = (siteZUID, accessTokenZUID) => {
 export const fetchUsage = (siteZUID, item) => {
   return dispatch => {
     return request(
-      `https://${siteZUID}${CONFIG.API_INSTANCE}/env/audits/?affectedZUID=${item.ZUID}`,
+      `${CONFIG.API_INSTANCE_PROTOCOL}${siteZUID}${CONFIG.API_INSTANCE}/env/audits/?affectedZUID=${item.ZUID}`,
       {
         method: 'GET',
         json: true

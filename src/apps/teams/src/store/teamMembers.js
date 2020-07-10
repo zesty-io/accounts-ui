@@ -46,7 +46,7 @@ export function fetchTeamMemberInvites(teamZUID) {
     ).then(res => {
       dispatch({
         type: 'FETCH_TEAM_MEMBER_INVITES_SUCCESS',
-        data: res.data,
+        data: res.data.filter(member => !member.accepted),
         teamZUID
       })
       return res.data

@@ -59,7 +59,7 @@ export default class LaunchWizard extends Component {
                 </p>
                 <p className={styles.aRecords}>
                   {CONFIG.A_RECORDS.map(rec => (
-                    <code>{rec}</code>
+                    <code key={rec}>{rec}</code>
                   ))}
                 </p>
 

@@ -15,6 +15,7 @@ import {
   getUsageToken,
   removeAccessToken
 } from '../../../../store/sitesAccessTokens'
+import { isIterable } from 'core-js'
 
 const formatDate = date => {
   if (!date) {
@@ -111,14 +112,15 @@ export default class AccessTokens extends Component {
     // this.setRemoveModalOpen(true)
   }
 
-  renderAccessTokensActions = index => {
-    const accessTokenZUID =
-      this.props.accessTokens.length > 0 && this.props.accessTokens[index].ZUID
+  renderAccessTokensActions = (index, data) => {
+    const token = this.props.accessTokens.find(it => it.ZUID === data.token.key)
+    const ind = this.props.accessTokens
+      .map(it => it.ZUID)
+      .indexOf(data.token.key)
+
+    const accessTokenZUID = this.props.accessTokens.length > 0 && token.ZUID
     const name =
-      this.props.accessTokens.length > 0 && this.props.accessTokens[index].name
-    const expiry =
-      this.props.accessTokens.length > 0 &&
-      this.props.accessTokens[index].expiry
+      this.props.accessTokens.length > 0 && this.props.accessTokens[ind].name
 
     return (
       this.props.isAdmin &&
@@ -155,7 +157,7 @@ export default class AccessTokens extends Component {
         token: (function() {
           return (
             <React.Fragment>
-              <p class={styles.Token}>
+              <p className={styles.Token}>
                 No access tokens added for this instance.
               </p>
             </React.Fragment>
