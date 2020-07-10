@@ -135,8 +135,8 @@ class Login extends Component {
                 <a href={`${CONFIG.API_AUTH}/azure/login`}>
                   <img
                     src="/ms-symbollockup_signin_light.svg"
-                    height=""
-                    width=""
+                    height="41px"
+                    width="215px"
                     alt="Microsoft Single Sign On"
                   />
                 </a>
