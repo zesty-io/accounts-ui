@@ -9,6 +9,12 @@ import InviteCard from '../InviteCard/'
 
 export default class TeamsGrid extends Component {
   render() {
+    const invites = Object.keys(this.props.teamInvites).map(
+      zuid => this.props.teamInvites[zuid]
+    )
+    const availableInvites = invites.filter(
+      invite => !invite.accepted && !invite.declined && !invite.cancelled
+    )
     return (
       <section className={cx('teams', styles.TeamsView)}>
         <h1 className={styles.TeamsTitle}>
@@ -20,11 +26,11 @@ export default class TeamsGrid extends Component {
           <CreateTeam dispatch={this.props.dispatch} />
 
           {/* invited teams */}
-          {Object.keys(this.props.teamInvites).map(inviteZUID => (
+          {availableInvites.map(invite => (
             <InviteCard
-              key={inviteZUID}
+              key={invite.ZUID}
               dispatch={this.props.dispatch}
-              invite={this.props.teamInvites[inviteZUID]}
+              invite={invite}
             />
           ))}
 
