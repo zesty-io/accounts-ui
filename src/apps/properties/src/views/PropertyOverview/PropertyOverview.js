@@ -452,9 +452,9 @@ export default connect((state, props) => {
       : {},
     domains: state.sitesDomains[siteZUID]
       ? state.sitesDomains[siteZUID].domains
-      : {},
+      : [],
     accessTokens: state.sitesAccessTokens[siteZUID]
       ? state.sitesAccessTokens[siteZUID].accessTokens
-      : {}
+      : []
   }
 })(PropertyOverview)
