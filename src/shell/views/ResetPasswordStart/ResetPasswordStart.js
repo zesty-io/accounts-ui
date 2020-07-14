@@ -20,8 +20,9 @@ export default class ResetPasswordStart extends Component {
         <div className={styles.Wrapper}>
           <header className={styles.Logo}>
             <img
-              src="https://brand.zesty.io/zesty-io-logo-vertical.png"
               alt="Zesty.io Logo"
+              src="https://brand.zesty.io/zesty-io-logo-vertical.png"
+              height="140px"
             />
           </header>
           <main>

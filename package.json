@@ -8,7 +8,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "precommit": "pretty-quick --staged",
-    "serve": "./node_modules/.bin/serve ./build -l 6006 --single",
+    "serve-ssl": "cross-env ./node_modules/.bin/http-server ./build -c-1 --ssl --cert etc/cert.pem --key etc/key.pem --port 9001 --proxy http://localhost:9001?",
     "prestart": "npm install",
     "start": "npm run build-dev && node bin/start",
     "build-local": "cross-env NODE_ENV=local node bin/build",
@@ -54,6 +54,7 @@
     "css-loader": "2.1.0",
     "cypress": "3.4.1",
     "extract-text-webpack-plugin": "4.0.0-beta.0",
+    "http-server": "^0.12.3",
     "husky": "3.0.3",
     "less": "3.9.0",
     "less-loader": "5.0.0",

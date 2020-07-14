@@ -58,7 +58,7 @@ module.exports = buildConfig = build => {
       MANAGER_URL_PROTOCOL: 'https://',
       PREVIEW_URL: '-dev.preview.dev.zesty.io',
       PREVIEW_URL_PROTOCOL: 'https://',
-      COOKIE_NAME: 'STAGE_APP_SID',
+      COOKIE_NAME: 'DEV_APP_SID',
       COOKIE_DOMAIN: '.zesty.io',
       EMAIL_SERVICE: 'https://email.zesty.io/send',
       C_NAME: 'zesty.map.fastly.net',
