@@ -84,16 +84,14 @@ export default class Domain extends Component {
             }}
           />
         </div>
-        {this.props.customDomains && this.props.customDomains.length > 0 && (
-          <DropDownFieldType
-            name="branch"
-            onChange={this.selectBranch}
-            selection={this.branches.filter(
-              branch => branch.value === this.state.domainBranch
-            )}
-            options={this.branches}
-          />
-        )}
+        <DropDownFieldType
+          name="branch"
+          onChange={this.selectBranch}
+          selection={this.branches.filter(
+            branch => branch.value === this.state.domainBranch
+          )}
+          options={this.branches}
+        />
         <Button
           className={styles.Button}
           data-test="saveDomain"
