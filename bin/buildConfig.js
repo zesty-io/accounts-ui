@@ -13,6 +13,8 @@ module.exports = buildConfig = build => {
       API_INSTANCE_PROTOCOL: 'https://',
       API_AUTH: 'https://auth.api.zesty.io',
       MANAGER_URL: '.manage.zesty.io',
+      NEW_MANAGER_URL: '.manager.zesty.io',
+
       MANAGER_URL_PROTOCOL: 'https://',
       PREVIEW_URL: '-dev.preview.zesty.io',
       PREVIEW_URL_PROTOCOL: 'https://',
@@ -34,6 +36,8 @@ module.exports = buildConfig = build => {
       API_INSTANCE_PROTOCOL: 'https://',
       API_AUTH: 'https://auth.api.stage.zesty.io',
       MANAGER_URL: '.stage-manage.zesty.io',
+      NEW_MANAGER_URL: '.manager.stage.zesty.io',
+
       MANAGER_URL_PROTOCOL: 'https://',
       PREVIEW_URL: '-dev.preview.stage.zesty.io',
       PREVIEW_URL_PROTOCOL: 'https://',
@@ -55,6 +59,8 @@ module.exports = buildConfig = build => {
       API_INSTANCE_PROTOCOL: 'https://',
       API_AUTH: 'https://auth.api.dev.zesty.io',
       MANAGER_URL: '.dev-manage.zesty.io',
+      NEW_MANAGER_URL: '.manager.dev.zesty.io',
+
       MANAGER_URL_PROTOCOL: 'https://',
       PREVIEW_URL: '-dev.preview.dev.zesty.io',
       PREVIEW_URL_PROTOCOL: 'https://',
@@ -76,6 +82,8 @@ module.exports = buildConfig = build => {
       API_INSTANCE_PROTOCOL: 'http://',
       API_AUTH: 'http://auth.api.zesty.localdev:3011',
       MANAGER_URL: '.manage.zesty.localdev:3017',
+      NEW_MANAGER_URL: '.manager.dev.zesty.io',
+
       MANAGER_URL_PROTOCOL: 'http://',
       PREVIEW_URL: '-dev.preview.zesty.localdev:3016',
       PREVIEW_URL_PROTOCOL: 'http://',

@@ -13,6 +13,10 @@
     display: flex;
     align-items: center;
 
+    display: grid;
+    grid-gap: 12px;
+    grid-template-columns: 155px 120px 124px 1fr;
+
     .manager {
       padding: 0 !important;
       a {
@@ -20,6 +24,10 @@
         color: @zesty-white;
         padding: 8px 16px 8px 16px;
       }
+    }
+
+    a {
+      margin: 0;
     }
   }
 }
@@ -43,16 +51,17 @@
   color: #497edf;
   cursor: pointer;
   background: none;
-  margin-left: 10px;
 }
 
 .DomainsDropDownContent {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
-  min-width: 160px;
+  min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  padding: 6px;
+
   a {
     display: block;
     text-align: left !important;
