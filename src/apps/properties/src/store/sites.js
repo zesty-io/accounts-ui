@@ -29,7 +29,7 @@ export function sites(state = {}, action) {
         ...state,
         [action.siteZUID]: {
           ...state[action.siteZUID],
-          blueprintID: action.blueprintID
+          blueprintZUID: action.blueprintZUID
         }
       }
     default:
@@ -134,23 +134,20 @@ export function updateSite(siteZUID, payload) {
   }
 }
 
-export function updateSiteBlueprint(siteZUID, payload) {
+export function updateSiteBlueprint(siteZUID, blueprintZUID) {
   return dispatch => {
     dispatch({
       type: 'UPDATING_SITE'
     })
-    return request(
-      `${CONFIG.API_ACCOUNTS}/instances/${siteZUID}?action=updateBlueprint`,
-      {
-        method: 'PUT',
-        json: true,
-        body: payload
-      }
-    ).then(res => {
+    return request(`${CONFIG.API_ACCOUNTS}/instances/${siteZUID}/blueprints`, {
+      method: 'PUT',
+      json: true,
+      body: { zuid: blueprintZUID }
+    }).then(res => {
       dispatch({
         type: 'UPDATE_SITE_BLUEPRINT_SUCCESS',
         siteZUID,
-        blueprintID: payload.blueprintID
+        blueprintZUID
       })
       return res.data
     })

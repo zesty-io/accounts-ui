@@ -27,84 +27,83 @@ class PropertyBlueprint extends Component {
     return (
       <div className={styles.BlueprintView}>
         <WithLoader
-          condition={this.props.blueprints.length}
-          message="Loading Available Blueprints">
-          <section>
-            <header>
-              <h1>Select a Blueprint</h1>
-              <AppLink kind="cancel" to={`/instances`}>
-                <i className="fa fa-ban" aria-hidden="true" />
-                &nbsp;Cancel
-              </AppLink>
-            </header>
-            <p className={styles.description}>
-              Blueprints are the starting point of your new content instance.
-              They can come pre-built with CSS, HTML, JavaScript, Schemas, and
-              content items(e.g. pages, headless data, etc.). Here you will find
-              a selection of community design frameworks configured as Zesty.io
-              blueprints.
-            </p>
-            <main className={styles.Blueprints}>
-              {this.props.blueprints.map(blueprint => {
-                return (
-                  <Card key={blueprint.ID} className={styles.Blueprint}>
-                    <CardHeader>
-                      <h4>{blueprint.name}</h4>
-                    </CardHeader>
-                    <CardContent className={styles.CardContent}>
-                      {blueprint.coverImage === '' ? (
-                        <div className={styles.noimage} aria-hidden="true">
+          condition={!this.state.submitted}
+          message="Creating Blueprint">
+          <WithLoader
+            condition={this.props.blueprints.length}
+            message="Loading Available Blueprints">
+            <section>
+              <header>
+                <h1>Select a Blueprint</h1>
+                <AppLink kind="cancel" to={`/instances`}>
+                  <i className="fa fa-ban" aria-hidden="true" />
+                  &nbsp;Cancel
+                </AppLink>
+              </header>
+              <p className={styles.description}>
+                Blueprints are the starting point of your new content instance.
+                They can come pre-built with CSS, HTML, JavaScript, Schemas, and
+                content items(e.g. pages, headless data, etc.). Here you will
+                find a selection of community design frameworks configured as
+                Zesty.io blueprints.
+              </p>
+              <main className={styles.Blueprints}>
+                {this.props.blueprints.map(blueprint => {
+                  return (
+                    <Card key={blueprint.ID} className={styles.Blueprint}>
+                      <CardHeader>
+                        <h4>{blueprint.name}</h4>
+                      </CardHeader>
+                      <CardContent className={styles.CardContent}>
+                        {blueprint.coverImage === '' ? (
+                          <div className={styles.noimage} aria-hidden="true">
+                            <i
+                              className="fas fa-file-code"
+                              aria-hidden="true"
+                            />
+                          </div>
+                        ) : (
+                          <img
+                            src={blueprint.coverImage}
+                            alt="Blueprint cover image"
+                          />
+                        )}
+                        <p>{blueprint.description}</p>
+                      </CardContent>
+                      <CardFooter className={styles.CardFooter}>
+                        <Button
+                          disabled={this.state.submitted}
+                          onClick={() =>
+                            this.setInstanceBlueprint(blueprint.ZUID)
+                          }>
                           <i className="fas fa-file-code" aria-hidden="true" />
-                        </div>
-                      ) : (
-                        <img
-                          src={blueprint.coverImage}
-                          alt="Blueprint cover image"
-                        />
-                      )}
-                      <p>{blueprint.description}</p>
-                    </CardContent>
-                    <CardFooter className={styles.CardFooter}>
-                      <Button
-                        disabled={this.state.submitted}
-                        onClick={() => this.setInstanceBlueprint(blueprint.ID)}>
-                        <i className="fas fa-file-code" aria-hidden="true" />
-                        Select Blueprint
-                      </Button>
-                      {blueprint.previewURL && (
-                        <Url href={blueprint.previewURL} target="_blank">
-                          <i className="fa fa-eye" aria-hidden="true" />
-                          &nbsp;Preview
-                        </Url>
-                      )}
-                    </CardFooter>
-                  </Card>
-                )
-              })}
-            </main>
-          </section>
+                          Select Blueprint
+                        </Button>
+                        {blueprint.previewURL && (
+                          <Url href={blueprint.previewURL} target="_blank">
+                            <i className="fa fa-eye" aria-hidden="true" />
+                            &nbsp;Preview
+                          </Url>
+                        )}
+                      </CardFooter>
+                    </Card>
+                  )
+                })}
+              </main>
+            </section>
+          </WithLoader>
         </WithLoader>
       </div>
     )
   }
-  setInstanceBlueprint = id => {
+  setInstanceBlueprint = blueprintZUID => {
     this.setState({
       submitted: true
     })
 
     this.props
-      .dispatch(
-        updateSiteBlueprint(this.props.siteZUID, {
-          blueprintID: id
-        })
-      )
+      .dispatch(updateSiteBlueprint(this.props.siteZUID, blueprintZUID))
       .then(data => {
-        if (!this.props.siteBlueprint) {
-          window.open(
-            `${CONFIG.MANAGER_URL_PROTOCOL}${this.props.randomHashID}${CONFIG.MANAGER_URL}`,
-            '_blank'
-          )
-        }
         this.props.history.push(`/instances/${this.props.siteZUID}`)
       })
       .catch(err => {
