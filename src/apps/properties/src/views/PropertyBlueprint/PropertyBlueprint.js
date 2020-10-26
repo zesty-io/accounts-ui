@@ -28,7 +28,16 @@ class PropertyBlueprint extends Component {
       <div className={styles.BlueprintView}>
         <WithLoader
           condition={!this.state.submitted}
-          message="Creating Blueprint">
+          message={
+            <div>
+              <h1 className={styles.headline}>
+                Building Instance From Blueprint
+              </h1>
+              <h2 className={styles.subheadline}>
+                This can take up to 30 seconds to complete.
+              </h2>
+            </div>
+          }>
           <WithLoader
             condition={this.props.blueprints.length}
             message="Loading Available Blueprints">
