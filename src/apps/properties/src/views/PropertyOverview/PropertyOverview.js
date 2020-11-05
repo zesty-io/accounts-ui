@@ -130,13 +130,11 @@ class PropertyOverview extends Component {
             </div>
           ) : null}
 
-          {this.props.isStaff && (
-            <Url
-              target="_blank"
-              href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.ZUID}${CONFIG.NEW_MANAGER_URL}`}>
-              <i className="fas fa-edit"></i>&nbsp;Manager
-            </Url>
-          )}
+          <Url
+            target="_blank"
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.ZUID}${CONFIG.NEW_MANAGER_URL}`}>
+            <i className="fas fa-edit"></i>&nbsp;Manager Beta
+          </Url>
         </header>
         <main className={styles.Cards}>
           <WithLoader
