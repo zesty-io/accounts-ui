@@ -57,7 +57,7 @@ export default connect(state => {
                   name="ecoFilter"
                   onChange={(name, value) => {
                     this.setState({
-                      ecoZUID: value
+                      ecoZUID: value == 0 ? '' : value
                     })
                   }}
                   // selection={ecosystems.find(eco => eco.id == this.state.eco)}

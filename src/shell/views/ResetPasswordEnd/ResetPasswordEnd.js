@@ -29,8 +29,9 @@ export default withRouter(
           <div className={styles.Wrapper}>
             <header className={styles.Logo}>
               <img
+                alt="Zesty.io Logo"
                 src="https://brand.zesty.io/zesty-io-logo-vertical.png"
-                alt="zesty logo"
+                height="140px"
               />
             </header>
             <main>

@@ -23,7 +23,7 @@ export default withRouter(
             <div className={styles.Logout}>
               <main className={styles.gridSingle}>
                 <div className={styles.createAccount}>
-                  <p className={styles.display}>Signing Out</p>
+                  <p className={styles.display}>Signing Out of Zesty.io</p>
                   <Loader />
                 </div>
               </main>

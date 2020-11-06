@@ -129,6 +129,14 @@ class PropertyOverview extends Component {
               )}
             </div>
           ) : null}
+
+          {this.props.isStaff && (
+            <Url
+              target="_blank"
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.ZUID}${CONFIG.NEW_MANAGER_URL}`}>
+              <i className="fas fa-edit"></i>&nbsp;Manager
+            </Url>
+          )}
         </header>
         <main className={styles.Cards}>
           <WithLoader
@@ -444,6 +452,7 @@ export default connect((state, props) => {
     userZUID: state.user.ZUID,
     isAdmin,
     isOwner,
+    isStaff: state.user.staff,
     site: state.sites[siteZUID] || {},
     users: state.sitesUsers[siteZUID] || {},
     teams: state.sitesTeams[siteZUID] || {},

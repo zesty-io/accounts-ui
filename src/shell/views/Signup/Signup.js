@@ -23,7 +23,7 @@ class Signup extends Component {
       email: '',
       firstName: '',
       lastName: '',
-      pass: '',
+      'new-password': '',
       eula: false
     }
   }
@@ -50,9 +50,9 @@ class Signup extends Component {
           <header className={styles.Logo}>
             <Url href="https://zesty.io" title="https://zesty.io">
               <img
+                alt="Zesty.io Logo"
                 src="https://brand.zesty.io/zesty-io-logo-vertical.png"
-                height="200px"
-                alt="zesty logo"
+                height="140px"
               />
             </Url>
           </header>
@@ -107,9 +107,10 @@ class Signup extends Component {
                   required
                   className={styles.input}
                   type="password"
-                  name="pass"
+                  name="new-password"
+                  autoComplete="new-password"
                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[?=.*[a-zA-Z0-9!@#$%^&()<>.,:;[\]{}\-_.+,/]{8,}$"
-                  value={this.state.pass}
+                  value={this.state['new-password']}
                   onChange={this.handleChange}
                 />
               </label>
@@ -145,7 +146,7 @@ class Signup extends Component {
                   ) : (
                     <React.Fragment>
                       <i className="fas fa-plus" aria-hidden="true" />
-                      &nbsp;Create Your Account
+                      &nbsp;Create Your Zesty.io Account
                     </React.Fragment>
                   )}
                 </Button>
@@ -189,7 +190,7 @@ class Signup extends Component {
         email: this.state.email,
         firstName: this.state.firstName,
         lastName: this.state.lastName,
-        password: this.state.pass
+        password: this.state['new-password']
       }
     })
       .then(json => {
@@ -210,7 +211,7 @@ class Signup extends Component {
           // send the user to the confirm email page
           // once validated user will automatically get into the app
           this.props
-            .dispatch(login(this.state.email, this.state.pass))
+            .dispatch(login(this.state.email, this.state['new-password']))
             .then(() => {
               this.props.history.push('/instances')
             })
