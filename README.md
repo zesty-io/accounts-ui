@@ -1,6 +1,14 @@
-# Zesty.io Accounts User Interface
+<div style="text-align:center;">
+  <img title="Logo for Zesty.io" width="300px" height="72px" src="https://brand.zesty.io/zesty-io-logo-horizontal.png" />  
+</div>
 
 > Application for managing your account, instances, teams and blueprints within the Zesty.io CMS
+
+<br />
+
+**[Start by creating a free instance](https://start.zesty.io/)**
+
+You have found the code base which powers the Zesty.io account manaagement experience. While this code base can be run locally it is only recommended to do so for developing. If you would like to learn more about Zesty.io visit our [documentation at zesty.org](https://zesty.org/)
 
 **Browser Support**
 
