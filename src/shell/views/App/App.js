@@ -80,7 +80,7 @@ class App extends Component {
             <Switch>
               <Route path="/instances" component={Properties} />
               <Route path="/settings" component={Settings} />
-              <Route path="/blueprints/:id?" component={Blueprints} />
+              {/* <Route path="/blueprints/:id?" component={Blueprints} /> */}
               <Route path="/support" component={Support} />
               <Route path="/teams" component={Teams} />
               <Redirect exact from="/" to="/instances" />

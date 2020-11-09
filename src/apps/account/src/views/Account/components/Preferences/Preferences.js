@@ -21,7 +21,7 @@ export default connect(state => state)(
               Account views can be customized by selecting from the options
               below
             </p>
-            <article className={styles.PrefItem}>
+            {/* <article className={styles.PrefItem}>
               Manage Blueprints
               <Toggle
                 name="blueprints"
@@ -29,7 +29,7 @@ export default connect(state => state)(
                 onChange={this.handleChange}
                 checked={this.props.user.prefs.devOptions}
               />
-            </article>
+            </article> */}
             <article className={styles.PrefItem}>
               Manage Teams
               <Toggle

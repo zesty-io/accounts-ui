@@ -81,7 +81,7 @@ export default connect(state => {
                 ) : null}
               </NavLink>
             )}
-            {this.props.user.prefs.devOptions === 1 && (
+            {/* {this.props.user.prefs.devOptions === 1 && (
               <NavLink
                 className={styles.sudheadline}
                 to="/blueprints"
@@ -89,7 +89,7 @@ export default connect(state => {
                 <i className="fa fa-map" aria-hidden="true" />
                 &nbsp;Blueprints
               </NavLink>
-            )}
+            )} */}
           </nav>
           <nav
             ref={nav => (this.userNav = nav)}
