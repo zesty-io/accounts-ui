@@ -42,12 +42,12 @@ export default class Blueprint extends PureComponent {
               </h2>
               <p>{this.props.blueprint.description}</p>
 
-              {this.props.blueprint.githubURL ? (
+              {/* {this.props.blueprint.githubURL ? (
                 <Url href={this.props.blueprint.githubURL} target="_blank">
                   <i className="fab fa-github" aria-hidden="true" />
                   View On GitHub
                 </Url>
-              ) : null}
+              ) : null} */}
             </CardContent>
           </Card>
         ) : (
