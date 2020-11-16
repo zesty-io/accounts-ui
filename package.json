@@ -8,6 +8,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "precommit": "pretty-quick --staged",
+    "serve": "serve build/ -l 9001 --single",
     "serve-ssl": "cross-env ./node_modules/.bin/http-server ./build -c-1 --ssl --cert etc/cert.pem --key etc/key.pem --port 9001 --proxy http://localhost:9001?",
     "prestart": "npm install",
     "start": "npm run build-dev && node bin/start",
