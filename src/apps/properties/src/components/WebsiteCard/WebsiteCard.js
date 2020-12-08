@@ -122,7 +122,7 @@ export default connect(state => state)(props => {
             <Url
               className={styles.manager}
               target="_blank"
-              href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.ZUID}${CONFIG.NEW_MANAGER_URL}`}>
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.ZUID}${CONFIG.NEW_MANAGER_URL}`}>
               <i className="fas fa-edit"></i>
               &nbsp;Edit Content
             </Url>
