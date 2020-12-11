@@ -85,8 +85,8 @@ class PropertyOverview extends Component {
             {this.props.site.blueprintID !== null ? (
               <Url
                 target="_blank"
-                href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}`}>
-                <i className="fas fa-edit"></i>&nbsp;Edit Content
+                href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.ZUID}${CONFIG.NEW_MANAGER_URL}`}>
+                <i className="fas fa-edit"></i>&nbsp;Open Content Manager
               </Url>
             ) : (
               <AppLink to={`/instances/${this.props.site.ZUID}/blueprint`}>
@@ -132,8 +132,8 @@ class PropertyOverview extends Component {
 
           <Url
             target="_blank"
-            href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.ZUID}${CONFIG.NEW_MANAGER_URL}`}>
-            <i className="fas fa-edit"></i>&nbsp;Manager Beta
+            href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}`}>
+            <i className="fas fa-edit"></i>&nbsp;Legacy Manager
           </Url>
         </header>
         <main className={styles.Cards}>
