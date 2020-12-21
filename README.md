@@ -8,7 +8,7 @@
 
 **[Start by creating a free instance](https://start.zesty.io/)**
 
-You have found the code base which powers the Zesty.io account manaagement experience. While this code base can be run locally it is only recommended to do so for developing. If you would like to learn more about Zesty.io visit our [documentation at zesty.org](https://zesty.org/)
+You have found the code base which powers the Zesty.io account management experience. While this code base can be run locally it is only recommended to do so for developing. If you would like to learn more about Zesty.io visit our [documentation at zesty.org](https://zesty.org/)
 
 **Browser Support**
 
