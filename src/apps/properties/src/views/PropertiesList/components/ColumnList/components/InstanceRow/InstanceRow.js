@@ -9,6 +9,7 @@ import { Url } from '@zesty-io/core/Url'
 
 export default function InstanceRow(props) {
   const { site } = props
+
   return (
     <span className={styles.row}>
       <InstanceFavorite
@@ -34,7 +35,7 @@ export default function InstanceRow(props) {
         <Url
           className={styles.action}
           target="_blank"
-          href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${CONFIG.MANAGER_URL}`}>
+          href={`${CONFIG.MANAGER_URL_PROTOCOL}${site.randomHashID}${CONFIG.NEW_MANAGER_URL}`}>
           <i className="fas fa-edit" aria-hidden="true" />
         </Url>
       ) : (
