@@ -43,9 +43,13 @@ export default class PropertyName extends Component {
           <span
             className={styles.Name}
             id="editInstanceName"
+            title="Edit instance title name"
             onClick={this.editName}>
             {this.props.name}
-            <i className={cx('fa fa-pencil', styles.Edit)} aria-hidden="true" />
+            <i
+              className={cx('fas fa-pencil-alt', styles.Edit)}
+              aria-hidden="true"
+            />
           </span>
         )}
       </label>
