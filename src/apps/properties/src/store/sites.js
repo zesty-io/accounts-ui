@@ -45,10 +45,19 @@ export function fetchSites() {
     return request(`${CONFIG.API_ACCOUNTS}/instances`).then(sites => {
       sites.data.sort((prev, next) => {
         // handle null .name property, otherwise sort breaks
-        if (prev.name === null || prev.name < next.name) {
+        if (prev.name === null) {
           return -1
         }
-        if (next.name === null || prev.name > next.name) {
+        if (next.name === null) {
+          return 1
+        }
+        // case insensitive sort
+        const prevName = prev.name.toUpperCase()
+        const nextName = next.name.toUpperCase()
+        if (prevName < nextName) {
+          return -1
+        }
+        if (prevName > nextName) {
           return 1
         }
         return 0
