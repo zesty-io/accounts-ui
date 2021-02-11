@@ -44,6 +44,12 @@ export function fetchSites() {
     })
     return request(`${CONFIG.API_ACCOUNTS}/instances`).then(sites => {
       sites.data.sort((prev, next) => {
+        if (prev.name === null) {
+          return -1
+        }
+        if (next.name === null) {
+          return 1
+        }
         if (prev.name < next.name) {
           return -1
         }
