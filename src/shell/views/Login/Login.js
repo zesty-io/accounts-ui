@@ -196,11 +196,22 @@ class Login extends Component {
           }
         } else if (json.code === 202) {
           this.props.history.push('/login/2fa')
+        } else if (json.status === 'Forbidden') {
+          this.setState({
+            error: true,
+            submitted: false,
+            message:
+              'Account locked for 5 minutes due to 5 failed login attempts. Please contact support@zesty.io'
+          })
+          this.props.dispatch({
+            type: 'FETCH_AUTH_ERROR',
+            auth: false
+          })
         } else {
           this.setState({
             error: true,
             submitted: false,
-            message: 'There was a problem signing you in'
+            message: 'Invalid username or password'
           })
           this.props.dispatch({
             type: 'FETCH_AUTH_ERROR',
