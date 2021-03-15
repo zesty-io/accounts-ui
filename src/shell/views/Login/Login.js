@@ -196,16 +196,6 @@ class Login extends Component {
           }
         } else if (json.code === 202) {
           this.props.history.push('/login/2fa')
-        } else if (json.status === 'Forbidden') {
-          this.setState({
-            error: true,
-            submitted: false,
-            message: json.message
-          })
-          this.props.dispatch({
-            type: 'FETCH_AUTH_ERROR',
-            auth: false
-          })
         } else {
           this.setState({
             error: true,
