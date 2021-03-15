@@ -200,8 +200,7 @@ class Login extends Component {
           this.setState({
             error: true,
             submitted: false,
-            message:
-              'Account locked for 5 minutes due to 5 failed login attempts. Please contact support@zesty.io'
+            message: json.message
           })
           this.props.dispatch({
             type: 'FETCH_AUTH_ERROR',
@@ -211,7 +210,7 @@ class Login extends Component {
           this.setState({
             error: true,
             submitted: false,
-            message: 'Invalid username or password'
+            message: json.message
           })
           this.props.dispatch({
             type: 'FETCH_AUTH_ERROR',
