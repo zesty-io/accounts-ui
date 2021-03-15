@@ -210,19 +210,11 @@ class Login extends Component {
       })
       .catch(err => {
         console.error(err)
-        if (err === 403) {
-          this.setState({
-            error: true,
-            submitted: false,
-            message: 'Too many failed login attempts'
-          })
-        } else {
-          this.setState({
-            error: true,
-            submitted: false,
-            message: 'There was a problem signing you in'
-          })
-        }
+        this.setState({
+          error: true,
+          submitted: false,
+          message: 'There was a problem signing you in'
+        })
       })
   }
 }
