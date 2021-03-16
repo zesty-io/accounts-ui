@@ -151,6 +151,17 @@ class Signup extends Component {
                   )}
                 </Button>
               </div>
+              <p className={styles.divider}>
+                <span className={styles.text}>or</span>
+              </p>
+              <a href={`${CONFIG.API_AUTH}/azure/login`}>
+                <img
+                  src="/ms-symbollockup_signin_light.svg"
+                  height="41px"
+                  width="215px"
+                  alt="Microsoft Single Sign On"
+                />
+              </a>
 
               {this.state.message ? (
                 <p className={styles.error}>
