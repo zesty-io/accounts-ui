@@ -36,41 +36,6 @@ class App extends Component {
     }, 60000)
   }
 
-  componentDidUpdate(prevProps) {
-    // NOTE: in order to have access to this information, you will need
-    // to wrap this component in the `withRouter` HOC
-
-    const {
-      location: { pathname }
-    } = this.props
-    const previousLocation = prevProps.location.pathname
-
-    if (window.Appcues !== undefined) {
-      if (pathname !== previousLocation) {
-        window.Appcues.page()
-      }
-
-      window.Appcues.identify(
-        prevProps.user.ZUID, // unique, required
-        {
-          // recommended (optional) properties
-
-          createdAt: prevProps.user.createdAt, // Unix timestamp of user signup date
-          purchasedAd: null, // Unix timestamp of account purchase date (leave null if empty)
-          planTier: 'uknn', // Current user’s plan tier
-          role: 'unkwn', // Current user’s role or permissions
-          accountId: prevProps.user.ID, // Current user's account ID
-          firstName: prevProps.user.firstName, // current user's first name
-          lastName: prevProps.user.lastName, // current user's first name
-
-          // additional suggestions
-
-          email: prevProps.user.email // Current user's email
-        }
-      )
-    }
-  }
-
   render() {
     return (
       <section className={cx(styles.AppShell, styles.bodyText)}>
