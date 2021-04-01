@@ -267,10 +267,19 @@ export const sortSites = sortBy => {
     let sites = Object.keys(sitesObj).map(site => sitesObj[site])
     if (sortBy === 'name') {
       sites.sort((prev, next) => {
-        if (prev[sortBy] < next[sortBy]) {
+        if (prev[sortBy] === null) {
           return -1
         }
-        if (prev[sortBy] > next[sortBy]) {
+        if (next[sortBy] === null) {
+          return 1
+        }
+        // case insensitive sort
+        const prevName = prev[sortBy].toUpperCase()
+        const nextName = next[sortBy].toUpperCase()
+        if (prevName < nextName) {
+          return -1
+        }
+        if (prevName > nextName) {
           return 1
         }
         return 0
