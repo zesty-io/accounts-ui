@@ -116,7 +116,7 @@ class PropertyOverview extends Component {
                     this.state.liveDomains.map(dom => (
                       <Url
                         key={dom.ZUID}
-                        href={`//${dom.domain}`}
+                        href={`http://${dom.domain}`}
                         target="_blank"
                         title="View live domain">
                         {dom.domain}
