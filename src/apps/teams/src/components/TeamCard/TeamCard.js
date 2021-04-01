@@ -264,9 +264,9 @@ export default class TeamCard extends Component {
     )
   }
 
-  handleChange = evt => {
+  handleChange = (name, value) => {
     this.setState({
-      [evt.target.name]: evt.target.value
+      [name]: value
     })
   }
 
