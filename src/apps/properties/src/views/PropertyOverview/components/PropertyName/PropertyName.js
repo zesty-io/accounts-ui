@@ -26,7 +26,7 @@ export default class PropertyName extends Component {
               name="instanceName"
               onChange={evt => {
                 this.setState({
-                  name: evt.target.value
+                  name: evt.target.value.trim()
                 })
               }}
             />
