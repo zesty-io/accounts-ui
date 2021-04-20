@@ -142,13 +142,6 @@ class Login extends Component {
                 </a>
               </div>
             </form>
-
-            <div className={styles.createAccount}>
-              <p>Don't have an account?</p>
-              <AppLink to="/signup" tabIndex="5">
-                Sign up for free
-              </AppLink>
-            </div>
           </main>
         </div>
       </section>
