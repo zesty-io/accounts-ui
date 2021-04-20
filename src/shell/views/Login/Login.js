@@ -143,12 +143,12 @@ class Login extends Component {
               </div>
             </form>
 
-            <div className={styles.createAccount}>
+            {/* <div className={styles.createAccount}>
               <p>Don't have an account?</p>
               <AppLink to="/signup" tabIndex="5">
                 Sign up for free
               </AppLink>
-            </div>
+            </div> */}
           </main>
         </div>
       </section>
