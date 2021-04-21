@@ -6,6 +6,7 @@ import { notify } from '../../../../../../../shell/store/notifications'
 import { Input } from '@zesty-io/core/Input'
 import { Button } from '@zesty-io/core/Button'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
+import { Infotip } from '@zesty-io/core/Infotip'
 
 import styles from './Domain.less'
 export default class Domain extends Component {
@@ -72,6 +73,11 @@ export default class Domain extends Component {
   render() {
     return (
       <label className={styles.Domain}>
+        <Infotip className={styles.Infotip}>
+          Enter the domain root. Do not include protocol (eg. http) or trailing
+          slash. For example, if your domain is example.com, you'll enter
+          example.com.
+        </Infotip>
         <div className={styles.DomainInput}>
           <Input
             name="domain"
