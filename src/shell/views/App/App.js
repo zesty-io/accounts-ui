@@ -77,7 +77,6 @@ class LoadUser extends Component {
       .then(user => {
         if (this.__mounted) {
           Raven.setUserContext(user)
-          bugsnagClient.user = user
           this.setState({
             loadingUser: false
           })

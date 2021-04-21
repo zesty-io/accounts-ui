@@ -127,11 +127,6 @@ export function request(url, opts = {}) {
       }
       // TODO global app notification on total request failure
       Raven.captureException(err)
-      bugsnagClient.notify(err, {
-        beforeSend: function(report) {
-          if (report.message === 'Invalid user') report.ignore
-        }
-      })
       throw err
     })
 }
