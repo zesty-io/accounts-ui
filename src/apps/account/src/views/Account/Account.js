@@ -9,7 +9,7 @@ import Profile from './components/Profile'
 import Email from './components/Email'
 import Password from './components/Password'
 import TwoFactor from './components/TwoFactor'
-import Preferences from './components/Preferences'
+import { Preferences } from './components/Preferences'
 
 import { WithLoader } from '@zesty-io/core/WithLoader'
 
