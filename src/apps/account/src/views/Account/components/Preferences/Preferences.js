@@ -23,7 +23,7 @@ export default connect(state => {
         )
       })
       .catch(err => {
-        this.props.dispatch(
+        props.dispatch(
           notify({
             message: err.error || 'Error saving preference',
             type: 'error'
