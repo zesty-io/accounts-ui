@@ -209,7 +209,7 @@ export default class Meta extends Component {
             <Url
               className={styles.manager}
               target="_blank"
-              href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}/#!/settings/instance/general`}>
+              href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.ZUID}${CONFIG.NEW_MANAGER_URL}/settings/instance/general`}>
               <i className="fa fa-external-link" aria-hidden="true" />
               &nbsp;Open Instance Settings
             </Url>
