@@ -25,7 +25,8 @@
   "author": "Zesty.io<developers@zesty.io>",
   "contributors": [
     "Grant Glidewell<grant.glidewell@zesty.io>",
-    "Stuart Runyan<stuart@zesty.io>"
+    "Stuart Runyan<stuart@zesty.io>",
+    "David Naimi<david.naimi@zesty.io>"
   ],
   "license": "All Rights Reserved",
   "dependencies": {
