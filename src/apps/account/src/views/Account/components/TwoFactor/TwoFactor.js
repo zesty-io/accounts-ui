@@ -23,18 +23,34 @@ export default function TwoFactorOptions(props) {
   const handleauthyPhoneNumber = event => {
     setauthyPhoneNumber(event.target.value)
   }
+  const numberValidator = (validateInput, message) => {
+    if (!validateInput) {
+      props.dispatch(
+        notify({
+          message: message,
+          type: 'error'
+        })
+      )
+      return
+    }
+  }
 
   const handleEnable = evt => {
     evt.preventDefault()
 
-    if (!authyPhoneNumber || !authyPhoneNumber) {
-      return
-    }
+    numberValidator(authyPhoneCountryCode, 'Missing country code')
+    numberValidator(authyPhoneNumber, 'Missing phone number')
+
     setSubmitted(true)
 
-    //State?????
     props
-      .dispatch(update2fa(props.user.ZUID, true, state))
+      .dispatch(
+        update2fa(props.user.ZUID, true, {
+          submitted,
+          authyPhoneCountryCode,
+          authyPhoneNumber
+        })
+      )
       .then(() => {
         setSubmitted(false)
         props.dispatch(
@@ -95,7 +111,7 @@ export default function TwoFactorOptions(props) {
       </CardHeader>
       <CardContent>
         {props.user.authyEnabled ? (
-          <React.Fragment>
+          <>
             <p>
               Two-factor authentication is enabled on your account. Currently
               registered phone number:
@@ -103,9 +119,9 @@ export default function TwoFactorOptions(props) {
             <p className={styles.RegisteredNumber}>
               +{props.user.authyPhoneCountryCode}-{props.user.authyPhoneNumber}
             </p>
-          </React.Fragment>
+          </>
         ) : (
-          <React.Fragment>
+          <>
             <p>
               <Url
                 className={styles.InfoLink}
@@ -125,7 +141,7 @@ export default function TwoFactorOptions(props) {
                 <label htmlFor="authyPhoneCountryCode">
                   <Input
                     required
-                    type="text"
+                    type="tel"
                     size="5"
                     placeholder="1"
                     name="authyPhoneCountryCode"
@@ -145,36 +161,36 @@ export default function TwoFactorOptions(props) {
                 </label>
               </div>
             </form>
-          </React.Fragment>
+          </>
         )}
       </CardContent>
       <CardFooter>
         {props.user.authyEnabled ? (
           <Button onClick={handleDisable} disabled={submitted}>
             {submitted ? (
-              <React.Fragment>
+              <>
                 <i className="fas fa-hourglass" aria-hidden="true" />
                 &nbsp;Disabling Authy 2FA
-              </React.Fragment>
+              </>
             ) : (
-              <React.Fragment>
+              <>
                 <i className="fas fa-shield-alt" aria-hidden="true" />
                 &nbsp;Disable Authy 2FA
-              </React.Fragment>
+              </>
             )}
           </Button>
         ) : (
           <Button form="TwoFactor" onClick={handleEnable} disabled={submitted}>
             {submitted ? (
-              <React.Fragment>
+              <>
                 <i className="fas fa-hourglass" aria-hidden="true" />
                 &nbsp;Enabling Authy 2FA
-              </React.Fragment>
+              </>
             ) : (
-              <React.Fragment>
+              <>
                 <i className="fas fa-shield-alt" aria-hidden="true" />
                 &nbsp;Enable Authy 2FA
-              </React.Fragment>
+              </>
             )}
           </Button>
         )}
