@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import useIsMounted from 'ismounted'
 import { zConfirm } from '../../../../../../../shell/store/confirm'
 import { update2fa } from '../../../../../../../shell/store/user'
 import { notify } from '../../../../../../../shell/store/notifications'
@@ -9,19 +10,20 @@ import { Button } from '@zesty-io/core/Button'
 import { Url } from '@zesty-io/core/Url'
 
 import styles from './TwoFactor.less'
-import { render } from 'less'
+
 export default function TwoFactorOptions(props) {
+  const isMounted = useIsMounted()
   const [submitted, setSubmitted] = useState(false)
-  const [authyPhoneCountryCode, setauthyPhoneCountryCode] = useState('')
-  const [authyPhoneNumber, setauthyPhoneNumber] = useState('')
+  const [authyPhoneCountryCode, setAuthyPhoneCountryCode] = useState('')
+  const [authyPhoneNumber, setAuthyPhoneNumber] = useState('')
 
   //Country Code
   const handleAuthyPhoneCountryCode = event => {
-    setauthyPhoneCountryCode(event.target.value)
+    setAuthyPhoneCountryCode(event.target.value)
   }
   //Phone number
-  const handleauthyPhoneNumber = event => {
-    setauthyPhoneNumber(event.target.value)
+  const handleAuthyPhoneNumber = event => {
+    setAuthyPhoneNumber(event.target.value)
   }
   const numberValidator = (validateInput, message) => {
     if (!validateInput) {
@@ -52,7 +54,9 @@ export default function TwoFactorOptions(props) {
         })
       )
       .then(() => {
-        setSubmitted(false)
+        if (isMounted.current) {
+          setSubmitted(false)
+        }
         props.dispatch(
           notify({ message: 'Two-Factor auth enabled', type: 'success' })
         )
@@ -65,7 +69,9 @@ export default function TwoFactorOptions(props) {
           })
         )
 
-        setSubmitted(false)
+        if (isMounted.current) {
+          setSubmitted(false)
+        }
       })
   }
 
@@ -87,7 +93,9 @@ export default function TwoFactorOptions(props) {
                   })
                 )
 
-                setSubmitted(false)
+                if (isMounted.current) {
+                  setSubmitted(false)
+                }
               })
               .catch(err => {
                 props.dispatch(
@@ -97,7 +105,9 @@ export default function TwoFactorOptions(props) {
                   })
                 )
 
-                setSubmitted(false)
+                if (isMounted.current) {
+                  setSubmitted(false)
+                }
               })
           }
         }
@@ -156,7 +166,7 @@ export default function TwoFactorOptions(props) {
                     placeholder="123-456-7890"
                     name="authyPhoneNumber"
                     value={authyPhoneNumber}
-                    onChange={handleauthyPhoneNumber}
+                    onChange={handleAuthyPhoneNumber}
                   />
                 </label>
               </div>

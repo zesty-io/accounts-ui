@@ -118,6 +118,7 @@ export function fetchUser(ZUID) {
 }
 
 export function update2fa(userZUID, enable, payload) {
+  console.log('🚀 ~ file: user.js ~ line 121 ~ update2fa ~ payload', payload)
   return dispatch => {
     if (enable) {
       return request(
