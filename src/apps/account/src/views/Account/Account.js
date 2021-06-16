@@ -87,15 +87,21 @@ export default connect(state => state)(
                   emails={this.props.user.emails}
                   loadingEmails={this.state.loadingEmails}
                 />
-                <Password
-                  history={this.props.history}
-                  className={styles.SettingCard}
-                />
-                <TwoFactor
-                  className={styles.SettingCard}
-                  dispatch={this.props.dispatch}
-                  user={this.props.user}
-                />
+                {this.props.user.authSource === null ? (
+                  <>
+                    <Password
+                      history={this.props.history}
+                      className={styles.SettingCard}
+                    />
+                    <TwoFactor
+                      className={styles.SettingCard}
+                      dispatch={this.props.dispatch}
+                      user={this.props.user}
+                    />
+                  </>
+                ) : (
+                  ''
+                )}
                 <Preferences
                   className={styles.SettingCard}
                   user={this.props.user}
