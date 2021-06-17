@@ -87,7 +87,7 @@ export default function Account(props) {
             <Profile className={styles.SettingCard} />
             <Email
               className={styles.SettingCard}
-              dispatch={props.dispatch}
+              dispatch={dispatch}
               user={user}
               emails={user.emails}
               loadingEmails={loadingEmails}
@@ -98,7 +98,7 @@ export default function Account(props) {
 
                 <TwoFactor
                   className={styles.SettingCard}
-                  dispatch={props.dispatch}
+                  dispatch={dispatch}
                   user={user}
                 />
               </>
@@ -108,7 +108,7 @@ export default function Account(props) {
             <Preferences
               className={styles.SettingCard}
               user={user}
-              dispatch={props.dispatch}
+              dispatch={dispatch}
             />
           </div>
         </WithLoader>
