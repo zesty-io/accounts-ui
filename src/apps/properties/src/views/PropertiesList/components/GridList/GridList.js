@@ -47,8 +47,7 @@ export default connect(state => state)(props => {
               <div className={styles.PropertyOverviewWrap}>
                 <Button
                   className={styles.CloseOverview}
-                  id="closeOverviewButton"
-                  onClick={close}>
+                  id="closeOverviewButton">
                   <i className="fa fa-times" aria-hidden="true" />
                 </Button>
                 <PropertyOverview {...props} />
