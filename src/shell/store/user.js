@@ -16,6 +16,7 @@ export function user(
       }
     case 'FETCH_AUTH_SUCCESS':
     case 'FETCH_VERIFY_SUCCESS':
+    case 'FETCH_2FA_SUCCESS':
       return {
         ...state,
         ZUID: action.payload.meta.userZuid
