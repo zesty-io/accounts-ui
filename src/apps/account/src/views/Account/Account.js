@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { connect, useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import useIsMounted from 'ismounted'
 
 import { fetchUserEmails, saveProfile } from '../../../../../shell/store/user'
@@ -94,10 +94,7 @@ export default function Account(props) {
             />
             {user.authSource === null ? (
               <>
-                <Password
-                  history={props.history}
-                  className={styles.SettingCard}
-                />
+                <Password className={styles.SettingCard} />
 
                 <TwoFactor
                   className={styles.SettingCard}
