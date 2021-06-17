@@ -16,7 +16,7 @@ import { WithLoader } from '@zesty-io/core/WithLoader'
 
 import styles from './Account.less'
 
-export default connect(state => {})(function Account(props) {
+export default function Account(props) {
   const dispatch = useDispatch()
   const isMounted = useIsMounted()
   const user = useSelector(state => state.user)
@@ -118,4 +118,4 @@ export default connect(state => {})(function Account(props) {
       </div>
     </section>
   )
-})
+}
