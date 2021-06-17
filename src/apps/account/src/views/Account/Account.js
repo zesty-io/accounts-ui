@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import useIsMounted from 'ismounted'
 
 import { fetchUserEmails, saveProfile } from '../../../../../shell/store/user'
@@ -17,19 +17,20 @@ import { WithLoader } from '@zesty-io/core/WithLoader'
 import styles from './Account.less'
 
 export default connect(state => {})(function Account(props) {
-  const [loadingEmails, setLoadingEmails] = useState(true)
+  const dispatch = useDispatch()
   const isMounted = useIsMounted()
+  const user = useSelector(state => state.user)
+  const [loadingEmails, setLoadingEmails] = useState(true)
 
   useEffect(() => {
-    props
-      .dispatch(fetchUserEmails())
+    dispatch(fetchUserEmails())
       .then(data => {
         if (isMounted.current) {
           setLoadingEmails(false)
         }
       })
       .catch(err => {
-        props.dispatch(
+        dispatch(
           notify({
             message: `Error fetching emails`,
             type: 'error'
@@ -37,28 +38,28 @@ export default connect(state => {})(function Account(props) {
         )
       })
 
-    if (props.user.prefs.hasSelectedDev) {
-      props.dispatch(
+    if (user.prefs.hasSelectedDev) {
+      dispatch(
         zConfirm({
           prompt:
             'Are you interested in using developer features, such as access to blueprints? You can change this any time in your account settings.',
           callback: response => {
             if (response) {
-              props.dispatch({
+              dispatch({
                 type: 'DEV_PREFS',
                 payload: 1
               })
-              props.dispatch(
+              dispatch(
                 saveProfile({
                   websiteCreator: true
                 })
               )
             } else {
-              props.dispatch({
+              dispatch({
                 type: 'DEV_PREFS',
                 payload: 0
               })
-              props.dispatch(
+              dispatch(
                 saveProfile({
                   websiteCreator: false
                 })
@@ -70,7 +71,10 @@ export default connect(state => {})(function Account(props) {
     }
   }, [])
 
-  document.title = 'Accounts: My Account'
+  useEffect(() => {
+    document.title = 'Accounts: My Account'
+  }, [])
+
   return (
     <section className={styles.Settings}>
       <h1 className={styles.SettingsTitle}>Manage Your Account Settings</h1>
@@ -84,20 +88,21 @@ export default connect(state => {})(function Account(props) {
             <Email
               className={styles.SettingCard}
               dispatch={props.dispatch}
-              user={props.user}
-              emails={props.user.emails}
+              user={user}
+              emails={user.emails}
               loadingEmails={loadingEmails}
             />
-            {props.user.authSource === null ? (
+            {user.authSource === null ? (
               <>
                 <Password
                   history={props.history}
                   className={styles.SettingCard}
                 />
+
                 <TwoFactor
                   className={styles.SettingCard}
                   dispatch={props.dispatch}
-                  user={props.user}
+                  user={user}
                 />
               </>
             ) : (
@@ -105,7 +110,7 @@ export default connect(state => {})(function Account(props) {
             )}
             <Preferences
               className={styles.SettingCard}
-              user={props.user}
+              user={user}
               dispatch={props.dispatch}
             />
           </div>
