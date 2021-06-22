@@ -129,12 +129,6 @@ class PropertyOverview extends Component {
               )}
             </div>
           ) : null}
-
-          <Url
-            target="_blank"
-            href={`${CONFIG.MANAGER_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.MANAGER_URL}`}>
-            <i className="fas fa-edit"></i>&nbsp;Legacy Manager
-          </Url>
         </header>
         <main className={styles.Cards}>
           <WithLoader
