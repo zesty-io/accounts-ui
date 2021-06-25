@@ -16,7 +16,7 @@ module.exports = buildConfig = build => {
       NEW_MANAGER_URL: '.manager.zesty.io',
 
       MANAGER_URL_PROTOCOL: 'https://',
-      PREVIEW_URL: '-dev.preview.zesty.io',
+      PREVIEW_URL: '-dev.webengine.zesty.io',
       PREVIEW_URL_PROTOCOL: 'https://',
       COOKIE_NAME: 'APP_SID',
       COOKIE_DOMAIN: '.zesty.io',
