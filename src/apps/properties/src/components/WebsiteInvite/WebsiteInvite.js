@@ -38,7 +38,7 @@ class WebsiteInvite extends Component {
               className={styles.Preview}
               target="_blank"
               title={`Preview  ${this.props.site.name}`}
-              href={`https://${this.props.site.randomHashID}.preview.zesty.io`}>
+              href={`${CONFIG.PREVIEW_URL_PROTOCOL}${this.props.site.randomHashID}${CONFIG.PREVIEW_URL}`}>
               <i
                 className={cx(styles.icon, 'fa fa-globe')}
                 aria-hidden="true"
