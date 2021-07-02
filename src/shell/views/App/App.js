@@ -96,18 +96,23 @@ class LoadUser extends Component {
     this.__mounted = false
   }
   render() {
-    if (this.props.auth) {
-      return (
-        <WithLoader
-          condition={!this.state.loadingUser}
-          message="Finding Your Account">
-          {this.props.children}
-        </WithLoader>
-      )
-    } else {
-      return <Redirect to="/login" />
-    }
+    return (
+      <WithLoader
+        condition={!this.state.loadingUser}
+        message="Finding Your Account">
+        {this.props.children}
+      </WithLoader>
+    )
   }
+}
+
+const PrivateRoute = ({ auth, children, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={() => (auth ? children : <Redirect to={'/login'} />)}
+    />
+  )
 }
 
 export default withRouter(
@@ -124,12 +129,11 @@ export default withRouter(
           <Route path="/verify-email" component={VerifyEmail} />
           <Route path="/resend-email" component={ResendEmail} />
 
-          <LoadUser
-            auth={props.auth.valid}
-            userZUID={props.user.ZUID}
-            dispatch={props.dispatch}>
-            <AppWithRouter user={props.user} dispatch={props.dispatch} />
-          </LoadUser>
+          <PrivateRoute auth={props.auth.valid}>
+            <LoadUser userZUID={props.user.ZUID} dispatch={props.dispatch}>
+              <AppWithRouter user={props.user} dispatch={props.dispatch} />
+            </LoadUser>
+          </PrivateRoute>
         </Switch>
       </React.Fragment>
     )
