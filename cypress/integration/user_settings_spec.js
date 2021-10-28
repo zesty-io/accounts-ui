@@ -68,7 +68,8 @@ describe('User Settings Flow', () => {
     cy.get('[name=newPassword]').type(Cypress.env('validPassword'))
     cy.get('[name=confirmNewPassword]').type(Cypress.env('validPassword'))
     cy.get('[data-test=changePassword]').click()
-
-    cy.get('#confirmTrue', { timeout: 15000 }).click()
+    cy.contains(
+      'Your password has been changed, please log in with your new password'
+    ).should('exist', { timeout: 3000 })
   })
 })
