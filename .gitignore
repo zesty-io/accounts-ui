@@ -3,6 +3,7 @@
 *.log
 *.css.json
 .env
+.enc
 
 /build
 *node_modules
