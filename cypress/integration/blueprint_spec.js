@@ -4,9 +4,10 @@ describe('Blueprint Flow', () => {
   before(function() {
     cy.login()
     cy.visit('/blueprints')
+    cy.wait(3000)
   })
 
-  it('Can Create a blueprint', () => {
+  it.skip('Can Create a blueprint', () => {
     cy.get('#createBlueprint').click()
 
     cy.get('#Blueprint > label:nth-child(2) > input').type(
