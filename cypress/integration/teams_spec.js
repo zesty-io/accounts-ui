@@ -17,24 +17,19 @@ describe('Teams Flow', () => {
       'Team created'
     )
   })
-  // skipping failing test in preparation for ci
-  it.skip('Can invite a member', () => {
-    cy.get('.teams article')
-      .children('main h3', {
-        timeout: 15000 // Wait for members to be loaded after team creation
-      })
-      .contains(timeStamp)
-      .parents('article')
-      .children('footer input[name=inviteeEmail]')
+  it('Can invite a member', () => {
+    cy.get('input[name=inviteeEmail]', { timeout: 15000 })
+      .first()
       .type('testInvite@zesty.io')
-      .parents('article')
-      .children('footer button')
+
+    cy.get('button[type="submit"]')
+      .first()
       .click()
 
     cy.get('#notificationMessage', { timeout: 15000 }).should('contain', 'sent')
   })
-  // skipping failing test in preparation for ci
-  it.skip('Can remove an invite', () => {
+
+  it('Can remove an invite', () => {
     //remove the invitiation
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > article:nth-child(2) > main > section:nth-child(3) > article'
