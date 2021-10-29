@@ -7,6 +7,7 @@ on:
 jobs:
   run_tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       # This Clean step simply checks if there's already a workflow running from the last
