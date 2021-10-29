@@ -2,8 +2,8 @@ name: cd
 
 on:
   # Uncomment to work on CD in development mode.
-  # pull_request:
-  #   branches: [ master ]
+  pull_request:
+    branches: [master]
   push:
     branches:
       - master
