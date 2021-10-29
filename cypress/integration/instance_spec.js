@@ -137,7 +137,7 @@ describe('Instance Flow', () => {
   it('Removes a team', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[data-test=removeTeam]', { timeout: 15000 }).click({ force: true })
+    cy.get('[data-test=removeTeam]', { timeout: 30000 }).click({ force: true })
     cy.get('#confirmTrue').click()
 
     cy.get('#notificationMessage', { timeout: 15000 }).should(
