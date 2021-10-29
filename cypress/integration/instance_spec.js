@@ -126,7 +126,9 @@ describe('Instance Flow', () => {
       .contains('Developer')
       .click({ force: true })
 
-    cy.get('[data-test=teamInvite] button').click({ force: true })
+    cy.get('[data-test=teamInvite] button', { timeout: 15000 }).click({
+      force: true
+    })
 
     cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
