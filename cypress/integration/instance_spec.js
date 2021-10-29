@@ -37,7 +37,7 @@ describe('Instance Flow', () => {
   it('Updates an instance name', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#editInstanceName', { timeout: 15000 }).click({ force: true })
+    cy.get('#editInstanceName', { timeout: 30000 }).click({ force: true })
     cy.get('[name=instanceName')
       .clear({ force: true })
       .type(`TEST EDITED: ${timestamp}`, { force: true })
@@ -52,7 +52,7 @@ describe('Instance Flow', () => {
   it('Adds a domain', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[name=domain]', { timeout: 15000 })
+    cy.get('[name=domain]', { timeout: 30000 })
       .last()
       .clear({ force: true })
       .type(`${timestamp}-test.zesty.site`, { force: true })
@@ -92,7 +92,7 @@ describe('Instance Flow', () => {
   it('Cancels an invite', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#revoke-button', { timeout: 15000 }).click({ force: true })
+    cy.get('#revoke-button', { timeout: 30000 }).click({ force: true })
     cy.get('#confirmTrue').click()
     cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
@@ -103,7 +103,7 @@ describe('Instance Flow', () => {
   it('Updates an instance blueprint', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#changeBlueprint', { timeout: 15000 }).click({ force: true })
+    cy.get('#changeBlueprint', { timeout: 30000 }).click({ force: true })
     cy.get('#confirmTrue').click()
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(4) > footer > button'
