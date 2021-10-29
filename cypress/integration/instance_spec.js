@@ -14,7 +14,8 @@ describe('Instance Flow', () => {
     }).should('contain', 'You must enter a name')
   })
 
-  // If this fails make sure the update_sql_users
+  // If this fails make sure the update_sql_users.sh script in the zutil repo has been ran today.
+  // An issue has been created to move this into a daily cron: https://github.com/zesty-io/zutil/issues/40
   it('Creates an instance', () => {
     cy.visit('/instances/create')
 

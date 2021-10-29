@@ -15,6 +15,8 @@ Cypress.Commands.add('login', (email, pass) => {
   const formBody = new FormData()
   formBody.append('email', email || Cypress.env('validEmail'))
   formBody.append('password', pass || Cypress.env('validPassword'))
+  console.log(`checking email: ${Cypress.env('validEmail')}`)
+  console.log(`checking password: ${Cypress.env('validPassword')}`)
 
   let login = fetch(`${Cypress.env('API_AUTH')}/login`, {
     method: 'POST',

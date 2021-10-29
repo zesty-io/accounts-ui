@@ -8,7 +8,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "ci:test:setup": "./ci/scripts/pull_ci_secrets.sh false && ./ci/scripts/update_etc_hosts.sh",
-    "ci": "start-server-and-test start http://accounts.dev.zesty.io:3100 test",
+    "ci": "./node_modules/.bin/start-server-and-test start http://accounts.dev.zesty.io:3100 test",
     "ci:pull:screenshots": "./ci/scripts/pull_ci_screenshots.sh",
     "precommit": "pretty-quick --staged",
     "serve": "serve build/ -l 9001 --single",
@@ -20,7 +20,7 @@
     "build-stage": "cross-env NODE_ENV=stage node bin/build",
     "build-prod": "cross-env NODE_ENV=production node bin/build",
     "test:open": "./node_modules/.bin/cypress open",
-    "test": "cypress run --headless --browser chrome",
+    "test": "./node_modules/.bin/cypress run --browser chrome",
     "release:stage": "npm test && zesty deploy stage .",
     "release:prod": "npm test && zesty deploy prod .",
     "cleanup": "echo 'All done'."

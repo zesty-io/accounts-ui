@@ -48,8 +48,9 @@ describe('User Settings Flow', () => {
       'email successfully removed'
     )
   })
-
-  it('Changes password', () => {
+  // TODO: unskip once we have a dedicated test user.
+  // Otherwise I could endup being locked out of my account due to a flakey test.
+  it.skip('Changes password', () => {
     cy.get('[name=oldPassword]', { timeout: 15000 }).type(
       Cypress.env('validPassword')
     )
