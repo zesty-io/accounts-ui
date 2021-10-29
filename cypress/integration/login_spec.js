@@ -1,6 +1,5 @@
 describe('User Login Failure', function() {
-  // skipping failing test in preparation for ci
-  it.skip('Log in fails with bad credentials', function() {
+  it('Log in fails with bad credentials', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
 
     cy.get('form[name="login"] input[name="email"]')
@@ -17,8 +16,7 @@ describe('User Login Failure', function() {
 })
 
 describe('User Login Flow', function() {
-  // skipping failing test in preparation for ci
-  it.skip('Logs in with good credentials', function() {
+  it('Logs in with good credentials', function() {
     cy.visit(Cypress.env('ACCOUNTS_UI'))
 
     cy.get('form[name="login"] input[name="email"]')
@@ -29,12 +27,7 @@ describe('User Login Flow', function() {
       .should('have.value', Cypress.env('validPassword'))
 
     cy.get('form[name="login"] button').click()
-
-    // assert that the app loads
-    cy.get('#root > section > header > nav.UserNav', { timeout: 10000 }).should(
-      'contain',
-      'test'
-    )
+    cy.url().should('contain', 'instances', { timeout: 15000 })
   })
 })
 
