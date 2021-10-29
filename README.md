@@ -46,19 +46,35 @@ Being aware of errors your users experience is an important part of iterating an
 
 ## Developing
 
-```
-npm start
-```
+    npm run start
 
 This will install all necessary dependencies and do a development build which will begin watching your files and rebuild when changes occur. You will need the complete stack running in order to load the account-ui.
 
-### Testing
+## Testing
 
-```
-npm test
-```
+To setup your local environment for tests run:
 
-We write and run our end-to-end tests using [cypress.io](https://www.cypress.io/). Tests require the complete platform stack to be running.
+    npm run test:setup
+
+This pulls the secrets file down and adds a DNS entry in your `/etc/hosts` file for routing requests to `accounts.dev.zesty.io` back to localhost to prevent running into CORS issues.
+
+**Note**
+
+**If you find yourself actually needing to login to the remote dev environment then don't forget to comment out the following line in your `/etc/hosts` file that was added by the above script:**
+
+    127.0.0.1 accounts.dev.zesty.io
+
+Otherwise you'll be routed to localhost.
+
+Then you can either:
+
+1 - Run your tests in headless mode:
+
+    npm run test
+
+2 - Selectively run your tests in the Cypress UI:
+
+    npm run test:open
 
 ### Running Locally & Deploying
 

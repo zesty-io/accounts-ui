@@ -1,44 +1,44 @@
-# name: ci
+name: ci
 
-# on:
-#   pull_request:
-#     branches: [master]
+on:
+  pull_request:
+    branches: [master]
 
-# jobs:
-#   run_tests:
-#     runs-on: ubuntu-latest
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       # This Clean step simply checks if there's already a workflow running from the last
-#       # commit and cancels it if there is. This helps us save on cloud cost in the long run.
-#       # See https://github.com/rokroskar/workflow-run-cleanup-action for more information.
-#       - name: Clean
-#         uses: rokroskar/workflow-run-cleanup-action@v0.2.2
-#         env:
-#           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
-#         if: "github.ref != 'refs/heads/master'"
-#       - name: Checkout Repo
-#         uses: actions/checkout@v2
-#       - name: Set up Gcloud SDK
-#         uses: google-github-actions/setup-gcloud@master
-#         with:
-#           project_id: zesty-dev
-#           service_account_key: ${{ secrets.GCP_DEV_SA_KEY }}
-#           export_default_credentials: true
-#       - name: Delete Old Screenshots
-#         run: gsutil rm gs://cypress_screenshots_accounts_ui/* || true
-#       - name: Set up Node
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: '16.5.0'
-#           cache: 'npm'
-#           cache-dependency-path: package-lock.json
-#       - name: Install Dependencies
-#         run: npm install
-#       - name: Setup Testing Environment
-#         run: npm run ci:test:setup
-#       - name: Run Tests
-#         run: npm run ci
-#       - name: Upload Screenshots
-#         if: ${{ failure() }}
-#         run: ./ci/scripts/upload_debug_screenshots_to_gcp.sh
+    steps:
+      # This Clean step simply checks if there's already a workflow running from the last
+      # commit and cancels it if there is. This helps us save on cloud cost in the long run.
+      # See https://github.com/rokroskar/workflow-run-cleanup-action for more information.
+      - name: Clean
+        uses: rokroskar/workflow-run-cleanup-action@v0.2.2
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        if: "github.ref != 'refs/heads/master'"
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Set up Gcloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: zesty-dev
+          service_account_key: ${{ secrets.GCP_DEV_SA_KEY }}
+          export_default_credentials: true
+      - name: Delete Old Screenshots
+        run: gsutil rm gs://cypress_screenshots_accounts_ui/* || true
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.5.0'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install Dependencies
+        run: npm install
+      - name: Setup Testing Environment
+        run: npm run ci:test:setup
+      - name: Run Tests
+        run: npm run ci
+      - name: Upload Screenshots
+        if: ${{ failure() }}
+        run: ./ci/scripts/upload_debug_screenshots_to_gcp.sh

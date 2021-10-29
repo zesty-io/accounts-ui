@@ -17,8 +17,6 @@
     "A_RECORD": "130.211.21.25",
     "invalidEmail": "userDoesNot@exist.com",
     "invalidPassword": "asdASD123",
-    "validEmail": "stuart+test1@zesty.io",
-    "validPassword": "86FM8nMe9Y8KSOFEPoaBbxkZORAnhInPBWktfpq5IFuOZcsVFxWgxvcTmqClV0y1",
     "testInstanceZUID": "8-dac0aad2c5-plnfwb",
     "testTeamZUID": "65-b6e3bafc9f-7q60kv"
   }

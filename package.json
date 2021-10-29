@@ -21,6 +21,7 @@
     "build-prod": "cross-env NODE_ENV=production node bin/build",
     "test:open": "./node_modules/.bin/cypress open",
     "test": "./node_modules/.bin/cypress run --browser chrome",
+    "test:setup": "./ci/scripts/pull_ci_secrets.sh && ./ci/scripts/update_etc_hosts.sh",
     "release:stage": "npm test && zesty deploy stage .",
     "release:prod": "npm test && zesty deploy prod .",
     "cleanup": "echo 'All done'."
