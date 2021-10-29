@@ -18,14 +18,14 @@ const os = require('os')
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  if (os.userInfo().username === 'runner') {
-    const ciEnvConfig = dotenv.config({
-      path: path.join(__dirname, '../../', 'ci/.env')
-    }).parsed
+  // if (os.userInfo().username === 'runner') {
+  const ciEnvConfig = dotenv.config({
+    path: path.join(__dirname, '../../', 'ci/.env')
+  }).parsed
 
-    // source the user credentials from the ci environment config
-    config.env.validEmail = ciEnvConfig.TEST_USER_EMAIL
-    config.env.validPassword = ciEnvConfig.TEST_USER_PASSWORD
-    return config
-  }
+  // source the user credentials from the ci environment config
+  config.env.validEmail = ciEnvConfig.TEST_USER_EMAIL
+  config.env.validPassword = ciEnvConfig.TEST_USER_PASSWORD
+  return config
+  // }
 }

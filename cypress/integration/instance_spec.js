@@ -1,5 +1,5 @@
 describe('Instance Flow', () => {
-  const timestamp = Date.now()
+  const timestamp = new Date().getTime()
 
   beforeEach(() => {
     cy.login()
@@ -14,6 +14,7 @@ describe('Instance Flow', () => {
     }).should('contain', 'You must enter a name')
   })
 
+  // If this fails make sure the update_sql_users
   it('Creates an instance', () => {
     cy.visit('/instances/create')
 
@@ -23,7 +24,7 @@ describe('Instance Flow', () => {
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(1) > footer > button',
       {
-        timeout: 20000 // Instance creation can take a long time
+        timeout: 30000 // Instance creation can take a long time
       }
     ).click()
 
@@ -46,15 +47,18 @@ describe('Instance Flow', () => {
       'Successfully'
     )
   })
-  // skipping failing test in preparation for ci
-  it.skip('Adds a domain', () => {
+
+  it('Adds a domain', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
     cy.get('[name=domain]', { timeout: 15000 })
+      .last()
       .clear({ force: true })
       .type(`${timestamp}-test.zesty.site`, { force: true })
 
-    cy.get('[data-test=saveDomain]').click({ force: true })
+    cy.get('[data-test=saveDomain]')
+      .last()
+      .click({ force: true })
 
     cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
@@ -65,9 +69,10 @@ describe('Instance Flow', () => {
   it('Invites a User', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[name=inviteeEmail]', { timeout: 15000 })
-      .focus()
-      .type('testInvite@zesty.io')
+    cy.get('[name=inviteeEmail]', { timeout: 30000 }).type(
+      'testInvite@zesty.io',
+      { force: true }
+    )
 
     cy.get('.invite .Select')
       .click({ force: true })
@@ -93,8 +98,8 @@ describe('Instance Flow', () => {
       'User invite cancelled'
     )
   })
-  // skipping failing test in preparation for ci
-  it.skip('Updates an instance blueprint', () => {
+
+  it('Updates an instance blueprint', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
     cy.get('#changeBlueprint', { timeout: 15000 }).click({ force: true })
@@ -103,13 +108,13 @@ describe('Instance Flow', () => {
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(4) > footer > button'
     ).click()
 
-    cy.get('#blueprintName', { timeout: 15000 }).should('contain', 'Skeleton')
+    cy.get('#blueprintName', { timeout: 30000 }).should('contain', 'Skeleton')
   })
 
   it('Invites a team', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[name=teamZUID]', { timeout: 15000 }).type(
+    cy.get('[name=teamZUID]', { timeout: 30000 }).type(
       Cypress.env('testTeamZUID'),
       { force: true }
     )
