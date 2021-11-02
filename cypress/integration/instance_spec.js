@@ -25,7 +25,7 @@ describe('Instance Flow', () => {
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(1) > footer > button',
       {
-        timeout: 30000 // Instance creation can take a long time
+        timeout: 60000 // Instance creation can take a long time
       }
     ).click()
 
@@ -37,7 +37,7 @@ describe('Instance Flow', () => {
   it('Updates an instance name', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#editInstanceName', { timeout: 30000 }).click({ force: true })
+    cy.get('#editInstanceName', { timeout: 60000 }).click({ force: true })
     cy.get('[name=instanceName')
       .clear({ force: true })
       .type(`TEST EDITED: ${timestamp}`, { force: true })
@@ -52,7 +52,7 @@ describe('Instance Flow', () => {
   it('Adds a domain', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[name=domain]', { timeout: 30000 })
+    cy.get('[name=domain]', { timeout: 60000 })
       .last()
       .clear({ force: true })
       .type(`${timestamp}-test.zesty.site`, { force: true })
@@ -70,7 +70,7 @@ describe('Instance Flow', () => {
   it('Invites a User', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[name=inviteeEmail]', { timeout: 30000 }).type(
+    cy.get('[name=inviteeEmail]', { timeout: 60000 }).type(
       'testInvite@zesty.io',
       { force: true }
     )
@@ -92,7 +92,7 @@ describe('Instance Flow', () => {
   it('Cancels an invite', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#revoke-button', { timeout: 30000 }).click({ force: true })
+    cy.get('#revoke-button', { timeout: 60000 }).click({ force: true })
     cy.get('#confirmTrue').click()
     cy.get('#notificationMessage', { timeout: 15000 }).should(
       'contain',
@@ -103,19 +103,19 @@ describe('Instance Flow', () => {
   it('Updates an instance blueprint', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('#changeBlueprint', { timeout: 30000 }).click({ force: true })
+    cy.get('#changeBlueprint', { timeout: 60000 }).click({ force: true })
     cy.get('#confirmTrue').click()
     cy.get(
       '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(4) > footer > button'
     ).click()
 
-    cy.get('#blueprintName', { timeout: 30000 }).should('contain', 'Skeleton')
+    cy.get('#blueprintName', { timeout: 60000 }).should('contain', 'Skeleton')
   })
 
   it('Invites a team', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[name=teamZUID]', { timeout: 30000 }).type(
+    cy.get('[name=teamZUID]', { timeout: 60000 }).type(
       Cypress.env('testTeamZUID'),
       { force: true }
     )
@@ -139,7 +139,7 @@ describe('Instance Flow', () => {
   it('Removes a team', () => {
     cy.visit(`/instances/${Cypress.env('testInstanceZUID')}`)
 
-    cy.get('[data-test=removeTeam]', { timeout: 30000 }).click({ force: true })
+    cy.get('[data-test=removeTeam]', { timeout: 60000 }).click({ force: true })
     cy.get('#confirmTrue').click()
 
     cy.get('#notificationMessage', { timeout: 15000 }).should(
