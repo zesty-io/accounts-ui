@@ -11,6 +11,6 @@ describe('User Creation Flow', function() {
 
     // Submit signup form
     cy.get('button[name=submit]').click()
-    cy.url().should('contain', 'instances', { timeout: 5000 })
+    cy.url().should('contain', 'instances')
   })
 })

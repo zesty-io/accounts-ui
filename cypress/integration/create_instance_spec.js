@@ -8,9 +8,10 @@ describe('Instance Creation Flow', () => {
 
   it('Fails to create an instance with no name', () => {
     cy.get('[data-test=createInstance]').click()
-    cy.get('#root > section > section > article > span > p', {
-      timeout: 15000
-    }).should('contain', 'You must enter a name')
+    cy.get('#root > section > section > article > span > p').should(
+      'contain',
+      'You must enter a name'
+    )
   })
 
   // If this fails make sure the update_sql_users.sh script in the zutil repo has been ran today.
@@ -20,14 +21,9 @@ describe('Instance Creation Flow', () => {
     cy.get('[data-test=createInstance]').click()
 
     cy.get(
-      '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(1) > footer > button',
-      {
-        timeout: 60000 // Instance creation can take a long time
-      }
+      '#root > section > section.AppMain.AppMain > section > div > section > main > article:nth-child(1) > footer > button'
     ).click()
 
-    cy.get('#siteListWrapper article h1', {
-      timeout: 15000
-    }).should('contain', timestamp)
+    cy.get('#siteListWrapper article h1').should('contain', timestamp)
   })
 })

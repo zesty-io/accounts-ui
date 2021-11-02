@@ -27,7 +27,7 @@ describe('User Login Flow', function() {
       .should('have.value', Cypress.env('validPassword'))
 
     cy.get('form[name="login"] button').click()
-    cy.url().should('contain', 'instances', { timeout: 15000 })
+    cy.url().should('contain', 'instances')
   })
 })
 

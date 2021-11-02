@@ -2,6 +2,7 @@
   "projectId": "Accounts-UI",
   "baseUrl": "http://accounts.dev.zesty.io:3100",
   "video": false,
+  "defaultCommandTimeout": 60000,
   "env": {
     "ACCOUNTS_UI": "http://accounts.dev.zesty.io:3100",
     "API_ACCOUNTS": "https://accounts.api.dev.zesty.io/v1",
