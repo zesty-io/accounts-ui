@@ -11,7 +11,18 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const path = require('path')
+const dotenv = require('dotenv')
+
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+  const ciEnvConfig = dotenv.config({
+    path: path.join(__dirname, '../../', 'ci/.env')
+  }).parsed
+
+  // source the user credentials from the ci environment config
+  config.env.validEmail = ciEnvConfig.TEST_USER_EMAIL
+  config.env.validPassword = ciEnvConfig.TEST_USER_PASSWORD
+  return config
 }

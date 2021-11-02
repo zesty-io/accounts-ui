@@ -4,7 +4,6 @@ describe('App Navigation', () => {
     cy.visit('/instances')
 
     cy.get('[data-test=teamsNavLink]').click()
-    cy.get('[data-test=blueprintsNavLink]').click()
     cy.get('[data-test=instancesNavLink]').click()
 
     // navigate to user settings

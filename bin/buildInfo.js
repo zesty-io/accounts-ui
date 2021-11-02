@@ -36,6 +36,15 @@ module.exports = async function buildInfo(env) {
     message: 'healthy'
   }
 
+  if (!fs.existsSync(`${root}/build/`)) {
+    try {
+      await fs.promises.mkdir(`${root}/build/`)
+    } catch (err) {
+      console.error(`failed to create missing build dir: ${err}`)
+      process.exit(1)
+    }
+  }
+
   fs.writeFileSync(`${root}/build/buildinfo.json`, JSON.stringify(h))
 
   return h

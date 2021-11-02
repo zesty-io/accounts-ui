@@ -16,5 +16,9 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+Cypress.Cookies.defaults({
+  preserve: Cypress.env('COOKIE_NAME')
+})
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
