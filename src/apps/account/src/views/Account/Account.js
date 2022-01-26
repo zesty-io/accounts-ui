@@ -37,38 +37,6 @@ export default function Account(props) {
           })
         )
       })
-
-    if (user.prefs.hasSelectedDev) {
-      dispatch(
-        zConfirm({
-          prompt:
-            'Are you interested in using developer features, such as access to blueprints? You can change this any time in your account settings.',
-          callback: response => {
-            if (response) {
-              dispatch({
-                type: 'DEV_PREFS',
-                payload: 1
-              })
-              dispatch(
-                saveProfile({
-                  websiteCreator: true
-                })
-              )
-            } else {
-              dispatch({
-                type: 'DEV_PREFS',
-                payload: 0
-              })
-              dispatch(
-                saveProfile({
-                  websiteCreator: false
-                })
-              )
-            }
-          }
-        })
-      )
-    }
   }, [])
 
   useEffect(() => {
