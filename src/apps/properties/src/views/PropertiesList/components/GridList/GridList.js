@@ -43,9 +43,6 @@ export default connect(state => state)(props => {
     zuid => props.sites[zuid].inviteZUID
   )
 
-  console.log('Invites', invites)
-  console.log('Site Faorites:', props.sitesFavorite)
-
   props.sitesFavorite.forEach(favorite => {
     invites.forEach(invite => {
       if (favorite.ZUID === invite) {
