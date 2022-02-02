@@ -9,6 +9,8 @@ import WebsiteCard from '../../../../components/WebsiteCard'
 import WebsiteCreate from '../../../../components/WebsiteCreate'
 import WebsiteInvite from '../../../../components/WebsiteInvite'
 
+import { favoriteSite } from '../../../../../../../shell/store/user'
+
 import { Button } from '@zesty-io/core/Button'
 
 export default connect(state => state)(props => {
@@ -37,6 +39,21 @@ export default connect(state => state)(props => {
     }
   }
 
+  const invites = Object.keys(props.sites).filter(
+    zuid => props.sites[zuid].inviteZUID
+  )
+
+  console.log('Invites', invites)
+  console.log('Site Faorites:', props.sitesFavorite)
+
+  props.sitesFavorite.forEach(favorite => {
+    invites.forEach(invite => {
+      if (favorite.ZUID === invite) {
+        props.dispatch(favoriteSite(invite, 'REMOVE'))
+      }
+    })
+  })
+
   return (
     <div className={styles.GridList} id="siteListWrapper">
       <Route
@@ -57,7 +74,7 @@ export default connect(state => state)(props => {
         }}
       />
 
-      {props.sitesInvited.length ? (
+      {props.sitesInvited.length && (
         <React.Fragment>
           <h2 className={cx(styles.subheadline, styles.SectionTitle)}>
             <i className="fas fa-envelope" aria-hidden="true" />
@@ -69,7 +86,7 @@ export default connect(state => state)(props => {
             })}
           </main>
         </React.Fragment>
-      ) : null}
+      )}
 
       {props.sitesFavorite.length ? (
         <React.Fragment>
