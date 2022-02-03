@@ -14,6 +14,21 @@ import { favoriteSite } from '../../../../../../../shell/store/user'
 import { Button } from '@zesty-io/core/Button'
 
 export default connect(state => state)(props => {
+  // Fix for pending invites not shown if user has favorited the instance before. ticket #173
+  useEffect(() => {
+    const invites = Object.keys(props.sites).filter(
+      zuid => props.sites[zuid].inviteZUID
+    )
+
+    const favorite = props.sitesFavorite.filter(favorite =>
+      invites.includes(favorite.ZUID)
+    )
+
+    favorite.forEach(() => {
+      props.dispatch(favoriteSite(invites, 'REMOVE'))
+    })
+  }, [])
+
   useEffect(() => {
     document.addEventListener('click', close)
     document.addEventListener('keydown', close)
@@ -39,21 +54,6 @@ export default connect(state => state)(props => {
     }
   }
 
-  useEffect(() => {
-    // Fix for pending invites not shown if user has favorited the instance before. ticket #173
-    const invites = Object.keys(props.sites).filter(
-      zuid => props.sites[zuid].inviteZUID
-    )
-
-    props.sitesFavorite.forEach(favorite => {
-      invites.forEach(invite => {
-        if (favorite.ZUID === invite) {
-          props.dispatch(favoriteSite(invite, 'REMOVE'))
-        }
-      })
-    })
-  }, [])
-
   return (
     <div className={styles.GridList} id="siteListWrapper">
       <Route
@@ -74,7 +74,7 @@ export default connect(state => state)(props => {
         }}
       />
 
-      {props.sitesInvited.length && (
+      {props.sitesInvited.length ? (
         <React.Fragment>
           <h2 className={cx(styles.subheadline, styles.SectionTitle)}>
             <i className="fas fa-envelope" aria-hidden="true" />
@@ -86,7 +86,7 @@ export default connect(state => state)(props => {
             })}
           </main>
         </React.Fragment>
-      )}
+      ) : null}
 
       {props.sitesFavorite.length ? (
         <React.Fragment>
