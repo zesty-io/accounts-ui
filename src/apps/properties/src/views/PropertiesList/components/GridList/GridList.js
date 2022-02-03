@@ -39,6 +39,7 @@ export default connect(state => state)(props => {
     }
   }
 
+  // Fix for pending invites not shown if user has favorited the instance before. ticket #173
   const invites = Object.keys(props.sites).filter(
     zuid => props.sites[zuid].inviteZUID
   )
