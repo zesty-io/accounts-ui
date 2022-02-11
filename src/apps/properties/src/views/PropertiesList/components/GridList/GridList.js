@@ -98,7 +98,7 @@ export default connect(state => state)(props => {
         </h2>
 
         <main className={styles.siteList}>
-          {props.sites.length === 0 && <WebsiteCreate />}
+          {props.sitesFiltered.length === 0 && <WebsiteCreate />}
 
           {props.sitesFiltered.length ? (
             props.sitesFiltered.map(site => {

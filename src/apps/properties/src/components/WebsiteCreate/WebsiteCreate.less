@@ -2,35 +2,25 @@
 @import '~@zesty-io/core/typography.less';
 
 .WebsiteCreate {
-  background: lighten(#f2f4fb, 2.5%);
+  background: lighten(@appBkgColor, 2.5%);
   word-break: break-word;
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 450px;
+  margin: 1rem;
+  width: fit-content;
+  max-width: 600px;
 
   margin: 1rem;
-  @supports (display: grid) {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 3;
-
-    display: grid;
-    grid-template-rows: 0fr 2fr 0fr;
-    margin: 0;
-  }
 
   header {
     padding: 1rem;
-    background: lighten(#f2f4fb, 2%);
-    border-bottom: 1px solid #f2f4fb;
+    background: lighten(@appBkgColor, 2%);
+    border-bottom: 1px solid @appBkgColor;
     .name {
       font-size: 1.1em;
     }
   }
 
   main {
-    border-bottom: 1px solid #f2f4fb;
+    border-bottom: 1px solid @appBkgColor;
     padding: 1rem;
     flex: 1 0 350px;
     p {

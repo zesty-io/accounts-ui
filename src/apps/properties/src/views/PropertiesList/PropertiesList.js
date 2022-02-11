@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import cx from 'classnames'
 
 import WebsiteCreate from '../../components/WebsiteCreate'
 import PropertiesHeader from './components/PropertiesHeader'
@@ -103,7 +104,11 @@ export default connect((state, props) => {
   class Properties extends Component {
     render() {
       return (
-        <section className={styles.Websites}>
+        <section
+          className={cx(
+            styles.Websites,
+            !this.props.sites.length ? styles.WebsiteCreate : ''
+          )}>
           <PropertiesHeader layout={this.props.layout} />
 
           {this.props.layout === 'grid' ? (
@@ -112,11 +117,11 @@ export default connect((state, props) => {
             <ColumnList {...this.props} />
           )}
 
-          {!this.props.sites.length ? (
+          {/* {!this.props.sites.length ? (
             <main className={styles.siteList}>
               <WebsiteCreate />
             </main>
-          ) : null}
+          ) : null} */}
         </section>
       )
     }
