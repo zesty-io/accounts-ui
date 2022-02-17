@@ -37,12 +37,23 @@ export default class Domain extends Component {
     this.setState({ submitted: true })
 
     let strippedDomain = ''
+
     if (this.state.domain) {
       strippedDomain = this.state.domain
         .toLowerCase()
         .replace(/http:\/\/|https:\/\//g, '')
-    }
 
+      if (!strippedDomain.slice(-4).includes('.')) {
+        this.props.dispatch(
+          notify({
+            message: `Your domain ${strippedDomain} is missing domain extension e.g. .com, .org, .dev, .io ... `,
+            type: 'error'
+          })
+        )
+        this.setState({ submitted: false })
+        return
+      }
+    }
     this.props
       .dispatch(
         addDomain(this.props.siteZUID, strippedDomain, this.state.domainBranch)
