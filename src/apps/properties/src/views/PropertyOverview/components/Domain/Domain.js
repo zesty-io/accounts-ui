@@ -46,7 +46,7 @@ export default class Domain extends Component {
       if (!strippedDomain.slice(-4).includes('.')) {
         this.props.dispatch(
           notify({
-            message: `Your domain ${strippedDomain} is missing domain extension e.g. .com, .org, .dev, .io ... `,
+            message: `Your domain ${strippedDomain} is missing domain extension e.g. .com, .org, .dev, .io, .NET, etc..`,
             type: 'error'
           })
         )
@@ -85,9 +85,9 @@ export default class Domain extends Component {
     return (
       <label className={styles.Domain}>
         <Infotip className={styles.Infotip}>
-          Enter the domain root. Do not include protocol (eg. http) or trailing
-          slash. For example, if your domain is example.com, you'll enter
-          example.com.
+          Enter the domain root. Do not include protocol (e.g. http) or trailing
+          slash. Must also include domain extension. For example, if your domain
+          is example.com, you'll enter example.com.
         </Infotip>
         <div className={styles.DomainInput}>
           <Input
