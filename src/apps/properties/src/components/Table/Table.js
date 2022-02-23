@@ -107,9 +107,9 @@ export const Table = React.memo(function Table(props) {
                 })}
 
                 {props.actions && (
-                  <p className={styles.RowActions}>
+                  <div className={styles.RowActions}>
                     {props.actions(index, row)}
-                  </p>
+                  </div>
                 )}
               </article>
             )
