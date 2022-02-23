@@ -9,9 +9,26 @@ import WebsiteCard from '../../../../components/WebsiteCard'
 import WebsiteCreate from '../../../../components/WebsiteCreate'
 import WebsiteInvite from '../../../../components/WebsiteInvite'
 
+import { favoriteSite } from '../../../../../../../shell/store/user'
+
 import { Button } from '@zesty-io/core/Button'
 
 export default connect(state => state)(props => {
+  // Fix for pending invites not shown if user has favorited the instance before. ticket #173
+  useEffect(() => {
+    const invites = Object.keys(props.sites).filter(
+      zuid => props.sites[zuid].inviteZUID
+    )
+
+    const favorite = props.sitesFavorite.filter(favorite =>
+      invites.includes(favorite.ZUID)
+    )
+
+    favorite.forEach(() => {
+      props.dispatch(favoriteSite(invites, 'REMOVE'))
+    })
+  }, [])
+
   useEffect(() => {
     document.addEventListener('click', close)
     document.addEventListener('keydown', close)
