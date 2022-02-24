@@ -41,9 +41,9 @@ export default class Domain extends Component {
     if (this.state.domain) {
       strippedDomain = this.state.domain
         .toLowerCase()
-        .replace(/http:\/\/|https:\/\//g, '')
+        .replace(/^(?:https?:\/\/)?(?:www\.)?/i, '') //Regex remove www, http://, https://
 
-      if (!strippedDomain.slice(-4).includes('.')) {
+      if (!strippedDomain.split('').includes('.')) {
         this.props.dispatch(
           notify({
             message: `Your domain ${strippedDomain} is missing domain extension e.g. .com, .org, .dev, .io, .NET, etc..`,
