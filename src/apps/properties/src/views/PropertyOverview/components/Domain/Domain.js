@@ -33,6 +33,12 @@ export default class Domain extends Component {
     this.setState({ domainBranch: value })
   }
 
+  validateDomain = url => {
+    return /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(
+      url
+    )
+  }
+
   handleSave = () => {
     this.setState({ submitted: true })
 
@@ -41,12 +47,20 @@ export default class Domain extends Component {
     if (this.state.domain) {
       strippedDomain = this.state.domain
         .toLowerCase()
-        .replace(/^(?:https?:\/\/)?(?:www\.)?/i, '') //Regex remove www, http://, https://
+        .replace(/http:\/\/|https:\/\//g, '')
 
-      if (!strippedDomain.split('').includes('.')) {
+      const isValidated = this.validateDomain(strippedDomain)
+
+      console.log(
+        '🚀 ~ file: Domain.js ~ line 51 ~ Domain ~ isValidated',
+        isValidated,
+        strippedDomain
+      )
+
+      if (!isValidated) {
         this.props.dispatch(
           notify({
-            message: `Your domain ${strippedDomain} is missing domain extension e.g. .com, .org, .dev, .io, .NET, etc..`,
+            message: `Invalid domain ${strippedDomain} `,
             type: 'error'
           })
         )
@@ -85,9 +99,10 @@ export default class Domain extends Component {
     return (
       <label className={styles.Domain}>
         <Infotip className={styles.Infotip}>
-          Enter the domain root. Do not include protocol (e.g. http) or trailing
-          slash. Must also include domain extension. For example, if your domain
-          is example.com, you'll enter example.com.
+          Do not include protocol (e.g. http://, https://) or trailing slash.
+          For example, if your domain is www.https://example.com, you'll enter
+          www.example.com. Must also include domain extension (e.g. .com, .io,
+          .org ...etc)
         </Infotip>
         <div className={styles.DomainInput}>
           <Input
