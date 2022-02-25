@@ -51,12 +51,6 @@ export default class Domain extends Component {
 
       const isValidated = this.validateDomain(strippedDomain)
 
-      console.log(
-        '🚀 ~ file: Domain.js ~ line 51 ~ Domain ~ isValidated',
-        isValidated,
-        strippedDomain
-      )
-
       if (!isValidated) {
         this.props.dispatch(
           notify({
