@@ -7,6 +7,7 @@ import { Input } from '@zesty-io/core/Input'
 import { Button } from '@zesty-io/core/Button'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
 import { Infotip } from '@zesty-io/core/Infotip'
+import { Validator } from './Validator'
 
 import styles from './Domain.less'
 export default class Domain extends Component {
@@ -33,12 +34,6 @@ export default class Domain extends Component {
     this.setState({ domainBranch: value })
   }
 
-  validateDomain = url => {
-    return /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(
-      url
-    )
-  }
-
   handleSave = () => {
     this.setState({ submitted: true })
 
@@ -49,7 +44,7 @@ export default class Domain extends Component {
         .toLowerCase()
         .replace(/http:\/\/|https:\/\//g, '')
 
-      const isValidated = this.validateDomain(strippedDomain)
+      const isValidated = Validator(strippedDomain)
 
       if (!isValidated) {
         this.props.dispatch(
