@@ -1,25 +1,30 @@
 // Validator definition can found in cypress/support/commands.js
 
+import { Validator } from '../../src/apps/properties/src/views/PropertyOverview/components/Domain/Validator'
+
 describe('Validate adding a URL', function() {
   it('Check domain', () => {
-    //PASS
-    cy.Validator('www.example.com').should('eq', true)
-    cy.Validator('example.com').should('eq', true)
-    cy.Validator('example.org').should('eq', true)
-    cy.Validator('example.multi.sub.domain.example.org').should('eq', true)
-    cy.Validator('example.co.uk').should('eq', true)
-    cy.Validator('example.io').should('eq', true)
-    cy.Validator('subdmain.example.org').should('eq', true)
+    // const answer =
+    // cy.log(answer)
+    // //PASS
+    assert.equal(Validator('www.example.com'), true)
+    assert.equal(Validator('www.example.com'), true)
+    assert.equal(Validator('example.com'), true)
+    assert.equal(Validator('example.org'), true)
+    assert.equal(Validator('example.multi.sub.domain.example.org'), true)
+    assert.equal(Validator('example.co.uk'), true)
+    assert.equal(Validator('example.io'), true)
+    assert.equal(Validator('subdmain.example.org'), true)
 
-    //FAIL
-    cy.Validator('https://www.example.com').should('eq', false)
-    cy.Validator('http://www.example.com').should('eq', false)
-    cy.Validator('https://www.example.com/').should('eq', false)
-    cy.Validator('http://www.example.com/').should('eq', false)
-    cy.Validator('www.example.com/path/page').should('eq', false)
-    cy.Validator('example.com/path/page').should('eq', false)
-    cy.Validator('example.org/path').should('eq', false)
-    cy.Validator('example.i').should('eq', false)
-    cy.Validator('ftp://example.org').should('eq', false)
+    // //FAIL
+    assert.equal(Validator('https://www.example.com'), false)
+    assert.equal(Validator('http://www.example.com'), false)
+    assert.equal(Validator('https://www.example.com/'), false)
+    assert.equal(Validator('http://www.example.com/'), false)
+    assert.equal(Validator('www.example.com/path/page'), false)
+    assert.equal(Validator('example.com/path/page'), false)
+    assert.equal(Validator('example.org/path'), false)
+    assert.equal(Validator('example.i'), false)
+    assert.equal(Validator('ftp://example.org'), false)
   })
 })

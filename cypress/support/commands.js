@@ -29,15 +29,6 @@ Cypress.Commands.add('login', (email, pass) => {
   cy.wrap(login).then(token => cy.setCookie(Cypress.env('COOKIE_NAME'), token))
 })
 
-// Referencing Validator.js function to check user URL validation
-// Ideally would like to import the function straight into integration/domain_validator.js
-// If you update this regex to an improved solution, UPDATE Validator.js function as well.
-Cypress.Commands.add('Validator', url => {
-  return /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(
-    url
-  )
-})
-
 //
 //
 // -- This is a child command --
