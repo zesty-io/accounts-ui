@@ -1,11 +1,7 @@
-// Validator definition can found in cypress/support/commands.js
-
 import { Validator } from '../../src/apps/properties/src/views/PropertyOverview/components/Domain/Validator'
 
 describe('Validate adding a URL', function() {
   it('Check domain', () => {
-    // const answer =
-    // cy.log(answer)
     // //PASS
     assert.equal(Validator('www.example.com'), true)
     assert.equal(Validator('www.example.com'), true)
