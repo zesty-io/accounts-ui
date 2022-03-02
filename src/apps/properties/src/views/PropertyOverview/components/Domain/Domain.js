@@ -42,7 +42,7 @@ export default class Domain extends Component {
     if (this.state.domain) {
       strippedDomain = this.state.domain
         .toLowerCase()
-        .replace(/(^\w+:|^)\/\//, '')
+        .replace(/(^\w+:|^)\/\//, '') // removes all protocols
 
       const isValidated = Validator(strippedDomain)
 
