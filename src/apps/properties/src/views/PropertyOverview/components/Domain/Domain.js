@@ -7,7 +7,7 @@ import { Input } from '@zesty-io/core/Input'
 import { Button } from '@zesty-io/core/Button'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
 import { Infotip } from '@zesty-io/core/Infotip'
-import { Validator } from './Validator'
+import { urlFormatter } from './Validator'
 
 import styles from './Domain.less'
 export default class Domain extends Component {
@@ -37,19 +37,17 @@ export default class Domain extends Component {
   handleSave = () => {
     this.setState({ submitted: true })
 
-    let strippedDomain = ''
+    let formattedDomain = ''
 
     if (this.state.domain) {
-      strippedDomain = this.state.domain
-        .toLowerCase()
-        .replace(/(^\w+:|^)\/\//, '') // removes all protocols
+      const validationInfo = urlFormatter(this.state.domain)
 
-      const isValidated = Validator(strippedDomain)
+      formattedDomain = validationInfo.value
 
-      if (!isValidated) {
+      if (validationInfo.error !== null) {
         this.props.dispatch(
           notify({
-            message: `Invalid domain ${strippedDomain} `,
+            message: `Invalid domain ${formattedDomain} `,
             type: 'error'
           })
         )
@@ -59,7 +57,7 @@ export default class Domain extends Component {
     }
     this.props
       .dispatch(
-        addDomain(this.props.siteZUID, strippedDomain, this.state.domainBranch)
+        addDomain(this.props.siteZUID, formattedDomain, this.state.domainBranch)
       )
       .then(({ error, domain }) => {
         this.setState({
@@ -68,7 +66,7 @@ export default class Domain extends Component {
         })
         this.props.dispatch(
           notify({
-            message: `Your domain has been set to ${strippedDomain}`,
+            message: `Your domain has been set to ${formattedDomain}`,
             type: 'success'
           })
         )
