@@ -1,41 +1,72 @@
 import { urlFormatter } from '../../src/apps/properties/src/views/PropertyOverview/components/Domain/Validator'
 
-// describe('Validate adding a URL', function() {
-//   it('Check domain', () => {
-//     // //PASS
-//     // urlFormatter('https://www.google.com/').should('eq', 'www.google.com')
-//     // assert(urlFormatter('www.example.com'), 'www.example.com')
-//     // assert.equal(urlFormatter('www.example.com'), true)
-//     // assert.equal(urlFormatter('example.com'), true)
-//     // assert.equal(urlFormatter('example.org'), true)
-//     // assert.equal(urlFormatter('example.multi.sub.domain.example.org'), true)
-//     // assert.equal(urlFormatter('example.co.uk'), true)
-//     // assert.equal(urlFormatter('example.io'), true)
-//     // assert.equal(urlFormatter('subdomain.example.org'), true)
-//     // // //FAIL
-//     // assert.equal(urlFormatter('https://www.example.com'), false)
-//     // assert.equal(urlFormatter('http://www.example.com'), false)
-//     // assert.equal(urlFormatter('https://www.example.com/'), false)
-//     // assert.equal(urlFormatter('http://www.example.com/'), false)
-//     // assert.equal(urlFormatter('www.example.com/path/page'), false)
-//     // assert.equal(urlFormatter('example.com/path/page'), false)
-//     // assert.equal(urlFormatter('example.org/path'), false)
-//     // assert.equal(urlFormatter('example.i'), false)
-//     // assert.equal(urlFormatter('ftp://example.org'), false)
-//   })
-// })
+describe('Validate adding a URL', function() {
+  it('Check domain', () => {
+    // Examples of values which can be corrected to return a valid value
 
-describe('Passing validator formatter', () => {
-  const pass = ['https://www.example.com', 'http://www.example.com']
+    expect(urlFormatter('www.example.com/')).to.deep.equal({
+      value: 'www.example.com/',
+      error: null
+    })
 
-  describe('Calling a function', function() {
-    it('Validate Formatter function', function() {
-      pass.forEach(urlTest => {
-        cy.urlFormatter(urlTest).should('deep.equal', {
-          value: 'www.example.com',
-          error: null
-        })
-      })
+    expect(urlFormatter('https://www.example.com/')).to.deep.equal({
+      value: 'www.example.com/',
+      error: null
+    })
+
+    expect(urlFormatter('http://www.example.com/')).to.deep.equal({
+      value: 'www.example.com/',
+      error: null
+    })
+
+    expect(urlFormatter('https://www.example.com')).to.deep.equal({
+      value: 'www.example.com',
+      error: null
+    })
+    expect(urlFormatter('http://www.example.com')).to.deep.equal({
+      value: 'www.example.com',
+      error: null
+    })
+    expect(urlFormatter('https://www.example.org')).to.deep.equal({
+      value: 'www.example.org',
+      error: null
+    })
+    expect(urlFormatter('ftp://example.org')).to.deep.equal({
+      value: 'example.org',
+      error: null
+    })
+    expect(urlFormatter('www.example.org')).to.deep.equal({
+      value: 'www.example.org',
+      error: null
+    })
+
+    expect(urlFormatter('example.multi.sub.domain.example.org')).to.deep.equal({
+      value: 'example.multi.sub.domain.example.org',
+      error: null
+    })
+    expect(urlFormatter('example.co.uk')).to.deep.equal({
+      value: 'example.co.uk',
+      error: null
+    })
+
+    expect(urlFormatter('https://www.example.co.uk')).to.deep.equal({
+      value: 'www.example.co.uk',
+      error: null
+    })
+
+    expect(urlFormatter('subdomain.example.org')).to.deep.equal({
+      value: 'subdomain.example.org',
+      error: null
+    })
+
+    //FAIL Examples of invalid values which can not be corrected
+    expect(urlFormatter('example.i')).to.deep.equal({
+      value: 'example.i',
+      error: 'Invalid domain extension'
+    })
+    expect(urlFormatter('example')).to.deep.equal({
+      value: 'example',
+      error: 'Invalid domain extension'
     })
   })
 })
