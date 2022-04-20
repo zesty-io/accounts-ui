@@ -86,10 +86,9 @@ export default class Domain extends Component {
     return (
       <label className={styles.Domain}>
         <Infotip className={styles.Infotip}>
-          Do not include protocol (e.g. http://, https://) or trailing slash.
-          For example, if your domain is www.https://example.com, you'll enter
-          www.example.com. Must also include domain extension (e.g. .com, .io,
-          .org ...etc)
+          Do not include protocol (e.g. http://, https://) For example, if your
+          domain is www.https://example.com, you'll enter www.example.com. Must
+          also include domain extension (e.g. .com, .io, .org ...etc)
         </Infotip>
         <div className={styles.DomainInput}>
           <Input
