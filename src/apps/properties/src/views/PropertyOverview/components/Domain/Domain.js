@@ -90,7 +90,12 @@ export default class Domain extends Component {
             }}
           />
         </div>
+        <Infotip className={styles.BranchInfotip}>
+          Dev: Preview content <br />
+          Live: Published production content
+        </Infotip>
         <DropDownFieldType
+          defaultOptText="- select a branch -"
           name="branch"
           onChange={this.selectBranch}
           selection={this.branches.filter(
