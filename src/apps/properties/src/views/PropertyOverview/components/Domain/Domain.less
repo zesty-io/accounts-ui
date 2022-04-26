@@ -8,16 +8,22 @@
   width: 100%;
   position: relative;
 
-  .Infotip,
-  .BranchInfotip {
+  .Infotip {
     position: absolute;
     top: 0;
-  }
-  .Infotip {
     left: 0;
   }
+  .BranchInfo {
+    transform: translateY(-7px);
+  }
   .BranchInfotip {
-    left: 340px;
+    transform: translateY(-6px);
+    display: inline-block;
+    &:hover {
+      small {
+        bottom: 18px;
+      }
+    }
   }
   .DomainInput {
     input {
