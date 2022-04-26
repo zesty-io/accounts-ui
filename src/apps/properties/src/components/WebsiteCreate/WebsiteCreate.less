@@ -2,7 +2,7 @@
 @import '~@zesty-io/core/typography.less';
 
 .WebsiteCreate {
-  background: lighten(#f2f4fb, 2.5%);
+  background: lighten(@appBkgColor, 2.5%);
   word-break: break-word;
   display: flex;
   flex-direction: column;
@@ -22,15 +22,15 @@
 
   header {
     padding: 1rem;
-    background: lighten(#f2f4fb, 2%);
-    border-bottom: 1px solid #f2f4fb;
+    background: lighten(@appBkgColor, 2%);
+    border-bottom: 1px solid @appBkgColor;
     .name {
       font-size: 1.1em;
     }
   }
 
   main {
-    border-bottom: 1px solid #f2f4fb;
+    border-bottom: 1px solid @appBkgColor;
     padding: 1rem;
     flex: 1 0 350px;
     p {

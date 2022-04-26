@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -115,7 +115,7 @@ export default connect(state => state)(props => {
         </h2>
 
         <main className={styles.siteList}>
-          {props.sites.length === 0 && <WebsiteCreate />}
+          {Object.keys(props.sites).length === 0 && <WebsiteCreate />}
 
           {props.sitesFiltered.length ? (
             props.sitesFiltered.map(site => {
