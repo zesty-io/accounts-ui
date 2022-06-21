@@ -46,7 +46,8 @@ Being aware of errors your users experience is an important part of iterating an
 
 ## Developing
 
-    npm run start
+    Terminal One:  npm run serve
+    Terminal Two:  npm run start
 
 This will install all necessary dependencies and do a development build which will begin watching your files and rebuild when changes occur. You will need the complete stack running in order to load the account-ui.
 
@@ -81,6 +82,11 @@ Then you can either:
 This application is configured to run and deploy against our internal stack and process. As such we do not provide a way to run on `localhost`.
 
 When deploying it is important to use the `npm run build-production` command as this will cause a production [webpack](https://webpack.js.org/) build which adds large optimizations to the bundle size and runtime code.
+
+## Failing Cypress Test
+
+Need to Ping Backend to run a script Notes found here
+[Github Script Notes](https://github.com/zesty-io/accounts-ui/blob/master/cypress/integration/create_instance_spec.js#L17-L18)
 
 ---
 
