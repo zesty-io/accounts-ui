@@ -72,26 +72,28 @@ export default class Domain extends Component {
 
   render() {
     return (
-      <label className={styles.Domain}>
-        <Infotip className={styles.Infotip}>
-          Enter the domain root. Do not include protocol (eg. http) or trailing
-          slash. For example, if your domain is example.com, you'll enter
-          example.com.
-        </Infotip>
-        <div className={styles.DomainInput}>
-          <Input
-            name="domain"
-            placeholder="Set a custom domain"
-            value={this.state.domain}
-            onChange={evt => {
-              this.setState({
-                domain: evt.target.value
-              })
-            }}
-          />
+      <section className={styles.Domain}>
+        <div>
+          <Infotip className={styles.Infotip}>
+            Enter the domain root. Do not include protocol (eg. http) or
+            trailing slash. For example, if your domain is example.com, you'll
+            enter example.com.
+          </Infotip>
+          <div className={styles.DomainInput}>
+            <Input
+              name="domain"
+              placeholder="Set a custom domain"
+              value={this.state.domain}
+              onChange={evt => {
+                this.setState({
+                  domain: evt.target.value
+                })
+              }}
+            />
+          </div>
         </div>
-        <div className={styles.BranchInfo}>
-          <Infotip className={styles.BranchInfotip}>
+        <div>
+          <Infotip className={styles.Infotip}>
             Dev: Preview content <br />
             Live: Published production content
           </Infotip>
@@ -99,7 +101,7 @@ export default class Domain extends Component {
             defaultOptText="- select a branch -"
             name="branch"
             onChange={this.selectBranch}
-            selection={this.branches.filter(
+            selection={this.branches.find(
               branch => branch.value === this.state.domainBranch
             )}
             options={this.branches}
@@ -115,7 +117,7 @@ export default class Domain extends Component {
           <i className="fa fa-plus" aria-hidden="true" />
           Add domain
         </Button>
-      </label>
+      </section>
     )
   }
 }
