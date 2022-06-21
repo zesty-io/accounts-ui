@@ -46,7 +46,8 @@ Being aware of errors your users experience is an important part of iterating an
 
 ## Developing
 
-    npm run start
+    Terminal One:  npm run serve
+    Terminal Two:  npm run start
 
 This will install all necessary dependencies and do a development build which will begin watching your files and rebuild when changes occur. You will need the complete stack running in order to load the account-ui.
 
