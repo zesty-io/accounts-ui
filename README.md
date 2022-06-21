@@ -83,6 +83,11 @@ This application is configured to run and deploy against our internal stack and 
 
 When deploying it is important to use the `npm run build-production` command as this will cause a production [webpack](https://webpack.js.org/) build which adds large optimizations to the bundle size and runtime code.
 
+## Failing Cypress Test
+
+Need to Ping Backend to run a script Notes found here
+[Gihub Script Notes](https://github.com/zesty-io/accounts-ui/blob/master/cypress/integration/create_instance_spec.js#L17-L18)
+
 ---
 
 Copyright (C) [Zesty.io Inc.](https://zesty.io/)
