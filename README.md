@@ -86,7 +86,7 @@ When deploying it is important to use the `npm run build-production` command as 
 ## Failing Cypress Test
 
 Need to Ping Backend to run a script Notes found here
-[Gihub Script Notes](https://github.com/zesty-io/accounts-ui/blob/master/cypress/integration/create_instance_spec.js#L17-L18)
+[Github Script Notes](https://github.com/zesty-io/accounts-ui/blob/master/cypress/integration/create_instance_spec.js#L17-L18)
 
 ---
 
