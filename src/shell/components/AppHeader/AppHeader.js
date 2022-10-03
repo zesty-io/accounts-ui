@@ -81,12 +81,6 @@ export default connect(state => {
                 ) : null}
               </NavLink>
             )}
-            <a
-              className={styles.sudheadline}
-              href="https://www.zesty.io/"
-              target="_blank">
-              Try Beta accounts
-            </a>
 
             {/* {this.props.user.prefs.devOptions === 1 && (
               <NavLink
@@ -98,6 +92,12 @@ export default connect(state => {
               </NavLink>
             )} */}
           </nav>
+          <a
+            className={styles.btnPrimary}
+            href="https://www.zesty.io/"
+            target="_blank">
+            Try Beta Accounts
+          </a>
           <nav
             ref={nav => (this.userNav = nav)}
             data-test="UserNav"
