@@ -81,6 +81,13 @@ export default connect(state => {
                 ) : null}
               </NavLink>
             )}
+            <a
+              className={styles.sudheadline}
+              href="https://www.zesty.io/"
+              target="_blank">
+              Try Beta accounts
+            </a>
+
             {/* {this.props.user.prefs.devOptions === 1 && (
               <NavLink
                 className={styles.sudheadline}
