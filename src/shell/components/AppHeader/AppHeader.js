@@ -94,7 +94,7 @@ export default connect(state => {
           </nav>
           <a
             className={styles.btnPrimary}
-            href="https://www.zesty.io/"
+            href="https://beta.zesty.io/"
             target="_blank">
             Try Beta Accounts
           </a>
