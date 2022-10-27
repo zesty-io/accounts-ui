@@ -96,7 +96,7 @@ export default connect(state => {
             className={styles.btnPrimary}
             href="https://www.zesty.io/"
             target="_blank">
-            Try New Accounts (Beta)
+            Try New Accounts
           </a>
           <nav
             ref={nav => (this.userNav = nav)}
