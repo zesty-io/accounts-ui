@@ -7,6 +7,7 @@ import { Input } from '@zesty-io/core/Input'
 import { Button } from '@zesty-io/core/Button'
 import { DropDownFieldType } from '@zesty-io/core/DropDownFieldType'
 import { Infotip } from '@zesty-io/core/Infotip'
+import { urlFormatter } from './Validator'
 
 import styles from './Domain.less'
 export default class Domain extends Component {
@@ -36,16 +37,27 @@ export default class Domain extends Component {
   handleSave = () => {
     this.setState({ submitted: true })
 
-    let strippedDomain = ''
-    if (this.state.domain) {
-      strippedDomain = this.state.domain
-        .toLowerCase()
-        .replace(/http:\/\/|https:\/\//g, '')
-    }
+    let formattedDomain = ''
 
+    if (this.state.domain) {
+      const validationInfo = urlFormatter(this.state.domain)
+
+      formattedDomain = validationInfo.value
+
+      if (validationInfo.error !== null) {
+        this.props.dispatch(
+          notify({
+            message: `Invalid domain ${formattedDomain} `,
+            type: 'error'
+          })
+        )
+        this.setState({ submitted: false })
+        return
+      }
+    }
     this.props
       .dispatch(
-        addDomain(this.props.siteZUID, strippedDomain, this.state.domainBranch)
+        addDomain(this.props.siteZUID, formattedDomain, this.state.domainBranch)
       )
       .then(({ error, domain }) => {
         this.setState({
@@ -54,7 +66,7 @@ export default class Domain extends Component {
         })
         this.props.dispatch(
           notify({
-            message: `Your domain has been set to ${strippedDomain}`,
+            message: `Your domain has been set to ${formattedDomain}`,
             type: 'success'
           })
         )
@@ -74,9 +86,9 @@ export default class Domain extends Component {
     return (
       <label className={styles.Domain}>
         <Infotip className={styles.Infotip}>
-          Enter the domain root. Do not include protocol (eg. http) or trailing
-          slash. For example, if your domain is example.com, you'll enter
-          example.com.
+          Do not include protocol (e.g. http://, https://) For example, if your
+          domain is www.https://example.com, you'll enter www.example.com. Must
+          also include domain extension (e.g. .com, .io, .org ...etc)
         </Infotip>
         <div className={styles.DomainInput}>
           <Input
