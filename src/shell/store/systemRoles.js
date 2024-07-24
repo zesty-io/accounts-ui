@@ -43,6 +43,16 @@ export function fetchSystemRoles() {
           ZUID: '31-71cfc74-c0ntr1b0t0r',
           name: 'Contributor',
           accessLevel: 5
+        },
+        '31-71cfc74-d3vc0n': {
+          ZUID: '31-71cfc74-d3vc0n',
+          name: 'Developer Contributor',
+          accessLevel: 6
+        },
+        '31-71cfc74-4cc4dm13': {
+          ZUID: '31-71cfc74-4cc4dm13',
+          name: 'Access Admin',
+          accessLevel: 7
         }
       }
     })
